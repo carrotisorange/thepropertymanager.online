@@ -162,7 +162,7 @@
 
 </div>
 @if($concerns->count() <=0 )
-<p class="text-danger text-center">No job orders found!</p>
+<p class="text-danger text-center">No concerns found!</p>
 
 @else
 <div class="table-responsive text-nowrap">

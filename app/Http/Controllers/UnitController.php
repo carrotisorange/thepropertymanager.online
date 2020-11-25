@@ -241,7 +241,7 @@ class UnitController extends Controller
 
             $property = Property::findOrFail($property_id);
     
-            return view('webapp.home.edit-units', compact('units', 'property'))
+            return view('webapp.home.edit-units', compact('units', 'property'));
      }
 
      public function post_edit_multiple_rooms(Request $request, $property_id){
@@ -286,7 +286,7 @@ class UnitController extends Controller
                     );
         
 
-        return redirect('/property/'. $property_id.'/home')->with('success','rooms have been updated!');
+        return redirect('/property/'. $property_id.'/home')->with('success','room/s have been updated!');
      }
 
 

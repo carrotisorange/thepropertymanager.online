@@ -174,6 +174,10 @@
   </div>
 
 </div>
+@if($owners->count() <=0 )
+<p class="text-danger text-center">No owners found!</p>
+
+@else
 Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
 {{-- @if(session(Auth::user()->id.'search_tenant'))
 <p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">"{{ session(Auth::user()->id.'search_tenant') }}"<span></p>
@@ -212,6 +216,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
     </table>
    
   </div>
+  @endif
 @endsection
 
 

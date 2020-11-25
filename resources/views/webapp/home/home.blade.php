@@ -173,6 +173,11 @@
 
  
 </div>
+@if($units->count() <=0 )
+<p class="text-danger text-center">No rooms found!</p>
+@else
+
+
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ $property->name }} <span id="count_rooms" class="badge badge-primary">{{ $units_count }}</span></a>
@@ -285,7 +290,7 @@
   @endforeach 
 </div>
 
-
+@endif
 <div class="modal fade" id="addMultipleUnits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">

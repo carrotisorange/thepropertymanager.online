@@ -184,6 +184,10 @@
     @endif
   </div>
 </div>
+@if($collections->count() <=0 )
+<p class="text-danger text-center">No collections found!</p>
+
+@else
 <div class="table-responsive text-nowrap">
   <table class="table">
       @foreach ($collections as $day => $collection_list)
@@ -247,7 +251,7 @@
       @endforeach
   </table>
    </div>
-
+@endif
 @endsection
 
 @section('scripts')

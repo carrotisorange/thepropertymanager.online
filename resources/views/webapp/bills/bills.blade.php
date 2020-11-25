@@ -214,7 +214,10 @@
   </div>
 
 </div>
+@if($bills->count() <=0 )
+<p class="text-danger text-center">No bills found!</p>
 
+@else
 <div class="table-responsive text-nowrap">
   <table class="table">
     @foreach ($bills as $day => $bill)
@@ -278,7 +281,7 @@
     @endforeach
   </table>
   </div>
-
+@endif
 @endsection
 
 

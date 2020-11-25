@@ -174,6 +174,11 @@
   </div>
 
 </div>
+
+@if($tenants->count() <=0 )
+<p class="text-danger text-center">No tenants found!</p>
+
+@else
 Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
 @if(Session::get('tenant_search'))
 <p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
@@ -222,7 +227,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
     </table>
 
   </div>
-
+@endif
 @endsection
 
 
