@@ -185,7 +185,7 @@
       <tr>
         <th>{{ $ctr++ }}</th>
         <td>{{ $item->created_at }}</td>
-        <td><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id_foreign }}">{{ $item->concern_id_foreign }}</a></td>
+        <td><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id_foreign }}">{{ $item->concern_desc }}</a></td>
         <td>{{ $item->summary }}</td>
         <td>{{ $item->personnel_name }}</td>
         <td>{{ $item->status }}</td>

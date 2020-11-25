@@ -21,6 +21,7 @@ class JobOrderController extends Controller
         ->join('concerns', 'concern_id_foreign', 'concern_id')
         ->join('tenants', 'concern_tenant_id', 'tenant_id')
         ->join('personnels', 'personnel_id_foreign', 'personnel_id')
+        ->select('*', 'job_orders.created_at as created_at')
 
         ->where('property_id_foreign',  Session::get('property_id'))
         ->orderBy('job_orders.created_at', 'desc')
@@ -64,7 +65,7 @@ class JobOrderController extends Controller
             ]
             );
 
-         return redirect('/property/'.$property_id.'/concern/'.$concern_id.'/joborder/'.$joborder_id)->with('success', 'new issue has been posted!');
+         return redirect('/property/'.$property_id.'/joborders')->with('success', 'new issue has been posted!');
     }
 
     /**
