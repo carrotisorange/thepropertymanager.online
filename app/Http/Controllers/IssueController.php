@@ -8,6 +8,7 @@ use App\Property;
 use App\User;
 use Session;
 use Auth;
+use DB;
 
 class IssueController extends Controller
 {
@@ -20,7 +21,7 @@ class IssueController extends Controller
     {
         $property = Property::findOrFail(Session::get('property_id'));
 
-        $issues = User::findOrFail(Auth::user()->id)->issues;
+        $issues = DB::table('issues')->get();
 
         return view('webapp.properties.issues',compact('property', 'property', 'issues'));
     }
