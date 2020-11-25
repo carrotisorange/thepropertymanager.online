@@ -640,7 +640,7 @@
     </button>
     </div>
    <div class="modal-body">
-    Help us improve your experience in managing your property. Report the issues and concerns you encountered while using the system. 
+    Please help us improve your experience in managing your property by reporting the issues and concerns you encountered while using the system.
   
   </div>
   <div class="modal-footer">
