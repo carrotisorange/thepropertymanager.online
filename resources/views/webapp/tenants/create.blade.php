@@ -139,7 +139,7 @@
               </a>
             </li>
           <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/issues" target="_blank">
+              <a class="nav-link" href="/property/{{ $property->property_id }}/announcements" target="_blank">
                 <i class="fas fa-microphone text-purple"></i>
                 <span class="nav-link-text">Announcements</span>
               </a>
@@ -415,7 +415,7 @@
           <table class = "table table-bordered" id="tab_logic">
               <tr>
                   <th>#</th>
-                  <th>Description</th>
+                  <th>Particular</th>
                   <th>Amount</th>
                  
               </tr>
@@ -447,14 +447,14 @@
   //adding moveout charges upon moveout
     $(document).ready(function(){
         var i=1;
-        var current_bill_no  = {{ $current_bill_no }};
+       
     $("#add_row").click(function(){
-        $('#addr'+i).html("<th>"+ (current_bill_no ) +"</th><td><select class='form-control' name='billing_desc"+i+"' form='addTenantForm1' id='billing_desc"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='billing_amt"+i+"' id='billing_amt"+i+"' type='number' min='1' step='0.01' value='{{ session(Auth::user()->id.'tenant_monthly_rent') }}'' required></td>");
+        $('#addr'+i).html("<th>"+ i +"</th><td><select class='form-control' name='billing_desc"+i+"' form='addTenantForm1' id='billing_desc"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='billing_amt"+i+"' id='billing_amt"+i+"' type='number' min='1' step='0.01' value='{{ session(Auth::user()->id.'tenant_monthly_rent') }}'' required></td>");
 
 
      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
      i++;
-     current_bill_no++;
+
      document.getElementById('no_of_items').value = i;
 
     });
@@ -463,7 +463,7 @@
         if(i>1){
         $("#addr"+(i-1)).html('');
         i--;
-        current_bill_no--;
+    
         document.getElementById('no_of_items').value = i;
         }
     });

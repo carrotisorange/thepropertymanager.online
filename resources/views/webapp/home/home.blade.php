@@ -139,7 +139,7 @@
               </a>
             </li>
           <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/issues" target="_blank">
+              <a class="nav-link" href="/property/{{ $property->property_id }}/announcements" target="_blank">
                 <i class="fas fa-microphone text-purple"></i>
                 <span class="nav-link-text">Announcements</span>
               </a>
@@ -239,18 +239,18 @@
       @foreach ($units as $floor_no => $floor_no_list)
       <p class="text-center">
       @if($floor_no >= 1)
-      {{ $numberFormatter->format($floor_no).' floor  ('.$floor_no_list->count().')' }}
+      {{ $numberFormatter->format($floor_no).' floor' }}
       @else
       @if($floor_no >= -1)
-        {{ '1st basement ('.$floor_no_list->count().')' }} 
+        {{ '1st basement' }} 
         @elseif($floor_no >= -2)
-        {{ '2nd basement ('.$floor_no_list->count().')' }} 
+       {{ '2nd basement' }} 
         @elseif($floor_no >= -3)
-        {{ '3rd basement ('.$floor_no_list->count().')' }} 
+        {{ '3rd basement' }} 
         @elseif($floor_no >= -4)
-        {{ '4th basement ('.$floor_no_list->count().')' }} 
+        {{ '4th basement' }} 
         @elseif($floor_no >= -5)
-        {{ '5th basement ('.$floor_no_list->count().')' }} 
+        {{ '5th basement' }} 
         @endif
       @endif
       

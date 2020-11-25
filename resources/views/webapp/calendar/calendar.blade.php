@@ -143,7 +143,7 @@
               </a>
             </li>
           <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/issues" target="_blank">
+              <a class="nav-link" href="/property/{{ $property->property_id }}/announcements" target="_blank">
                 <i class="fas fa-microphone text-purple"></i>
                 <span class="nav-link-text">Announcements</span>
               </a>
