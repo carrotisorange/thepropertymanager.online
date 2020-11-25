@@ -161,6 +161,10 @@
   </div>
 
 </div>
+@if($joborders->count() <=0 )
+<p class="text-danger text-center">No job orders found!</p>
+
+@else
 <div class="table-responsive text-nowrap">
      
   <table class="table" >
@@ -191,6 +195,8 @@
   </table>
  
 </div>
+
+@endif
 @endsection
 
 

@@ -17,7 +17,7 @@ class JobOrderController extends Controller
      */
     public function index()
     {
-         $joborders = DB::table('job_orders')
+          $joborders = DB::table('job_orders')
         ->join('concerns', 'concern_id_foreign', 'concern_id')
         ->join('tenants', 'concern_tenant_id', 'tenant_id')
         ->join('personnels', 'personnel_id_foreign', 'personnel_id')

@@ -166,7 +166,7 @@
 
 </div>
 
-<div class="row">
+
   
 <div class="table-responsive text-nowrap">
      
@@ -196,7 +196,7 @@
   </table>
   
 </div>
-</div>
+
 
    {{-- Modal to moveout tenant --}}
    <div class="modal fade" id="addPersonnelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
