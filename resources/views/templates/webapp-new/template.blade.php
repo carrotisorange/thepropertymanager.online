@@ -1,18 +1,3 @@
-<!--
-=========================================================
-* Argon Dashboard - v1.2.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-
-
-* Copyright  Creative Tim (http://www.creative-tim.com)
-* Coded by www.creative-tim.com
-
-
-
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html>
 
@@ -32,34 +17,32 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="{{ asset('/argon/assets/css/argon.css?v=1.2.0') }}" type="text/css">
-
+  
   @yield('css')
 </head>
 
 <body>
   @include('templates.webapp-new.chat-messenger')
-@yield('sidebar')
-@show
+  @yield('sidebar')
+  @show
   <!-- Main content -->
   <div class="main-content" id="panel">
     @include('templates.webapp-new.header')
     @include('templates.webapp.notifications')
-        <div class="header pb-6">
-            <div class="container-fluid">
-              <div class="header-body">
-        @yield('upper-content')
-              </div>
+      <div class="header pb-6">
+          <div class="container-fluid">
+            <div class="header-body">
+                @yield('upper-content')
             </div>
-        </div>
+          </div>
+      </div>
     <!-- Page content -->
-    <div class="container-fluid mt--6">
+      <div class="container-fluid mt--6">
         @yield('body-content')
-
-    @include('templates.webapp-new.footer')
+        @include('templates.webapp-new.footer')
+        @include('templates.webapp-new.logout')
     </div>
   </div>
-
-  @include('templates.webapp-new.logout')
   <!-- Argon Scripts -->
   <!-- Core -->
   

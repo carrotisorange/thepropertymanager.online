@@ -49,11 +49,10 @@ Route::get('property/{property_id}/announcements', function($property_id){
     return view('webapp.properties.announcements',compact('property'));
 });
 
-Route::get('property/{property_id}/issues', function($property_id){
-    $property = Property::findOrFail($property_id);
 
-    return view('webapp.properties.issues',compact('property'));
-});
+//route for issues
+Route::get('/property/{property_id}/issues', 'IssueController@index');
+Route::post('/property/{property_id}/issue/create', 'IssueController@store');
 
 
 //routes for blogs

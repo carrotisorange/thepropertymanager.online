@@ -170,18 +170,60 @@
 </div>
 <div class="row">
   <div class="col">
-    <ul>
-      <li>Tenant access to the portal is being finalized and expected to be rolled before the end of the November 2020.</li>
-      <br>
-        <p class="text-justify">
-          The tenant portal will provide a hassle-free way for tenants to monitor their contracts, bills, payments and report their concerns. 
-          All properties are advised to make sure that the tenants' details are accurate to avoid future problems. 
-          The portal promises to improve customer service by providing a way for tenants to send their concerns anytime and anywhere, which the employees can address adequately through constant status monitoring. 
-          Also, property managers have been restructuring their organizational structure to accommodate this big change. Everyone is expected to participate to ensure the success of the transition. This is just the start of a new level of property management.
-        </p>
-    </ol>
+
+      
+
+        <form action="/property/{{ $property->property_id }}/issue/create" method="POST">
+          @csrf
+      
+    
+          <textarea  class="form-control form-control-user @error('details') is-invalid @enderror" name="details" id="" cols="30" rows="3" placeholder="enter the problems you encounter while using the system..."></textarea required>
+          
+            @error('details')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+      
+        <br>
+      <p class="text-right">
+        <a href="/property/{{ $property->property_id }}/issues" class="btn btn-secondary"><i class="fas fa-times text-dark-50"></i> Clear</a>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit </button>
+      </p>
+      </form>
+    
+  
   </div>
 </div>
+
+<div class="row">
+  <div class="col">
+    
+      <h6 class="h2 text-dark d-inline-block mb-0">Issues posted by other users({{ $issues->count() }})</h6>
+      <br>
+
+     
+    
+    <div class="row">
+      <div class="col">
+        @foreach ($issues as $item)
+
+        <div class="card">
+          <div class="card-body">
+          
+            <small class="font-italic">issue raised by {{ $item->reported_by }} at {{ Carbon\Carbon::parse($item->created_at) }} ({{ $item->status }})</small>
+                <br><br>
+                {!! $item->details !!}
+            
+        </div>
+      </div>
+      </table>
+     @endforeach
+      </div>
+    </div>
+ 
+    </div>
+  </div>
 
 @endsection
 

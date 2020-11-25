@@ -96,7 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function issues()
     {
-        return $this->hasMany('App\Issue', 'referrer_id_foreign');
+        return $this->hasMany('App\Issue', 'user_id_foreign')->orderBy('created_at', 'desc');
     }
 
 

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Issue;
 use Illuminate\Http\Request;
+use App\Property;
+use App\User;
+use Session;
+use Auth;
 
 class IssueController extends Controller
 {
@@ -14,7 +18,11 @@ class IssueController extends Controller
      */
     public function index()
     {
-        //
+        $property = Property::findOrFail(Session::get('property_id'));
+
+        $issues = User::findOrFail(Auth::user()->id)->issues;
+
+        return view('webapp.properties.issues',compact('property', 'property', 'issues'));
     }
 
     /**
@@ -35,7 +43,20 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'details' => 'required'
+        ]);
+
+        $issue = new Issue();
+        $issue->user_id_foreign = Auth::user()->id;
+        $issue->reported_by = Auth::user()->name;
+        $issue->details = $request->details;
+        $issue->status = 'active';
+        $issue->save();
+
+        return back()->with('success', 'new issue has been posted!');
+
     }
 
     /**
