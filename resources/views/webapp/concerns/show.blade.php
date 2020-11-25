@@ -440,7 +440,7 @@ font-family: FontAwesome;
       </button>
       </div>
       <div class="modal-body">
-        <form action="/property/{{ $property->property_id }}/tenant/{{ $concern->concern_tenant_id }}/concern/{{ $concern->concern_id }}/joborder" method="POST">
+        <form action="/property/{{ $property->property_id }}/concern/{{ $concern->concern_id }}/joborder" method="POST">
           @csrf
 
           <div class="row">
@@ -453,14 +453,32 @@ font-family: FontAwesome;
         <div class="row">
           <div class="col">
               <label>Personnel</label>
-              <select class="form-control" name="personnel_id" id="personnel_id">
+              <select  class="form-control form-control-user @error('personnel_id_foreign') is-invalid @enderror" name="personnel_id_foreign" id="personnel_id_foreign" required>
                 <option value="">Please select one</option>
                 @foreach ($personnels as $item)
                     <option value="{{ $item->personnel_id }}">{{ $item->personnel_name }}</option>
                 @endforeach
               </select>
+
+              @error('personnel_id_foreign')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+              @enderror
           </div>
       </div>
+      <br>
+      <div class="row">
+        <div class="col">
+            <label>Summary</label>
+            <textarea  class="form-control form-control-user @error('summary') is-invalid @enderror" name="summary" id="" cols="30" rows="3" placeholder="enter the summary of the job order..."></textarea required>
+              @error('summary')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+          </div>
+    </div>
          
       </div>
       <div class="modal-footer">

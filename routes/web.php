@@ -288,7 +288,7 @@ Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/{
 
 Route::get('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/{contract_id}/alert', 'ContractController@send_contract_alert')->middleware(['auth', 'verified']);
 
-Route::post('/property/{property_id}/tenant/{tenant_id}/concern/{concern_id}/joborder', 'JobOrderController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/concern/{concern_id}/joborder', 'JobOrderController@store')->middleware(['auth', 'verified']);
 
 //routes for job orders
 Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->middleware(['auth', 'verified']);

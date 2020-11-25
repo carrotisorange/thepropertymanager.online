@@ -218,7 +218,7 @@ class CollectionController extends Controller
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
            
         }
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payments have been added!');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payments have been recorded!');
         
         
    

@@ -15,6 +15,12 @@ class CreateJobOrdersTable extends Migration
     {
         Schema::create('job_orders', function (Blueprint $table) {
             $table->bigIncrements('joborder_id');
+            $table->unsignedBigInteger('concern_id_foreign')->nullable();
+            $table->foreign('concern_id_foreign')->references('concern_id')->on('concerns');
+            $table->unsignedBigInteger('personnel_id_foreign')->nullable();
+            $table->foreign('personnel_id_foreign')->references('personnel_id')->on('personnels');
+            $table->string('status')->default('active');
+            $table->string('summary');
             $table->timestamps();
         });
     }
