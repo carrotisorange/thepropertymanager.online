@@ -165,7 +165,10 @@
 
 
 </div>
+@if($personnels->count() <=0 )
+<p class="text-danger text-center">No personnels found!</p>
 
+@else
 
   
 <div class="table-responsive text-nowrap">
@@ -196,7 +199,7 @@
   </table>
   
 </div>
-
+@endif
 
    {{-- Modal to moveout tenant --}}
    <div class="modal fade" id="addPersonnelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

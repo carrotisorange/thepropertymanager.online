@@ -77,7 +77,7 @@
 
             @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/bills">
+            <a class="nav-link" href="/property/{{$property->property_id }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bills</span>
               </a>

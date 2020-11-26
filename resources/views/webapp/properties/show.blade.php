@@ -645,7 +645,7 @@
   </div>
   <div class="modal-footer">
    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss </button>
-   <a href="/property/{{  Session::get('property_id') }}/issues" class="btn btn-primary" >Try now</a>
+   <a href="/property/{{  Session::get('property_id') }}/issues" class="btn btn-primary" >Report now</a>
   </form>
   </div> 
   </div>
