@@ -68,7 +68,7 @@
             </li>
            
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}}/personnels">
+              <a class="nav-link" href="/property/{{$property->property_id }}/personnels">
                 <i class="fas fa-user-secret text-gray"></i>
                 <span class="nav-link-text">Personnels</span>
               </a>
