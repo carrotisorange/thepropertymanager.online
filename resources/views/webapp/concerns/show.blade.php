@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title',  'Concern #'. $concern->concern_id)
+@section('title',   $concern->concern_desc)
 
 @section('css')
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -190,7 +190,7 @@ font-family: FontAwesome;
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-4">
-    <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }}: {{ $concern->concern_item }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0"> {{ $concern->concern_desc }}</h6>
     
   </div>
 

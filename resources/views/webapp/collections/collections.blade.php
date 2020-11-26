@@ -203,7 +203,7 @@
           <th>Bill No</th>
           <th>Tenant</th>
           <th>Room</th>
-          <th>Description</th>
+          <th>Particular</th>
           <th colspan="2">Period Covered</th>
           <th>Form</th>
           <th >Amount</th>

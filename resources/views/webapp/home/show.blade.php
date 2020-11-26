@@ -144,18 +144,7 @@
                 <span class="nav-link-text">Announcements</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/system-updates" target="_blank">
-                <i class="fas fa-bug text-green"></i>
-                <span class="nav-link-text">System Updates</span>
-              </a>
-            </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/announcements" target="_blank">
-                <i class="fas fa-microphone text-purple"></i>
-                <span class="nav-link-text">Announcements</span>
-              </a>
-            </li>
+      
              {{--  <li class="nav-item">
               <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
                 <i class="ni ni-chart-pie-35"></i>

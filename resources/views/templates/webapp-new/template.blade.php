@@ -40,11 +40,18 @@
       <div class="container-fluid mt--6">
         @yield('body-content')
         @include('templates.webapp-new.footer')
+
+        
+
         @include('templates.webapp-new.logout')
     </div>
+    <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+    <div id="preloader"></div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
+
+  
   
   <script src="{{ asset('/argon/assets/vendor/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ asset('/argon/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>

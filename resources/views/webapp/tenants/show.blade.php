@@ -706,7 +706,7 @@
                     <th>AR No</th>
                     <th>Bill No</th>
                     {{-- <th>Room</th>   --}}
-                    <th>Description</th>
+                    <th>Particular</th>
                     <th colspan="2">Period Covered</th>
                     <th>Form</th>
                     <th class="text-right">Amount</th>
