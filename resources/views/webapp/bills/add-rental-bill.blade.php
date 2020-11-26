@@ -233,15 +233,6 @@
           <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
       
           <input class="" type="hidden" form="add_billings" name="billing_desc{{ $desc_ctr++ }}" value="Rent" required readonly>
-      
-        {{-- <td>
-          @if($item->tenants_note === 'new' )
-            <input form="add_billings" type="text" name="details{{ $details_ctr++  }}" value="{{ Carbon\Carbon::parse($item->movein_date)->startOfMonth()->format('M d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('d Y') }} " >
-          @else
-            <input form="add_billings" type="text"  name="details{{ $details_ctr++  }}" value="{{ Carbon\Carbon::now()->startOfMonth()->format('M d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('d Y') }}" >
-          @endif
-        </td> --}}
-   
       <td>
         <?php 
               $prorated_rent =  Carbon\Carbon::parse($item->movein_at)->DiffInDays(Carbon\Carbon::now()->endOfMonth());

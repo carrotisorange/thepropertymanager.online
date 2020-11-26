@@ -159,10 +159,10 @@
     <h6 class="h2 text-dark d-inline-block mb-0">Bills</h6>
     
   </div>
-  <div class="col-lg-8 text-right">
+  <div class="col text-right">
   
-    <div class="form-group row">
-      <div class="col">
+    <div class=" row">
+      
         
     <form id="billingRentForm" action="/property/{{ $property->property_id }}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
       @csrf
@@ -172,8 +172,7 @@
     
         
   
-      </div>
-      <div class="col">
+      
         <form id="billingElectricForm" action=" /property/{{ $property->property_id }}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
@@ -181,9 +180,8 @@
         <button class="btn btn-primary"  type="submit" form="billingElectricForm" ><i class="fas fa-plus"></i> Electric</button>
      
       
-      </div>
+ 
 
-      <div class="col">
          
     
       <form id="billingWaterForm" action="/property/{{ $property->property_id }}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
@@ -192,9 +190,7 @@
     <input type="hidden" form="billingWaterForm" name="billing_option" value="water">
         <button class="btn btn-primary" type="submit" form="billingWaterForm" ><i class="fas fa-plus"></i> Water</button>
        
-      </div>
-
-      {{-- <div class="col">
+    
          
     
         <form id="billingSurchargeForm" action="/property/{{ $property->property_id }}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
@@ -202,8 +198,7 @@
       </form>
       <input type="hidden" form="billingSurchargeForm" name="billing_option" value="surcharge">
           <button class="btn btn-primary" type="submit" form="billingSurchargeForm" ><i class="fas fa-plus"></i> Surcharge</button>
-         
-        </div> --}}
+   
     </div>
      
    

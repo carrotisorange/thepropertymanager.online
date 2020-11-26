@@ -156,7 +156,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-4">
-    <h6 class="h2 text-dark d-inline-block mb-0">Surcharge Bills</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Rent Bills</h6>
     
     
   </div>
@@ -183,13 +183,13 @@
      
       
         <th>Amount</th>
-       
-        <th></th>
+
    
     </tr>
    <?php
      $ctr = 1;
      $desc_ctr = 1;
+     $tenant_id = 1;
      $amt_ctr = 1;
      $id_ctr = 1;
      $billing_start = 1;
@@ -229,34 +229,15 @@
         <input form="add_billings" type="date" name="billing_end{{ $billing_end++  }}" value="{{ Carbon\Carbon::parse($updated_billing_end)->endOfMonth()->format('Y-m-d') }}" required>
         @endif
     </td>
- 
+          <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
       
-          <input class="" type="hidden" form="add_billings" name="billing_desc{{ $desc_ctr++ }}" value="Rent" required readonly>
-      
-        {{-- <td>
-          @if($item->tenants_note === 'new' )
-            <input form="add_billings" type="text" name="details{{ $details_ctr++  }}" value="{{ Carbon\Carbon::parse($item->movein_date)->startOfMonth()->format('M d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('d Y') }} " >
-          @else
-            <input form="add_billings" type="text"  name="details{{ $details_ctr++  }}" value="{{ Carbon\Carbon::now()->startOfMonth()->format('M d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('d Y') }}" >
-          @endif
-        </td> --}}
+          <input class="" type="hidden" form="add_billings" name="billing_desc{{ $desc_ctr++ }}" value="Surcharge" required readonly>
+      <td>
    
-      <td>
-        <?php 
-              $prorated_rent =  Carbon\Carbon::parse($item->movein_at)->DiffInDays(Carbon\Carbon::now()->endOfMonth());
-              $prorated_monthly_rent =  ($item->rent/30) * $prorated_rent;
-        ?>
-          @if($item->tenants_note === 'new' )
-            <input form="add_billings" type="number" name="billing_amt{{ $amt_ctr++ }}" step="0.01"  value="{{ $prorated_monthly_rent }}" oninput="this.value = Math.abs(this.value)" required>
-          @else
-            <input form="add_billings" type="number" name="billing_amt{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->rent }}" oninput="this.value = Math.abs(this.value)" required>
-          @endif
+            <input form="add_billings" type="number" name="billing_amt{{ $amt_ctr++ }}" step="0.01"  value="0" oninput="this.value = Math.abs(this.value)" required>
+      
       </td>
-      <td>
-        @if($item->tenants_note === 'new' )
-          <span class="badge badge-primary">prorated</span>
-        @endif
-      </td>
+      
    </tr>
    @endforeach
   </table>
@@ -280,7 +261,7 @@
       </button>
       </div>
      <div class="modal-body">
-      <form id="periodCoveredForm" action="/property/{{ $property->property_id }}/bills/rent/{{ $updated_billing_start? Carbon\Carbon::parse($updated_billing_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_billing_end)->format('Y-m-d') }}/" method="POST">
+      <form id="periodCoveredForm" action="/property/{{ $property->property_id }}/bills/surcharge/{{ $updated_billing_start? Carbon\Carbon::parse($updated_billing_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_billing_end)->format('Y-m-d') }}/" method="POST">
         @csrf
       <div class="row">
         <div class="col">
