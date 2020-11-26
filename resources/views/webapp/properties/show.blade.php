@@ -307,7 +307,58 @@
           
            
           </div>
+          <div class="row">
           
+            <!-- Financial Line Chart -->
+            <div class="col-xl-6 col-lg-6">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">TOP AGENTS</h6>
+                  <div class="dropdown no-arrow">
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <table class="table">
+                    <?php $ctr=1;?>
+                   <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Referrals</th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                     @foreach ($top_agents as $item)
+                     <tr>
+                       <th>{{ $ctr++ }}</th>
+                       <td>{{ $item->name }}</td>
+                       <td>{{ $item->user_type }}</td>
+                       <td>{{ number_format($item->referrals) }}</td>
+                    </tr>
+                     @endforeach
+                   </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+              <!-- Illustrations -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">POINT OF CONTACT </h6>
+                </div>
+                <div class="card-body">
+                  {!! $point_of_contact->script() !!}
+                </div>
+              </div>
+          
+            </div>
+          
+           
+          </div>
           <div class="row">
             {{-- Moveout Line Chart --}}
             <div class="col-lg-6 mb-4">
@@ -654,11 +705,13 @@
   </div>
 
 @section('scripts')
+{!! $point_of_contact->script() !!}
 {!! $movein_rate->script() !!}
 {!! $renewed_chart->script() !!}
 {!! $moveout_rate->script() !!}
 {!! $expenses_rate->script() !!}
 {!! $reason_for_moving_out_chart->script() !!}
+
 
 <script>
   $(document).ready(function(){

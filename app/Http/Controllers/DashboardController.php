@@ -28,6 +28,17 @@ class DashboardController extends Controller
        
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
         
+         $top_agents = DB::table('contracts')
+        ->join('users', 'referrer_id_foreign', 'id')
+        ->join('users_properties_relations', 'id', 'user_id_foreign')
+        ->select('*', DB::raw('count(*) as referrals'))
+        ->where('user_type', '<>', 'tenant')
+        ->where('property_id_foreign', Session::get('property_id') )
+        ->groupBy('id')
+        ->orderBy('referrals', 'desc')
+        ->limit(5)
+        ->get();
+
         $active_concerns = DB::table('tenants')
         ->join('units', 'unit_id', 'unit_tenant_id')
         ->join('concerns', 'tenant_id', 'concern_tenant_id')
@@ -361,7 +372,92 @@ $expenses_rate->dataset
 // ->havingRaw('balance > 0')
 // ->get();
 
+$contracts = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->count();
 
+ $facebook = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','Facebook')
+->count();
+
+$flyers = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','Flyers')
+->count();
+
+$inhouse = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','In house')
+->count();
+
+$instagram = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','Instagram')
+->count();
+
+$website = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','Website')
+->count();
+
+$walkin = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','Walk in')
+->count();
+
+$wordofmouth = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->where('form_of_interaction','wordofmouth')
+->count();
+
+$point_of_contact = new DashboardChart;
+$point_of_contact->displaylegend(true);
+$point_of_contact->labels
+                            (
+                                [ 
+                                    'Facebook'.' ('.$facebook.')',
+                                    'Flyers'.' ('.$flyers.')', 
+                                    'In house'.' ('.$inhouse.')', 
+                                    'Instagram'.' ('.$instagram.')', 
+                                    'Website'.' ('.$website.')',
+                                    'Walk in'.' ('.$walkin.')', 
+                                    'Word of mouth'.' ('.$wordofmouth.')',
+                                ]
+                            );
+$point_of_contact->dataset
+                            ('', 'pie',
+                                [   
+                                    number_format(($contracts == 0 ? 1 : $facebook/$contracts) * 100,1),
+                                    number_format(($contracts == 0 ? 1 : $flyers/$contracts) * 100,1),
+                                    number_format(($contracts == 0 ? 1 : $inhouse/$contracts) * 100,1),
+                                    number_format(($contracts == 0 ? 1 : $instagram/$contracts) * 100,1),
+                                    number_format(($contracts== 0 ? 1 : $website/$contracts) * 100,1), 
+                                    number_format(($contracts== 0 ? 1 : $walkin/$contracts) * 100,1), 
+                                    number_format(($contracts == 0 ? 1 : $wordofmouth/$contracts) * 100,1),
+                                ]
+                            )
+->backgroundColor
+                    (
+                        [
+                            '#008000',
+                            '#FFF000', 
+                            '#FF0000',
+                            '#0E0601',
+                            '#DE7835',
+                            '#211979',
+                            '#211939',
+                        ]
+                    );
+                    
  $tenants_to_watch_out = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -493,16 +589,18 @@ $collections_for_the_day = DB::table('contracts')
 ->groupBy('payment_id')
 ->get();
 
+
+
 $property = Property::findOrFail(Session::get('property_id'));
 
     return view('webapp.properties.show',
     compact(
-    'units', 'units_occupied','units_vacant', 'units_reserved',
-    'tenants', 'pending_tenants', 'owners',
-    'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
-    'delinquent_accounts','tenants_to_watch_out',
-    'collections_for_the_day','active_concerns',
-    'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired'
+                'units', 'units_occupied','units_vacant', 'units_reserved',
+                'tenants', 'pending_tenants', 'owners',
+                'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
+                'delinquent_accounts','tenants_to_watch_out',
+                'collections_for_the_day','active_concerns',
+                'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact'
             )
     );
 
