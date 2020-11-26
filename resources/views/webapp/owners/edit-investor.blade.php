@@ -212,7 +212,7 @@
             <div class="row">
               <div class="col">
                 <small>Bank Name</small>
-                <input form="editInvestorForm" class="form-control" type="text" name="bank_name" >
+                <input form="editInvestorForm" class="form-control" type="text" name="bank_name" value="{{ $owner->bank_name }}">
             </div>
 
             <div class="col">
@@ -222,7 +222,7 @@
 
             <div class="col">
               <small>Account Number</small>
-              <input form="editInvestorForm" class="form-control" type="text" name="account_number" >
+              <input form="editInvestorForm" class="form-control" type="text" name="account_number" value="{{ $owner->bank_name }}">
             </div>
             </div>
           
