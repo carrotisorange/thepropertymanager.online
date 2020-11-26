@@ -11,9 +11,9 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="#hero">Home</a></li>
-          <li><a target="_blank" href="/blogs">Blogs</a></li>
+          <li><a target="_blank" href="http://bedspace.online/blog">Blogs</a></li>
           <li><a target="_blank" href="/listings">Listings</a></li>
-          <li><a target="_blank" href="/pricing">Payment</a></li>
+ 
         </ul>
       </nav>
       <!-- .nav-menu -->
@@ -147,7 +147,7 @@
                 </li>
 
                 <li>
-                  <a data-toggle="collapse" href="#accordion-list-5" class="collapsed"><span>05</span>Mass billing <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                  <a data-toggle="collapse" href="#accordion-list-5" class="collapsed"><span>05</span>Bulk billing <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
                   <div id="accordion-list-5" class="collapse" data-parent=".accordion-list">
                     <p>
                           bill rent, water, lights, and other charges then email to tenant or print for distribution.
@@ -281,7 +281,7 @@
             <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
               <div class="icon-box">
                 <div class="icon"><i class="bx bx-file"></i></div>
-                <h4><a href="">Mass billing</a></h4>
+                <h4><a href="">Bulk billing</a></h4>
                 <p>adds, sends recurring bills to tenants in one click, and exports ready to print SOA.</p>
               </div>
             </div>
@@ -465,9 +465,9 @@
                 <li><i class="bx bx-check"></i> 20 rooms</li>
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
-                <li><i class="bx bx-check"></i> Mass billing for rent, utilities, and etc.</li>
+                <li><i class="bx bx-check"></i> Bulk billing for rent, utilities, and etc.</li>
                 <li><i class="bx bx-check"></i> Record payments</li>
-                <li><i class="bx bx-check"></i> Concern and violation tracker</li>
+                <li><i class="bx bx-check"></i> Concern tracker</li>
                 <li><i class="bx bx-check"></i> Job order</li>
                 <li class="na"><i class="bx bx-x"></i> <span>Marketing services</span></li>
                 <li class="na"><i class="bx bx-x"></i> <span>Owner portal</span></li>
@@ -490,9 +490,9 @@
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
           
-                <li><i class="bx bx-check"></i> Mass billing for rent, utilities, and etc.</li>
+                <li><i class="bx bx-check"></i> Bulk billing for rent, utilities, and etc.</li>
                 <li><i class="bx bx-check"></i> Record payments</li>
-                <li><i class="bx bx-check"></i> Concern and violation tracker</li>
+                <li><i class="bx bx-check"></i> Concern tracker</li>
                 <li><i class="bx bx-check"></i> Job order</li>
                 <li><i class="bx bx-check"></i> <span>Marketing services</span></li>
                 <li><i class="bx bx-check"></i> <span>Owner portal</span></li>
@@ -515,9 +515,9 @@
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
           
-                <li><i class="bx bx-check"></i> Mass billing for rent, utilities, and etc.</li>
+                <li><i class="bx bx-check"></i> Bulk billing for rent, utilities, and etc.</li>
                 <li><i class="bx bx-check"></i> Record payments</li>
-                <li><i class="bx bx-check"></i> Concern and violation tracker</li>
+                <li><i class="bx bx-check"></i> Concern tracker</li>
                 <li><i class="bx bx-check"></i> Job order</li>
                 <li><i class="bx bx-check"></i> <span>Marketing services</span></li>
                 <li><i class="bx bx-check"></i> <span>Owner portal</span></li>
@@ -545,9 +545,9 @@
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
                
-                <li><i class="bx bx-check"></i> Mass billing for rent, utilities, and etc.</li>
+                <li><i class="bx bx-check"></i> Bulk billing for rent, utilities, and etc.</li>
                 <li><i class="bx bx-check"></i> Record payments</li>
-              <li><i class="bx bx-check"></i> Concern and violation tracker</li>
+              <li><i class="bx bx-check"></i> Concern tracker</li>
               <li><i class="bx bx-check"></i> Job order</li>
               <li><i class="bx bx-check"></i> <span>Marketing services</span></li>
               <li><i class="bx bx-check"></i> <span>Owner portal</span></li>

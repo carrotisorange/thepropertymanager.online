@@ -28,38 +28,16 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('/arsha/assets/css/style.css') }}" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Arsha - v2.2.0
-  * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-
-  {{-- <style>
-    .center-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-}
-
-  </style> --}}
   
 </head>
 
-<body>
-<!-- Load Facebook SDK for JavaScript -->
-@include('templates.webapp-new.chat-messenger')
-  @section('nav-bar')
-  @show
+
+
+  @yield('nav-bar')
   <!-- ======= Header ======= -->
 
   <!-- End Header -->
-    @section('front-screen') 
-    @show
+    @yield('front-screen') 
   <!-- ======= Hero Section ======= -->
 
   <main id="main">
@@ -74,7 +52,8 @@
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>
 
-  
+      <!-- Load Facebook SDK for JavaScript -->
+      @include('templates.webapp-new.chat-messenger')
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('/arsha/assets/vendor/jquery/jquery.min.js') }}"></script>
@@ -89,6 +68,7 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('/arsha/assets/js/main.js') }}"></script>
+  <body>
 
 </body>
 

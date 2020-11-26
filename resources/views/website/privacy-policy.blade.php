@@ -1,116 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('templates.website.main')
 
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  
-    <title>The Property Manager | Privacy Policy</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-  
-    <!-- Favicons -->
-    <link href="{{ asset('/arsha/assets/img/favicon.ico') }}" rel="icon">
-    <link href="{{ asset('/arsha/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
-  
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  
-    <!-- Vendor CSS Files -->
-    <link href="{{ asset('/arsha/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/arsha/assets/vendor/icofont/icofont.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/arsha/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/arsha/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('/arsha/assets/vendor/venobox/venobox.css') }}" rel="stylesheet">
-    <link href="{{ asset('/arsha/assets/vendor/owl.carousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/arsha/assets/vendor/aos/aos.css') }}" rel="stylesheet">
-  
-    <!-- Template Main CSS File -->
-    <link href="{{ asset('/arsha/assets/css/style.css') }}" rel="stylesheet">
-  
-    <!-- =======================================================
-    * Template Name: Arsha - v2.2.0
-    * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-    * Author: BootstrapMade.com
-    * License: https://bootstrapmade.com/license/
-    ======================================================== -->
-  </head>
+@section('title', 'Privacy Policy | The Property Manager')
 
-<body>
+@section('content-title')
+    <h1 class="logo mr-auto"><a href="/privacy-policy">Privacy Policy</a></h1>
+@endsection
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top header-inner-pages">
-      <div class="container d-flex align-items-center">
-  
-        <a href="/" title="The Property Manager" class="logo mr-auto"><img src="{{ asset('/arsha/assets/img/logo.png') }}" alt="" class="img-fluid"></a> 
-        <!-- Uncomment below if you prefer to use an image logo -->
-         {{-- <a href="index.html" class="logo mr-auto"><img src="{{ asset('/arsha/assets/img/logo.png') }}" alt="" class="img-fluid"></a> --}}
-  
-         <nav class="nav-menu d-none d-lg-block">
-          <ul>
-            <li class=""><a href="#hero">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Features</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-           
-            <li class=""><a href="/resources">Resources</a></li>
-            {{-- <li class="drop-down"><a href="">Resources</a>
-              <ul>
-                <li><a href="#">Drop Down 1</a></li>
-                <li class="drop-down"><a href="#">Deep Drop Down</a>
-                  <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                    <li><a href="#">Deep Drop Down 2</a></li>
-                    <li><a href="#">Deep Drop Down 3</a></li>
-                    <li><a href="#">Deep Drop Down 4</a></li>
-                    <li><a href="#">Deep Drop Down 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Drop Down 2</a></li>
-                <li><a href="#">Drop Down 3</a></li>
-                <li><a href="#">Drop Down 4</a></li>
-              </ul>
-            </li> --}}
-            <li><a  href='#contact'>Contact</a></li>
-            {{-- <li><a href="/properties" target="_blank">Tenant Portal</a></li> --}}
-            <li><a href="/login" target="_blank">Owner Portal</a></li>
-            {{-- <li class="drop-down"><a href="">Login</a>
-              <ul>
-                <li><a href="/login" target="_blank">System User</a></li>
-                <li><a href="/properties" target="_blank">Tenant Portal</a></li>
-                <li><a href="/login" target="_blank">Owner Portal</a></li>
-               
-              </ul>
-            </li> --}}
-  
-          </ul>
-        </nav><!-- .nav-menu -->
-  
-        {{-- <a href="#about" class="get-started-btn scrollto">Get Started</a> --}}
-  
-        <a href="/login"  target="_blank" class="get-started-btn scrollto">Login</a>
-  
-      </div>
-    </header><!-- End Header -->
-
-  <main id="main">
-
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="/">Home</a></li>
-          <li>Privacy Policy</li>
-        </ol>
-        <h2>Privacy Policy</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-
-    <section class="inner-page">
-        <div class="container text-justify">
-         
+@section('content')
+<section class="inner-page">
+  <div class="container text-justify">
+   
 <p> This privacy policy (&quot;Policy&quot;) describes how the personally identifiable information (&quot;Personal Information&quot;) you may provide on the <a target="_blank" rel="nofollow" href="http://www.thepropertymanager.online">thepropertymanager.online</a> website (&quot;Website&quot; or &quot;Service&quot;) and any of its related products and services (collectively, &quot;Services&quot;) is collected, protected and used. It also describes the choices available to you regarding our use of your Personal Information and how you can access and update this information. This Policy is a legally binding agreement between you (&quot;User&quot;, &quot;you&quot; or &quot;your&quot;) and The PMO Co. (&quot;The PMO Co.&quot;, &quot;we&quot;, &quot;us&quot; or &quot;our&quot;). By accessing and using the Website and Services, you acknowledge that you have read, understood, and agree to be bound by the terms of this Agreement. This Policy does not apply to the practices of companies that we do not own or control, or to individuals that we do not employ or manage.</p>
 <h2>Automatic collection of information</h2>
 <p>When you open the Website, our servers automatically record information that your browser sends. This data may include information such as your device's IP address, browser type and version, operating system type and version, language preferences or the webpage you were visiting before you came to the Website and Services, pages of the Website and Services that you visit, the time spent on those pages, information you search for on the Website, access times and dates, and other statistics.</p>
@@ -181,95 +80,8 @@
 <h2>Contacting us</h2>
 <p>If you would like to contact us to understand more about this Policy or wish to contact us concerning any matter relating to individual rights and your Personal Information, you may send an email to &#99;us&#116;o&#109;&#101;&#114;care&#64;th&#101;pr&#111;&#112;&#101;rt&#121;mana&#103;&#101;r.onl&#105;&#110;&#101;</p>
 <p>This document was last updated on August 25, 2020</p>
-          </div>
-    </section>
-
-  </main><!-- End #main -->
-
-   <!-- ======= Footer ======= -->
-   <footer id="footer">
-
-    <div class="footer-top">
-      <div class="container">
-        <div id="contact" class="row">
-
-          <div class="col-lg-4 col-md-6 footer-contact">
-            <h3>The PMO Co.</h3>
-            <p>
-            {{--   Baguio City <br>
-              Philippines, 2600<br>
-            <br>
-              <strong>Phone:</strong> 09752826318<br> --}}
-              <strong>Email:</strong> customercare@thepropertymanager.online<br>
-            </p>
-          </div>
-
-           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#hero">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#about">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#services">Features</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/terms-of-service">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/privacy-policy">Privacy policy</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/acceptable-use-policy">Acceptable Use Policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Features</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Room Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Billing & Collection</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Expense Tracker</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Online Payment</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Job Order</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Landlord/Tenant Portal</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Concierge Service</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Get in touch with us:</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="https://www.facebook.com/onlinepropertymanager"  target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              {{-- <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a> --}}
-  
-            </div>
-          </div> 
-
-        </div>
-      </div>
     </div>
+</section>
 
-    <div class="container footer-bottom clearfix">
-      <div class="copyright">
-        &copy; Copyright <strong><span>The PMO Co</span></strong>. All Rights Reserved
-      </div>
-      
-    </div>
-  </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="{{ asset('/arsha/assets/vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/jquery.easing/jquery.easing.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/php-email-form/validate.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/waypoints/jquery.waypoints.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/venobox/venobox.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/owl.carousel/owl.carousel.min.js') }}"></script>
-  <script src="{{ asset('/arsha/assets/vendor/aos/aos.js') }}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{{ asset('/arsha/assets/js/main.js') }}"></script>
-
-</body>
-
-</html>
+@endsection
