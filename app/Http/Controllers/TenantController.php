@@ -586,15 +586,18 @@ class TenantController extends Controller
     
             $property = Property::findOrFail($property_id);
 
-             $concerns = DB::table('tenants')
-           ->join('units', 'unit_id', 'unit_tenant_id')
-           ->join('concerns', 'tenant_id', 'concern_tenant_id')
-           ->join('users', 'concern_user_id', 'id')
-           ->where('tenant_id', $tenant_id)
-           ->orderBy('date_reported', 'desc')
-           ->orderBy('concern_urgency', 'desc')
-           ->orderBy('concern_status', 'desc')
-           ->get();
+
+            $concerns = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->join('users', 'concern_user_id', 'id')
+            ->where('tenant_id', $tenant_id)
+            ->orderBy('date_reported', 'desc')
+            ->orderBy('concern_urgency', 'desc')
+            ->orderBy('concern_status', 'desc')
+            ->get();
+
 
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
@@ -607,33 +610,6 @@ class TenantController extends Controller
         ->groupBy(function($item) {
             return \Carbon\Carbon::parse($item->payment_created)->timestamp;
         });
-
-        //  $payments = DB::table('payments')
-        // ->join('billings', 'payment_tenant_id', 'billing_tenant_id')
-        // ->where('payment_tenant_id', $tenant_id)
-        // ->orderBy('payment_created', 'desc')
-        // ->orderBy('ar_no', 'desc')
-        // ->groupBy('ar_no')
-        // ->get()
-        // ->groupBy(function($item) {
-        //     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-        // });
-
-            //  $payments = DB::table('units')
-            // ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
-            // ->leftJoin('billings', 'tenant_id', 'billing_tenant_id')
-            // ->leftJoin('payments', 'payment_billing_id', 'billing_id')
-            // ->where('tenant_id', $tenant_id)
-            // ->orderBy('payment_created', 'desc')
-            // ->orderBy('ar_no', 'desc')
-            // ->groupBy('payment_id')
-            // ->get();
-        
-
-            // $collections_count = DB::table('payments')
-           
-            // ->where('payment_tenant_id', $tenant_id)
-            // ->count();
 
               //get the number of last added bills
        
@@ -667,6 +643,112 @@ class TenantController extends Controller
               ->get();
             
                 return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
+        }else{
+                return view('website.unregistered');
+        }
+    }
+
+
+    public function show_occupant($property_id, $tenant_id)
+    {
+
+        if(Auth::user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'treasury'){
+           
+           $tenant = Tenant::findOrFail($tenant_id);
+
+           $units = Property::findOrFail($property_id)
+           ->units()->whereIn('status',['vacant'])
+           ->get()->groupBy(function($item) {
+                return $item->floor_no;
+            });;
+    
+            $buildings = Property::findOrFail($property_id)
+            ->units()
+            ->whereIn('status',['vacant'])
+            ->select('building', 'status', DB::raw('count(*) as count'))
+            ->groupBy('building')
+            ->orderBy('building', 'asc')
+            ->get('building', 'status','count');
+
+            $contracts = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->select('*', 'contracts.status as contract_status')
+            ->where('tenant_id', $tenant_id)
+            ->get();
+
+            $guardians = Tenant::findOrFail($tenant_id)->guardians;
+
+
+              $users = DB::table('users_properties_relations')
+             ->join('users','user_id_foreign','id')
+            ->where('property_id_foreign', $property_id)
+            ->where('user_type','<>' ,'tenant')
+            ->get();
+    
+            $property = Property::findOrFail($property_id);
+
+
+            $concerns = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->join('users', 'concern_user_id', 'id')
+            ->where('tenant_id', $tenant_id)
+            ->orderBy('date_reported', 'desc')
+            ->orderBy('concern_urgency', 'desc')
+            ->orderBy('concern_status', 'desc')
+            ->get();
+
+
+        //    $payments = Tenant::findOrFail($tenant_id)->payments;
+
+
+        $payments = Billing::leftJoin('payments', 'billings.billing_id', 'payments.payment_billing_id')
+        ->where('billing_tenant_id', $tenant_id)
+        ->groupBy('payment_id')
+        ->orderBy('ar_no', 'desc')
+       ->get()
+        ->groupBy(function($item) {
+            return \Carbon\Carbon::parse($item->payment_created)->timestamp;
+        });
+
+              //get the number of last added bills
+       
+              $current_bill_no = DB::table('contracts')
+              ->join('units', 'unit_id_foreign', 'unit_id')
+              ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+              ->join('billings', 'tenant_id', 'billing_tenant_id')
+              ->where('property_id_foreign',  Session::get('property_id'))
+              ->max('billing_no') + 1;
+
+            $balance = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_billing_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('billing_tenant_id', $tenant_id)
+            ->groupBy('billing_id')
+            ->orderBy('billing_no', 'desc')
+            ->havingRaw('balance > 0')
+            ->get();
+
+
+            $bills = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_billing_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('billing_tenant_id', $tenant_id)
+            ->groupBy('billing_id')
+            ->orderBy('billing_no', 'desc')
+            // ->havingRaw('balance > 0')
+            ->get();
+
+               $access = DB::table('users')
+              ->join('tenants', 'id', 'user_id_foreign')
+              ->where('tenant_id', $tenant_id)
+              ->get();
+            
+               if(Session::get('property_type') === 'Condominium Corporation'){
+                return view('webapp.tenants.show-occupant', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
+               }else{
+                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
+               }
         }else{
                 return view('website.unregistered');
         }

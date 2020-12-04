@@ -168,7 +168,7 @@
           <a class="nav-item nav-link active" id="nav-unit-tab" data-toggle="tab" href="#unit" role="tab" aria-controls="nav-unit" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Unit</a>
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#occupants" role="tab" aria-controls="nav-occupants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Occupants</a>
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
-          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter">{{ $bills->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter"></span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
         </div>
       </nav>
@@ -255,7 +255,7 @@
             
             </tr>
           </thead>
-            @foreach ($bills as $item)
+            {{-- @foreach ($bills as $item)
             <tr>
               <th>{{ $ctr++ }}</th>
               <td>
@@ -277,7 +277,7 @@
             <tr>
               <th>Total</th>
               <th class="text-right" colspan="7"> {{ number_format($bills->sum('billing_amt'),2) }}</th>
-            </tr>
+            </tr> --}}
             
             </table>
         
@@ -302,12 +302,21 @@
                    <tr>
                      <th>#</th>
                      <th>Occupant</th>
+                     <th>Mobile</th>
+                     <th>Email</th>
+                     <th>Movein at</th>
+                     <th></th>
                    </tr>
                  </thead>
                  <tbody>
-                   <tr>
+                 @foreach ($occupants as $item)
                      <th>{{ $ctr++ }}</th>
-                   </tr>
+                     <td>{{ $item->first_name.' '.$item->middle_name.' '.$item->last_name }}</td>
+                     <td>{{ $item->contact_no }}</td>
+                     <td>{{ $item->email_address }}</td>
+                     <td>{{ $item->movein_at }}</td>
+                     <th><a href="/property/{{ Session::get('property_id') }}/occupant/{{ $item->tenant_id }}/">View</a></th>
+                 @endforeach
                  </tbody>
                </table>
              </div>

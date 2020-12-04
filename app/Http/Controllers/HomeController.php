@@ -90,6 +90,13 @@ class HomeController extends Controller
             ->where('unit_id', $unit_id)
             ->get();
 
+            $occupants = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->select('*', 'contracts.rent as contract_rent')
+            ->where('unit_id', $unit_id)
+            ->get();
+
            $tenant_active = DB::table('contracts')
            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
            ->join('units', 'unit_id_foreign', 'unit_id')
@@ -137,7 +144,7 @@ class HomeController extends Controller
             $property = Property::findOrFail(Session::get('property_id'));
 
             if($property->type === 'Condominium Corporation'){
-                return view('webapp.home.show-unit',compact('reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
+                return view('webapp.home.show-unit',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }else{
                 return view('webapp.home.show',compact('reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }

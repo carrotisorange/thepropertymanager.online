@@ -403,15 +403,13 @@ class BillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($property_id, $unit_id, $tenant_id)
+    public function edit($property_id, $tenant_id)
     {
 
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
             
             //get the tenant information
             $tenant = Tenant::findOrFail($tenant_id);
-
-            $room = Unit::findOrFail($unit_id);
 
             $property = Property::findOrFail($property_id);
     
@@ -432,7 +430,7 @@ class BillController extends Controller
             ->havingRaw('balance > 0')
             ->get();
 
-            return view('webapp.bills.edit-billings', compact('current_bill_no','tenant', 'room', 'balance', 'property'));  
+            return view('webapp.bills.edit-billings', compact('current_bill_no','tenant', 'balance', 'property'));  
         }else{
             return view('website.unregistered');
         }
