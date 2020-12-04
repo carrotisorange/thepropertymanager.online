@@ -8,6 +8,7 @@ use App\Unit, App\Billing;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Property;
+use Session;
 
 class UnitController extends Controller
 {
@@ -112,22 +113,25 @@ class UnitController extends Controller
             ->where('unit_id_foreign', $unit_id)
             ->get();  
     
-            $tenant_active = DB::table('tenants')
-            ->join('units', 'unit_id', 'unit_tenant_id')
-            ->where('unit_tenant_id', $unit_id)
-            ->where('tenant_status', 'active')
+            $tenant_active = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->where('unit_id', $unit_id)
+            ->where('status', 'active')
             ->get();
     
-            $tenant_inactive = DB::table('tenants')
-            ->join('units', 'unit_id', 'unit_tenant_id')
-            ->where('unit_tenant_id', $unit_id)
-            ->where('tenant_status', 'inactive')
+            $tenant_inactive =  DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->where('unit_id', $unit_id)
+            ->where('status', 'inactive')
             ->get();
 
-            $tenant_reservations = DB::table('tenants')
-            ->join('units', 'unit_id', 'unit_tenant_id')
-            ->where('unit_tenant_id', $unit_id)
-            ->where('tenant_status', 'pending')
+            $tenant_reservations = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->where('unit_id', $unit_id)
+            ->where('status', 'pending')
             ->get();
             
             $bills = Billing::leftJoin('payments', 'billings.billing_no', '=', 'payments.payment_billing_no')
@@ -182,8 +186,6 @@ class UnitController extends Controller
     // }
 
     public function add_multiple_rooms(Request $request){
-
-      
         if(!$request->building){
             $building = 'Building-1';
         }else{
@@ -198,21 +200,19 @@ class UnitController extends Controller
              'building' => $building,
              'max_occupancy' => $request->max_occupancy,
              'monthly_rent' => $request->monthly_rent,
-             'status' => 'vacant',
-           'unit_property' => '',
              'type_of_units' => $request->type_of_units,
              'created_at'=> Carbon::now(),
-             'property_id_foreign' => $request->property_id,
+             'property_id_foreign' => Session::get('property_id'),
          ]);
         }
 
         $units = DB::table('units')
-        ->where('property_id_foreign', $request->property_id)
+        ->where('property_id_foreign', Session::get('property_id'))
         ->where('status','<>','deleted')
         ->count();
 
         $occupied_units = DB::table('units')
-        ->where('property_id_foreign', $request->property_id)
+        ->where('property_id_foreign', Session::get('property_id'))
         ->where('status', 'occupied')
         ->count();
 
@@ -220,13 +220,19 @@ class UnitController extends Controller
             ->insert(
                         [
                             'occupancy_rate' => ($occupied_units/$units) * 100,
-                            'property_id_foreign' => $request->property_id,
+                            'property_id_foreign' => Session::get('property_id'),
                            'occupancy_date' => Carbon::now(),'created_at' => Carbon::now(),
                         ]
                     );
-        
+
+        $property = Property::findOrFail(Session::get('property_id'));
  
-         return back()->with('success', $request->no_of_rooms.' rooms have been created!');
+        if($property->type === 'Condominium Corporation'){
+            return back()->with('success', $request->no_of_rooms.' units have been added!');
+        }else{
+            return back()->with('success', $request->no_of_rooms.' rooms have been added!');
+        }
+        
      }
 
      public function show_edit_multiple_rooms($property_id){

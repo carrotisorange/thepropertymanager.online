@@ -89,6 +89,10 @@ Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show'
 Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}', 'TenantController@update')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
+
+
+Route::get('/property/{property_id}/home/{unit_id}/occupant', 'TenantController@create_occupant')->middleware(['auth', 'verified']);
+
 Route::get('/property/{property_id}/tenants/search', 'TenantController@index')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/extend', 'TenantController@extend')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/request', 'TenantController@request')->middleware(['auth', 'verified']);
@@ -465,6 +469,10 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/send', function($unit_id,
 //routes for tenants
 Route::get('/units/{unit_id}/tenants/{tenant_id}', 'TenantController@show')->name('show')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
+
+Route::post('/property/{property_id}/home/{unit_id}/occupant', 'TenantController@store_occupant')->middleware(['auth', 'verified']);
+
+
 Route::get('/units/{unit_id}/tenants/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
 Route::put('/units/{unit_id}/tenants/{tenant_id}/', 'TenantController@update')->middleware(['auth', 'verified']);
 

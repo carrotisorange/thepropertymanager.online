@@ -205,6 +205,37 @@ class TenantController extends Controller
         return view('webapp.tenants.create', compact('unit', 'property', 'current_bill_no', 'users', 'units'));
     }
 
+
+    public function create_occupant($property_id, $unit_id)
+    {   
+        $unit = Unit::findOrFail($unit_id);
+
+        $property = Property::findOrFail($property_id);
+
+        $users = DB::table('users_properties_relations')
+        ->join('properties', 'property_id_foreign', 'property_id')
+        ->join('users', 'user_id_foreign', 'id')
+        ->select('*', 'properties.name as property')
+        ->where('lower_access_user_id', Auth::user()->id)
+        ->orWhere('id', Auth::user()->id)  
+        ->orderBy('users.name')
+        ->get();
+
+         $units = Property::findOrFail($property_id)
+        ->units
+        ->whereIn('status',['vacant', 'reserved']);
+
+
+        $current_bill_no = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('billings', 'tenant_id', 'billing_tenant_id')
+        ->where('property_id_foreign',  Session::get('property_id'))
+        ->max('billing_no') + 1;
+
+        return view('webapp.occupants.create', compact('unit', 'property', 'current_bill_no', 'users', 'units'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -236,8 +267,153 @@ class TenantController extends Controller
 
         $tenant_id = DB::table('tenants')->insertGetId(
             [
-                //deprecated
-                'unit_tenant_id' => 1,
+                'tenant_unique_id' => $tenant_unique_id,
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name'=> $request->last_name,
+                'birthdate'=>$request->birthdate,
+                'gender' => $request->gender,
+                'civil_status'=> $request->civil_status,
+                'id_number' => $request->id_number,
+                //contact number
+                'contact_no' => $request->contact_no,
+                'email_address' => $request->email_address,
+                'created_at' => $request->movein_at
+            ]
+            );
+
+            DB::table('contracts')->insert(
+                    [
+                        'contract_id' => Uuid::generate()->string,
+                        'unit_id_foreign' => $unit_id,
+                        'tenant_id_foreign' => $tenant_id,
+                        'referrer_id_foreign' => $request->referrer_id,
+                        'form_of_interaction' => $request->form_of_interaction,
+                        'rent' => $request->rent,
+                        'movein_at' => $request->movein_at,
+                        'moveout_at' => $request->moveout_at,
+                        'discount' => $request->discount,
+                        'term' => $request->term,
+                        'number_of_months' => $request->number_of_months,
+                        'created_at' => $request->movein_at,
+                    ]
+                );
+
+            
+            DB::table('units')
+            ->where('unit_id', $unit_id)
+            ->update(
+                [
+                    'status' => 'reserved'
+                ]
+            );
+
+            $units = DB::table('units')
+            ->where('property_id_foreign', $property_id)
+            ->where('status','<>','deleted')
+            ->count();
+
+            $occupied_units = DB::table('units')
+            ->where('property_id_foreign', $property_id)
+            ->where('status', 'occupied')
+            ->count();
+
+        DB::table('occupancy_rate')
+            ->insert(
+                        [
+                            'occupancy_rate' => ($occupied_units/$units) * 100,
+                            'property_id_foreign' => $request->property_id,
+                           'occupancy_date' => Carbon::now(),
+                           'created_at' => Carbon::now(),
+                        ]
+                    );
+
+            
+                    $no_of_bills = $request->no_of_items;
+
+                    $current_bill_no = DB::table('contracts')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->join('billings', 'tenant_id', 'billing_tenant_id')
+                    ->where('property_id_foreign', Session::get('property_id'))
+                    ->max('billing_no') + 1;
+            
+                    for ($i=1; $i < $no_of_bills; $i++) { 
+                        $bill = new Billing();
+                        $bill->billing_tenant_id = $tenant_id;
+                        $bill->billing_no = $current_bill_no++;
+                        $bill->billing_date = $request->movein_at;
+                        $bill->billing_desc = $request->input('billing_desc'.$i);
+                        $bill->billing_start = $request->movein_at;
+                        $bill->billing_end = $request->moveout_at;
+                        $bill->billing_amt = $request->input('billing_amt'.$i);
+                        $bill->save();
+                    }
+
+        $user_id =  DB::table('users')->insertGetId([
+            'name' => $request->first_name.' '.$request->last_name,
+            'email' => $request->email_address,
+            'user_type' => 'tenant',
+            'property' => '',
+            'property_type' => '',
+            'property_ownership' => '',
+            'password' => Hash::make($request->contact_no),
+            'created_at' => $request->movein_at,
+            'account_type' => '',
+            'email_verified_at' => $request->movein_at,
+            'trial_ends_at' => '',
+        ]);
+
+        DB::table('tenants')
+        ->where('tenant_id', $tenant_id)
+        ->update([
+            'user_id_foreign' => $user_id,
+        ]);
+
+        DB::table('users_properties_relations')
+        ->insert([
+            'property_id_foreign' => $property_id,
+            'user_id_foreign' => $user_id,
+        ]);
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'success';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as pending!';
+        $notification->save();
+        
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'tenant has been added!');
+       
+
+       
+    }
+
+    public function store_occupant(Request $request, $property_id, $unit_id )
+    {
+        $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+    
+            'birthdate' => [],
+            'gender' => [],
+    
+            'civil_status' => [],
+            'id_number' => [],
+        
+            'email_address' => ['required', 'string', 'email', 'max:255', 'unique:tenants'],
+            'contact_no' => ['required', 'unique:tenants'],
+        ]);
+
+        $tenant_unique_id = Str::random(8);
+
+        $tenant_id = DB::table('tenants')->insertGetId(
+            [
                 'tenant_unique_id' => $tenant_unique_id,
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,

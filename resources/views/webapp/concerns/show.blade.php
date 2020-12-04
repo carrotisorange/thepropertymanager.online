@@ -65,12 +65,7 @@ font-family: FontAwesome;
               </a>
             </li>
             @endif
-            <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/calendar">
-                <i class="fas fa-calendar-alt text-red"></i>
-                <span class="nav-link-text">Calendar</span>
-              </a>
-            </li>
+           
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
             <li class="nav-item">
               <a class="nav-link" href="/property/{{$property->property_id }}/tenants">

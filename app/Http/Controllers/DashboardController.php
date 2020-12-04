@@ -27,6 +27,8 @@ class DashboardController extends Controller
         Session::put('property_id', $request->property_id);
        
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
         
          $top_agents = DB::table('contracts')
         ->join('users', 'referrer_id_foreign', 'id')
@@ -39,12 +41,12 @@ class DashboardController extends Controller
         ->limit(5)
         ->get();
 
-        $active_concerns = DB::table('tenants')
-        ->join('units', 'unit_id', 'unit_tenant_id')
-        ->join('concerns', 'tenant_id', 'concern_tenant_id')
-        ->where('concern_status', 'active')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->get();
+        // $active_concerns = DB::table('tenants')
+        // ->join('units', 'unit_id', 'unit_tenant_id')
+        // ->join('concerns', 'tenant_id', 'concern_tenant_id')
+        // ->where('concern_status', 'active')
+        // ->where('property_id_foreign', Session::get('property_id'))
+        // ->get();
 
 $units = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
 
@@ -64,7 +66,7 @@ $units = Property::findOrFail(Session::get('property_id'))->units->where('status
 ->where('status', '<>', 'deleted')
 ->count();
 
-$increase_in_room_acquired = number_format(($no_of_rooms_previous_month == 0 ? 1 : $no_of_rooms_current_month/$no_of_rooms_previous_month ) * 100 ,2);
+$increase_in_room_acquired = number_format($no_of_rooms_previous_month == 0 ? 0 : (($no_of_rooms_current_month-$no_of_rooms_previous_month)/$no_of_rooms_previous_month ) * 100 ,1);
 
  $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
 
@@ -230,7 +232,7 @@ $collection_rate_5 = DB::table('contracts')
 
 ->sum('amt_paid');
 
-$increase_from_last_month = number_format(($collection_rate_1 == 0 ? 1 : $collection_rate_2/$collection_rate_1 ) * 100 ,2);
+ $increase_from_last_month = number_format(($collection_rate_2 == 0 ? 0 : ($collection_rate_1-$collection_rate_2)/$collection_rate_2 ) * 100 ,1);
 
 $expenses_1 = DB::table('payable_request')
 ->where('property_id_foreign', Session::get('property_id'))
@@ -599,7 +601,7 @@ $property = Property::findOrFail(Session::get('property_id'));
                 'tenants', 'pending_tenants', 'owners',
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
-                'collections_for_the_day','active_concerns',
+                'collections_for_the_day',
                 'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact'
             )
     );

@@ -31,12 +31,7 @@
               </a>
             </li>
             @endif
-            <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/calendar">
-                <i class="fas fa-calendar-alt text-red"></i>
-                <span class="nav-link-text">Calendar</span>
-              </a>
-            </li>
+           
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
             <li class="nav-item">
               <a class="nav-link" href="/property/{{$property->property_id }}/tenants">
@@ -173,7 +168,7 @@
           <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="nav-room" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Room</a>
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants</a>
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
-          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter">{{ $bills->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter"></span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
         </div>
       </nav>
@@ -207,7 +202,7 @@
              
                     <td>
                       @if($home->floor_no <= 0)
-                      {{ $numberFormatter->format($home->floor_no) }} basement
+                      {{ $numberFormatter->format($home->floor_no * -1) }} basement
                       @else
                       {{ $numberFormatter->format($home->floor_no) }} floor
                       @endif
@@ -221,7 +216,7 @@
              
                
                <tr>
-                <td>Max Occupancy</td>
+                <td>Occupancy</td>
                 <td>{{ $home->max_occupancy }} pax</td>
               </tr>
               <tr>
@@ -269,30 +264,7 @@
               <th class="text-right">Amount</th>
             
             </tr>
-          </thead>
-            @foreach ($bills as $item)
-            <tr>
-              <th>{{ $ctr++ }}</th>
-              <td>
-                {{Carbon\Carbon::parse($item->billing_date)->format('M d Y')}}
-              </td>   
-                <td>{{ $item->billing_no }}</td>
-                <td> <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
-                <td>{{ $item->billing_desc }}</td>
-                <td colspan="2">
-                  {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                  {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
-                </td>
-                <td class="text-right"> {{ number_format($item->billing_amt,2) }}</td>
-            
-  
-            </tr>
-          
-            @endforeach
-            <tr>
-              <th>Total</th>
-              <th class="text-right" colspan="7"> {{ number_format($bills->sum('billing_amt'),2) }}</th>
-            </tr>
+     
             
             </table>
         
@@ -604,7 +576,7 @@
             </div>
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
             <div class="form-group">
-              <small>Max Occupancy</small>
+              <small>Occupancy</small>
               <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->max_occupancy }}" name="max_occupancy" class="form-control"> 
             </div>
             <div class="form-group">

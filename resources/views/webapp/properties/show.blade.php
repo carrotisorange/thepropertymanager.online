@@ -31,12 +31,7 @@
               </a>
             </li>
             @endif
-            <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/calendar">
-                <i class="fas fa-calendar-alt text-red"></i>
-                <span class="nav-link-text">Calendar</span>
-              </a>
-            </li>
+           
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
             <li class="nav-item">
               <a class="nav-link" href="/property/{{$property->property_id }}/tenants">
@@ -179,9 +174,13 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
+                    @if($increase_in_room_acquired > 0)
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $increase_in_room_acquired }}%</span>
+                    @else
+                    <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i> {{ $increase_in_room_acquired }}%</span>
+                    @endif
                     <span class="text-nowrap">Since last month</span>
-                  </p>
+                    </p>
                 </div>
               </div>
             </div>
@@ -201,7 +200,7 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-warning mr-2">  </span>
+                    <span class="text-warning mr-2"> | </span>
                     <span class="text-nowrap"></span>
                   </p>
                 </div>
@@ -245,9 +244,13 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
+                    @if($increase_in_room_acquired > 0)
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $increase_from_last_month }}%</span>
+                    @else
+                    <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i> {{ $increase_from_last_month }}%</span>
+                    @endif
                     <span class="text-nowrap">Since last month</span>
-                  </p>
+                    </p>
                 </div>
               </div>
             </div>
@@ -590,93 +593,7 @@
           </div>
           </div>
           </div>
-          
-          <div class="row" id="active-concerns">
-          <div class="col-md-12">
-              <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">ACTIVE CONCERNS</h6>            
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive text-nowrap">
-          
-          <table class="table">
-           <thead>
-             <?php $ctr=1;?>
-             <tr>
-                    <th>#</th>
-                    <th>Reported</th>
-                    <th>Tenant</th>
-                    <th>Room</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Urgency</th>
-                    <th>Status</th>
-                   
-               </tr>
-           </thead>
-           <tbody>
-                @foreach ($active_concerns as $item)
-                <tr>
-                <td>{{ $ctr++ }}</td>
-                  <td>{{ Carbon\Carbon::parse($item->date_reported)->format('M d Y') }}</td>
-                    <td>
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                      <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
-                      @else
-                      <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
-                      @endif
-                    </td>
-                    <td> 
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                      <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
-                      @else
-
-                
-                     {{ $item->building.' '.$item->unit_no }}
-                      @endif
-                    <td>
-                      
-                        {{ $item->concern_type }}
-                        
-                    </td>
-                    <td >
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                      <a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
-                      @else
-                      {{ $item->concern_item }}
-                      @endif
-          
-                      
-                    <td>
-                        @if($item->concern_urgency === 'urgent')
-                        <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
-                        @elseif($item->concern_urgency === 'major')
-                        <span class="badge badge-warning">{{ $item->concern_urgency }}</span>
-                        @else
-                        <span class="badge badge-primary">{{ $item->concern_urgency }}</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($item->concern_status === 'pending')
-                        <span class="badge badge-warning">{{ $item->concern_status }}</span>
-                        @elseif($item->concern_status === 'active')
-                        <span class="badge badge-primary">{{ $item->concern_status }}</span>
-                        @else
-                        <span class="badge badge-secondary">{{ $item->concern_status }}</span>
-                        @endif
-                    </td>
-                  
-                </tr>
-                @endforeach
-           </tbody>
-          </table>
-          
-          </div>
-                  </div>
-              </div>    
-          </div>
-          </div>  
+      
 @endsection
 
   
