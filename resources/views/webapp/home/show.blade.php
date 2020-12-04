@@ -399,7 +399,7 @@
                     <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
                     
                     <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d Y') }}</td>
-                    <td>{{ $item->reason_for_moving_out }}</td>
+                    <td>{{ $item->moveout_reason }}</td>
                 </tr>
             @endforeach
                 @endif                        
