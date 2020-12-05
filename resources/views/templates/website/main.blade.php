@@ -50,8 +50,8 @@
          <nav class="nav-menu d-none d-lg-block">
           <ul>
             <li class="active"><a href="/">Home</a></li>
-            <li><a target="_blank" href="/blogs">Blogs</a></li>
-            <li><a target="_blank" href="/listings">Listings</a></li>
+            <li><a target="_blank" href="/http://bedspace.online/blog">Blogs</a></li>
+            <li><a target="_blank" href="/http://bedspace.online">Listings</a></li>
    
           </ul>
         </nav><!-- .nav-menu -->
