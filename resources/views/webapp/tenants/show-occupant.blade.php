@@ -235,77 +235,42 @@
         <table class="table" >
             
               <tr>
-                  <td>Tenant</td>
+                  <th>Name</th>
                   <td>{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }} 
                      
                   </td>
               </tr>
               <tr>
-                  <td>Gender</td>
+                  <th>Gender</th>
                   <td>{{ $tenant->gender }}</td>
               </tr>
               <tr>
-                  <td>Birthdate</th>
+                  <th>Birthdate</th>
                   <td>{{ Carbon\Carbon::parse($tenant->birthdate)->format('M d Y') }}</td>
               </tr>
               <tr>
-                  <td>Civil Status</td>
+                  <th>Civil Status</th>
                   <td>{{ $tenant->civil_status }}</td>
               </tr>
               <tr>
-                  <td>ID/ID Number</td>
+                  <th>ID/ID Number</th>
                   <td>{{ $tenant->id_number }}</td>
               </tr>
               <tr>
-                  <td>Address</td>
+                  <th>Address</th>
                   <td>{{ $tenant->barangay.', '.$tenant->city.', '.$tenant->province.', '.$tenant->country.', '.$tenant->zip_code }}</td>
               </tr>
           
               <tr>
-                  <td>Mobile</td>
+                  <th>Mobile</th>
                   <td>{{ $tenant->contact_no }}</td>
               </tr>
               <tr>
-                  <td>Email</td>
+                  <th>Email</th>
                   <td>{{ $tenant->email_address }}</td>
               </tr>
              
-           
-            <tr>
-                <td>High School</td>
-                <td>{{ $tenant->high_school.', '.$tenant->high_school_address }}</td>
-            </tr>
-            <tr>
-                <td>College/University</td>
-                <td>{{ $tenant->college_school.', '.$tenant->college_school_address }}</td>
-            </tr>
-            <tr>
-                <td>Course/Year</td>
-                <td>{{ $tenant->course.', '.$tenant->year_level }}</td>
-            </tr>
-            
-           
-            <tr>
-                <td>Employer</td>
-                <td>{{ $tenant->employer}}</td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td>{{ $tenant->employer_address }}</td>
-            </tr>
-            <tr>
-                <td>Contact No</td>
-                <td>{{ $tenant->employer_contact_no }}</td>
-            </tr>
-            
-            <tr>
-                <td>Job description</td>
-                <td>{{ $tenant->job }}</td>
-            </tr>
-            <tr>
-                <td>Years of employment</td>
-                <td>{{ $tenant->years_of_employment }}</td>
-            </tr>
+  
               
 
           </table>

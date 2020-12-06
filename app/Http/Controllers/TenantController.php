@@ -387,7 +387,7 @@ class TenantController extends Controller
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'tenant has been added!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'a tenant has been added!');
        
 
        
@@ -425,27 +425,9 @@ class TenantController extends Controller
                 //contact number
                 'contact_no' => $request->contact_no,
                 'email_address' => $request->email_address,
-                'created_at' => $request->movein_at
+                'created_at' => Carbon::now()
             ]
             );
-
-            DB::table('contracts')->insert(
-                    [
-                        'contract_id' => Uuid::generate()->string,
-                        'unit_id_foreign' => $unit_id,
-                        'tenant_id_foreign' => $tenant_id,
-                        'referrer_id_foreign' => $request->referrer_id,
-                        'form_of_interaction' => $request->form_of_interaction,
-                        'rent' => $request->rent,
-                        'status' => 'pending',
-                        'movein_at' => $request->movein_at,
-                        'moveout_at' => $request->moveout_at,
-                        'discount' => $request->discount,
-                        'term' => $request->term,
-                        'number_of_months' => $request->number_of_months,
-                        'created_at' => $request->movein_at,
-                    ]
-                );
 
             
             DB::table('units')
@@ -476,27 +458,6 @@ class TenantController extends Controller
                         ]
                     );
 
-            
-                    $no_of_bills = $request->no_of_items;
-
-                    $current_bill_no = DB::table('contracts')
-                    ->join('units', 'unit_id_foreign', 'unit_id')
-                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                    ->join('billings', 'tenant_id', 'billing_tenant_id')
-                    ->where('property_id_foreign', Session::get('property_id'))
-                    ->max('billing_no') + 1;
-            
-                    for ($i=1; $i < $no_of_bills; $i++) { 
-                        $bill = new Billing();
-                        $bill->billing_tenant_id = $tenant_id;
-                        $bill->billing_no = $current_bill_no++;
-                        $bill->billing_date = $request->movein_at;
-                        $bill->billing_desc = $request->input('billing_desc'.$i);
-                        $bill->billing_start = $request->movein_at;
-                        $bill->billing_end = $request->moveout_at;
-                        $bill->billing_amt = $request->input('billing_amt'.$i);
-                        $bill->save();
-                    }
 
         $user_id =  DB::table('users')->insertGetId([
             'name' => $request->first_name.' '.$request->last_name,
@@ -535,7 +496,7 @@ class TenantController extends Controller
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'new tenant has been added!');
+            return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'an occupant has been added!');
        
 
        
