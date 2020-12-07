@@ -383,7 +383,7 @@
   
       </div>
     </section><!-- End Services Section -->
-
+{{-- 
         <!-- ======= Cta Section ======= -->
         <section id="cta" class="cta">
           <div class="container" data-aos="zoom-in">
@@ -399,9 +399,9 @@
             </div>
     
           </div>
-        </section><!-- End Cta Section -->
+        </section><!-- End Cta Section --> --}}
 
-    <section id="team" class="team section-bg">
+    <section id="team" class="team">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -442,7 +442,7 @@
     </section><!-- End Team Section -->
 
     <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing">
+    <section id="pricing" class="pricing section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">

@@ -34,12 +34,21 @@
             @endif
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
+            @if(Session::get('property_type') === 'Condominium Corporation')
             <li class="nav-item">
-              <a class="nav-link active" href="/property/{{$property->property_id }}/tenants">
-                <i class="fas fa-user text-green"></i>
-                <span class="nav-link-text">Tenants</span>
-              </a>
-            </li>
+                <a class="nav-link active" href="/property/{{$property->property_id }}/occupants">
+                  <i class="fas fa-user text-green"></i>
+                  <span class="nav-link-text">Occupants</span>
+                </a>
+              </li>
+            @else
+            <li class="nav-item">
+                <a class="nav-link" href="/property/{{$property->property_id }}/tenants">
+                  <i class="fas fa-user text-green"></i>
+                  <span class="nav-link-text">Tenants</span>
+                </a>
+              </li>
+            @endif
           
             <li class="nav-item">
               <a class="nav-link" href="/property/{{$property->property_id }}/owners">

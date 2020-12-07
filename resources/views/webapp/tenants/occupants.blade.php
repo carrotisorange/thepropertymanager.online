@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', 'Bills')
+@section('title', 'Occupants')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -25,7 +25,7 @@
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/home">
+              <a class="nav-link " href="/property/{{$property->property_id }}/home">
                 <i class="fas fa-home text-indigo"></i>
                 <span class="nav-link-text">Home</span>
               </a>
@@ -33,10 +33,11 @@
             @endif
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
-         
+           
+
             @if(Session::get('property_type') === 'Condominium Corporation')
             <li class="nav-item">
-                <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
+                <a class="nav-link active" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
                   <span class="nav-link-text">Occupants</span>
                 </a>
@@ -82,7 +83,7 @@
 
             @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
             <li class="nav-item">
-              <a class="nav-link active" href="/property/{{$property->property_id }}/bills">
+              <a class="nav-link" href="/property/{{$property->property_id }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bills</span>
               </a>
@@ -160,126 +161,77 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-4">
-    <h6 class="h2 text-dark d-inline-block mb-0">Bills</h6>
+  <div class="col-lg-6 col-7">
+    <h6 class="h2 text-dark d-inline-block mb-0">Occupants</h6>
     
   </div>
-  <div class="col text-right">
-  
-    <div class=" row">
-      
-        
-    <form id="billingRentForm" action="/property/{{ $property->property_id }}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
+  <div class="col-lg-6 col-5 text-right">
+    <form  action="/property/{{ $property->property_id }}/tenants/search" method="GET" >
       @csrf
-    </form>
-    <input type="hidden" form="billingRentForm" name="billing_option" value="rent">
-        <button class="btn btn-primary"  type="submit" form="billingRentForm"><i class="fas fa-plus"></i> Rent</button>
-    
-        
-  
-      
-        <form id="billingElectricForm" action=" /property/{{ $property->property_id }}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-          @csrf
-      </form>
-      <input type="hidden" form="billingElectricForm" name="billing_option" value="electric">
-        <button class="btn btn-primary"  type="submit" form="billingElectricForm" ><i class="fas fa-plus"></i> Electric</button>
-     
-      
- 
-
-         
-    
-      <form id="billingWaterForm" action="/property/{{ $property->property_id }}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-        @csrf
-    </form>
-    <input type="hidden" form="billingWaterForm" name="billing_option" value="water">
-        <button class="btn btn-primary" type="submit" form="billingWaterForm" ><i class="fas fa-plus"></i> Water</button>
-       
-    
-         
-    
-        <form id="billingSurchargeForm" action="/property/{{ $property->property_id }}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-          @csrf
-      </form>
-      <input type="hidden" form="billingSurchargeForm" name="billing_option" value="surcharge">
-          <button class="btn btn-primary" type="submit" form="billingSurchargeForm" ><i class="fas fa-plus"></i> Surcharge</button>
-   
-    </div>
-     
-   
-    
- 
-    
-   
+      <div class="input-group">
+          <input type="text" class="form-control" name="tenant_search" placeholder="Enter name..." >
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+            </button>
+          </div>
+      </div>
+  </form>
   </div>
 
 </div>
-@if($bills->count() <=0 )
-<p class="text-danger text-center">No bills found!</p>
+
+@if($tenants->count() <=0 )
+<p class="text-danger text-center">No occupants found!</p>
 
 @else
-<div class="table-responsive text-nowrap">
-  <table class="table">
-    @foreach ($bills as $day => $bill)
-<thead>
-  <tr>
-    <th colspan="12">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $bill->count() }}) </th>
-</tr>
-<tr>
-  <?php $ctr=1;?>
-  <th>#</th>
-  <th>Bill No</th>
-  
-  
-  <th>Tenant</th>
-  <th>Room</th>
-  <th>Particular</th>
- 
-  <th colspan="2">Period Covered</th>
-  <th>Amount</th>
+Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
+@if(Session::get('tenant_search'))
+<p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
+@endif
 
-  <td></td>
-    
-</tr>
-</thead>
-      @foreach ($bill as $item)
-      <tr>
-        <th>{{ $ctr++ }}</th>
-        <td>{{ $item->billing_no }}</th>  
-        {{-- <td>  {{ Carbon\Carbon::parse($item->billing_date)->format('M d Y') }}</td> --}}
-       
-        
-        <td>
-          @if(Auth::user()->user_type === 'billing')
-          <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bills">{{ $item->first_name.' '.$item->last_name }}</a>
-          @else
-            <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}</a>
-          @endif
-        </td>
-        <td>{{ $item->unit_no }}</td>
-        <td>{{ $item->billing_desc }}</td>
-       
-        <td colspan="2">
-          {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-          {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
-        </td>
-        <td>{{ number_format($item->billing_amt,2) }}</td>
-     
-          <td class="text-center">
-            @if(Auth::user()->user_type === 'manager')
-            <form action="/property/{{ $property->property_id }}/bill/{{ $item->billing_id }}" method="POST">
-              @csrf
-              @method('delete')
-              <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
-            </form>
-            @endif
+
+<div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <?php $ctr=1;?>
+        <tr>
+          <th>#</th>
+          <th>Profile</th>
+          <th>Tenant ID</th>
+          {{-- <th>Room</th> --}}
+          <th>Tenant</th>
+          {{-- <th>User ID</th> --}}
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Movein at</th>
+       </tr>
+      </thead>
+      <tbody>
+        @foreach ($tenants as $item)
+        <tr>
+          <th>{{ $ctr++ }}</th>
+          <td>  <span class="avatar avatar-sm rounded-circle">
+            <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
+          </span></td>
+          <td>{{ $item->tenant_unique_id }}</td>
+          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td> --}}
+          <td>
+            {{-- @if($item->user_id_foreign == null) --}}
+            <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
+            {{-- @else
+            <a  href="/asa/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+            @endif --}}
           </td>
+          {{-- <td>{{ $item->user_id_foreign }} </td> --}}
+            <td>{{ $item->contact_no }}</td>
+            <td>{{ $item->email_address }}</td>
+          <td>{{ $item->movein_at }}</td>
         </tr>
-      @endforeach
-          
-        
-    @endforeach
-  </table>
+        @endforeach
+      </tbody>
+    </table>
+
   </div>
 @endif
 @endsection

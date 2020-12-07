@@ -79,6 +79,55 @@ class TenantController extends Controller
     }
     }
 
+    public function occupants_index(Request $request, $property_id)
+    {
+
+        $search = $request->tenant_search;
+
+        Session::put('tenant_search', $search);
+
+        if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' ){
+            
+            if($search === null){
+                $tenants = DB::table('users_properties_relations')
+                ->join('properties', 'property_id_foreign', 'property_id')
+                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
+                ->select('*', 'tenants.created_at as movein_at')
+                ->where('property_id', $property_id)
+                ->orderBy('tenant_id', 'desc')
+                ->get();
+    
+                $count_tenants = DB::table('users_properties_relations')
+                ->join('properties', 'property_id_foreign', 'property_id')
+                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
+                ->where('property_id', $property_id)
+                ->count();
+            }else{
+                $tenants = DB::table('users_properties_relations')
+                ->join('properties', 'property_id_foreign', 'property_id')
+                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
+                ->select('*', 'tenants.created_at as movein_at')
+                ->where('property_id', $property_id)
+                ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
+                ->orderBy('tenant_id', 'desc')
+                ->get();
+    
+                $count_tenants = DB::table('users_properties_relations')
+                ->join('properties', 'property_id_foreign', 'property_id')
+                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
+                ->where('property_id', $property_id)
+                ->count();
+            }
+
+            // return 'under maintenance';
+            $property = Property::findOrFail($property_id);
+
+        return view('webapp.tenants.occupants', compact('tenants', 'count_tenants', 'property'));
+    }else{
+        return view('website.unregistered');
+    }
+    }
+
     public function search(Request $request, $property_id){   
         
         $search = $request->get('search');

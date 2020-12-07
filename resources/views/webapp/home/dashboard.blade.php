@@ -32,11 +32,7 @@
           @endif
         
           @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
-            <li class="nav-item">
-              <a class="nav-link" href="/tenants">
-                <i class="fas fa-users fa-chart-area"></i>
-                <span>Tenants</span></a>
-            </li>
+           
             @endif
       
         @if((Auth::user()->user_type === 'admin' && Auth::user()->property_ownership === 'Multiple Owners') || (Auth::user()->user_type === 'manager' && Auth::user()->property_ownership === 'Multiple Owners'))
