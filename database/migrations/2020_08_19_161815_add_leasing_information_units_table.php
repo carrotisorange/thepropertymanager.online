@@ -18,7 +18,7 @@ class AddLeasingInformationUnitsTable extends Migration
             $table->date('contract_end')->nullable();
             $table->date('date_enrolled')->nullable();
             $table->date('date_accepted')->nullable();
-            $table->integer('max_occupancy')->nullable();
+            $table->integer('occupancy')->nullable();
         });
     }
 

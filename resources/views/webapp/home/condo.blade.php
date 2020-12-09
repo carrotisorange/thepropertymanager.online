@@ -268,18 +268,13 @@
     
       @foreach ($floor_no_list as $item)
       @if($building->building === $item->building)
-        @if($item->status === 'vacant')
+        @if($item->status === 'vacant' || $item->status=== 'accepted')
             <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
             </a>
-            @elseif($item->status=== 'reserved')
-            <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
-                <i class="fas fa-home fa-3x"></i>
-                <br>
-               {{ $item->unit_no }}
-              </a>
+         
             @elseif($item->status=== 'occupied')
               <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
                 <i class="fas fa-home fa-3x"></i>
@@ -307,7 +302,7 @@
       </button>
       </div>
       <div class="modal-body">
-          <form id="addUMultipleUnitForm" action="/units/add-multiple" method="POST">
+          <form id="addUMultipleUnitForm" action="/units/add/multiple" method="POST">
               @csrf
           </form>
 
@@ -344,7 +339,7 @@
               <select form="addUMultipleUnitForm" class="form-control" name="type_of_units" required>
                   <option value="" selected>Please select one</option>
                   <option value="commercial">commercial</option>
-                  {{-- <option value="leasing">leasing</option> --}}
+              
                   <option value="residential">residential</option>         
               </select>
           </div> 
@@ -352,7 +347,7 @@
           
               <div class="form-group">
                 <label>Occupancy</label>
-                <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="max_occupancy">
+                <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
             </div>
 
           <div class="form-group">

@@ -224,7 +224,7 @@
                 <td>{{ $unit->floor_no }}</td>
                 <td>{{ $unit->beds }}</td>
                 <td>{{ $unit->status }}</td>
-                <td>{{ $unit->max_occupancy }}</td>
+                <td>{{ $unit->occupancy }}</td>
                  <td>{{ number_format($unit->monthly_rent, 2) }}</td>
             </tr>
             @endforeach

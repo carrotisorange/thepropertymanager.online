@@ -592,9 +592,20 @@ $collections_for_the_day = DB::table('contracts')
 ->get();
 
 
-
 $property = Property::findOrFail(Session::get('property_id'));
 
+if(Session::get('property_type') === 'Condominium Corporation'){
+    return view('webapp.properties.show-unit-properties',
+    compact(
+                'units', 'units_occupied','units_vacant', 'units_reserved',
+                'tenants', 'pending_tenants', 'owners',
+                'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
+                'delinquent_accounts','tenants_to_watch_out',
+                'collections_for_the_day',
+                'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact'
+            )
+    );
+}else{
     return view('webapp.properties.show',
     compact(
                 'units', 'units_occupied','units_vacant', 'units_reserved',
@@ -605,6 +616,9 @@ $property = Property::findOrFail(Session::get('property_id'));
                 'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact'
             )
     );
+}
+
+   
 
 // if(Auth::user()->property_type === 'Apartment Rentals' || Auth::user()->property_type === 'Dormitory'){
    

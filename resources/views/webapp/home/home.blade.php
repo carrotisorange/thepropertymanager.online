@@ -307,7 +307,7 @@
       </button>
       </div>
       <div class="modal-body">
-          <form id="addUMultipleUnitForm" action="/units/add-multiple" method="POST">
+          <form id="addUMultipleUnitForm" action="/rooms/add/multiple" method="POST">
               @csrf
           </form>
 
@@ -352,7 +352,7 @@
           
               <div class="form-group">
                 <label>Occupancy</label>
-                <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="max_occupancy">
+                <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
             </div>
 
           <div class="form-group">

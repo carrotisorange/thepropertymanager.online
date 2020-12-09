@@ -436,7 +436,7 @@ class TenantController extends Controller
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'a tenant has been added!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'tenant has been added!');
        
 
        
@@ -483,7 +483,7 @@ class TenantController extends Controller
             ->where('unit_id', $unit_id)
             ->update(
                 [
-                    'status' => 'reserved'
+                    'status' => 'occupied'
                 ]
             );
 
@@ -540,12 +540,12 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as pending!';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added as occupant!';
         $notification->save();
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'an occupant has been added!');
+            return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
        
 
        

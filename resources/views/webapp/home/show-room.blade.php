@@ -186,7 +186,7 @@
              
              <tr>
               <td>Max Occupancy</td>
-              <td>{{ $unit->max_occupancy }} pax</td>
+              <td>{{ $unit->occupancy }} pax</td>
             </tr>
             <tr>
                   <td>Status</td>
@@ -267,13 +267,13 @@
       </div>
 
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        @if ($tenant_active->count() < $unit->max_occupancy)
-        <a href="/units/{{ $unit->unit_id }}/tenants-create" title="{{ $unit->max_occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn btn-primary">
-            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add <span class="badge badge-light">{{  $tenant_active->count() }}/{{ $unit->max_occupancy }} </a>
+        @if ($tenant_active->count() < $unit->occupancy)
+        <a href="/units/{{ $unit->unit_id }}/tenants-create" title="{{ $unit->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn btn-primary">
+            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add <span class="badge badge-light">{{  $tenant_active->count() }}/{{ $unit->occupancy }} </a>
   
         @else
-        <a href="#/" title="{{ $unit->max_occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn btn-primary">
-            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add <span class="badge badge-light">{{  $tenant_active->count() }}/{{ $unit->max_occupancy }} 
+        <a href="#/" title="{{ $unit->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn btn-primary">
+            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add <span class="badge badge-light">{{  $tenant_active->count() }}/{{ $unit->occupancy }} 
           </a>
         @endif
         <br><br>
@@ -555,7 +555,7 @@
       
           <div class="form-group">
             <small>Max Occupancy</small>
-            <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $unit->max_occupancy }}" name="max_occupancy" class="form-control"> 
+            <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $unit->occupancy }}" name="occupancy" class="form-control"> 
           </div>
           <div class="form-group">
           <small> Status</small>
@@ -651,7 +651,7 @@
         </div>
         <div class="form-group">
           <small>Occupancy</small>
-          <input form="enrollLeasingForm" type="number" class="form-control" name="max_occupancy" required >
+          <input form="enrollLeasingForm" type="number" class="form-control" name="occupancy" required >
       </div>   
         <div class="form-group">
             <small>Monthly Rent</small>

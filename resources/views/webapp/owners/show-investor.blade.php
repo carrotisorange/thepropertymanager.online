@@ -274,7 +274,7 @@
                 <td>{{ $item->floor_no }}</td>
                 <td>{{ $item->status }}</td>
                 <td>{{ number_format($item->monthly_rent, 2) }}</td>
-                <td>{{ $item->max_occupancy }} pax</td>
+                <td>{{ $item->occupancy }} pax</td>
               </tr>
             </tbody>
              @endforeach

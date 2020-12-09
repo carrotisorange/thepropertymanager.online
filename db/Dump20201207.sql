@@ -904,7 +904,7 @@ CREATE TABLE `units` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `date_accepted` date DEFAULT NULL,
-  `max_occupancy` int DEFAULT NULL,
+  `occupancy` int DEFAULT NULL,
   `property_id_foreign` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`unit_id`),
   KEY `units_property_id_foreign_foreign` (`property_id_foreign`),

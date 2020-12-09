@@ -227,7 +227,7 @@
                
                <tr>
                 <th>Occupancy</th>
-                <td>{{ $home->max_occupancy }} pax</td>
+                <td>{{ $home->occupancy }} pax</td>
               </tr>
               <tr>
                     <th>Status</th>
@@ -299,7 +299,7 @@
         <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
          
              
-          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant" title="{{ $home->max_occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
+          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
             <i class="fas fa-user-plus"></i> Add </a>
     
        
@@ -501,7 +501,7 @@
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
             <div class="form-group">
               <label>Occupancy</label>
-              <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->max_occupancy }}" name="max_occupancy" class="form-control"> 
+              <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy }}" name="occupancy" class="form-control"> 
             </div>
             <div class="form-group">
             <label> Status</label>

@@ -12,6 +12,7 @@ use App\Session;
 use App\Certificate;
 use App\Guardian;
 use Illuminate\Support\Facades\Hash;
+use App\Room;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,8 +81,8 @@ Route::get('/property/{property_id}/search', 'PropertyController@search')->middl
 Route::get('/property/{property_id}/dashboard', 'DashboardController@index')->middleware(['auth', 'verified']);
 
 //routes for home
-Route::get('/property/{property_id}/home', 'HomeController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/home/{unit_id}', 'HomeController@show')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/home', 'UnitController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
 
 //routes for tenants
 Route::get('/property/{property_id}/tenants', 'TenantController@index')->middleware(['auth', 'verified']);
@@ -122,6 +123,17 @@ Route::post('/property/{property_id}/home/{unit_id}/owner', 'OwnerController@sto
 Route::get('/property/{property_id}/calendar', 'CalendarController@index')->middleware(['auth', 'verified']);
 
 Route::get('/asa', function(){
+
+    // $rooms = Property::findOrFail('4b3cc400-181c-11eb-b718-f9aa30fde187')->units;
+
+    // for ($i=1; $i <=$rooms->count(); $i++) { 
+    //     if (Unit::where('property_id_foreign', '4b3cc400-181c-11eb-b718-f9aa30fde187')->exists()) {
+
+    //     }
+    //     $room = new Room();
+    //  }
+
+ 
 
     //  $user = DB::table('tenants')
     //  ->leftJoin('users', 'user_id_foreign', 'id')
@@ -382,12 +394,13 @@ Route::get('/listings', function(){
     return view('website.listings', compact('properties'));
 });
 
+Route::post('/rooms/add/multiple', 'UnitController@add_multiple_rooms')->middleware(['auth', 'verified']);
 
-//routes for units
-Route::get('units/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
-Route::put('units/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
-Route::post('units/add', 'Unitsontroller@add_unit')->middleware(['auth', 'verified']);
-Route::post('units/add-multiple', 'UnitController@add_multiple_rooms')->middleware(['auth', 'verified']);
+Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
+
+
+Route::put('/units/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
+
 
 
 //routes for payments

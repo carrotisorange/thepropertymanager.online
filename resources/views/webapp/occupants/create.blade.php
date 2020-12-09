@@ -280,7 +280,7 @@
   <hr>
     
       {{-- <a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
-      <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Submit</button>
+      <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block"> Submit</button>
 
   
 

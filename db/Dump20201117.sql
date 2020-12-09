@@ -861,7 +861,7 @@ CREATE TABLE `units` (
   `contract_end` date DEFAULT NULL,
   `date_enrolled` date DEFAULT NULL,
   `date_accepted` date DEFAULT NULL,
-  `max_occupancy` int DEFAULT NULL,
+  `occupancy` int DEFAULT NULL,
   `property_id_foreign` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`unit_id`),
   KEY `units_unit_unit_owner_id_foreign` (`unit_unit_owner_id`),

@@ -227,7 +227,7 @@
                
                <tr>
                 <td>Occupancy</td>
-                <td>{{ $home->max_occupancy }} pax</td>
+                <td>{{ $home->occupancy }} pax</td>
               </tr>
               <tr>
                     <td>Status</td>
@@ -242,7 +242,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Monthly Rent <small>(excluding utilities)</small></td> 
+                    <td>Monthly Rent</td> 
                     <td>{{ number_format($home->monthly_rent,2) }}</td>
     
                     <?php 
@@ -284,12 +284,12 @@
         </div>
   
         <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
-          @if ($tenant_active->count() < $home->max_occupancy)
-          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/tenant" title="{{ $home->max_occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
+          @if ($tenant_active->count() < $home->occupancy)
+          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/tenant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
               <i class="fas fa-user-plus"></i> Add </a>
     
           @else
-          <a href="#/" title="{{ $home->max_occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn  btn-primary">
+          <a href="#/" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn  btn-primary">
               <i class="fas fa-user-plus"></i> Add 
             </a>
           @endif
@@ -587,7 +587,7 @@
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
             <div class="form-group">
               <small>Occupancy</small>
-              <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->max_occupancy }}" name="max_occupancy" class="form-control"> 
+              <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy }}" name="occupancy" class="form-control"> 
             </div>
             <div class="form-group">
             <small> Status</small>
