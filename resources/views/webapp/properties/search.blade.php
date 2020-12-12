@@ -220,7 +220,7 @@
                 <th>{{ $unit_ctr++ }}</th>
                 <td><a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a></td>
                 <td>{{ $unit->building }}</td>
-                <td>{{ $unit->type_of_units }}</td>
+                <td>{{ $unit->type }}</td>
                 <td>{{ $unit->floor_no }}</td>
                 <td>{{ $unit->beds }}</td>
                 <td>{{ $unit->status }}</td>
@@ -249,7 +249,7 @@
             @foreach ($all_owners as $owner)
             <tr>
                 <th>{{ $owner_ctr++ }}</th>
-                <td><a href="/property/{{ $property->property_id }}/owner/{{ $owner->unit_owner_id }}">{{ $owner->unit_owner }} </a></td>
+                <td><a href="/property/{{ $property->property_id }}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></td>
               
                <td>{{ $owner->investor_email_address}}</td>
                <td>{{ $owner->investor_contact_no }}</td>

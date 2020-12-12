@@ -32,7 +32,7 @@ class Concern extends Model
 
     public function owner()
     {
-    return $this->belongsTo('App\UnitOwner', 'owner_id_foreign');
+    return $this->belongsTo('App\Owner', 'owner_id_foreign');
     }
 
     public function personnel()

@@ -214,10 +214,10 @@
                       $ctr = 1;
                       $unit_id = 1;
                       $unit_no = 1;
-                      $type_of_units = 1;
+                      $type = 1;
                       $status =1;
                       $building =1;
-                      $floor_no = 1;
+                      $floor = 1;
                   ?>
                   @foreach ($units as $item)
                       <tr>
@@ -228,7 +228,7 @@
                           </td>
                           <td>
                             <select form="editUnitsForm" type="number" name="floor_no{{ $floor_no++ }}">
-                              <option value="{{ $item->floor_no }}" readonly selected class="bg-primary">{{ $item->floor_no }}</option>
+                              <option value="{{ $item->floor }}" readonly selected class="bg-primary">{{ $item->floor }}</option>
                               <option value="-5">5th basement</option>
                               <option value="-4">4th basement</option>
                               <option value="-3">3rd basement</option>
@@ -249,7 +249,7 @@
                           </td>
                           <td>
                             <select class="" form="editUnitsForm" type="text" name="type_of_units{{ $type_of_units++  }}">
-                              <option value="{{ $item->type_of_units }}" readonly selected class="bg-primary">{{ $item->type_of_units }}</option>
+                              <option value="{{ $item->type }}" readonly selected class="bg-primary">{{ $item->type }}</option>
                               <option value="commercial">commercial</option>
                               <option value="residential">residential</option>
                           </select>

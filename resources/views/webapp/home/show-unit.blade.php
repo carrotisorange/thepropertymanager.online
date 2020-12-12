@@ -208,20 +208,20 @@
                     <td>{{ $home->building }}</td>
                </tr>
                <tr>
-                    <th>Floor No</th>
+                    <th>Floor</th>
              
                     <td>
-                      @if($home->floor_no <= 0)
-                      {{ $numberFormatter->format($home->floor_no * -1) }} basement 
+                      @if($home->floor <= 0)
+                      {{ $numberFormatter->format($home->floor * -1) }} basement 
                       @else
-                      {{ $numberFormatter->format($home->floor_no) }} floor
+                      {{ $numberFormatter->format($home->floor) }} floor
                       @endif
                       
                     </td>
                </tr>
                <tr>
                     <th>Type</th>
-                    <td>{{ $home->type_of_units }}</td>
+                    <td>{{ $home->type }}</td>
                </tr>
              
                
@@ -427,10 +427,10 @@
                   @foreach ($owners as $item)
                   <tr>
                     <th>{{ $ctr++ }}</th>
-                     <td><a href="/property/{{ $property->property_id }}/owner/{{ $item->unit_owner_id }}">{{ $item->unit_owner }} </a></td>
+                     <td><a href="/property/{{ $property->property_id }}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
               
-                    <td>{{ $item-> investor_email_address}}</td>
-                    <td>{{ $item->investor_contact_no }}</td>
+                    <td>{{ $item-> email}}</td>
+                    <td>{{ $item->mobile }}</td>
                   
                     
                   </tr>
@@ -467,8 +467,8 @@
             </div>
             <div class="form-group">
             <label>Floor no</label>
-            <select form="editUnitForm" id="floor_no" name="floor_no" class="form-control">
-                <option value="{{ $home->floor_no }}" readonly selected class="bg-primary">{{ $home->floor_no }}</option>
+            <select form="editUnitForm" id="floor" name="floor" class="form-control">
+                <option value="{{ $home->floor }}" readonly selected class="bg-primary">{{ $home->floor }}</option>
                 <option value="-5">5th basement</option>
                 <option value="-4">4th basement</option>
                 <option value="-3">3rd basement</option>
@@ -492,8 +492,8 @@
               </div>
             <div class="form-group">
             <label>Type</label>
-            <select form="editUnitForm" id="type_of_units" name="type_of_units" class="form-control">
-                <option value="{{ $home->type_of_units }}" readonly selected class="bg-primary">{{ $home->type_of_units }}</option>
+            <select form="editUnitForm" id="type" name="type" class="form-control">
+                <option value="{{ $home->type }}" readonly selected class="bg-primary">{{ $home->type }}</option>
                 <option value="commercial">commercial</option>
                 <option value="residential">residential</option>
             </select>

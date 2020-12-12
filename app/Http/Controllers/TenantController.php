@@ -567,7 +567,7 @@ class TenantController extends Controller
            $units = Property::findOrFail($property_id)
            ->units()->whereIn('status',['vacant'])
            ->get()->groupBy(function($item) {
-                return $item->floor_no;
+                return $item->floor;
             });;
     
             $buildings = Property::findOrFail($property_id)
@@ -669,7 +669,7 @@ class TenantController extends Controller
            $units = Property::findOrFail($property_id)
            ->units()->whereIn('status',['vacant'])
            ->get()->groupBy(function($item) {
-                return $item->floor_no;
+                return $item->floor;
             });;
     
             $buildings = Property::findOrFail($property_id)

@@ -16,7 +16,7 @@ class Personnel extends Model
 
     public function tenant()
     {
-        return $this->belongsTo('App\UnitOwner', 'unit_owner_id');
+        return $this->belongsTo('App\Owner', 'owner_id');
     }
 
     public function property()

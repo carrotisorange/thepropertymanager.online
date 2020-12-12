@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB, Auth;
 use App\Charts\DashboardChart;
-use App\Unit, App\UnitOwner, App\Tenant, App\User, App\Payment, App\Billing;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Payment, App\Billing;
 use Carbon\Carbon;
 use App\Mail\UserRegisteredMail;
 use Illuminate\Support\Facades\Mail;

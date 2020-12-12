@@ -36,7 +36,7 @@ class UnitController extends Controller
            $units = Property::findOrFail($property_id)
            ->units()->where('status','<>','deleted')
            ->get()->groupBy(function($item) {
-                return $item->floor_no;
+                return $item->floor;
             });;
     
             $buildings = Property::findOrFail($property_id)
@@ -76,36 +76,7 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //insert investor to a specific unit.
-       $id = DB::table('unit_owners')->insertGetId(
-            [
-                // 'date_invested' => $request->date_invested,
-                'unit_owner' => $request->unit_owner,
-                'unit_id_foreign' => $request->unit_id,
-                // 'discount' => $request->discount,
-                // 'investment_price' => $request->investment_price,
-                // 'investment_type'=> $request->investment_type,
-                // 'investor_representative' =>$request->investor_representative,
-                'investor_email_address' => $request->investor_email_address,
-                'investor_contact_no' => $request->investor_contact_no,
-                // 'account_name' => $request->account_name,
-                // 'bank_name' => $request->bank_name,
-                // 'investor_address' =>$request->investor_address,
-                // 'contract_start' =>$request->contract_start,
-                // 'contract_end' => $request->contract_end,
-            ]
-        );
-
-        //insert the id of the newly created investor to the unit.
-        // DB::table('units')
-        //     ->where('unit_id', $request->unit_id)
-        //     ->update(
-        //                 [
-        //                     'unit_unit_owner_id' => $id,
-        //                 ]
-        //             );
-
-    return redirect('/units/'.$request->unit_id.'/owners/'.$id.'/edit')->with('success', 'owner has been saved! Please complete the information below.');
+      
     }
 
     /**
@@ -125,9 +96,10 @@ class UnitController extends Controller
            ->get();
 
             $home = Unit::findOrFail($unit_id);
+            
 
             $owners = DB::table('certificates')
-            ->join('unit_owners', 'owner_id_foreign', 'unit_owner_id')
+            ->join('owners', 'owner_id_foreign', 'owner_id')
             ->where('certificates.unit_id_foreign', $unit_id)
             ->get();
     
@@ -193,7 +165,7 @@ class UnitController extends Controller
             if($property->type === 'Condominium Corporation'){
                 return view('webapp.home.show-unit',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }else{
-                return view('webapp.home.show',compact('reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
+                return view('webapp.home.show-room',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }
         }else{
                 return view('website.unregistered');
@@ -213,10 +185,10 @@ class UnitController extends Controller
         
             $unit = new Unit();
             $unit->unit_no = $request->unit_no.'-'.$i;
-            $unit->floor_no = $request->floor_no;
+            $unit->floor = $request->floor;
             $unit->building = $building;
             $unit->status = 'vacant';
-            $unit->type_of_units = $request->type_of_units;
+            $unit->type = $request->type;
             $unit->occupancy = $request->occupancy;
             $unit->property_id_foreign = Session::get('property_id');
             $unit->save();
@@ -244,7 +216,7 @@ class UnitController extends Controller
 
         $property = Property::findOrFail(Session::get('property_id'));
  
-            return back()->with('success', $request->no_of_rooms.' rooms have been added!');
+            return back()->with('success', $request->no_of_rooms.' room/s have been added!');
         
      }
 
@@ -261,7 +233,7 @@ class UnitController extends Controller
             $unit->floor_no = $request->floor_no;
             $unit->building = $building;
             $unit->status = 'accepted';
-            $unit->type_of_units = $request->type_of_units;
+            $unit->type = $request->type_of_units;
             $unit->occupancy = $request->occupancy;
             $unit->property_id_foreign = Session::get('property_id');
             $unit->save();
@@ -298,7 +270,7 @@ class UnitController extends Controller
             $units = DB::table('units')
             ->where('property_id_foreign', $property_id)
             ->orderBy('building', 'asc')
-            ->orderBy('floor_no', 'asc')
+            ->orderBy('floor', 'asc')
             ->orderBy('unit_no', 'asc')
             ->get();
 
@@ -314,25 +286,22 @@ class UnitController extends Controller
      }
 
      public function post_edit_multiple_rooms(Request $request, $property_id){
-    
+
       $units_count = DB::table('units')
       ->where('property_id_foreign', $property_id)
         //  ->where('status','<>','deleted')
          ->count();
          
         for($i = 1; $i<=$units_count; $i++){
-            DB::table('units')
-            ->where('unit_id', $request->input('unit_id'.$i))
-            ->update(
-                [
-                    'unit_no' => $request->input('unit_no'.$i),
-                    'type_of_units' => $request->input('type_of_units'.$i),
-                    'status' => $request->input('status'.$i),
-                    'building' => $request->input('building'.$i),
-                    'floor_no' => $request->input('floor_no'.$i),
-                    'occupancy' => $request->input('occupancy'.$i),
-                    'monthly_rent' => $request->input('monthly_rent'.$i),
-                ]);
+             $room = Unit::find($i);
+             $room->unit_no = $request->input('unit_no'.$i);
+             $room->type = $request->input('type'.$i);
+             $room->status = $request->input('status'.$i);
+             $room->building = $request->input('building'.$i);
+             $room->floor = $request->input('floor'.$i);
+             $room->occupancy = $request->input('occupancy'.$i);
+             $room->rent = $request->input('rent'.$i);
+             $room->save();
         }
 
         $units = DB::table('units')
@@ -354,11 +323,8 @@ class UnitController extends Controller
                         ]
                     );
         
-                    if(Session::get('property_type') === 'Condominium Corporation'){
-                        return redirect('/property/'. $property_id.'/home')->with('success','unit/s have been updated!');
-                    }else{
-                        return redirect('/property/'. $property_id.'/home')->with('success','room/s have been updated!');
-                    }
+          return redirect('/property/'. $property_id.'/home')->with('success','changes have been saved!');
+                 
 
        
      }
@@ -387,12 +353,12 @@ class UnitController extends Controller
             DB::table('units')->where('unit_id', $id)
             ->update([
                 'unit_no' => $request->unit_no,
-                'floor_no' => $request->floor_no,
+                'floor' => $request->floor,
                 'occupancy' => $request->occupancy,
                 'status' => $request->status,
                 'building' => $request->building,
-                'type_of_units' => $request->type_of_units,
-                'monthly_rent' => $request->monthly_rent
+                'type' => $request->type,
+                'rent' => $request->rent
             ]);
 
             $units = DB::table('units')

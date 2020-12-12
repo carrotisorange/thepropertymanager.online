@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Property;
 use DB;
 use Auth;
-use App\Unit, App\UnitOwner, App\Tenant, App\User, App\Billing;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Billing;
 use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use Illuminate\Http\Request;
@@ -122,13 +122,13 @@ class PropertyController extends Controller
         ->orWhereRaw("building like '%$search_key%' ")
         ->get();
 
-        $owners = DB::table('unit_owners')
+        $owners = DB::table('owners')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
         ->whereRaw("unit_owner like '%$search_key%' ")
         ->get();
 
-        $mobiles = DB::table('unit_owners')
+        $mobiles = DB::table('owners')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
         ->whereRaw("investor_email_address like '%$search_key%' ")

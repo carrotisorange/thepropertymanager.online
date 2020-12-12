@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', $owner->unit_owner)
+@section('title', 'Owners')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -125,7 +125,7 @@
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
-            <li class="nav-item">
+                   <li class="nav-item">
               <a class="nav-link" href="/property/{{ $property->property_id }}/getting-started" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Getting started</span>
@@ -161,127 +161,65 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $owner->unit_owner }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Owners</h6>
     
+  </div>
+  <div class="col-lg-6 col-5 text-right">
+    <form  action="/property/{{ $property->property_id }}/owners/search" method="GET" >
+      @csrf
+      <div class="input-group">
+          <input type="text" class="form-control" name="search" placeholder="Enter name..." value="{{ session(Auth::user()->id.'search_owner') }}" required>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+            </button>
+          </div>
+      </div>
+  </form>
   </div>
 
 </div>
-<div class="row">
-  <form id="editInvestorForm" action="/property/{{ $property->property_id }}/owner/{{ $owner->unit_owner_id }}" method="POST">
-    @method('put')
-    @csrf
-</form>
+@if($owners->count() <=0 )
+<p class="text-danger text-center">No owners found!</p>
 
-                <div class="col">
-                    <small>Name</small>
-                    <input form="editInvestorForm" class="form-control" type="text" name="unit_owner" value="{{ $owner->unit_owner }}" >
-                </div>
-               
-              <div class="col">
-                <small>Mobile</small>
-                <input form="editInvestorForm" class="form-control" type="text" name="investor_contact_no" value="{{ $owner->investor_contact_no }}" >
-            </div>
-            <div class="col">
-              <small>Email</small>
-              <input form="editInvestorForm" class="form-control" type="emailf" name="investor_email_address" value="{{ $owner->investor_email_address }}" >
-          </div>  
+@else
+Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
+{{-- @if(session(Auth::user()->id.'search_tenant'))
+<p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">"{{ session(Auth::user()->id.'search_tenant') }}"<span></p>
+@endif --}}
+<div class="table-responsive text-nowrap">
+
+    <table class="table">
+        <thead>
+          <?php $ctr=1; ?>
+            <tr>
+              <th>#</th>
+               <th>Owner</th>
+        
+               <th>Email</th>
+               <th>Mobile</th>
+               <th>Representative</th>
             
-            </div>
-            <br>
-            <div class="row">
-              
-          <div class="col">
-            <small>Address</small>
-            <input form="editInvestorForm" class="form-control" type="text" name="investor_address" value="{{ $owner->investor_address }}" >
-        </div>  
-             
-          </div>
-<br>
-          <div class="row">
-              
-            <div class="col">
-              <small>Authorized Representative</small>
-              <input form="editInvestorForm" class="form-control" type="text" name="investor_representative" value="{{ $owner->investor_representative }}" >
-          </div>  
-               
-            </div>
-
-            <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
-                <h6 class="h2 text-dark d-inline-block mb-0">Bank Information</h6>
-                
-              </div>
-            
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <small>Bank Name</small>
-                <input form="editInvestorForm" class="form-control" type="text" name="bank_name" value="{{ $owner->bank_name }}">
-            </div>
-
-            <div class="col">
-              <small>Account Name</small>
-              <input form="editInvestorForm" class="form-control" type="text" name="account_name" value="{{ $owner->account_name? $owner->account_name: $owner->unit_owner }}">
-          </div>
-
-            <div class="col">
-              <small>Account Number</small>
-              <input form="editInvestorForm" class="form-control" type="text" name="account_number" value="{{ $owner->account_number }}">
-            </div>
-            </div>
-          
-            <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
-                <h6 class="h2 text-dark d-inline-block mb-0">Room Information</h6>
-                
-              </div>
-            
-            </div>
-
-            <div class="row">
-              
-              <div class="col">
-                <small>Date Purchased</small>
-                <input form="editInvestorForm" class="form-control" type="date" name="date_purchased" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
-            </div>  
-            
-             <div class="col">
-                <small>Purchase Amount</small>
-                <input form="editInvestorForm" class="form-control" type="number" min="1" step="0.01" name="price"  >
-            </div>  
-
-            <div class="col">
-              <small>Payment type</small>
-              <select name="payment_type" id=""  form="editInvestorForm" class="form-control" >
-                  <option value="">Please select one</option>
-                  <option value="Full Cash">Full Cash</option>
-                  <option value="Full Downpayment">Full Downpayment</option>
-                  <option value="Installment">Installment</option>
-              </select>
-          </div>  
-                 
-              </div>
-     <br>
-         <div class="row">
-         <div class="col">
-          <p class="text-right">   
-            <a href="/property/{{ $property->property_id}}/owner/{{ $owner->unit_owner_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</a>
-            <button type="submit" form="editInvestorForm" class="btn btn-primary" ><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
-        </p>   
-         </div>
-        </div>  
-  
-
-
-
-</div>
-
+           </tr>
+        </thead>   
+           <tbody>
+           @foreach ($owners as $item)
+          <tr>
+            <th>{{ $ctr++ }}</th>
+            <td><a href="/property/{{ $property->property_id }}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
+            <td>{{ $item->email}}</td>
+            <td>{{ $item->mobile }}</td>
+            <td>{{ $item->representative }}</td>
+          </tr>
+           @endforeach
+           </tbody>
+    </table>
+   
+  </div>
+  @endif
 @endsection
 
-@section('main-content')
 
-@endsection
 
 @section('scripts')
   

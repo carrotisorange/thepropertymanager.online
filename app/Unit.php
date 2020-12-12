@@ -11,22 +11,22 @@ class Unit extends Model
     protected $fillable = [
                             'unit_id',
                             'unit_no',
-                            'unit_unit_owner_id',
-                            'floor_no',
-                            'beds',
-                            'monthly_rent',
+                           
+                            'floor',
+                            
+                            'rent',
                             'egr',
                             'status',
-                            'type_of_units',
+                            'type',
                             'discount',
-                            'unit_property',
+                            'property_id_foreign',
                             'building',
                            
     ];
 
     public function owner()
     {
-        return $this->belongsTo('App\UnitOwner', 'unit_id_foreign');
+        return $this->belongsTo('App\Owner', 'unit_id_foreign');
     }
 
     public function property()

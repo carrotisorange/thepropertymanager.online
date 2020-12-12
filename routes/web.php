@@ -1,6 +1,6 @@
 <?php
 
-use App\Unit, App\UnitOwner, App\Tenant, App\User, App\Billing, App\Property;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Billing, App\Property;
 use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use Illuminate\Http\Request;
@@ -80,9 +80,7 @@ Route::get('/property/{property_id}/search', 'PropertyController@search')->middl
 //routes for dashboard
 Route::get('/property/{property_id}/dashboard', 'DashboardController@index')->middleware(['auth', 'verified']);
 
-//routes for home
-Route::get('/property/{property_id}/home', 'UnitController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
+
 
 //routes for tenants
 Route::get('/property/{property_id}/tenants', 'TenantController@index')->middleware(['auth', 'verified']);
@@ -114,13 +112,11 @@ Route::post('property/{property_id}/tenant/{tenant_id}/user/create', 'TenantCont
 
 //routes for owners
 Route::get('/property/{property_id}/owners', 'OwnerController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/owners/search', 'OwnerController@search')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/owner/{owner_id}/edit', 'OwnerController@edit')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/owner/{owner_id}', 'OwnerController@update')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/home/{unit_id}/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
-
-//routes for calendar
-Route::get('/property/{property_id}/calendar', 'CalendarController@index')->middleware(['auth', 'verified']);
 
 Route::get('/asa', function(){
 
@@ -394,12 +390,6 @@ Route::get('/listings', function(){
     return view('website.listings', compact('properties'));
 });
 
-Route::post('/rooms/add/multiple', 'UnitController@add_multiple_rooms')->middleware(['auth', 'verified']);
-
-Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
-
-
-Route::put('/units/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
 
 
 
@@ -498,17 +488,17 @@ Route::get('/owners', function(){
     if( auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
 
 
-            $owners = DB::table('unit_owners')
+            $owners = DB::table('owners')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->where('unit_property', Auth::user()->property)
             ->get();
 
-            $count_owners = DB::table('unit_owners')
+            $count_owners = DB::table('owners')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->where('unit_property', Auth::user()->property)
             ->count();
 
-            return view('webapp.owners.owners', compact('owners', 'count_owners'));
+            return view('webapp.owners.index', compact('owners', 'count_owners'));
     }else{
             return view('website.unregistered');
     }
@@ -604,15 +594,6 @@ Route::delete('property/{property_id}/bill/{billing_id}', 'BillController@destro
 
 //delete owners
 Route::delete('owners/{owner_id}', 'OwnerController@destroy')->middleware(['auth', 'verified']);
-
-Route::delete('/property/{property_id}/unit/{unit_id}', 'UnitController@destroy')->middleware(['auth', 'verified']);
-
-//route for searching tenant
-
-
-//route for searching investors
-Route::get('/property/{property_id}/owners/search', 'OwnerController@search')->middleware(['auth', 'verified']);
-Route::put('/units/{unit_id}/owners/{unit_owner_id}', 'OwnerController@update')->middleware(['auth', 'verified']);
 
 
 //route for users
@@ -711,12 +692,28 @@ Route::post('/users/{user_id}/charge', function(Request $request){
 });
 
 
+//routes for home
+Route::get('/property/{property_id}/home', 'UnitController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
+
 //show multiple units for editing
+
 Route::get('/property/{property_id}/home/{date}/edit', 'UnitController@show_edit_multiple_rooms')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/home/{date}', 'UnitController@post_edit_multiple_rooms')->middleware(['auth', 'verified']);
 
 //post changes to multiple units
 Route::put('/units/edit/{property}/{date}', 'UnitController@post_edit_multiple_rooms')->middleware(['auth', 'verified']);
+
+
+Route::delete('/property/{property_id}/unit/{unit_id}', 'UnitController@destroy')->middleware(['auth', 'verified']);
+
+Route::post('/rooms/add/multiple', 'UnitController@add_multiple_rooms')->middleware(['auth', 'verified']);
+
+Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
+
+
+Route::put('/units/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
+
 
 
 //routes for resources in landing page

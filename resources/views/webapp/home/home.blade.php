@@ -219,19 +219,19 @@
 
 @foreach ($floor_no_list as $item)
   @if($item->status === 'vacant')
-      <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger ">
+      <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger ">
           <i class="fas fa-home fa-3x"></i>
           <br>
           {{ $item->unit_no }}
       </a>
       @elseif($item->status=== 'reserved')
-      <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
+      <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
           <i class="fas fa-home fa-3x"></i>
           <br>
          {{ $item->unit_no }}
         </a>
       @elseif($item->status=== 'occupied')
-        <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
+        <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
           <i class="fas fa-home fa-3x"></i>
           <br>
           {{ $item->unit_no }}
@@ -269,19 +269,19 @@
       @foreach ($floor_no_list as $item)
       @if($building->building === $item->building)
         @if($item->status === 'vacant')
-            <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger">
+            <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
             </a>
             @elseif($item->status=== 'reserved')
-            <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
+            <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                {{ $item->unit_no }}
               </a>
             @elseif($item->status=== 'occupied')
-              <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
+              <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
@@ -318,8 +318,8 @@
           </div>
 
           <div class="form-group">
-              <label>Floor no</label>
-              <select class="form-control" form="addUMultipleUnitForm" name="floor_no" id="floor_no" onchange ="autoFillInitialName()" required>
+              <label>Floor</label>
+              <select class="form-control" form="addUMultipleUnitForm" name="floor" id="floor" onchange ="autoFillInitialName()" required>
                                   <option value="" selected>Please select one</option>
                                   <option value="-5">5th basement</option>
                                   <option value="-4">4th basement</option>
@@ -341,10 +341,9 @@
 
            <div class="form-group">
               <label>Type</label>
-              <select form="addUMultipleUnitForm" class="form-control" name="type_of_units" required>
+              <select form="addUMultipleUnitForm" class="form-control" name="type" required>
                   <option value="" selected>Please select one</option>
                   <option value="commercial">commercial</option>
-                  {{-- <option value="leasing">leasing</option> --}}
                   <option value="residential">residential</option>         
               </select>
           </div> 
@@ -366,13 +365,13 @@
          
             <div class="form-group">
                 <label>Rent</label>
-                <input form="addUMultipleUnitForm" type="number" value="0" step="0.01" min="0" class="form-control" name="monthly_rent" id="monthly_rent">
+                <input form="addUMultipleUnitForm" type="number" value="0" step="0.01" min="0" class="form-control" name="rent" id="rent">
             </div>
           
 
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button>
           <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
           </div>
   </div>
@@ -386,7 +385,7 @@
 @section('scripts')
   <script>
     function autoFillInitialName(){
-      $floor_no = document.getElementById('floor_no').value;
+      $floor_no = document.getElementById('floor').value;
       $unit_name = document.getElementById('unit_no');
       if($floor_no === '1'){
         $unit_name.value = 'GF';

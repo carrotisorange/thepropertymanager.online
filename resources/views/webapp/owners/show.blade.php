@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', $owner->unit_owner)
+@section('title', $owner->name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -161,7 +161,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $owner->unit_owner }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $owner->name }}</h6>
     
   </div>
 
@@ -191,14 +191,14 @@
         <div class="row">
           <div class="col-md-8">
             <a href="/property/{{ $property->property_id }}/owners"  class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>
-            <a href="/property/{{ $property->property_id }}/owner/{{ $owner->unit_owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+            <a href="/property/{{ $property->property_id }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
             <br><br>
   
                <div class="table-responsive text-nowrap">
                  <table class="table" >
                     <tr>
                         <td>Owner</td>
-                        <td>{{ $owner->unit_owner }}</td>
+                        <td>{{ $owner->name }}</td>
                     </tr>
                     <tr>
                      <td>Email</td>
@@ -255,12 +255,13 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Room</th>
                   <th>Building</th>
+                  <th>Room</th>
+                 
                   <th>Type</th>
-                  <th>Floor No</th>
+                  
                   <th>Status</th>
-                  <th>Monthly Rent</th>
+                  <th>Rent</th>
                   <th>Occupancy</th>
                 </tr>
               </thead>
@@ -268,12 +269,13 @@
              <tbody>
               <tr>
                 <th>{{ $ctr++ }}</th>
-                <td><a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a></td>
                 <td>{{ $item->building }}</td>
-                <td>{{ $item->type_of_units }}</td>
-                <td>{{ $item->floor_no }}</td>
+                <td><a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a></td>
+       
+                <td>{{ $item->type }}</td>
+              
                 <td>{{ $item->status }}</td>
-                <td>{{ number_format($item->monthly_rent, 2) }}</td>
+                <td>{{ number_format($item->rent, 2) }}</td>
                 <td>{{ $item->occupancy }} pax</td>
               </tr>
             </tbody>
@@ -289,7 +291,7 @@
       
         <div class="table-responsive text-nowrap">
           <table class="table" >
-         <td>Bank name</td>
+         <td>Bank</td>
          <td>{{ $owner->bank_name }}</td>
        </tr>
        <tr>

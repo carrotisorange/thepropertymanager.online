@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Property;
 use DB;
 use Auth;
-use App\Unit, App\UnitOwner, App\Tenant, App\User, App\Billing;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Billing;
 use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use Illuminate\Http\Request;
@@ -97,7 +97,7 @@ $pending_tenants = DB::table('contracts')
 
 $owners = DB::table('certificates')
 ->join('units', 'unit_id_foreign', 'unit_id')
-->join('unit_owners', 'owner_id_foreign', 'unit_owner_id')
+->join('owners', 'owner_id_foreign', 'owner_id')
 ->where('property_id_foreign', Session::get('property_id'))
 ->get();
 

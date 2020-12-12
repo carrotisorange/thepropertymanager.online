@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UnitOwner extends Model
+class Owner extends Model
 {
-    protected $primaryKey = 'unit_owner_id';
+    protected $primaryKey = 'owner_id';
 
     protected $fillable = [
                                 'date_invested', 
@@ -28,6 +28,6 @@ class UnitOwner extends Model
 
     public function units()
     {
-        return $this->hasMany('App\Unit', 'unit_unit_owner_id');
+        return $this->hasMany('App\Unit', 'owner_id');
     }
 }

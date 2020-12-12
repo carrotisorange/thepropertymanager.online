@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\UnitOwner, App\Unit, App\Billing;
+use App\Owner, App\Unit, App\Billing;
 use Illuminate\Support\Facades\Auth;
 use App\Property;
 use App\Certificate;
@@ -20,22 +20,21 @@ class OwnerController extends Controller
      */
     public function index($property_id)
     {
-             $owners = DB::table('certificates')
-            ->join('unit_owners', 'owner_id_foreign', 'unit_owner_id')
-            ->join('units', 'certificates.unit_id_foreign', 'unit_id')
-            ->where('property_id_foreign', $property_id)
-            ->get();
+        $owners = DB::table('certificates')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->where('property_id_foreign', $property_id)
+        ->get();
 
-            $count_owners = DB::table('certificates')
-            ->join('unit_owners', 'owner_id_foreign', 'unit_owner_id')
-            ->join('units', 'certificates.unit_id_foreign', 'unit_id')
-            ->where('property_id_foreign', $property_id)
-            ->count();
-    
+        $count_owners = DB::table('certificates')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->join('units', 'certificates.unit_id_foreign', 'unit_id')
+        ->where('property_id_foreign', $property_id)
+        ->count();
 
         $property = Property::findOrFail($property_id);
         
-        return view('webapp.owners.owners', compact('owners','count_owners','property'));
+        return view('webapp.owners.index', compact('owners','count_owners','property'));
     }
 
     
@@ -48,22 +47,22 @@ class OwnerController extends Controller
 
       
         $owners = DB::table('certificates')
-        ->join('unit_owners', 'owner_id_foreign', 'unit_owner_id')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
         ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
-        ->whereRaw("unit_owner like '%$search%' ")
+        ->whereRaw("name like '%$search%' ")
         ->get();
 
         $count_owners = DB::table('certificates')
-        ->join('unit_owners', 'owner_id_foreign', 'unit_owner_id')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
         ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
-        ->whereRaw("unit_owner like '%$search%' ")
+        ->whereRaw("name like '%$search%' ")
         ->count();
 
          $property = Property::findOrFail($property_id);
 
-        return view('webapp.owners.owners', compact('owners', 'count_owners', 'property'));
+        return view('webapp.owners.index', compact('owners', 'count_owners', 'property'));
 
     }
 
@@ -86,13 +85,13 @@ class OwnerController extends Controller
     public function store(Request $request, $property_id, $unit_id)
     {
 
-         $owner_id = DB::table('unit_owners')
+         $owner_id = DB::table('owners')
         ->insertGetId
         (
             [
-                'unit_owner' => $request->name,
-                'investor_email_address' => $request->email,
-                'investor_contact_no' => $request->mobile,
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
             ]
             );
 
@@ -116,11 +115,11 @@ class OwnerController extends Controller
     {
         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
 
-            $owner = UnitOwner::findOrFail($owner_id);
+            $owner = Owner::findOrFail($owner_id);
 
             $investor_billings = DB::table('units')
-           ->join('unit_owners', 'unit_id', 'unit_unit_owner_id')
-           ->join('billings', 'unit_owner_id', 'billing_tenant_id')
+           ->join('owners', 'unit_id', 'owner_id')
+           ->join('billings', 'owner_id', 'billing_tenant_id')
            ->get();
 
            $rooms = DB::table('certificates')
@@ -140,7 +139,7 @@ class OwnerController extends Controller
     
         $property = Property::findOrFail($property_id);
    
-            return view('webapp.owners.show-investor', compact('owner','rooms','property'));
+            return view('webapp.owners.show', compact('owner','rooms','property'));
         }else{
             return view('website.unregistered');
         }
@@ -157,11 +156,11 @@ class OwnerController extends Controller
      */
     public function edit($property_id,$owner_id)
     {
-        $owner = UnitOwner::findOrFail($owner_id);
+        $owner = Owner::findOrFail($owner_id);
 
         $property = Property::findOrFail($property_id);
         
-        return view('webapp.owners.edit-investor', compact('owner', 'property'));
+        return view('webapp.owners.edit', compact('owner', 'property'));
     }
 
     /**
@@ -174,14 +173,14 @@ class OwnerController extends Controller
     public function update(Request $request, $property_id, $owner_id)
     {
 
-        DB::table('unit_owners')
-        ->where('unit_owner_id',$owner_id )
+        DB::table('owners')
+        ->where('owner_id',$owner_id )
         ->update([
-            'unit_owner' => $request->unit_owner,
-            'investor_contact_no' => $request->investor_contact_no,
-            'investor_email_address' => $request->investor_email_address,
-            'investor_address' => $request->investor_address,
-            'investor_representative' => $request->investor_representative,
+            'name' => $request->unit_owner,
+            'mobile' => $request->investor_contact_no,
+            'email' => $request->investor_email_address,
+            'address' => $request->investor_address,
+            'representative' => $request->investor_representative,
             'bank_name' => $request->bank_name,
             'account_number' => $request->account_number,
             'account_name' => $request->account_name,
@@ -207,7 +206,7 @@ class OwnerController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('unit_owners')->where('unit_owner_id', $id)->delete();
+        DB::table('owners')->where('owner_id', $id)->delete();
 
         return back();
     }

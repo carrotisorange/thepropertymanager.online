@@ -219,19 +219,19 @@
 
 @foreach ($floor_no_list as $item)
   @if($item->status === 'vacant')
-      <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger ">
+      <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-danger ">
           <i class="fas fa-home fa-3x"></i>
           <br>
           {{ $item->unit_no }}
       </a>
       @elseif($item->status=== 'reserved')
-      <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
+      <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-warning">
           <i class="fas fa-home fa-3x"></i>
           <br>
          {{ $item->unit_no }}
         </a>
       @elseif($item->status=== 'occupied')
-        <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
+        <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
           <i class="fas fa-home fa-3x"></i>
           <br>
           {{ $item->unit_no }}

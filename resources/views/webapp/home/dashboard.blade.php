@@ -578,7 +578,7 @@
        <td>{{ $item->payment_billing_no }}</td>
        <td>{{ $item->building.' '.$item->unit_no }}</td>
         <td>{{ $item->first_name.' '.$item->last_name }}</td>
-        <td>{{ $item->unit_owner }}</td>
+        <td>{{ $item->name }}</td>
         <td>
           {{ $item->billing_desc }}</td>
         <td colspan="2">
