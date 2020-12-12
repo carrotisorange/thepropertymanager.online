@@ -409,8 +409,11 @@ class BillController extends Controller
             ->where('property_id_foreign', Session::get('property_id'))
             ->max('billing_no') + 1;
 
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id') 
-            ->selectRaw('* ,bills.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            ->join('tenants', 'billing_tenant_id', 'tenant_id')
+            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('billing_tenant_id', $tenant_id)
             ->groupBy('billing_no')
             ->orderBy('billing_no', 'desc')
@@ -435,7 +438,7 @@ class BillController extends Controller
         //
     }
 
-    public function post_edited_bills(Request $request, $property_id, $unit_id, $tenant_id){
+    public function post_edited_bills(Request $request, $property_id, $tenant_id){
 
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
 
@@ -447,23 +450,19 @@ class BillController extends Controller
             ->orderBy('billing_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
-        
-        
+
+
             for ($i=1; $i <= $balance->count(); $i++) { 
-                DB::table('bills')
-                ->where('bill_id', $request->input('billing_id_ctr'.$i))
-                ->update
-                        (
-                            [
-                                'billing_start' => $request->input('billing_start_ctr'.$i),
-                                'billing_end' => $request->input('billing_end_ctr'.$i),
-                                'billing_amt' => $request->input('billing_amt_ctr'.$i),
-                            ]
-                        );
+                 $bill = Bill::find( $request->input('billing_id_ctr'.$i));
+                  $bill->billing_start = $request->input('billing_start_ctr'.$i);
+                  $bill->billing_end = $request->input('billing_end_ctr'.$i);
+                  $bill->billing_amt = $request->input('billing_amt_ctr'.$i);
+                 $bill->save();
                }
 
                DB::table('users')
-               ->where('property', Auth::user()->property)
+               ->where('id', Auth::user()->id)
+               ->orWhere('lower_access_user_id',Auth::user()->id )
                ->update(
                        [
                            'note' => $request->note,

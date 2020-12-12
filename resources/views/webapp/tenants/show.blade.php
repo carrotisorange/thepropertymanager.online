@@ -606,7 +606,7 @@
           <tr>
             <th class="text-center">#</th>
              <th>Date posted</th>
-                   <th>Room</th>
+              <th>Room</th>
                <th>Bill no</th>
                
                <th>Particular</th>

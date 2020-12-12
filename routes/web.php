@@ -325,7 +325,7 @@ Route::post('/property/{property_id}/personnel', 'PersonnelController@store')->m
 //routes for bills
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/bills/edit', 'BillController@post_edited_bills')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/tenant/{tenant_id}/bills/update', 'BillController@post_edited_bills')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/rent/{date}', 'BillController@post_bills_rent')->middleware(['auth', 'verified']);
 
 Route::post('property/{property_id}/bills/create', 'BillController@store')->middleware(['auth', 'verified']);

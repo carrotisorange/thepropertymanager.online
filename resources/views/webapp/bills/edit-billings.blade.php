@@ -157,18 +157,19 @@
 </div>
 {{-- 
 @if(Auth::user()->user_type === 'manager') --}}
-<a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a>
+{{-- <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a> --}}
+
+<h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
 {{-- @else
 <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Bills</a>
 @endif
  --}}
 
 
-<br><br>
 <div class="row">
   <div class="col-md-12">
 
-    <form id="editBillsForm" action="/property/{{ $property->property_id }}/home/{{ $tenant->unit_tenant_id }}/tenant/{{ $tenant->tenant_id }}/bills/edit" method="POST">
+    <form id="editBillsForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/update" method="POST">
       @csrf
       @method('PUT')
     </form>
@@ -178,9 +179,10 @@
         <?php $ctr=1; ?>
         <tr>
           <th class="text-center">#</th>
+        
           <th>Bill No</th>
-         
-          <th>Description</th>
+           <th>Room</th>
+          <th>Particular</th>
           <th colspan="2">Period Covered</th>
           <th>Amount</th>
           <td></td>
@@ -196,15 +198,15 @@
         <tr>
             <th class="text-center">{{ $ctr++ }}</th>
             <td>{{ $item->billing_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
-    
+            <td>{{$item->unit_no}}</td>
             <td>{{ $item->billing_desc }}</td>
             <td>
-              <input class="form-control" form="editBillsForm" type="date" name="billing_start_ctr{{ $billing_start_ctr++ }}" value="{{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('Y-m-d') : null}}"> 
+              <input form="editBillsForm" type="date" name="billing_start_ctr{{ $billing_start_ctr++ }}" value="{{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('Y-m-d') : null}}"> 
             </td>
             <td>
-              <input class="form-control" form="editBillsForm"  type="date" name="billing_end_ctr{{ $billing_end_ctr++ }}" value="{{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('Y-m-d') : null }}">
+              <input form="editBillsForm"  type="date" name="billing_end_ctr{{ $billing_end_ctr++ }}" value="{{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('Y-m-d') : null }}">
             </td>
-            <td><input class="form-control" form="editBillsForm" type="number" name="billing_amt_ctr{{ $billing_amt++ }}" step="0.01" value="{{  $item->balance }}"></td>
+            <td><input form="editBillsForm" type="number" name="billing_amt_ctr{{ $billing_amt++ }}" step="0.01" value="{{  $item->balance }}"></td>
             <td>
               @if(Auth::user()->user_type === 'manager')
   
@@ -219,7 +221,7 @@
         @endforeach
         <tr>
           <th>Total</th>
-          <th colspan="5" class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
+          <th colspan="6" class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
          </tr>    
     </table>
   </div>
