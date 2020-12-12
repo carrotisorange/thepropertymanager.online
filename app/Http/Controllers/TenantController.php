@@ -734,15 +734,14 @@ class TenantController extends Controller
 
 
             $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->join('tenants', 'billing_tenant_id', 'tenant_id')
-            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
-            ->join('units', 'unit_id_foreign', 'unit_id')
             ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('billing_tenant_id', $tenant_id)
             ->groupBy('bill_id')
             ->orderBy('billing_no', 'desc')
             // ->havingRaw('balance > 0')
             ->get();
+
+
 
                $access = DB::table('users')
               ->join('tenants', 'id', 'user_id_foreign')

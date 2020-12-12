@@ -446,20 +446,25 @@ Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', function($
 
     $tenant = Tenant::findOrFail($tenant_id);
 
-      $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->join('tenants', 'billing_tenant_id', 'tenant_id')
-            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('billing_tenant_id', $tenant_id)
-            ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
-            // ->havingRaw('balance > 0')
-            ->get();
+    $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+      
+        
+    ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+    ->where('billing_tenant_id', $tenant_id)
+    ->groupBy('bill_id')
+    ->orderBy('billing_no', 'desc')
+    ->havingRaw('balance > 0')
+    ->get();
+
+                
+    $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
+
+     $current_room = Unit::findOrFail($room_id)->unit_no;
 
     $data = [
         'tenant' => $tenant->first_name.' '.$tenant->last_name ,
         'bills' => $bills,
+        'current_room' => $current_room,
 ];
     $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');
     return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');

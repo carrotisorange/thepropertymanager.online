@@ -606,7 +606,7 @@
           <tr>
             <th class="text-center">#</th>
              <th>Date posted</th>
-              <th>Room</th>
+       
                <th>Bill no</th>
                
                <th>Particular</th>
@@ -625,7 +625,7 @@
             <td>
               {{Carbon\Carbon::parse($item->billing_date)->format('M d Y')}}
             </td>   
-              <td>{{ $item->unit_no }}</td>
+             
 
               <td>{{ $item->billing_no }}</td>
       
@@ -659,7 +659,7 @@
           <tr>
             <th>Total </th>
             
-            <th class="text-right" colspan="6">{{ number_format($bills->sum('billing_amt'),2) }} </th>
+            <th class="text-right" colspan="5">{{ number_format($bills->sum('billing_amt'),2) }} </th>
             <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
             <th class="text-right text-danger" colspan="">
               @if($bills->sum('balance') > 0)
@@ -677,10 +677,11 @@
     </div>
     
       </div>
+      <br>
       <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
+        <div class="col-md-11 mx-auto">
+          <div class="">
+            <div class="">
               {!! Auth::user()->note !!}
             </div>
           </div>
