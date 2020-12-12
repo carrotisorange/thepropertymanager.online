@@ -8,12 +8,6 @@ Should you need help with setting up your property or with using any of the feat
 feel free to send us a message through the messenger chatbot, located at the bottom left corner, available 
 at any given time or email us at customercare@thepropertymanager.online. 
 
-<br>
-<br>
-Email: jamesdavid_11@yahoo.com
-<br>
-Password: 12345678
-
 
 <br>
 @component('mail::button', ['url' => 'thepropertymanager.online/property/all'])

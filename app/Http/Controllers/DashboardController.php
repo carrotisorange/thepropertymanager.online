@@ -104,7 +104,11 @@ $owners = DB::table('certificates')
 ->where('property_id_foreign', Session::get('property_id'))
 ->get();
 
-$current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+if(!Property::findOrFail(Session::get('property_id'))->occupancy_rate){
+    $current_occupancy_rate = Property::findOrFail(Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+}else{
+    $current_occupancy_rate = 0;
+}
 
 $occupancy_rate_5 = DB::table('occupancy_rate')
 ->where('property_id_foreign', Session::get('property_id'))
