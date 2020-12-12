@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', 'Edit Units')
+@section('title', 'Edit Rooms')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -203,8 +203,6 @@
                       <th>Floor</th>
                       <th>Type</th>
                       <th>Status</th>
-                    
-                    
                       <th>Occupancy</th>
                       <th>Rent</th>
                       <th></th>
@@ -223,11 +221,12 @@
                       $rent = 1;
                   ?>
                   @foreach ($units as $item)
+              
                       <tr>
                           <th> {{ $ctr++ }}</th>
                           <td><input form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
                           <td>
-                            <input col-md-12" form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
+                            <input  form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
                             <input form="editUnitsForm" type="hidden" name="unit_id{{ $unit_id++  }}" id="" value="{{ $item->unit_id }}">
                           </td>
                           <td>
@@ -271,8 +270,8 @@
                           </td>
                         
                        
-                          <td><input form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"> pax</td>
-                          <td><input form="editUnitsForm" type="number" step="0.001" name="rent{{ $rent++  }}"  min="0" id="" value="{{$item->rent }}"></td>
+                          <td><input class="col" form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"> pax</td>
+                          <td><input class="" form="editUnitsForm" type="number" step="0.001" name="rent{{ $rent++  }}"  min="0" id="" value="{{$item->rent }}"></td>
                           <td>
                             <form action="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" method="POST">
                               @csrf
@@ -282,6 +281,7 @@
                             </form> 
                           </td>
                       </tr>
+                 
                   @endforeach
               </tbody>
             

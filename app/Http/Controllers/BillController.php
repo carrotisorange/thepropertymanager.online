@@ -81,7 +81,7 @@ class BillController extends Controller
    ->where('property_id_foreign',  Session::get('property_id'))
    ->max('billing_no') + 1;
 
-   $property = Property::findOrFail($property_id);
+   $property = Property::findOrFail(Session::get('property_id'));
 
     return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'property'))->with('success', 'changes have been saved!');
 

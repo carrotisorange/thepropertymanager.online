@@ -197,25 +197,26 @@
                <div class="table-responsive text-nowrap">
                  <table class="table" >
                     <tr>
-                        <td>Owner</td>
+                        <th>Name</th>
                         <td>{{ $owner->name }}</td>
                     </tr>
                     <tr>
-                     <td>Email</td>
-                     <td>{{ $owner->investor_email_address }}</td>
+                     <th>Email</th>
+                     <td>{{ $owner->email }}</td>
                  </tr>
                   <tr>
-                     <td>Mobile</td>
-                     <td>{{ $owner->investor_contact_no }}</td>
+                     <th>Mobile</th>
+                     <td>{{ $owner->mobile }}</td>
                  </tr>
-                 <tr>
-                   <td>Representative</td>
-                   <td>{{ $owner->investor_representative }}</td>
+               
+               <tr>
+                 <th>Address</th>
+                 <td>{{ $owner->address }}</td>
                </tr>
                <tr>
-                 <td>Address</td>
-                 <td>{{ $owner->investor_address }}</td>
-               </tr>
+                <th>Representative</th>
+                <td>{{ $owner->representative }}</td>
+            </tr>
                  </table>
                </div>
          
@@ -291,15 +292,15 @@
       
         <div class="table-responsive text-nowrap">
           <table class="table" >
-         <td>Bank</td>
+         <th>Bank</th>
          <td>{{ $owner->bank_name }}</td>
        </tr>
        <tr>
-         <td>Account name</td>
+         <th>Account name</th>
          <td>{{ $owner->account_name }}</td>
        </tr>
        <tr>
-         <td>Account number</td>
+         <th>Account number</th>
          <td>{{ $owner->account_number }}</td>
        </tr>
    

@@ -101,7 +101,7 @@ $owners = DB::table('certificates')
 ->where('property_id_foreign', Session::get('property_id'))
 ->get();
 
-$current_occupancy_rate = number_format(($units->count()? $tenants->count()/$units->count(): 0)*100, 2);
+$current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
 $occupancy_rate_5 = DB::table('occupancy_rate')
 ->where('property_id_foreign', Session::get('property_id'))

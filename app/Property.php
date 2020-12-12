@@ -46,6 +46,11 @@ class Property extends Model
         return $this->hasMany('App\OccupancyRate', 'property_id_foreign');
     }
 
+    public function current_occupancy_rate()
+    {
+        return $this->hasMany('App\OccupancyRate', 'property_id_foreign');
+    }
+
     public function unseen_notifications()
     {
         return $this->hasMany('App\Notification', 'property_id_foreign')->orderBy('created_at', 'desc')->limit(5);

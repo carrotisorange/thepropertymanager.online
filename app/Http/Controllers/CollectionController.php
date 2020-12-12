@@ -161,23 +161,23 @@ class CollectionController extends Controller
             );
                       
 
-            //update the occupancy rate
-               
-            $units = DB::table('units')->where('property_id_foreign', Session::get('property_id'))->where('status','<>','deleted')->count();
+          
+        $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-            $occupied_units = DB::table('units')->where('property_id_foreign', Session::get('property_id'))->where('status', 'occupied')->count();
-    
-            DB::table('occupancy_rate')
-                ->insert(
-                            [
-                                'occupancy_rate' => ($occupied_units/$units) * 100,
-                                'property_id_foreign' => Session::get('property_id'),
-                               'occupancy_date' => Carbon::now(),'created_at' => Carbon::now(),
-                                'created_at' => Carbon::now(),
-                            ]
-                        );
-   
-        
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+
+        if($new_occupancy_rate/$current_occupancy_rate !== 1){
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = $new_occupancy_rate;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  Session::get('property_id');
+            $occupancy->save();
+
+        }
 
             //retrieve all the tenant information
             $tenant = Tenant::findOrFail($tenant_id);

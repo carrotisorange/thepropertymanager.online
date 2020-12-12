@@ -194,12 +194,10 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
           <?php $ctr=1; ?>
             <tr>
               <th>#</th>
-               <th>Owner</th>
-        
+               <th>Name</th>
                <th>Email</th>
                <th>Mobile</th>
                <th>Representative</th>
-            
            </tr>
         </thead>   
            <tbody>

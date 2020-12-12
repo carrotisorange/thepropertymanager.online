@@ -8,6 +8,7 @@ use App\Unit, App\Billing;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Property;
+use App\OccupancyRate;
 use Session;
 
 class UnitController extends Controller
@@ -195,24 +196,25 @@ class UnitController extends Controller
        
         }
 
-        $units = DB::table('units')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->where('status','<>','deleted')
-        ->count();
+       
+        $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-        $occupied_units = DB::table('units')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->where('status', 'occupied')
-        ->count();
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
 
-        DB::table('occupancy_rate')
-            ->insert(
-                        [
-                            'occupancy_rate' => ($occupied_units/$units) * 100,
-                            'property_id_foreign' => Session::get('property_id'),
-                           'occupancy_date' => Carbon::now(),'created_at' => Carbon::now(),
-                        ]
-                    );
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+
+        if($new_occupancy_rate/$current_occupancy_rate !== 1){
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = $new_occupancy_rate;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  Session::get('property_id');
+            $occupancy->save();
+
+        }else{
+            return 'asd';
+        }
 
         $property = Property::findOrFail(Session::get('property_id'));
  
@@ -239,24 +241,23 @@ class UnitController extends Controller
             $unit->save();
         }
 
-        $units = DB::table('units')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->where('status','<>','deleted')
-        ->count();
+       
+        $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-        $occupied_units = DB::table('units')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->where('status', 'accepted')
-        ->count();
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
 
-        DB::table('occupancy_rate')
-            ->insert(
-                        [
-                            'occupancy_rate' => ($occupied_units/$units) * 100,
-                            'property_id_foreign' => Session::get('property_id'),
-                           'occupancy_date' => Carbon::now(),'created_at' => Carbon::now(),
-                        ]
-                    );
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+
+        if($new_occupancy_rate/$current_occupancy_rate !== 1){
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = $new_occupancy_rate;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  Session::get('property_id');
+            $occupancy->save();
+
+        }
 
         $property = Property::findOrFail(Session::get('property_id'));
 
@@ -287,13 +288,11 @@ class UnitController extends Controller
 
      public function post_edit_multiple_rooms(Request $request, $property_id){
 
-      $units_count = DB::table('units')
-      ->where('property_id_foreign', $property_id)
-        //  ->where('status','<>','deleted')
-         ->count();
-         
-        for($i = 1; $i<=$units_count; $i++){
-             $room = Unit::find($i);
+        $all_rooms = Property::findOrFail($property_id)->units->count();
+
+        for($i = 1; $i<=$all_rooms; $i++){
+
+             $room = Unit::findOrFail($request->input('unit_id'.$i));
              $room->unit_no = $request->input('unit_no'.$i);
              $room->type = $request->input('type'.$i);
              $room->status = $request->input('status'.$i);
@@ -303,30 +302,27 @@ class UnitController extends Controller
              $room->rent = $request->input('rent'.$i);
              $room->save();
         }
-
-        $units = DB::table('units')
-        ->where('property_id_foreign', $property_id)
-        ->where('status','<>','deleted')
-        ->count();
-
-        $occupied_units = DB::table('units')
-        ->where('property_id_foreign', $property_id)
-        ->where('status', 'occupied')
-        ->count();
-
-        DB::table('occupancy_rate')
-            ->insert(
-                        [
-                            'occupancy_rate' => ($occupied_units/$units) * 100,
-                            'property_id_foreign' => $property_id,
-                           'occupancy_date' => Carbon::now(),'created_at' => Carbon::now(),
-                        ]
-                    );
         
-          return redirect('/property/'. $property_id.'/home')->with('success','changes have been saved!');
-                 
+      
+        $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-       
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+
+        if($new_occupancy_rate/$current_occupancy_rate !== 1){
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = $new_occupancy_rate;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  Session::get('property_id');
+            $occupancy->save();
+
+        }
+     
+        return redirect('/property/'. $property_id.'/home')->with('success','changes have been saved!');
+                 
      }
 
 
