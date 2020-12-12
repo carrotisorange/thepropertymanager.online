@@ -438,7 +438,7 @@
           <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
           @endif
           @if($balance->count() > 0)
-          <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
+          <a  target="_blank" href="/property/{{ Session('') }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
           {{-- @if($tenant->email_address !== null)
           <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
           @endif --}}

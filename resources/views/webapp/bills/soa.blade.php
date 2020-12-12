@@ -25,11 +25,10 @@
           
             <b>Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }}
             <br>
-            <span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span>
-            <br>
+            {{-- <span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span>
+            <br> --}}
             <b>To:</b> {{ $tenant }}
-            <br>
-            <b>Room:</b> {{ $unit }}</b>
+            
           
        
           <p class="text-right">Statement of Accounts</p>
@@ -39,8 +38,10 @@
               <tr>
                 <?php $ctr=1;?>
                 <th>#</th>
+                <th>Room</th>
                 <th>Bill No</th>
                 <th>Description</th>
+           
                 <th colspan="2">Period Covered</th>
                 <th class="text-right">Amount</th>
               </tr>
@@ -48,8 +49,10 @@
               @foreach ($bills as $item)
               <tr>
                 <th>{{ $ctr++ }}</th>
+                 <td>{{ $item->unit_no }}</td>
                   <td>{{ $item->billing_no }}</th>
                   <td>{{ $item->billing_desc }}</td>
+                 
                   <td colspan="2">
                     {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
                       {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
@@ -59,16 +62,8 @@
               @endforeach
               <tr>
                 <th>Total</th>
-                <th class="text-right" colspan="5">{{ number_format($bills->sum('balance'),2) }} </th>
+                <th class="text-right" colspan="6">{{ number_format($bills->sum('balance'),2) }} </th>
                </tr>
-               {{-- @if($tenant_status === 'pending')
-   
-               @else
-               <tr>
-                 <th class="text-danger">Total After Due Date(+10%)</th>
-                 <th class="text-right text-danger" colspan="4">{{ number_format($bills->sum('balance') + ($bills->sum('balance') * .1) ,2) }}</th>
-                </tr>
-               @endif   --}}
         
           </table>
   

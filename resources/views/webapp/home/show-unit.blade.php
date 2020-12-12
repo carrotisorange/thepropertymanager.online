@@ -295,8 +295,13 @@
         </div>
   
         <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
+
+          @if($owners->count() < 1 && Session::get('property_ownership') === 'Multiple Owners')
+              <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>
+          @else
+              <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>   
+          @endif
           
-          <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>
  
           <br><br>
           <div class="col-md-12 mx-auto">
@@ -306,7 +311,7 @@
                  <thead>
                    <tr>
                      <th>#</th>
-                     <th>Occupant</th>
+                     <th>Name</th>
                      <th>Mobile</th>
                      <th>Email</th>
                      <th>Movein at</th>

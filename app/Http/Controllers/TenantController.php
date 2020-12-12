@@ -682,8 +682,7 @@ class TenantController extends Controller
 
             $guardians = Tenant::findOrFail($tenant_id)->guardians;
 
-
-              $users = DB::table('users_properties_relations')
+            $users = DB::table('users_properties_relations')
              ->join('users','user_id_foreign','id')
             ->where('property_id_foreign', $property_id)
             ->where('user_type','<>' ,'tenant')
@@ -735,6 +734,9 @@ class TenantController extends Controller
 
 
             $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            ->join('tenants', 'billing_tenant_id', 'tenant_id')
+            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
+            ->join('units', 'unit_id_foreign', 'unit_id')
             ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('billing_tenant_id', $tenant_id)
             ->groupBy('bill_id')
@@ -820,7 +822,7 @@ class TenantController extends Controller
 
               //get the number of last added bills
        
-              $current_bill_no = DB::table('contracts')
+                $current_bill_no = DB::table('contracts')
               ->join('units', 'unit_id_foreign', 'unit_id')
               ->join('tenants', 'tenant_id_foreign', 'tenant_id')
               ->join('bills', 'tenant_id', 'billing_tenant_id')

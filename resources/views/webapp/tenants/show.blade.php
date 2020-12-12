@@ -587,7 +587,7 @@
           <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
           @endif
           @if($balance->count() > 0)
-          <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
+          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
           {{-- @if($tenant->email_address !== null)
           <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
           @endif --}}
@@ -606,10 +606,13 @@
           <tr>
             <th class="text-center">#</th>
              <th>Date posted</th>
+                   <th>Room</th>
                <th>Bill no</th>
                
                <th>Particular</th>
+         
                <th>Period covered</th>
+               
                <th class="text-right" >Bill amount</th>
                <th class="text-right" >Amount paid</th>
                <th class="text-right" >Balance</th>
@@ -622,10 +625,12 @@
             <td>
               {{Carbon\Carbon::parse($item->billing_date)->format('M d Y')}}
             </td>   
+              <td>{{ $item->unit_no }}</td>
 
               <td>{{ $item->billing_no }}</td>
       
               <td>{{ $item->billing_desc }}</td>
+            
               <td>
                 {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
                 {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
@@ -653,7 +658,8 @@
           @endforeach
           <tr>
             <th>Total </th>
-            <th class="text-right" colspan="5">{{ number_format($bills->sum('billing_amt'),2) }} </th>
+            
+            <th class="text-right" colspan="6">{{ number_format($bills->sum('billing_amt'),2) }} </th>
             <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
             <th class="text-right text-danger" colspan="">
               @if($bills->sum('balance') > 0)

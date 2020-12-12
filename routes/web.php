@@ -442,20 +442,23 @@ return $pdf->download(Carbon::now().'-'.Auth::user()->property.'-ar'.'.pdf');
 //print gate pass
 Route::get('/units/{unit_id}/tenants/{tenant_id}/print/gatepass', 'TenantController@printGatePass')->middleware(['auth', 'verified']);
 
-Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/download', function($unit_id, $tenant_id){
+Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', function($property_id, $tenant_id){
+
     $tenant = Tenant::findOrFail($tenant_id);
-    $unit = Unit::findOrFail($unit_id);
-    $bills = Billing::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-    ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-    ->where('billing_tenant_id', $tenant_id)
-    ->groupBy('bill_id')
-    ->orderBy('billing_no', 'desc')
-    ->havingRaw('balance > 0')
-    ->get();
+
+      $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            ->join('tenants', 'billing_tenant_id', 'tenant_id')
+            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('billing_tenant_id', $tenant_id)
+            ->groupBy('bill_id')
+            ->orderBy('billing_no', 'desc')
+            // ->havingRaw('balance > 0')
+            ->get();
+
     $data = [
         'tenant' => $tenant->first_name.' '.$tenant->last_name ,
-        'tenant_status' => $tenant->tenant_status,
-        'unit' => $unit->building.' '.$unit->unit_no,
         'bills' => $bills,
 ];
     $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');

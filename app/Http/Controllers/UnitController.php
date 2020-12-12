@@ -97,8 +97,7 @@ class UnitController extends Controller
            ->get();
 
             $home = Unit::findOrFail($unit_id);
-            
-
+        
             $owners = DB::table('certificates')
             ->join('owners', 'owner_id_foreign', 'owner_id')
             ->where('certificates.unit_id_foreign', $unit_id)

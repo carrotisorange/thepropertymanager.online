@@ -29,7 +29,10 @@ class DashboardController extends Controller
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
-        
+
+        Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
+    
+
          $top_agents = DB::table('contracts')
         ->join('users', 'referrer_id_foreign', 'id')
         ->join('users_properties_relations', 'id', 'user_id_foreign')

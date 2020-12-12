@@ -137,7 +137,7 @@ class ContractController extends Controller
                     ->max('billing_no') + 1;
             
                     for ($i=1; $i < $no_of_bills; $i++) { 
-                        $bill = new Billing();
+                        $bill = new Bill();
                         $bill->billing_tenant_id = $tenant_id;
                         $bill->billing_no = $current_bill_no++;
                         $bill->billing_date = $request->movein_at;
@@ -162,7 +162,7 @@ class ContractController extends Controller
     public function show($property_id, $tenant_id, $contract_id)
     {
 
-        $balance = Billing::leftJoin('payments', 'bills.billing_no', '=', 'payments.payment_billing_no')
+        $balance = Bill::leftJoin('payments', 'bills.billing_no', '=', 'payments.payment_billing_no')
         ->selectRaw('*, bills.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
         ->where('billing_tenant_id', $tenant_id)
         ->groupBy('bill_id')
@@ -324,7 +324,7 @@ class ContractController extends Controller
             // $unit = Unit::findOrFail($unit_id);
 
          
-            $balance = Billing::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
             ->selectRaw('billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
             ->where('billing_tenant_id', $tenant->tenant_id)
             ->havingRaw('balance > 0')
