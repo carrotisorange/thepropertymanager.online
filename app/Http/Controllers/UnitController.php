@@ -188,6 +188,7 @@ class UnitController extends Controller
             $unit->floor = $request->floor;
             $unit->building = $building;
             $unit->status = 'vacant';
+            $unit->rent = $request->rent;
             $unit->type = $request->type;
             $unit->occupancy = $request->occupancy;
             $unit->property_id_foreign = Session::get('property_id');
