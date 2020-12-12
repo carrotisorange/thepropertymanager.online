@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Property;
 use App\Charts\DashboardChart;
 use App\Tenant;
-use App\Billing;
+use App\Bill;
 use App\Concern;
 
 class UserController extends Controller
@@ -596,10 +596,10 @@ class UserController extends Controller
 
         if(($user_id == Auth::user()->id)){
 
-           $bills = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_billing_id')
+           $bills = Billing::leftJoin('payments', 'bills.billing_id', '=', 'payments.payment_billing_id')
            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
            ->where('billing_tenant_id', $tenant_id)
-           ->groupBy('billing_id')
+           ->groupBy('bill_id')
            ->orderBy('billing_no', 'desc')
            ->havingRaw('balance > 0')
            ->get();
@@ -621,7 +621,7 @@ class UserController extends Controller
         if(($user_id == Auth::user()->id)){
 
         
-            $payments = Billing::leftJoin('payments', 'billings.billing_id', 'payments.payment_billing_id')
+            $payments = Billing::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
             ->where('billing_tenant_id', $tenant_id)
             ->groupBy('payment_id')
             ->orderBy('ar_no', 'desc')

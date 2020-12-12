@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB, Auth;
 use App\Charts\DashboardChart;
-use App\Unit, App\Owner, App\Tenant, App\User, App\Payment, App\Billing;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Payment, App\Bill;
 use Carbon\Carbon;
 use App\Mail\UserRegisteredMail;
 use Illuminate\Support\Facades\Mail;
@@ -30,7 +30,7 @@ class CollectionController extends Controller
 
         if($search  === null){
 
-            $collections = Billing::leftJoin('payments', 'billings.billing_id', 'payments.payment_billing_id')
+            $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
             ->join('contracts', 'billing_tenant_id', 'tenant_id_foreign')
             ->join('tenants', 'billing_tenant_id', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
@@ -69,7 +69,7 @@ class CollectionController extends Controller
             // });
         }else{
         
-            $collections = Billing::leftJoin('payments', 'billings.billing_id', 'payments.payment_billing_id')
+            $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
             ->join('contracts', 'billing_tenant_id', 'tenant_id_foreign')
             ->join('tenants', 'billing_tenant_id', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
@@ -219,7 +219,7 @@ class CollectionController extends Controller
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
            
         }
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payments have been recorded!');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
         
         
    

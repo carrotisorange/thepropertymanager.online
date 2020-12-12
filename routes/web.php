@@ -1,6 +1,6 @@
 <?php
 
-use App\Unit, App\Owner, App\Tenant, App\User, App\Billing, App\Property;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Bill, App\Property;
 use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use Illuminate\Http\Request;
@@ -408,7 +408,7 @@ Route::get('/property/{property}/export', function(Request $request){
     $collections = DB::table('units')
     ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
     ->leftJoin('payments', 'tenant_id', 'payment_tenant_id')
-    ->leftJoin('billings', 'payment_billing_no', 'billing_no')
+    ->leftJoin('bills', 'payment_billing_no', 'billing_no')
     ->where('unit_property', Auth::user()->property)
     ->whereDate('payment_created', Carbon::now())
     ->orderBy('payment_created', 'desc')
@@ -434,10 +434,10 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/print/gatepass', 'TenantControl
 Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/download', function($unit_id, $tenant_id){
     $tenant = Tenant::findOrFail($tenant_id);
     $unit = Unit::findOrFail($unit_id);
-    $bills = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_billing_id')
+    $bills = Billing::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
     ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
     ->where('billing_tenant_id', $tenant_id)
-    ->groupBy('billing_id')
+    ->groupBy('bill_id')
     ->orderBy('billing_no', 'desc')
     ->havingRaw('balance > 0')
     ->get();
@@ -454,10 +454,10 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/download', function($unit
 Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/send', function($unit_id,$tenant_id){
     $tenant = Tenant::findOrFail($tenant_id);
     $unit = Unit::findOrFail($unit_id);
-    $bills = Billing::leftJoin('payments', 'billings.billing_no', '=', 'payments.payment_billing_no')
-    ->selectRaw('*, billings.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+    $bills = Billing::leftJoin('payments', 'bills.billing_no', '=', 'payments.payment_billing_no')
+    ->selectRaw('*, bills.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
     ->where('billing_tenant_id', $tenant_id)
-    ->groupBy('billing_id')
+    ->groupBy('bill_id')
     ->havingRaw('balance > 0')
     ->get();
     $data = [
@@ -510,8 +510,8 @@ Route::get('/collections', function(){
 
              $collections = DB::table('units')
              ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
-             ->leftJoin('billings', 'tenant_id', 'billing_tenant_id')
-             ->leftJoin('payments', 'payment_billing_id', 'billing_id')
+             ->leftJoin('bills', 'tenant_id', 'billing_tenant_id')
+             ->leftJoin('payments', 'payment_billing_id', 'bill_id')
             ->where('unit_property', Auth::user()->property)
             ->orderBy('payment_created', 'desc')
             ->orderBy('ar_no', 'desc')
@@ -534,7 +534,7 @@ Route::get('/bills', function(){
 
         $bills = DB::table('units')
         ->join('tenants', 'unit_id', 'unit_tenant_id')
-        ->join('billings', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'billing_tenant_id')
         ->where('unit_property', Auth::user()->property)
         ->orderBy('billing_no', 'desc')
         ->get()
@@ -588,9 +588,9 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantControll
 Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
 Route::post('/tenants/billings', 'TenantController@add_billings')->name("add-billings")->middleware(['auth', 'verified']);
 Route::post('/tenants/billings-post', 'TenantController@post_billings')->middleware(['auth', 'verified']);
-Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{billing_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
+Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 
-Route::delete('property/{property_id}/bill/{billing_id}', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
+Route::delete('property/{property_id}/bill/{bill_id}', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
 
 //delete owners
 Route::delete('owners/{owner_id}', 'OwnerController@destroy')->middleware(['auth', 'verified']);

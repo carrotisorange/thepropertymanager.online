@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Owner, App\Unit, App\Billing;
+use App\Owner, App\Unit, App\Bill;
 use Illuminate\Support\Facades\Auth;
 use App\Property;
 use App\Certificate;
@@ -118,7 +118,7 @@ class OwnerController extends Controller
 
             $investor_billings = DB::table('units')
            ->join('owners', 'unit_id', 'owner_id')
-           ->join('billings', 'owner_id', 'billing_tenant_id')
+           ->join('bills', 'owner_id', 'billing_tenant_id')
            ->get();
 
            $rooms = DB::table('certificates')

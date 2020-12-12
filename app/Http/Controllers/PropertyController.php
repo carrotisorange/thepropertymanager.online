@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Property;
 use DB;
 use Auth;
-use App\Unit, App\Owner, App\Tenant, App\User, App\Billing;
+use App\Unit, App\Owner, App\Tenant, App\User, App\Bill;
 use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use Illuminate\Http\Request;

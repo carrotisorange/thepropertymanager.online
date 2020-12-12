@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Unit, App\Billing;
+use App\Unit, App\Bill;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Property;

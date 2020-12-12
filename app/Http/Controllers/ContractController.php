@@ -11,7 +11,7 @@ use App\Tenant;
 use Auth;
 use Uuid;
 use Carbon\Carbon;
-use App\Billing;
+use App\Bill;
 use Session;
 use Illuminate\Support\Facades\Mail;
 use App\Notification;
@@ -64,7 +64,7 @@ class ContractController extends Controller
         $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('billings', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'billing_tenant_id')
         ->where('property_id_foreign',  Session::get('property_id'))
         ->max('billing_no') + 1;
 
@@ -132,7 +132,7 @@ class ContractController extends Controller
                     $current_bill_no = DB::table('contracts')
                     ->join('units', 'unit_id_foreign', 'unit_id')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                    ->join('billings', 'tenant_id', 'billing_tenant_id')
+                    ->join('bills', 'tenant_id', 'billing_tenant_id')
                     ->where('property_id_foreign', Session::get('property_id'))
                     ->max('billing_no') + 1;
             
@@ -162,10 +162,10 @@ class ContractController extends Controller
     public function show($property_id, $tenant_id, $contract_id)
     {
 
-        $balance = Billing::leftJoin('payments', 'billings.billing_no', '=', 'payments.payment_billing_no')
-        ->selectRaw('*, billings.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+        $balance = Billing::leftJoin('payments', 'bills.billing_no', '=', 'payments.payment_billing_no')
+        ->selectRaw('*, bills.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
         ->where('billing_tenant_id', $tenant_id)
-        ->groupBy('billing_id')
+        ->groupBy('bill_id')
         ->orderBy('billing_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
@@ -276,7 +276,7 @@ class ContractController extends Controller
         $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('billings', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'billing_tenant_id')
         ->where('property_id_foreign',  Session::get('property_id'))
         ->max('billing_no') + 1;
         
@@ -307,7 +307,7 @@ class ContractController extends Controller
 
 
         for($i = 1; $i<$no_of_charges; $i++){
-            DB::table('billings')->insert(
+            DB::table('bills')->insert(
                 [
                     'billing_tenant_id' => $tenant_id,
                     'billing_no' => $current_bill_no++,
@@ -324,7 +324,7 @@ class ContractController extends Controller
             // $unit = Unit::findOrFail($unit_id);
 
          
-            $balance = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_billing_id')
+            $balance = Billing::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
             ->selectRaw('billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
             ->where('billing_tenant_id', $tenant->tenant_id)
             ->havingRaw('balance > 0')
