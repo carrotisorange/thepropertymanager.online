@@ -10,6 +10,7 @@ use App\Property;
 use App\Certificate;
 use Uuid;
 use Carbon\Carbon;
+use Session;
 
 class OwnerController extends Controller
 {
@@ -40,11 +41,9 @@ class OwnerController extends Controller
     
     public function search(Request $request,$property_id){   
         
-        $search = $request->get('search');
+       $search = $request->owner_search;
 
-        //create session for the search
-        $request->session()->put(Auth::user()->id.'search_owner', $search);
-
+        Session::put('owner_search', $search);
       
         $owners = DB::table('certificates')
         ->join('owners', 'owner_id_foreign', 'owner_id')

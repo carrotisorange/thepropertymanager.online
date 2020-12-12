@@ -167,7 +167,7 @@
     <form  action="/property/{{ $property->property_id }}/tenants/search" method="GET" >
       @csrf
       <div class="input-group">
-          <input type="text" class="form-control" name="tenant_search" placeholder="Enter name..." >
+          <input type="text" class="form-control" name="tenant_search" placeholder="Enter name..." value="{{ Session::get('tenant_search') }}">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
               <i class="fas fa-search fa-sm"></i>

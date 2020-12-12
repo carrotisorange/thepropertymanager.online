@@ -168,7 +168,7 @@
     <form  action="/property/{{ $property->property_id }}/owners/search" method="GET" >
       @csrf
       <div class="input-group">
-          <input type="text" class="form-control" name="search" placeholder="Enter name..." value="{{ session(Auth::user()->id.'search_owner') }}" required>
+          <input type="text" class="form-control" name="owner_search" placeholder="Enter name..." value="{{ Session::get('owner_search') }}">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
               <i class="fas fa-search fa-sm"></i>
@@ -184,9 +184,9 @@
 
 @else
 Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
-{{-- @if(session(Auth::user()->id.'search_tenant'))
-<p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">"{{ session(Auth::user()->id.'search_tenant') }}"<span></p>
-@endif --}}
+ @if(Session::get('owner_search'))
+<p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">"{{ Session::get('owner_search') }}"<span></p>
+@endif 
 <div class="table-responsive text-nowrap">
 
     <table class="table">

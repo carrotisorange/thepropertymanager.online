@@ -73,7 +73,7 @@ class TenantController extends Controller
             // return 'under maintenance';
             $property = Property::findOrFail($property_id);
 
-        return view('webapp.tenants.tenants', compact('tenants', 'count_tenants', 'property'));
+        return view('webapp.tenants.index', compact('tenants', 'count_tenants', 'property'));
     }else{
         return view('website.unregistered');
     }
@@ -171,7 +171,7 @@ class TenantController extends Controller
  
          $property = Property::findOrFail($property_id);
 
-        return view('webapp.tenants.tenants', compact('tenants', 'count_tenants', 'property'));
+        return view('webapp.tenants.index', compact('tenants', 'count_tenants', 'property'));
 
     }
 
