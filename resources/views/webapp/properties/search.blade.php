@@ -174,10 +174,10 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Tenant ID</th>
+        
                 <th>Email</th>
                 <th>Mobile</th>
-                <th>Birthdate</th>
+    
                 <th>Civil status</th>
               
             </tr>
@@ -187,10 +187,10 @@
                 <th>{{ $tenant_ctr++ }}</th>
                 <td><a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></td>
                 
-                <td>{{ $tenant->tenant_unique_id }}</td>
+              
                 <td>{{ $tenant->email_address }}</td>
                 <td>{{ $tenant->contact_no }}</td>
-                <td>{{ $tenant->birthdate }}</td>
+        
                 <td>{{ $tenant->civil_status }}</td>
                
             </tr>
@@ -205,27 +205,26 @@
         <table class="table">
             <tr>
                 <th>#</th>
-                <th>Room</th>
                 <th>Building</th>
+                <th>Room</th>
+                <th>Floor</th>
                 <th>Type</th>
-                <th>Floor no</th>
-                <th>Number of bed</th>
+          
                 <th>Status</th>
                 <th>Occupancy</th>
-                <th>Monthly rent</th>
+                <th>Rent</th>
             </tr>
             <?php $unit_ctr=1;?>
             @foreach ($units as $unit)
             <tr>
                 <th>{{ $unit_ctr++ }}</th>
-                <td><a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a></td>
                 <td>{{ $unit->building }}</td>
+                <td><a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a></td>
+                <td>{{ $unit->floor }}</td>
                 <td>{{ $unit->type }}</td>
-                <td>{{ $unit->floor_no }}</td>
-                <td>{{ $unit->beds }}</td>
                 <td>{{ $unit->status }}</td>
-                <td>{{ $unit->occupancy }}</td>
-                 <td>{{ number_format($unit->monthly_rent, 2) }}</td>
+                <td>{{ $unit->occupancy }} pax</td>
+                <td>{{ number_format($unit->rent, 2) }}</td>
             </tr>
             @endforeach
          </table>
@@ -251,9 +250,9 @@
                 <th>{{ $owner_ctr++ }}</th>
                 <td><a href="/property/{{ $property->property_id }}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></td>
               
-               <td>{{ $owner->investor_email_address}}</td>
-               <td>{{ $owner->investor_contact_no }}</td>
-               <td>{{ $owner->investor_representative }}</td>
+               <td>{{ $owner->email}}</td>
+               <td>{{ $owner->mobile }}</td>
+               <td>{{ $owner->representative }}</td>
              
               
 

@@ -122,17 +122,18 @@ class PropertyController extends Controller
         ->orWhereRaw("building like '%$search_key%' ")
         ->get();
 
-        $owners = DB::table('owners')
-        ->join('units', 'unit_id_foreign', 'unit_id')
+        $owners = DB::table('certificates')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
-        ->whereRaw("unit_owner like '%$search_key%' ")
+        ->whereRaw("name like '%$search_key%' ")
         ->get();
 
-        $mobiles = DB::table('owners')
-        ->join('units', 'unit_id_foreign', 'unit_id')
+        $mobiles = DB::table('certificates')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
-        ->whereRaw("investor_email_address like '%$search_key%' ")
-        ->orWhereRaw("investor_contact_no like '%$search_key%' ")
+        ->whereRaw("name like '%$search_key%' ")
         ->get();
 
         $all_owners = $owners->merge($mobiles)->unique();
