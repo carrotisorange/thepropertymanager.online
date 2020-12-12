@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', $search_key)
+@section('title', 'Results for ' .'"'.$search_key.'"')
 
 @section('sidebar')
   <!-- Sidenav -->

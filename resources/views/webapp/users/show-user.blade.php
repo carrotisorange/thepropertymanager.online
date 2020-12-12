@@ -193,19 +193,19 @@
           <div class="table-responsive text-nowrap">
             <table class="table">
               <tr>
-                <td>Name</td>
+                <th>Name</th>
                 <td>{{ $user->name }}</td>
               </tr>
               <tr>
-                <td>Email</td>
+                <th>Email</th>
                 <td>{{ $user->email }}</td>
               </tr>
               <tr>
-                <td>Role</td>
+                <th>Role</th>
                 <td>{{ $user->user_type }}</td>
               </tr>
               <tr>
-                <td>Plan</td>
+                <th>Plan</th>
                 <td>{{ $user->account_type }}</td>
               </tr>
             </table>

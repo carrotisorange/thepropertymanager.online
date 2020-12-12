@@ -13,6 +13,7 @@ use App\Property;
 use App\Contract;
 use Session;
 use App\Notification;
+use App\OccupancyRate;
 
 class CollectionController extends Controller
 {

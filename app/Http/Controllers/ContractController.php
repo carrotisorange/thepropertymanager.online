@@ -15,6 +15,7 @@ use App\Billing;
 use Session;
 use Illuminate\Support\Facades\Mail;
 use App\Notification;
+use App\OccupancyRate;
 
 class ContractController extends Controller
 {

@@ -22,6 +22,7 @@ use Illuminate\Support\Str;
 use Session;
 use App\UserProperty;
 use App\Notification;
+use App\OccupancyRate;
 
 class TenantController extends Controller
 {

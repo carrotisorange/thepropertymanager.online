@@ -180,13 +180,13 @@
           <th>Date Reported</th>
           <th>Reported By</th>
           <th>Room</th>
-          <th>Category</th>
-          <th>Short title</th>
+        
+          <th>Title</th>
           <th>Urgency</th>
           <th>Status</th> 
           <th>Assigned to</th>
           <th>Rating</th>
-          <th>Feedback</th>
+
      </tr>
     </thead>
     <tbody>
@@ -199,9 +199,7 @@
           <a href="/property/{{ $property->property_id }}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
           </td>
           <td><a href="/property/{{ $property->property_id }}/home/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a></td>
-          <td>{{ $item->concern_type }}
-          </td>
-          <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
+                <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
           <td>
               @if($item->concern_urgency === 'urgent')
               <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
@@ -222,7 +220,7 @@
           </td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-          <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+        
         
       </tr>
       @endforeach
