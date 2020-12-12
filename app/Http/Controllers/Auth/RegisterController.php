@@ -75,8 +75,8 @@ class RegisterController extends Controller
             ->bcc(['landleybernardo@thepropertymanager.online',
                 'sales@thepropertymanager.online',
                 'customercare@thepropertymanager.online', 
-                'pamelatecson@thepropertymanager.online
-            '])
+                'pamelatecson@thepropertymanager.online',
+                ])
             ->send(new TenantRegisteredMail());
 
          return User::create([
