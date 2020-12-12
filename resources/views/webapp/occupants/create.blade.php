@@ -160,14 +160,14 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-3">
-    <a class="btn btn-primary" href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
-    {{-- <h6 class="h2 text-dark d-inline-block mb-0">iBack</h6> --}}
+  <div class="col-lg-4">
+    {{-- <a class="btn btn-primary" href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a> --}}
+    <h6 class="h2 text-dark d-inline-block mb-0">Occupant registration form</h6> 
     
   </div>
 </div>
-<form id="addTenantForm1" action="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/occupant/" method="POST">
-  {{ csrf_field() }}
+<form id="addTenantForm1" action="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/occupant/prefilled" method="POST">
+  @csrf
   </form>
 
   <div class="row">
@@ -291,81 +291,8 @@
 @endsection
 
 @section('scripts')
-  
-
-<script type="text/javascript">
-
-  //adding moveout charges upon moveout
-    $(document).ready(function(){
-        var i=1;
-       
-    $("#add_row").click(function(){
-        $('#addr'+i).html("<th>"+ i +"</th><td><select class='form-control' name='billing_desc"+i+"' form='addTenantForm1' id='billing_desc"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='billing_amt"+i+"' id='billing_amt"+i+"' type='number' min='1' step='0.01' value='{{ session(Auth::user()->id.'tenant_monthly_rent') }}'' required></td>");
 
 
-     $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-     i++;
-
-     document.getElementById('no_of_items').value = i;
-
-    });
-
-    $("#delete_row").click(function(){
-        if(i>1){
-        $("#addr"+(i-1)).html('');
-        i--;
-    
-        document.getElementById('no_of_items').value = i;
-        }
-    });
-
-});
-</script>
-
-<script>
-
-  function autoFill(){
-    var moveout_date = document.getElementById('moveout_at').value;
-    var movein_date = document.getElementById('movein_at').value;
-    var rent = document.getElementById('rent').value;
-    
-
-    date1 = new Date(movein_date);
-    date2 = new Date(moveout_date);
-
-    let diff = date2-date1; 
-
-    let months = 1000 * 60 * 60 * 24 * 28;
-
-    var dateInMonths = Math.floor(diff/months);
-
-    document.getElementById('number_of_months').value = dateInMonths +' month/s';
-
-    if(dateInMonths <=0 ){
-      document.getElementById('invalid-date').innerText = 'Invalid movein or moveout date!';
-    }else{
-      document.getElementById('invalid-date').innerText = ' ';
-      if(dateInMonths <5 ){
-        document.getElementById('term').value = 'Short Term';
-        document.getElementById('discount').value = 0;
-        document.getElementById('rent').value = document.getElementById('original').value;
-      }else{
-        document.getElementById('term').value = 'Long Term';
-        document.getElementById('discount').value = (document.getElementById('original').value * .1);
-        document.getElementById('rent').value = document.getElementById('original').value - (document.getElementById('original').value * .1) ;
-      }
-     
-     
-    }
-  }
-</script>
-
-<script>
- function changeUnit(val){
-  alert(val);
- }
-
-</script>
 @endsection
 
 

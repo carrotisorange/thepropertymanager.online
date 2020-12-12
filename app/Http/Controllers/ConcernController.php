@@ -29,7 +29,7 @@ class ConcernController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-        return view('webapp.concerns.concerns', compact('concerns', 'property'));
+        return view('webapp.concerns.index', compact('concerns', 'property'));
     }
 
     /**

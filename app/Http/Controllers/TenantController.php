@@ -256,34 +256,22 @@ class TenantController extends Controller
     }
 
 
+    public function create_occupant_prefilled($property_id, $unit_id)
+    {   
+        $unit = Unit::findOrFail($unit_id);
+
+        $property = Property::findOrFail($property_id);
+
+        return view('webapp.occupants.create', compact('property', 'unit'));
+    }
+
     public function create_occupant($property_id, $unit_id)
     {   
         $unit = Unit::findOrFail($unit_id);
 
         $property = Property::findOrFail($property_id);
 
-        $users = DB::table('users_properties_relations')
-        ->join('properties', 'property_id_foreign', 'property_id')
-        ->join('users', 'user_id_foreign', 'id')
-        ->select('*', 'properties.name as property')
-        ->where('lower_access_user_id', Auth::user()->id)
-        ->orWhere('id', Auth::user()->id)  
-        ->orderBy('users.name')
-        ->get();
-
-         $units = Property::findOrFail($property_id)
-        ->units
-        ->whereIn('status',['vacant', 'reserved']);
-
-
-        $current_bill_no = DB::table('contracts')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'billing_tenant_id')
-        ->where('property_id_foreign',  Session::get('property_id'))
-        ->max('billing_no') + 1;
-
-        return view('webapp.occupants.create', compact('unit', 'property', 'current_bill_no', 'users', 'units'));
+        return view('webapp.occupants.create', compact('property', 'unit'));
     }
 
     /**
@@ -494,26 +482,22 @@ class TenantController extends Controller
                     'status' => 'occupied'
                 ]
             );
+            $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-            $units = DB::table('units')
-            ->where('property_id_foreign', $property_id)
-            ->where('status','<>','deleted')
-            ->count();
-
-            $occupied_units = DB::table('units')
-            ->where('property_id_foreign', $property_id)
-            ->where('status', 'occupied')
-            ->count();
-
-        DB::table('occupancy_rate')
-            ->insert(
-                        [
-                            'occupancy_rate' => ($occupied_units/$units) * 100,
-                            'property_id_foreign' => $request->property_id,
-                           'occupancy_date' => Carbon::now(),
-                           'created_at' => Carbon::now(),
-                        ]
-                    );
+            $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+    
+            $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+    
+            $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+    
+            if($new_occupancy_rate/$current_occupancy_rate !== 1){
+                $occupancy = new OccupancyRate();
+                $occupancy->occupancy_rate = $new_occupancy_rate;
+                $occupancy->occupancy_date = Carbon::now();
+                $occupancy->property_id_foreign =  Session::get('property_id');
+                $occupancy->save();
+    
+            }
 
 
         $user_id =  DB::table('users')->insertGetId([
@@ -524,9 +508,9 @@ class TenantController extends Controller
             'property_type' => '',
             'property_ownership' => '',
             'password' => Hash::make($request->contact_no),
-            'created_at' => $request->movein_at,
+            'created_at' => Carbon::now(),
             'account_type' => '',
-            'email_verified_at' => $request->movein_at,
+            'email_verified_at' => Carbon::now(),
             'trial_ends_at' => '',
         ]);
 
@@ -553,9 +537,112 @@ class TenantController extends Controller
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
+        return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
        
+    }
 
+    public function store_occupant_prefilled(Request $request, $property_id, $unit_id )
+    {
+        return 'asdasd';
+
+        $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+    
+            'birthdate' => [],
+            'gender' => [],
+    
+            'civil_status' => [],
+            'id_number' => [],
+        
+            'email_address' => ['required', 'string', 'email', 'max:255', 'unique:tenants'],
+            'contact_no' => ['required', 'unique:tenants'],
+        ]);
+
+        $tenant_unique_id = Str::random(8);
+
+        $tenant_id = DB::table('tenants')->insertGetId(
+            [
+                'tenant_unique_id' => $tenant_unique_id,
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name'=> $request->last_name,
+                'birthdate'=>$request->birthdate,
+                'gender' => $request->gender,
+                'civil_status'=> $request->civil_status,
+                'id_number' => $request->id_number,
+                //contact number
+                'contact_no' => $request->contact_no,
+                'email_address' => $request->email_address,
+                'created_at' => Carbon::now()
+            ]
+            );
+
+            
+            DB::table('units')
+            ->where('unit_id', $unit_id)
+            ->update(
+                [
+                    'status' => 'occupied'
+                ]
+            );
+            $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
+
+            $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+    
+            $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+    
+            $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+    
+            if($new_occupancy_rate/$current_occupancy_rate !== 1){
+                $occupancy = new OccupancyRate();
+                $occupancy->occupancy_rate = $new_occupancy_rate;
+                $occupancy->occupancy_date = Carbon::now();
+                $occupancy->property_id_foreign =  Session::get('property_id');
+                $occupancy->save();
+    
+            }
+
+
+        $user_id =  DB::table('users')->insertGetId([
+            'name' => $request->first_name.' '.$request->last_name,
+            'email' => $request->email_address,
+            'user_type' => 'tenant',
+            'property' => '',
+            'property_type' => '',
+            'property_ownership' => '',
+            'password' => Hash::make($request->contact_no),
+            'created_at' => Carbon::now(),
+            'account_type' => '',
+            'email_verified_at' => Carbon::now(),
+            'trial_ends_at' => '',
+        ]);
+
+        DB::table('tenants')
+        ->where('tenant_id', $tenant_id)
+        ->update([
+            'user_id_foreign' => $user_id,
+        ]);
+
+        DB::table('users_properties_relations')
+        ->insert([
+            'property_id_foreign' => $property_id,
+            'user_id_foreign' => $user_id,
+        ]);
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'success';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added as occupant!';
+        $notification->save();
+        
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
        
     }
 
@@ -908,6 +995,19 @@ class TenantController extends Controller
 
     }
 
+    public function occupant_edit($property_id, $tenant_id)
+    {
+        $property = Property::findOrFail($property_id);
+
+        if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
+            $tenant = Tenant::findOrFail($tenant_id);
+            return view('webapp.tenants.edit-occupant', compact('tenant', 'property'));
+        }else{
+            return view('website.unregistered');
+        }
+
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -938,7 +1038,6 @@ class TenantController extends Controller
                 'country' => $request->country,
                 'zip_code' => $request->zip_code,
 
-
                 'high_school' => $request->high_school,
                 'high_school_address' =>$request->high_school_address,
                 'college_school' => $request->college_school,
@@ -962,6 +1061,28 @@ class TenantController extends Controller
         ]);
         
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','changes have been saved!');
+    }
+
+    public function occupant_update(Request $request,$property_id, $tenant_id)
+    {   
+        $occupant = Tenant::findOrFail($tenant_id);
+        $occupant->first_name = $request->first_name;
+        $occupant->middle_name = $request->middle_name;
+        $occupant->last_name = $request->last_name;
+        $occupant->birthdate = $request->birthdate;
+        $occupant->gender = $request->gender;
+        $occupant->civil_status = $request->civil_status;
+        $occupant->id_number = $request->id_number;
+        $occupant->contact_no = $request->contact_no;
+        $occupant->email_address = $request->email_address;
+        $occupant->barangay = $request->barangay;
+        $occupant->city = $request->city;
+        $occupant->id_number = $request->id_number;
+        $occupant->province = $request->province;
+        $occupant->country = $request->country;
+        $occupant->save();
+        
+       return redirect('/property/'.$property_id.'/occupant/'.$tenant_id)->with('success','changes have been saved!');
     }
     
     public function request(Request $request, $property_id, $unit_id, $tenant_id){

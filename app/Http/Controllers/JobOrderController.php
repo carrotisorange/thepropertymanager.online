@@ -65,7 +65,7 @@ class JobOrderController extends Controller
             ]
             );
 
-         return redirect('/property/'.$property_id.'/joborders')->with('success', 'new issue has been posted!');
+         return redirect('/property/'.$property_id.'/joborders')->with('success', 'job order has been filed!');
     }
 
     /**

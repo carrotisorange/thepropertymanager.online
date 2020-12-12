@@ -178,7 +178,7 @@
       <tr>
           <th>#</th>
           <th>Date filed</th>
-          <th>Concern ID </th>
+          <th>Concern </th>
           <th>Summary</th>
           <th>Personnel</th>
           <th>Status</th>

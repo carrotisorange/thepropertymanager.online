@@ -307,14 +307,14 @@
           </form>
 
           <div class="form-group">
-              <label >Building</label>
+              <label>Building</label>
               <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="ex. Building A, Building 1">
               
           </div>
 
           <div class="form-group">
-              <label>Floor no</label>
-              <select class="form-control" form="addUMultipleUnitForm" name="floor_no" id="floor_no" onchange ="autoFillInitialName()" required>
+              <label>Floor</label>
+              <select class="form-control" form="addUMultipleUnitForm" name="floor" id="floor" onchange ="autoFillInitialName()" required>
                                   <option value="" selected>Please select one</option>
                                   <option value="-5">5th basement</option>
                                   <option value="-4">4th basement</option>
@@ -336,7 +336,7 @@
 
            <div class="form-group">
               <label>Type</label>
-              <select form="addUMultipleUnitForm" class="form-control" name="type_of_units" required>
+              <select form="addUMultipleUnitForm" class="form-control" name="type" required>
                   <option value="" selected>Please select one</option>
                   <option value="commercial">commercial</option>
               
@@ -351,14 +351,14 @@
             </div>
 
           <div class="form-group">
-              <label>Units to be created</label>
+              <label>Number of units to be created</label>
               <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
           </div>
 
           <input form="addUMultipleUnitForm" type="hidden" class="form-control" name="unit_no" id="unit_no" required>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button>
           <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
           </div>
   </div>

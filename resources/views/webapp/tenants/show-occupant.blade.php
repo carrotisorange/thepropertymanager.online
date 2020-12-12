@@ -233,7 +233,7 @@
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
+    <a href="/property/{{ $property->property_id }}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
      <br><br>
@@ -249,6 +249,15 @@
                      
                   </td>
               </tr>
+                  <tr>
+                  <th>Mobile</th>
+                  <td>{{ $tenant->contact_no }}</td>
+              </tr>
+              <tr>
+                  <th>Email</th>
+                  <td>{{ $tenant->email_address }}</td>
+              </tr>
+             
               <tr>
                   <th>Gender</th>
                   <td>{{ $tenant->gender }}</td>
@@ -270,15 +279,7 @@
                   <td>{{ $tenant->barangay.', '.$tenant->city.', '.$tenant->province.', '.$tenant->country.', '.$tenant->zip_code }}</td>
               </tr>
           
-              <tr>
-                  <th>Mobile</th>
-                  <td>{{ $tenant->contact_no }}</td>
-              </tr>
-              <tr>
-                  <th>Email</th>
-                  <td>{{ $tenant->email_address }}</td>
-              </tr>
-             
+          
   
               
 

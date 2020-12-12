@@ -88,11 +88,22 @@ Route::get('/property/{property_id}/occupants', 'TenantController@occupants_inde
 Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/occupant/{tenant_id}', 'TenantController@show_occupant')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/occupant/{tenant_id}/edit', 'TenantController@occupant_edit')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}', 'TenantController@update')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/occupant/{tenant_id}', 'TenantController@occupant_update')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
+
+Route::post('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
+
+
+
 
 
 Route::get('/property/{property_id}/home/{unit_id}/occupant', 'TenantController@create_occupant')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/home/{unit_id}/occupant/prefilled', 'TenantController@occupant_store')->middleware(['auth', 'verified']);
+
+Route::get('/property/{property_id}/home/{unit_id}/occupant/prefilled', 'TenantController@create_occupant_prefilled')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/home/{unit_id}/occupant/prefilled', 'TenantController@store_occupant_prefilled')->middleware(['auth', 'verified']);
 
 Route::get('/property/{property_id}/tenants/search', 'TenantController@index')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/extend', 'TenantController@extend')->middleware(['auth', 'verified']);
@@ -470,16 +481,6 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/send', function($unit_id,
     $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
    $pdf->save(storage_path().'_filename.pdf');
 })->middleware(['auth', 'verified']);
-
-//routes for tenants
-Route::get('/units/{unit_id}/tenants/{tenant_id}', 'TenantController@show')->name('show')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
-
-Route::post('/property/{property_id}/home/{unit_id}/occupant', 'TenantController@store_occupant')->middleware(['auth', 'verified']);
-
-
-Route::get('/units/{unit_id}/tenants/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
-Route::put('/units/{unit_id}/tenants/{tenant_id}/', 'TenantController@update')->middleware(['auth', 'verified']);
 
 
 Route::delete('/tenants/{tenant_id}', 'TenantController@destroy')->middleware(['auth', 'verified']);

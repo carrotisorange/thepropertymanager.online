@@ -177,7 +177,7 @@
       <?php $ctr=1; ?>
       <tr>
           <th>#</th>
-          <th>Date Reported</th>
+          <th>Reported</th>
           <th>Reported By</th>
           <th>Room</th>
         

@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', 'Edit All')
+@section('title', 'Edit Units')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -198,14 +198,11 @@
               <thead>
                   <tr>
                       <th>#</th>
+                      <th>Building</th>
                       <th>Unit</th>
                       <th>Floor</th>
                       <th>Type</th>
                       <th>Status</th>
-                      <th>Building</th>
-               
-                  
-                
                       <th></th>
                   </tr>
               </thead>
@@ -222,12 +219,13 @@
                   @foreach ($units as $item)
                       <tr>
                           <th> {{ $ctr++ }}</th>
+                            <td><input form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
                           <td>
                             <input col-md-12" form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
                             <input form="editUnitsForm" type="hidden" name="unit_id{{ $unit_id++  }}" id="" value="{{ $item->unit_id }}">
                           </td>
                           <td>
-                            <select form="editUnitsForm" type="number" name="floor_no{{ $floor_no++ }}">
+                            <select form="editUnitsForm" type="number" name="floor{{ $floor++ }}">
                               <option value="{{ $item->floor }}" readonly selected class="bg-primary">{{ $item->floor }}</option>
                               <option value="-5">5th basement</option>
                               <option value="-4">4th basement</option>
@@ -248,7 +246,7 @@
                            
                           </td>
                           <td>
-                            <select class="" form="editUnitsForm" type="text" name="type_of_units{{ $type_of_units++  }}">
+                            <select class="" form="editUnitsForm" type="text" name="type{{ $type++  }}">
                               <option value="{{ $item->type }}" readonly selected class="bg-primary">{{ $item->type }}</option>
                               <option value="commercial">commercial</option>
                               <option value="residential">residential</option>
@@ -264,11 +262,7 @@
                               <option value="reserved">accepted</option>
                           </select>
                           
-                          </td>
-                          <td><input form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
-                         
-          
-                          
+                          </td>    
                           <td>
                             <form action="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" method="POST">
                               @csrf

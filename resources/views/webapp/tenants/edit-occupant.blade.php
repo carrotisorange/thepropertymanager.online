@@ -156,7 +156,7 @@
   </div>
 
 </div>
-<form id="editTenantForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}" method="POST">
+<form id="editTenantForm" action="/property/{{ $property->property_id }}/occupant/{{ $tenant->tenant_id }}" method="POST">
     @method('put')
     {{ csrf_field() }}
 </form>
@@ -190,7 +190,7 @@
                     <input form="editTenantForm" class="form-control" type="date" name="birthdate" value="{{ $tenant->birthdate }}">
                 </div>
                 <div class="col">
-                    <small>Civil Status:</small>
+                    <small>Civil Status</small>
                     <select form="editTenantForm"  id="civil_status" name="civil_status" class="form-control">
                         <option value="{{ $tenant->civil_status }}" selected>{{ $tenant->civil_status }}</option>
                         <option value="single" selected>single</option>
@@ -221,7 +221,7 @@
                 </div>
                 <div class=" col-md-4">
                     <small for="">Country</small>
-                    <select form="editTenantForm" class="form-control" name="country">
+                    <select  form="editTenantForm" class="form-control" name="country">
                            <option value="{{$tenant->country}}">{{$tenant->country}}</option> 
                           <option value="Afganistan">Afghanistan</option>
                           <option value="Albania">Albania</option>
@@ -479,104 +479,23 @@
 
             <div class="form-group row">
                 <div class="col">
-                    <small for="">Contact No</small>
+                    <small for="">Mobile</small>
                     <input form="editTenantForm" class="form-control" type="text" name="contact_no" value="{{ $tenant->contact_no }}">
                 </div>
                 <div class="col" id="email_address">
-                    <small for="">Email Address</small>
+                    <small for="">Email</small>
                     <input form="editTenantForm" class="form-control" type="text" name="email_address" value="{{ $tenant->email_address }}">
                   @if($tenant->email_address === null)
                   <small class="text-danger">Please add an email</small>
                   @endif
                 </div>
             </div>
-      
 
-            <hr>
-
-            <div class="form-group row">
-                <div class="col">
-                    <small for="">High School</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="high_school" value="{{ $tenant->high_school }}">
-                </div>
-                <div class="col">
-                    <small for="">Adddress</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="high_school_address" value="{{ $tenant->high_school_address }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col">
-                    <small for="">College/University</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="college_school" value="{{ $tenant->college_school }}">
-                </div>
-                <div class="col">
-                    <small for="">Address</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="college_school_address" value="{{ $tenant->college_school_address }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col">
-                    <small for="">Course</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="course" value="{{ $tenant->course }}">
-                </div>
-                <div class="col">
-                    <small for="">Year Level</small>
-                    <select form="editTenanForm" class="form-control" name="year_level" id="">
-                        <option value="{{ $tenant->year_level }}">{{ $tenant->year_level }}</option>
-                          <option value="senior high">junior high</option>
-                          <option value="first year">first year</option>
-                          <option value="second year">second year</option>
-                          <option value="third year">third year</option>
-                          <option value="fourth year">fourth year</option>
-                          <option value="fifth year">fifth year</option>
-                          <option value="graduate student">graduate student</option>
-                      </select>
-                </div>
-            </div>
-
-            <hr>
-
-
-            <div class="form-group row">
-                <div class="col">
-                    <small for="">Employer/Company</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="employer" value="{{ $tenant->employer }}">
-                </div>
-                <div class="col">
-                    <small for="">Position/Job description</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="job" value="{{ $tenant->job }}">
-                </div>
-                <div class="col">
-                    <small for="">Years of Employment</small>
-                    <input form="editTenantForm" class="form-control" type="number" name="years_of_employment" value="{{ $tenant->years_of_employment }}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col">
-                    <small for="">Address</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="employer_address" value="{{ $tenant->employer_address }}">
-                </div>
-                <div class="col">
-                    <small for="">Contact No</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="employer_contact_no" value="{{ $tenant->employer_contact_no }}">
-                </div>
-                
-            </div>
-            <hr>
-            {{-- @if($tenant->tenants_note !== 'new' )
-            <div class="form-group row">
-                <div class="col">
-                  <small>Note</small>
-                    <textarea form="editTenantForm" class="form-control" name="tenants_note" id="" cols="30" rows="5">
-                        {{ $tenant->tenants_note }}
-                    </textarea>
-                </div>
-            </div>
-            @endif --}}
+        
 
 
 <p class="text-right">   
-    <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</a>
+    <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</a>
     <button type="submit" form="editTenantForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
 </p>
 @endsection

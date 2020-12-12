@@ -232,10 +232,10 @@ class UnitController extends Controller
         for($i = 1; $i<=$request->no_of_rooms; $i++ ) {
             $unit = new Unit();
             $unit->unit_no = $request->unit_no.'-'.$i;
-            $unit->floor_no = $request->floor_no;
+            $unit->floor = $request->floor;
             $unit->building = $building;
             $unit->status = 'accepted';
-            $unit->type = $request->type_of_units;
+            $unit->type = $request->type;
             $unit->occupancy = $request->occupancy;
             $unit->property_id_foreign = Session::get('property_id');
             $unit->save();

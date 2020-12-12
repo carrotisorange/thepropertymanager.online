@@ -199,14 +199,15 @@
             <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             <div class="table-responsive text-nowrap">
           <table class="table">
+           <tr>
+                    <th>Building</th>
+                    <td>{{ $home->building }}</td>
+               </tr>
                <tr>
                     <th>Unit</th>
                     <td>{{ $home->unit_no }}</td>
                </tr>
-                <tr>
-                    <th>Building</th>
-                    <td>{{ $home->building }}</td>
-               </tr>
+               
                <tr>
                     <th>Floor</th>
              
@@ -225,9 +226,6 @@
                </tr>
              
                
-               <tr>
-                <th>Occupancy</th>
-                <td>{{ $home->occupancy }} pax</td>
               </tr>
               <tr>
                     <th>Status</th>
@@ -237,7 +235,7 @@
                           @elseif($home->status === 'reserved')
                               <span class="badge badge-warning">{{ $home->status}} </span>
                           @else
-                              <span class="badge badge-secondary">{{ $home->status }}</span>
+                              <span class="badge badge-success">{{ $home->status }}</span>
                           @endif
                     </td>
                 </tr>
@@ -297,12 +295,9 @@
         </div>
   
         <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
-         
-             
-          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
-            <i class="fas fa-user-plus"></i> Add </a>
-    
-       
+          
+          <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>
+ 
           <br><br>
           <div class="col-md-12 mx-auto">
              <div class="table-responsive">
@@ -631,6 +626,33 @@
                   </div>
   @include('webapp.tenants.show_includes.rooms.warning-exceeds-limit')
   @include('webapp.tenants.show_includes.owners.create')
+
+  <div class="modal fade" id="addOccupant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add occupant </h5>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+           <p class="text-center">
+               Would you like to add the owner as the occupant?
+                <br>
+           </p>
+        </div>
+         <div class="modal-footer">
+          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant"  type="button" class="btn btn-secondary"> <i class="fas fa-times fa-sm text-dark-50"></i> No</a>
+          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant/prefilled"  type="button" class="btn btn-primary"> <i class="fas fa-check fa-sm text-dark-50"></i> Yes</a>
+          </div>
+        
+    </div>
+    </div>
+</div>
+
+
 @endsection
 
 @section('scripts')
