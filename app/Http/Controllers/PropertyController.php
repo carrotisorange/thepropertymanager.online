@@ -16,6 +16,7 @@ use Uuid;
 use App\UserProperty;
 use App\Notification;
 use Session;
+use App\OccupancyRate;
 
 
 class PropertyController extends Controller
@@ -216,8 +217,14 @@ class PropertyController extends Controller
                     ]
                 );
 
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = 1;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  $property_id;
+            $occupancy->save();
+         
 
-        return redirect('property/all')->with('success', 'New property has been added!');
+        return redirect('property/all')->with('success', 'Your property has been added!');
 
     
 
