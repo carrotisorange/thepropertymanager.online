@@ -204,13 +204,14 @@ class UnitController extends Controller
     
         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
 
-        if($new_occupancy_rate/$current_occupancy_rate !== 1){
+        if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
             $occupancy = new OccupancyRate();
             $occupancy->occupancy_rate = $new_occupancy_rate;
             $occupancy->occupancy_date = Carbon::now();
             $occupancy->property_id_foreign =  Session::get('property_id');
             $occupancy->save();
         }
+
 
         $property = Property::findOrFail(Session::get('property_id'));
  
@@ -246,15 +247,15 @@ class UnitController extends Controller
 
         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
 
-        if($new_occupancy_rate/$current_occupancy_rate !== 1){
+       
+        if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
             $occupancy = new OccupancyRate();
             $occupancy->occupancy_rate = $new_occupancy_rate;
             $occupancy->occupancy_date = Carbon::now();
             $occupancy->property_id_foreign =  Session::get('property_id');
             $occupancy->save();
-
         }
-
+        
         $property = Property::findOrFail(Session::get('property_id'));
 
         return back()->with('success', $request->no_of_rooms.' units have been added!');
