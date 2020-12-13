@@ -195,7 +195,7 @@ class UnitController extends Controller
             $unit->save();
        
         }
-        
+
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
         $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
@@ -362,7 +362,7 @@ class UnitController extends Controller
         
             $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
     
-            if($new_occupancy_rate/$current_occupancy_rate !== 1){
+            if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
                 $occupancy = new OccupancyRate();
                 $occupancy->occupancy_rate = $new_occupancy_rate;
                 $occupancy->occupancy_date = Carbon::now();
