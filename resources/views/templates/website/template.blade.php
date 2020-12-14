@@ -68,7 +68,8 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('/arsha/assets/js/main.js') }}"></script>
-  <body>
+
+  @yield('scripts')
 
 </body>
 

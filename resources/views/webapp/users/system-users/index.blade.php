@@ -62,10 +62,10 @@
       <hr>
       <div class="row">
         <div class="col">
-           <a href="/property/all/" class="btn btn-primary btn-user btn-block"> Home</a>
+           <a href="/property/all/" class="btn btn-primary btn-user btn-block"><i class="fas fa-home"></i> Home</a>
        </div>
        <div class="col">
-        @if($users->count() > 1)
+        @if($users->count() < 1)
         <a href="#/" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus-circle"></i> User </a
         @else
         <a href="/user/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus-circle"></i> User </a>

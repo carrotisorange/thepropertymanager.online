@@ -53,7 +53,7 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a href="/" target="_blank" class="nav-link">
-              <span class="nav-link-inner--text">The Property Manager</span>
+              <h2 class="text-white">The Property Manager</h2>
             </a>
           </li>
           {{-- <li class="nav-item">

@@ -604,8 +604,7 @@
           </div>
           </div>
       
-@endsection
-
+          
   
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="modal">
@@ -630,6 +629,8 @@
   </div>
   
   </div>
+@endsection
+
 
 @section('scripts')
 {!! $point_of_contact->script() !!}

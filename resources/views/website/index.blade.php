@@ -29,7 +29,8 @@
         <h2></h2>
         <div class="d-lg-flex">
           <a href="/register" class="btn-get-started scrollto">Get Started For Free</a>
-          <a href="https://youtu.be/5wxvKBkhDqQ" class="venobox btn-watch-video" data-vbtype="video" data-autoplay="true"> Watch Demo <i class="icofont-play-alt-2"></i></a>
+    
+          <a href="#myModal"  style="display:none" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a>
         </div>
       </div>
       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
@@ -61,39 +62,10 @@
       </div>
     </section><!-- End Cliens Section -->
 
-    <!-- ======= About Us Section ======= -->
-    <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>About Us</h2>
-        </div>
-
-        <div class="row content">
-          <div class="col-lg-6 d-flex align-items-center" data-aos="fade-right" data-aos-delay="50">
-            <img src="{{ asset('/arsha/assets/img/about.png') }}" class="img-fluid" alt="">
-          </div>
-          
-          <div class="col-lg-6 pt-4 pt-lg-0">
-            <p class="text-justify">
-
-              We are property managers with about a thousand listings, we were using traditional marketing and many steps of leasing procedures, 
-              paper and pen to sign up tenant info sheets, contracts, billing statements and receipts. We monitor transactions through spreadsheets 
-              and it takes a day to process a report. At one point, our operations are so wrapped up into administrative work that we are spending less 
-              time strengthening our customer relations. We spend so much time looking for documents and less time on satisfying customer requests. 
-              We realize that if we want to stay in this business and grow, we need to automate our processes so we can focus on the more important 
-              aspects of the business like providing good customer service experience while maintaining efficient operations and that’s how thepropertymanager.online was born. 
-            </p>
-            {{-- <a href="#quick" class="btn-learn-more">Quick Start</a> --}}
-           
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Us Section -->
+    
 
     <!-- ======= Why Us Section ======= -->
-    <section id="quick" class="why-us section-bg">
+    <section id="quick" class="why-us">
       <div class="container-fluid" data-aos="fade-up">
 
         <div class="row">
@@ -178,7 +150,7 @@
     </section><!-- End Why Us Section -->
 
     <!-- ======= Skills Section ======= -->
-    <section id="skills" class="skills">
+    <section id="skills" class="skills section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="row">
@@ -232,7 +204,7 @@
     </section><!-- End Skills Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
+    <section id="services" class="services">
       <div class="container text-center" data-aos="fade-up">
 
         <div class="section-title">
@@ -401,7 +373,7 @@
           </div>
         </section><!-- End Cta Section --> --}}
 
-    <section id="team" class="team">
+    <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -442,7 +414,7 @@
     </section><!-- End Team Section -->
 
     <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing section-bg">
+    <section id="pricing" class="pricing">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -461,18 +433,18 @@
               <h4><sup>₱</sup>950<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 1 property</li>
-                <li><i class="bx bx-check"></i> 20 rooms</li>
+                <li><i class="bx bx-check"></i> 20-30 rooms</li>
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
                 <li><i class="bx bx-check"></i> Bulk billing for rent, utilities, and etc.</li>
                 <li><i class="bx bx-check"></i> Record payments</li>
                 <li><i class="bx bx-check"></i> Concern tracker</li>
                 <li><i class="bx bx-check"></i> Job order</li>
-                <li class="na"><i class="bx bx-x"></i> <span>Marketing services</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Owner portal</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Tenant portal</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Online payment</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Concierge services</span></li>
+                <li><i class="bx bx-check"></i> Marketing services</span></li>
+                <li><i class="bx bx-check"></i> Owner portal</li>
+                <li><i class="bx bx-check"></i> Tenant portal</li>
+                <li><i class="bx bx-check"></i> Online payment</li>
+                <li><i class="bx bx-check"></i> Concierge services</li>
                 <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
               </ul>
               <a href="/register" class="buy-btn">Get Started for Free</a>
@@ -482,10 +454,10 @@
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="box featured">
               <h3>Large</h3>
-              <h4><sup>₱</sup>1800<span>per month</span></h4>
+              <h4><sup>₱</sup>1400<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 1 property</li>
-                <li><i class="bx bx-check"></i> 50 rooms</li>
+                <li><i class="bx bx-check"></i> 31-50 rooms</li>
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
           
@@ -493,11 +465,11 @@
                 <li><i class="bx bx-check"></i> Record payments</li>
                 <li><i class="bx bx-check"></i> Concern tracker</li>
                 <li><i class="bx bx-check"></i> Job order</li>
-                <li><i class="bx bx-check"></i> <span>Marketing services</span></li>
-                <li><i class="bx bx-check"></i> <span>Owner portal</span></li>
-                <li><i class="bx bx-check"></i> <span>Tenant portal</span></li>
-                <li><i class="bx bx-check"></i> <span>Online payment</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Concierge services</span></li>
+                <li><i class="bx bx-check"></i> Marketing services</span></li>
+                <li><i class="bx bx-check"></i> Owner portal</li>
+                <li><i class="bx bx-check"></i> Tenant portal</li>
+                <li><i class="bx bx-check"></i> Online payment</li>
+                <li><i class="bx bx-check"></i> Concierge services</li>
                 <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
               </ul>
               <a href="/register" class="buy-btn">Get Started for Free</a>
@@ -507,10 +479,10 @@
           <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
             <div class="box">
               <h3>Advanced</h3>
-              <h4><sup>₱</sup>2500<span>per month</span></h4>
+              <h4><sup>₱</sup>2400<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 2 properties</li>
-                <li><i class="bx bx-check"></i> 100 rooms</li>
+                <li><i class="bx bx-check"></i> 51-75 rooms</li>
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
           
@@ -518,12 +490,12 @@
                 <li><i class="bx bx-check"></i> Record payments</li>
                 <li><i class="bx bx-check"></i> Concern tracker</li>
                 <li><i class="bx bx-check"></i> Job order</li>
-                <li><i class="bx bx-check"></i> <span>Marketing services</span></li>
-                <li><i class="bx bx-check"></i> <span>Owner portal</span></li>
-                <li><i class="bx bx-check"></i> <span>Tenant portal</span></li>
-                <li><i class="bx bx-check"></i> <span>Online payment</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Concierge services</span></li>
-                <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
+                <li><i class="bx bx-check"></i> Marketing services</span></li>
+                <li><i class="bx bx-check"></i> Owner portal</li>
+                <li><i class="bx bx-check"></i> Tenant portal</li>
+                <li><i class="bx bx-check"></i> Online payment</li>
+                <li><i class="bx bx-check"></i> Concierge services</li>
+                <li><i class="bx bx-check"></i>Portforlio management</li>
               </ul>
          
               <a href="/register" class="buy-btn">Get Started for Free</a>
@@ -539,8 +511,8 @@
               <h3>Enterprise</h3>
               <h4><sup>₱</sup>N<span>per month</span></h4>
               <ul>
-                <li><i class="bx bx-check"></i> 2+ property</li>
-                <li><i class="bx bx-check"></i> 100+ rooms</li>
+                <li><i class="bx bx-check"></i> 2+ properties</li>
+                <li><i class="bx bx-check"></i> 76+ rooms</li>
                 <li><i class="bx bx-check"></i> Room management</li>
                 <li><i class="bx bx-check"></i> Tenant management</li>
                
@@ -563,9 +535,80 @@
       </div>
     </section><!-- End Pricing Section -->
 
-@endsection
-@section('scripts')
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about section-bg">
+      <div class="container" data-aos="fade-up">
 
+        <div class="section-title">
+          <h2>About Us</h2>
+        </div>
+
+        <div class="row content">
+          <div class="col-lg-6 d-flex align-items-center" data-aos="fade-right" data-aos-delay="50">
+            <img src="{{ asset('/arsha/assets/img/about.png') }}" class="img-fluid" alt="">
+          </div>
+          
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <p class="text-justify">
+
+              We are property managers with about a thousand listings, we were using traditional marketing and many steps of leasing procedures, 
+              paper and pen to sign up tenant info sheets, contracts, billing statements and receipts. We monitor transactions through spreadsheets 
+              and it takes a day to process a report. At one point, our operations are so wrapped up into administrative work that we are spending less 
+              time strengthening our customer relations. We spend so much time looking for documents and less time on satisfying customer requests. 
+              We realize that if we want to stay in this business and grow, we need to automate our processes so we can focus on the more important 
+              aspects of the business like providing good customer service experience while maintaining efficient operations and that’s how thepropertymanager.online was born. 
+            </p>
+            {{-- <a href="#quick" class="btn-learn-more">Quick Start</a> --}}
+           
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Us Section -->
+
+     <!-- Modal HTML -->
+ <div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Watch Demo</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="embed-responsive embed-responsive-16by9">
+             
+              <iframe id="openWatchDemo" class="embed-responsive-item" frameborder="0" height="100%" width="100%" src="//youtube.com/embed/BMIt10slYgs?autoplay=1&controls=1&showinfo=0&autohide=1" allowfullscreen allow="autoplay"></iframe>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    $(window).on('load',function(){
+      $('#myModal').modal('show');
+  });
+
+  $(document).ready(function(){
+      /* Get iframe src attribute value i.e. YouTube video url
+      and store it in a variable */
+      var url = $("#openWatchDemo").attr('src');
+      
+      /* Assign empty url value to the iframe src attribute when
+      modal hide, which stop the video playing */
+      $("#myModal").on('hide.bs.modal', function(){
+          $("#open").attr('src', '');
+      });
+      
+      /* Assign the initially stored url back to the iframe src
+      attribute when modal is displayed again */
+      $("#myModal").on('show.bs.modal', function(){
+          $("#openWatchDemo").attr('src', url);
+      });
+  });
+  </script>
 @endsection
 
 

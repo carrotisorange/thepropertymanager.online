@@ -83,9 +83,9 @@
     <div class="col-md-4">
       @if (Auth::user()->user_type === 'manager')
         @if($users > 1)
-        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block">   Users ({{ $users }}/2) </a>
+        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block">   Users ({{ $users }}) </a>
         @else
-        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> Users ({{ $users }}/2)</a>
+        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> Users ({{ $users }})</a>
         @endif
       @else
       <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"> Users</a>
