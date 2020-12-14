@@ -281,6 +281,7 @@
      <th>#</th>
      <th>Name</th>
      <th>Email</th>
+     <th>M</th>
      <th>Role</th>
 
      <th>Created at</th>
@@ -443,7 +444,7 @@
                          <th>Name</th>
                          <th>Type</th>
                          <th>Ownership</th>
-                         <th>Status</th>
+                       
                          <th>Mobile</th>
                        
                         
@@ -468,9 +469,7 @@
                              <td>
                               {{ $item->ownership }}
                              </td>
-                             <td>
-                              {{ $item->status }}
-                             </td>
+                           
                              <td>
                               {{ $item->mobile }}
                              </td>

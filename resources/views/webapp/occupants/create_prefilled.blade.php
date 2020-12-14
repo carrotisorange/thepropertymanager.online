@@ -169,17 +169,12 @@
 <form id="addTenantForm1" action="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/occupant" method="POST">
   @csrf
   </form>
-
+  <?php $explode = explode(" ", $current_owner->name);?>
   <div class="row">
 
       <div class="col">
           <small class="">First Name <span class="text-danger">*</span></small>
-          <input form="addTenantForm1" type="text" class="form-control form-control-user @error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}">
-             @error('first_name')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-          @enderror
+          <input form="addTenantForm1" type="text" class="form-control form-control" name="first_name" id="first_name"  value="{{ $explode[0] }}">
         </div>
       <div class="col">
           <small class="">Middle Name</small>
@@ -192,13 +187,9 @@
       </div>
       <div class="col">
           <small class="">Last Name  <span class="text-danger">*</span></small>
-          <input form="addTenantForm1" type="text" class="form-control form-control-user @error('last_name') is-invalid @enderror" name="last_name" id="last_name"  value="{{ old('last_name') }}">
+          <input form="addTenantForm1" type="text" class="form-control form-control-user" name="last_name" id="last_name"  value="{{ $explode[1]}}">
   
-          @error('last_name')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-          @enderror
+     
       </div>
       </div>
       <br>
@@ -258,7 +249,7 @@
   <div class="row">
       <div class="col">
           <small class="">Mobile <span class="text-danger">*</span></small>
-        <input form="addTenantForm1" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ old('contact_no') }}">
+        <input form="addTenantForm1" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ $current_owner->mobile }}">
   
         @error('contact_no')
         <span class="invalid-feedback" role="alert">
@@ -268,7 +259,7 @@
       </div>
       <div class="col">
           <small class="">Email <span class="text-danger">*</span></small>
-        <input form="addTenantForm1" type="email" class="form-control form-control-user @error('email_address') is-invalid @enderror" name="email_address" id="email_address" value="{{ old('email_address') }}">
+        <input form="addTenantForm1" type="email" class="form-control form-control-user @error('email_address') is-invalid @enderror" name="email_address" id="email_address" value="{{ $current_owner->email }}">
   
         @error('email_address')
         <span class="invalid-feedback" role="alert">

@@ -132,7 +132,7 @@
 <br><br>
 <div class="row">
   <div class="col">
-    <a href="https://youtu.be/1vcMTY8SdwU" target="_blank" class="btn btn-danger btn-user btn-block"> <i class="fab fa-youtube"></i> Watch </a>
+    <a href="https://youtu.be/BMIt10slYgs" target="_blank" class="btn btn-danger btn-user btn-block"> <i class="fab fa-youtube"></i> Watch </a>
     </div>
     <div class="col">
       <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-user btn-block"> <i class="fab fa-facebook-messenger"></i> Chat </a>

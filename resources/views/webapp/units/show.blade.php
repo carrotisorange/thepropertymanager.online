@@ -175,8 +175,8 @@
     <div class="col-md-12">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="nav-room" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Room</a>
-          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants</a>
+          <a class="nav-item nav-link active" id="nav-unit-tab" data-toggle="tab" href="#unit" role="tab" aria-controls="nav-unit" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Unit</a>
+          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#occupants" role="tab" aria-controls="nav-occupants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Occupants</a>
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
           <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter"></span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
@@ -189,9 +189,9 @@
     <div class="col-md-12">
       <div class="tab-content" id="nav-tabContent">
      
-        <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
+        <div class="tab-pane fade show active" id="unit" role="tabpanel" aria-labelledby="nav-unit-tab">
     
-          <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
+          <button type="button" title="edit unit" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
     
           <div class="col-md-12 mx-auto">
            
@@ -199,20 +199,21 @@
             <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             <div class="table-responsive text-nowrap">
           <table class="table">
-               <tr>
-                    <th>Room</th>
-                    <td>{{ $home->unit_no }}</td>
-               </tr>
-                <tr>
+           <tr>
                     <th>Building</th>
                     <td>{{ $home->building }}</td>
                </tr>
+               <tr>
+                    <th>Unit</th>
+                    <td>{{ $home->unit_no }}</td>
+               </tr>
+               
                <tr>
                     <th>Floor</th>
              
                     <td>
                       @if($home->floor <= 0)
-                      {{ $numberFormatter->format($home->floor * -1) }} basement
+                      {{ $numberFormatter->format($home->floor * -1) }} basement 
                       @else
                       {{ $numberFormatter->format($home->floor) }} floor
                       @endif
@@ -225,25 +226,20 @@
                </tr>
              
                
-               <tr>
-                <th>Occupancy</th>
-                <td>{{ $home->occupancy }} pax</td>
               </tr>
               <tr>
                     <th>Status</th>
-                    <td>{{ $home->status }}</td>
+                    <td>
+                          @if($home->status === 'occupied')
+                          <span class="badge badge-primary">{{ $home->status }}</span>
+                          @elseif($home->status === 'reserved')
+                              <span class="badge badge-warning">{{ $home->status}} </span>
+                          @else
+                              <span class="badge badge-success">{{ $home->status }}</span>
+                          @endif
+                    </td>
                 </tr>
-                <tr>
-                    <th>Rent</th> 
-                    <td>{{ number_format($home->rent,2) }}</td>
-    
-                    <?php 
-                        session([Auth::user()->id.'tenant_monthly_rent'=> $home->rent]);
-                        session([Auth::user()->id.'unit_id'=> $home->unit_id]);
-                        session([Auth::user()->id.'unit_no'=> $home->unit_no]);
-                        session([Auth::user()->id.'building'=> $home->building]);
-                    ?>
-                </tr>
+                
             
            </table>
           </div>
@@ -266,7 +262,30 @@
               <th class="text-right">Amount</th>
             
             </tr>
-     
+          </thead>
+            {{-- @foreach ($bills as $item)
+            <tr>
+              <th>{{ $ctr++ }}</th>
+              <td>
+                {{Carbon\Carbon::parse($item->billing_date)->format('M d Y')}}
+              </td>   
+                <td>{{ $item->billing_no }}</td>
+                <td> <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
+                <td>{{ $item->billing_desc }}</td>
+                <td colspan="2">
+                  {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
+                  {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                </td>
+                <td class="text-right"> {{ number_format($item->billing_amt,2) }}</td>
+            
+  
+            </tr>
+          
+            @endforeach
+            <tr>
+              <th>Total</th>
+              <th class="text-right" colspan="7"> {{ number_format($bills->sum('billing_amt'),2) }}</th>
+            </tr> --}}
             
             </table>
         
@@ -275,143 +294,46 @@
         </div>
         </div>
   
-        <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
-          @if ($tenant_active->count() < $home->occupancy)
-          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/tenant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
-              <i class="fas fa-user-plus"></i> Add </a>
-    
+        <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
+
+          @if($owners->count() < 1 && Session::get('property_ownership') === 'Multiple Owners')
+              <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>
           @else
-          <a href="#/" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn  btn-primary">
-              <i class="fas fa-user-plus"></i> Add 
-            </a>
+              <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>   
           @endif
+          
+ 
           <br><br>
           <div class="col-md-12 mx-auto">
-     
+             <div class="table-responsive">
+               <table class="table">
+                <?php $occupanct_ctr=1;?>
+                 <thead>
+                   <tr>
+                     <th>#</th>
+                     <th>Name</th>
+                     <th>Mobile</th>
+                     <th>Email</th>
+                     <th>Movein at</th>
+                     <th></th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                 @foreach ($occupants as $item)
+                     <th>{{ $ctr++ }}</th>
+                     <td>{{ $item->first_name.' '.$item->middle_name.' '.$item->last_name }}</td>
+                     <td>{{ $item->contact_no }}</td>
+                     <td>{{ $item->email_address }}</td>
+                     <td>{{ $item->movein_at }}</td>
+                     <th><a href="/property/{{ Session::get('property_id') }}/occupant/{{ $item->tenant_id }}/">View</a></th>
+                 @endforeach
+                 </tbody>
+               </table>
+             </div>
        
   
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" data-toggle="tab" href="#active" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-user-check fa-sm text-50"></i> Active  <span class="badge badge-primary">{{ $tenant_active->count() }}</span></a>
-              <a class="nav-item nav-link"  data-toggle="tab" href="#reserved" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-user-clock fa-sm text-50"></i> Reserved <span class="badge badge-primary">{{ $tenant_reserved->count() }}</a>
-              <a class="nav-item nav-link"  data-toggle="tab" href="#inactive" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-user-times fa-sm text-50"></i> Inactive <span class="badge badge-primary">{{ $tenant_inactive->count() }}</a>
-            </div>
-          </nav>
-          <br>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="nav-home-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table">
-                @if($tenant_active->count() <= 0)
-                <tr>
-                    <br><br><br>
-                    <p class="text-center">No tenants found!</p>
-                </tr>
-                @else
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Tenant</th>
-                    <th>Movein</th>   
-                    <th>Moveout</th>
-                    <th>Term</th>
-                    <th>Rent</th>
-                </tr>
-              </thead>
-                <?php $ctr = 1; ?>   
-            @foreach ($tenant_active as $item)
-                <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
-                    <td>{{ $item->movein_at }}</td>
-                    <td>{{ $item->moveout_at }}</td>
-                    <td>{{ $item->term }}</td>
-                    {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }} days left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}</> --}}
-                      <td>{{ number_format($item->contract_rent, 2) }}</td>
-                    </tr>
-            @endforeach
-                @endif                        
-            </table>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="reserved" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table">
-                @if($tenant_reserved->count() <= 0)
-                <tr>
-                    <br><br><br>
-                    <p class="text-center">No tenants found!</p>
-                </tr>
-                @else
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Tenant</th>
-                    <th>Reserved Via</th>
-                    <th>Reserved On</th>   
-                             
-                    <th></th>
-                </tr>
-                </thead>
-                <?php
-                    $ctr = 1;
-                ?>   
-            @foreach ($tenant_reserved as $item)
-                <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
-                    @if($item->type_of_tenant === 'online')
-                    <td><a class="badge badge-success">{{ $item->type_of_tenant }}</td>
-                    @else
-                    <td><a class="badge badge-warning">{{ $item->type_of_tenant }}</td>
-                    @endif
-                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                    <th>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->created_at)->addDays(7), false) }} days before exp</th>
-                </tr>
-            @endforeach
-                @endif                        
-            </table>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="nav-contact-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table">
-                @if($tenant_inactive->count() <= 0)
-                <tr>
-                    <br><br><br>
-                    <p class="text-center">No tenants found!</p>
-                </tr>
-                @else
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Tenant</th>
-                    
-                    <th>Inactive since</th>   
-                    <th>Reason for moving out</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <?php
-                    $ctr = 1;
-                ?>   
-            @foreach ($tenant_inactive as $item)
-                <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
-                    
-                    <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d Y') }}</td>
-                    <td>{{ $item->moveout_reason }}</td>
-                </tr>
-            @endforeach
-                @endif                        
-            </table>
-              </div>
-            </div>
-          </div>
         </div>
         </div>
-  
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
           <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  
           <br><br>
@@ -425,8 +347,8 @@
                
                  <th>Date Reported</th>
                 
-               
-    
+                 <th>Room</th>
+                 <th>Type</th>
                  <th>Description</th>
                  <th>Urgency</th>
                  <th>Status</th>
@@ -442,8 +364,12 @@
            
               <td>{{ Carbon\Carbon::parse($item->date_reported)->format('M d Y') }}</td>
                 
-  
-               
+                <td>{{ $item->building.' '.$item->unit_no }}</td>
+                <td>
+                  
+                    {{ $item->concern_type }}
+                    
+                </td>
                 <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
                 <td>
                     @if($item->concern_urgency === 'urgent')
@@ -491,10 +417,10 @@
               <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
+              <th>Owner</th>
               <th>Email</th>
               <th>Mobile</th>
-              <th>Representative</th>
+             
               
                   </tr>
                 </thead>
@@ -505,7 +431,7 @@
               
                     <td>{{ $item-> email}}</td>
                     <td>{{ $item->mobile }}</td>
-                    <td>{{ $item->representative }}</td>
+                  
                     
                   </tr>
                   @endforeach
@@ -524,7 +450,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Unit</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -536,11 +462,11 @@
         <div class="modal-body">
         <form>
             <div class="form-group">
-            <small>Room No</small>
+            <label>Unit</label>
             <input form="editUnitForm" type="text" value="{{ $home->unit_no }}" name="unit_no" class="form-control" id="unit_no" >
             </div>
             <div class="form-group">
-            <small>Floor</small>
+            <label>Floor</label>
             <select form="editUnitForm" id="floor" name="floor" class="form-control">
                 <option value="{{ $home->floor }}" readonly selected class="bg-primary">{{ $home->floor }}</option>
                 <option value="-5">5th basement</option>
@@ -561,11 +487,11 @@
             </select>
             </div>
             <div class="form-group">
-                <small>Building</small>
+                <label>Building</label>
                 <input form="editUnitForm" type="text" value="{{ $home->building }}" name="building" class="form-control"> 
               </div>
             <div class="form-group">
-            <small>Type</small>
+            <label>Type</label>
             <select form="editUnitForm" id="type" name="type" class="form-control">
                 <option value="{{ $home->type }}" readonly selected class="bg-primary">{{ $home->type }}</option>
                 <option value="commercial">commercial</option>
@@ -574,23 +500,18 @@
             </div>
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
             <div class="form-group">
-              <small>Occupancy</small>
+              <label>Occupancy</label>
               <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy }}" name="occupancy" class="form-control"> 
             </div>
             <div class="form-group">
-            <small>Status</small>
+            <label> Status</label>
             <select form="editUnitForm" id="status" name="status" class="form-control">
                 <option value="{{ $home->status }}" readonly selected class="bg-primary">{{ $home->status }}</option>
                 <option value="vacant">vacant</option>
                 <option value="occupied">occupied</option>
-                
                 <option value="reserved">reserved</option>
             </select>
             </div>
-            <div class="form-group">
-                <small>Rent</small>
-                <input form="editUnitForm"  oninput="this.value = Math.abs(this.value)" step="0.01" type="number" value="{{ $home->rent }}" name="rent" class="form-control">
-                </div>
        
         </form>
         </div>
@@ -628,7 +549,7 @@
                             
                             <div class="row">
                               <div class="col">
-                                  <label>Reported By</label>
+                                  <small>Reported By</small>
                                   <select class="form-control" form="concernForm" name="reported_by" id="" required>
                                     <option value="">Please select one</option>
                                     @foreach ($reported_by as $item)
@@ -674,7 +595,7 @@
                            
                           <div class="row">
                             <div class="col">
-                                <label>Title</label>
+                                <label>Short Description</label>
                               
                                 <input type="text" form="concernForm" class="form-control" name="concern_item" required >
                             </div>
@@ -710,9 +631,34 @@
                   </div>
   @include('webapp.tenants.show_includes.rooms.warning-exceeds-limit')
   @include('webapp.tenants.show_includes.owners.create')
+
+  <div class="modal fade" id="addOccupant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add occupant </h5>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+           <p class="text-center">
+               Would you like to add the owner as the occupant?
+                <br>
+           </p>
+        </div>
+         <div class="modal-footer">
+          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant"  type="button" class="btn btn-secondary"> <i class="fas fa-times fa-sm text-dark-50"></i> No</a>
+          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/occupant/prefilled"  type="button" class="btn btn-primary"> <i class="fas fa-check fa-sm text-dark-50"></i> Yes</a>
+          </div>
+        
+    </div>
+    </div>
+</div>
+
+
 @endsection
-
-
 
 @section('scripts')
   

@@ -223,7 +223,7 @@
       <div class="col">
           <small class="">First Name <span class="text-danger">*</span></small>
           <input form="addTenantForm1" type="text" class="form-control form-control-user @error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}">
-             @error('gender')
+             @error('first_name')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>

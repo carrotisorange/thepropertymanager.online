@@ -158,7 +158,7 @@
 </div>
 <form id="editTenantForm" action="/property/{{ $property->property_id }}/occupant/{{ $tenant->tenant_id }}" method="POST">
     @method('put')
-    {{ csrf_field() }}
+    @csrf
 </form>
  
             <div class="form-group row">

@@ -39,4 +39,9 @@ class Unit extends Model
         return $this->hasMany('App\Contract', 'unit_id_foreign');
     }
 
+    public function certificates()
+    {
+        return $this->hasMany('App\Certificate', 'unit_id_foreign');
+    }
+
 }
