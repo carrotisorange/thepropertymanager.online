@@ -218,7 +218,7 @@ class PropertyController extends Controller
                 );
 
             $occupancy = new OccupancyRate();
-            $occupancy->occupancy_rate = 1;
+            $occupancy->occupancy_rate = 100;
             $occupancy->occupancy_date = Carbon::now();
             $occupancy->property_id_foreign =  $property_id;
             $occupancy->save();

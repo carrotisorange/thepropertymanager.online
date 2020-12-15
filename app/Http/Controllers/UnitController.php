@@ -272,9 +272,9 @@ class UnitController extends Controller
 
         $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
 
-        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+         $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
-        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
 
         if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
             $occupancy = new OccupancyRate();
