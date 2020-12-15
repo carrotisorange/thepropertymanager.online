@@ -706,7 +706,7 @@ class TenantController extends Controller
             ->havingRaw('balance > 0')
             ->get();
 
-            return view('webapp.bills.edit-billings', compact('current_bill_no','tenant', 'room', 'balance'));  
+            return view('webapp.bills.edit', compact('current_bill_no','tenant', 'room', 'balance'));  
         }else{
             return view('website.unregistered');
         }

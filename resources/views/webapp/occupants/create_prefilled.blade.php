@@ -187,7 +187,7 @@
       </div>
       <div class="col">
           <small class="">Last Name  <span class="text-danger">*</span></small>
-          <input form="addTenantForm1" type="text" class="form-control form-control-user" name="last_name" id="last_name"  value="{{ $explode[1]}}">
+          <input form="addTenantForm1" type="text" class="form-control form-control-user" name="last_name" id="last_name"  value="{{ old('last_name')? old('last_name'): $explode[1] }}">
   
      
       </div>

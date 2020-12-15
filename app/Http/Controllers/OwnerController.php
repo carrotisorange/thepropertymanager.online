@@ -83,12 +83,19 @@ class OwnerController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id)
     {
+        $explode = explode(" ", $request->name);
+
+        if(count($explode)<=1){
+             $last_name = 'NULL';
+        }else{
+             $last_name = '';
+        }
 
          $owner_id = DB::table('owners')
         ->insertGetId
         (
             [
-                'name' => $request->name,
+                'name' => $request->name.' '.$last_name,
                 'email' => $request->email,
                 'mobile' => $request->mobile,
             ]

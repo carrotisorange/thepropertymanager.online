@@ -99,7 +99,7 @@ class OccupantController extends Controller
     public function create_prefilled($property_id, $unit_id)
     {   
 
-        $current_owner_id = Unit::findOrFail($unit_id)->certificates()->orderBy('certificate_id', 'desc')->first()->owner_id_foreign;
+        $current_owner_id = Unit::findOrFail($unit_id)->certificates()->orderBy('owner_id_foreign', 'desc')->first()->owner_id_foreign;
 
         $current_owner = Owner::find($current_owner_id);
 
@@ -118,6 +118,7 @@ class OccupantController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id )
     {
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['max:255'],
@@ -152,6 +153,16 @@ class OccupantController extends Controller
             ]
             );
 
+            DB::table('contracts')->insert(
+                [
+                    'contract_id' => Uuid::generate()->string,
+                    'unit_id_foreign' => $unit_id,
+                    'tenant_id_foreign' => $tenant_id,
+                    'movein_at' => Carbon::now(),
+                    'status' => 'active',
+                    'created_at' =>Carbon::now(),
+                ]
+            );
             
             $unit = Unit::find($unit_id);
             $unit->status = 'occupied';

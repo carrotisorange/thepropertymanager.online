@@ -345,10 +345,10 @@
           </div> 
             <input form="addUMultipleUnitForm" type="hidden" value="{{ $property->property_id }}" name="property_id">
           
-              <div class="form-group">
+              {{-- <div class="form-group">
                 <label>Occupancy</label>
                 <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
-            </div>
+            </div> --}}
 
           <div class="form-group">
               <label>Number of units to be created</label>
@@ -372,49 +372,49 @@
 @section('scripts')
   <script>
     function autoFillInitialName(){
-      $floor_no = document.getElementById('floor_no').value;
+      $floor = document.getElementById('floor').value;
       $unit_name = document.getElementById('unit_no');
-      if($floor_no === '1'){
+      if($floor === '1'){
         $unit_name.value = 'GF';
       }
-      if($floor_no === '2'){
+      if($floor === '2'){
         $unit_name.value = '2F';
       }
-      if($floor_no === '3'){
+      if($floor === '3'){
         $unit_name.value = '3F';
       }
-      if($floor_no === '4'){
+      if($floor === '4'){
         $unit_name.value = '4F';
       }
-      if($floor_no === '5'){
+      if($floor === '5'){
         $unit_name.value = '5F';
       }
-      if($floor_no === '6'){
+      if($floor === '6'){
         $unit_name.value = '6F';
       }
-      if($floor_no === '7'){
+      if($floor === '7'){
         $unit_name.value = '7F';
       }
-      if($floor_no === '8'){
+      if($floor === '8'){
         $unit_name.value = '8F';
       }
-      if($floor_no === '9'){
+      if($floor === '9'){
         $unit_name.value = '9F';
       }
 
-      if($floor_no === '-1'){
+      if($floor === '-1'){
         $unit_name.value = '1B';
       }
-      if($floor_no === '-2'){
+      if($floor === '-2'){
         $unit_name.value = '2B';
       }
-      if($floor_no === '-3'){
+      if($floor === '-3'){
         $unit_name.value = '3B';
       }
-      if($floor_no === '-4'){
+      if($floor === '-4'){
         $unit_name.value = '4B';
       }
-      if($floor_no === '-5'){
+      if($floor === '-5'){
         $unit_name.value = '5B';
       }
     }

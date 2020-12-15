@@ -657,11 +657,43 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalToAddOwner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel"> Warning </h5>
+      
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+         <p class="text-center">
+             An owner is required before an occupant can be added.
+              <br>
+         </p>
+      </div>
+       <div class="modal-footer">
+        
+        <a  data-toggle="modal" data-target="#addInvestor" id="addOwnerForm" data-whatever="@mdo" type="button" class="btn btn-primary text-white">Add Now</a>
+        </div>
+      
+  </div>
+  </div>
+</div>
+
 
 @endsection
 
 @section('scripts')
-  
+  <script>
+    $("#addOwnerForm").on("click", function(){
+    $("#modalToAddOwner").modal("hide");
+    $("#modalToAddOwner").on("hidden.bs.modal",function(){
+    $("#addInvestor").modal("show");
+    });
+});
+  </script>
 @endsection
 
 

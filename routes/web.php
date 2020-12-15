@@ -89,6 +89,7 @@ Route::get('/property/{property_id}/home/{unit_id}/occupant', 'OccupantControlle
 Route::post('/property/{property_id}/home/{unit_id}/occupant', 'OccupantController@store')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}/occupant/prefilled', 'OccupantController@create_prefilled')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/home/{unit_id}/occupant/prefilled', 'OccupantController@store_prefilled')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/occupants/search', 'OccupantController@index')->middleware(['auth', 'verified']);
 
 //routes for tenants
 Route::get('/property/{property_id}/tenants', 'TenantController@index')->middleware(['auth', 'verified']);
@@ -318,7 +319,8 @@ Route::post('/property/{property_id}/personnel', 'PersonnelController@store')->m
 
 //routes for bills
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit_tenant_bills')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/occupant/{tenant_id}/bills/edit', 'BillController@edit_occupant_bills')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}/bills/update', 'BillController@post_edited_bills')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/rent/{date}', 'BillController@post_bills_rent')->middleware(['auth', 'verified']);
 
@@ -708,7 +710,8 @@ Route::put('/units/{unit_id}', 'RoomController@update')->middleware(['auth', 've
 //routes for units
 Route::get('/property/{property_id}/home', 'UnitController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
-Route::put('/units/edit/{property}/{date}', 'UnitController@post_edit_multiple_rooms')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/home/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/home/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
 Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
 
 

@@ -231,7 +231,7 @@ class RoomController extends Controller
             $property = Property::findOrFail($property_id);
 
             if(Session::get('property_type') === 'Condominium Corporation'){
-                return view('webapp.home.edit-units', compact('units', 'property'));
+                return view('webapp.rooms.edit', compact('units', 'property'));
             }else{
                 return view('webapp.rooms.edit', compact('units', 'property'));
             }

@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', 'Occupants')
+@section('title', $tenant->first_name.' '.$tenant->last_name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -25,7 +25,7 @@
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link " href="/property/{{$property->property_id }}/home">
+              <a class="nav-link" href="/property/{{$property->property_id }}/home">
                 <i class="fas fa-home text-indigo"></i>
                 <span class="nav-link-text">Home</span>
               </a>
@@ -33,23 +33,12 @@
             @endif
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
-           
-
-            @if(Session::get('property_type') === 'Condominium Corporation')
             <li class="nav-item">
-                <a class="nav-link active" href="/property/{{$property->property_id }}/occupants">
-                  <i class="fas fa-user text-green"></i>
-                  <span class="nav-link-text">Occupants</span>
-                </a>
-              </li>
-            @else
-            <li class="nav-item">
-                <a class="nav-link" href="/property/{{$property->property_id }}/tenants">
-                  <i class="fas fa-user text-green"></i>
-                  <span class="nav-link-text">Tenants</span>
-                </a>
-              </li>
-            @endif
+              <a class="nav-link active" href="/property/{{$property->property_id }}/tenants">
+                <i class="fas fa-user text-green"></i>
+                <span class="nav-link-text">Tenants</span>
+              </a>
+            </li>
           
             <li class="nav-item">
               <a class="nav-link" href="/property/{{$property->property_id }}/owners">
@@ -74,7 +63,7 @@
             </li>
            
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/personnels">
+              <a class="nav-link" href="/property/{{$property->property_id }}}/personnels">
                 <i class="fas fa-user-secret text-gray"></i>
                 <span class="nav-link-text">Personnels</span>
               </a>
@@ -126,21 +115,15 @@
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
-                   <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" href="/property/{{ $property->property_id }}/getting-started" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Getting started</span>
               </a>
             </li>
-        </li> <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/issues" target="_blank">
-                <i class="fas fa-dizzy text-red"></i>
-                <span class="nav-link-text">Issues</span>
-              </a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="/property/{{ $property->property_id }}/system-updates" target="_blank">
-                <i class="fas fa-bug text-green"></i>
+                <i class="fas fa-bug text-red"></i>
                 <span class="nav-link-text">System Updates</span>
               </a>
             </li>
@@ -150,7 +133,12 @@
                 <span class="nav-link-text">Announcements</span>
               </a>
             </li>
-
+             {{--  <li class="nav-item">
+              <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
+                <i class="ni ni-chart-pie-35"></i>
+                <span class="nav-link-text">Plugins</span>
+              </a>
+            </li> --}}
             
           </ul>
         </div>
@@ -162,84 +150,108 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Occupants</h6>
+    {{-- <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6> --}}
     
-  </div>
-  <div class="col-lg-6 col-5 text-right">
-    <form  action="/property/{{ $property->property_id }}/occupants/search" method="GET" >
-      @csrf
-      <div class="input-group">
-          <input type="text" class="form-control" name="tenant_search" placeholder="Enter name..." >
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
-              <i class="fas fa-search fa-sm"></i>
-            </button>
-          </div>
-      </div>
-  </form>
   </div>
 
 </div>
+{{-- 
+@if(Auth::user()->user_type === 'manager') --}}
+{{-- <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a> --}}
 
-@if($tenants->count() <=0 )
-<p class="text-danger text-center">No occupants found!</p>
-
-@else
-Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
-@if(Session::get('tenant_search'))
-<p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
+<h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
+{{-- @else
+<a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Bills</a>
 @endif
+ --}}
 
 
-<div class="table-responsive text-nowrap">
-    <table class="table">
-      <thead>
-        <?php $ctr=1;?>
+<div class="row">
+  <div class="col-md-12">
+
+    <form id="editBillsForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/update" method="POST">
+      @csrf
+      @method('PUT')
+    </form>
+    <p class="text-right">Statement of Accounts </p>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <?php $ctr=1; ?>
+        <thead>
+          <tr>
+            <th class="text-center">#</th>
+          
+            <th>Bill No</th>
+             <th>Room</th>
+            <th>Particular</th>
+            <th colspan="2">Period Covered</th>
+            <th>Amount</th>
+            <td></td>
+          </tr>
+        </thead>
+
+        <?php
+          $billing_start_ctr = 1;
+          $billing_end_ctr = 1;
+          $billing_amt = 1;
+          $billing_id_ctr =1;
+        ?>
+        @foreach ($balance as $item)
         <tr>
-          <th>#</th>
-          <th>Profile</th>
-          <th>Tenant ID</th>
-          {{-- <th>Room</th> --}}
-          <th>Tenant</th>
-          {{-- <th>User ID</th> --}}
-          <th>Mobile</th>
-          <th>Email</th>
-          <th>Movein at</th>
-       </tr>
-      </thead>
-      <tbody>
-        @foreach ($tenants as $item)
-        <tr>
-          <th>{{ $ctr++ }}</th>
-          <td>  <span class="avatar avatar-sm rounded-circle">
-            <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
-          </span></td>
-          <td>{{ $item->tenant_unique_id }}</td>
-          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td> --}}
-          <td>
-            {{-- @if($item->user_id_foreign == null) --}}
-            <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
-            {{-- @else
-            <a  href="/asa/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
-            @endif --}}
-          </td>
-          {{-- <td>{{ $item->user_id_foreign }} </td> --}}
-            <td>{{ $item->contact_no }}</td>
-            <td>{{ $item->email_address }}</td>
-          <td>{{ $item->movein_at }}</td>
-        </tr>
+            <th class="text-center">{{ $ctr++ }}</th>
+            <td>{{ $item->billing_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
+            <td>{{$item->unit_no}}</td>
+            <td>{{ $item->billing_desc }}</td>
+            <td>
+              <input form="editBillsForm" type="date" name="billing_start_ctr{{ $billing_start_ctr++ }}" value="{{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('Y-m-d') : null}}"> 
+            </td>
+            <td>
+              <input form="editBillsForm"  type="date" name="billing_end_ctr{{ $billing_end_ctr++ }}" value="{{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('Y-m-d') : null }}">
+            </td>
+            <td><input form="editBillsForm" type="number" name="billing_amt_ctr{{ $billing_amt++ }}" step="0.01" value="{{  $item->balance }}"></td>
+            <td>
+              @if(Auth::user()->user_type === 'manager')
+  
+              <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}" method="POST">
+                @csrf
+                @method('delete')
+                <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+              </form>
+              @endif
+            </td>   
+          </tr>
         @endforeach
-      </tbody>
+        <tr>
+          <th>Total</th>
+          <th colspan="6" class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
+         </tr>    
     </table>
-
   </div>
-@endif
+  <p>Message footer</p>
+  <textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">
+    {{ Auth::user()->note }}
+    </textarea> 
+    <br>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button> </p>
+  </div>
+  <br>
+</div>
+
 @endsection
 
+@section('main-content')
 
+@endsection
 
 @section('scripts')
-  
+<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace( 'note', {
+      filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+      filebrowserUploadMethod: 'form',
+  });
+  </script>
+
 @endsection
 
 

@@ -225,7 +225,12 @@ class BillController extends Controller
 
         }
 
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bills have been posted!');
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+        }else{
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+        }
+        
 
     }
 
@@ -275,7 +280,12 @@ class BillController extends Controller
 
     // }
         }
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bills have been posted!');
+        
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+        }else{
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+        }
     }
 
     public function store(Request $request, $property_id)
@@ -390,7 +400,7 @@ class BillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($property_id, $tenant_id)
+    public function edit_tenant_bills($property_id, $tenant_id)
     {
 
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
@@ -420,7 +430,60 @@ class BillController extends Controller
             ->havingRaw('balance > 0')
             ->get();
 
-            return view('webapp.bills.edit-billings', compact('current_bill_no','tenant', 'balance', 'property'));  
+            if(Session::get('property_type') === 'Condominium Corporation'){
+                return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
+            }else{
+                return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
+            }
+
+        }else{
+            return view('website.unregistered');
+        }
+    }
+
+    public function edit_occupant_bills($property_id, $tenant_id)
+    {
+
+        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
+            
+            //get the tenant information
+            $tenant = Tenant::findOrFail($tenant_id);
+
+            $property = Property::findOrFail($property_id);
+    
+            //get the number of last added bills
+   
+            $current_bill_no = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('bills', 'tenant_id', 'billing_tenant_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('billing_no') + 1;
+
+           
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('billing_tenant_id', $tenant_id)
+            ->groupBy('bill_id')
+            ->orderBy('billing_no', 'desc')
+            ->havingRaw('balance > 0')
+            ->get();
+
+
+            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('billing_tenant_id', $tenant_id)
+            ->groupBy('bill_id')
+            ->orderBy('billing_no', 'desc')
+            // ->havingRaw('balance > 0')
+            ->get();
+
+            if(Session::get('property_type') === 'Condominium Corporation'){
+                return view('webapp.bills.edit_occupant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
+            }else{
+                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
+            }
+
         }else{
             return view('website.unregistered');
         }

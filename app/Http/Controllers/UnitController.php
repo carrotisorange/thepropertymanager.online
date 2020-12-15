@@ -185,6 +185,26 @@ class UnitController extends Controller
         //
     }
 
+    public function edit_all($property_id){
+
+        $units = DB::table('units')
+        ->where('property_id_foreign', $property_id)
+        ->orderBy('building', 'asc')
+        ->orderBy('floor', 'asc')
+        ->orderBy('unit_no', 'asc')
+        ->get();
+
+        $property = Property::findOrFail($property_id);
+
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            return view('webapp.units.edit-all', compact('units', 'property'));
+        }else{
+            return view('webapp.rooms.edit', compact('units', 'property'));
+        }
+
+
+ }
+
     
     public function add_multiple_units(Request $request){
         if(!$request->building){
@@ -228,6 +248,44 @@ class UnitController extends Controller
         return back()->with('success', $request->no_of_rooms.' units have been added!');
       
         
+     }
+
+     public function update_all(Request $request, $property_id){
+
+        $all_rooms = Property::findOrFail($property_id)->units->count();
+
+        for($i = 1; $i<=$all_rooms; $i++){
+
+             $room = Unit::findOrFail($request->input('unit_id'.$i));
+             $room->unit_no = $request->input('unit_no'.$i);
+             $room->type = $request->input('type'.$i);
+             $room->status = $request->input('status'.$i);
+             $room->building = $request->input('building'.$i);
+             $room->floor = $request->input('floor'.$i);
+             $room->occupancy = $request->input('occupancy'.$i);
+             $room->rent = $request->input('rent'.$i);
+             $room->save();
+        }
+        
+      
+        $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
+
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+
+        if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = $new_occupancy_rate;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  Session::get('property_id');
+            $occupancy->save();
+        }
+     
+        return redirect('/property/'. $property_id.'/home')->with('success','changes have been saved!');
+                 
      }
 
 

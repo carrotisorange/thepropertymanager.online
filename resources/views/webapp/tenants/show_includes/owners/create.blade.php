@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label>Mobile</label>
-                <input form="addInvestorForm" type="text" class="form-control" name="mobile" id="contact_no">
+                <input form="addInvestorForm" type="number" class="form-control" name="mobile" id="mobile">
             </div>            
         </div>
         <div class="modal-footer">

@@ -177,17 +177,17 @@
     <div class="table-responsive text-nowrap">
       <table class="table">
         <?php $ctr=1; ?>
+       <thead>
         <tr>
-          <th class="text-center">#</th>
-        
-          <th>Bill No</th>
-           <th>Room</th>
-          <th>Particular</th>
-          <th colspan="2">Period Covered</th>
-          <th>Amount</th>
-          <td></td>
-        </tr>
-
+            <th class="text-center">#</th>
+          
+            <th>Bill No</th>
+            <th>Particular</th>
+            <th colspan="2">Period Covered</th>
+            <th>Amount</th>
+            <td></td>
+          </tr>
+       </thead>
         <?php
           $billing_start_ctr = 1;
           $billing_end_ctr = 1;
@@ -198,7 +198,7 @@
         <tr>
             <th class="text-center">{{ $ctr++ }}</th>
             <td>{{ $item->billing_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
-            <td>{{$item->unit_no}}</td>
+          
             <td>{{ $item->billing_desc }}</td>
             <td>
               <input form="editBillsForm" type="date" name="billing_start_ctr{{ $billing_start_ctr++ }}" value="{{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('Y-m-d') : null}}"> 
@@ -219,10 +219,7 @@
             </td>   
           </tr>
         @endforeach
-        <tr>
-          <th>Total</th>
-          <th colspan="6" class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
-         </tr>    
+        
     </table>
   </div>
   <p>Message footer</p>
