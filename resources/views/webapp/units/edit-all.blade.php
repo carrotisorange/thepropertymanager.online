@@ -188,7 +188,7 @@
       </div> --}}
  
       <div class="table-responsive">
-          <form id="editUnitsForm" action="/property/{{ $property->property_id }}/home/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
+          <form id="editUnitsForm" action="/property/{{ $property->property_id }}/units/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
   
               @csrf
               @method('PUT')

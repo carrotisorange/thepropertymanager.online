@@ -173,7 +173,7 @@
 
   <div class="col-md-3 text-right">
     <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
-    <a href="/property/{{ $property->property_id }}/home/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+    <a href="/property/{{ $property->property_id }}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
   </div>
 
  
@@ -427,7 +427,7 @@
       if($floor === '-4'){
         $unit_name.value = '4B';
       }
-      if($floor === '-5'){
+      if($floorfed === '-5'){
         $unit_name.value = '5B';
       }
     }

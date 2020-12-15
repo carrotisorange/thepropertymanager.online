@@ -219,7 +219,7 @@ class RoomController extends Controller
         
      }
 
-     public function show_edit_multiple_rooms($property_id){
+     public function edit_all($property_id){
 
             $units = DB::table('units')
             ->where('property_id_foreign', $property_id)
@@ -231,7 +231,7 @@ class RoomController extends Controller
             $property = Property::findOrFail($property_id);
 
             if(Session::get('property_type') === 'Condominium Corporation'){
-                return view('webapp.rooms.edit', compact('units', 'property'));
+                return view('webapp.units.edit', compact('units', 'property'));
             }else{
                 return view('webapp.rooms.edit', compact('units', 'property'));
             }
@@ -239,7 +239,7 @@ class RoomController extends Controller
 
      }
 
-     public function post_edit_multiple_rooms(Request $request, $property_id){
+     public function update_all(Request $request, $property_id){
 
         $all_rooms = Property::findOrFail($property_id)->units->count();
 

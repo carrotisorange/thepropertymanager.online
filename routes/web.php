@@ -700,8 +700,8 @@ Route::post('/users/{user_id}/charge', function(Request $request){
 //routes for rooms
 Route::get('/property/{property_id}/home', 'RoomController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}', 'RoomController@show')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/home/{date}/edit', 'RoomController@show_edit_multiple_rooms')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/home/{date}', 'RoomController@post_edit_multiple_rooms')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/rooms/{date}/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
 Route::post('/rooms/add/multiple', 'RoomController@add_multiple_rooms')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/unit/{unit_id}', 'RoomController@destroy')->middleware(['auth', 'verified']);
 Route::put('/units/{unit_id}', 'RoomController@update')->middleware(['auth', 'verified']);
@@ -710,8 +710,8 @@ Route::put('/units/{unit_id}', 'RoomController@update')->middleware(['auth', 've
 //routes for units
 Route::get('/property/{property_id}/home', 'UnitController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/home/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/home/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
 Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
 
 
