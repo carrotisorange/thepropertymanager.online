@@ -464,7 +464,7 @@ class BillController extends Controller
             if(Session::get('property_type') === 'Condominium Corporation'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
-                return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
+                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
             }
 
         }else{
