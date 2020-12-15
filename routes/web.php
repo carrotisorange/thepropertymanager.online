@@ -321,8 +321,11 @@ Route::post('/property/{property_id}/personnel', 'PersonnelController@store')->m
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit_tenant_bills')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/occupant/{tenant_id}/bills/edit', 'BillController@edit_occupant_bills')->middleware(['auth', 'verified']);
+
+
 Route::put('/property/{property_id}/tenant/{tenant_id}/bills/update', 'BillController@post_edited_bills')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/rent/{date}', 'BillController@post_bills_rent')->middleware(['auth', 'verified']);
+Route::post('property/{property_id}/bills/condodues/{date}', 'BillController@post_bills_condodues')->middleware(['auth', 'verified']);
 
 Route::post('property/{property_id}/bills/create', 'BillController@store')->middleware(['auth', 'verified']);
 
@@ -407,7 +410,8 @@ Route::get('/payments/all', 'CollectionController@index')->name('show-all-paymen
 Route::get('/property/{property_id}/payments/search', 'CollectionController@index')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}', 'CollectionController@destroy')->middleware(['auth', 'verified']);
 
-Route::get('/property/{property_id}/tenant/{tenant_id}/payments/{payment_id}/dates/{payment_created}/export', 'TenantController@export')->middleware(['auth', 'verified']);
+//export payments
+Route::get('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);
 
 
 
@@ -438,33 +442,8 @@ return $pdf->download(Carbon::now().'-'.Auth::user()->property.'-ar'.'.pdf');
 //print gate pass
 Route::get('/units/{unit_id}/tenants/{tenant_id}/print/gatepass', 'TenantController@printGatePass')->middleware(['auth', 'verified']);
 
-Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', function($property_id, $tenant_id){
-
-    $tenant = Tenant::findOrFail($tenant_id);
-
-    $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-      
-        
-    ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-    ->where('billing_tenant_id', $tenant_id)
-    ->groupBy('bill_id')
-    ->orderBy('billing_no', 'desc')
-    ->havingRaw('balance > 0')
-    ->get();
-
-                
-    $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
-
-     $current_room = Unit::findOrFail($room_id)->unit_no;
-
-    $data = [
-        'tenant' => $tenant->first_name.' '.$tenant->last_name ,
-        'bills' => $bills,
-        'current_room' => $current_room,
-];
-    $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');
-    return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
-})->middleware(['auth', 'verified']);
+//export bills
+Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', 'BillController@export')->middleware(['auth', 'verified']);
 
 Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/send', function($unit_id,$tenant_id){
     $tenant = Tenant::findOrFail($tenant_id);
@@ -547,7 +526,7 @@ Route::get('/bills', function(){
             return \Carbon\Carbon::parse($item->billing_start)->timestamp;
         });
 
-        return view('webapp.bills.bills', compact('bills'));
+        return view('webapp.bills.index', compact('bills'));
     }else{
         return view('website.unregistered');
     }

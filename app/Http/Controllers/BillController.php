@@ -40,7 +40,7 @@ class BillController extends Controller
 
             $property = Property::findOrFail(Session::get('property_id'));
     
-            return view('webapp.bills.bills', compact('bills', 'property'));
+            return view('webapp.bills.index', compact('bills', 'property'));
         }else{
             return view('website.unregistered');
         }
@@ -84,6 +84,37 @@ class BillController extends Controller
    $property = Property::findOrFail(Session::get('property_id'));
 
     return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'property'))->with('success', 'changes have been saved!');
+
+    }
+
+    public function post_bills_condodues(Request $request, $property_id)
+    {
+
+    $updated_billing_start = $request->billing_start;
+    $updated_billing_end = $request->billing_end;
+
+
+  $active_tenants = DB::table('contracts')
+  ->join('units', 'unit_id_foreign', 'unit_id')
+  ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+  ->select('*', 'contracts.rent as contract_rent')
+  ->where('property_id_foreign', Session::get('property_id'))
+  ->where('contracts.status', 'active')
+  ->get();
+
+
+   //get the number of last added bills
+
+   $current_bill_no = DB::table('contracts')
+   ->join('units', 'unit_id_foreign', 'unit_id')
+   ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+   ->join('bills', 'tenant_id', 'billing_tenant_id')
+   ->where('property_id_foreign',  Session::get('property_id'))
+   ->max('billing_no') + 1;
+
+   $property = Property::findOrFail(Session::get('property_id'));
+
+    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'property'))->with('success', 'changes have been saved!');
 
     }
 
@@ -533,7 +564,13 @@ class BillController extends Controller
                    );
           
           
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
+                   if(Session::get('property_type') === 'Condominium Corporation'){
+                    return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
+                }else{
+                    return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
+                }
+
+           
         }else{
             return view('website.unregistered');
         }
@@ -558,6 +595,35 @@ class BillController extends Controller
         DB::table('bills')->where('bill_id', $billing_id)->delete();
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'bill has been deleted!');
     }
+
+    public function export($property_id,$tenant_id)
+    {
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+        ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('billing_tenant_id', $tenant_id)
+        ->groupBy('bill_id')
+        ->orderBy('billing_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+        
+        $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
+
+        $current_room = Unit::findOrFail($room_id)->unit_no;
+
+        $data = [
+            'tenant' => $tenant->first_name.' '.$tenant->last_name ,
+            'bills' => $bills,
+            'current_room' => $current_room,
+        ];
+
+        $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');
+        return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
+    }
+
+    
 
 
     public function destroy_bill_from_bills_page($property_id, $billing_id)

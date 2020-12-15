@@ -33,11 +33,11 @@
           
        
           <p class="text-right">Statement of Accounts</p>
-          
+          <?php $ctr=1;?>
             <table class="table table-condensed">
              <thead>
               <tr>
-                <?php $ctr=1;?>
+              
                 <th>#</th>
 
                 <th>Bill No</th>
@@ -63,7 +63,7 @@
               @endforeach
               <tr>
                 <th>Total</th>
-                <th class="text-right" colspan="5">{{ number_format($bills->sum('balance'),2) }} </th>
+                <th class="text-right" colspan="6">{{ number_format($bills->sum('balance'),2) }} </th>
                </tr>
         
           </table>

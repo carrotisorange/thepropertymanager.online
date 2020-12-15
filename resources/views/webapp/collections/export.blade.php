@@ -27,11 +27,11 @@
            <br>
            <b>To:</b> {{ $tenant }}
            <br>
-           <b>Room:</b> {{ $unit }}</b>
+           <b>Room:</b> {{ $current_room }}</b>
       <br>
          
-          {{-- <p class="text-right">Acknowledgment Receipt</p>
-       --}}
+          <p class="text-right">Acknowledgment Receipt</p>
+       
           <table class="table table-condensed">
             <tr>
               <?php $ctr = 1; ?>
@@ -39,7 +39,7 @@
               <th>Bill No </th>
            
            
-              <th>Description</th>
+              <th>Particular</th>
               <th colspan="2">Period Covered</th>
               <th>Form</th>
               <th class="text-right">Amount</th>

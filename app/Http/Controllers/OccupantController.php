@@ -279,7 +279,7 @@ class OccupantController extends Controller
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
 
-        $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
+         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
         ->where('billing_tenant_id', $tenant_id)
         ->groupBy('payment_id')
         ->orderBy('ar_no', 'desc')

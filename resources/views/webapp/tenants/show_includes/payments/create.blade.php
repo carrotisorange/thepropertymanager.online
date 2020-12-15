@@ -16,9 +16,15 @@
             
             <div class="row">
                 <div class="col">
-                    <small for="">Date</small>
+                    <label for="">Date</label>
                 {{-- <input form="acceptPaymentForm" type="date" class="form-control" name="payment_created" value={{date('Y-m-d')}} required> --}}
-                <input  class='form-control' type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                <input type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                </div>
+                <div class="col">
+                    <p class="text-right">
+                        <a href="#/" id='delete_payment' class="btn btn-sm btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
+                      <a href="#/" id="add_payment" class="btn btn-sm btn-primary" ><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>     
+                      </p>
                 </div>
                 
               
@@ -26,22 +32,19 @@
           
     <br>
             <div class="row">
-              <div class="col-md-12">
-             
-                <p class="text-right">
-                  <a href="#/" id='delete_payment' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
-                <a href="#/" id="add_payment" class="btn btn-primary" ><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>     
-                </p>
+              <div class="col">
                   <div class="table-responsive text-nowrap">
-                  <table class = "table table-bordered" id="payment">
-                      <tr>
-                          <th>#</th>
-                          <th>Bill</th>
-                          <th>Amount</th>
-                          <th>Form of Payment</th>
-                          <th>Bank Name</th>
-                          <th>Cheque No</th>
-                      </tr>
+                  <table class = "table" id="payment">
+                     <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Bill</th>
+                            <th>Amount</th>
+                            <th>Form of Payment</th>
+                            <th>Bank Name</th>
+                            <th>Cheque No</th>
+                        </tr>
+                     </thead>
                           <input form="acceptPaymentForm" type="hidden" id="no_of_payments" name="no_of_payments" >
                       <tr id='payment1'></tr>
                   </table>

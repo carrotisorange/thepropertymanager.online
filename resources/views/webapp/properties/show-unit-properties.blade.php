@@ -380,7 +380,7 @@
                   <th>Tenant</th>
                
                  
-                  <th>Description</th>
+                  <th>Particular</th>
                   <th colspan="2">Period Covered</th>
                   <th>Amount</th>
                   <th></th>

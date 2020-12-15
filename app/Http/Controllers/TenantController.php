@@ -1151,47 +1151,6 @@ class TenantController extends Controller
         return view('reservation-forms.get-reservation', compact('tenant', 'unit', 'billings'));
     }
 
-    public function export ($unit_id, $tenant_id, $payment_id,$payment_created){
-
-            $tenant = Tenant::findOrFail($tenant_id);
-
-            $unit = Unit::findOrFail($unit_id);
-
-            $collections = DB::table('units')
-                ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
-                ->leftJoin('payments', 'tenant_id', 'payment_tenant_id')
-                ->leftJoin('bills', 'payment_billing_no', 'billing_no')
-                ->where('tenant_id', $tenant_id)
-                ->where('payment_created', $payment_created)
-                ->orderBy('payment_created', 'desc')
-                ->orderBy('ar_no', 'desc')
-                ->groupBy('payment_id')
-                ->get();
-
-            $balance = Billing::leftJoin('payments', 'bills.billing_no', '=', 'payments.payment_billing_no')
-            ->selectRaw('*, bills.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('billing_tenant_id', $tenant_id)
-            ->groupBy('bill_id')
-
-            ->havingRaw('balance > 0')
-            ->get();
-
-            $payment = Payment::findOrFail($payment_id);
-            
-            $data = [
-                        'tenant' => $tenant->first_name.' '.$tenant->last_name ,
-                        'unit' => $unit->building.' '.$unit->unit_no,
-                        'collections' => $collections,
-                        'balance' => $balance,
-                        'payment_date' => $payment->payment_created,
-                        'payment_ar' => $payment->ar_no
-                    ];
-
-            $pdf = \PDF::loadView('webapp.collections.export-collections', $data)->setPaper('a5', 'portrait');
-      
-            return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
-    }
-
 }
 
 

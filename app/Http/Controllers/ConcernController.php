@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB, App\Tenant, App\Unit, App\Concern, Auth, Carbon\Carbon;
 use App\Property;
 use App\Response;
+use Session;
 
 class ConcernController extends Controller
 {
@@ -68,19 +69,25 @@ class ConcernController extends Controller
   
     public function store(Request $request, $property_id, $tenant_id)
     {
-       $concern_id = DB::table('concerns')->insertGetId(
-            [
-                'concern_tenant_id' => $tenant_id,
-                'date_reported' => $request->date_reported,
-                'concern_type'=> $request->concern_type,
-                'concern_urgency' => $request->concern_urgency,
-                'concern_item' => $request->concern_item,
-                'concern_desc' => $request->concern_desc,
-                'concern_status' => 'pending',
-                'concern_user_id' => $request->concern_user_id,
-            ]);
 
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#concerns')->with('success', 'concern has been saved!');
+        $concern = new Concern();
+        $concern->concern_tenant_id = $tenant_id;
+        $concern->date_reported = $request->date_reported;
+        $concern->concern_type = $request->concern_type;
+        $concern->concern_urgency = $request->concern_urgency;
+        $concern->concern_item = $request->concern_item;
+        $concern->concern_desc = $request->concern_desc;
+        $concern->concern_user_id = $request->concern_user_id;
+        $concern->save();
+
+            if(Session::get('property_type') === 'Condominium Corporation'){
+                return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');
+            }else{
+                return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');
+            }
+            
+
+           
     }
 
     /**

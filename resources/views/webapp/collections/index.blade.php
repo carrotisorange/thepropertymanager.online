@@ -223,7 +223,16 @@
                 <td>{{ $item->ar_no }}</td>
                 <td>{{ $item->payment_billing_no }}</td>
                 {{-- <td><a href="units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td> --}}
-                <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
+
+                
+                <td>
+                  @if(Session::get('property_type') === 'Condominium Corporation')
+                  <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
+                  @else
+                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
+                  @endif
+                 
+                </td>
                 <td>{{ $item->unit_no }}</td>
                 <td>{{ $item->billing_desc }}</td>
                 <td colspan="2">

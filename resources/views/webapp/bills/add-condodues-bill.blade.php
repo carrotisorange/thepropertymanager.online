@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', 'Bills')
+@section('title', 'Condo Dues Bills')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -125,7 +125,7 @@
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
-                   <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" href="/property/{{ $property->property_id }}/getting-started" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Getting started</span>
@@ -160,134 +160,148 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-4">
-    <h6 class="h2 text-dark d-inline-block mb-0">Bills</h6>
+  <div class="col-md-4">
+    <h6 class="h2 text-dark d-inline-block mb-0">Condo Dues Bills</h6>
+    
     
   </div>
-  <div class="col text-right">
   
-    <div class=" row">
-      
-        
-    <form id="billingRentForm" action="/property/{{ $property->property_id }}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-      @csrf
-    </form>
-    <input type="hidden" form="billingRentForm" name="billing_option" value="rent">
-        <button class="btn btn-primary"  type="submit" form="billingRentForm"><i class="fas fa-plus"></i> Rent</button>
-    
-        
-  
-      
-        <form id="billingElectricForm" action=" /property/{{ $property->property_id }}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-          @csrf
-      </form>
-      <input type="hidden" form="billingElectricForm" name="billing_option" value="electric">
-        <button class="btn btn-primary"  type="submit" form="billingElectricForm" ><i class="fas fa-plus"></i> Electric</button>
-     
-      
- 
-
-         
-    
-      <form id="billingWaterForm" action="/property/{{ $property->property_id }}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-        @csrf
-    </form>
-    <input type="hidden" form="billingWaterForm" name="billing_option" value="water">
-        <button class="btn btn-primary" type="submit" form="billingWaterForm" ><i class="fas fa-plus"></i> Water</button>
-       
-    
-         
-    
-        <form id="billingSurchargeForm" action="/property/{{ $property->property_id }}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
-          @csrf
-      </form>
-      <input type="hidden" form="billingSurchargeForm" name="billing_option" value="surcharge">
-          <button class="btn btn-primary" type="submit" form="billingSurchargeForm" ><i class="fas fa-plus"></i> Surcharge</button>
-   
-    </div>
-     
-   
-    
- 
-    
-   
+  <div class="col-lg-8 text-right">
+    <a href="/property/{{ $property->property_id }}/bills"  class="btn btn-primary"><i class="fas fa-file-invoice-dollar"></i> Bills </a> 
+    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Period covered</a> 
   </div>
-
 </div>
-@if($bills->count() <=0 )
-<p class="text-danger text-center">No bills found!</p>
 
-@else
 <div class="table-responsive text-nowrap">
-  <table class="table">
-    @foreach ($bills as $day => $bill)
-<thead>
-  <tr>
-    <th colspan="12">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $bill->count() }}) </th>
-</tr>
-<tr>
-  <?php $ctr=1;?>
-  <th>#</th>
-  <th>Bill No</th>
-  
-  
-  <th>Tenant</th>
-  <th>Room</th>
-  <th>Particular</th>
- 
-  <th colspan="2">Period Covered</th>
-  <th>Amount</th>
 
-  <td></td>
+  <form id="add_billings" action="/property/{{ $property->property_id }}/bills/create/" method="POST">
+      @csrf
+  </form>
     
-</tr>
-</thead>
-      @foreach ($bill as $item)
-      <tr>
-        <th>{{ $ctr++ }}</th>
-        <td>{{ $item->billing_no }}</th>  
-        {{-- <td>  {{ Carbon\Carbon::parse($item->billing_date)->format('M d Y') }}</td> --}}
-       
-        
-        <td>
-          @if(Auth::user()->user_type === 'billing')
-          <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bills">{{ $item->first_name.' '.$item->last_name }}</a>
-          @else
-            <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}</a>
-          @endif
-        </td>
-        <td>{{ $item->unit_no }}</td>
-        <td>{{ $item->billing_desc }}</td>
-       
-        <td colspan="2">
-          {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-          {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
-        </td>
-        <td>{{ number_format($item->billing_amt,2) }}</td>
+    <table class="table">
+    <tr>
+        <th>#</th>
+        <th>Tenant</th>
+        <th>Room</th> 
+        <th colspan="2">Period Covered</th>     
+  
      
-          <td class="text-center">
-            @if(Auth::user()->user_type === 'manager')
-            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}" method="POST">
-              @csrf
-              @method('delete')
-              <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
-            </form>
-            @endif
-          </td>
-        </tr>
-      @endforeach
-          
+      
+        <th>Amount</th>
+       
+        <th></th>
+   
+    </tr>
+   <?php
+     $ctr = 1;
+     $desc_ctr = 1;
+     $tenant_id = 1;
+     $amt_ctr = 1;
+     $id_ctr = 1;
+     $billing_start = 1;
+     $billing_end = 1;
+   ?>   
+   @foreach($active_tenants as $item)
+  
+   {{-- <input type="hidden" form="add_billings" name="ctr" value="{{ $ctr++ }}" required>      --}}
+  
+    <input type="hidden" form="add_billings" name="billing_tenant_id{{ $id_ctr++ }}" value="{{ $item->tenant_id }}" required>
+  
+    <input type="hidden" form="add_billings" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
+
+    <input type="hidden" form="add_billings" name="property_id" value="{{ $property->property_id }}" required>
+  
+    <tr>
+      <td>
+        {{ $ctr++ }}
+      </td>
+      <td>
+        <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
         
-    @endforeach
+      </td>
+      <td>
+          <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+      </td>
+  
+    
+      <td colspan="2">
+       
+        <input form="add_billings" type="date" name="billing_start{{ $billing_start++  }}" value="{{ Carbon\Carbon::parse($updated_billing_start)->startOfMonth()->format('Y-m-d') }}" required>
+        <input form="add_billings" type="date" name="billing_end{{ $billing_end++  }}" value="{{ Carbon\Carbon::parse($updated_billing_end)->endOfMonth()->format('Y-m-d') }}" required>
+       
+    </td>
+          <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
+      
+          <input class="" type="hidden" form="add_billings" name="billing_desc{{ $desc_ctr++ }}" value="Condo Dues" required readonly>
+      <td>
+       
+            <input form="add_billings" type="number" name="billing_amt{{ $amt_ctr++ }}" step="0.01"  value="" oninput="this.value = Math.abs(this.value)">
+    
+      </td>
+     
+   </tr>
+   @endforeach
   </table>
+  
   </div>
-@endif
+  <br>
+  <p class="text-right">
+  <a href="/property/{{ $property->property_id }}/bills" class="btn btn-secondary"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</a>
+  <button type="submit" form="add_billings" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Submit</button>
+  </p>
+
+  
+  <div class="modal fade" id="editPeriodCovered" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit period covered</h5>
+    
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+     <div class="modal-body">
+      <form id="periodCoveredForm" action="/property/{{ $property->property_id }}/bills/condodues/{{ $updated_billing_start? Carbon\Carbon::parse($updated_billing_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_billing_end)->format('Y-m-d') }}/" method="POST">
+        @csrf
+      <div class="row">
+        <div class="col">
+        <label for="">Start</label>
+        <input class="form-control" form="periodCoveredForm" type="date" name="billing_start" value="{{ Carbon\Carbon::parse($updated_billing_start)->startOfMonth()->format('Y-m-d') }}" required>
+      </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+        <label for="">End</label>
+        <input class="form-control" form="periodCoveredForm" type="date" name="billing_end" value="{{ Carbon\Carbon::parse($updated_billing_end)->endOfMonth()->format('Y-m-d') }}" required>
+      </div>
+      </div>
+    
+
+    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Dismiss </button>
+     <button form="periodCoveredForm" type="submit" id="addBillsButton" class="btn btn-primary" ><i class="fas fa-check" onclick="this.form.submit(); this.disabled = true;"></i> Save Changes</button>
+    </form>
+    </div> 
+    </div>
+    </div>
+    
+    </div>
+
 @endsection
 
+@section('main-content')
 
+@endsection
 
 @section('scripts')
-  
+<script type="text/javascript">
+  $(window).on('load',function(){
+      $('#editPeriodCovered').modal('show');
+  });
+</script>
 @endsection
 
 

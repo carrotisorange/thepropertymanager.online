@@ -56,7 +56,7 @@
                          
                         <div class="row">
                           <div class="col">
-                              <label>Short title</label>
+                              <label>Title</label>
                             
                               <input type="text" form="concernForm" class="form-control" name="concern_item" placeholder="Uncessary charges to my account" required >
                           </div>

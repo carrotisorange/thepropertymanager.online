@@ -87,7 +87,7 @@ class CollectionController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-       return view('webapp.collections.collections', compact('collections', 'property'));
+       return view('webapp.collections.index', compact('collections', 'property'));
     }
 
     /**
@@ -218,11 +218,59 @@ class CollectionController extends Controller
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
            
         }
+        
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
+        }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
+        }
+
+            
         
         
    
     }
+
+    public function export($property_id, $tenant_id, $payment_id, $payment_created){
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
+
+        $current_room = Unit::findOrFail($room_id)->unit_no;
+
+       $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
+      ->where('billing_tenant_id', $tenant_id)
+      ->where('payment_created', $payment_created)
+      ->groupBy('payment_id')
+      ->orderBy('ar_no', 'desc')
+     ->get();
+
+
+
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('billing_tenant_id', $tenant_id)
+            ->groupBy('bill_id')
+            ->orderBy('billing_no', 'desc')
+            ->havingRaw('balance > 0')
+            ->get();
+
+        $payment = Payment::findOrFail($payment_id);
+        
+        $data = [
+                    'tenant' => $tenant->first_name.' '.$tenant->last_name ,
+                    'current_room' => $current_room,
+                    'collections' => $collections,
+                    'balance' => $balance,
+                    'payment_date' => $payment->payment_created,
+                    'payment_ar' => $payment->ar_no
+                ];
+
+        $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
+  
+        return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
+}
 
     /**
      * Display the specified resource.
@@ -281,7 +329,11 @@ class CollectionController extends Controller
     {
         DB::table('payments')->where('payment_id', $payment_id)->delete();
 
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
+        }else{
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
+        }
     }
 
 }
