@@ -1,6 +1,6 @@
 
       <div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="modal">
+        <div class="modal-dialog modal-lg" role="modal">
         <div class="modal-content">
           <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add Bill</h5>
@@ -17,29 +17,33 @@
           
           <div class="row">
             <div class="col">
-                <label>Billing Date</label>
+                <label>Date</label>
                 {{-- <input type="date" form="addBillForm" class="form-control" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
-                <input type="date" class="form-control" form="addBillForm" class="" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                <input type="date" form="addBillForm" class="" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+            </div>
+            <div class="col">
+              <p class="text-right">
+                <span id='delete_bill' class="btn btn-sm btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</span>
+              <span id="add_bill" class="btn btn-sm btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</span>     
+              </p>
             </div>
           </div>
          
           <br>
           <div class="row">
             <div class="col">
-           
-              <p class="text-right">
-                <span id='delete_bill' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</span>
-              <span id="add_bill" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</span>     
-              </p>
+        
                 <div class="table-responsive text-nowrap">
-                <table class = "table table-bordered" id="table_bill">
+                <table class = "table" id="table_bill">
+                   <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Particular</th>
-                        <th colspan="2">Period Covered</th>
-                        <th>Amount</th>
-                        
-                    </tr>
+                      <th>#</th>
+                      <th>Particular</th>
+                      <th colspan="2">Period Covered</th>
+                      <th>Amount</th>
+                      
+                  </tr>
+                   </thead>
                         <input form="addBillForm" type="hidden" id="no_of_bills" name="no_of_bills" >
                     <tr id='bill1'></tr>
                 </table>

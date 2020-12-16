@@ -744,7 +744,7 @@
       
       <div class="row">
         <div class="col">
-            <label>Billing Date</label>
+            <label>Date</label>
             {{-- <input type="date" form="addBillForm" class="form-control" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
             <input type="date" class="form-control" form="addBillForm" class="" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
         </div>
