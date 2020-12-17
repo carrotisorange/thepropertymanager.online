@@ -162,11 +162,8 @@ class UnitController extends Controller
             
             $property = Property::findOrFail(Session::get('property_id'));
 
-            if(Session::get('property_type') === 'Condominium Corporation'){
                 return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
-            }else{
-                return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
-            }
+          
         }else{
                 return view('website.unregistered');
         }

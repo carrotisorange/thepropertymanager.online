@@ -27,6 +27,9 @@ class BillController extends Controller
     {
         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
 
+          
+            
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             $bills = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
@@ -38,6 +41,18 @@ class BillController extends Controller
             ->groupBy(function($item) {
                 return \Carbon\Carbon::parse($item->start)->timestamp;
             });
+        }else{
+            $bills = DB::table('units')
+            
+            ->join('bills', 'unit_id', 'bill_unit_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->orderBy('bill_id', 'desc')
+            ->groupBy('bill_id')
+            ->get()
+            ->groupBy(function($item) {
+                return \Carbon\Carbon::parse($item->start)->timestamp;
+            });
+        }
 
             $property = Property::findOrFail(Session::get('property_id'));
     
@@ -440,6 +455,7 @@ class BillController extends Controller
         ->where('property_id_foreign', Session::get('property_id'))
         ->where('contracts.status', 'active')
         ->count();
+        
         if(Session::get('property_type') === 'Condominium Corporation'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
