@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+            @if(Session::get('property_type') === 'Condominium Corporation')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -179,7 +179,8 @@
   </form>
     
     <table class="table">
-    <tr>
+    <thead>
+      <tr>
         <th>#</th>
         <th>Tenant</th>
         <th>Room</th> 
@@ -192,6 +193,7 @@
         <th></th>
    
     </tr>
+    </thead>
    <?php
      $ctr = 1;
      $desc_ctr = 1;
@@ -265,7 +267,7 @@
     <div class="modal-dialog modal-md" role="modal">
     <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Edit period covered</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Period Covered</h5>
     
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

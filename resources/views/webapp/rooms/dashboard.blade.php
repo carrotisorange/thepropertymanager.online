@@ -632,7 +632,7 @@
       @foreach ($concerns as $item)
       <tr>
       <td>{{ $ctr++ }}</td>
-        <td>{{ Carbon\Carbon::parse($item->date_reported)->format('M d Y') }}</td>
+        <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
           <td>
             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
             <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
@@ -648,33 +648,33 @@
             @endif
           <td>
             
-              {{ $item->concern_type }}
+              {{ $item->category }}
               
           </td>
           <td >
             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-            <a title="{{ $item->concern_desc }}" href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/concerns/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
+            <a title="{{ $item->details }}" href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/concerns/{{ $item->concern_id }}">{{ $item->title }}</a></td>
             @else
-            {{ $item->concern_item }}
+            {{ $item->title }}
             @endif
 
             
           <td>
-              @if($item->concern_urgency === 'urgent')
-              <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
-              @elseif($item->concern_urgency === 'major')
-              <span class="badge badge-warning">{{ $item->concern_urgency }}</span>
+              @if($item->urgency === 'urgent')
+              <span class="badge badge-danger">{{ $item->urgency }}</span>
+              @elseif($item->urgency === 'major')
+              <span class="badge badge-warning">{{ $item->urgency }}</span>
               @else
-              <span class="badge badge-primary">{{ $item->concern_urgency }}</span>
+              <span class="badge badge-primary">{{ $item->urgency }}</span>
               @endif
           </td>
           <td>
-              @if($item->concern_status === 'pending')
-              <span class="badge badge-warning">{{ $item->concern_status }}</span>
-              @elseif($item->concern_status === 'active')
-              <span class="badge badge-primary">{{ $item->concern_status }}</span>
+              @if($item->status === 'pending')
+              <span class="badge badge-warning">{{ $item->status }}</span>
+              @elseif($item->status === 'active')
+              <span class="badge badge-primary">{{ $item->status }}</span>
               @else
-              <span class="badge badge-secondary">{{ $item->concern_status }}</span>
+              <span class="badge badge-secondary">{{ $item->status }}</span>
               @endif
           </td>
         

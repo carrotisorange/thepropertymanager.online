@@ -270,9 +270,9 @@ class OccupantController extends Controller
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
             ->join('users', 'concern_user_id', 'id')
             ->where('tenant_id', $tenant_id)
-            ->orderBy('date_reported', 'desc')
-            ->orderBy('concern_urgency', 'desc')
-            ->orderBy('concern_status', 'desc')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
             ->get();
 
 
@@ -289,13 +289,20 @@ class OccupantController extends Controller
         });
 
               //get the number of last added bills
-       
+              if(Session::get('property_type') === 'Condominium Corporation'){
+                $current_bill_no = DB::table('units')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->max('bill_no') + 1;
+        
+            }else{
                 $current_bill_no = DB::table('contracts')
-              ->join('units', 'unit_id_foreign', 'unit_id')
-              ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-              ->join('bills', 'tenant_id', 'bill_tenant_id')
-              ->where('property_id_foreign',  Session::get('property_id'))
-              ->max('bill_no') + 1;
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('bills', 'tenant_id', 'bill_tenant_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->max('bill_no') + 1;
+            }     
 
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')

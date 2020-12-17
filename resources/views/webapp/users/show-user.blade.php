@@ -324,26 +324,26 @@
                <td>{{ $item->concern_id }}</td>
                <td>
               
-                {{ $item->concern_type }}
+                {{ $item->category }}
                 
             </td>
-            <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
+            <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
             <td>
-                @if($item->concern_urgency === 'urgent')
-                <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
-                @elseif($item->concern_urgency === 'major')
-                <span class="badge badge-warning">{{ $item->concern_urgency }}</span>
+                @if($item->urgency === 'urgent')
+                <span class="badge badge-danger">{{ $item->urgency }}</span>
+                @elseif($item->urgency === 'major')
+                <span class="badge badge-warning">{{ $item->urgency }}</span>
                 @else
-                <span class="badge badge-primary">{{ $item->concern_urgency }}</span>
+                <span class="badge badge-primary">{{ $item->urgency }}</span>
                 @endif
             </td>
             <td>
-                @if($item->concern_status === 'pending')
-                <span class="badge badge-warning">{{ $item->concern_status }}</span>
-                @elseif($item->concern_status === 'active')
-                <span class="badge badge-primary">{{ $item->concern_status }}</span>
+                @if($item->status === 'pending')
+                <span class="badge badge-warning">{{ $item->status }}</span>
+                @elseif($item->status === 'active')
+                <span class="badge badge-primary">{{ $item->status }}</span>
                 @else
-                <span class="badge badge-success">{{ $item->concern_status }}</span>
+                <span class="badge badge-success">{{ $item->status }}</span>
                 @endif
             </td>
   

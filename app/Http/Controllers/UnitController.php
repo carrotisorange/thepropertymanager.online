@@ -49,7 +49,7 @@ class UnitController extends Controller
                
             $property = Property::findOrFail($property_id);
     
-           if($property->type === 'Condominium Corporation'){
+           if(Session::get('property_type') === 'Condominium Corporation'){
             return view('webapp.units.index',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property'));
            }else{
             return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property'));
@@ -140,31 +140,30 @@ class UnitController extends Controller
             ->get();
 
     
-        //     $bills = Billing::leftJoin('payments', 'billings.bill_no', '=', 'payments.payment_bill_no')
-        //    ->join('tenants', 'bill_tenant_id', 'tenant_id')
-        //    ->selectRaw('*, billings.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-        //    ->where('unit_tenant_id', $unit_id)
-        //    ->groupBy('billing_id')
-        //    ->orderBy('bill_no', 'desc')
-        //    ->havingRaw('balance > 0')
-        //    ->get();
+            $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
+           ->join('units', 'bill_unit_id', 'unit_id')
+           ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
+           ->where('unit_id', $unit_id)
+           ->groupBy('bill_id')
+           ->orderBy('bill_no', 'desc')
+           ->havingRaw('balance > 0')
+           ->get();
 
 
-           $concerns = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+           $concerns = DB::table('units')
+            ->join('concerns', 'unit_id', 'concern_unit_id')
             ->join('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
             ->where('unit_id', $unit_id)
-            ->orderBy('date_reported', 'desc')
-            ->orderBy('concern_urgency', 'desc')
-            ->orderBy('concern_status', 'desc')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
             ->get();
             
             $property = Property::findOrFail(Session::get('property_id'));
 
-            if($property->type === 'Condominium Corporation'){
-                return view('webapp.units.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
+            if(Session::get('property_type') === 'Condominium Corporation'){
+                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }else{
                 return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }

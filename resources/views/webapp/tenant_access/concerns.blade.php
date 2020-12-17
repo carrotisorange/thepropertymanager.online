@@ -148,31 +148,31 @@
         <tr>
           <th>{{ $ctr++ }}</th>
        
-          <td>{{ Carbon\Carbon::parse($item->date_reported)->format('M d Y') }}</td>
+          <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
             
             <td>{{ $item->building.' '.$item->unit_no }}</td>
             <td>
               
-                {{ $item->concern_type }}
+                {{ $item->category }}
                 
             </td>
-            <td ><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses">{{ $item->concern_item }}</a></td>
+            <td ><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses">{{ $item->title }}</a></td>
             <td>
-                @if($item->concern_urgency === 'urgent')
-                <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
-                @elseif($item->concern_urgency === 'major')
-                <span class="badge badge-warning">{{ $item->concern_urgency }}</span>
+                @if($item->urgency === 'urgent')
+                <span class="badge badge-danger">{{ $item->urgency }}</span>
+                @elseif($item->urgency === 'major')
+                <span class="badge badge-warning">{{ $item->urgency }}</span>
                 @else
-                <span class="badge badge-primary">{{ $item->concern_urgency }}</span>
+                <span class="badge badge-primary">{{ $item->urgency }}</span>
                 @endif
             </td>
             <td>
-                @if($item->concern_status === 'pending')
-                <span class="badge badge-warning">{{ $item->concern_status }}</span>
-                @elseif($item->concern_status === 'active')
-                <span class="badge badge-primary">{{ $item->concern_status }}</span>
+                @if($item->status === 'pending')
+                <span class="badge badge-warning">{{ $item->status }}</span>
+                @elseif($item->status === 'active')
+                <span class="badge badge-primary">{{ $item->status }}</span>
                 @else
-                <span class="badge badge-success">{{ $item->concern_status }}</span>
+                <span class="badge badge-success">{{ $item->status }}</span>
                 @endif
             </td>
             <td>{{ $item->name }}</td>
@@ -207,14 +207,14 @@
                             <div class="row">
                               <div class="col">
                                   <label>Date Reported</label>
-                                  <input type="date" form="concernForm" class="form-control" name="date_reported" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                                  <input type="date" form="concernForm" class="form-control" name="reported_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
                               </div>
                           </div>
                           <br>
                             <div class="row">
                                 <div class="col">
                                    <label>Type</label>
-                                    <select class="form-control" form="concernForm" name="concern_type" id="" required>
+                                    <select class="form-control" form="concernForm" name="category" id="" required>
                                       <option value="" selected>Please select one</option>
                                       <option value="billing">billing</option>
                                       <option value="employee">employee</option>
@@ -233,7 +233,7 @@
                             <div class="row">
                               <div class="col">
                                  <label>Urgency</label>
-                                  <select class="form-control" form="concernForm" name="concern_urgency" id="" required>
+                                  <select class="form-control" form="concernForm" name="urgency" id="" required>
                                     <option value="" selected>Please select one</option>
                                     <option value="minor and not urgent">minor and not urgent</option>
                                     <option value="minor but urgent">minor but urgent</option>
@@ -246,9 +246,9 @@
                          
                         <div class="row">
                           <div class="col">
-                              <label>Short Description</label>
+                              <label>Title</label>
                             
-                              <input type="text" form="concernForm" class="form-control" name="concern_item" required >
+                              <input type="text" form="concernForm" class="form-control" name="title" required >
                           </div>
                         </div>  
                         <br>
@@ -257,7 +257,7 @@
                               <div class="col">
                                   <label>Details</label>
                                   
-                                  <textarea form="concernForm" rows="7" class="form-control" name="concern_desc" required></textarea>
+                                  <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
                               </div>
                           </div>
                           <br>

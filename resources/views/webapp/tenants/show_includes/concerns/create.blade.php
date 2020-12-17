@@ -17,14 +17,14 @@
                             <div class="row">
                               <div class="col">
                                   <label>Date Reported</label>
-                                  <input type="date" form="concernForm" class="form-control" name="date_reported" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                                  <input type="date" form="concernForm" class="form-control" name="reported_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
                               </div>
                           </div>
                           <br>
                             <div class="row">
                                 <div class="col">
                                    <label>Category</label>
-                                    <select class="form-control" form="concernForm" name="concern_type" id="" required>
+                                    <select class="form-control" form="concernForm" name="category" id="" required>
                                       <option value="" selected>Please select one</option>
                                       <option value="billing">billing</option>
                                       <option value="employee">employee</option>
@@ -43,7 +43,7 @@
                             <div class="row">
                               <div class="col">
                                  <label>Urgency</label>
-                                  <select class="form-control" form="concernForm" name="concern_urgency" id="" required>
+                                  <select class="form-control" form="concernForm" name="urgency" id="" required>
                                     <option value="" selected>Please select one</option>
                                     <option value="minor and not urgent">minor and not urgent</option>
                                     <option value="minor but urgent">minor but urgent</option>
@@ -58,7 +58,7 @@
                           <div class="col">
                               <label>Title</label>
                             
-                              <input type="text" form="concernForm" class="form-control" name="concern_item" placeholder="Uncessary charges to my account" required >
+                              <input type="text" form="concernForm" class="form-control" name="title" placeholder="Uncessary charges to my account" required >
                           </div>
                         </div>  
                         <br>
@@ -67,7 +67,7 @@
                               <div class="col">
                                   <label>Details</label>
                                   
-                                  <textarea form="concernForm" rows="7" class="form-control" name="concern_desc" required></textarea>
+                                  <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
                               </div>
                           </div>
                           <br>

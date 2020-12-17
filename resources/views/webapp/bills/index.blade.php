@@ -243,7 +243,11 @@
   <th>Bill No</th>
   
   
+  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+  <th>Occupant</th>
+  @else
   <th>Tenant</th>
+  @endif
   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
   <th>Unit</th>
   @else
@@ -274,7 +278,7 @@
           
         
         </td>
-        <td>{{ $item->unit_no }}</td>
+        <td><a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a></td>
         <td>{{ $item->particular }}</td>
        
         <td colspan="2">

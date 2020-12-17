@@ -197,28 +197,28 @@
       <tr>
         <th>{{ $ctr++ }}</th>
      
-        <td>{{ Carbon\Carbon::parse($item->date_reported)->format('M d Y') }}</td>
+        <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
           <td>
           <a href="/property/{{ $property->property_id }}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
           </td>
           <td><a href="/property/{{ $property->property_id }}/home/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a></td>
-                <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
+                <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
           <td>
-              @if($item->concern_urgency === 'urgent')
-              <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
-              @elseif($item->concern_urgency === 'major')
-              <span class="badge badge-warning">{{ $item->concern_urgency }}</span>
+              @if($item->urgency === 'urgent')
+              <span class="badge badge-danger">{{ $item->urgency }}</span>
+              @elseif($item->urgency === 'major')
+              <span class="badge badge-warning">{{ $item->urgency }}</span>
               @else
-              <span class="badge badge-primary">{{ $item->concern_urgency }}</span>
+              <span class="badge badge-primary">{{ $item->urgency }}</span>
               @endif
           </td>
           <td>
-              @if($item->concern_status === 'pending')
-              <span class="badge badge-warning">{{ $item->concern_status }}</span>
-              @elseif($item->concern_status === 'active')
-              <span class="badge badge-primary">{{ $item->concern_status }}</span>
+              @if($item->status === 'pending')
+              <span class="badge badge-warning">{{ $item->status }}</span>
+              @elseif($item->status === 'active')
+              <span class="badge badge-primary">{{ $item->status }}</span>
               @else
-              <span class="badge badge-success">{{ $item->concern_status }}</span>
+              <span class="badge badge-success">{{ $item->status }}</span>
               @endif
           </td>
           <td>{{ $item->name }}</td>

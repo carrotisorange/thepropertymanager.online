@@ -17,15 +17,15 @@ class CreateConcernsTable extends Migration
             $table->bigIncrements('concern_id');
             $table->unsignedBigInteger('concern_tenant_id');
             $table->unsignedBigInteger('concern_user_id');
-            $table->string('concern_type');
-            $table->date('date_reported');
+            $table->string('category');
+            $table->date('reported_at');
             $table->string('is_warranty');
-            $table->string('concern_urgency');
+            $table->string('urgency');
 
-            $table->string('concern_item');
+            $table->string('title');
             $table->string('concern_qty')->nullable();
-            $table->longText('concern_desc');
-            $table->string('concern_status');
+            $table->longText('details');
+            $table->string('status');
             $table->double('concern_amt', 8, 2)->nullable();
             $table->string('is_paid');
             $table->string('rating')->nullable();

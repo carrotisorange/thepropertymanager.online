@@ -59,7 +59,7 @@ class ResponseController extends Controller
             ->where('concern_id', $request->concern_id)
             ->update(
                 [
-                    'concern_status' => 'active',
+                    'status' => 'active',
                     'updated_at' => Carbon::now(),
                 ]
             );

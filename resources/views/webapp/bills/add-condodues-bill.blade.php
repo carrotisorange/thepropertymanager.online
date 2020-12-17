@@ -179,23 +179,31 @@
   </form>
     
     <table class="table">
+   <thead>
     <tr>
-        <th>#</th>
-        <th>Tenant</th>
-        <th>Room</th> 
-        <th colspan="2">Period Covered</th>     
-  
-     
-      
-        <th>Amount</th>
-       
-        <th></th>
+      <th>#</th>
+      <th>Occupant</th>
+      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+      <th>Unit</th>
+      @else
+      <th>Room</th>
+      @endif
+      <th colspan="2">Period Covered</th>     
+
    
-    </tr>
+    
+      <th>Amount</th>
+     
+
+ 
+  </tr>
+   </thead>
    <?php
      $ctr = 1;
      $desc_ctr = 1;
      $tenant_id = 1;
+     $unit_id = 1;
+     $unit_id_ctr = 1;
      $amt_ctr = 1;
      $id_ctr = 1;
      $start = 1;
@@ -206,6 +214,8 @@
    {{-- <input type="hidden" form="add_billings" name="ctr" value="{{ $ctr++ }}" required>      --}}
   
     <input type="hidden" form="add_billings" name="bill_tenant_id{{ $id_ctr++ }}" value="{{ $item->tenant_id }}" required>
+
+    <input type="hidden" form="add_billings" name="bill_unit_id{{ $unit_id_ctr++ }}" value="{{ $item->unit_id }}" required>
   
     <input type="hidden" form="add_billings" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
 
@@ -216,7 +226,7 @@
         {{ $ctr++ }}
       </td>
       <td>
-        <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
+        <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
         
       </td>
       <td>
@@ -255,7 +265,7 @@
     <div class="modal-dialog modal-md" role="modal">
     <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Edit period covered</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Period Covered</h5>
     
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

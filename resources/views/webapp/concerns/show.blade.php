@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title',   $concern->concern_desc)
+@section('title',   $concern->details)
 
 @section('css')
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -195,7 +195,7 @@ font-family: FontAwesome;
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-4">
-    <h6 class="h2 text-dark d-inline-block mb-0"> {{ $concern->concern_desc }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0"> {{ $concern->details }}</h6>
     
   </div>
 
@@ -205,7 +205,7 @@ font-family: FontAwesome;
    
     <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-white-50"></i> Response</a> 
   
-    @if($concern->concern_status != 'closed')
+    @if($concern->status != 'closed')
     <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-white-50"></i> Edit</a> 
     <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-success"><i class="fas fa-check-square text-white-50"></i> Mark as complete</a> 
     {{-- @else
@@ -235,7 +235,7 @@ font-family: FontAwesome;
         
         <tr>
           <th>Date Reported</th>
-          <td>{{ $concern->date_reported }}</td>
+          <td>{{ $concern->reported_at }}</td>
         </tr>
            <tr>
                 <td>Reported by</th>
@@ -255,31 +255,31 @@ font-family: FontAwesome;
        <tr>
             <th>Type</th>
             <td>
-              {{ $concern->concern_type }}
+              {{ $concern->category }}
             </td>
        </tr>
       
        <tr>
             <th>Urgency</th>
             <td>
-              @if($concern->concern_urgency === 'urgent')
-              <span class="badge badge-danger">{{ $concern->concern_urgency }}</span>
-              @elseif($concern->concern_urgency === 'major')
-              <span class="badge badge-warning">{{ $concern->concern_urgency }}</span>
+              @if($concern->urgency === 'urgent')
+              <span class="badge badge-danger">{{ $concern->urgency }}</span>
+              @elseif($concern->urgency === 'major')
+              <span class="badge badge-warning">{{ $concern->urgency }}</span>
               @else
-              <span class="badge badge-primary">{{ $concern->concern_urgency }}</span>
+              <span class="badge badge-primary">{{ $concern->urgency }}</span>
               @endif
             </td>
        </tr>
        <tr>
           <th>Status</th>
             <td>
-                @if($concern->concern_status === 'pending')
-                <span class="badge badge-warning">{{ $concern->concern_status }} for {{ number_format(Carbon\Carbon::parse($concern->date_reported)->DiffInDays(Carbon\Carbon::now()), 0) }} days</span>
-                @elseif($concern->concern_status === 'active')
-                <span class="badge badge-primary">{{ $concern->concern_status }} for {{ number_format(Carbon\Carbon::parse($concern->updated_at)->DiffInDays(Carbon\Carbon::now()), 0) }} days </span> 
+                @if($concern->status === 'pending')
+                <span class="badge badge-warning">{{ $concern->status }} for {{ number_format(Carbon\Carbon::parse($concern->reported_at)->DiffInDays(Carbon\Carbon::now()), 0) }} days</span>
+                @elseif($concern->status === 'active')
+                <span class="badge badge-primary">{{ $concern->status }} for {{ number_format(Carbon\Carbon::parse($concern->updated_at)->DiffInDays(Carbon\Carbon::now()), 0) }} days </span> 
                 @else
-                <span class="badge badge-secondary">{{ $concern->concern_status }} on {{ Carbon\Carbon::parse($concern->updated_at)->format('M d Y')}}</span> 
+                <span class="badge badge-secondary">{{ $concern->status }} on {{ Carbon\Carbon::parse($concern->updated_at)->format('M d Y')}}</span> 
                 @endif
             </td>
        </tr>
@@ -317,7 +317,7 @@ font-family: FontAwesome;
    <div class="card">
     
      <div class="card-body">
-       {{ $concern->concern_desc }}
+       {{ $concern->details }}
      </div>
   </div>
    </div>
@@ -374,15 +374,15 @@ font-family: FontAwesome;
         <div class="row">
             <div class="col">
                 <small>Date reported</small>
-                <input type="date" form="editConcernDetailsForm" class="form-control" name="date_reported" value="{{ $concern->date_reported }}" required>
+                <input type="date" form="editConcernDetailsForm" class="form-control" name="reported_at" value="{{ $concern->reported_at }}" required>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
                 <small>Category</small>
-                <select class="form-control" form="editConcernDetailsForm" name="concern_type" id="" required>
-                    <option value="{{ $concern->concern_type }}" readonly selected class="bg-primary">{{ $concern->concern_type }}</option>
+                <select class="form-control" form="editConcernDetailsForm" name="category" id="" required>
+                    <option value="{{ $concern->category }}" readonly selected class="bg-primary">{{ $concern->category }}</option>
                     <option value="billing">billing</option>
                     <option value="internet">internet</option>
                     <option value="employee">employee</option>
@@ -400,15 +400,15 @@ font-family: FontAwesome;
         <div class="row">
             <div class="col">
                 <small>Short tile</small>
-                <input type="text" form="editConcernDetailsForm" class="form-control" name="concern_item" value="{{ $concern->concern_item }}" required>
+                <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
             </div>
         </div>
 <br>
         <div class="row">
             <div class="col">
                 <small>Urgency</small>
-                <select class="form-control" form="editConcernDetailsForm" name="concern_urgency" id="" required>
-                    <option value="{{ $concern->concern_urgency }}" readonly selected class="bg-primary">{{ $concern->concern_urgency }}</option>
+                <select class="form-control" form="editConcernDetailsForm" name="urgency" id="" required>
+                    <option value="{{ $concern->urgency }}" readonly selected class="bg-primary">{{ $concern->urgency }}</option>
                     <option value="minor and not urgent">minor and not urgent</option>
                     <option value="minor but urgent">minor but urgent</option>
                     <option value="major but not urgent">major but not urgent</option>
@@ -421,8 +421,8 @@ font-family: FontAwesome;
         <div class="row">
           <div class="col">
               <small>Details</small>
-             <textarea form="editConcernDetailsForm" class="form-control" name="concern_desc" id="" cols="30" rows="10" required>
-              {{ $concern->concern_desc }}
+             <textarea form="editConcernDetailsForm" class="form-control" name="details" id="" cols="30" rows="10" required>
+              {{ $concern->details }}
              </textarea>
           </div>
       </div>

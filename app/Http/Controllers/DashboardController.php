@@ -47,7 +47,7 @@ class DashboardController extends Controller
         // $active_concerns = DB::table('tenants')
         // ->join('units', 'unit_id', 'unit_tenant_id')
         // ->join('concerns', 'tenant_id', 'concern_tenant_id')
-        // ->where('concern_status', 'active')
+        // ->where('status', 'active')
         // ->where('property_id_foreign', Session::get('property_id'))
         // ->get();
 

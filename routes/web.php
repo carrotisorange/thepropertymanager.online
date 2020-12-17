@@ -320,16 +320,26 @@ Route::post('/property/{property_id}/personnel', 'PersonnelController@store')->m
 //routes for bills
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit_tenant_bills')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/occupant/{tenant_id}/bills/edit', 'BillController@edit_occupant_bills')->middleware(['auth', 'verified']);
+
+
+Route::get('/property/{property_id}/home/{home_id}/bills/edit', 'BillController@edit_occupant_bills')->middleware(['auth', 'verified']);
+
+//export bills
+Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', 'BillController@export')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/home/{unit_id}/bills/export', 'BillController@export_occupant_bills')->middleware(['auth', 'verified']);
 
 
 Route::put('/property/{property_id}/tenant/{tenant_id}/bills/update', 'BillController@post_edited_bills')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/home/{unit_id}/bills/update', 'BillController@update_occupant_bills')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/rent/{date}', 'BillController@post_bills_rent')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/condodues/{date}', 'BillController@post_bills_condodues')->middleware(['auth', 'verified']);
 
 Route::post('property/{property_id}/bills/create', 'BillController@store')->middleware(['auth', 'verified']);
 
 Route::post('property/{property_id}/tenant/{tenant_id}/bills/create', 'BillController@post_tenant_bill')->middleware(['auth', 'verified']);
+
+
+Route::post('property/{property_id}/home/{unit_id}/bills/create', 'BillController@post_unit_bill')->middleware(['auth', 'verified']);
 
 Route::post('property/{property_id}/bills/electric/{date}', 'BillController@post_bills_electric')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/water/{date}', 'BillController@post_bills_water')->middleware(['auth', 'verified']);
@@ -442,8 +452,7 @@ return $pdf->download(Carbon::now().'-'.Auth::user()->property.'-ar'.'.pdf');
 //print gate pass
 Route::get('/units/{unit_id}/tenants/{tenant_id}/print/gatepass', 'TenantController@printGatePass')->middleware(['auth', 'verified']);
 
-//export bills
-Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', 'BillController@export')->middleware(['auth', 'verified']);
+
 
 Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/send', function($unit_id,$tenant_id){
     $tenant = Tenant::findOrFail($tenant_id);
@@ -566,11 +575,10 @@ Route::get('/maintenance', function(){
 })->middleware(['auth', 'verified']);
 
 
-//routes for billings
+//routes for bills
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@show_billings')->name('show-billings')->middleware(['auth', 'verified']);
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@edit_billings')->middleware(['auth', 'verified']);
 Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
-Route::post('/tenants/billings', 'TenantController@add_billings')->name("add-billings")->middleware(['auth', 'verified']);
 Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 
 Route::delete('property/{property_id}/bill/{bill_id}', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
@@ -726,7 +734,7 @@ Route::put('/concerns/{concern_id}/closed', function(Request $request){
         ->where('concern_id', $request->concern_id)
         ->update(
             [
-                'concern_status' => 'closed',
+                'status' => 'closed',
                 'rating' => $request->rating,
                 'feedback' => $request->feedback
             ]

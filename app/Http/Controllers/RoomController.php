@@ -49,7 +49,7 @@ class RoomController extends Controller
                
             $property = Property::findOrFail($property_id);
     
-           if($property->type === 'Condominium Corporation'){
+           if(Session::get('property_type') === 'Condominium Corporation'){
             return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property'));
            }else{
             return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property'));
@@ -155,14 +155,14 @@ class RoomController extends Controller
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
             ->join('users', 'concern_user_id', 'id')
             ->where('unit_id', $unit_id)
-            ->orderBy('date_reported', 'desc')
-            ->orderBy('concern_urgency', 'desc')
-            ->orderBy('concern_status', 'desc')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
             ->get();
             
             $property = Property::findOrFail(Session::get('property_id'));
 
-            if($property->type === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation'){
                 return view('webapp.units.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }else{
                 return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));

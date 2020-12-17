@@ -60,13 +60,20 @@ class ContractController extends Controller
         ->units
         ->whereIn('status',['vacant', 'reserved']);
 
-
-        $current_bill_no = DB::table('contracts')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'bill_tenant_id')
-        ->where('property_id_foreign',  Session::get('property_id'))
-        ->max('bill_no') + 1;
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            $current_bill_no = DB::table('units')
+            ->join('bills', 'unit_id', 'bill_unit_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+    
+        }else{
+            $current_bill_no = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+        }     
 
         return view('webapp.contracts.create', compact('tenant','unit', 'property', 'current_bill_no', 'users', 'units'));
     }
@@ -129,12 +136,20 @@ class ContractController extends Controller
 
                     $no_of_bills = $request->no_of_items;
 
-                    $current_bill_no = DB::table('contracts')
-                    ->join('units', 'unit_id_foreign', 'unit_id')
-                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                    ->join('bills', 'tenant_id', 'bill_tenant_id')
-                    ->where('property_id_foreign', Session::get('property_id'))
-                    ->max('bill_no') + 1;
+                    if(Session::get('property_type') === 'Condominium Corporation'){
+                        $current_bill_no = DB::table('units')
+                        ->join('bills', 'unit_id', 'bill_unit_id')
+                        ->where('property_id_foreign', Session::get('property_id'))
+                        ->max('bill_no') + 1;
+                
+                    }else{
+                        $current_bill_no = DB::table('contracts')
+                        ->join('units', 'unit_id_foreign', 'unit_id')
+                        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                        ->join('bills', 'tenant_id', 'bill_tenant_id')
+                        ->where('property_id_foreign', Session::get('property_id'))
+                        ->max('bill_no') + 1;
+                    }     
             
                     for ($i=1; $i < $no_of_bills; $i++) { 
                         $bill = new Bill();
@@ -273,12 +288,20 @@ class ContractController extends Controller
 
     public function preterminate_post(Request $request, $property_id, $tenant_id, $contract_id){
 
-        $current_bill_no = DB::table('contracts')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'bill_tenant_id')
-        ->where('property_id_foreign',  Session::get('property_id'))
-        ->max('bill_no') + 1;
+        if(Session::get('property_type') === 'Condominium Corporation'){
+            $current_bill_no = DB::table('units')
+            ->join('bills', 'unit_id', 'bill_unit_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+    
+        }else{
+            $current_bill_no = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+        }     
         
         $no_of_charges = (int) $request->no_of_charges; 
 

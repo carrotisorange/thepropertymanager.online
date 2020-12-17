@@ -691,12 +691,12 @@ class UserController extends Controller
              DB::table('concerns')->insertGetId(
                 [
                     'concern_tenant_id' => $tenant_id,
-                    'date_reported' => $request->date_reported,
-                    'concern_type'=> $request->concern_type,
-                    'concern_urgency' => $request->concern_urgency,
-                    'concern_item' => $request->concern_item,
-                    'concern_desc' => $request->concern_desc,
-                    'concern_status' => 'pending',
+                    'reported_at' => $request->reported_at,
+                    'category'=> $request->category,
+                    'urgency' => $request->urgency,
+                    'title' => $request->title,
+                    'details' => $request->details,
+                   
                     'concern_user_id' => $request->concern_user_id,
                 ]);
     

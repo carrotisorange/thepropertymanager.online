@@ -202,18 +202,15 @@
         @else
         <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access </a>
         @endif
-       
+
+        <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-file-signature"></i> 
+          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+        Unit
+        @else
+        Room
+        @endif
+        </a>
     
-         @if($balance->count() <= 0)
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills </a>
-         @else
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> {{ $balance->count() }}</span></a>
-         @endif
-
-         
-         <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="true"><i class="fas fa-money-bill"></i> Payments </a>
-
-
         <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools"></i> Concerns</a>
       </div>
     </nav>
@@ -312,8 +309,7 @@
       </div>
 
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-        <a  href="#" class="btn btn-primary " data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>  
-        <br><br>
+        
         <div class="row" >
           <div class="col-md-12 mx-auto" >
         <div class="table-responsive text-nowrap">
@@ -325,9 +321,8 @@
                
                  <th>Date Reported</th>
                 
-                 <th>Room</th>
-                 <th>Type</th>
-                 <th>Description</th>
+                 <th>Category</th>
+                 <th>Title</th>
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>
@@ -340,31 +335,31 @@
              <tr>
                <th>{{ $ctr++ }}</th>
             
-               <td>{{ Carbon\Carbon::parse($item->date_reported)->format('M d Y') }}</td>
+               <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
                  
-                 <td>{{ $item->building.' '.$item->unit_no }}</td>
+                
                  <td>
                    
-                     {{ $item->concern_type }}
+                     {{ $item->category }}
                      
                  </td>
-                 <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->concern_item }}</a></td>
+                 <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
                  <td>
-                     @if($item->concern_urgency === 'urgent')
-                     <span class="badge badge-danger">{{ $item->concern_urgency }}</span>
-                     @elseif($item->concern_urgency === 'major')
-                     <span class="badge badge-warning">{{ $item->concern_urgency }}</span>
+                     @if($item->urgency === 'urgent')
+                     <span class="badge badge-danger">{{ $item->urgency }}</span>
+                     @elseif($item->urgency === 'major')
+                     <span class="badge badge-warning">{{ $item->urgency }}</span>
                      @else
-                     <span class="badge badge-primary">{{ $item->concern_urgency }}</span>
+                     <span class="badge badge-primary">{{ $item->urgency }}</span>
                      @endif
                  </td>
                  <td>
-                     @if($item->concern_status === 'pending')
-                     <span class="badge badge-warning">{{ $item->concern_status }}</span>
-                     @elseif($item->concern_status === 'active')
-                     <span class="badge badge-primary">{{ $item->concern_status }}</span>
+                     @if($item->status === 'pending')
+                     <span class="badge badge-warning">{{ $item->status }}</span>
+                     @elseif($item->status === 'active')
+                     <span class="badge badge-primary">{{ $item->status }}</span>
                      @else
-                     <span class="badge badge-success">{{ $item->concern_status }}</span>
+                     <span class="badge badge-success">{{ $item->status }}</span>
                      @endif
                  </td>
                  <td>{{ $item->name }}</td>
@@ -381,6 +376,74 @@
           </div>
       </div>
       </div>
+
+      <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
+
+       
+       
+       <div style="display:none" id="showSelectedContract" class="col-md-6 p-0 m-0 mx-auto text-center">
+       <div class="alert alert-success alert-dismissable custom-success-box">
+           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+           <strong id="showNumberOfSelectedContract"></strong>
+        </div>
+     </div>
+         <div class="row">
+           <form action="" method="POST">
+             @csrf
+             @method('put')
+           </form>
+           <div class="col-md-12 mx-auto">
+             <table class="table">
+               <thead>
+                 <?php $ctr = 1; ?>
+                 <tr>
+                   {{-- <th><div class="form-check form-check-inline">
+                     <input class="form-check-input" type="checkbox" id="selectAll" onclick="selectAll()" value="option1">
+                   </div> --}}
+                 </th>
+                   <th>#</th>
+                   <th>Building</th>
+                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+                    <th>Unit</th>
+                    @else
+                    <th>Room</th>
+                    @endif
+                 
+                   <th>Movein</th>
+                   <th>Last electric consumption</th>
+                   <th>Last water consumption</th>
+                  
+             <th></th>
+ 
+                   
+                 </tr>
+               </thead>
+               <tbody>
+                @foreach ($contracts as $item)
+                <tr>
+                  {{-- <th>
+                    <div class="form-check form-check-inline">
+                     <input class="form-check-input" type="checkbox" onclick="selectOne()" id="checkbox{{$item->contract_id}}" value="{{$item->contract_id}}">
+                   </div>
+                 </th> --}}
+                 <th>{{ $ctr++ }}</th>
+                 <td>{{ $item->building }}</td>
+                 <td><a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></td>
+                 
+                 <td>{{ $item->movein_at }}</td>
+                 <td>{{ $item->initial_electric }}</td>
+               <td>{{ $item->initial_water }}</td>
+                
+  
+          
+               </tr>
+                @endforeach
+               </tbody>
+             </table>
+ 
+           </div>
+         </div>
+       </div>
       
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
@@ -432,176 +495,6 @@
         </div>
       </div>
 
-      <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
-        @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
-          <a href="/property/{{ $property->property_id }}/occupant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-          @endif
-          @if($balance->count() > 0)
-          <a  target="_blank" href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
-          {{-- @if($tenant->email_address !== null)
-          <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
-          @endif --}}
-          @endif
-        
-      
-
-    <br>
-    <br>
-    <div class="col-md-12 mx-auto">
-    <div class="table-responsive">
-      <div class="table-responsive text-nowrap">
-        <table class="table">
-          <?php $ctr=1; ?>
-        <thead>
-          <tr>
-            <th class="text-center">#</th>
-             <th>Date posted</th>
-               <th>Bill no</th>
-               
-               <th>Particular</th>
-               <th>Period covered</th>
-               <th class="text-right" >Bill amount</th>
-               <th class="text-right" >Amount paid</th>
-               <th class="text-right" >Balance</th>
-               {{-- <th></th> --}}
-             </tr>
-        </thead>
-          @foreach ($bills as $item)
-          <tr>
-         <th class="text-center">{{ $ctr++ }}</th>
-            <td>
-              {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
-            </td>   
-
-              <td>{{ $item->bill_no }}</td>
-      
-              <td>{{ $item->particular }}</td>
-              <td>
-                {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-              </td>
-              <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
-              <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
-              <td class="text-right" >
-                @if($item->balance > 0)
-                <span class="text-danger">{{ number_format($item->balance,2) }}</span>
-                @else
-                <span >{{ number_format($item->balance,2) }}</span>
-                @endif
-              </td>
-              {{-- <td class="text-center">
-                @if(Auth::user()->user_type === 'manager')
-                <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
-                </form>
-                @endif
-              </td> --}}
-                     </tr>
-                     
-          @endforeach
-          <tr>
-            <th>Total </th>
-            <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
-            <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
-            <th class="text-right text-danger" colspan="">
-              @if($bills->sum('balance') > 0)
-              <span class="text-danger">{{ number_format($bills->sum('balance'),2) }}</span>
-              @else
-              <span >{{ number_format($bills->sum('balance'),2) }}</span>
-              @endif
-         
-             </th>
-           </tr>
-        
-      </table>
-
-    </div>
-    </div>
-    
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              {!! Auth::user()->note !!}
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-      <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
-        @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
-        <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
-        @endif 
-        <br><br>
-        <div class="col-md-12 mx-auto">
-        <div class="table-responsive text-nowrap">
-          <table class="table">
-            @foreach ($payments as $day => $collection_list)
-             <thead>
-                <tr>
-                    <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $collection_list->count() }})</th>
-                    
-                </tr>
-                <tr>
-                  <?php $ctr = 1; ?>
-                    <th class="text-center">#</th>
-                    <th>AR No</th>
-                    <th>Bill No</th>
-                    {{-- <th>Room</th>   --}}
-                    <th>Particular</th>
-                    <th colspan="2">Period Covered</th>
-                    <th>Form</th>
-                    <th class="text-right">Amount</th>
-                   
-                   <th>Action</th>
-                     
-                    </tr>
-              </tr>
-             </thead>
-              @foreach ($collection_list as $item)
-             
-              <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                      <td>{{ $item->ar_no }}</td>
-                      <td>{{ $item->payment_bill_no }}</td>
-                        {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
-                       <td>{{ $item->particular }}</td> 
-                       <td colspan="2">
-                        {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                        {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                      </td>
-                      <td>{{ $item->form }}</td>
-                      <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
-                      <td>
-                          <a title="export" target="_blank" href="/property/{{ Session::get('property_id') }}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
-                      </td>
-                       <td>
-                      
-                        @if(Auth::user()->user_type === 'manager')
-                        <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
-                          @csrf
-                          @method('delete')
-                          <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                        </form>
-                        @endif
-                      </td>    
-                     
-                  </tr>
-              @endforeach
-                  <tr>
-                    <th>Total</th>
-                    <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
-                  </tr>
-                  
-            @endforeach
-        </table>
-        </div>
-      </div>
-      </div>
     </div>
   </div>
 </div>

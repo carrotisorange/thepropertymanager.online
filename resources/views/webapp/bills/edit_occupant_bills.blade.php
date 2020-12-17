@@ -1,6 +1,6 @@
 @extends('templates.webapp-new.template')
 
-@section('title', $tenant->first_name.' '.$tenant->last_name)
+@section('title', $unit->unit_no)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -159,7 +159,7 @@
 @if(Auth::user()->user_type === 'manager') --}}
 {{-- <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a> --}}
 
-<h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
+<h6 class="h2 text-dark d-inline-block mb-0">{{ $unit->unit_no }}</h6>
 {{-- @else
 <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Bills</a>
 @endif
@@ -169,7 +169,7 @@
 <div class="row">
   <div class="col-md-12">
 
-    <form id="editBillsForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/update" method="POST">
+    <form id="editBillsForm" action="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/bills/update" method="POST">
       @csrf
       @method('PUT')
     </form>

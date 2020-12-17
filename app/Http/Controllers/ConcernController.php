@@ -23,9 +23,9 @@ class ConcernController extends Controller
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
             ->join('users', 'concern_user_id', 'id')
             ->where('property_id_foreign', $property_id)
-            ->orderBy('date_reported', 'desc')
-            ->orderBy('concern_urgency', 'desc')
-            ->orderBy('concern_status', 'desc')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
             ->get();
 
         $property = Property::findOrFail($property_id);
@@ -52,14 +52,13 @@ class ConcernController extends Controller
     public function store_room_concern(Request $request, $property_id, $unit_id)
     {
         $concern = new Concern();
-        $concern->date_reported = $request->date_reported;
+        $concern->reported_at = $request->reported_at;
         $concern->concern_tenant_id = $request->reported_by;
-        $concern->concern_type = $request->concern_type;
-
-        $concern->concern_status = 'pending';
-        $concern->concern_urgency = $request->concern_urgency;
-        $concern->concern_item = $request->concern_item;
-        $concern->concern_desc = $request->concern_desc;
+        $concern->concern_unit_id = $unit_id;
+        $concern->category = $request->category;
+        $concern->urgency = $request->urgency;
+        $concern->title = $request->title;
+        $concern->details = $request->details;
         $concern->concern_user_id = $request->concern_user_id;
         $concern->save();
 
@@ -72,11 +71,11 @@ class ConcernController extends Controller
 
         $concern = new Concern();
         $concern->concern_tenant_id = $tenant_id;
-        $concern->date_reported = $request->date_reported;
-        $concern->concern_type = $request->concern_type;
-        $concern->concern_urgency = $request->concern_urgency;
-        $concern->concern_item = $request->concern_item;
-        $concern->concern_desc = $request->concern_desc;
+        $concern->reported_at = $request->reported_at;
+        $concern->category = $request->category;
+        $concern->urgency = $request->urgency;
+        $concern->title = $request->title;
+        $concern->details = $request->details;
         $concern->concern_user_id = $request->concern_user_id;
         $concern->save();
 
@@ -114,9 +113,9 @@ class ConcernController extends Controller
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
             ->join('users', 'concern_user_id', 'id')
             ->where('concern_id', $concern_id)
-            ->orderBy('date_reported', 'desc')
-            ->orderBy('concern_urgency', 'desc')
-            ->orderBy('concern_status', 'desc')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
             ->limit(1)
             ->get();
 
@@ -164,11 +163,11 @@ class ConcernController extends Controller
         DB::table('concerns')
         ->where('concern_id', $concern_id)
         ->update([
-            'date_reported' => $request->date_reported,
-            'concern_item' => $request->concern_item,
-            'concern_type' => $request->concern_type,
-            'concern_desc' => $request->concern_desc,
-            'concern_urgency' => $request->concern_urgency
+            'reported_at' => $request->reported_at,
+            'title' => $request->title,
+            'category' => $request->category,
+            'details' => $request->details,
+            'urgency' => $request->urgency
         ]);
 
         return back()->with('success', 'changes have been saved!');

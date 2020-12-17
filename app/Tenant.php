@@ -51,7 +51,7 @@ class Tenant extends Model
 
     public function concerns()
     {
-        return $this->hasMany('App\Concern', 'concern_tenant_id') ->orderBy('date_reported', 'desc')->orderBy('concern_urgency', 'desc')->orderBy('concern_status', 'desc');
+        return $this->hasMany('App\Concern', 'concern_tenant_id') ->orderBy('reported_at', 'desc')->orderBy('urgency', 'desc')->orderBy('status', 'desc');
     }
 
     public function payments(){
