@@ -33,7 +33,7 @@ class BillController extends Controller
             $bills = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('bills', 'tenant_id', 'bill_tenant_id')
+            ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('bill_id', 'desc')
             ->groupBy('bill_id')
@@ -41,10 +41,13 @@ class BillController extends Controller
             ->groupBy(function($item) {
                 return \Carbon\Carbon::parse($item->start)->timestamp;
             });
-        }else{
-            $bills = DB::table('units')
             
-            ->join('bills', 'unit_id', 'bill_unit_id')
+       
+        }else{
+            $bills = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('bill_id', 'desc')
             ->groupBy('bill_id')
