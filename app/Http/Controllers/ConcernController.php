@@ -80,7 +80,7 @@ class ConcernController extends Controller
         $concern->concern_user_id = $request->concern_user_id;
         $concern->save();
 
-            if(Session::get('property_type') === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                 return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');
             }else{
                 return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');

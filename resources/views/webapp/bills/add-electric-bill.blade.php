@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -197,13 +197,13 @@
     $tenant_id = 1;
     $contract_id = 1;
    
-     $billing_no_ctr = 1;
+     $bill_no_ctr = 1;
      $desc_ctr = 1;
      $amt_ctr = 1;
      $id_ctr = 1;
      $details_ctr = 1;
-     $billing_start = 1;
-     $billing_end = 1;
+     $start = 1;
+     $end = 1;
      $previous_reading = 1;
      $current_reading = 1;
      $consumption = 1;
@@ -218,9 +218,9 @@
    @foreach($active_tenants as $item)
    
       
-    <input type="hidden" form="add_billings" name="billing_tenant_id{{ $id_ctr++ }}" value="{{ $item->tenant_id }}">
+    <input type="hidden" form="add_billings" name="bill_tenant_id{{ $id_ctr++ }}" value="{{ $item->tenant_id }}">
   
-    <input type="hidden" form="add_billings" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
+    <input type="hidden" form="add_billings" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
   
     <tr>
       <td>{{ $ctr++ }}</td>
@@ -234,8 +234,8 @@
           <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
       </td>
       <td colspan="2">
-        <input form="add_billings" type="date" name="billing_start{{ $billing_start++  }}" value="{{ Carbon\Carbon::parse($updated_billing_start)->startOfMonth()->format('Y-m-d') }}" required>
-        <input form="add_billings" type="date" name="billing_end{{ $billing_end++  }}" value="{{ Carbon\Carbon::parse($updated_billing_end)->endOfMonth()->format('Y-m-d') }}" required>
+        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
+        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
   
         <input type="hidden" form="add_billings" name="property_id" value="{{ $property->property_id }}" required>
   
@@ -244,7 +244,7 @@
 
       <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
    
-          <input class="" type="hidden" form="add_billings" name="billing_desc{{ $desc_ctr++ }}" value="Electric" readonly>
+          <input class="" type="hidden" form="add_billings" name="particular{{ $desc_ctr++ }}" value="Electric" readonly>
       
        
       <td>
@@ -257,7 +257,7 @@
         <input class="" type="number" form="add_billings" step="0.001" name="consumption{{ $consumption++ }}" id="id_consumption{{ $id_consumption++ }}"  value="0" required readonly>
       </td>
         <td>
-            <input form="add_billings" type="number" step="0.001" name="billing_amt{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" value="0" required readonly>
+            <input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" value="0" required readonly>
         </td>
        
    </tr>
@@ -284,19 +284,19 @@
     </button>
     </div>
    <div class="modal-body">
-    <form id="periodCoveredForm" action="/property/{{ $property->property_id }}/bills/electric/{{ $updated_billing_start? Carbon\Carbon::parse($updated_billing_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_billing_end)->format('Y-m-d') }}/" method="POST">
+    <form id="periodCoveredForm" action="/property/{{ $property->property_id }}/bills/electric/{{ $updated_start? Carbon\Carbon::parse($updated_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_end)->format('Y-m-d') }}/" method="POST">
       @csrf
     <div class="row">
       <div class="col">
       <label for="">Start</label>
-      <input class="form-control" form="periodCoveredForm" type="date" name="billing_start" value="{{ Carbon\Carbon::parse($updated_billing_start)->startOfMonth()->format('Y-m-d') }}" required>
+      <input class="form-control" form="periodCoveredForm" type="date" name="start" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
     </div>
     </div>
     <br>
     <div class="row">
       <div class="col">
       <label for="">End</label>
-      <input class="form-control" form="periodCoveredForm" type="date" name="billing_end" value="{{ Carbon\Carbon::parse($updated_billing_end)->endOfMonth()->format('Y-m-d') }}" required>
+      <input class="form-control" form="periodCoveredForm" type="date" name="end" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
     </div>
     </div>
 <br>

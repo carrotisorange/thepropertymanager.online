@@ -12,17 +12,17 @@ class Bill extends Model
 
     protected $fillable = 
                         [
-                            'billing_tenant_id',
-                            'billing_date',
-                            'billing_desc',
+                            'bill_tenant_id',
+                            'date_posted',
+                            'particular',
                             'billing_amt',
                             'details',
                             'billing_status',
-                            'billing_no'
+                            'bill_no'
                         ];
 
  public function tenant()
     {
-    return $this->belongsTo('App\Tenant', 'billing_tenant_id');
+    return $this->belongsTo('App\Tenant', 'bill_tenant_id');
     }
 }

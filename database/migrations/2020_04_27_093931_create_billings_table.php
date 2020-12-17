@@ -15,14 +15,14 @@ class CreateBillingsTable extends Migration
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->bigIncrements('billing_id')->unsigned();
-            $table->unsignedBigInteger('billing_tenant_id');
-            $table->date('billing_date');
-            $table->string('billing_desc');
-            $table->double('billing_amt', 8, 2);
+            $table->unsignedBigInteger('bill_tenant_id');
+            $table->date('date_posted');
+            $table->string('particular');
+            $table->double('amount', 8, 2);
             $table->string('billing_status')->default('unpaid');
             $table->string('details');
             $table->timestamps();
-            $table->foreign('billing_tenant_id')->references('tenant_id')
+            $table->foreign('bill_tenant_id')->references('tenant_id')
             ->on('tenants');
         });
     }
@@ -35,6 +35,6 @@ class CreateBillingsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('billings');
-        $table->dropForeign('billing_tenant_id');
+        $table->dropForeign('bill_tenant_id');
     }
 }

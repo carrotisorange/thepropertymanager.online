@@ -596,11 +596,11 @@ class UserController extends Controller
 
         if(($user_id == Auth::user()->id)){
 
-           $bills = Billing::leftJoin('payments', 'bills.billing_id', '=', 'payments.payment_billing_id')
-           ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-           ->where('billing_tenant_id', $tenant_id)
+           $bills = Billing::leftJoin('payments', 'bills.billing_id', '=', 'payments.payment_bill_id')
+           ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+           ->where('bill_tenant_id', $tenant_id)
            ->groupBy('bill_id')
-           ->orderBy('billing_no', 'desc')
+           ->orderBy('bill_no', 'desc')
            ->havingRaw('balance > 0')
            ->get();
 
@@ -621,8 +621,8 @@ class UserController extends Controller
         if(($user_id == Auth::user()->id)){
 
         
-            $payments = Billing::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
-            ->where('billing_tenant_id', $tenant_id)
+            $payments = Billing::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('payment_id')
             ->orderBy('ar_no', 'desc')
            ->get()

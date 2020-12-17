@@ -14,7 +14,7 @@ class AddPaymentBillingNoToPaymentsTable extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->integer('payment_billing_no')->nullable();
+            $table->integer('payment_bill_no')->nullable();
         });
     }
 

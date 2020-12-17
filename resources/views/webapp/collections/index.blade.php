@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -207,7 +207,11 @@
           <th>AR No</th>
           <th>Bill No</th>
           <th>Tenant</th>
+          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+          <th>Unit</th>
+          @else
           <th>Room</th>
+          @endif
           <th>Particular</th>
           <th colspan="2">Period Covered</th>
           <th>Form</th>
@@ -221,12 +225,12 @@
         <tr>
                 <th class="text-center">{{ $ctr++ }}</th>
                 <td>{{ $item->ar_no }}</td>
-                <td>{{ $item->payment_billing_no }}</td>
+                <td>{{ $item->payment_bill_no }}</td>
                 {{-- <td><a href="units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td> --}}
 
                 
                 <td>
-                  @if(Session::get('property_type') === 'Condominium Corporation')
+                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
                   <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
                   @else
                   <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
@@ -234,12 +238,12 @@
                  
                 </td>
                 <td>{{ $item->unit_no }}</td>
-                <td>{{ $item->billing_desc }}</td>
+                <td>{{ $item->particular }}</td>
                 <td colspan="2">
-                  {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                  {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                 </td>
-                <td>{{ $item->form_of_payment }}</td>
+                <td>{{ $item->form }}</td>
                 <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                
                 {{-- <td class="text-center">

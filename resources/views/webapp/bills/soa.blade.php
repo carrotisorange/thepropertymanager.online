@@ -51,12 +51,12 @@
               <tr>
                 <th>{{ $ctr++ }}</th>
       
-                  <td>{{ $item->billing_no }}</th>
-                  <td>{{ $item->billing_desc }}</td>
+                  <td>{{ $item->bill_no }}</th>
+                  <td>{{ $item->particular }}</td>
                  
                   <td colspan="2">
-                    {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                      {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                    {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                      {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                   </td>
                   <td class="text-right" >{{ number_format($item->balance,2) }}</td>
               </tr>

@@ -140,12 +140,12 @@ class UnitController extends Controller
             ->get();
 
     
-        //     $bills = Billing::leftJoin('payments', 'billings.billing_no', '=', 'payments.payment_billing_no')
-        //    ->join('tenants', 'billing_tenant_id', 'tenant_id')
-        //    ->selectRaw('*, billings.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+        //     $bills = Billing::leftJoin('payments', 'billings.bill_no', '=', 'payments.payment_bill_no')
+        //    ->join('tenants', 'bill_tenant_id', 'tenant_id')
+        //    ->selectRaw('*, billings.amount - IFNULL(sum(payments.amt_paid),0) as balance')
         //    ->where('unit_tenant_id', $unit_id)
         //    ->groupBy('billing_id')
-        //    ->orderBy('billing_no', 'desc')
+        //    ->orderBy('bill_no', 'desc')
         //    ->havingRaw('balance > 0')
         //    ->get();
 
@@ -196,7 +196,7 @@ class UnitController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             return view('webapp.units.edit-all', compact('units', 'property'));
         }else{
             return view('webapp.rooms.edit', compact('units', 'property'));

@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -174,7 +174,14 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-owner-tab" data-toggle="tab" href="#owner" role="tab" aria-controls="nav-owner" aria-selected="true"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Profile</a>
           <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="fas fa-money-check fa-sm text-primary-50"></i> Bank <span class="badge badge-primary"></span></a>
-          <a class="nav-item nav-link" id="nav-rooms-tab" data-toggle="tab" href="#rooms" role="tab" aria-controls="nav-rooms" aria-selected="false"><i class="fas fa-home fa-sm text-primary-50"></i> Rooms <span class="badge badge-primary">{{ $rooms->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-rooms-tab" data-toggle="tab" href="#rooms" role="tab" aria-controls="nav-rooms" aria-selected="false"><i class="fas fa-home fa-sm text-primary-50"></i> 
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+            Unit
+            @else
+            Room
+            @endif
+            <span class="badge badge-primary">{{ $rooms->count() }}</span>
+          </a>
 
           {{-- <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter">{{ $bills->count() }}</span></a> --}}
         </div>
@@ -257,8 +264,11 @@
                 <tr>
                   <th>#</th>
                   <th>Building</th>
+                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+                  <th>Unit</th>
+                  @else
                   <th>Room</th>
-                 
+                  @endif
                   <th>Type</th>
                   
                   <th>Status</th>
@@ -277,7 +287,7 @@
               
                 <td>{{ $item->status }}</td>
                 <td>{{ number_format($item->rent, 2) }}</td>
-                <td>{{ $item->occupancy }} pax</td>
+                <td>{{ $item->occupancy? $item->occupancy: 0 }} pax</td>
               </tr>
             </tbody>
              @endforeach

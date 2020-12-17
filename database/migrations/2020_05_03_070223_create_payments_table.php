@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('payment_tenant_id');
             $table->date('payment_created');
             $table->double('amt_paid', 8, 2);
-            $table->string('form_of_payment')->nullable();
+            $table->string('form')->nullable();
             $table->string('or_number')->nullable();
             $table->string('ar_number')->nullable();
             $table->string('bank_name')->nullable();

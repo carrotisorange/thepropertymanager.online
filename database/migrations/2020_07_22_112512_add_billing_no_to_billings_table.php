@@ -14,7 +14,7 @@ class AddBillingNoToBillingsTable extends Migration
     public function up()
     {
         Schema::table('billings', function (Blueprint $table) {
-            $table->integer('billing_no')->nullable();
+            $table->integer('bill_no')->nullable();
         });
     }
 

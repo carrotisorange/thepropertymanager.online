@@ -24,22 +24,22 @@ DROP TABLE IF EXISTS `billings`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billings` (
   `billing_id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `billing_tenant_id` bigint unsigned NOT NULL,
-  `billing_date` date NOT NULL,
-  `billing_desc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `billing_amt` double(8,2) NOT NULL,
+  `bill_tenant_id` bigint unsigned NOT NULL,
+  `date_posted` date NOT NULL,
+  `particular` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` double(8,2) NOT NULL,
   `billing_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
   `details` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `billing_no` int DEFAULT NULL,
-  `billing_start` date DEFAULT NULL,
-  `billing_end` date DEFAULT NULL,
+  `bill_no` int DEFAULT NULL,
+  `start` date DEFAULT NULL,
+  `end` date DEFAULT NULL,
   `electric_rate_kwh` double(8,2) NOT NULL,
   `water_rate_cum` double(8,2) NOT NULL,
   PRIMARY KEY (`billing_id`),
-  KEY `billings_billing_tenant_id_foreign` (`billing_tenant_id`),
-  CONSTRAINT `billings_billing_tenant_id_foreign` FOREIGN KEY (`billing_tenant_id`) REFERENCES `tenants` (`tenant_id`)
+  KEY `billings_bill_tenant_id_foreign` (`bill_tenant_id`),
+  CONSTRAINT `billings_bill_tenant_id_foreign` FOREIGN KEY (`bill_tenant_id`) REFERENCES `tenants` (`tenant_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -323,7 +323,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_08_19_000000_create_failed_jobs_table',1),(4,'2020_03_26_061523_create_unit_owners_table',1),(5,'2020_03_26_061525_create_units_table',1),(6,'2020_04_22_042313_create_tenants_table',1),(7,'2020_04_27_093931_create_billings_table',1),(8,'2020_05_03_070223_create_payments_table',1),(9,'2020_06_03_051720_add_renewal_history_to_tenants_table',2),(10,'2020_07_06_020440_add_property_type_users_table',3),(11,'2020_07_09_035411_add_login_fields_to_users_table',4),(12,'2020_07_09_064726_add_user_status_in_users_table',5),(13,'2020_07_14_074452_add_type_of_account_to_users_table',6),(14,'2020_07_21_185820_create_personnels_table',7),(15,'2020_07_21_191003_create_concerns_table',7),(16,'2020_07_22_112512_add_billing_no_to_billings_table',8),(17,'2020_07_22_145101_add_payment_billing_no_to_payments_table',8),(18,'2020_07_30_001838_add_property_to_personnels_table',9),(19,'2020_07_30_001949_add_note_to_users_table',9),(20,'2020_08_05_103939_add_category_in_personnels_table',10),(21,'2020_08_05_140603_add_action_taken_concerns_table',11),(22,'2020_08_05_140923_add_feedback_to_concerns_table',12),(23,'2020_08_13_180011_create_notifications_table',13),(24,'2019_05_03_000001_create_customer_columns',14),(25,'2019_05_03_000002_create_subscriptions_table',14),(26,'2019_05_03_000003_create_subscription_items_table',14),(27,'2020_08_19_161815_add_leasing_information_units_table',15),(28,'2020_09_01_200518_add_more_info_billings_table',16),(29,'2020_09_01_210648_add_kwh_to_users_table',16),(30,'2020_09_10_130044_add_payment_billing_id_to_payments_table',17),(31,'2020_09_11_101752_create_payables_table',18),(32,'2020_09_14_122949_create_sessions_table',19),(33,'2020_09_18_005813_add_previous_reading_in_tenants_table',20),(34,'2020_09_18_143100_add_img_in_tenants_table',21),(35,'2020_09_19_004815_add_ar_no_in_payments_table',22),(36,'2020_09_22_100858_create_occupancy_rate_table',23),(37,'2020_09_22_112145_create_payable_entry_table',24),(38,'2020_09_22_130519_create_payable_request_table',25),(39,'2020_09_29_104436_add_unit_id_to_owners_table',26),(40,'2020_09_30_162648_create_responses_table',27),(41,'2020_10_02_152446_add_desc_to_payable_entry_table',28),(42,'2020_10_02_154700_add_desc_to_payable_request_table',28),(43,'2020_10_06_212400_create_blogs_table',29),(44,'2020_10_07_222616_create_calendars_table',30),(45,'2020_10_22_121522_add_property_to_payments',31),(46,'2020_10_23_012040_add_status_payments_table',32),(47,'2020_10_23_232102_create_properties_table',33),(48,'2020_10_24_020531_add_property_id_to_units_table',33),(49,'2020_10_24_040053_add_property_id_to_occupancy_rate_table',33),(50,'2020_10_24_202537_add_property_id_to_personnels_table',33),(51,'2020_10_24_210713_add_property_id_to_payable_request_table',33),(52,'2020_10_24_214720_add_property_id_to_calendars_table',33),(53,'2020_10_24_215028_add_property_id_to_payable_entry_table',33),(54,'2020_10_24_233040_create_users_properties_relations_table',33),(55,'2020_10_25_040407_add_user_id_foreign_to_properties',33),(56,'2020_10_26_050025_add_user_id_to_concerns_table',34),(57,'2020_10_26_053442_add_lower_access_user_id_to_users_table',35),(58,'2020_10_29_102417_add_user_id_to_tenants_table',36),(59,'2020_11_04_222701_create_contracts_table',37),(60,'2020_11_04_225939_create_guardians_table',37),(61,'2020_11_11_153130_create_certificates_table',38),(62,'2020_11_17_124514_create_notifications_table',39);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_08_19_000000_create_failed_jobs_table',1),(4,'2020_03_26_061523_create_unit_owners_table',1),(5,'2020_03_26_061525_create_units_table',1),(6,'2020_04_22_042313_create_tenants_table',1),(7,'2020_04_27_093931_create_billings_table',1),(8,'2020_05_03_070223_create_payments_table',1),(9,'2020_06_03_051720_add_renewal_history_to_tenants_table',2),(10,'2020_07_06_020440_add_property_type_users_table',3),(11,'2020_07_09_035411_add_login_fields_to_users_table',4),(12,'2020_07_09_064726_add_user_status_in_users_table',5),(13,'2020_07_14_074452_add_type_of_account_to_users_table',6),(14,'2020_07_21_185820_create_personnels_table',7),(15,'2020_07_21_191003_create_concerns_table',7),(16,'2020_07_22_112512_add_bill_no_to_billings_table',8),(17,'2020_07_22_145101_add_payment_bill_no_to_payments_table',8),(18,'2020_07_30_001838_add_property_to_personnels_table',9),(19,'2020_07_30_001949_add_note_to_users_table',9),(20,'2020_08_05_103939_add_category_in_personnels_table',10),(21,'2020_08_05_140603_add_action_taken_concerns_table',11),(22,'2020_08_05_140923_add_feedback_to_concerns_table',12),(23,'2020_08_13_180011_create_notifications_table',13),(24,'2019_05_03_000001_create_customer_columns',14),(25,'2019_05_03_000002_create_subscriptions_table',14),(26,'2019_05_03_000003_create_subscription_items_table',14),(27,'2020_08_19_161815_add_leasing_information_units_table',15),(28,'2020_09_01_200518_add_more_info_billings_table',16),(29,'2020_09_01_210648_add_kwh_to_users_table',16),(30,'2020_09_10_130044_add_payment_bill_id_to_payments_table',17),(31,'2020_09_11_101752_create_payables_table',18),(32,'2020_09_14_122949_create_sessions_table',19),(33,'2020_09_18_005813_add_previous_reading_in_tenants_table',20),(34,'2020_09_18_143100_add_img_in_tenants_table',21),(35,'2020_09_19_004815_add_ar_no_in_payments_table',22),(36,'2020_09_22_100858_create_occupancy_rate_table',23),(37,'2020_09_22_112145_create_payable_entry_table',24),(38,'2020_09_22_130519_create_payable_request_table',25),(39,'2020_09_29_104436_add_unit_id_to_owners_table',26),(40,'2020_09_30_162648_create_responses_table',27),(41,'2020_10_02_152446_add_desc_to_payable_entry_table',28),(42,'2020_10_02_154700_add_desc_to_payable_request_table',28),(43,'2020_10_06_212400_create_blogs_table',29),(44,'2020_10_07_222616_create_calendars_table',30),(45,'2020_10_22_121522_add_property_to_payments',31),(46,'2020_10_23_012040_add_status_payments_table',32),(47,'2020_10_23_232102_create_properties_table',33),(48,'2020_10_24_020531_add_property_id_to_units_table',33),(49,'2020_10_24_040053_add_property_id_to_occupancy_rate_table',33),(50,'2020_10_24_202537_add_property_id_to_personnels_table',33),(51,'2020_10_24_210713_add_property_id_to_payable_request_table',33),(52,'2020_10_24_214720_add_property_id_to_calendars_table',33),(53,'2020_10_24_215028_add_property_id_to_payable_entry_table',33),(54,'2020_10_24_233040_create_users_properties_relations_table',33),(55,'2020_10_25_040407_add_user_id_foreign_to_properties',33),(56,'2020_10_26_050025_add_user_id_to_concerns_table',34),(57,'2020_10_26_053442_add_lower_access_user_id_to_users_table',35),(58,'2020_10_29_102417_add_user_id_to_tenants_table',36),(59,'2020_11_04_222701_create_contracts_table',37),(60,'2020_11_04_225939_create_guardians_table',37),(61,'2020_11_11_153130_create_certificates_table',38),(62,'2020_11_17_124514_create_notifications_table',39);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -496,7 +496,7 @@ CREATE TABLE `payments` (
   `payment_tenant_id` bigint unsigned NOT NULL,
   `payment_created` date NOT NULL,
   `amt_paid` double(8,2) NOT NULL,
-  `form_of_payment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `form` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `or_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ar_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -505,16 +505,16 @@ CREATE TABLE `payments` (
   `payment_note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `payment_billing_no` int DEFAULT NULL,
-  `payment_billing_id` bigint unsigned DEFAULT NULL,
+  `payment_bill_no` int DEFAULT NULL,
+  `payment_bill_id` bigint unsigned DEFAULT NULL,
   `ar_no` bigint NOT NULL,
   `payment_property` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `reason_for_deletion` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`payment_id`),
   KEY `payments_payment_tenant_id_foreign` (`payment_tenant_id`),
-  KEY `payments_payment_billing_id_foreign` (`payment_billing_id`),
-  CONSTRAINT `payments_payment_billing_id_foreign` FOREIGN KEY (`payment_billing_id`) REFERENCES `billings` (`billing_id`) ON DELETE CASCADE,
+  KEY `payments_payment_bill_id_foreign` (`payment_bill_id`),
+  CONSTRAINT `payments_payment_bill_id_foreign` FOREIGN KEY (`payment_bill_id`) REFERENCES `billings` (`billing_id`) ON DELETE CASCADE,
   CONSTRAINT `payments_payment_tenant_id_foreign` FOREIGN KEY (`payment_tenant_id`) REFERENCES `tenants` (`tenant_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2816 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

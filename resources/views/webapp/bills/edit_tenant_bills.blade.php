@@ -191,24 +191,24 @@
         </thead>
 
         <?php
-          $billing_start_ctr = 1;
-          $billing_end_ctr = 1;
-          $billing_amt = 1;
+          $start_ctr = 1;
+          $end_ctr = 1;
+          $amount = 1;
           $billing_id_ctr =1;
         ?>
         @foreach ($balance as $item)
         <tr>
             <th class="text-center">{{ $ctr++ }}</th>
-            <td>{{ $item->billing_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
+            <td>{{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
             <td>{{$item->unit_no}}</td>
-            <td>{{ $item->billing_desc }}</td>
+            <td>{{ $item->particular }}</td>
             <td>
-              <input form="editBillsForm" type="date" name="billing_start_ctr{{ $billing_start_ctr++ }}" value="{{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('Y-m-d') : null}}"> 
+              <input form="editBillsForm" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
             </td>
             <td>
-              <input form="editBillsForm"  type="date" name="billing_end_ctr{{ $billing_end_ctr++ }}" value="{{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('Y-m-d') : null }}">
+              <input form="editBillsForm"  type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
             </td>
-            <td><input form="editBillsForm" type="number" name="billing_amt_ctr{{ $billing_amt++ }}" step="0.01" value="{{  $item->balance }}"></td>
+            <td><input form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
             <td>
               @if(Auth::user()->user_type === 'manager')
   

@@ -383,14 +383,14 @@
             </tr>
            <?php
              $ctr = 1;
-             $billing_no_ctr = 1;
+             $bill_no_ctr = 1;
              $desc_ctr = 1;
              $amt_ctr = 1;
              $id_ctr = 1;
              $details_ctr = 1;
            ?>   
            @foreach($delinquent_tenants as $item)
-           <input class="col-md-4" type="hidden" form="add_billings" name="billing_no{{ $billing_no_ctr++ }}" value="{{ $billing_ctr++ }}" required>
+           <input class="col-md-4" type="hidden" form="add_billings" name="bill_no{{ $bill_no_ctr++ }}" value="{{ $billing_ctr++ }}" required>
            <input class="form-control" type="hidden" form="add_billings" name="ctr" value="{{ $ctr++ }}" readonly>     
             <input type="hidden" form="add_billings" name="tenant{{ $id_ctr++ }}" value="{{ $item->tenant_id }}"">
             <input class="form-control" type="hidden" form="add_billings" name="desc{{ $desc_ctr++ }}" value="Surcharge" readonly>

@@ -22,28 +22,28 @@ class PayableController extends Controller
         if( auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'ap'){
 
             $entry = DB::table('payable_entry')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('created_at', 'desc')
             ->get();
      
             $pending = DB::table('payable_request')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->where('status', 'pending')
             ->get();
      
             $approved = DB::table('payable_request')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->where('status', 'approved')
             ->get();
      
      
             $released = DB::table('payable_request')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->where('status', 'released')
             ->get();
      
              $expense_report = DB::table('payable_request')
-             ->where('property_id_foreign', $property_id)
+             ->where('property_id_foreign', Session::get('property_id'))
             ->where('status', 'released')
             ->orderBy('updated_at', 'desc')
             ->get()
@@ -53,11 +53,11 @@ class PayableController extends Controller
      
      
             $declined = DB::table('payable_request')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->where('status', 'declined')
             ->get();
 
-            $property = Property::findOrFail($property_id);
+            $property = Property::findOrFail(Session::get('property_id'));
      
              return view('webapp.payables.payables', compact('entry','pending','approved','declined','released','expense_report', 'property'));
          }else{
@@ -91,7 +91,7 @@ class PayableController extends Controller
                 [
                     'payable_entry' =>  $request->input('payable_entry'.$i),
                     'payable_entry_desc' => $request->input('payable_entry_desc'.$i),
-                    'property_id_foreign' => $request->property_id,
+                    'property_id_foreign' => Session::get('property_id'),
                     'created_at' => Carbon::now(),
                 ]);
         }
@@ -115,7 +115,7 @@ class PayableController extends Controller
                    'amt' =>  $request->input('amt'.$i),
                    'note' =>  $request->input('note'.$i),
                    'status' => 'pending',
-                   'property_id_foreign' => $request->property_id,
+                   'property_id_foreign' => Session::get('property_id'),
                    'requested_by' => Auth::user()->name,
                    'created_at' => Carbon::now(),
 

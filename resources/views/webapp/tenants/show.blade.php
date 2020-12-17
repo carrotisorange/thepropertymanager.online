@@ -623,19 +623,19 @@
           <tr>
          <th class="text-center">{{ $ctr++ }}</th>
             <td>
-              {{Carbon\Carbon::parse($item->billing_date)->format('M d Y')}}
+              {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
             </td>   
              
 
-              <td>{{ $item->billing_no }}</td>
+              <td>{{ $item->bill_no }}</td>
       
-              <td>{{ $item->billing_desc }}</td>
+              <td>{{ $item->particular }}</td>
             
               <td>
-                {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
               </td>
-              <td class="text-right"  >{{ number_format($item->billing_amt,2) }}</td>
+              <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
               <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
               <td class="text-right" >
                 @if($item->balance > 0)
@@ -646,7 +646,7 @@
               </td>
               {{-- <td class="text-center">
                 @if(Auth::user()->user_type === 'manager')
-                <form action="/property/{{ $property->property_id }}/tenant/{{ $item->billing_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
+                <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
                   @csrf
                   @method('delete')
                   <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
@@ -659,7 +659,7 @@
           <tr>
             <th>Total </th>
             
-            <th class="text-right" colspan="5">{{ number_format($bills->sum('billing_amt'),2) }} </th>
+            <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
             <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
             <th class="text-right text-danger" colspan="">
               @if($bills->sum('balance') > 0)
@@ -723,14 +723,14 @@
               <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
                       <td>{{ $item->ar_no }}</td>
-                      <td>{{ $item->payment_billing_no }}</td>
+                      <td>{{ $item->payment_bill_no }}</td>
                         {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
-                       <td>{{ $item->billing_desc }}</td> 
+                       <td>{{ $item->particular }}</td> 
                        <td colspan="2">
-                        {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                        {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                        {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                        {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                       </td>
-                      <td>{{ $item->form_of_payment }}</td>
+                      <td>{{ $item->form }}</td>
                       <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                        
                        {{-- <td class="text-center">
@@ -907,7 +907,7 @@
     $(document).ready(function(){
         var i=1;
     $("#add_row").click(function(){
-        $('#addr'+i).html("<th id='value'>"+ (i) +"</th><td><input class='form-control' form='requestMoveoutForm' name='billing_desc"+i+"' id='desc"+i+"' type='text' required></td><td><input class='form-control' form='requestMoveoutForm'    oninput='autoCompute("+i+")' name='price"+i+"' id='price"+i+"' type='number' min='1' required></td><td><input class='form-control' form='requestMoveoutForm'  oninput='autoCompute("+i+")' name='qty"+i+"' id='qty"+i+"' value='1' type='number' min='1' required></td><td><input class='form-control' form='requestMoveoutForm' name='billing_amt"+i+"' id='amt"+i+"' type='number' min='1' required readonly value='0'></td>");
+        $('#addr'+i).html("<th id='value'>"+ (i) +"</th><td><input class='form-control' form='requestMoveoutForm' name='particular"+i+"' id='desc"+i+"' type='text' required></td><td><input class='form-control' form='requestMoveoutForm'    oninput='autoCompute("+i+")' name='price"+i+"' id='price"+i+"' type='number' min='1' required></td><td><input class='form-control' form='requestMoveoutForm'  oninput='autoCompute("+i+")' name='qty"+i+"' id='qty"+i+"' value='1' type='number' min='1' required></td><td><input class='form-control' form='requestMoveoutForm' name='amount"+i+"' id='amt"+i+"' type='number' min='1' required readonly value='0'></td>");
      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
      i++;
      document.getElementById('no_of_charges').value = i;
@@ -921,7 +921,7 @@
     });
         var j=1;
     $("#add_charges").click(function(){
-      $('#row'+j).html("<th>"+ (j) +"</th><td><select class='form-control' name='billing_desc"+j+"' form='extendTenantForm' id='billing_desc"+j+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='extendTenantForm' name='billing_start"+j+"' id='billing_start"+j+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input class='form-control' form='extendTenantForm' name='billing_end"+j+"' id='billing_end"+j+"' type='date' required></td> <td><input class='form-control' form='extendTenantForm'   name='billing_amt"+j+"' id='billing_amt"+j+"' type='number' min='1' step='0.01' required></td>");
+      $('#row'+j).html("<th>"+ (j) +"</th><td><select class='form-control' name='particular"+j+"' form='extendTenantForm' id='particular"+j+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='extendTenantForm' name='start"+j+"' id='start"+j+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input class='form-control' form='extendTenantForm' name='end"+j+"' id='end"+j+"' type='date' required></td> <td><input class='form-control' form='extendTenantForm'   name='amount"+j+"' id='amount"+j+"' type='number' min='1' step='0.01' required></td>");
      $('#extend_table').append('<tr id="row'+(j+1)+'"></tr>');
      j++;
      
@@ -937,7 +937,7 @@
     });
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='billing_desc"+k+"' form='addBillForm' id='billing_desc"+k+"' required><option value='' selected>Please select one</option><option value='Advance Rent'>Advance Rent</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input form='addBillForm' name='billing_start"+k+"' id='billing_start"+k+"' type='date' value='{{ $tenant->movein_date }}' required></td> <td><input form='addBillForm' name='billing_end"+k+"' id='billing_end"+k+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input form='addBillForm' name='billing_amt"+k+"' id='billing_amt"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Advance Rent'>Advance Rent</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' value='{{ $tenant->movein_date }}' required></td> <td><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      
@@ -970,7 +970,7 @@
     $(document).ready(function(){
     var j=1;
     $("#add_payment").click(function(){
-        $('#payment'+j).html("<th>"+ (j) +"</th><td><select form='acceptPaymentForm' name='billing_no"+j+"' id='billing_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option value='{{ $item->billing_no.'-'.$item->bill_id }}'> Bill No {{ $item->billing_no }} | {{ $item->billing_desc }} | {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} - {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select form='acceptPaymentForm' name='form_of_payment"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
   
   
      $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');

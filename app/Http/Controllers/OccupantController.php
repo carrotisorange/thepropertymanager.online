@@ -279,8 +279,8 @@ class OccupantController extends Controller
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
 
-         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
-        ->where('billing_tenant_id', $tenant_id)
+         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        ->where('bill_tenant_id', $tenant_id)
         ->groupBy('payment_id')
         ->orderBy('ar_no', 'desc')
        ->get()
@@ -293,24 +293,24 @@ class OccupantController extends Controller
                 $current_bill_no = DB::table('contracts')
               ->join('units', 'unit_id_foreign', 'unit_id')
               ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-              ->join('bills', 'tenant_id', 'billing_tenant_id')
+              ->join('bills', 'tenant_id', 'bill_tenant_id')
               ->where('property_id_foreign',  Session::get('property_id'))
-              ->max('billing_no') + 1;
+              ->max('bill_no') + 1;
 
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('billing_tenant_id', $tenant_id)
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
+            ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
 
 
-            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('billing_tenant_id', $tenant_id)
+            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
+            ->orderBy('bill_no', 'desc')
             // ->havingRaw('balance > 0')
             ->get();
 
@@ -319,7 +319,7 @@ class OccupantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-               if(Session::get('property_type') === 'Condominium Corporation'){
+               if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                 return view('webapp.occupants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
                }else{
                 return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  

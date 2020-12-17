@@ -29,13 +29,13 @@ class BillController extends Controller
             $bills = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('bills', 'tenant_id', 'billing_tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('bill_id', 'desc')
             ->groupBy('bill_id')
             ->get()
             ->groupBy(function($item) {
-                return \Carbon\Carbon::parse($item->billing_start)->timestamp;
+                return \Carbon\Carbon::parse($item->start)->timestamp;
             });
 
             $property = Property::findOrFail(Session::get('property_id'));
@@ -59,8 +59,8 @@ class BillController extends Controller
     public function post_bills_rent(Request $request, $property_id)
     {
 
-    $updated_billing_start = $request->billing_start;
-    $updated_billing_end = $request->billing_end;
+    $updated_start = $request->start;
+    $updated_end = $request->end;
 
 
   $active_tenants = DB::table('contracts')
@@ -77,21 +77,21 @@ class BillController extends Controller
    $current_bill_no = DB::table('contracts')
    ->join('units', 'unit_id_foreign', 'unit_id')
    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-   ->join('bills', 'tenant_id', 'billing_tenant_id')
+   ->join('bills', 'tenant_id', 'bill_tenant_id')
    ->where('property_id_foreign',  Session::get('property_id'))
-   ->max('billing_no') + 1;
+   ->max('bill_no') + 1;
 
    $property = Property::findOrFail(Session::get('property_id'));
 
-    return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'property'))->with('success', 'changes have been saved!');
+    return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'changes have been saved!');
 
     }
 
     public function post_bills_condodues(Request $request, $property_id)
     {
 
-    $updated_billing_start = $request->billing_start;
-    $updated_billing_end = $request->billing_end;
+    $updated_start = $request->start;
+    $updated_end = $request->end;
 
 
   $active_tenants = DB::table('contracts')
@@ -108,21 +108,21 @@ class BillController extends Controller
    $current_bill_no = DB::table('contracts')
    ->join('units', 'unit_id_foreign', 'unit_id')
    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-   ->join('bills', 'tenant_id', 'billing_tenant_id')
+   ->join('bills', 'tenant_id', 'bill_tenant_id')
    ->where('property_id_foreign',  Session::get('property_id'))
-   ->max('billing_no') + 1;
+   ->max('bill_no') + 1;
 
    $property = Property::findOrFail(Session::get('property_id'));
 
-    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'property'))->with('success', 'changes have been saved!');
+    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'changes have been saved!');
 
     }
 
     public function post_bills_electric(Request $request, $property_id)
     {
     
-    $updated_billing_start = $request->billing_start;
-    $updated_billing_end = $request->billing_end;
+    $updated_start = $request->start;
+    $updated_end = $request->end;
     $electric_rate_kwh = $request->electric_rate_kwh;
 
     $active_tenants = DB::table('contracts')
@@ -137,9 +137,9 @@ class BillController extends Controller
    $current_bill_no = DB::table('contracts')
    ->join('units', 'unit_id_foreign', 'unit_id')
    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-   ->join('bills', 'tenant_id', 'billing_tenant_id')
+   ->join('bills', 'tenant_id', 'bill_tenant_id')
    ->where('property_id_foreign',  Session::get('property_id'))
-   ->max('billing_no') + 1;
+   ->max('bill_no') + 1;
 
    DB::table('users')
    ->where('id', Auth::user()->id)
@@ -149,7 +149,7 @@ class BillController extends Controller
 
    $property = Property::findOrFail($property_id);
 
-    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'electric_rate_kwh', 'property'))->with('success', 'changes have been saved!');
+    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'electric_rate_kwh', 'property'))->with('success', 'changes have been saved!');
 
 
        
@@ -158,8 +158,8 @@ class BillController extends Controller
     public function post_bills_water(Request $request, $property_id)
     {
 
-        $updated_billing_start = $request->billing_start;
-        $updated_billing_end = $request->billing_end;
+        $updated_start = $request->start;
+        $updated_end = $request->end;
         $water_rate_cum = $request->water_rate_cum;
     
     
@@ -175,9 +175,9 @@ class BillController extends Controller
        $current_bill_no = DB::table('contracts')
        ->join('units', 'unit_id_foreign', 'unit_id')
        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-       ->join('bills', 'tenant_id', 'billing_tenant_id')
+       ->join('bills', 'tenant_id', 'bill_tenant_id')
        ->where('property_id_foreign',  Session::get('property_id'))
-       ->max('billing_no') + 1;
+       ->max('bill_no') + 1;
     
        DB::table('users')
        ->where('id', Auth::user()->id)
@@ -187,7 +187,7 @@ class BillController extends Controller
 
        $property = Property::findOrFail($property_id);
     
-        return view('webapp.bills.add-water-bill', compact('property','active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end', 'water_rate_cum'))->with('success', 'changes have been saved!');
+        return view('webapp.bills.add-water-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end', 'water_rate_cum'))->with('success', 'changes have been saved!');
     
 
       
@@ -196,8 +196,8 @@ class BillController extends Controller
     public function post_bills_surcharge(Request $request, $property_id)
     {
 
-        $updated_billing_start = $request->billing_start;
-        $updated_billing_end = $request->billing_end;
+        $updated_start = $request->start;
+        $updated_end = $request->end;
 
         $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
@@ -211,14 +211,14 @@ class BillController extends Controller
        $current_bill_no = DB::table('contracts')
        ->join('units', 'unit_id_foreign', 'unit_id')
        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-       ->join('bills', 'tenant_id', 'billing_tenant_id')
+       ->join('bills', 'tenant_id', 'bill_tenant_id')
        ->where('property_id_foreign',  Session::get('property_id'))
-       ->max('billing_no') + 1;
+       ->max('bill_no') + 1;
 
 
        $property = Property::findOrFail($property_id);
     
-        return view('webapp.bills.add-surcharge-bill', compact('property','active_tenants','current_bill_no', 'updated_billing_start', 'updated_billing_end'))->with('success', 'changes have been saved!');
+        return view('webapp.bills.add-surcharge-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end'))->with('success', 'changes have been saved!');
     
 
       
@@ -239,24 +239,24 @@ class BillController extends Controller
         $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->max('billing_no') + 1;
+        ->max('bill_no') + 1;
 
         for ($i=1; $i < $no_of_bills; $i++) { 
             $bill = new Bill();
-            $bill->billing_tenant_id = $tenant_id;
-            $bill->billing_no = $current_bill_no++;
-            $bill->billing_date = $request->billing_date;
-            $bill->billing_desc = $request->input('billing_desc'.$i);
-            $bill->billing_start = $request->input('billing_start'.$i);
-            $bill->billing_end = $request->input('billing_end'.$i);
-            $bill->billing_amt = $request->input('billing_amt'.$i);
+            $bill->bill_tenant_id = $tenant_id;
+            $bill->bill_no = $current_bill_no++;
+            $bill->date_posted = $request->date_posted;
+            $bill->particular = $request->input('particular'.$i);
+            $bill->start = $request->input('start'.$i);
+            $bill->end = $request->input('end'.$i);
+            $bill->amount = $request->input('amount'.$i);
             $bill->save();
 
         }
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
@@ -271,20 +271,20 @@ class BillController extends Controller
         $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->max('billing_no') + 1;
+        ->max('bill_no') + 1;
 
 
         for($i = 1; $i<$request->no_of_bills; $i++){
             $bill = new Bill();
-            $bill->billing_tenant_id = $tenant_id;
-            $bill->billing_no = $current_bill_no++;
-            $bill->billing_date = $request->billing_date;
-            $bill->billing_desc = $request->input('billing_desc'.$i);
-            $bill->billing_start = $request->input('billing_start'.$i);
-            $bill->billing_end = $request->input('billing_end'.$i);
-            $bill->billing_amt = $request->input('billing_amt'.$i);
+            $bill->bill_tenant_id = $tenant_id;
+            $bill->bill_no = $current_bill_no++;
+            $bill->date_posted = $request->date_posted;
+            $bill->particular = $request->input('particular'.$i);
+            $bill->start = $request->input('start'.$i);
+            $bill->end = $request->input('end'.$i);
+            $bill->amount = $request->input('amount'.$i);
             $bill->save();
 
             
@@ -296,10 +296,10 @@ class BillController extends Controller
                 'email' =>$tenant->email_address,
                 'name' => $tenant->first_name,
                 'property' => $property->name,
-                'amt' => $request->input('billing_amt'.$i),
-                'desc' => $request->input('billing_desc'.$i),
-                'start' => $request->input('billing_start'.$i),
-                'end' => $request->input('billing_end'.$i),
+                'amt' => $request->input('amount'.$i),
+                'desc' => $request->input('particular'.$i),
+                'start' => $request->input('start'.$i),
+                'end' => $request->input('end'.$i),
             );
 
     //     if($tenant->email_address !== null){
@@ -312,7 +312,7 @@ class BillController extends Controller
     // }
         }
         
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
@@ -333,32 +333,32 @@ class BillController extends Controller
          $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->max('billing_no') + 1;
+        ->max('bill_no') + 1;
         
           $no_of_billed = 1;
             for($i = 1; $i<=$active_tenants; $i++){
-               if($request->input('billing_amt'.$i) > 0){
+               if($request->input('amount'.$i) > 0){
                 $no_of_billed++;
                 DB::table('bills')->insert(
                     [
-                        'billing_no' => $current_bill_no++,
-                        'billing_tenant_id' => $request->input('billing_tenant_id'.$i),
-                        'billing_date' => $request->billing_date,
-                        'billing_start' => $request->input('billing_start'.$i),
-                        'billing_end' => $request->input('billing_end'.$i),
-                        'billing_desc' => $request->input('billing_desc'.$i),
-                        'billing_amt' =>  $request->input('billing_amt'.$i)
+                        'bill_no' => $current_bill_no++,
+                        'bill_tenant_id' => $request->input('bill_tenant_id'.$i),
+                        'date_posted' => $request->date_posted,
+                        'start' => $request->input('start'.$i),
+                        'end' => $request->input('end'.$i),
+                        'particular' => $request->input('particular'.$i),
+                        'amount' =>  $request->input('amount'.$i)
                     ]);
                     
-                    if($request->input('billing_desc'.$i) === 'Electric'){
+                    if($request->input('particular'.$i) === 'Electric'){
                         $contract =  Contract::find($request->input('contract_id'.$i));
                         $contract->initial_electric =  $request->input('current_reading'.$i);
                         $contract->save();
                     }
 
-                    if($request->input('billing_desc'.$i) === 'Water'){
+                    if($request->input('particular'.$i) === 'Water'){
                         $contract =  Contract::find($request->input('contract_id'.$i));
                         $contract->initial_water =  $request->input('current_reading'.$i);
                         $contract->save();
@@ -372,10 +372,10 @@ class BillController extends Controller
                         'email' =>$tenant->email_address,
                         'name' => $tenant->first_name,
                         'property' => $property->name,
-                        'amt' => $request->input('billing_amt'.$i),
-                        'desc' => $request->input('billing_desc'.$i),
-                        'start' => $request->input('billing_start'.$i),
-                        'end' => $request->input('billing_end'.$i),
+                        'amt' => $request->input('amount'.$i),
+                        'desc' => $request->input('particular'.$i),
+                        'start' => $request->input('start'.$i),
+                        'end' => $request->input('end'.$i),
                     );
         
             //     if($tenant->email_address !== null){
@@ -387,7 +387,7 @@ class BillController extends Controller
 
             // }
 
-                    if($request->billing_desc1 === 'Water'){
+                    if($request->particular1 === 'Water'){
                         DB::table('contracts')
                         ->where('contract_id', $request->input('contract_id'.$i))
                         ->update(
@@ -396,7 +396,7 @@ class BillController extends Controller
                                         'initial_water' => $request->input('current_reading'.$i),
                                     ]
                                 );
-                    }elseif($request->billing_desc1 === 'Electricity'){
+                    }elseif($request->particular1 === 'Electricity'){
                         DB::table('contracts')
                         ->where('contract_id', $request->input('contract_id'.$i)) 
                         ->update(
@@ -410,7 +410,7 @@ class BillController extends Controller
                  
                }
             }
-            return redirect('/property/'.$request->property_id.'/bills')->with('success', ($no_of_billed-1).' '.$request->billing_desc1.' bills have been posted!');
+            return redirect('/property/'.$request->property_id.'/bills')->with('success', ($no_of_billed-1).' '.$request->particular1.' bills have been posted!');
         
     }
 
@@ -446,22 +446,22 @@ class BillController extends Controller
             $current_bill_no = DB::table('contracts')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('bills', 'tenant_id', 'billing_tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->max('billing_no') + 1;
+            ->max('bill_no') + 1;
 
-             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->join('tenants', 'billing_tenant_id', 'tenant_id')
+             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->join('tenants', 'bill_tenant_id', 'tenant_id')
             ->join('contracts', 'tenant_id', 'tenant_id_foreign')
             ->join('units', 'unit_id_foreign', 'unit_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('billing_tenant_id', $tenant_id)
-            ->groupBy('billing_no')
-            ->orderBy('billing_no', 'desc')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
+            ->groupBy('bill_no')
+            ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
 
-            if(Session::get('property_type') === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
                 return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
@@ -487,29 +487,29 @@ class BillController extends Controller
             $current_bill_no = DB::table('contracts')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('bills', 'tenant_id', 'billing_tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->max('billing_no') + 1;
+            ->max('bill_no') + 1;
 
            
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('billing_tenant_id', $tenant_id)
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
+            ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
 
 
-            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('billing_tenant_id', $tenant_id)
+            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
+            ->orderBy('bill_no', 'desc')
             // ->havingRaw('balance > 0')
             ->get();
 
-            if(Session::get('property_type') === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                 return view('webapp.bills.edit_occupant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
                 return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
@@ -537,20 +537,20 @@ class BillController extends Controller
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
 
 
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('billing_tenant_id', $tenant_id)
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
+            ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
 
 
             for ($i=1; $i <= $balance->count(); $i++) { 
                  $bill = Bill::find( $request->input('billing_id_ctr'.$i));
-                  $bill->billing_start = $request->input('billing_start_ctr'.$i);
-                  $bill->billing_end = $request->input('billing_end_ctr'.$i);
-                  $bill->billing_amt = $request->input('billing_amt_ctr'.$i);
+                  $bill->start = $request->input('start_ctr'.$i);
+                  $bill->end = $request->input('end_ctr'.$i);
+                  $bill->amount = $request->input('amount_ctr'.$i);
                  $bill->save();
                }
 
@@ -564,7 +564,7 @@ class BillController extends Controller
                    );
           
           
-                   if(Session::get('property_type') === 'Condominium Corporation'){
+                   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                     return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
                 }else{
                     return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
@@ -585,11 +585,11 @@ class BillController extends Controller
     public function destroy($property_id,$tenant_id, $billing_id)
     {
         //  DB::table("billings")
-        //  ->join('tenants', 'billing_tenant_id', 'tenant_id')
+        //  ->join('tenants', 'bill_tenant_id', 'tenant_id')
         //  ->join('units', 'unit_tenant_id', 'unit_id')
         // ->where('unit_property', Auth::user()->property)
-        // // ->whereIn('billing_desc', ['Water', 'Electricity'])
-        // ->where('billing_desc', 'Rent')
+        // // ->whereIn('particular', ['Water', 'Electricity'])
+        // ->where('particular', 'Rent')
         // ->delete();
 
         DB::table('bills')->where('bill_id', $billing_id)->delete();
@@ -601,11 +601,11 @@ class BillController extends Controller
 
         $tenant = Tenant::findOrFail($tenant_id);
 
-        $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-        ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-        ->where('billing_tenant_id', $tenant_id)
+        $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
-        ->orderBy('billing_no', 'desc')
+        ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
         

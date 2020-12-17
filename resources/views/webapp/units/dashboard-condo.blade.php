@@ -527,7 +527,7 @@
     @foreach ($collections_for_the_day as $item)
     <tr>
       <td>{{ $item->ar_no }}</td>
-       <td>{{ $item->payment_billing_no }}</td>
+       <td>{{ $item->payment_bill_no }}</td>
         <td>{{ $item->first_name.' '.$item->last_name }}</td>
         <td>{{ $item->building.' '.$item->unit_no }}</td>
         

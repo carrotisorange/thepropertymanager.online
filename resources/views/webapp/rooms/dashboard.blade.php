@@ -575,15 +575,15 @@
     <tr>
       <th class="text-center">{{ $ctr++ }}</th>
       <td>{{ $item->ar_no }}</td>
-       <td>{{ $item->payment_billing_no }}</td>
+       <td>{{ $item->payment_bill_no }}</td>
        <td>{{ $item->building.' '.$item->unit_no }}</td>
         <td>{{ $item->first_name.' '.$item->last_name }}</td>
         <td>{{ $item->name }}</td>
         <td>
-          {{ $item->billing_desc }}</td>
+          {{ $item->particular }}</td>
         <td colspan="2">
-        {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-        {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+        {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+        {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
         </td>
         <td>{{ number_format($item->amt_paid,2) }}</td>
         <td class="text-center">

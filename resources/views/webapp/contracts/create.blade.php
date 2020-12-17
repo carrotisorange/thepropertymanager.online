@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -386,7 +386,7 @@
         var i=1;
         var current_bill_no  = {{ $current_bill_no }};
     $("#add_row").click(function(){
-        $('#addr'+i).html("<th>"+ (current_bill_no ) +"</th><td><select class='form-control' name='billing_desc"+i+"' form='addTenantForm1' id='billing_desc"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='billing_amt"+i+"' id='billing_amt"+i+"' type='number' min='1' step='0.01' value='{{ $unit->monthly_rent }}'' required></td>");
+        $('#addr'+i).html("<th>"+ (current_bill_no ) +"</th><td><select class='form-control' name='particular"+i+"' form='addTenantForm1' id='particular"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='amount"+i+"' id='amount"+i+"' type='number' min='1' step='0.01' value='{{ $unit->monthly_rent }}'' required></td>");
 
 
      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');

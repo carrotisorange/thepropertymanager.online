@@ -14,8 +14,8 @@ class AddMoreInfoBillingsTable extends Migration
     public function up()
     {
         Schema::table('billings', function (Blueprint $table) {
-            $table->date('billing_start')->nullable();
-            $table->date('billing_end')->nullable();
+            $table->date('start')->nullable();
+            $table->date('end')->nullable();
             $table->float('electric_rate_kwh', 8,2);
             $table->float('water_rate_cum', 8,2);
         });

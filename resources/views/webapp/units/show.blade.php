@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -267,16 +267,16 @@
             <tr>
               <th>{{ $ctr++ }}</th>
               <td>
-                {{Carbon\Carbon::parse($item->billing_date)->format('M d Y')}}
+                {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
               </td>   
-                <td>{{ $item->billing_no }}</td>
+                <td>{{ $item->bill_no }}</td>
                 <td> <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
-                <td>{{ $item->billing_desc }}</td>
+                <td>{{ $item->particular }}</td>
                 <td colspan="2">
-                  {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                  {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                 </td>
-                <td class="text-right"> {{ number_format($item->billing_amt,2) }}</td>
+                <td class="text-right"> {{ number_format($item->amount,2) }}</td>
             
   
             </tr>
@@ -284,7 +284,7 @@
             @endforeach
             <tr>
               <th>Total</th>
-              <th class="text-right" colspan="7"> {{ number_format($bills->sum('billing_amt'),2) }}</th>
+              <th class="text-right" colspan="7"> {{ number_format($bills->sum('amount'),2) }}</th>
             </tr> --}}
             
             </table>

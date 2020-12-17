@@ -64,9 +64,9 @@ class ContractController extends Controller
         $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('property_id_foreign',  Session::get('property_id'))
-        ->max('billing_no') + 1;
+        ->max('bill_no') + 1;
 
         return view('webapp.contracts.create', compact('tenant','unit', 'property', 'current_bill_no', 'users', 'units'));
     }
@@ -132,19 +132,19 @@ class ContractController extends Controller
                     $current_bill_no = DB::table('contracts')
                     ->join('units', 'unit_id_foreign', 'unit_id')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                    ->join('bills', 'tenant_id', 'billing_tenant_id')
+                    ->join('bills', 'tenant_id', 'bill_tenant_id')
                     ->where('property_id_foreign', Session::get('property_id'))
-                    ->max('billing_no') + 1;
+                    ->max('bill_no') + 1;
             
                     for ($i=1; $i < $no_of_bills; $i++) { 
                         $bill = new Bill();
-                        $bill->billing_tenant_id = $tenant_id;
-                        $bill->billing_no = $current_bill_no++;
-                        $bill->billing_date = $request->movein_at;
-                        $bill->billing_desc = $request->input('billing_desc'.$i);
-                        $bill->billing_start = $request->movein_at;
-                        $bill->billing_end = $request->moveout_at;
-                        $bill->billing_amt = $request->input('billing_amt'.$i);
+                        $bill->bill_tenant_id = $tenant_id;
+                        $bill->bill_no = $current_bill_no++;
+                        $bill->date_posted = $request->movein_at;
+                        $bill->particular = $request->input('particular'.$i);
+                        $bill->start = $request->movein_at;
+                        $bill->end = $request->moveout_at;
+                        $bill->amount = $request->input('amount'.$i);
                         $bill->save();
                     }
 
@@ -162,11 +162,11 @@ class ContractController extends Controller
     public function show($property_id, $tenant_id, $contract_id)
     {
 
-        $balance = Bill::leftJoin('payments', 'bills.billing_no', '=', 'payments.payment_billing_no')
-        ->selectRaw('*, bills.billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-        ->where('billing_tenant_id', $tenant_id)
+        $balance = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
+        ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
+        ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
-        ->orderBy('billing_no', 'desc')
+        ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
 
@@ -276,9 +276,9 @@ class ContractController extends Controller
         $current_bill_no = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'billing_tenant_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('property_id_foreign',  Session::get('property_id'))
-        ->max('billing_no') + 1;
+        ->max('bill_no') + 1;
         
         $no_of_charges = (int) $request->no_of_charges; 
 
@@ -309,11 +309,11 @@ class ContractController extends Controller
         for($i = 1; $i<$no_of_charges; $i++){
             DB::table('bills')->insert(
                 [
-                    'billing_tenant_id' => $tenant_id,
-                    'billing_no' => $current_bill_no++,
-                    'billing_date' => $request->actual_moveout_at,
-                    'billing_desc' =>  $request->input('billing_desc'.$i),
-                    'billing_amt' =>  $request->input('billing_amt'.$i)
+                    'bill_tenant_id' => $tenant_id,
+                    'bill_no' => $current_bill_no++,
+                    'date_posted' => $request->actual_moveout_at,
+                    'particular' =>  $request->input('particular'.$i),
+                    'amount' =>  $request->input('amount'.$i)
                 ]);
         }
          $tenant = Tenant::findOrFail($tenant_id);
@@ -324,9 +324,9 @@ class ContractController extends Controller
             // $unit = Unit::findOrFail($unit_id);
 
          
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('billing_tenant_id', $tenant->tenant_id)
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('bill_tenant_id', $tenant->tenant_id)
             ->havingRaw('balance > 0')
             ->get();
 

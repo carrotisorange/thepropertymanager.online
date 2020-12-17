@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -546,7 +546,7 @@
           <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS ({{ $collections_for_the_day->count() }})</h6>
           
           
-            <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a>
+            {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
           
           
           </div>
@@ -575,15 +575,15 @@
               <tr>
                 <th class="text-center">{{ $ctr++ }}</th>
                 <td>{{ $item->ar_no }}</td>
-                 <td>{{ $item->payment_billing_no }}</td>
+                 <td>{{ $item->payment_bill_no }}</td>
                  <td>{{ $item->building.' '.$item->unit_no }}</td>
                   <td>{{ $item->first_name.' '.$item->last_name }}</td>
                 
                   <td>
-                    {{ $item->billing_desc }}</td>
+                    {{ $item->particular }}</td>
                   <td colspan="2">
-                  {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                  {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                   </td>
                   <td>{{ number_format($item->amt_paid,2) }}</td>
                   <td class="text-center">
@@ -593,7 +593,7 @@
               </tr>
               @endforeach
               <tr>
-                <th>Total</th>
+                <th>TOTAL</th>
                 <th class="text-right" colspan="8">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
                </tr>
              </tbody>

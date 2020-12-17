@@ -200,12 +200,12 @@
             @foreach ($balance as $item)
             <tr>
               <th>{{ $ctr++ }}</th>   
-                <td>{{ $item->billing_no }}</td>
+                <td>{{ $item->bill_no }}</td>
         
-                <td>{{ $item->billing_desc }}</td>
+                <td>{{ $item->particular }}</td>
                 <td>
-                  {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                  {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                 </td>
                 <td class="text-right" colspan="3">{{ number_format($item->balance,2) }}</td>
                        </tr>
@@ -268,14 +268,14 @@
                 <tr>
                         <th class="text-center">{{ $ctr++ }}</th>
                         <td>{{ $item->ar_no }}</td>
-                        <td>{{ $item->payment_billing_no }}</td>
+                        <td>{{ $item->payment_bill_no }}</td>
                           <td>{{ $item->building.' '.$item->unit_no }}</td> 
-                         <td>{{ $item->billing_desc }}</td> 
+                         <td>{{ $item->particular }}</td> 
                          <td colspan="2">
-                          {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} -
-                          {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }}
+                          {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                          {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                         </td>
-                        <td>{{ $item->form_of_payment }}</td>
+                        <td>{{ $item->form }}</td>
                         <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                         
                         <td class="text-center">
@@ -435,8 +435,8 @@
   <div class="row">
     <div class="col">
         <small>Billing Date</small>
-        {{-- <input type="date" form="addBillForm" class="form-control" name="billing_date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
-        <input type="date" form="addBillForm" class="" name="billing_date" value="{{ Carbon\Carbon::parse($tenant->movein_date)->format('Y-m-d') }}" required >
+        {{-- <input type="date" form="addBillForm" class="form-control" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
+        <input type="date" form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::parse($tenant->movein_date)->format('Y-m-d') }}" required >
     </div>
   </div>
  
@@ -501,7 +501,7 @@
   $(document).ready(function(){
   var j=1;
   $("#add_payment").click(function(){
-      $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='billing_no"+j+"' id='billing_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option value='{{ $item->billing_no.'-'.$item->bill_id }}'> Bill No {{ $item->billing_no }} | {{ $item->billing_desc }} | {{ $item->billing_start? Carbon\Carbon::parse($item->billing_start)->format('M d Y') : null}} - {{ $item->billing_end? Carbon\Carbon::parse($item->billing_end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input class='form-control'  form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' min='1' step='0.01' required></td><td><select class='form-control'  form='acceptPaymentForm' name='form_of_payment"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input class='form-control'  form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control'  form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+      $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input class='form-control'  form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' min='1' step='0.01' required></td><td><select class='form-control'  form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input class='form-control'  form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control'  form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
 
 
    $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');

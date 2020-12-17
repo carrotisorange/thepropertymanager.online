@@ -23,8 +23,8 @@
               </tr>
               @foreach ($rent_bills as $item)
               <tr>
-                  <td>{{ $item->billing_no }}</th>
-                  <td>{{ $item->billing_desc }}</td>
+                  <td>{{ $item->bill_no }}</th>
+                  <td>{{ $item->particular }}</td>
                   <td>
                     @if($item->details === null)
                    -
@@ -32,13 +32,13 @@
                     {{ $item->details }}
                     @endif
                   </td>
-                  <th class="text-right" colspan="3">{{ number_format($item->billing_amt,2) }}</th>
+                  <th class="text-right" colspan="3">{{ number_format($item->amount,2) }}</th>
               </tr>
               @endforeach
               @foreach ($other_bills as $item)
               <tr>
-                <td>{{ $item->billing_no }}</th>
-                  <td>{{ $item->billing_desc }}</td>
+                <td>{{ $item->bill_no }}</th>
+                  <td>{{ $item->particular }}</td>
                   <td> 
                     @if($item->details === null)
                     -
@@ -46,7 +46,7 @@
                     {{ $item->details }}
                     @endif
                   </td>
-                  <th class="text-right" colspan="3">{{ number_format($item->billing_amt,2) }}</th>
+                  <th class="text-right" colspan="3">{{ number_format($item->amount,2) }}</th>
               </tr>
               @endforeach
         

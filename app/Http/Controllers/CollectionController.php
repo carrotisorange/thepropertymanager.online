@@ -30,9 +30,9 @@ class CollectionController extends Controller
 
         if($search  === null){
 
-            $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
-            ->join('contracts', 'billing_tenant_id', 'tenant_id_foreign')
-            ->join('tenants', 'billing_tenant_id', 'tenant_id')
+            $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+            ->join('tenants', 'bill_tenant_id', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->where('property_id_foreign', $property_id)
             ->groupBy('payment_id')
@@ -46,7 +46,7 @@ class CollectionController extends Controller
             // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             // ->join('units', 'unit_id_foreign', 'unit_id')
             // ->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-            // ->join('billings', 'tenant_id_foreign', 'billing_tenant_id')
+            // ->join('billings', 'tenant_id_foreign', 'bill_tenant_id')
             // ->where('property_id_foreign', $property_id)
             // ->orderBy('payment_created', 'desc')
             // ->orderBy('ar_no', 'desc')
@@ -58,7 +58,7 @@ class CollectionController extends Controller
             // $collections = DB::table('units')
             // ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
             // ->leftJoin('payments', 'tenant_id', 'payment_tenant_id')
-            // ->leftJoin('billings', 'payment_billing_no', 'billing_no')
+            // ->leftJoin('billings', 'payment_bill_no', 'bill_no')
             // ->where('property_id_foreign', $property_id)
             // ->orderBy('payment_created', 'desc')
             // ->orderBy('ar_no', 'desc')
@@ -69,9 +69,9 @@ class CollectionController extends Controller
             // });
         }else{
         
-            $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
-            ->join('contracts', 'billing_tenant_id', 'tenant_id_foreign')
-            ->join('tenants', 'billing_tenant_id', 'tenant_id')
+            $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+            ->join('tenants', 'bill_tenant_id', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->where('property_id_foreign', $property_id)
             ->where('payment_created', $search)
@@ -122,17 +122,17 @@ class CollectionController extends Controller
 
         //add all the payment to the database.
         for($i = 1; $i<$no_of_payments; $i++){
-             $explode = explode("-", $request->input('billing_no'.$i));
+             $explode = explode("-", $request->input('bill_no'.$i));
             DB::table('payments')->insert(
                 [
                     'payment_tenant_id' => $tenant_id, 
-                    'payment_billing_no' => $explode[0], 
-                    'payment_billing_id' => $explode[1],
+                    'payment_bill_no' => $explode[0], 
+                    'payment_bill_id' => $explode[1],
                     'amt_paid' => $request->input('amt_paid'.$i),
                     'payment_created' => $request->payment_created,
                     'ar_no' => $payment_ctr,
                     'bank_name' => $request->input('bank_name'.$i),
-                    'form_of_payment' => $request->input('form_of_payment'.$i),
+                    'form' => $request->input('form'.$i),
                     'check_no' => $request->input('cheque_no'.$i),
                     'date_deposited' => $request->date_deposited,
                     'created_at' => Carbon::now(),
@@ -219,7 +219,7 @@ class CollectionController extends Controller
            
         }
         
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
@@ -239,8 +239,8 @@ class CollectionController extends Controller
 
         $current_room = Unit::findOrFail($room_id)->unit_no;
 
-       $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_billing_id')
-      ->where('billing_tenant_id', $tenant_id)
+       $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+      ->where('bill_tenant_id', $tenant_id)
       ->where('payment_created', $payment_created)
       ->groupBy('payment_id')
       ->orderBy('ar_no', 'desc')
@@ -248,11 +248,11 @@ class CollectionController extends Controller
 
 
 
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
-            ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('billing_tenant_id', $tenant_id)
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
             ->groupBy('bill_id')
-            ->orderBy('billing_no', 'desc')
+            ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
 
@@ -329,7 +329,7 @@ class CollectionController extends Controller
     {
         DB::table('payments')->where('payment_id', $payment_id)->delete();
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');

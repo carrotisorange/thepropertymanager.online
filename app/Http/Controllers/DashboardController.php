@@ -341,12 +341,12 @@ $expenses_rate->dataset
     ->linetension(0.4);
 
 
-// $delinquent_accounts = Billing::leftJoin('payments', 'billings.billing_id', 'payments.payment_billing_id')
-// ->leftJoin('tenants', 'billing_tenant_id', 'tenant_id')
+// $delinquent_accounts = Billing::leftJoin('payments', 'billings.billing_id', 'payments.payment_bill_id')
+// ->leftJoin('tenants', 'bill_tenant_id', 'tenant_id')
 // ->leftJoin('units', 'tenant_id', 'unit_tenant_id')
-// ->selectRaw('*, billing_amt - IFNULL(sum(amt_paid),0) as balance')
+// ->selectRaw('*, amount - IFNULL(sum(amt_paid),0) as balance')
 //  ->where('property_id_foreign', Session::get('property_id'))
-// ->where('billing_date', '<', Carbon::now()->startOfMonth()->addDays(7))
+// ->where('date_posted', '<', Carbon::now()->startOfMonth()->addDays(7))
 // ->groupBy('tenant_id')
 // ->orderBy('balance', 'desc')
 // ->havingRaw('balance > 0')
@@ -354,23 +354,23 @@ $expenses_rate->dataset
 
 
 
- $delinquent_accounts = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_billing_id')
+ $delinquent_accounts = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
   ->leftJoin('contracts', 'payment_tenant_id', 'tenant_id_foreign')
   ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
   ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-    ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+    ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
     ->where('property_id_foreign',Session::get('property_id'))
     ->groupBy('bill_id')
-    ->orderBy('billing_no', 'desc')
+    ->orderBy('bill_no', 'desc')
     ->havingRaw('balance > 0')
     ->get();
 
 
-//  $delinquent_accounts = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_billing_id')
-// ->join('contracts', 'billing_tenant_id', 'tenant_id_foreign')
+//  $delinquent_accounts = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_bill_id')
+// ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
 // ->join('units', 'unit_id_foreign', 'unit_id')
 // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-// ->selectRaw('*, billing_amt - IFNULL(sum(payments.amt_paid),0) as balance')
+// ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
 // ->where('property_id_foreign', Session::get('property_id'))
 // ->groupBy('tenant_id')
 // ->orderBy('balance', 'desc')
@@ -585,8 +585,8 @@ $reason_for_moving_out_chart->dataset('', 'pie', [number_format(($inactive_tenan
 $collections_for_the_day = DB::table('contracts')
 ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
 ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-->leftJoin('bills', 'tenant_id', 'billing_tenant_id')
-->leftJoin('payments', 'payment_billing_id', 'bill_id')
+->leftJoin('bills', 'tenant_id', 'bill_tenant_id')
+->leftJoin('payments', 'payment_bill_id', 'bill_id')
 ->where('property_id_foreign', Session::get('property_id'))
 ->whereDate('payment_created', Carbon::now())
 ->orderBy('payment_created', 'desc')
@@ -597,7 +597,7 @@ $collections_for_the_day = DB::table('contracts')
 
 $property = Property::findOrFail(Session::get('property_id'));
 
-if(Session::get('property_type') === 'Condominium Corporation'){
+if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
     return view('webapp.properties.show-unit-properties',
     compact(
                 'units', 'units_occupied','units_vacant', 'units_reserved',

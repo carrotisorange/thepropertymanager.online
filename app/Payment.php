@@ -12,7 +12,7 @@ class Payment extends Model
                             'payment_tenant_id',
                             'payment_created',
                             'amt_paid',
-                            'form_of_payment',
+                            'form',
                             'or_number',
                             'ar_number',
                             'bank_name',
@@ -24,6 +24,6 @@ class Payment extends Model
 
     public function tenant()
     {
-        return $this->belongsTo('App\Tenant', 'billing_tenant_id');
+        return $this->belongsTo('App\Tenant', 'bill_tenant_id');
     }
 }
