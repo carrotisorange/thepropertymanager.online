@@ -174,10 +174,10 @@
             @method('PUT')
         </form>
 
-            {{ $tenant->first_name.' '.$tenant->last_name }} stayed for <?php   $diffInDays =  number_format((Carbon\Carbon::parse($contract->movein_at))->DiffInDays(Carbon\Carbon::parse($contract->moveout_at))) ?> {{ number_format($diffInDays/28,0) }} months in your property. 
+            {{ $tenant->first_name.' '.$tenant->last_name }} stayed for <?php   $diffInDays =  number_format((Carbon\Carbon::parse($contract->movein_at))->DiffInDays(Carbon\Carbon::parse($contract->moveout_at))) ?> {{ $contract->number_of_months? $contract->number_of_months: 'NULL' }} months in your property. 
             The reason for his/her moveout is {{ $contract->moveout_reason }}. He/she is scheduled to moveout on {{ Carbon\Carbon::parse($contract->actual_moveout_at )->format('M d Y') }}. 
             Please click  <button type="submit" form="moveoutTenantForm">here</button> to export the gatepass. 
-            The tenant will present the gatepass to the guard before before leaving the property. Also, don't forget to remind the tenant to rate their stay at their tenant portal.
+            The tenant will present the gatepass to the guard before leaving the property. Also, don't forget to remind the tenant to rate their stay at their tenant portal.
         </div>
       </div>      
     </div>

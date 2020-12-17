@@ -177,13 +177,14 @@ class ContractController extends Controller
     public function show($property_id, $tenant_id, $contract_id)
     {
 
-        $balance = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-        ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
+         $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
+
 
         $contract = Contract::findOrFail($contract_id);
 

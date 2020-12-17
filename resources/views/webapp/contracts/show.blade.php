@@ -226,7 +226,7 @@
                 <td>{{ $contract->status }}</td>
             </tr>
             <tr>
-                <th>Contract period</th>
+                <th>Movein at</th>
                 <td>{{ $contract->movein_at }}</td>
             </tr>
             <tr>
@@ -290,7 +290,7 @@
               
                   <th>Bill No</th>
                  
-                  <th>Description</th>
+                  <th>Particular</th>
                   <th>Period Covered</th>
                   <th class="text-right" colspan="3">Amount</th>
                   
@@ -313,7 +313,7 @@
             </table>
             <table class="table">
               <tr>
-               <th>Total</th>
+               <th>TOTAL</th>
                <th class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
               </tr>    
             </table>
@@ -323,7 +323,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-primary"><i class="fas fa-times text-dark-50"></i> Close</a>
+        <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-primary"> Dismiss</a>
       </div>
       
   </div>
