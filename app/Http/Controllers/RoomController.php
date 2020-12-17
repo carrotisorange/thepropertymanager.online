@@ -139,14 +139,15 @@ class RoomController extends Controller
             ->get();
 
     
-        //     $bills = Billing::leftJoin('payments', 'billings.bill_no', '=', 'payments.payment_bill_no')
-        //    ->join('tenants', 'bill_tenant_id', 'tenant_id')
-        //    ->selectRaw('*, billings.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-        //    ->where('unit_tenant_id', $unit_id)
-        //    ->groupBy('billing_id')
-        //    ->orderBy('bill_no', 'desc')
-        //    ->havingRaw('balance > 0')
-        //    ->get();
+       
+            $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
+           ->join('units', 'bill_unit_id', 'unit_id')
+           ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
+           ->where('unit_id', $unit_id)
+           ->groupBy('bill_id')
+           ->orderBy('bill_no', 'desc')
+           ->havingRaw('balance > 0')
+           ->get();
 
 
            $concerns = DB::table('contracts')
@@ -162,8 +163,11 @@ class RoomController extends Controller
             
             $property = Property::findOrFail(Session::get('property_id'));
 
+
+
+
             if(Session::get('property_type') === 'Condominium Corporation'){
-                return view('webapp.units.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
+                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }else{
                 return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }
