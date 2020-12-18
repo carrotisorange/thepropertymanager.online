@@ -540,6 +540,7 @@
                    <th>#</th>
                    <th>Entry</th>
                    <th>Description</th>
+                   <th>Date</th>
                  </thead>
                </tr>
                    <input form="addPayableEntryForm" type="hidden" id="no_of_entry" name="no_of_entry" >
@@ -553,8 +554,8 @@
 
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</button>
-          <button form="addPayableEntryForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+
+          <button form="addPayableEntryForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
           </div>
   </div>
   </div>
@@ -617,7 +618,7 @@
          var i=1;
          
      $("#add_entry").click(function(){
-         $('#addr'+i).html("<th>"+ (i) +"</th><td><input class='form-control' form='addPayableEntryForm' name='entry"+i+"' type='text' required></td><td><input class='form-control' form='addPayableEntryForm' name='description"+i+"' type='text' required></td>");
+         $('#addr'+i).html("<th>"+ (i) +"</th><td><input form='addPayableEntryForm' name='entry"+i+"' type='text' required></td><td><input form='addPayableEntryForm' name='description"+i+"' type='text' required></td><td><input form='addPayableEntryForm' name='created_at"+i+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}' required></td>");
  
  
       $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
@@ -639,7 +640,7 @@
      var j=1;
          
          $("#add_request").click(function(){
-             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+i+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->entry }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+i+"' type='text'></td>");
+             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->entry }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+i+"' type='text'></td>");
      
      
           $('#request_table').append('<tr id="request'+(j+1)+'"></tr>');
