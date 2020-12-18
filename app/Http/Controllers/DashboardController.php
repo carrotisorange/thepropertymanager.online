@@ -30,6 +30,8 @@ class DashboardController extends Controller
 
         Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
 
+        Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
+
         Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
     
 

@@ -267,7 +267,7 @@
             
               <tr>
                <th class="text-center">{{ $ctr++ }}</th>
-               <th class="text-center">{{ $item->no }}</th>
+               <td class="text-center">{{ $item->no }}</td>
                <td>{{ $item->entry }}</td>
               
                <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
@@ -319,14 +319,14 @@
                     <?php $ctr=1;?>
                     <tr>
                       <th class="text-center">#</th>
-                      <th class="text-center">Payable No</th>
+                      <td class="text-center">Payable No</td>
                       <th>Entry</th>
                       <th>Amount</th>
                       <th>Requested</th>
                       <th>Requester</th>
                       <th>Note</th>
                       @if(Auth::user()->user_type === 'manager')
-                      <th colspan="2" class="text-center">Action</th>
+                      <th colspan="2" class="text-center"></th>
                       @endif
                     
                       {{-- <th colspan="2" class="text-center">Action</th> --}}
@@ -338,7 +338,7 @@
                     @foreach ($pending as $item)
                        <tr>
                          <th class="text-center">{{ $ctr++ }}</th>
-                        <th class="text-center">{{ $item->no }}</th>
+                        <td class="text-center">{{ $item->no }}</td>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
@@ -350,7 +350,7 @@
                           
                           <form action="/property/{{ $property->property_id }}/payable/{{ $item->id }}/decline" method="POST">
                           @csrf
-                          <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-times-circle fa-sm text-white-50"></i></button>
+                          <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Decline</button>
                         </form>
                      
  
@@ -359,7 +359,7 @@
                         <form action="/property/{{ $property->property_id }}/payable/{{ $item->id }}/approve" method="POST">
                           @csrf
                 
-                          <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle fa-sm text-white-50"></i></button>
+                          <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Approve</button>
                         </form>
                       </td> 
                        
@@ -390,7 +390,7 @@
                       <th>Aprroved</th>
                       
                       @if(Auth::user()->user_type === 'manager')
-                      <th colspan="2" class="text-center">Action</th>
+                      <th colspan="2" class="text-center"></th>
                       @endif
                     </tr>
                  </thead>
@@ -400,7 +400,7 @@
                     @foreach ($approved as $item)
                        <tr>
                         <th class="text-center">{{ $ctr++ }}</th>
-                        <th class="text-center">{{ $item->no }}</th>
+                        <td class="text-center">{{ $item->no }}</td>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
@@ -411,7 +411,7 @@
                         <td class="text-center"> 
                           <form action="/property/{{ $property->property_id }}/payable/{{ $item->id }}/release" method="POST">
                           @csrf
-                          <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle fa-sm text-white-50"></i></button>
+                          <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Release</button>
                         </form>
                       @endif
                        
@@ -447,7 +447,7 @@
                     @foreach ($released as $item)
                        <tr>
                         <th class="text-center">{{ $ctr++ }}</th>
-                        <th class="text-center">{{ $item->no }}</th>
+                        <td class="text-center">{{ $item->no }}</td>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
@@ -490,7 +490,7 @@
                     @foreach ($declined as $item)
                        <tr>
                         <th class="text-center">{{ $ctr++ }}</th>
-                        <th class="text-center">{{ $item->no }}</th>
+                        <td class="text-center">{{ $item->no }}</td>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>

@@ -8,6 +8,8 @@ use DB;
 use App\Property;
 use Carbon\Carbon;
 use Session;
+use App\Notification;
+use App\Payable;
 
 class PayableController extends Controller
 {
@@ -94,7 +96,17 @@ class PayableController extends Controller
                     'property_id_foreign' => Session::get('property_id'),
                     'created_at' => Carbon::now(),
                 ]);
+
+                $notification = new Notification();
+                $notification->user_id_foreign = Auth::user()->id;
+                $notification->property_id_foreign = Session::get('property_id');
+                $notification->type = 'payable';
+                $notification->message = $request->input('entry'.$i).' has been added as an entry to payable!';
+                $notification->save();
         }
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
     
         return back()->with('success', 'entries have been saved!');
     }
@@ -118,7 +130,18 @@ class PayableController extends Controller
                    'requested_at' => $request->input('requested_at'.$i),
                    'property_id_foreign' => Session::get('property_id')
                ]);
+
+               $notification = new Notification();
+               $notification->user_id_foreign = Auth::user()->id;
+               $notification->property_id_foreign = Session::get('property_id');
+               $notification->type = 'payable';
+               $notification->message = $request->input('entry'.$i).' for '.$request->input('requested_at'.$i).' has been requested!';
+               $notification->save();
        }
+
+     
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
    
    
        return redirect('property/'.Session::get('property_id').'/payables#payables/')->with('success', 'request has been sent!');
@@ -136,6 +159,18 @@ class PayableController extends Controller
                     ]
                 );
 
+        $entry = Payable::findOrFail($payable_id)->entry;
+        $date = Payable::findOrFail($payable_id)->requested_at;
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payable';
+        $notification->message = ' request for '.$entry.' on '.$date.' has been approved!';
+        $notification->save();
+                
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
     return redirect('property/'.Session::get('property_id').'/payables#approved/')->with('success', 'request has been approved!');
     }
 
@@ -151,6 +186,18 @@ class PayableController extends Controller
                     ]
                 );
 
+        $entry = Payable::findOrFail($payable_id)->entry;
+        $date = Payable::findOrFail($payable_id)->requested_at;
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payable';
+        $notification->message = ' request for '.$entry.' on '.$date.' has been declined!';
+        $notification->save();
+                
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);             
+
     return redirect('/property/'.$property_id.'/payables#declined/')->with('success', 'request has been declined!');
     }
 
@@ -164,6 +211,18 @@ class PayableController extends Controller
                         'released_at' => Carbon::now(),
                     ]
                 );
+
+        $entry = Payable::findOrFail($payable_id)->entry;
+        $date = Payable::findOrFail($payable_id)->requested_at;
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payable';
+        $notification->message = ' request for '.$entry.' on '.$date.' has been released!';
+        $notification->save();
+                
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
     return redirect('/property/'.$property_id.'/payables#released/')->with('success', 'request has been released!');
     }

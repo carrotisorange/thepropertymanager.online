@@ -385,6 +385,9 @@ Route::get('/user/{user_id}/portal/tenant/', 'UserController@show_portal_tenant'
 //routes for responses
 Route::post('concern/{concern_id}/response', 'ResponseController@store')->middleware(['auth', 'verified']);
 
+//routes for notifications
+Route::get('property/{property_id}/notifications', 'NotificationController@index')->middleware(['auth', 'verified']);
+
 
 //routes for the the website
 Route::get('/', function(){

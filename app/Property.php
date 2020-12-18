@@ -56,5 +56,9 @@ class Property extends Model
         return $this->hasMany('App\Notification', 'property_id_foreign')->orderBy('created_at', 'desc')->limit(5);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany('App\Notification', 'property_id_foreign')->orderBy('created_at', 'desc');
+    }
     
 }
