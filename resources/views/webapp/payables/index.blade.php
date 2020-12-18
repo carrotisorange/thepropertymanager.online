@@ -341,7 +341,7 @@
                         <th class="text-center">{{ $item->no }}</th>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
                         <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>    
                        
@@ -403,7 +403,7 @@
                         <th class="text-center">{{ $item->no }}</th>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
                         <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>       
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
@@ -450,10 +450,10 @@
                         <th class="text-center">{{ $item->no }}</th>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
                         <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>       
-                        <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
+                        <td>{{ Carbon\Carbon::parse($item->released_at)->format('M d Y') }}</td>     
                         {{-- @if(Auth::user()->user_type === 'manager')
                         <td class="text-center"> 
                           <form action="/" method="POST">
@@ -493,10 +493,10 @@
                         <th class="text-center">{{ $item->no }}</th>
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
                         <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>       
-                        <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>            
+                        <td>{{ Carbon\Carbon::parse($item->declined_at)->format('M d Y') }}</td>            
                        </tr>
                     @endforeach
                   </tbody>
