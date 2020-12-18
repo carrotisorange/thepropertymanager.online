@@ -26,7 +26,7 @@ class PayableController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
      
-            $pending = DB::table('payable_request')
+             $pending = DB::table('payable_request')
             ->where('property_id_foreign', Session::get('property_id'))
             ->where('status', 'pending')
             ->get();
@@ -59,7 +59,7 @@ class PayableController extends Controller
 
             $property = Property::findOrFail(Session::get('property_id'));
      
-             return view('webapp.payables.payables', compact('entry','pending','approved','declined','released','expense_report', 'property'));
+             return view('webapp.payables.index', compact('entry','pending','approved','declined','released','expense_report', 'property'));
          }else{
              return view('website.unregistered');
     }
@@ -84,19 +84,19 @@ class PayableController extends Controller
      */
     public function store(Request $request)
     {
-        $no_of_entry = (int) $request->no_of_entry;
+     $no_of_entry = (int) $request->no_of_entry;
 
         for($i = 1; $i<$no_of_entry; $i++){
             DB::table('payable_entry')->insert(
                 [
-                    'payable_entry' =>  $request->input('payable_entry'.$i),
-                    'payable_entry_desc' => $request->input('payable_entry_desc'.$i),
+                    'entry' =>  $request->input('entry'.$i),
+                    'description' => $request->input('description'.$i),
                     'property_id_foreign' => Session::get('property_id'),
                     'created_at' => Carbon::now(),
                 ]);
         }
     
-        return back()->with('success', 'new entry has been saved!');
+        return back()->with('success', 'entries have been saved!');
     }
 
     public function request(Request $request){
@@ -114,11 +114,9 @@ class PayableController extends Controller
                    'entry' =>  $request->input('entry'.$i),
                    'amt' =>  $request->input('amt'.$i),
                    'note' =>  $request->input('note'.$i),
-                   'status' => 'pending',
-                   'property_id_foreign' => Session::get('property_id'),
-                   'requested_by' => Auth::user()->name,
-                   'created_at' => Carbon::now(),
-
+                   'requester_id' => Auth::user()->id,
+                   'requested_at' => $request->input('requested_at'.$i),
+                   'property_id_foreign' => Session::get('property_id')
                ]);
        }
    

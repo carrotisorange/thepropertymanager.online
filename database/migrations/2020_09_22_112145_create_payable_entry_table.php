@@ -13,10 +13,10 @@ class CreatePayableEntryTable extends Migration
      */
     public function up()
     {
-        Schema::create('payable_entry', function (Blueprint $table) {
+        Schema::create('entry', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('payable_entry');
-            $table->string('payable_entry_property');
+            $table->string('entry');
+            $table->string('entry_property');
             $table->timestamps();
         });
     }

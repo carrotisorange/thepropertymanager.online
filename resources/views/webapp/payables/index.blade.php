@@ -209,8 +209,8 @@
                 @foreach ($entry as $item)
                    <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td>{{ $item->payable_entry }}</td>
-                    <td>{{ $item->payable_entry_desc }}</td>
+                    <td>{{ $item->entry }}</td>
+                    <td>{{ $item->description }}</td>
                     <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
                     <td class="text-right"> 
                       @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager')
@@ -271,7 +271,7 @@
                <td>{{ $item->entry }}</td>
               
                <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-               <td>{{ $item->requested_by }}</td>
+               <td>{{ $item->requester_id }}</td>
                <td>{{ $item->note? $item->note: '-' }}</td>       
                <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>    
                <td class="text-right">{{ number_format($item->amt, 2) }}</td> 
@@ -342,7 +342,7 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requested_by }}</td>
+                        <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>    
                        
                         @if(Auth::user()->user_type === 'manager')
@@ -404,7 +404,7 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requested_by }}</td>
+                        <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>       
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
                         @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
@@ -451,7 +451,7 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requested_by }}</td>
+                        <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>       
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
                         {{-- @if(Auth::user()->user_type === 'manager')
@@ -494,7 +494,7 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requested_by }}</td>
+                        <td>{{ $item->requester_id }}</td>
                         <td>{{ $item->note? $item->note: '-' }}</td>       
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>            
                        </tr>
@@ -584,9 +584,11 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Date</th>
                     <th>Entry</th>
                     <th>Amount</th>
                     <th>Note</th>
+                    
                 </tr>
                 </thead>
                       <input form="requestFundsForm" type="hidden" id="no_of_request" name="no_of_request" >
@@ -598,8 +600,8 @@
 
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</button>
-          <button form="requestFundsForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+         
+          <button form="requestFundsForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
           </div>
   </div>
   </div>
@@ -615,7 +617,7 @@
          var i=1;
          
      $("#add_entry").click(function(){
-         $('#addr'+i).html("<th>"+ (i) +"</th><td><input class='form-control' form='addPayableEntryForm' name='payable_entry"+i+"' type='text' required></td><td><input class='form-control' form='addPayableEntryForm' name='payable_entry_desc"+i+"' type='text' required></td>");
+         $('#addr'+i).html("<th>"+ (i) +"</th><td><input class='form-control' form='addPayableEntryForm' name='entry"+i+"' type='text' required></td><td><input class='form-control' form='addPayableEntryForm' name='description"+i+"' type='text' required></td>");
  
  
       $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
@@ -637,7 +639,7 @@
      var j=1;
          
          $("#add_request").click(function(){
-             $('#request'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->payable_entry }}'>{{ $item->payable_entry }}</option> @endforeach</select></td><td><input class='form-control' form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input class='form-control' form='requestFundsForm' name='note"+i+"' type='text'></td>");
+             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+i+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->entry }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+i+"' type='text'></td>");
      
      
           $('#request_table').append('<tr id="request'+(j+1)+'"></tr>');

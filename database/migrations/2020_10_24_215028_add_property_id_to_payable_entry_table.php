@@ -13,7 +13,7 @@ class AddPropertyIdToPayableEntryTable extends Migration
      */
     public function up()
     {
-        Schema::table('payable_entry', function (Blueprint $table) {
+        Schema::table('entry', function (Blueprint $table) {
             $table->uuid('property_id_foreign')->nullable();
             $table->foreign('property_id_foreign')->references('property_id')->on('properties')->onDelete('cascade');
         });
@@ -26,7 +26,7 @@ class AddPropertyIdToPayableEntryTable extends Migration
      */
     public function down()
     {
-        Schema::table('payable_entry', function (Blueprint $table) {
+        Schema::table('entry', function (Blueprint $table) {
             $table->dropForeign('property_id_foreign');
         });
     }

@@ -13,8 +13,8 @@ class AddDescToPayableEntryTable extends Migration
      */
     public function up()
     {
-        Schema::table('payable_entry', function (Blueprint $table) {
-            $table->longText('payable_entry_desc')->nullable();
+        Schema::table('entry', function (Blueprint $table) {
+            $table->longText('description')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddDescToPayableEntryTable extends Migration
      */
     public function down()
     {
-        Schema::table('payable_entry', function (Blueprint $table) {
+        Schema::table('entry', function (Blueprint $table) {
             //
         });
     }
