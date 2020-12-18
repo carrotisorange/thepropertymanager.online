@@ -164,10 +164,7 @@
 <div class="row">
     <div class="col">
         <div class="list-group list-group-flush">
-
-            
-          
-            @foreach (Session::get('notifications') as $item)
+            @foreach ($notifications as $item)
          
             <a href="#!" class="list-group-item list-group-item-action">
               <div class="row align-items-center">
@@ -197,10 +194,10 @@
                       <h4 class="mb-0 text-sm">{{ $item->message }}</h4>
                     </div>
                     <div class="text-right text-muted">
-                      {{-- <small>{{ $item->created_at }}</small> --}}
+                      <small>{{ $item->name }}</small>
                     </div>
                   </div>
-                  <p class="text-sm text-muted mb-0">{{ $item->created_at }}</p>
+                  <p class="text-sm text-muted mb-0">{{ $item->action_made }}</p>
                 </div>
               </div>
             </a>

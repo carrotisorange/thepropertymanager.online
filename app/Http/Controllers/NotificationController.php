@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Property;
 use Session;
+use DB;
 
 class NotificationController extends Controller
 {
@@ -15,7 +16,12 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications =  Property::findOrFail(Session::get('property_id'))->notifications;
+         $notifications =  DB::table('notifications')
+         ->join('users','user_id_foreign', 'id')
+         ->select('*', 'notifications.created_at as action_made')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->get();
+        
 
         return view('webapp.notifications.index', compact('notifications'));
     }
