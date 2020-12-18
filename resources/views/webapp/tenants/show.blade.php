@@ -506,7 +506,7 @@
                 <td>{{ $item->term }}</td>
                 <td>{{ number_format($item->rent, 2) }}</td>
                 <td>
-                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}">View</a>
+                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><button class="btn btn-primary btn-sm">View</button></a>
                 </td>
                
  

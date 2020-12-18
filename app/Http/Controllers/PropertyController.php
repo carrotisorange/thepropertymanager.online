@@ -202,7 +202,7 @@ class PropertyController extends Controller
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = $property_id;
-        $notification->type = 'success';
+        $notification->type = 'property';
         $notification->message = 'Congratulations! You have successfully added your first property.';
         $notification->save();
     

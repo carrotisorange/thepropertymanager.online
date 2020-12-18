@@ -76,6 +76,10 @@
                 <i class="fas fa-list text-dark"></i>
                 @elseif($item->type === 'unit')
                 <i class="fas fa-home text-indigo"></i>
+                @elseif($item->type === 'contract')
+                <i class="fas fa-file-signature text-teal"></i>
+                @else
+                <i class="fas fa-building text-primary"></i>
                 @endif
                 </div>
                 <div class="col">

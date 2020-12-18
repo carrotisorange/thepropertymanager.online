@@ -15,6 +15,7 @@ use App\Mail\SendBillAlertToTenant;
 use Illuminate\Support\Facades\Mail;
 use App\Contract;
 use App\Owner;
+use App\Notification;
 
 class BillController extends Controller
 {
@@ -549,6 +550,17 @@ class BillController extends Controller
                  
                }
             }
+
+            
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->message = ($no_of_billed-1).' '.$request->particular1.' bills have been posted! ';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
             return redirect('/property/'.$request->property_id.'/bills')->with('success', ($no_of_billed-1).' '.$request->particular1.' bills have been posted!');
         
     }
@@ -696,7 +708,17 @@ class BillController extends Controller
                            'note' => $request->note,
                        ]
                    );
-          
+
+                   $tenant = Tenant::findOrFail($tenant_id);
+
+                    $notification = new Notification();
+                    $notification->user_id_foreign = Auth::user()->id;
+                    $notification->property_id_foreign = Session::get('property_id');
+                    $notification->type = 'bill';
+                    $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been updated! ';
+                    $notification->save();
+
+                    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
           
                    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                     return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
@@ -744,6 +766,17 @@ class BillController extends Controller
                            'note' => $request->note,
                        ]
                    );
+
+            $unit = Unit::findOrFail($unit_id);
+                   
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'bill';
+            $notification->message = $unit->unit_no.' bills have been updated! ';
+            $notification->save();
+                        
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
           
                     return redirect('/property/'.$property_id.'/home/'.$unit_id.'#bills')->with('success','changes have been saved!');
            
@@ -768,6 +801,17 @@ class BillController extends Controller
         // // ->whereIn('particular', ['Water', 'Electricity'])
         // ->where('particular', 'Rent')
         // ->delete();
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been deleted! ';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         DB::table('bills')->where('bill_id', $billing_id)->delete();
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'bill has been deleted!');
@@ -796,7 +840,23 @@ class BillController extends Controller
             'current_room' => $current_room,
         ];
 
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been exported! ';
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+
         $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');
+
+    
+                    
+      
         return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
     }
 
@@ -824,6 +884,16 @@ class BillController extends Controller
             'unit' => $unit_no,
         ];
 
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->message = $unit_no.' bills have been exported! ';
+        $notification->save();
+
+
         $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)->setPaper('a5', 'portrait');
         return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
@@ -833,6 +903,16 @@ class BillController extends Controller
     public function destroy_bill_from_bills_page($property_id, $billing_id)
     {
         DB::table('bills')->where('bill_id', $billing_id)->delete();
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->message = 'Bill no '.$billing_id.' has been deleted! ';
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
         return back()->with('success', 'bill has been deleted!');
     }
    

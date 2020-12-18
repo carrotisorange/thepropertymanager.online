@@ -211,19 +211,16 @@ class CollectionController extends Controller
             $notification = new Notification();
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
-            $notification->type = 'success';
+            $notification->type = 'payment';
             $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as active!';
             $notification->save();
                         
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
            
         }
-        
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
-        }else{
+    
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
-        }
+ 
 
             
         
@@ -327,7 +324,19 @@ class CollectionController extends Controller
      */
     public function destroy($property_id, $tenant_id, $payment_id)
     {
+
+        $payment = Payment::findOrFail($payment_id);
+
         DB::table('payments')->where('payment_id', $payment_id)->delete();
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        $notification->message = 'Payment with AR no '.$payment->ar_no.' has been deleted! ';
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');

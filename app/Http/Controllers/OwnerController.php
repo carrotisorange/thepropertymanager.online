@@ -108,6 +108,15 @@ class OwnerController extends Controller
         $certificate->owner_id_foreign = $owner_id;
         $certificate->save();
 
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'owner';
+        $notification->message = $request->name.' '.$last_name.' has been as an owner! ';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
         return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'new owner has been added! Please complete the fields below...');
     }
 

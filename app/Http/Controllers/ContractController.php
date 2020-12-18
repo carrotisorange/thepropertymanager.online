@@ -163,6 +163,18 @@ class ContractController extends Controller
                         $bill->save();
                     }
 
+                    $tenant = Tenant::findOrFail($tenant_id);
+                    $unit = Unit::findOrFail($unit_id);
+
+                    $notification = new Notification();
+                    $notification->user_id_foreign = Auth::user()->id;
+                    $notification->property_id_foreign = Session::get('property_id');
+                    $notification->type = 'contract';
+                    $notification->message = $tenant->first_name.' '.$tenant->last_name.' entered another contract in '.$unit->unit_no.'.';
+                    $notification->save();
+                    
+                    Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
+
             return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'new contract has been added!');
        
 
@@ -273,8 +285,8 @@ class ContractController extends Controller
                 $notification = new Notification();
                 $notification->user_id_foreign = Auth::user()->id;
                 $notification->property_id_foreign = Session::get('property_id');
-                $notification->type = 'success';
-                $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been moveout! ';
+                $notification->type = 'contract';
+                $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been moved out of the property! ';
                 $notification->save();
                             
                 Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
@@ -376,7 +388,7 @@ class ContractController extends Controller
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
-        $notification->type = 'success';
+        $notification->type = 'contract';
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' contract has been terminated! ';
         $notification->save();
                     

@@ -20,6 +20,7 @@ class NotificationController extends Controller
          ->join('users','user_id_foreign', 'id')
          ->select('*', 'notifications.created_at as action_made')
          ->where('property_id_foreign', Session::get('property_id'))
+         ->orderBy('notification_id', 'desc')
          ->get();
         
 

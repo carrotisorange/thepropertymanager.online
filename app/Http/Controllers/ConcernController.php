@@ -7,6 +7,7 @@ use DB, App\Tenant, App\Unit, App\Concern, Auth, Carbon\Carbon;
 use App\Property;
 use App\Response;
 use Session;
+use App\Notification;
 
 class ConcernController extends Controller
 {
@@ -62,6 +63,17 @@ class ConcernController extends Controller
         $concern->concern_user_id = $request->concern_user_id;
         $concern->save();
 
+        $unit = Unit::findOrFail($unit_id)->unit_no;
+        
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'concern';
+        $notification->message = $unit.' reported a concern regarding '.$request->category.'.';
+        $notification->save();
+                
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
         return redirect('/property/'.$property_id.'/home/'.$unit_id.'#concerns')->with('success', 'concern has been saved!');
 
     }
@@ -78,6 +90,18 @@ class ConcernController extends Controller
         $concern->details = $request->details;
         $concern->concern_user_id = $request->concern_user_id;
         $concern->save();
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'concern';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' reported a concern regarding '.$request->category.'.';
+        $notification->save();
+                
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
                 return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');

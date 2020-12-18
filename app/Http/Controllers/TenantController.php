@@ -385,8 +385,8 @@ class TenantController extends Controller
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
-        $notification->type = 'success';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as pending!';
+        $notification->type = 'tenant';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been r as pending!';
         $notification->save();
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
