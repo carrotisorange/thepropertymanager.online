@@ -376,6 +376,15 @@ class BillController extends Controller
                 'end' => $request->input('end'.$i),
             );
 
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'bill';
+            $notification->message = ($request->no_of_bills-1).' bills have been posted to '.$tenant->first_name.' '.$tenant->last_name;
+            $notification->save();
+    
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
     //     if($tenant->email_address !== null){
     //         //send welcome email to the tenant
     //         Mail::send('webapp.tenants.send-bill-alert', $data, function($message) use ($data){
@@ -445,6 +454,18 @@ class BillController extends Controller
 
     // }
         }
+
+        $unit = Unit::findOrFail($unit_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        $notification->message = ($request->no_of_bills-1).' bills have been posted to '.$unit->unit_no;
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
             return redirect('/property/'.Session::get('property_id').'/home/'.$unit_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
     
     }

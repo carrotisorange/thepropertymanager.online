@@ -218,6 +218,17 @@ class CollectionController extends Controller
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
            
         }
+
+        $tenant = Tenant::findOrFail($tenant_id);
+        
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        $notification->message = ($no_of_payments-1).' payments have been recorded to '.$tenant->first_name.' '.$tenant->last_name;
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
  
@@ -263,6 +274,16 @@ class CollectionController extends Controller
                     'payment_date' => $payment->payment_created,
                     'payment_ar' => $payment->ar_no
                 ];
+
+            
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' payments have been exported.';
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
   
