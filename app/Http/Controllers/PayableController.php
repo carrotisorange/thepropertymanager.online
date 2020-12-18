@@ -131,8 +131,8 @@ class PayableController extends Controller
         ->update(
                     [
                         'status' => 'approved',
-                        'updated_at' => Carbon::now(),
-                        'approved_by' => Auth::user()->name,
+                        'approved_at' => Carbon::now(),
+                        'approver_id' => Auth::user()->id,
                     ]
                 );
 
@@ -146,7 +146,8 @@ class PayableController extends Controller
         ->update(
                     [
                         'status' => 'declined',
-                        'updated_at' => Carbon::now(),
+                        'declined_at' => Carbon::now(),
+                        'approver_id' => Auth::user()->id,
                     ]
                 );
 
@@ -160,7 +161,7 @@ class PayableController extends Controller
         ->update(
                     [
                         'status' => 'released',
-                        'updated_at' => Carbon::now(),
+                        'released_at' => Carbon::now(),
                     ]
                 );
 

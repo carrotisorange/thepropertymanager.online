@@ -198,9 +198,9 @@
               <thead>
                 <tr>
                   <th class="text-center">#</th>
-                  <th>Entry</th>
+                  <th>Name</th>
                   <th>Description</th>
-                  <th>Date added</th>
+                  <th>Created</th>
                   <th class="text-center" colspan="2">Action</th>
                 </tr>
               </thead>
