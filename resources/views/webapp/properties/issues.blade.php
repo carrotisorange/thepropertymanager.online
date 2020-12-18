@@ -192,8 +192,8 @@
       
         <br>
       <p class="text-right">
-        <a href="/property/{{ $property->property_id }}/issues" class="btn btn-secondary"><i class="fas fa-times text-dark-50"></i> Clear</a>
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit </button>
+        <a href="/property/{{ $property->property_id }}/issues" class="btn btn-danger"> Clear</a>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
       </p>
       </form>
     
@@ -204,7 +204,7 @@
 <div class="row">
   <div class="col">
     
-      <h6 class="h2 text-dark d-inline-block mb-0">Issues posted by other users({{ $issues->count() }})</h6>
+      <h6 class="h2 text-dark d-inline-block mb-0">Issues posted by other users ({{ $issues->count() }})</h6>
       <br>
 
      

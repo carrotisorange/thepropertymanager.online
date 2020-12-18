@@ -596,13 +596,13 @@ class UserController extends Controller
 
         if(($user_id == Auth::user()->id)){
 
-           $bills = Billing::leftJoin('payments', 'bills.billing_id', '=', 'payments.payment_bill_id')
-           ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
-           ->where('bill_tenant_id', $tenant_id)
-           ->groupBy('bill_id')
-           ->orderBy('bill_no', 'desc')
-           ->havingRaw('balance > 0')
-           ->get();
+            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
+            ->groupBy('bill_id')
+            ->orderBy('bill_no', 'desc')
+            // ->havingRaw('balance > 0')
+            ->get();
 
            $tenant = Tenant::findOrFail($tenant_id);
 
@@ -620,8 +620,7 @@ class UserController extends Controller
 
         if(($user_id == Auth::user()->id)){
 
-        
-            $payments = Billing::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
             ->where('bill_tenant_id', $tenant_id)
             ->groupBy('payment_id')
             ->orderBy('ar_no', 'desc')
@@ -647,7 +646,16 @@ class UserController extends Controller
 
         if(($user_id == Auth::user()->id)){
 
-             $concerns = Tenant::findOrFail($tenant_id)->concerns;
+            $concerns = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->join('users', 'concern_user_id', 'id')
+            ->where('tenant_id', $tenant_id)
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
 
            $tenant = Tenant::findOrFail($tenant_id);
             

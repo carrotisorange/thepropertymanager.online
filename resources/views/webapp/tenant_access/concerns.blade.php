@@ -133,14 +133,15 @@
           
             <th>Date Reported</th>
            
-            <th>Room</th>
-            <th>Type</th>
-            <th>Description</th>
+          
+           <th>Category</th>
+            <th>Title</th>
             <th>Urgency</th>
             <th>Status</th>
             <th>Assigned to</th>
             <th>Rating</th>
             <th>Feedback</th>
+            <th></th>
        </tr>
       </thead>
       <tbody>
@@ -150,13 +151,9 @@
        
           <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
             
-            <td>{{ $item->building.' '.$item->unit_no }}</td>
-            <td>
-              
-                {{ $item->category }}
-                
-            </td>
-            <td ><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses">{{ $item->title }}</a></td>
+        <td>{{ $item->category }}</td>
+          
+            <td>{{ $item->title }}</td>
             <td>
                 @if($item->urgency === 'urgent')
                 <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -178,6 +175,7 @@
             <td>{{ $item->name }}</td>
             <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
             <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+            <td ><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses"><button class="btn btn-sm btn-primary">View</button></a></td>
         </tr>
         @endforeach
       </tbody>
