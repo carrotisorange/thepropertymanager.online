@@ -25,7 +25,7 @@
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$Session::get('property_id')}}/home">
+              <a class="nav-link" href="/property/{{Session::get('property_id')}}/home">
                 <i class="fas fa-home text-indigo"></i>
                 <span class="nav-link-text">Home</span>
               </a>
