@@ -590,7 +590,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS ({{ $collections_for_the_day->count() }})</h6>
+          <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS</h6>
           
           
             {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
@@ -623,7 +623,7 @@
                 <th class="text-center">{{ $ctr++ }}</th>
                 <td>{{ $item->ar_no }}</td>
                  <td>{{ $item->payment_bill_no }}</td>
-                 <td>{{ $item->building.' '.$item->unit_no }}</td>
+                 <td>{{ $item->unit_no }}</td>
                   <td>{{ $item->first_name.' '.$item->last_name }}</td>
                 
                   <td>

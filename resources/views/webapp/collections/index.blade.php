@@ -207,7 +207,7 @@
           <th>AR No</th>
           <th>Bill No</th>
           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-          <th>Occupant</th>
+          <th></th>
           @else
           <th>Tenant</th>
           @endif

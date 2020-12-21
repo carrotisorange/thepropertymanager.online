@@ -824,17 +824,32 @@ $reason_for_moving_out_chart->dataset('', 'pie',
                 );
 
 
-$collections_for_the_day = DB::table('contracts')
-->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
-->leftJoin('units', 'unit_id_foreign', 'unit_id')
-->leftJoin('bills', 'tenant_id', 'bill_tenant_id')
-->leftJoin('payments', 'payment_bill_id', 'bill_id')
-->where('property_id_foreign', Session::get('property_id'))
-->whereDate('payment_created', Carbon::now())
-->orderBy('payment_created', 'desc')
-->orderBy('ar_no', 'desc')
-->groupBy('payment_id')
-->get();
+
+if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+    $collections_for_the_day = DB::table('contracts')
+    ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+    ->leftJoin('bills', 'unit_id', 'bill_unit_id')
+    ->leftJoin('payments', 'payment_bill_id', 'bill_id')
+    ->where('property_id_foreign', Session::get('property_id'))
+    ->whereDate('payment_created', Carbon::now())
+    ->orderBy('payment_created', 'desc')
+    ->orderBy('ar_no', 'desc')
+    ->groupBy('payment_id')
+    ->get();
+}else{
+
+    $collections_for_the_day = DB::table('contracts')
+    ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+    ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+    ->leftJoin('bills', 'tenant_id', 'bill_tenant_id')
+    ->leftJoin('payments', 'payment_bill_id', 'bill_id')
+    ->where('property_id_foreign', Session::get('property_id'))
+    ->whereDate('payment_created', Carbon::now())
+    ->orderBy('payment_created', 'desc')
+    ->orderBy('ar_no', 'desc')
+    ->groupBy('payment_id')
+    ->get();
+}
 
 
 $property = Property::findOrFail(Session::get('property_id'));

@@ -407,7 +407,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS ({{ $collections_for_the_day->count() }})</h6>
+          <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS </h6>
           
           
             {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
@@ -424,13 +424,10 @@
                   <th>AR No</th>
                   <th>Bill No</th>
                   <th>Unit</th>
-                  <th>Occupant</th>
-               
-                 
                   <th>Particular</th>
                   <th colspan="2">Period Covered</th>
-                  <th>Amount</th>
-                  <th></th>
+                  <th class="text-right" >Amount</th>
+
               </tr>
               
             </thead>
@@ -440,25 +437,19 @@
                 <th class="text-center">{{ $ctr++ }}</th>
                 <td>{{ $item->ar_no }}</td>
                  <td>{{ $item->payment_bill_no }}</td>
-                 <td>{{ $item->building.' '.$item->unit_no }}</td>
-                  <td>{{ $item->first_name.' '.$item->last_name }}</td>
-                
-                  <td>
-                    {{ $item->particular }}</td>
+                 <td>{{ $item->unit_no }}</td>
+               
+                    <td>{{ $item->particular }}</td>
                   <td colspan="2">
                   {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                   {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                   </td>
-                  <td>{{ number_format($item->amt_paid,2) }}</td>
-                  <td class="text-center">
-                    <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
-                    {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a>  --}}
-                  </td>
-              </tr>
+                  <td class="text-right" >{{ number_format($item->amt_paid,2) }}</td>
+            
               @endforeach
               <tr>
                 <th>TOTAL</th>
-                <th class="text-right" colspan="8">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
+                <th class="text-right" colspan="7">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
                </tr>
              </tbody>
            </table>
