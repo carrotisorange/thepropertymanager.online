@@ -601,9 +601,9 @@
           <div class="table-responsive text-nowrap">
            <table class="table" >
              <thead>
-              <?php $ctr=1;?>
+       
               <tr>
-                <th class="text-center">#</th>
+           
                   <th>AR No</th>
                   <th>Bill No</th>
                   <th>Room</th>
@@ -620,7 +620,7 @@
              <tbody>
               @foreach ($collections_for_the_day as $item)
               <tr>
-                <th class="text-center">{{ $ctr++ }}</th>
+    
                 <td>{{ $item->ar_no }}</td>
                  <td>{{ $item->payment_bill_no }}</td>
                  <td>{{ $item->unit_no }}</td>
