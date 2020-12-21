@@ -195,7 +195,7 @@ class TenantController extends Controller
         ->units
         ->whereIn('status',['vacant', 'reserved']);
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -327,7 +327,7 @@ class TenantController extends Controller
             
                     $no_of_bills = $request->no_of_items;
 
-                    if(Session::get('property_type') === 'Condominium Corporation'){
+                    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                         $current_bill_no = DB::table('units')
                         ->join('bills', 'unit_id', 'bill_unit_id')
                         ->where('property_id_foreign', Session::get('property_id'))
@@ -572,7 +572,7 @@ class TenantController extends Controller
 
               //get the number of last added bills
        
-              if(Session::get('property_type') === 'Condominium Corporation'){
+              if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -660,7 +660,7 @@ class TenantController extends Controller
 
             //get the number of last added bills
          
-            if(Session::get('property_type') === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -722,7 +722,7 @@ class TenantController extends Controller
     
             //get the number of last added bills
 
-            if(Session::get('property_type') === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -846,7 +846,7 @@ class TenantController extends Controller
 
         //get the number of last added bills
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -925,7 +925,7 @@ class TenantController extends Controller
         $renewal_history = Tenant::findOrFail($tenant_id);
 
   
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))

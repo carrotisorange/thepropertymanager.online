@@ -289,7 +289,7 @@ class OccupantController extends Controller
         });
 
               //get the number of last added bills
-              if(Session::get('property_type') === 'Condominium Corporation'){
+              if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -326,7 +326,7 @@ class OccupantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-               if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+               if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.occupants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
                }else{
                 return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  

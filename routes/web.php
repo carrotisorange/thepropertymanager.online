@@ -78,7 +78,7 @@ Route::post('/property/select', 'PropertyController@select')->middleware(['auth'
 Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
 
 //routes for dashboard
-Route::get('/property/{property_id}/dashboard', 'DashboardController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/dashboard', 'PropertyController@show')->middleware(['auth', 'verified']);
 
 //routes for occupants
 Route::get('/property/{property_id}/occupants', 'OccupantController@index')->middleware(['auth', 'verified']);
@@ -350,6 +350,7 @@ Route::post('property/{property_id}/bills/surcharge/{date}', 'BillController@pos
 //routes for collections
 Route::get('/property/{property_id}/collections', 'CollectionController@index')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/tenant/{tenant_id}/collection', 'CollectionController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/home/{unit_id}/collection', 'CollectionController@collect_unit_payment')->middleware(['auth', 'verified']);
 
 //routes for financials
 Route::get('/property/{property_id}/financials', 'FinancialController@index')->middleware(['auth', 'verified']);

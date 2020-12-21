@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -300,59 +300,106 @@
           
           </div>
 
-          
           <!-- Content Row -->
           <div class="row">
 
-                  <!-- Pie Chart -->
-                  <div class="col-md-12">
-                    <div class="card shadow mb-3">
-                      <!-- Card Header - Dropdown -->
-                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">DELINQUENTS</h6>
-                       
-                        
-                      </div>
-                      <!-- Card Body -->
-                      <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                          <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>Tenant</th>
-                                <th>Unit</th>
-                                <th>Amount</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                              {{-- @foreach($delinquent_accounts as $item)
-                              <tr>
-                                <td>
+            <!-- Pie Chart -->
+            <div class="col-md-6">
+              <div class="card shadow mb-3">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">DELINQUENTS</h6>
+                 
+                  
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Occupant</th>
+                          <th>Unit</th>
+                          <th>Balance</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($delinquent_accounts as $item)
+                        <tr>
+                          <td>
+                
+                            <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
                       
-                                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
-                            
-                                </td>
-                                <td>
-                                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                                  <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{ $item->building.' '.$item->unit_no }}</a>
-                                  @else
-                                 {{ $item->building.' '.$item->unit_no }}
-                                  @endif
-                                </td>
-                                <td>
-                                  <a>{{ number_format($item->balance,2) }}
-                                </td>
-                              </tr>
-                              @endforeach --}}
-                            </tbody>
-                          </table>
-                     
-                        </div>
-                      </div>
-                    </div>
+                          </td>
+                          <td>
+                            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                            <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                            @else
+                           {{ $item->unit_no }}
+                            @endif
+                          </td>
+                          <td>
+                            <a>{{ number_format($item->balance,2) }}
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+               
                   </div>
-          
-          </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card shadow mb-3">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">PENDING CONCERNS</h6>
+                 
+                  
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Tenant</th>
+                          <th>Room</th>
+                          <th>Concern</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($pending_concerns as $item)
+                        <tr>
+                          <td>
+                
+                            <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+                      
+                          </td>
+                          <td>
+                            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                            <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                            @else
+                            {{ $item->unit_no }}
+                            @endif
+                          </td>
+                          <td>
+                            <a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+               {{ $pending_concerns->links() }}
+               
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+    </div>
           
           <div class="row">
                   <!-- Content Column -->
@@ -377,7 +424,7 @@
                   <th>AR No</th>
                   <th>Bill No</th>
                   <th>Unit</th>
-                  <th>Tenant</th>
+                  <th>Occupant</th>
                
                  
                   <th>Particular</th>

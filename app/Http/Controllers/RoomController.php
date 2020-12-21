@@ -49,7 +49,7 @@ class RoomController extends Controller
                
             $property = Property::findOrFail($property_id);
     
-           if(Session::get('property_type') === 'Condominium Corporation'){
+           if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property'));
            }else{
             return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property'));
@@ -162,11 +162,8 @@ class RoomController extends Controller
             ->get();
             
             $property = Property::findOrFail(Session::get('property_id'));
-
-
-
-
-            if(Session::get('property_type') === 'Condominium Corporation'){
+          
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }else{
                 return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
@@ -234,7 +231,7 @@ class RoomController extends Controller
 
             $property = Property::findOrFail($property_id);
 
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.units.edit', compact('units', 'property'));
             }else{
                 return view('webapp.rooms.edit', compact('units', 'property'));

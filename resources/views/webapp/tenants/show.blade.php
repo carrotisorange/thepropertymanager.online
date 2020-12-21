@@ -733,11 +733,7 @@
                       <td>{{ $item->form }}</td>
                       <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                        
-                       {{-- <td class="text-center">
-                       <a title="export" target="_blank" href="/units/tenants/{{ $item->payment_tenant_id }}/payments/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
-                        {{--  <a target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
-                        
-                      </td>  --}}
+                       
                        <td class="text-center">
                        @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
                         <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
@@ -746,7 +742,12 @@
                           <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
                         </form>
                         @endif
-                      </td>    
+                      </td>   
+                      <td class="text-center">
+                        <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+
+      
+    </td>   
                      
                   </tr>
               @endforeach

@@ -239,6 +239,55 @@ class CollectionController extends Controller
    
     }
 
+    public function collect_unit_payment(Request $request, $property_id, $home_id){ 
+
+        $no_of_payments = (int) $request->no_of_payments; 
+
+         $payment_ctr = DB::table('units')
+        ->join('payments', 'unit_id', 'payment_unit_id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->max('ar_no') + 1;
+
+        //add all the payment to the database.
+        for($i = 1; $i<$no_of_payments; $i++){
+             $explode = explode("-", $request->input('bill_no'.$i));
+            DB::table('payments')->insert(
+                [
+                    'payment_unit_id' => $home_id, 
+                    'payment_bill_no' => $explode[0], 
+                    'payment_bill_id' => $explode[1],
+                    'amt_paid' => $request->input('amt_paid'.$i),
+                    'payment_created' => $request->payment_created,
+                    'ar_no' => $payment_ctr,
+                    'bank_name' => $request->input('bank_name'.$i),
+                    'form' => $request->input('form'.$i),
+                    'check_no' => $request->input('cheque_no'.$i),
+                    'date_deposited' => $request->date_deposited,
+                    'created_at' => Carbon::now(),
+                ]
+           );
+        }
+
+        $unit = Unit::findOrFail($home_id);
+        
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        $notification->message = ($no_of_payments-1).' payments have been recorded to '.$unit->unit_no;
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+    
+            return redirect('/property/'.$property_id.'/home/'.$home_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
+ 
+
+            
+        
+        
+   
+    }
+
     public function export($property_id, $tenant_id, $payment_id, $payment_created){
 
         $tenant = Tenant::findOrFail($tenant_id);
@@ -359,7 +408,7 @@ class CollectionController extends Controller
 
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');

@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -183,6 +183,8 @@
          @else
          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> {{ $bills->count() }}</span></a>
          @endif
+
+         <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="true"><i class="fas fa-money-bill"></i> Payments </a>
 
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
         </div>
@@ -334,6 +336,78 @@
             </div>
         </div>
         </div>
+
+        <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
+          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+          @endif 
+          <br><br>
+          <div class="col-md-12 mx-auto">
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              @foreach ($payments as $day => $collection_list)
+               <thead>
+                  <tr>
+                      <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $collection_list->count() }})</th>
+                      
+                  </tr>
+                  <tr>
+                    <?php $ctr = 1; ?>
+                      <th class="text-center">#</th>
+                      <th>AR No</th>
+                      <th>Bill No</th>
+                      {{-- <th>Room</th>   --}}
+                      <th>Particular</th>
+                      <th colspan="2">Period Covered</th>
+                      <th>Form</th>
+                      <th class="text-right">Amount</th>
+                     
+                     {{-- <th colspan="2">Action</th> --}}
+                       {{-- <th></th> --}}
+                      </tr>
+                </tr>
+               </thead>
+                @foreach ($collection_list as $item)
+               
+                <tr>
+                      <th class="text-center">{{ $ctr++ }}</th>
+                        <td>{{ $item->ar_no }}</td>
+                        <td>{{ $item->payment_bill_no }}</td>
+                          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
+                         <td>{{ $item->particular }}</td> 
+                         <td colspan="2">
+                          {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                          {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                        </td>
+                        <td>{{ $item->form }}</td>
+                        <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
+                        {{-- <td class="text-center">
+                          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+                           <form action="/property/{{$property->property_id}}/home/{{ $item->unit_id }}/payment/{{ $item->payment_id }}" method="POST">
+                             @csrf
+                             @method('delete')
+                             <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+                           </form>
+                           @endif
+                         </td>   
+                         <td class="text-center">
+                           <a title="export" target="_blank" href="/property/{{ $property->property_id }}/home/{{ $item->bill_unit_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+   
+         
+       </td>    --}}
+                       
+                    </tr>
+                @endforeach
+                    <tr>
+                      <th>TOTAL</th>
+                      <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
+                    </tr>
+                    
+              @endforeach
+          </table>
+          </div>
+        </div>
+        </div>
   
         <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
 
@@ -394,7 +468,7 @@
                  <th>Date Reported</th>
                 
                       
-                 @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+                 @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                  <th>Unit</th>
                  @else
                  <th>Room</th>
@@ -796,6 +870,72 @@
   </div>
   
   </div>
+
+  
+<div class="modal fade" id="acceptPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add Payment</h5>
+      
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+          <form id="acceptPaymentForm" action="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/collection" method="POST">
+          @csrf
+          </form>
+          
+          <div class="row">
+              <div class="col">
+                  <label for="">Date</label>
+              {{-- <input form="acceptPaymentForm" type="date" class="form-control" name="payment_created" value={{date('Y-m-d')}} required> --}}
+              <input type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+              </div>
+              <div class="col">
+                  <p class="text-right">
+                      <a href="#/" id='delete_payment' class="btn btn-sm btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
+                    <a href="#/" id="add_payment" class="btn btn-sm btn-primary" ><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>     
+                    </p>
+              </div>
+              
+            
+          </div>
+        
+  <br>
+          <div class="row">
+            <div class="col">
+                <div class="table-responsive text-nowrap">
+                <table class = "table" id="payment">
+                   <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Bill</th>
+                          <th>Amount</th>
+                          <th>Form</th>
+                          <th>Bank Name</th>
+                          <th>Cheque No</th>
+                      </tr>
+                   </thead>
+                        <input form="acceptPaymentForm" type="hidden" id="no_of_payments" name="no_of_payments" >
+                    <tr id='payment1'></tr>
+                </table>
+              </div>
+            </div>
+          </div>        
+        
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button>
+          <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check fa-sm text-white-50f"></i> Submit</button>
+      </div>
+  
+  </div>
+  </div>
+  
+  
+  </div>
 @endsection
 
 @section('scripts')
@@ -828,6 +968,30 @@
         }
     });
 });
+</script>
+<script type="text/javascript">
+
+  //adding moveout charges upon moveout
+    $(document).ready(function(){
+    var j=1;
+    $("#add_payment").click(function(){
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($bills as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+  
+  
+     $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');
+     j++;
+     document.getElementById('no_of_payments').value = j;
+  
+    });
+  
+    $("#delete_payment").click(function(){
+        if(j>1){
+        $("#payment"+(j-1)).html('');
+        j--;
+        document.getElementById('no_of_payments').value = j;
+        }
+    });
+  });
 </script>
 @endsection
 

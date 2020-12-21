@@ -30,7 +30,7 @@ class BillController extends Controller
 
           
             
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $bills = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
@@ -94,7 +94,7 @@ class BillController extends Controller
 
    //get the number of last added bills
 
-   if(Session::get('property_type') === 'Condominium Corporation'){
+   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
     $current_bill_no = DB::table('units')
     ->join('bills', 'unit_id', 'bill_unit_id')
     ->where('property_id_foreign', Session::get('property_id'))
@@ -132,7 +132,7 @@ class BillController extends Controller
 
    //get the number of last added bills
 
-   if(Session::get('property_type') === 'Condominium Corporation'){
+   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
     $current_bill_no = DB::table('units')
     ->join('bills', 'unit_id', 'bill_unit_id')
     ->where('property_id_foreign', Session::get('property_id'))
@@ -169,7 +169,7 @@ class BillController extends Controller
 
    //get the number of last added bills
 
-   if(Session::get('property_type') === 'Condominium Corporation'){
+   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
     $current_bill_no = DB::table('units')
     ->join('bills', 'unit_id', 'bill_unit_id')
     ->where('property_id_foreign', Session::get('property_id'))
@@ -215,7 +215,7 @@ class BillController extends Controller
     
        //get the number of last added bills
 
-       if(Session::get('property_type') === 'Condominium Corporation'){
+       if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
         $current_bill_no = DB::table('units')
         ->join('bills', 'unit_id', 'bill_unit_id')
         ->where('property_id_foreign', Session::get('property_id'))
@@ -258,7 +258,7 @@ class BillController extends Controller
         ->get();
     
        //get the number of last added bills
-       if(Session::get('property_type') === 'Condominium Corporation'){
+       if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
         $current_bill_no = DB::table('units')
         ->join('bills', 'unit_id', 'bill_unit_id')
         ->where('property_id_foreign', Session::get('property_id'))
@@ -294,7 +294,7 @@ class BillController extends Controller
 
 
         $no_of_bills = $request->no_of_bills;
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -322,7 +322,7 @@ class BillController extends Controller
 
         }
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
@@ -334,7 +334,7 @@ class BillController extends Controller
     public function post_tenant_bill(Request $request, $property_id, $tenant_id)
     {
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -395,7 +395,7 @@ class BillController extends Controller
     // }
         }
         
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
@@ -405,7 +405,7 @@ class BillController extends Controller
     public function post_unit_bill(Request $request, $property_id, $unit_id)
     {
 
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -481,7 +481,7 @@ class BillController extends Controller
         ->where('contracts.status', 'active')
         ->count();
         
-        if(Session::get('property_type') === 'Condominium Corporation'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -633,7 +633,7 @@ class BillController extends Controller
             ->havingRaw('balance > 0')
             ->get();
 
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
                 return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
@@ -655,7 +655,7 @@ class BillController extends Controller
     
             //get the number of last added bills
    
-            if(Session::get('property_type') === 'Condominium Corporation'){
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -741,7 +741,7 @@ class BillController extends Controller
 
                     Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
           
-                   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+                   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                     return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
                 }else{
                     return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','changes have been saved!');

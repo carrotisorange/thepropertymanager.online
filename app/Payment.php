@@ -10,6 +10,7 @@ class Payment extends Model
 
     protected $fillable = [
                             'payment_tenant_id',
+                            'payment_unit_id',
                             'payment_created',
                             'amt_paid',
                             'form',
@@ -18,7 +19,6 @@ class Payment extends Model
                             'bank_name',
                             'check_no',
                             'date_deposited',
-            
                             'payment_status'
     ];
 

@@ -49,7 +49,7 @@ class UnitController extends Controller
                
             $property = Property::findOrFail($property_id);
     
-           if(Session::get('property_type') === 'Condominium Corporation'){
+           if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.index',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property'));
            }else{
             return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property'));
@@ -125,6 +125,15 @@ class UnitController extends Controller
            ->where('contracts.status', 'active')
            ->get();
 
+           $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+           ->where('bill_unit_id', $unit_id)
+           ->groupBy('payment_id')
+           ->orderBy('ar_no', 'desc')
+          ->get()
+           ->groupBy(function($item) {
+               return \Carbon\Carbon::parse($item->payment_created)->timestamp;
+           });
+
             $tenant_inactive =DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
@@ -138,15 +147,14 @@ class UnitController extends Controller
             ->where('unit_id', $unit_id)
             ->where('contracts.status', 'pending')
             ->get();
+           
 
-    
-            $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-           ->join('units', 'bill_unit_id', 'unit_id')
-           ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-           ->where('unit_id', $unit_id)
+           $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+           ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+           ->where('bill_unit_id', $unit_id)
            ->groupBy('bill_id')
            ->orderBy('bill_no', 'desc')
-           ->havingRaw('balance > 0')
+           // ->havingRaw('balance > 0')
            ->get();
 
 
@@ -162,8 +170,8 @@ class UnitController extends Controller
             
             $property = Property::findOrFail(Session::get('property_id'));
 
-            if(Session::get('property_type') === 'Condominium Corporation'){
-                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'payments'));
             }else{
                 return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }
@@ -198,7 +206,7 @@ class UnitController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.edit-all', compact('units', 'property'));
         }else{
             return view('webapp.rooms.edit', compact('units', 'property'));

@@ -34,7 +34,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
          
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations')
+            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             <li class="nav-item">
                 <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
                   <i class="fas fa-user text-green"></i>
@@ -327,7 +327,7 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">TOP REFFERERS</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">TOP AGENTS</h6>
                   <div class="dropdown no-arrow">
                   </div>
                 </div>
@@ -339,8 +339,8 @@
                     <tr>
                       <th>#</th>
                       <th>Name</th>
-                      <th>Type</th>
-                      <th>Referrals</th>
+                      <th>Role</th>
+                      <th>Total referrals</th>
                     </tr>
                    </thead>
                    <tbody>
@@ -361,10 +361,10 @@
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">POINT OF CONTACT </h6>
+                  <h6 class="m-0 font-weight-bold text-primary">SOURCE</h6>
                 </div>
                 <div class="card-body">
-                  {!! $point_of_contact->script() !!}
+                  {!! $point_of_contact->container() !!}
                 </div>
               </div>
           
@@ -410,7 +410,7 @@
               <!-- DataTales Example -->
               <div class="card shadow mb-4">
                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">EXPIRING CONTRACTS ({{ $tenants_to_watch_out->count() }})</h6>
+                 <h6 class="m-0 font-weight-bold text-primary">EXPIRING CONTRACTS</h6>
          
                </div>
                <div class="card-body">
@@ -442,7 +442,7 @@
                             </td>
                             <td>
                               @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                              <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
+                              <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
                               @else
                              {{$item->unit_no }}
                               @endif
@@ -474,7 +474,7 @@
                        @endforeach
                      </tbody>
                    </table>
-                
+                {{ $tenants_to_watch_out->links() }}
                  </div>
                </div>
              </div>
@@ -488,7 +488,7 @@
           <div class="row">
 
                   <!-- Pie Chart -->
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="card shadow mb-3">
                       <!-- Card Header - Dropdown -->
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -499,16 +499,16 @@
                       <!-- Card Body -->
                       <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                          <table class="table table-striped">
+                          <table class="table">
                             <thead>
                               <tr>
                                 <th>Tenant</th>
                                 <th>Room</th>
-                                <th>Amount</th>
+                                <th>Balance</th>
                             </tr>
                             </thead>
                             <tbody>
-                              {{-- @foreach($delinquent_accounts as $item)
+                              @foreach($delinquent_accounts as $item)
                               <tr>
                                 <td>
                       
@@ -517,19 +517,66 @@
                                 </td>
                                 <td>
                                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                                  <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{ $item->building.' '.$item->unit_no }}</a>
+                                  <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
                                   @else
-                                 {{ $item->building.' '.$item->unit_no }}
+                                 {{ $item->unit_no }}
                                   @endif
                                 </td>
                                 <td>
                                   <a>{{ number_format($item->balance,2) }}
                                 </td>
                               </tr>
-                              @endforeach --}}
+                              @endforeach
                             </tbody>
                           </table>
-                     
+                     {{-- {{ $delinquent_accounts->links() }} --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card shadow mb-3">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">PENDING CONCERNS</h6>
+                       
+                        
+                      </div>
+                      <!-- Card Body -->
+                      <div class="card-body">
+                        <div class="table-responsive text-nowrap">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Tenant</th>
+                                <th>Room</th>
+                                <th>Concern</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($pending_concerns as $item)
+                              <tr>
+                                <td>
+                      
+                                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+                            
+                                </td>
+                                <td>
+                                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                                  <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                                  @else
+                                  {{ $item->unit_no }}
+                                  @endif
+                                </td>
+                                <td>
+                                  <a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
+                                </td>
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                     {{ $pending_concerns->links() }}
                         </div>
                       </div>
                     </div>
@@ -585,9 +632,9 @@
                   {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                   {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                   </td>
-                  <td>{{ number_format($item->amt_paid,2) }}</td>
+                  <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                   <td class="text-center">
-                    <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                    {{-- <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
                     {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a>  --}}
                   </td>
               </tr>
