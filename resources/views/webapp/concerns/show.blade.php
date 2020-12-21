@@ -544,7 +544,7 @@ font-family: FontAwesome;
       <div class="modal-body">
         <p>
           @foreach ($concern_details as $concern)
-          How did <b>{{ $concern->name }}</b> handled the concern?
+          How did <b>{{ $concern->name }}</b> handle the concern?
 
           @endforeach
         </p>
