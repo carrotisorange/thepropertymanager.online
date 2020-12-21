@@ -7,6 +7,9 @@ use DB;
 use App\Concern;
 use Auth;
 use Carbon\Carbon;
+use App\Notification;
+use Session;
+use App\Property;
 
 class ResponseController extends Controller
 {
@@ -65,6 +68,18 @@ class ResponseController extends Controller
             );
     
         }
+
+        $concern = Concern::findOrFail($concern_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'concern';
+        $notification->message = Auth::user()->name.' has responded to concern regarding '.$concern->title;
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
     
         return back()->with('success', 'reponse has been saved!');
     }

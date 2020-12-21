@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use App\Property;
+use App\Personnel;
+use App\Concern;    
+use App\Notification;
+use Auth;
 
 class JobOrderController extends Controller
 {
@@ -21,7 +25,7 @@ class JobOrderController extends Controller
         ->join('concerns', 'concern_id_foreign', 'concern_id')
         ->join('tenants', 'concern_tenant_id', 'tenant_id')
         ->join('personnels', 'personnel_id_foreign', 'personnel_id')
-        ->select('*', 'job_orders.created_at as created_at')
+        ->select('*', 'job_orders.created_at as created_at', 'job_orders.status as joborder_status')
 
         ->where('property_id_foreign',  Session::get('property_id'))
         ->orderBy('job_orders.created_at', 'desc')
@@ -29,7 +33,7 @@ class JobOrderController extends Controller
 
         $property = Property::findOrFail(Session::get('property_id'));
 
-        return view('webapp.joborders.joborders', compact('joborders', 'property'));
+        return view('webapp.joborders.index', compact('joborders', 'property'));
     }
 
     /**
@@ -51,10 +55,9 @@ class JobOrderController extends Controller
     public function store(Request $request, $property_id, $concern_id)
     {
 
-        $request->validate([
-            'summary' => 'required',
-            'personnel_id_foreign' => 'required'
-        ]);
+        if($request->summary === null || $request->personnel_id_foreign === null){
+            return back()->with('danger', 'Please select a personnel and provide the summary of the joborder.');
+        }
 
         $joborder_id = DB::table('job_orders')->insertGetId(
             [
@@ -64,6 +67,17 @@ class JobOrderController extends Controller
                 'created_at' => $request->created_at
             ]
             );
+
+            $personnel = Personnel::findOrFail($request->personnel_id_foreign);
+
+            $concern = Concern::findOrFail($request->concern_id);
+
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'joborder';
+            $notification->message =  Auth::user()->name.' filed a job order for concern ID '.$concern->concern_id.' regarding '.$concern->title.' and assigned it to '.$personnel->personnel_name.' .';
+            $notification->save();
 
          return redirect('/property/'.$property_id.'/joborders')->with('success', 'job order has been filed!');
     }

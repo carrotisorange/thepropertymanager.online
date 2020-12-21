@@ -238,7 +238,7 @@ font-family: FontAwesome;
           <td>{{ $concern->reported_at }}</td>
         </tr>
            <tr>
-                <td>Reported by</th>
+                <th>Reported by</th>
                 <td><a target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></td>
            </tr>  
            
@@ -253,7 +253,7 @@ font-family: FontAwesome;
           </tr>  
      
        <tr>
-            <th>Type</th>
+            <th>Category</th>
             <td>
               {{ $concern->category }}
             </td>
@@ -454,7 +454,7 @@ font-family: FontAwesome;
 
           <div class="row">
             <div class="col">
-                <label>Date filed</label>
+                <label>Date</label>
                 <input type="date"  class="form-control" name="created_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
             </div>
         </div>
@@ -491,8 +491,8 @@ font-family: FontAwesome;
          
       </div>
       <div class="modal-footer">
-        <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-secondary"><i class="fas fa-times text-dark-50"></i> Close</a>
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit </button>
+        
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
       </form>
       </div>
   </div>
@@ -520,8 +520,7 @@ font-family: FontAwesome;
     
       </div>
       <div class="modal-footer">
-        <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-secondary"><i class="fas fa-times text-dark-50"></i> Close</a>
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit </button>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
       </form>
       </div>
   </div>
@@ -535,13 +534,21 @@ font-family: FontAwesome;
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Rate Employee</h5>
+
+      <h5 class="modal-title" id="exampleModalLabel">Rate employee</h5>
+
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
       </div>
       <div class="modal-body">
-      <form id="markAsCompleteModalForm" action="/concerns/{{ $concern->concern_id }}/closed" method="POST">
+        <p>
+          @foreach ($concern_details as $concern)
+          How did <b>{{ $concern->name }}</b> handled the concern?
+
+          @endforeach
+        </p>
+      <form id="markAsCompleteModalForm" action="/concern/{{ $concern->concern_id }}/closed" method="POST">
         @method('put')
         {{ csrf_field() }}
       </form>
@@ -559,8 +566,14 @@ font-family: FontAwesome;
       </div>
   <br>
 
+  @foreach ($concern_details as $concern)
+  
+  <input form="markAsCompleteModalForm" type="hidden" name="name" value="{{ $concern->name }}">
+
+  @endforeach
+
      
-      <p class="text-left">Feedback</p>
+      <p class="">Feedback</p>
       <textarea form="markAsCompleteModalForm" class="form-control" id="" cols="30" rows="5" name="feedback" required>
         
       </textarea>
@@ -568,8 +581,7 @@ font-family: FontAwesome;
  
       </div>
       <div class="modal-footer">
-          <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-secondary"><i class="fas fa-times text-dark-50"></i> Close</a>
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
       </div>
   </div>
   </div>

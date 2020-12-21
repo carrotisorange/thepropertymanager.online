@@ -923,16 +923,18 @@ class BillController extends Controller
 
     public function destroy_bill_from_bills_page($property_id, $billing_id)
     {
-        DB::table('bills')->where('bill_id', $billing_id)->delete();
+        $bill = Bill::findOrFail($billing_id);
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = 'Bill no '.$billing_id.' has been deleted! ';
+        $notification->message = 'Bill no '.$billing_id.' amounting '. number_format($bill->amount,2).' has been deleted! ';
         $notification->save();
 
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        DB::table('bills')->where('bill_id', $billing_id)->delete();
 
         return back()->with('success', 'bill has been deleted!');
     }

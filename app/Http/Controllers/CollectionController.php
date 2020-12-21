@@ -406,16 +406,16 @@ class CollectionController extends Controller
 
         $payment = Payment::findOrFail($payment_id);
 
-        DB::table('payments')->where('payment_id', $payment_id)->delete();
-
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = 'Payment with AR no '.$payment->ar_no.' has been deleted! ';
+        $notification->message = 'Payment with AR no '.$payment->ar_no.' amounting '.number_format($payment->amt_paid,2).' has been deleted! ';
         $notification->save();
 
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        DB::table('payments')->where('payment_id', $payment_id)->delete();
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');

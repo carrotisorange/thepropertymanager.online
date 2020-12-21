@@ -729,25 +729,7 @@ Route::get('/acceptable-use-policy', function(){
 
 
 //close concern 
-Route::put('/concerns/{concern_id}/closed', function(Request $request){
-
-    if($request->rating === null && $request->feedback === null){
-        return back()->with('danger', 'Please provide a rating and feedback for the employee.');
-    }else{
-        DB::table('concerns')
-        ->where('concern_id', $request->concern_id)
-        ->update(
-            [
-                'status' => 'closed',
-                'rating' => $request->rating,
-                'feedback' => $request->feedback
-            ]
-        );
-
-    return back()->with('success', 'concern has been closed!');
-    }
-   
-})->middleware(['auth', 'verified']);
+Route::put('/concern/{concern_id}/closed', 'ConcernController@closed')->middleware(['auth', 'verified']);
 
 //routes for logging in using facebook
 Route::get('/login/google', 'Auth\LoginController@redirectToProvider');

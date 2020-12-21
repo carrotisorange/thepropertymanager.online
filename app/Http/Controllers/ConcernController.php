@@ -194,7 +194,48 @@ class ConcernController extends Controller
             'urgency' => $request->urgency
         ]);
 
+        $concern = Concern::findOrFail($concern_id);    
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'concern';
+        $notification->message = Auth::user()->name.' has made changes in concern ID '.$concern->concern_id.' regarding the '.$concern->title.'.';
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
         return back()->with('success', 'changes have been saved!');
+    }
+
+    public function closed(Request $request){
+
+        if($request->rating === null || $request->feedback === null){
+            return back()->with('danger', 'Please provide a rating and feedback for the employee.');
+        }else{
+            DB::table('concerns')
+            ->where('concern_id', $request->concern_id)
+            ->update(
+                [
+                    'status' => 'closed',
+                    'rating' => $request->rating,
+                    'feedback' => $request->feedback
+                ]
+            );
+
+        $concern = Concern::findOrFail($request->concern_id);
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'concern';
+        $notification->message =  $request->name.' was rated '.$request->rating.' for resolving concern ID '.$concern->concern_id.' regarding '.$concern->title;
+        $notification->save();
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+    
+        return back()->with('success', 'concern has been closed!');
+        }
     }
 
     /**
