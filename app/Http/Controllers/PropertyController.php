@@ -557,16 +557,30 @@ $expenses_rate->dataset
     ->linetension(0.4);
 
 
- $delinquent_accounts = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
-  ->leftJoin('contracts', 'tenant_id', 'tenant_id_foreign')
-  ->leftJoin('payments', 'bill_id','payment_bill_id')
-  ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-    ->selectRaw('*,sum(amount) - IFNULL(sum(payments.amt_paid),0) as balance')
-    ->where('property_id_foreign',Session::get('property_id'))
-    ->groupBy('tenant_id')
-    ->orderBy('balance', 'desc')
-    ->havingRaw('balance > 0')
-    ->get();
+    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        $delinquent_accounts = Unit::leftJoin('bills', 'unit_id','bill_unit_id')
+        ->leftJoin('payments', 'bill_id','payment_bill_id')
+        ->leftJoin('contracts', 'unit_id', 'unit_id_foreign')
+          ->selectRaw('*,sum(amount) - IFNULL(sum(payments.amt_paid),0) as balance')
+          ->where('property_id_foreign',Session::get('property_id'))
+          ->groupBy('unit_id')
+          ->orderBy('balance', 'desc')
+          ->havingRaw('balance > 0')
+          ->get();
+    }else{
+        $delinquent_accounts = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
+          ->leftJoin('payments', 'bill_id','payment_bill_id')
+        ->leftJoin('contracts', 'tenant_id', 'tenant_id_foreign')
+      
+        ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+          ->selectRaw('*,sum(amount) - IFNULL(sum(payments.amt_paid),0) as balance')
+          ->where('property_id_foreign',Session::get('property_id'))
+          ->groupBy('tenant_id')
+          ->orderBy('balance', 'desc')
+          ->havingRaw('balance > 0')
+          ->get();
+    }
+
 
 
 //  $delinquent_accounts = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_bill_id')

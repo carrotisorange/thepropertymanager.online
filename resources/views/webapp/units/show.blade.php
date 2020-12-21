@@ -254,89 +254,102 @@
         </div>
   
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-          <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+          <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
           @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
-          <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-          @endif
-          @if($bills->count() > 0)
-          <a  target="_blank" href="/property/{{Session::get('property_id')}}/home/{{ $home->unit_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
-          {{-- @if($tenant->email_address !== null)
-          <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
-          @endif --}}
-          @endif 
-          <br><br>
-          <div class="col-md-12 mx-auto">
-         
-          <div class="table-responsive text-nowrap">
-            <table class="table">
-              <?php $ctr=1; ?>
-              <thead>
-                <tr>
-                  <th class="text-center">#</th>
-                   <th>Date posted</th>
-             
-                     <th>Bill no</th>
-                     
-                     <th>Particular</th>
-               
-                     <th>Period covered</th>
-                     
-                     <th class="text-right" >Bill amount</th>
-                     <th class="text-right" >Amount paid</th>
-                     <th class="text-right" >Balance</th>
-                     {{-- <th></th> --}}
-                   </tr>
-          </thead>
-             @foreach ($bills as $item)
-             <tr>
-              <th class="text-center">{{ $ctr++ }}</th>
-                 <td>
-                   {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
-                 </td>   
-                  
-     
-                   <td>{{ $item->bill_no }}</td>
-           
-                   <td>{{ $item->particular }}</td>
-                 
-                   <td>
-                     {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                     {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                   </td>
-                   <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
-                   <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
-                   <td class="text-right" >
-                     @if($item->balance > 0)
-                     <span class="text-danger">{{ number_format($item->balance,2) }}</span>
-                     @else
-                     <span >{{ number_format($item->balance,2) }}</span>
-                     @endif
-                   </td>
-                   {{-- <td class="text-center">
-                     @if(Auth::user()->user_type === 'manager')
-                     <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
-                       @csrf
-                       @method('delete')
-                       <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
-                     </form>
-                     @endif
-                   </td> --}}
-                          </tr>
-                          
+            <a href="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            @endif
+            @if($bills->count() > 0)
+            <a  target="_blank" href="/property/{{Session::get('property_id')}}/home/{{ $home->unit_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
+            {{-- @if($tenant->email_address !== null)
+            <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
+            @endif --}}
+            @endif
           
+        
+  
+      <br>
+      <br>
+      <div class="col-md-12 mx-auto">
+      <div class="table-responsive">
+        <div class="table-responsive text-nowrap">
+          <table class="table">
+            <?php $ctr=1; ?>
+          <thead>
+            <tr>
+              <th class="text-center">#</th>
+               <th>Date posted</th>
+         
+                 <th>Bill no</th>
+                 
+                 <th>Particular</th>
+           
+                 <th>Period covered</th>
+                 
+                 <th class="text-right" >Bill amount</th>
+                 <th class="text-right" >Amount paid</th>
+                 <th class="text-right" >Balance</th>
+                 {{-- <th></th> --}}
+               </tr>
+          </thead>
+            @foreach ($bills as $item)
+            <tr>
+           <th class="text-center">{{ $ctr++ }}</th>
+              <td>
+                {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
+              </td>   
+               
+  
+                <td>{{ $item->bill_no }}</td>
+        
+                <td>{{ $item->particular }}</td>
+              
+                <td>
+                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                </td>
+                <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
+                <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
+                <td class="text-right" >
+                  @if($item->bills > 0)
+                  <span class="text-danger">{{ number_format($item->balance,2) }}</span>
+                  @else
+                  <span >{{ number_format($item->balance,2) }}</span>
+                  @endif
+                </td>
+                {{-- <td class="text-center">
+                  @if(Auth::user()->user_type === 'manager')
+                  <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
+                  </form>
+                  @endif
+                </td> --}}
+                       </tr>
+                       
             @endforeach
             <tr>
-              <th>TOTAL</th>
-              <th class="text-right" colspan="7"> {{ number_format($bills->sum('amount'),2) }}</th>
-            </tr>
-            
-            </table>
-        
+              <th>Total </th>
+              
+              <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
+              <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
+              <th class="text-right text-danger" colspan="">
+                @if($bills->sum('bills') > 0)
+                <span class="text-danger">{{ number_format($bills->sum('balance'),2) }}</span>
+                @else
+                <span >{{ number_format($bills->sum('balance'),2) }}</span>
+                @endif
            
-            </div>
+               </th>
+             </tr>
+          
+        </table>
+  
+      </div>
+      </div>
+      
         </div>
         </div>
-
         <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
           @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
           <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
