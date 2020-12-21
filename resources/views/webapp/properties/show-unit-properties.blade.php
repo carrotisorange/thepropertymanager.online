@@ -333,7 +333,7 @@
                           </td>
                           <td>
                             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                            <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                            <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id}}#bills">{{ $item->unit_no }}</a>
                             @else
                            {{ $item->unit_no }}
                             @endif
