@@ -52,6 +52,7 @@ class LoginController extends Controller
                 $session->session_user_id = Auth::user()->id;
                 $session->session_last_login_at = Carbon::now();
                 $session->session_last_login_ip = request()->ip();
+    
                 $session->save();
 
                
@@ -65,6 +66,7 @@ class LoginController extends Controller
                     $session->session_user_id = Auth::user()->id;
                     $session->session_last_login_at = Carbon::now();
                     $session->session_last_login_ip = request()->ip();
+                
                     $session->save();
                    
                 }
@@ -80,6 +82,9 @@ class LoginController extends Controller
 
     public function logout(Request $request) {   
 
+        //return \Location::get(\Request::ip());
+
+        //$session->location = Location::get(request()->ip());
         DB::table('sessions')
         ->where('session_user_id', Auth::user()->id)
         ->whereDate('session_last_login_at',  Carbon::today())

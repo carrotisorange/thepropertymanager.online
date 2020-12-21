@@ -470,7 +470,7 @@ class UserController extends Controller
 
         $manager = User::findOrFail(Auth::user()->id);
 
-        $sessions = DB::table('sessions')->where('session_user_id', $user_id)->get();
+        $sessions = DB::table('sessions')->where('session_user_id', $user_id)->orderBy('session_last_login_at', 'desc')->get();
 
         $blogs = DB::table('users')
         ->join('blogs', 'users.id','user_id_foreign')

@@ -254,7 +254,7 @@
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
                    
-                        <strong><i class="fas fa-exclamation-triangle"></i> Don't forget to logout your account to record your usage time. Otherwise, it will not be recorded. </strong>
+                        <strong><i class="fas fa-exclamation-triangle"></i> Don't forget to logout your account to record your usage time. </strong>
                       
                     
                 </div>
@@ -269,7 +269,9 @@
             <thead>
             <tr>
               <th>#</th>  
+              <th>Date</th>
               <th>IP Address</th>
+              <th>Location</th>
               <th>Login at</th>
               <th>Logout at</th>
               <th>Usage time</th>
@@ -278,9 +280,11 @@
             @foreach ($sessions as $item)
               <tr>
                <th>{{ $ctr++ }}</th>
+               <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->format('M d Y') }}</td>
                 <td>{{ $item->session_last_login_ip }}</td>
-               <td>{{ $item->session_last_login_at? Carbon\Carbon::parse($item->session_last_login_at)->format('M d Y').' '.Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() : null }}</td>
-               <td>{{ $item->session_last_logout_at? Carbon\Carbon::parse($item->session_last_logout_at)->format('M d Y').' '.Carbon\Carbon::parse($item->session_last_logout_at)->toTimeString() : null }}</td>
+                <td>{{ $item->location }}</td>
+               <td>{{ $item->session_last_login_at? Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() : null }}</td>
+               <td>{{ $item->session_last_logout_at? Carbon\Carbon::parse($item->session_last_logout_at)->toTimeString() : null }}</td>
                <td>
                  @if($item->session_last_logout_at == null)
                   0.0 hours
@@ -310,8 +314,8 @@
             <tr>
               <th>#</th>  
               <th>Concern ID</th>
-              <th>Type</th>
-              <th>Description</th>
+              <th>Category</th>
+              <th>Title</th>
               <th>Urgency</th>
               <th>Status</th>
               <th>Rating</th>
@@ -372,9 +376,9 @@
               
                  <th>Movein</th>
                  <th>Moveout</th>
-                 <th>Rent</th>
+               
                  <th>Term</th>
-                 <th>Point of contact</th>
+                 <th>Source</th>
                </tr>
              </thead>
                @foreach ($referrals as $item)
@@ -385,7 +389,7 @@
                     
                     <td>{{ $item->movein_at }}</td>
                     <td>{{ $item->moveout_at }}</td>
-                    <td>{{ number_format($item->rent, 2) }}</td>  
+                 
                     <td>{{ $item->term }}</td>
                     <td>{{ $item->form_of_interaction }}</td>
                  </tr>

@@ -664,6 +664,47 @@
     'proxies' => NULL,
     'headers' => 30,
   ),
+  'location' => 
+  array (
+    'driver' => 'Stevebauman\\Location\\Drivers\\IpApi',
+    'fallbacks' => 
+    array (
+      0 => 'Stevebauman\\Location\\Drivers\\IpInfo',
+      1 => 'Stevebauman\\Location\\Drivers\\GeoPlugin',
+      2 => 'Stevebauman\\Location\\Drivers\\MaxMind',
+    ),
+    'position' => 'Stevebauman\\Location\\Position',
+    'maxmind' => 
+    array (
+      'web' => 
+      array (
+        'enabled' => false,
+        'user_id' => '',
+        'license_key' => '',
+        'options' => 
+        array (
+          'host' => 'geoip.maxmind.com',
+        ),
+      ),
+      'local' => 
+      array (
+        'path' => 'C:\\Users\\hp user\\Desktop\\thepropertymanager.online\\database\\maxmind/GeoLite2-City.mmdb',
+      ),
+    ),
+    'ip_api' => 
+    array (
+      'token' => NULL,
+    ),
+    'ipinfo' => 
+    array (
+      'token' => NULL,
+    ),
+    'testing' => 
+    array (
+      'enabled' => true,
+      'ip' => '66.102.0.0',
+    ),
+  ),
   'tinker' => 
   array (
     'commands' => 
