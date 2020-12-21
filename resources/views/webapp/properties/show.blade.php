@@ -612,8 +612,8 @@
                  
                   <th>Particular</th>
                   <th colspan="2">Period Covered</th>
-                  <th>Amount</th>
-                  <th></th>
+                  <th class="text-right">Amount</th>
+                  
               </tr>
               
             </thead>
@@ -623,8 +623,8 @@
     
                 <td>{{ $item->ar_no }}</td>
                  <td>{{ $item->payment_bill_no }}</td>
-                 <td>{{ $item->unit_no }}</td>
-                  <td>{{ $item->first_name.' '.$item->last_name }}</td>
+                 <td><a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</td>
+                  <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
                 
                   <td>
                     {{ $item->particular }}</td>
@@ -633,11 +633,11 @@
                   {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                   </td>
                   <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
-                  <td class="text-center">
-                    {{-- <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
-                    {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a>  --}}
-                  </td>
-              </tr>
+                     {{-- <td class="text-center">
+                 <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
+                    {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
+              </tr> --}}
+                  
               @endforeach
               <tr>
                 <th>TOTAL</th>
