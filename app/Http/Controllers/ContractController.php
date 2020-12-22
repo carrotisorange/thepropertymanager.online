@@ -86,6 +86,17 @@ class ContractController extends Controller
      */
     public function store(Request $request, $property_id,$unit_id,$tenant_id)
     {
+
+        
+        $no_of_bills = $request->no_of_items;
+
+    
+        if($no_of_bills === null){
+          $status = 'active';
+        }else{
+          $status = 'pending';
+        }
+
         
         $tenant_unique_id = Uuid::generate()->string;
 
@@ -97,7 +108,7 @@ class ContractController extends Controller
                         'referrer_id_foreign' => $request->referrer_id,
                         'form_of_interaction' => $request->form_of_interaction,
                         'rent' => $request->rent,
-                        'status' => 'pending',
+                        'status' => $status,
                         'movein_at' => $request->movein_at,
                         'moveout_at' => $request->moveout_at,
                         'discount' => $request->discount,
@@ -106,15 +117,6 @@ class ContractController extends Controller
                         'created_at' => $request->movein_at,
                     ]
                 );
-
-            
-            DB::table('units')
-            ->where('unit_id', $unit_id)
-            ->update(
-                [
-                    'status' => 'reserved'
-                ]
-            );
 
           
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
@@ -134,7 +136,25 @@ class ContractController extends Controller
 
         }
 
-                    $no_of_bills = $request->no_of_items;
+
+                    if($no_of_bills === null){
+                        DB::table('units')
+                        ->where('unit_id', $unit_id)
+                        ->update(
+                            [
+                                'status' => 'occupied'
+                            ]
+                        );
+                    }else{
+                        DB::table('units')
+                        ->where('unit_id', $unit_id)
+                        ->update(
+                            [
+                                'status' => 'reserved'
+                            ]
+                        );
+                    }
+    
 
                     if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                         $current_bill_no = DB::table('units')
@@ -175,7 +195,7 @@ class ContractController extends Controller
                     
                     Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'new contract has been added!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'new contract has been added!');
        
 
     }
@@ -197,12 +217,13 @@ class ContractController extends Controller
         ->havingRaw('balance > 0')
         ->get();
 
+        $tenant = Tenant::findOrFail($tenant_id);
 
         $contract = Contract::findOrFail($contract_id);
 
         $property = Property::findOrFail($property_id);
 
-        return view('webapp.contracts.show', compact('contract', 'property', 'balance'));
+        return view('webapp.contracts.show', compact('contract', 'property', 'balance', 'tenant'));
     }
 
     public function moveout_get(Request $request, $property_id, $tenant_id, $contract_id){
@@ -404,8 +425,80 @@ class ContractController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-        return view('webapp.contracts.preterminate', compact('contract', 'property'));
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.contracts.preterminate', compact('contract', 'property', 'tenant'));
     }
+
+    public function extend($property_id, $tenant_id, $contract_id)
+    {
+        $contract = Contract::findOrFail($contract_id);
+
+        $property = Property::findOrFail($property_id);
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.contracts.extend', compact('contract', 'property', 'tenant'));
+    }
+
+    public function extend_post(Request $request, $property_id, $tenant_id, $contract_id)
+    {
+        
+        if($request->moveout_at > 5){
+            $term = 'Long Term';
+           }else{
+            $term = 'Short Term';
+           }
+    
+
+     $unit_id = Contract::findOrFail($contract_id)->unit_id_foreign;
+
+     $rent = Unit::findOrFail($unit_id)->rent;
+
+        // if($request->movein_at > 1 ){
+        //     return back()->with('danger', 'The length of contract should be atleast 1 month.');
+        // }
+        DB::table('contracts')->insert(
+            [
+                'contract_id' => Uuid::generate()->string,
+                'unit_id_foreign' => $unit_id,
+                'tenant_id_foreign' => $tenant_id,
+                'referrer_id_foreign' => $tenant_id,
+                'form_of_interaction' => 'Renewal',
+                'rent' => $rent,
+                'status' => 'active',
+                'movein_at' => $request->movein_at,
+                'moveout_at' => Carbon::parse($request->movein_at)->addMonths($request->moveout_at),
+                'discount' => 0,
+                'term' => $term,
+                'number_of_months' =>  $request->moveout_at,
+                'created_at' => $request->movein_at,
+            ]
+        );
+
+            if($request->no_of_charges > 0){
+                DB::table('units')
+                ->where('unit_id', $unit_id)
+                ->update(
+                    [
+                        'status' => 'reserved'
+                    ]
+                );
+            }else{
+                DB::table('units')
+                ->where('unit_id', $unit_id)
+                ->update(
+                    [
+                        'status' => 'occupied'
+                    ]
+                );
+            }
+      
+
+        return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract has been extended!');
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -437,7 +530,9 @@ class ContractController extends Controller
         ->orderBy('users.name')
         ->get();
 
-        return view('webapp.contracts.edit', compact('contract', 'property', 'tenants', 'units', 'users'));
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.contracts.edit', compact('contract', 'property', 'tenants', 'units', 'users', 'tenant'));
     }
 
     /**

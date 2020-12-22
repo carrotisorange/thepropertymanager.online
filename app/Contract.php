@@ -12,4 +12,9 @@ class Contract extends Model
 
     public $incrementing = false;
 
+    public function unit()
+    {
+    return $this->belongsTo('App\Unit', 'unit_id');
+    }
+
 }

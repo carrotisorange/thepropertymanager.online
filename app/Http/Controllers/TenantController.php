@@ -234,6 +234,14 @@ class TenantController extends Controller
     public function store(Request $request, $property_id, $unit_id )
     {
 
+        $no_of_bills = $request->no_of_items;
+
+        if($no_of_bills === null){
+            $status = 'active';
+          }else{
+            $status = 'pending';
+          }
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['max:255'],
@@ -279,6 +287,7 @@ class TenantController extends Controller
                         'referrer_id_foreign' => $request->referrer_id,
                         'form_of_interaction' => $request->form_of_interaction,
                         'rent' => $request->rent,
+                        'status' => $status,
                         'movein_at' => $request->movein_at,
                         'moveout_at' => $request->moveout_at,
                         'discount' => $request->discount,
@@ -288,15 +297,26 @@ class TenantController extends Controller
                     ]
                 );
 
-            
-            DB::table('units')
-            ->where('unit_id', $unit_id)
-            ->update(
-                [
-                    'status' => 'reserved'
-                ]
-            );
+    
+                if($no_of_bills === null){         
+                    DB::table('units')
+                    ->where('unit_id', $unit_id)
+                    ->update(
+                        [
+                            'status' => 'occupied'
+                        ]
+                    );
+                  }else{  
+                    DB::table('units')
+                    ->where('unit_id', $unit_id)
+                    ->update(
+                        [
+                            'status' => 'reserved'
+                        ]
+                    );
+                  }
 
+           
             $units = DB::table('units')
             ->where('property_id_foreign', $property_id)
             ->where('status','<>','deleted')
@@ -325,8 +345,7 @@ class TenantController extends Controller
             $occupancy->save();
         }
             
-                    $no_of_bills = $request->no_of_items;
-
+                 
                     if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                         $current_bill_no = DB::table('units')
                         ->join('bills', 'unit_id', 'bill_unit_id')
@@ -982,11 +1001,25 @@ class TenantController extends Controller
                 'renewal_history' => $renewal_history->renewal_history.', from '.Carbon::parse($request->old_movein_date)->format('M d Y').' to '.Carbon::parse($request->movein_date)->format('M d Y')
             ]);
     
-            DB::table('units')
-            ->where('unit_id', $unit_id)
-            ->update([
-                'status' => 'reserved'
-            ]);
+ 
+
+            if($no_of_items > 0){
+                DB::table('units')
+                ->where('unit_id', $unit_id)
+                ->update(
+                    [
+                        'status' => 'reserved'
+                    ]
+                );
+            }else{
+                DB::table('units')
+                ->where('unit_id', $unit_id)
+                ->update(
+                    [
+                        'status' => 'reserved'
+                    ]
+                );
+            }
 
             return back()->with('success', 'contract has been extended to '. $request->no_of_months.' month/s.');
             

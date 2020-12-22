@@ -150,7 +150,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-8">
-    <h6 class="h2 text-dark d-inline-block mb-0">Contract </h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
     
   </div>
 </div>
@@ -188,80 +188,84 @@
 </div>
 <br>
 <div class="row">
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table">
-               <tr>
-                   <th>Tenant </th>
-                   <td><a target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}">View</a></td>
-               </tr>
-               <tr>
-                <th>Room </th>
-                <td><a target="_blank" href="/property/{{ $property->property_id }}/home/{{ $contract->unit_id_foreign }}">View</a></td>
-            </tr>
-            <tr>
-                <th>Referrer </th>
-                <td>
-                  @if($contract->referrer_id_foreign != '36')
-                  <a target="_blank" href="/property/{{ $property->property_id }}/user/{{ $contract->referrer_id_foreign }}">View</a>
-                  @else
-                  None
-                  @endif
-                </td>
-            </tr>
-            <tr>
-                <th>Point of contact</th>
-                <td>{{ $contract->form_of_interaction }}</td>
-            </tr>
-            <tr>
-                <th>Rent</th>
-                <td>{{ $contract->rent }}</td>
-            </tr>
-            <tr>
-                <th>Discount</th>
-                <td>{{ $contract->discount }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ $contract->status }}</td>
-            </tr>
-            <tr>
-                <th>Movein at</th>
-                <td>{{ $contract->movein_at }}</td>
-            </tr>
-            <tr>
-                <th>Moveout at</th>
-                <td>{{ $contract->moveout_at }}</td>
-            </tr>
-            <tr>
-                <th>Number of months</th>
-                <td>{{ $contract->number_of_months }}</td>
-            </tr>
-            <tr>
-                <th>Term</th>
-                <td>{{ $contract->term }}</td>
-            </tr>
-            <tr>
-                <th>Terminated at</th>
-                <td>{{ $contract->terminated_at? $contract->terminated_at: 'NA' }}</td>
-            </tr>
-            <tr>
-                <th>Actual moveout at</th>
-                <td>{{ $contract->actual_moveout_at? $contract->actual_moveout_at: 'NA' }}</td>
-            </tr>
-            <tr>
-                <th>Reason for moving out</th>
-                <td>{{ $contract->moveout_reason? $contract->moveout_reason: 'NA' }}</td>
-            </tr>
-            <tr>
-                <th>Created at</th>
-                <td>{{ $contract->created_at? $contract->created_at: 'NA' }}</td>
-            </tr>
-            <tr>
-                <th>Updated at</th>
-                <td>{{ $contract->created_at? $contract->created_at: 'NA' }}</td>
-            </tr>
-            </table>
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                 <tr>
+                     <th>Tenant </th>
+                     <td><a target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}">View</a></td>
+                 </tr>
+                 <tr>
+                  <th>Room </th>
+                  <td><a target="_blank" href="/property/{{ $property->property_id }}/home/{{ $contract->unit_id_foreign }}">View</a></td>
+              </tr>
+              <tr>
+                  <th>Referrer </th>
+                  <td>
+                    @if($contract->referrer_id_foreign != '36')
+                    <a target="_blank" href="/property/{{ $property->property_id }}/user/{{ $contract->referrer_id_foreign }}">View</a>
+                    @else
+                    None
+                    @endif
+                  </td>
+              </tr>
+              <tr>
+                  <th>Source</th>
+                  <td>{{ $contract->form_of_interaction }}</td>
+              </tr>
+              <tr>
+                  <th>Rent</th>
+                  <td>{{ number_format($contract->rent, 2) }}</td>
+              </tr>
+              <tr>
+                  <th>Discount</th>
+                  <td>{{  number_format($contract->discount, 2) }}</td>
+              </tr>
+              <tr>
+                  <th>Status</th>
+                  <td>{{ $contract->status }}</td>
+              </tr>
+              <tr>
+                  <th>Movein</th>
+                  <td>{{ $contract->movein_at }}</td>
+              </tr>
+              <tr>
+                  <th>Moveout</th>
+                  <td>{{ $contract->moveout_at }}</td>
+              </tr>
+              <tr>
+                  <th>Length of stay</th>
+                  <td>{{ $contract->number_of_months }}</td>
+              </tr>
+              <tr>
+                  <th>Term</th>
+                  <td>{{ $contract->term }}</td>
+              </tr>
+              <tr>
+                  <th>Terminated</th>
+                  <td>{{ $contract->terminated_at? $contract->terminated_at: 'NA' }}</td>
+              </tr>
+              <tr>
+                  <th>Actual moveout</th>
+                  <td>{{ $contract->actual_moveout_at? $contract->actual_moveout_at: 'NA' }}</td>
+              </tr>
+              <tr>
+                  <th>Reason for termination</th>
+                  <td>{{ $contract->moveout_reason? $contract->moveout_reason: 'NA' }}</td>
+              </tr>
+              {{-- <tr>
+                  <th>Created at</th>
+                  <td>{{ $contract->created_at? $contract->created_at: 'NA' }}</td>
+              </tr>
+              <tr>
+                  <th>Updated at</th>
+                  <td>{{ $contract->created_at? $contract->created_at: 'NA' }}</td>
+              </tr> --}}
+              </table>
+          </div>
+          </div>
         </div>
     </div>
 </div>

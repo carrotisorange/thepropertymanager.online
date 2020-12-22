@@ -150,7 +150,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-8">
-    <h6 class="h2 text-dark d-inline-block mb-0">Edit</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
     
   </div>
 </div>
@@ -160,8 +160,10 @@
     @csrf
     @method('PUT')
     </form>
-    <div class="col-md-12">
-        <div class="table-responsive">
+    <div class="col-md-11 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
             <table class="table">
                <tr>
                    <th>Tenant</th>
@@ -197,7 +199,7 @@
                </td>
             </tr>
             <tr>
-                <th>Point of contact</th>
+                <th>Source</th>
                 <td>
                     <select form="editContractForm"  class="form-control" name="form_of_interaction" id="form_of_interaction">
                     <option value="{{ $contract->form_of_interaction }}">{{ $contract->form_of_interaction }}</option>
@@ -228,15 +230,15 @@
          
             </tr>
             <tr>
-                <th>Movein at</th>
+                <th>Movein</th>
                 <td><input form="editContractForm" type="date"  name="movein_at" id="movein_at" onkeyup='autoFill()' class="form-control" value="{{ Carbon\Carbon::parse($contract->movein_at)->format('Y-m-d') }}"></td>
             </tr>
             <tr>
-                <th>Moveout at</th>
+                <th>Moveout</th>
                 <td><input form="editContractForm" type="date" name="moveout_at" id="moveout_at" onkeyup='autoFill()' class="form-control" value="{{ Carbon\Carbon::parse($contract->moveout_at)->format('Y-m-d') }}"></td>
             </tr>
             <tr>
-                <th>Number of months</th>
+                <th>Length of stay</th>
                 <td><input form="editContractForm" type="text" class="form-control" name="number_of_months" id="number_of_months" required readonly value="{{ $contract->number_of_months? $contract->number_of_months: 'NULL' }}"></td>
                 <small class="text-danger" id="invalid_date"></small>
             </tr>
@@ -245,15 +247,15 @@
                 <td><input form="editContractForm" type="text" class="form-control" name="term" id="term" value="{{ $contract->term? $contract->term: 'NULL' }}" required readonly></td>
             </tr>
             <tr>
-                <th>Terminated at</th>
+                <th>Terminated</th>
                 <td><input form="editContractForm" type="date" class="form-control" name="terminated_at" id="terminated_at" value="{{ $contract->terminated_at? $contract->terminated_at: 'NULL' }}" ></td>
             </tr>
             <tr>
-                <th>Actual moveout at</th>
+                <th>Actual moveout</th>
                 <td><input form="editContractForm" type="date" class="form-control" name="actual_moveout_at" id="actual_moveout_at" value="{{ $contract->actual_moveout_at? $contract->actual_moveout_at: 'NULL' }}" ></td>
             </tr>
             <tr>
-                <th>Reason for moving out at</th>
+                <th>Reason for termination</th>
                 <td> 
                     <select form="editContractForm" class="form-control" name="moveout_reason" id="moveout_reason">
                     <option value="{{ $contract->moveout_reason }}" selected>{{ $contract->moveout_reason }}</option>
@@ -270,13 +272,15 @@
             </tr>
             </table>
         </div>
+        </div>
+      </div>
     </div>
 </div>
 <div class="row">
     <div class="col">
         <p class="text-right">
-            <a href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}" class="btn btn-secondary"><i class="fas fa-times"></i>  Cancel</a>
-            <button form="editContractForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-check"></i> Save Changes</button>
+         
+            <button form="editContractForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"> Update</button>
         </p>
     </div>
 </div>

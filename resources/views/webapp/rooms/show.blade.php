@@ -548,7 +548,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <form id="editUnitForm" action="/property/{{ Session::get('property_type') }}/room/{{ $home->unit_id}}/update" method="POST">
+        <form id="editUnitForm" action="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id}}/update" method="POST">
             @method('put')
             @csrf
         </form>
