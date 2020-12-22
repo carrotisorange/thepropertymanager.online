@@ -192,7 +192,7 @@
    </div>
 
    <div class="col-lg-3">
-    <small class="">Point of contact <span class="text-danger">*</span></small>
+    <small class="">Source <span class="text-danger">*</span></small>
     <input class="form-control" form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" value="Renewal"required readonly>
      {{-- <option value="">Please select one</option>
        <option value="Facebook">Facebook</option>
@@ -215,7 +215,7 @@
       
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
            
-            <strong><i class="fas fa-check"></i> You're about to add another contract for {{ $tenant->first_name.' '.$tenant->last_name}}. Please complete the contract details below...</strong>
+            <strong> You're about to add another contract for {{ $tenant->first_name.' '.$tenant->last_name}}. Please complete the contract details below...</strong>
           
         
     </div>
@@ -227,7 +227,7 @@
   @csrf
   </form>
   
-  <p>Tenant Information</p>
+  <h2>Tenant Details</h2>
   <div class="row">
 
       <div class="col">
@@ -258,10 +258,10 @@
   <input type="hidden" form="addTenantForm1" value="{{ $property->property_id }}" name="property_id">
   <hr>
 
-  <p>Contract Details</p>
+  <h2>Contract Details</h2>
   <div class="row">
     <div class="col">
-      <small>Move-in date <span class="text-danger">*</span></small>
+      <small>Movein <span class="text-danger">*</span></small>
       
       <input form="addTenantForm1" type="date" class="form-control form-control-user @error('movein_at') is-invalid @enderror" name="movein_at" id="movein_at" onchange='autoFill()' value="{{ old('movein_at') }}" required>
     
@@ -273,7 +273,7 @@
 
     </div>
     <div class="col">
-      <small>Move-out date <span class="text-danger">*</span></small>
+      <small>Moveout <span class="text-danger">*</span></small>
       <input form="addTenantForm1" type="date" class="form-control form-control-user @error('moveout_at') is-invalid @enderror" name="moveout_at" id="moveout_at" onchange='autoFill()' value="{{ old('moveout_at') }}" required>
     
       @error('moveout_at')
@@ -342,19 +342,22 @@
     <div class="row">
       <div class="col">
      
-        <p>
-          Bill Information
-          <p class="text-right"><a href="#/" id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
-            <a href="#/" id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>     </p>
+        <h2>Bills and movein charges <span class="text-danger"><small>(Optional)</small></span>
+          <p class="text-right">
+            <a href="#/" id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
+            <a href="#/" id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>    
           </p>
+        </h2>
           <div class="table-responsive text-nowrap">
           <table class = "table" id="tab_logic">
+             <thead>
               <tr>
-                  <th>#</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                 
-              </tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Amount</th>
+               
+            </tr>
+             </thead>
                   <input form="addTenantForm1" type="hidden" id="no_of_items" name="no_of_items" >
               <tr id='addr1'></tr>
           </table>
@@ -384,14 +387,12 @@
   //adding moveout charges upon moveout
     $(document).ready(function(){
         var i=1;
-        var current_bill_no  = {{ $current_bill_no }};
     $("#add_row").click(function(){
-        $('#addr'+i).html("<th>"+ (current_bill_no ) +"</th><td><select class='form-control' name='particular"+i+"' form='addTenantForm1' id='particular"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='amount"+i+"' id='amount"+i+"' type='number' min='1' step='0.01' value='{{ $unit->monthly_rent }}'' required></td>");
+        $('#addr'+i).html("<th>"+ i +"</th><td><select class='form-control' name='particular"+i+"' form='addTenantForm1' id='particular"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addTenantForm1' name='amount"+i+"' id='amount"+i+"' type='number' min='1' step='0.01' value='{{ $unit->monthly_rent }}'' required></td>");
 
 
      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
      i++;
-     current_bill_no++;
      document.getElementById('no_of_items').value = i;
 
     });
@@ -400,7 +401,6 @@
         if(i>1){
         $("#addr"+(i-1)).html('');
         i--;
-        current_bill_no--;
         document.getElementById('no_of_items').value = i;
         }
     });

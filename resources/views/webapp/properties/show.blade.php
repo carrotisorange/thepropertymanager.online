@@ -430,29 +430,22 @@
                      </thead>
                      <tbody>
                        @foreach($tenants_to_watch_out as $item)
-                       <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($item->moveout_at))) ?>
+                      
                         <tr>
                           <th>{{ $ctr++ }}</th>
                             <td>
-                              @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' )
-                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
-                              @else
-                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
-                              @endif  
+                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
                             </td>
                             <td>
-                              @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                               <a href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
-                              @else
-                             {{$item->unit_no }}
-                              @endif
                             </td>
                             <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}}</td>
                             <td>
-                                @if($diffInDays <= -1)
-                                <span class="badge badge-danger">contract has expired {{ $diffInDays*-1 }} days ago</span>
-                                 @else
+                              <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($item->moveout_at))) ?>
+                                @if($diffInDays < 1)
                                 <span class="badge badge-info">contract expires in {{ $diffInDays }} days </span>
+                                 @else
+                                 <span class="badge badge-danger">contract has expired {{ $diffInDays }} days ago</span>
                                  @endif
                             </td>
                             <td>

@@ -190,7 +190,7 @@
    </div>
 
    <div class="col-lg-3">
-    <small class="">Point of contact <span class="text-danger">*</span></small>
+    <small class="">Source <span class="text-danger">*</span></small>
     <select class="form-control" form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" required>
       <option value="{{ old('form_of_interaction')? old('form_of_interaction'): '' }}" selected>{{ old('form_of_interaction')? old('form_of_interaction'): 'Please select one' }} </option>
        <option value="Facebook">Facebook</option>
@@ -217,7 +217,7 @@
   {{ csrf_field() }}
   </form>
   
-  <p>Tenant Information</p>
+  <h2>Tenant Details</h2>
   <div class="row">
 
       <div class="col">
@@ -327,10 +327,10 @@
   </div>
   <hr>
  
-  <p>Contract Details</p>
+  <h2>Contract Details</h2>
   <div class="row">
       <div class="col">
-        <small>Move-in date <span class="text-danger">*</span></small>
+        <small>Movein  <span class="text-danger">*</span></small>
         
         <input form="addTenantForm1" type="date" class="form-control form-control-user @error('movein_at') is-invalid @enderror" name="movein_at" id="movein_at" onchange='autoFill()' value="{{ old('movein_at') }}" required>
       
@@ -342,7 +342,7 @@
   
       </div>
       <div class="col">
-        <small>Move-out date <span class="text-danger">*</span></small>
+        <small>Moveout <span class="text-danger">*</span></small>
         <input form="addTenantForm1" type="date" class="form-control form-control-user @error('moveout_at') is-invalid @enderror" name="moveout_at" id="moveout_at" onchange='autoFill()' value="{{ old('moveout_at') }}" required>
       
         @error('moveout_at')
@@ -395,8 +395,8 @@
 </div>
   <div class="col">
     <small>Rent (per month) <span class="text-danger">*</span></small>
-    <input form="addTenantForm1" type="number" step="0.001" class="form-control form-control-user @error('rent') is-invalid @enderror" name="rent" id="rent" value="{{ $unit->monthly_rent }}" required>
-    <input form="addTenantForm1" type="hidden" class="form-control" name="original" min="1" id="original" value="{{ $unit->monthly_rent }}" required>
+    <input form="addTenantForm1" type="number" step="0.001" class="form-control form-control-user @error('rent') is-invalid @enderror" name="rent" id="rent" value="{{ $unit->rent }}" required>
+    <input form="addTenantForm1" type="hidden" class="form-control" name="original" min="1" id="original" value="{{ $unit->rent }}" required>
  
     @error('rent')
     <span class="invalid-feedback" role="alert">
@@ -411,19 +411,23 @@
     <div class="row">
       <div class="col">
      
-        <p>
-          Bill Information
-          <p class="text-right"><a href="#/" id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
-            <a href="#/" id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>     </p>
+        <h2>Bills and movein charges <span class="text-danger"><small>(Optional)</small></span>
+          <p class="text-right">
+            <a href="#/" id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
+            <a href="#/" id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>    
           </p>
+        </h2>
+       
           <div class="table-responsive text-nowrap">
-          <table class = "table table-bordered" id="tab_logic">
+          <table class = "table" id="tab_logic">
+            <thead>
               <tr>
-                  <th>#</th>
-                  <th>Particular</th>
-                  <th>Amount</th>
-                 
-              </tr>
+                <th>#</th>
+                <th>Particular</th>
+                <th>Amount</th>
+               
+            </tr>
+            </thead>
                   <input form="addTenantForm1" type="hidden" id="no_of_items" name="no_of_items" >
               <tr id='addr1'></tr>
           </table>

@@ -353,6 +353,23 @@ class RoomController extends Controller
 
         return view('reservation-forms.show-vacant-units', compact('buildings','units'));
     }
+    public function upload(Request $request, $property_id, $room_id){
+        // $image_code = '';
+        // $images = $request->file('file');
+        // foreach($images as $image)
+        // {
+        //  $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        //  $image->move(public_path('images'), $new_name);
+        //  $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+        // }
+   
+        // $output = array(
+        //  'success'  => 'Images uploaded successfully',
+        //  'image'   => $image_code
+        // );
+   
+        // return response()->json($output);
+    }
 
     public function show_property(){
        

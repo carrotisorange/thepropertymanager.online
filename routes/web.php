@@ -694,7 +694,8 @@ Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all
 Route::put('/property/{property_id}/rooms/{date}/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
 Route::post('/rooms/add/multiple', 'RoomController@add_multiple_rooms')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/unit/{unit_id}', 'RoomController@destroy')->middleware(['auth', 'verified']);
-Route::put('/units/{unit_id}', 'RoomController@update')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upload')->middleware(['auth', 'verified']);
 
 
 //routes for units

@@ -191,68 +191,83 @@
      
         <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
     
-          <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
-    <div class="row">
-          <div class="col-md-6">
-           
-          <br>
-            <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
-            <div class="table-responsive text-nowrap">
-          <table class="table">
-               <tr>
+          <p class="text-right">
+            <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
+            <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload</button> 
+          </p>
+          <div class="row">
+          <div class="col-md-12 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                
+                <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
+                <div class="table-responsive text-left">
+              <table class="table">
+                 <thead>
+                  <tr>
                     <th>Room</th>
                     <td>{{ $home->unit_no }}</td>
                </tr>
-                <tr>
-                    <th>Building</th>
-                    <td>{{ $home->building }}</td>
-               </tr>
-               <tr>
-                    <th>Floor</th>
-             
-                    <td>
-                      @if($home->floor <= 0)
-                      {{ $numberFormatter->format($home->floor * -1) }} basement
-                      @else
-                      {{ $numberFormatter->format($home->floor) }} floor
-                      @endif
-                      
-                    </td>
-               </tr>
-               <tr>
-                    <th>Type</th>
-                    <td>{{ $home->type }}</td>
-               </tr>
-             
+                 </thead>
+                  <thead>
+                    <tr>
+                      <th>Building</th>
+                      <td>{{ $home->building }}</td>
+                 </tr>
+                  </thead>
+                   <thead>
+                    <tr>
+                      <th>Floor</th>
                
-               <tr>
-                <th>Occupancy</th>
-                <td>{{ $home->occupancy }} pax</td>
-              </tr>
-              <tr>
+                      <td>
+                        @if($home->floor <= 0)
+                        {{ $numberFormatter->format($home->floor * -1) }} basement
+                        @else
+                        {{ $numberFormatter->format($home->floor) }} floor
+                        @endif
+                        
+                      </td>
+                 </tr>
+                   </thead>
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <td>{{ $home->type }}</td>
+                 </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <th>Occupancy</th>
+                      <td>{{ $home->occupancy? $home->occupancy: 0 }} <b>pax</b></td>
+                    </tr>
+                  </thead>
+                 <thead>
+                  <tr>
                     <th>Status</th>
                     <td>{{ $home->status }}</td>
                 </tr>
-                <tr>
-                    <th>Rent</th> 
-                    <td>{{ number_format($home->rent,2) }}</td>
-    
-                    <?php 
-                        session([Auth::user()->id.'tenant_monthly_rent'=> $home->rent]);
-                        session([Auth::user()->id.'unit_id'=> $home->unit_id]);
-                        session([Auth::user()->id.'unit_no'=> $home->unit_no]);
-                        session([Auth::user()->id.'building'=> $home->building]);
-                    ?>
-                </tr>
-            
-           </table>
-          </div>
-          </div>
-          <div class="col-md-6">
-            <img  src="{{ asset('/arsha/assets/img/no-image.png') }}" alt="image of the tenant" class="img-thumbnail">
+                 </thead>
+                   <thead>
+                    <tr>
+                      <th>Rent</th> 
+                      <td>{{ number_format($home->rent,2) }}</td>
+                  </tr>
+                   </thead>
+                
+               </table>
+              </div>
+              </div>
+            </div>
           </div>
         </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            asdasd
+          </div>  
         </div>
+        </div>
+        
   
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
           <div class="col-md-12 mx-auto">
@@ -528,23 +543,22 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit room</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <form id="editUnitForm" action="/units/{{$home->unit_id }}" method="POST">
+        <form id="editUnitForm" action="/property/{{ Session::get('property_type') }}/room/{{ $home->unit_id}}/update" method="POST">
             @method('put')
             @csrf
         </form>
         <div class="modal-body">
-        <form>
             <div class="form-group">
-            <small>Room No</small>
+            <label>Room</label>
             <input form="editUnitForm" type="text" value="{{ $home->unit_no }}" name="unit_no" class="form-control" id="unit_no" >
             </div>
             <div class="form-group">
-            <small>Floor</small>
+            <label>Floor</label>
             <select form="editUnitForm" id="floor" name="floor" class="form-control">
                 <option value="{{ $home->floor }}" readonly selected class="bg-primary">{{ $home->floor }}</option>
                 <option value="-5">5th basement</option>
@@ -565,11 +579,11 @@
             </select>
             </div>
             <div class="form-group">
-                <small>Building</small>
+                <label>Building</label>
                 <input form="editUnitForm" type="text" value="{{ $home->building }}" name="building" class="form-control"> 
               </div>
             <div class="form-group">
-            <small>Type</small>
+            <label>Type</label>
             <select form="editUnitForm" id="type" name="type" class="form-control">
                 <option value="{{ $home->type }}" readonly selected class="bg-primary">{{ $home->type }}</option>
                 <option value="commercial">commercial</option>
@@ -578,29 +592,26 @@
             </div>
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
             <div class="form-group">
-              <small>Occupancy</small>
-              <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy }}" name="occupancy" class="form-control"> 
+              <label>Occupancy</label>
+              <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy? $home->occupancy: 0 }}" name="occupancy" class="form-control"> 
             </div>
             <div class="form-group">
-            <small>Status</small>
+            <label>Status</label>
             <select form="editUnitForm" id="status" name="status" class="form-control">
                 <option value="{{ $home->status }}" readonly selected class="bg-primary">{{ $home->status }}</option>
-                <option value="vacant">vacant</option>
                 <option value="occupied">occupied</option>
-                
                 <option value="reserved">reserved</option>
+                <option value="vacant">vacant</option>
             </select>
             </div>
             <div class="form-group">
-                <small>Rent</small>
-                <input form="editUnitForm"  oninput="this.value = Math.abs(this.value)" step="0.01" type="number" value="{{ $home->rent }}" name="rent" class="form-control">
+                <label>Rent</label>
+                <input form="editUnitForm"  oninput="this.value = Math.abs(this.value)" step="0.01" type="number" value="{{ $home->rent? $home->rent: 0 }}" name="rent" class="form-control">
                 </div>
-       
-        </form>
+      
         </div>
         <div class="modal-footer">
-       
-        <button type="submit" form="editUnitForm" class="btn btn-primary" this.disabled = true;><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>  
+        <button type="submit" form="editUnitForm" class="btn btn-primary" this.disabled = true;> Update</button>  
         </div>
     </div>
     </div>
@@ -712,6 +723,39 @@
                       </div>
                       </div>
                   </div>
+
+                  <div class="modal fade" id="uploadImages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Select images</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <form  method="POST" id="uploadImagesForm" action="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/upload" enctype="multipart/form-data">
+                            @csrf
+                        </form>
+                        <div class="modal-body">
+                          <input form="uploadImagesForm" class="form-control" type="file" name="file[]" accept="image/*" multiple required/>
+                          <br><br>
+                          <div class="progress">
+                            <div class="progress-bar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                0%
+                            </div>
+                          </div>
+                          <br><br>
+                          <div id="success" class="row">
+
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" form="uploadImagesForm" class="btn btn-primary" this.disabled = true;> Upload</button>  
+                        </div>
+                    </div>
+                    </div>
+                  </div>
   @include('webapp.tenants.show_includes.rooms.warning-exceeds-limit')
   @include('webapp.tenants.show_includes.owners.create')
 @endsection
@@ -719,7 +763,31 @@
 
 
 @section('scripts')
-  
+<script>
+  $(document).ready(function(){
+      $('form').ajaxForm({
+          beforeSend:function(){
+              $('#success').empty();
+              $('.progress-bar').text('0%');
+              $('.progress-bar').css('width', '0%');
+          },
+          uploadProgress:function(event, position, total, percentComplete){
+              $('.progress-bar').text(percentComplete + '0%');
+              $('.progress-bar').css('width', percentComplete + '0%');
+          },
+          success:function(data)
+          {
+              if(data.success)
+              {
+                  $('#success').html('<div class="text-success text-center"><b>'+data.success+'</b></div><br /><br />');
+                  $('#success').append(data.image);
+                  $('.progress-bar').text('Uploaded');
+                  $('.progress-bar').css('width', '100%');
+              }
+          }
+      });
+  });
+  </script>  
 @endsection
 
 
