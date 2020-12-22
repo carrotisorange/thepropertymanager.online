@@ -48,11 +48,11 @@ class PropertyController extends Controller
                ->count();
        
 
-                $existing_users = DB::table('users')->where('property', Auth::user()->property)
-                ->where('id','<>',Auth::user()->id )
-                ->count();
+                // $existing_users = DB::table('users')->where('property', Auth::user()->property)
+                // ->where('id','<>',Auth::user()->id )
+                // ->count();
 
-        return view('webapp.properties.index', compact('properties', 'users','existing_users')); 
+        return view('webapp.properties.index', compact('properties', 'users')); 
 
             }elseif(Auth::user()->user_type == 'tenant'){
                 $property_id = DB::table('users_properties_relations')
@@ -163,17 +163,6 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'type' => 'required',
-          
-            'ownership' => 'required',
-            'address' => 'required',
-            'mobile' => 'required',
-            'country' => 'required',
-            'zip' => 'required',
-        ]);
-        
         $request->validate([
             'name' => 'required|max:255',
             'type' => 'required',

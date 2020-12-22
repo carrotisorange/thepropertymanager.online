@@ -192,8 +192,8 @@
         <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
     
           <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
-    
-          <div class="col-md-12 mx-auto">
+    <div class="row">
+          <div class="col-md-6">
            
           <br>
             <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
@@ -248,6 +248,10 @@
            </table>
           </div>
           </div>
+          <div class="col-md-6">
+            <img  src="{{ asset('/arsha/assets/img/no-image.png') }}" alt="image of the tenant" class="img-thumbnail">
+          </div>
+        </div>
         </div>
   
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
