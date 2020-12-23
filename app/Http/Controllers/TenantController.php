@@ -76,7 +76,7 @@ class TenantController extends Controller
 
         return view('webapp.tenants.index', compact('tenants', 'count_tenants', 'property'));
     }else{
-        return view('website.unregistered');
+        return view('layouts.arsha.unregistered');
     }
     }
 
@@ -632,7 +632,7 @@ class TenantController extends Controller
             
                 return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
         }else{
-                return view('website.unregistered');
+                return view('layouts.arsha.unregistered');
         }
     }
 
@@ -726,7 +726,7 @@ class TenantController extends Controller
 
             return view('webapp.bills.show-billings', compact('current_bill_no','tenant','payments', 'room', 'balance','payment_ctr', 'collections'));  
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -766,7 +766,7 @@ class TenantController extends Controller
 
             return view('webapp.bills.edit', compact('current_bill_no','tenant', 'room', 'balance'));  
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -785,7 +785,7 @@ class TenantController extends Controller
             $tenant = Tenant::findOrFail($tenant_id);
             return view('webapp.tenants.edit', compact('tenant', 'property'));
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
 
     }

@@ -484,7 +484,7 @@ class UserController extends Controller
          if(($user->id === Auth::user()->id) || ($manager->user_type === 'manager' && $user->property === $manager->property) || Auth::user()->email === 'thepropertymanager2020@gmail.com'){
             return view('webapp.users.show-user', compact('referrals','concerns','properties','property','user', 'sessions', 'blogs'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
        
     }
@@ -506,7 +506,7 @@ class UserController extends Controller
             return view('webapp.users.edit-user', compact('user'));
         }
         else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
 
        
@@ -585,7 +585,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.index', compact('tenant'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -609,7 +609,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.bills', compact('bills','tenant'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -635,7 +635,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.payments', compact('payments','tenant'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -667,7 +667,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.concerns', compact('concerns','tenant','users'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -685,7 +685,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.responses', compact('responses','tenant'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -713,7 +713,7 @@ class UserController extends Controller
            return back()->with('success', 'Your concern has been reported! Please keep your line open. One of our employees will get back to you.');
 
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -731,7 +731,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.profile', compact('tenant','user'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 
@@ -793,7 +793,7 @@ class UserController extends Controller
 
             return view('webapp.tenant_access.profile', compact('tenant','user'));
          }else{
-             return view('website.unregistered');
+             return view('layouts.arsha.unregistered');
          }
       
 

@@ -393,7 +393,7 @@ Route::post('concern/{concern_id}/response', 'ResponseController@store')->middle
 Route::get('property/{property_id}/notifications', 'NotificationController@index')->middleware(['auth', 'verified']);
 
 
-//routes for the the website
+//routes for the the layouts.arsha
 Route::get('/', function(){
     $users = User::where('user_type','<>','tenant')->where('id','<>', 36)->count();
 
@@ -407,14 +407,14 @@ Route::get('/', function(){
      ->where('property_id','<>' ,'2b5e65e0-1701-11eb-bf70-a74337c91b16')
      ->count();
 
-    return view('website.index', compact('users','properties', 'rooms', 'tenants'));
+    return view('layouts.arsha.index', compact('users','properties', 'rooms', 'tenants'));
 });
 
 Route::get('/listings', function(){
 
     $properties = Property::all()->count();
 
-    return view('website.listings', compact('properties'));
+    return view('layouts.arsha.listings', compact('properties'));
 });
 
 
@@ -500,7 +500,7 @@ Route::get('/owners', function(){
 
             return view('webapp.owners.index', compact('owners', 'count_owners'));
     }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
     }
 
 })->middleware(['auth', 'verified']);
@@ -523,7 +523,7 @@ Route::get('/collections', function(){
 
         return view('webapp.collections.collections', compact('collections'));
     }else{
-        return view('website.unregistered');
+        return view('layouts.arsha.unregistered');
     }
 
 })->middleware(['auth', 'verified']);
@@ -544,7 +544,7 @@ Route::get('/bills', function(){
 
         return view('webapp.bills.index', compact('bills'));
     }else{
-        return view('website.unregistered');
+        return view('layouts.arsha.unregistered');
     }
 
 })->middleware(['auth', 'verified']);
@@ -561,7 +561,7 @@ Route::get('/housekeeping', function(){
 
         return view('webapp.hose.housekeeping', compact('housekeeping'));
     }else{
-        return view('website.unregistered');
+        return view('layouts.arsha.unregistered');
     }
 
 })->middleware(['auth', 'verified']);
@@ -576,7 +576,7 @@ Route::get('/maintenance', function(){
 
         return view('webapp.personnels.maintenance', compact('maintenance'));
     }else{
-        return view('website.unregistered');
+        return view('layouts.arsha.unregistered');
     }
 
 })->middleware(['auth', 'verified']);
@@ -717,18 +717,18 @@ Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middlew
 
 //show privacy policy
 Route::get('/privacy-policy', function(){
-    return view('website.privacy-policy');
+    return view('layouts.arsha.privacy-policy');
 });
 
 //show terms of service
 Route::get('/terms-of-service', function(){
-    return view('website.terms-of-service');
+    return view('layouts.arsha.terms-of-service');
 });
 
 
 //show acceptable use policy
 Route::get('/acceptable-use-policy', function(){
-    return view('website.acceptable-use-policy');
+    return view('layouts.arsha.acceptable-use-policy');
 });
 
 

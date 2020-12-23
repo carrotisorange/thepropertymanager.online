@@ -1,4 +1,4 @@
-@extends('templates.webapp.template')
+@extends('layouts.argon.main')
 
 @section('title', 'Housekeeping')
 

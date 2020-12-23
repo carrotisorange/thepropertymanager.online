@@ -1129,7 +1129,7 @@
 		},
 		"file-highlight": {
 			"title": "File Highlight",
-			"description": "Fetch external files and highlight them with Prism. Used on the Prism website itself.",
+			"description": "Fetch external files and highlight them with Prism. Used on the Prism layouts.arsha itself.",
 			"noCSS": true
 		},
 		"show-language": {

@@ -62,7 +62,7 @@ class BillController extends Controller
     
             return view('webapp.bills.index', compact('bills', 'property'));
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -640,7 +640,7 @@ class BillController extends Controller
             }
 
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -683,7 +683,7 @@ class BillController extends Controller
                 return view('webapp.bills.edit_occupant_bills', compact('current_bill_no','unit', 'balance', 'property'));  
           
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -749,7 +749,7 @@ class BillController extends Controller
 
            
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -803,7 +803,7 @@ class BillController extends Controller
            
            
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 

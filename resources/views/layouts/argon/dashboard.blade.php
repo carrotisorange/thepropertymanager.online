@@ -1,95 +1,4 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>@yield('title')</title>
-
-  @yield('css')
-
-  <!-- Custom fonts for this template-->
-  <link href="{{ asset('dashboard/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css"><link href="{{ asset('index/assets/img/favicon.ico') }}" rel="icon">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <!-- Custom styles for this template-->
-  <link href="{{ asset('dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('/arsha/assets/img/favicon.ico') }}" rel="icon">
-  <link href="{{ asset('/arsha/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
-
-  <style>
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited .text-primary{
-        background-color: #8629f8 !important;
-    }
-  </style>
-
-</head>
-
-<body>
-  
-    @include('templates.webapp.header')
- 
-  @include('templates.website.messenger-chatbot')
-  @include('templates.webapp.notifications')
-  <div class="col-md-5 mx-auto">
-    <div class="col-xl-12 col-lg-12 col-md-12">
-        <div class="card shadow-lg my-3 rounded">
-            <div class="card-body p-1">
-                <div class="p-5">
-                    @yield('content')
-                </div>
-            </div>
-        </div>
-    </div>
-  </div>
-  <hr>
-  @include('templates.webapp.footer')
-  @include('templates.webapp-new.logout')
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{ asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="{{ asset('dashboard/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{{ asset('dashboard/js/sb-admin-2.min.js') }}"></script>
- 
- <script type="text/javascript">
-     function checkForm(form) // Submit button clicked
-   {
-     form.myButton.disabled = true;
-     form.myButton.value = "Please wait...";
-     return true;
-   }
-   </script>
- 
-<script>
-  @yield('js')
-</script>
-</body>
-
-</html>
-
-
- --}}
-<!--
-=========================================================
-* Argon Dashboard - v1.2.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-
-* Copyright  Creative Tim (http://www.creative-tim.com)
-* Coded by www.creative-tim.com
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html>
 
@@ -115,7 +24,8 @@
       </head>
 
 <body class="bg-default">
-  @include('templates.webapp-new.chat-messenger')
+  @include('layouts.argon.chat-messenger')
+
   <!-- Navbar -->
   <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
     <div class="container">
@@ -160,13 +70,13 @@
         </ul>
         <hr class="d-lg-none" />
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-            {{-- {{-- <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
+             <li class="nav-item">
+              <a class="nav-link nav-link-icon" href="https://www.facebook.com/onlinepropertymanager" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
                 <i class="fab fa-facebook-square"></i>
                 <span class="nav-link-inner--text d-lg-none">Facebook</span>
               </a>
             </li>
-            <li class="nav-item">
+           {{-- <li class="nav-item">
               <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
                 <i class="fab fa-instagram"></i>
                 <span class="nav-link-inner--text d-lg-none">Instagram</span>
@@ -184,20 +94,14 @@
                 <span class="nav-link-inner--text d-lg-none">Github</span>
               </a>
             </li> --}}
-          @if(Auth::check())
           <li class="nav-item d-none d-lg-block ml-lg-4">
-           <p class="text-white"> Welcome, {{ Auth::user()->name }}!</p>
-          </li>
-          @else
-          <li class="nav-item d-none d-lg-block ml-lg-4">
-            <a href="/register" target="_blank" class="btn btn-neutral btn-icon">
+            <a href="/user/upgrade" target="_blank" class="btn btn-neutral btn-icon">
               <span class="btn-inner--icon">
-                <i class="fas fa-user mr-2"></i>
+                <i class="fas fa-shopping-cart mr-2"></i>
               </span>
-              <span class="nav-link-inner--text">Register for FREE</span>
+              <span class="nav-link-inner--text">Upgrade to PRO</span>
             </a>
           </li>
-          @endif
         </ul>
       </div>
     </div>
@@ -206,16 +110,7 @@
   <div class="main-content">
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
-      <div class="container">
-        {{-- <div class="header-body text-center mb-7">
-          <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-              <h1 class="text-white">Welcome Back!</h1>
-              <p class="text-lead text-white">Simplifying property management.</p>
-            </div>
-          </div>
-        </div> --}}
-      </div>
+
       <div class="separator separator-bottom separator-skew zindex-100">
         <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
@@ -225,8 +120,9 @@
     <!-- Page content -->
     <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-5">
+        <div class="col-lg-10 col-md-10">
           <div class="card bg-secondary border-0 mb-0">
+            @include('layouts.argon.notifications')
             {{-- <div class="card-header bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">
@@ -241,13 +137,14 @@
               </div>
             </div> --}}
             <div class="card-body px-lg-5 py-lg-5">
+           
               {{-- <div class="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
               </div> --}}
               @yield('content')
             </div>
           </div>
-    
+          <br><br><br>
           {{-- <div class="row mt-3">
             <div class="col-6">
               <a href="#" class="text-light"><small>Forgot password?</small></a>
@@ -301,6 +198,8 @@
   <script src="{{ asset('/argon/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <!-- Argon JS -->
   <script src="{{ asset('/argon/assets/js/argon.js?v=1.2.0') }}"></script>
+
+  @yield('scripts')
 </body>
 
 </html>

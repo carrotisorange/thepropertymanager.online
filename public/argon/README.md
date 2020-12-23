@@ -6,14 +6,14 @@
 ![Product Gif](https://s3.amazonaws.com/creativetim_bucket/products/96/original/opt_ad_thumbnail.jpg)
 
 
-Start your development with a Dashboard for Bootstrap 4. It is open source, free and it features many components that can help you create amazing websites.
+Start your development with a Dashboard for Bootstrap 4. It is open source, free and it features many components that can help you create amazing layouts.arshas.
 
 
 #### Fully Coded Components
 
 Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in colour, that you can easily modify using SASS files.
 
-You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Dashboard is coming with prebuilt examples, so the development process is seamless, switching from our pages to the real website is very easy to be done.
+You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Dashboard is coming with prebuilt examples, so the development process is seamless, switching from our pages to the real layouts.arsha is very easy to be done.
 
 Every element has multiple states for colors, styles, hover, focus, that you can easily access and use.
 
@@ -111,7 +111,7 @@ If you want to get inspiration or just show something directly to your clients, 
 
 ## Documentation
 
-The documentation for the Argon Dashboard is hosted at our [website](https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html).
+The documentation for the Argon Dashboard is hosted at our [layouts.arsha](https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html).
 
 ## File Structure
 
@@ -178,7 +178,7 @@ At present, we officially aim to support the last two versions of the following 
 
 We use GitHub Issues as the official bug tracker for the Argon Dashboard. Here are some advices for our users that want to report an issue:
 
-1. Make sure that you are using the latest version of the Argon Dashboard. Check the CHANGELOG from your copy on our [website](https://www.creative-tim.com).
+1. Make sure that you are using the latest version of the Argon Dashboard. Check the CHANGELOG from your copy on our [layouts.arsha](https://www.creative-tim.com).
 2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
 3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 

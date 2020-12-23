@@ -93,7 +93,7 @@
 
   * Add `@alfredxing` to the `@jekyll/core` team. :tada: (#3218)
   * Document the `-q` option for the `build` and `serve` commands (#3149)
-  * Fix some minor typos/flow fixes in documentation website content (#3165)
+  * Fix some minor typos/flow fixes in documentation layouts.arsha content (#3165)
   * Add `keep_files` to configuration documentation (#3162)
   * Repeat warning about cleaning of the `destination` directory (#3161)
   * Add jekyll-500px-embed to list of third-party plugins (#3163)

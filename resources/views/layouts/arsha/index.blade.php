@@ -1,4 +1,4 @@
-@extends('templates.website.template')
+@extends('layouts.arsha.template')
 
 @section('title', 'The Property Manager')
 

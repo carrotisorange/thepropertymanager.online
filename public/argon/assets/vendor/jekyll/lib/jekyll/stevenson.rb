@@ -14,7 +14,7 @@ module Jekyll
       severity ||= UNKNOWN
       @logdev = set_logdevice(severity)
 
-      if @logdev.nil? or severity < @level
+      if @loglayouts.devnil? or severity < @level
         return true
       end
       progname ||= @progname
@@ -26,7 +26,7 @@ module Jekyll
           progname = @progname
         end
       end
-      @logdev.puts(
+      @loglayouts.devputs(
         format_message(format_severity(severity), Time.now, progname, message))
       true
     end

@@ -1,4 +1,4 @@
-@extends('templates.webapp-new.dashboard')
+@extends('layouts.argon.dashboard')
 
 
 @section('title', 'My properties')

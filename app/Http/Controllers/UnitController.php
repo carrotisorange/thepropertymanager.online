@@ -55,7 +55,7 @@ class UnitController extends Controller
             return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property'));
            }
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -179,7 +179,7 @@ class UnitController extends Controller
              
           
         }else{
-                return view('website.unregistered');
+                return view('layouts.arsha.unregistered');
         }
         
     }

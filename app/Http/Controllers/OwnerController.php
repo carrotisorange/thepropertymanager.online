@@ -156,7 +156,7 @@ class OwnerController extends Controller
    
             return view('webapp.owners.show', compact('owner','rooms','property'));
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
 
        

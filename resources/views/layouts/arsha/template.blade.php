@@ -46,14 +46,14 @@
 
   <hr>
   <!-- ======= Footer ======= -->
-  @include('templates.website.footer')
+  @include('layouts.arsha.footer')
   <!-- End Footer -->
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>
 
       <!-- Load Facebook SDK for JavaScript -->
-      @include('templates.webapp-new.chat-messenger')
+      @include('layouts.argon.chat-messenger')
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('/arsha/assets/vendor/jquery/jquery.min.js') }}"></script>

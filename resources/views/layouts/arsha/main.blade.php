@@ -70,7 +70,7 @@
 
   <hr>
      <!-- ======= Footer ======= -->
-  @include('templates.website.footer')
+  @include('layouts.arsha.footer')
   <!-- End Footer -->
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>

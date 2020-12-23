@@ -1,4 +1,4 @@
-@extends('templates.webapp-new.auth')
+@extends('layouts.argon.auth')
 
 @section('title', 'Register')
 

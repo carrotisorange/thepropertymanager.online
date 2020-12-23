@@ -37441,9 +37441,9 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue/dist/vue.common.dev.js":
+/***/ "./node_modules/vue/dist/vue.common.layouts.devjs":
 /*!*************************************************!*\
-  !*** ./node_modules/vue/dist/vue.common.dev.js ***!
+  !*** ./node_modules/vue/dist/vue.common.layouts.devjs ***!
   \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -49421,7 +49421,7 @@ module.exports = Vue;
 /***/ (function(module, exports, __webpack_require__) {
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./vue.common.dev.js */ "./node_modules/vue/dist/vue.common.dev.js")
+  module.exports = __webpack_require__(/*! ./vue.common.layouts.devjs */ "./node_modules/vue/dist/vue.common.layouts.devjs")
 }
 
 

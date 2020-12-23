@@ -1,4 +1,4 @@
-@extends('templates.webapp-new.template')
+@extends('layouts.argon.main')
 
 @section('title', $unit->building.' '.$unit->unit_no )
 
@@ -199,7 +199,7 @@
        <option value="Flyers">Flyers</option>
        <option value="In house">In house</option>
        <option value="Instagram">Instagram</option>
-       <option value="Website">Website</option>
+       <option value="layouts.arsha">layouts.arsha</option>
        <option value="Walk in">Walk in</option>
        <option value="Word of mouth">Word of mouth</option> --}}
 

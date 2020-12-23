@@ -1,4 +1,4 @@
-@extends('templates.webapp-new.template')
+@extends('layouts.argon.main')
 
 @section('title', $owner->name)
 
@@ -174,11 +174,11 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-owner-tab" data-toggle="tab" href="#owner" role="tab" aria-controls="nav-owner" aria-selected="true"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Profile</a>
           <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="fas fa-money-check fa-sm text-primary-50"></i> Bank <span class="badge badge-primary"></span></a>
-          <a class="nav-item nav-link" id="nav-rooms-tab" data-toggle="tab" href="#rooms" role="tab" aria-controls="nav-rooms" aria-selected="false"><i class="fas fa-home fa-sm text-primary-50"></i> 
+          <a class="nav-item nav-link" id="nav-certificates-tab" data-toggle="tab" href="#certificates" role="tab" aria-controls="nav-certificates" aria-selected="false"><i class="fas fa-home fa-sm text-primary-50"></i> 
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            Unit
+            Certificates
             @else
-            Room
+            Rooms
             @endif
             <span class="badge badge-primary">{{ $rooms->count() }}</span>
           </a>
@@ -251,7 +251,7 @@
        
          </div> </div>
       </div>
-      <div class="tab-pane fade" id="rooms" role="tabpanel" aria-labelledby="nav-rooms-tab">
+      <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="nav-certificates-tab">
         {{-- <a href="#/"  data-toggle="modal" data-target="#addRoomModal" data-whatever="@mdo" type="button" class="btn btn-primary">
           <i class="fas fa-plus fa-sm text-white-50"></i> Add 
         </a>

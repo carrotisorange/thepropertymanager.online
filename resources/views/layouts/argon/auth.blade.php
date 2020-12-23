@@ -129,7 +129,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-5">
           <div class="card bg-secondary border-0 mb-0">
-            @include('templates.webapp.notifications')
+            @include('layouts.argon.notifications')
             {{-- <div class="card-header bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">

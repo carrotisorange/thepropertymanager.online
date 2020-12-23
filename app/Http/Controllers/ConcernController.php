@@ -158,7 +158,7 @@ class ConcernController extends Controller
       
        return view('webapp.concerns.show', compact('concern', 'responses', 'property','concern_details', 'personnels'));
    }else{
-       return view('website.unregistered');
+       return view('layouts.arsha.unregistered');
    }
 
     }

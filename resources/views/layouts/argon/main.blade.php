@@ -22,13 +22,13 @@
 </head>
 
 <body>
-  @include('templates.webapp-new.chat-messenger')
+  @include('layouts.argon.chat-messenger')
   @yield('sidebar')
   @show
   <!-- Main content -->
   <div class="main-content" id="panel">
-    @include('templates.webapp-new.header')
-    @include('templates.webapp.notifications')
+    @include('layouts.argon.header')
+    @include('layouts.argon.notifications')
       <div class="header pb-6">
           <div class="container-fluid">
             <div class="header-body">
@@ -39,11 +39,11 @@
     <!-- Page content -->
       <div class="container-fluid mt--6">
         @yield('body-content')
-        @include('templates.webapp-new.footer')
+        @include('layouts.argon.footer')
 
         
 
-        @include('templates.webapp-new.logout')
+        @include('layouts.argon.logout')
     </div>
     <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
     <div id="preloader"></div>

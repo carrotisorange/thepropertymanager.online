@@ -19,9 +19,9 @@ permalink: /feed.xml
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
     <language>en-US</language>
     <generator>Jekyll v{{ jekyll.version }}</generator>
-    <description>Transform your plain text into static websites and blogs.</description>
+    <description>Transform your plain text into static layouts.arshas and blogs.</description>
     <image>
-      <description>Transform your plain text into static websites and blogs.</description>
+      <description>Transform your plain text into static layouts.arshas and blogs.</description>
       <url>http://jekyllrb.com/img/logo-rss.png</url>
       <title>Jekyll • Simple, blog-aware, static sites</title>
       <link>http://jekyllrb.com/</link>

@@ -38,7 +38,7 @@ class VerificationController extends Controller
     // protected function authenticated(Request $request, $user)
     // {
     //     if($user->status === 'unregistered'){
-    //         return view('website.unregistered');
+    //         return view('layouts.arsha.unregistered');
     //     }else{
     //         return view('/');
     //     }

@@ -358,7 +358,7 @@ class CollectionController extends Controller
     {
 
         if(Auth::user()->status === 'unregistered')
-             return view('website.unregistered'); 
+             return view('layouts.arsha.unregistered'); 
 
          else
              $payment = DB::table('units')

@@ -55,7 +55,7 @@ class RoomController extends Controller
             return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property'));
            }
         }else{
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
     }
 
@@ -169,7 +169,7 @@ class RoomController extends Controller
                 return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
             }
         }else{
-                return view('website.unregistered');
+                return view('layouts.arsha.unregistered');
         }
         
     }
@@ -335,7 +335,7 @@ class RoomController extends Controller
     public function show_vacant_units($property){
 
         if(Auth::check()){
-            return view('website.unregistered');
+            return view('layouts.arsha.unregistered');
         }
         else
         $buildings = DB::table('units')

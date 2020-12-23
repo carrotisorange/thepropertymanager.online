@@ -1,4 +1,4 @@
-@extends('templates.webapp-new.template')
+@extends('layouts.argon.main')
 
 @section('title',   $concern->details)
 

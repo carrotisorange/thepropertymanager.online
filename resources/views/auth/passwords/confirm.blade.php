@@ -1,4 +1,4 @@
-@extends('templates.webapp.auth')
+@extends('layouts.argon.auth')
 
 @section('content')
 <div class="container">

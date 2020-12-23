@@ -36,7 +36,7 @@
         @yield('css')
       </head>
 <body>
-  @include('templates.webapp-new.chat-messenger')
+  @include('layouts.argon.chat-messenger')
   <!-- Sidenav -->
 @yield('sidebar')
 @show
@@ -45,7 +45,7 @@
     <!-- Topnav -->
     <!-- Topnav -->
 @include('webapp.tenant_access.header')
-@include('templates.webapp.notifications')
+@include('layouts.argon.notifications')
     <!-- Header -->
     <!-- Header -->
     <div class="header pb-6">
@@ -98,7 +98,7 @@
     </div>
   </div>
 
-  @include('templates.webapp-new.logout')
+  @include('layouts.argon.logout')
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="{{ asset('/argon/assets/vendor/jquery/dist/jquery.min.js') }}"></script>

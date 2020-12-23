@@ -79,7 +79,7 @@ class PropertyController extends Controller
 
                 Session::put('notifications', Notification::orderBy('notification_id', 'desc')->limit(5)->get());
 
-                return view('dev.activities', compact('activities'));
+                return view('layouts.dev.activities', compact('activities'));
             }
             else{
                 if(Auth::user()->lower_access_user_id == null){
@@ -628,7 +628,7 @@ $instagram = DB::table('contracts')
 $website = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
-->where('form_of_interaction','Website')
+->where('form_of_interaction','website')
 ->count();
 
 $walkin = DB::table('contracts')
