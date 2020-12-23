@@ -143,7 +143,7 @@
                    <td>{{ $item->movein_at }}</td>
                    <td>{{ $item->moveout_at }}</td>
                    <td>{{ $item->contract_status }}</td>
-                   <td>{{ $item->contract_rent }}</td>
+                   <td>{{ number_format($item->contract_rent,2) }}</td>
                </tr>
            @endforeach
        </tbody>

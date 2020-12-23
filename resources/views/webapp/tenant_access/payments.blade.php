@@ -134,7 +134,7 @@
                 <th>AR No</th>
                 <th>Bill No</th>
           
-                <th>Description</th>
+                <th>Particular</th>
                 <th colspan="2">Period Covered</th>
                 <th>Form</th>
                 <th class="text-right">Amount</th>
@@ -175,7 +175,7 @@
               </tr>
           @endforeach
               <tr>
-                <th>Total</th>
+                <th>TOTAL</th>
                 <th colspan="8" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
               </tr>
               
