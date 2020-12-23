@@ -430,15 +430,15 @@
                      @endif
                  </td>
                  <td>
-                     @if($item->status === 'pending')
-                     <span class="badge badge-warning">{{ $item->status }}</span>
-                     @elseif($item->status === 'active')
-                     <span class="badge badge-primary">{{ $item->status }}</span>
+                     @if($item->concern_status === 'pending')
+                     <span class="badge badge-warning">{{ $item->concern_status }}</span>
+                     @elseif($item->concern_status === 'active')
+                     <span class="badge badge-primary">{{ $item->concern_status }}</span>
                      @else
-                     <span class="badge badge-success">{{ $item->status }}</span>
+                     <span class="badge badge-success">{{ $item->concern_status }}</span>
                      @endif
                  </td>
-                 <td>{{ $item->name }}</td>
+                 <td>{{ $item->name? $item->name: 'NULL' }}</td>
                  <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
                  <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
              </tr>

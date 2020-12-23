@@ -160,7 +160,7 @@ class UnitController extends Controller
 
            $concerns = DB::table('units')
             ->join('concerns', 'unit_id', 'concern_unit_id')
-            ->join('users', 'concern_user_id', 'id')
+            ->leftJoin('users', 'concern_user_id', 'id')
             ->select('*', 'concerns.status as concern_status')
             ->where('unit_id', $unit_id)
             ->orderBy('reported_at', 'desc')

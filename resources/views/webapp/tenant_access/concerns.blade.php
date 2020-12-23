@@ -164,15 +164,15 @@
                 @endif
             </td>
             <td>
-                @if($item->status === 'pending')
-                <span class="badge badge-warning">{{ $item->status }}</span>
-                @elseif($item->status === 'active')
-                <span class="badge badge-primary">{{ $item->status }}</span>
+                @if($item->concern_status === 'pending')
+                <span class="badge badge-warning">{{ $item->concern_status }}</span>
+                @elseif($item->concern_status === 'active')
+                <span class="badge badge-primary">{{ $item->concern_status }}</span>
                 @else
-                <span class="badge badge-success">{{ $item->status }}</span>
+                <span class="badge badge-success">{{ $item->concern_status }}</span>
                 @endif
             </td>
-            <td>{{ $item->name }}</td>
+            <td>{{ $item->name? $item->name: 'NULL' }}</td>
             <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
             <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
             <td ><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses"><button class="btn btn-sm btn-primary">View</button></a></td>
@@ -262,7 +262,7 @@
                          <div class="row">
                             <div class="col">
                                 <label for="movein_date">Assign concern to</label>
-                                <select class="form-control" form="concernForm" name="concern_user_id" required>
+                                <select class="form-control" form="concernForm" name="concern_user_id">
                                   <option value="" selected>Please select one</option>
                                   
                                   @foreach($users as $item)
@@ -274,8 +274,7 @@
                         </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</button> 
-                            <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Submit</button>
+                            <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
                         </div>
                     </div>
                     </div>
