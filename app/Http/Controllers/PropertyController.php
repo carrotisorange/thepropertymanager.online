@@ -77,8 +77,8 @@ class PropertyController extends Controller
                 ->orderBy('notification_id', 'desc')
                 ->get();
 
-                Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
-                
+                Session::put('notifications', Notification::all());
+
                 return view('dev.activities', compact('activities'));
             }
             else{
