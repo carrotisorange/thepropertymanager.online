@@ -810,7 +810,7 @@ class UserController extends Controller
 
          $tenant = Tenant::findOrFail($tenant_id);
 
-        return view('webapp.tenant_access.rooms', compact('rooms', 'tenant'));
+        return view('webapp.tenant_access.contracts', compact('rooms', 'tenant'));
     }
 
     public function show_portal_tenant(){
