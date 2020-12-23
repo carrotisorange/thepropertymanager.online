@@ -77,7 +77,7 @@ class PropertyController extends Controller
                 ->orderBy('notification_id', 'desc')
                 ->get();
 
-                Session::put('notifications', Notification::all());
+                Session::put('notifications', Notification::orderBy('notification_id', 'desc')->limit(5)->get());
 
                 return view('dev.activities', compact('activities'));
             }
