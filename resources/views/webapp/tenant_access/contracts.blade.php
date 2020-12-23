@@ -26,7 +26,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/rooms">
-              <i class="fas fa-home text-indigo"></i>
+              <i class="fas fa-file-signature text-indigo"></i>
               <span class="nav-link-text">Contracts</span>
             </a>
           </li>
