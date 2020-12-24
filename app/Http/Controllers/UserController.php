@@ -214,8 +214,8 @@ class UserController extends Controller
     ->linetension(0.4);
 
     $active_users = DB::table('users')
-    ->orderBy('user_current_status', 'desc')
-    ->orderBy('last_login_at', 'desc')
+
+
     ->where('user_type', '<>','tenant')
     ->whereNotNull('email_verified_at')
     ->where('email', '!=','thepropertymanager2020@gmail.com')

@@ -329,7 +329,7 @@
                        
             @endforeach
             <tr>
-              <th>Total </th>
+              <th>TOTAL </th>
               
               <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
               <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
