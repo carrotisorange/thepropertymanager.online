@@ -543,7 +543,7 @@
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
                    
-                        <strong><i class="fas fa-check"></i>  By default, the password would be the mobile number of the tenant. If the password is not letting you in, try using 12345678 as the password instead. <br> Please ask the tenant to immediately change the password.</strong>
+                      By default, the password would be the mobile number of the tenant. If the password is not letting you in, try using 12345678 as the password instead. <br> Please ask the tenant to immediately change the password.</strong>
                       
                     
                 </div>

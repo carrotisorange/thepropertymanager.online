@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Contract</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Room selection</h5>
   
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -13,7 +13,6 @@
             @csrf
   
           </form>
-          <h2>Please select a room</h2>
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               @foreach ($buildings as $building)
@@ -72,8 +71,7 @@
           </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button> 
-            <button type="submit" form="contractForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Select</button>
+            <button type="submit" form="contractForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
         </div>
     </div>
     </div>
