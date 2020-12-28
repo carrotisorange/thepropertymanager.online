@@ -628,7 +628,7 @@ $instagram = DB::table('contracts')
 $website = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
-->where('form_of_interaction','website')
+->where('form_of_interaction','Website')
 ->count();
 
 $walkin = DB::table('contracts')
@@ -640,7 +640,7 @@ $walkin = DB::table('contracts')
 $wordofmouth = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
-->where('form_of_interaction','wordofmouth')
+->where('form_of_interaction','Word of mouth')
 ->count();
 
 $point_of_contact = new DashboardChart;
