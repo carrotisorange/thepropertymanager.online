@@ -599,6 +599,7 @@
             <label>Status</label>
             <select form="editUnitForm" id="status" name="status" class="form-control">
                 <option value="{{ $home->status }}" readonly selected class="bg-primary">{{ $home->status }}</option>
+                <option value="dirty">dirty</option>
                 <option value="occupied">occupied</option>
                 <option value="reserved">reserved</option>
                 <option value="vacant">vacant</option>

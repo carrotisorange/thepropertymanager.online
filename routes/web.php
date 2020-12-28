@@ -285,6 +285,8 @@ Route::get('/asa', function(){
 //          }
 //         }
 
+
+
         return back()->with('success', 'Tenant access to the system has been created!');
 
 
@@ -297,7 +299,7 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/concern', 'ConcernContro
 Route::post('/property/{property_id}/home/{unit_id}/concern', 'ConcernController@store_room_concern')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/concern/{concern_id}', 'ConcernController@show')->middleware(['auth', 'verified']);
 
-//routes for contractsF
+//routes for contracts
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}', 'ContractController@show')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/edit', 'ContractController@edit')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/update', 'ContractController@update')->middleware(['auth', 'verified']);
@@ -391,6 +393,9 @@ Route::post('concern/{concern_id}/response', 'ResponseController@store')->middle
 
 //routes for notifications
 Route::get('property/{property_id}/notifications', 'NotificationController@index')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/delinquents', 'CollectionController@delinquents')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/pending-concerns', 'ConcernController@pending')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/expiring-contracts', 'ContractController@expired')->middleware(['auth', 'verified']);
 
 
 //routes for the the layouts.arsha

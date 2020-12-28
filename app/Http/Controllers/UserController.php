@@ -399,9 +399,6 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'user_type' => $request->user_type,
-            'property' => '',
-            'property_type' => '',
-            'property_ownership' => '',
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
             'email_verified_at' =>Carbon::now(),
@@ -725,8 +722,7 @@ class UserController extends Controller
 
             $user = User::findOrFail($user_id);
 
-             $tenant = Tenant::findOrFail($tenant_id);
-
+            $tenant = Tenant::findOrFail($tenant_id);
 
             return view('webapp.tenant_access.profile', compact('tenant','user'));
          }else{

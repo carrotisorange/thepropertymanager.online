@@ -139,15 +139,12 @@ class TenantController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'user_type' => 'tenant',
-            'property' => '',
-            'property_type' => '',
-            'property_ownership' => '',
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
-            'account_type' => '',
+            'account_type' => Auth::user()->account_type,
             'created_at' => Carbon::now(),
             'email_verified_at' => Carbon::now(),
-            'trial_ends_at' => '',
+            'trial_ends_at' => Auth::user()->trial_ends_at,
         ]);
 
     DB::table('tenants')
@@ -405,7 +402,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been r as pending!';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as pending!';
         $notification->save();
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);

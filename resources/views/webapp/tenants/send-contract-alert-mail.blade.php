@@ -1,14 +1,23 @@
-<p class="text-justify">
-    <h3>Hi, {{ $name }}!</h3>
-
+<p>
+    <h3> Hi, {{ $name }}! </h3>
+    
     <br>
-
-    Your contract in <b>{{ $unit }}</b> is about to expire on <b>{{ Carbon\Carbon::parse($moveout_at)->format('M d Y') }}</b>, 
-        exactly <b>{{ $days_before_moveout }} days </b> from now. Would you like to extend? If yes, for how long? Please send your response to {{ Auth::user()->email }}</p>
-
+    
+    Thanks for staying in {{ $property }}.
     <br>
-
-    Sincerely,
+    
+    <br><br>
+    To keep track of your bills and payments, and to report concerns, go to your tenant portal through this link <a href="/thepropertymanager.online/login">here</a> and use the following credentials:
     <br>
+    <br>
+    Email: {{ $email }}
+    <br>
+    Password: {{ $password }}
+    
+    <br><br>
+    
+    
+    Thanks,<br>
     {{ $property }}
-</p>
+    </p>
+    

@@ -1,22 +1,14 @@
-@component('mail::message')
-# Hi, there!
+<p class="text-justify">
+    <h3>Hi, {{ $name }}!</h3>
 
-<br>
+    <br>
 
-Thanks for signing up to manage your property. During your free trial, you can use all the features of The Property Manager. 
-Should you need help with setting up your property or with using any of the features of the application, 
-feel free to send us a message through the messenger chatbot, located at the bottom left corner, available 
-at any given time or email us at customercare@thepropertymanager.online. 
+    Your contract in <b>{{ $unit }}</b> is about to expire on <b>{{ Carbon\Carbon::parse($moveout_at)->format('M d Y') }}</b>, 
+        exactly <b>{{ $days_before_moveout }} days </b> from now. Would you like to extend? If yes, for how long? Please send your response to {{ Auth::user()->email }}</p>
 
+    <br>
 
-<br>
-@component('mail::button', ['url' => 'thepropertymanager.online/property/all'])
-Add your first property
-@endcomponent
-<br>
-
-Hope to hear from you soon!
-
-Cheers,<br>
-{{ config('app.name') }}
-@endcomponent
+    Sincerely,
+    <br>
+    {{ $property }}
+</p>

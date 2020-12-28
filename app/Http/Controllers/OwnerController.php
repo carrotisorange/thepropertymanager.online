@@ -141,6 +141,9 @@ class OwnerController extends Controller
            ->join('units', 'certificates.unit_id_foreign', 'unit_id')
            ->where('owner_id_foreign', $owner_id)
            ->get();
+
+   
+   
   
         //    $bills = Billing::leftJoin('payments', 'billings.bill_no', '=', 'payments.payment_bill_no')
         //    ->join('tenants', 'bill_tenant_id', 'tenant_id')

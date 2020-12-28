@@ -259,7 +259,7 @@ class ContractController extends Controller
             DB::table('units')
             ->where('unit_id', $unit_id)
             ->update([
-                'status' => 'vacant'
+                'status' => 'dirty'
             ]);
         }
 
@@ -542,6 +542,22 @@ class ContractController extends Controller
      * @param  \App\Contract  $contract
      * @return \Illuminate\Http\Response
      */
+
+    public function expired()
+    {
+        $tenants_to_watch_out = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->select('*', 'contracts.status as contract_status' )
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('contracts.status', 'active')
+        ->where('moveout_at', '<=', Carbon::now()->addMonth())
+        ->orderBy('moveout_at', 'asc')
+        ->paginate(5);
+
+        return view('webapp.contracts.expired', compact('tenants_to_watch_out'));
+    }
+
 
      //send notice for contract extension
 public function send_contract_alert($property_id, $unit_id, $tenant_id, $contract_id){

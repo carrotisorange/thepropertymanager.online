@@ -208,6 +208,24 @@ class ConcernController extends Controller
         return back()->with('success', 'changes have been saved!');
     }
 
+    public function pending()
+    {
+        $pending_concerns = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('concerns', 'tenant_id', 'concern_tenant_id')
+        ->join('users', 'concern_user_id', 'id')
+
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('concerns.status', 'pending')
+        ->orderBy('reported_at', 'desc')
+        ->orderBy('urgency', 'desc')
+        ->orderBy('concerns.status', 'desc')
+        ->paginate(5);
+
+        return view('webapp.concerns.pending', compact('pending_concerns'));
+    }
+
     public function closed(Request $request){
 
         if($request->rating === null || $request->feedback === null){

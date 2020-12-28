@@ -361,7 +361,7 @@
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">SOURCE</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">SOURCES</h6>
                 </div>
                 <div class="card-body">
                   {!! $point_of_contact->container() !!}
@@ -410,19 +410,20 @@
               <!-- DataTales Example -->
               <div class="card shadow mb-4">
                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">EXPIRING CONTRACTS</h6>
-         
+                 <h6 class="m-0 font-weight-bold text-primary">THE LAST 5 EXPIRING CONTRACTS</h6>
+                 <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/expiring-contracts">View all</a></small>
                </div>
                <div class="card-body">
                 <div class="table-responsive text-nowrap">
                    <table class="table" >
                      <thead>
-                       <?php $ctr=1;?>
+                 
                        <tr>
-                         <th>#</th>
+                  
                          <th>Tenant</th>
                          <th>Room</th>
                          <th>Moveout</th>
+                         <th>Days since moveout</th>
                          <th>Status</th>
                          <th>Action</th>
                       
@@ -432,7 +433,7 @@
                        @foreach($tenants_to_watch_out as $item)
                       
                         <tr>
-                          <th>{{ $ctr++ }}</th>
+              
                             <td>
                               <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
                             </td>
@@ -448,9 +449,10 @@
                                  <span class="badge badge-danger">contract has expired {{ $diffInDays }} days ago</span>
                                  @endif
                             </td>
+                            <td>{{ $item->contract_status }}</td>
                             <td>
                               @if($item->email_address === null)
-                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-warning">Please add an email</a>
+                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
                               @else
                               <form action="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
                                 @csrf
@@ -467,7 +469,7 @@
                        @endforeach
                      </tbody>
                    </table>
-                {{ $tenants_to_watch_out->links() }}
+  
                  </div>
                </div>
              </div>
@@ -485,8 +487,9 @@
                     <div class="card shadow mb-3">
                       <!-- Card Header - Dropdown -->
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">DELINQUENTS ({{ number_format($delinquent_accounts->sum('balance'),2) }})</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">TOP DELINQUENTS </h6>
                        
+                        <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/delinquents">View all</a></small>
                         
                       </div>
                       <!-- Card Body -->
@@ -494,6 +497,7 @@
                         <div class="table-responsive text-nowrap">
                           <table class="table">
                             <thead>
+                              
                               <tr>
                                 <th>Tenant</th>
                                 <th>Room</th>
@@ -521,19 +525,22 @@
                               </tr>
                               @endforeach
                             </tbody>
+                            
                           </table>
-                     {{-- {{ $delinquent_accounts->links() }} --}}
+                         
                         </div>
+                       
                       </div>
                     </div>
+                    
                   </div>
 
                   <div class="col-md-6">
                     <div class="card shadow mb-3">
                       <!-- Card Header - Dropdown -->
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">PENDING CONCERNS</h6>
-                       
+                        <h6 class="m-0 font-weight-bold text-primary">THE LAST 5 PENDING CONCERNS</h6>
+                        <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/pending-concerns">View all</a></small>
                         
                       </div>
                       <!-- Card Body -->

@@ -179,11 +179,11 @@
                
               <div class="col">
                 <small>Mobile</small>
-                <input form="editInvestorForm" class="form-control" type="text" name="investor_contact_no" value="{{ $owner->investor_contact_no }}" >
+                <input form="editInvestorForm" class="form-control" type="number" name="investor_contact_no" value="{{ $owner->mobile }}" >
             </div>
             <div class="col">
               <small>Email</small>
-              <input form="editInvestorForm" class="form-control" type="emailf" name="investor_email_address" value="{{ $owner->investor_email_address }}" >
+              <input form="editInvestorForm" class="form-control" type="email" name="investor_email_address" value="{{ $owner->email }}" >
           </div>  
             
             </div>
@@ -192,7 +192,7 @@
               
           <div class="col">
             <small>Address</small>
-            <input form="editInvestorForm" class="form-control" type="text" name="investor_address" value="{{ $owner->investor_address }}" >
+            <input form="editInvestorForm" class="form-control" type="text" name="investor_address" value="{{ $owner->address }}" >
         </div>  
              
           </div>
@@ -201,7 +201,7 @@
               
             <div class="col">
               <small>Authorized Representative</small>
-              <input form="editInvestorForm" class="form-control" type="text" name="investor_representative" value="{{ $owner->investor_representative }}" >
+              <input form="editInvestorForm" class="form-control" type="text" name="investor_representative" value="{{ $owner->representative }}" >
           </div>  
                
             </div>
@@ -273,8 +273,8 @@
          <div class="row">
          <div class="col">
           <p class="text-right">   
-            <a href="/property/{{ $property->property_id}}/owner/{{ $owner->owner_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</a>
-            <button type="submit" form="editInvestorForm" class="btn btn-primary" ><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
+           
+            <button type="submit" form="editInvestorForm" class="btn btn-primary" > Update</button>
         </p>   
          </div>
         </div>  

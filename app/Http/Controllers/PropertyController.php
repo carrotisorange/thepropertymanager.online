@@ -568,7 +568,7 @@ $expenses_rate->dataset
           ->groupBy('unit_id')
           ->orderBy('balance', 'desc')
           ->havingRaw('balance > 0')
-          ->get();
+          ->simplePaginate(5);
     }else{
         $delinquent_accounts = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
           ->leftJoin('payments', 'bill_id','payment_bill_id')
@@ -580,7 +580,7 @@ $expenses_rate->dataset
           ->groupBy('tenant_id')
           ->orderBy('balance', 'desc')
           ->havingRaw('balance > 0')
-          ->get();
+          ->simplePaginate(5);
     }
 
 
@@ -685,6 +685,7 @@ $point_of_contact->dataset
  $tenants_to_watch_out = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+->select('*', 'contracts.status as contract_status' )
 ->where('property_id_foreign', Session::get('property_id'))
 ->where('contracts.status', 'active')
 ->where('moveout_at', '<=', Carbon::now()->addMonth())

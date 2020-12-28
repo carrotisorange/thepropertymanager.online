@@ -261,6 +261,7 @@
                           <td>
                             <select form="editUnitsForm" type="text" name="status{{ $status++  }}" id="" >
                               <option value="{{ $item->status }}" readonly selected class="bg-primary">{{ $item->status }}</option>
+                              <option value="dirty">dirty</option>
                               <option value="vacant">vacant</option>
                               <option value="occupied">occupied</option>
                               

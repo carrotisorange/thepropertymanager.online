@@ -576,8 +576,8 @@
 
 
 <p class="text-right">   
-    <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-white-50"></i> Cancel</a>
-    <button type="submit" form="editTenantForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
+
+    <button type="submit" form="editTenantForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Update</button>
 </p>
 @endsection
 

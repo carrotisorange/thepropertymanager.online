@@ -22,6 +22,24 @@ class CollectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function delinquents()
+    {
+        $delinquents = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
+        ->leftJoin('payments', 'bill_id','payment_bill_id')
+      ->leftJoin('contracts', 'tenant_id', 'tenant_id_foreign')
+    
+      ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+        ->selectRaw('*,sum(amount) - IFNULL(sum(payments.amt_paid),0) as balance, contracts.status as contract_status')
+        ->where('property_id_foreign',Session::get('property_id'))
+        ->groupBy('tenant_id')
+        ->orderBy('balance', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+
+        return view('webapp.collections.delinquents', compact('delinquents'));
+    }
+
     public function index(Request $request, $property_id)
     {
         $search = $request->search;

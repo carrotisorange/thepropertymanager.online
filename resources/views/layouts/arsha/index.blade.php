@@ -349,6 +349,14 @@
                <p>allows tenants to request, order, and book for restaurants, taxis, and etc.</p>
              </div>
            </div>
+
+           <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon-box">
+             <div class="icon"><i class="bx bx-user"></i></div>
+              <h4><a href="">User management</a></h4>
+              <p>creates and gives different access level to each user (manager, admin, billing, treasury, and etc.). </p>
+            </div>
+          </div>
  
 
           </div>

@@ -236,6 +236,7 @@
           <br>
           {{ $item->unit_no }}
           </a>
+      
       @endif   
 @endforeach
 <hr>

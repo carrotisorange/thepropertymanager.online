@@ -236,6 +236,12 @@
           <br>
           {{ $item->unit_no }}
           </a>
+          @elseif($item->status=== 'dirty')
+          <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-dark">
+            <i class="fas fa-home fa-3x"></i>
+            <br>
+            {{ $item->unit_no }}
+            </a>  
       @endif   
 @endforeach
 <hr>
@@ -286,6 +292,12 @@
                 <br>
                 {{ $item->unit_no }}
                 </a>
+                @elseif($item->status=== 'dirty')
+                <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-dark">
+                  <i class="fas fa-home fa-3x"></i>
+                  <br>
+                  {{ $item->unit_no }}
+                  </a>  
             @endif   
           @endif
       @endforeach
