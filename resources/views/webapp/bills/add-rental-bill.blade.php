@@ -293,8 +293,8 @@
 
     </div>
     <div class="modal-footer">
-     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Dismiss </button>
-     <button form="periodCoveredForm" type="submit" id="addBillsButton" class="btn btn-primary" ><i class="fas fa-check" onclick="this.form.submit(); this.disabled = true;"></i> Save Changes</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss</button>
+     <button form="periodCoveredForm" type="submit" id="addBillsButton" class="btn btn-primary"> Update</button>
     </form>
     </div> 
     </div>
