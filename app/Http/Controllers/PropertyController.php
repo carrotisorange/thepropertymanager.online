@@ -519,7 +519,7 @@ $expenses_rate->dataset
                                                             ]
                         )
 ->color("#0000FF")
-->fill(false)
+->fill(true)
 ->backgroundcolor("#0000FF");
 
 $expenses_rate->dataset
@@ -536,7 +536,7 @@ $expenses_rate->dataset
                                                             ]
                         )
 ->color("#ff0000")
-->fill(false)
+->fill(true)
 ->backgroundcolor("#ff0000");
 
 $expenses_rate->dataset
@@ -556,7 +556,7 @@ $expenses_rate->dataset
 
     ->color("#008000")
     ->backgroundcolor("#008000")
-    ->fill(false)
+    ->fill(true)
     ->linetension(0.4);
 
 
