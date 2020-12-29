@@ -243,15 +243,11 @@ class UserController extends Controller
             return view('webapp.users.users', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 'users', 'property'));
 
         }else{
-
-            if(Auth::user()->user_type === 'manager'){
-                $users = User::findOrFail(Auth::user()->id)->users;
-         
-            }else{
+   
                 $users = DB::table('users')
                 ->where('lower_access_user_id', Auth::user()->id)
                 ->get();
-            }
+        
            
             $sessions = DB::table('users')
             ->join('sessions', 'id', 'session_user_id')

@@ -197,7 +197,7 @@
        <option value="Flyers">Flyers</option>
        <option value="In house">In house</option>
        <option value="Instagram">Instagram</option>
-       <option value="layouts.arsha">layouts.arsha</option>
+       <option value="Website">Website</option>
        <option value="Walk in">Walk in</option>
        <option value="Word of mouth">Word of mouth</option>
     </select>
@@ -252,7 +252,7 @@
       <br>
   <div class="row">
       <div class="col">
-          <small class="">Birthdate </small>
+          <small class="">Birthdate <span class="text-danger">*</span></small></small>
           <input form="addTenantForm1" type="date" class="form-control form-control-user @error('birthdate') is-invalid @enderror" name="birthdate" id="birthdate" value="{{ old('birthdate') }}" >
   
           @error('birthdate')
@@ -262,8 +262,8 @@
           @enderror
       </div>
       <div class="col">
-          <small class="">Gender </small>
-          <select form="addTenantForm1"  id="gender" name="gender" class="form-control">        
+          <small class="">Gender <span class="text-danger">*</span></small></small>
+          <select form="addTenantForm1"  id="gender" name="gender" class="form-control" required>        
               <option value="{{ old('gender')? old('gender'): '' }}" selected>{{ old('gender')? old('gender'): 'Please select one' }} </option>
               <option value="male">male</option>
               <option value="female">female</option>
@@ -276,8 +276,8 @@
           @enderror
       </div>
       <div class="col">
-          <small class="">Civil Status</small>
-          <select form="addTenantForm1"  id="civil_status" name="civil_status" class="form-control">
+          <small class="">Civil Status <span class="text-danger">*</span></small></small>
+          <select form="addTenantForm1"  id="civil_status" name="civil_status" class="form-control" required>
             <option value="{{ old('civil_status')? old('civil_status'): '' }}" selected>{{ old('civil_status')? old('civil_status'): 'Please select one' }} </option>
               <option value="single">single</option>
               <option value="married">married</option>
@@ -383,8 +383,8 @@
     @enderror
   </div>
 <div class="col">
-  <small>Discount <span class="text-danger">*</span></small>
-  <input form="addTenantForm1" type="number" class="form-control form-control-user @error('discount') is-invalid @enderror" name="discount" min="0" id="discount" step="0.001" value="{{ old('discount') }}" required  >
+  <small>Discount </small>
+  <input form="addTenantForm1" type="number" class="form-control form-control-user @error('discount') is-invalid @enderror" name="discount" min="0" id="discount" step="0.001" value="{{ old('discount') }}" >
 
  
   @error('discount')

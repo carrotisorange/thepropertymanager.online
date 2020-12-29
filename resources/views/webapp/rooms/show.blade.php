@@ -330,11 +330,12 @@
                 <thead>
                 <tr>
                     <th class="text-center">#</th>
-                    <th>Tenant</th>
+                    <th>Name</th>
                     <th>Movein</th>   
                     <th>Moveout</th>
                     <th>Term</th>
                     <th>Rent</th>
+                    <th>Source</th>
                 </tr>
               </thead>
                 <?php $ctr = 1; ?>   
@@ -347,6 +348,7 @@
                     <td>{{ $item->term }}</td>
                     {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }} days left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}</> --}}
                       <td>{{ number_format($item->contract_rent, 2) }}</td>
+                      <td>{{ $item->form_of_interaction }}</td>
                     </tr>
             @endforeach
                 @endif                        
@@ -365,11 +367,11 @@
                 <thead>
                 <tr>
                     <th class="text-center">#</th>
-                    <th>Tenant</th>
+                    <th>Name</th>
                     <th>Reserved Via</th>
-                    <th>Reserved On</th>   
-                             
-                    <th></th>
+                    <th>Source</th>
+                    <th>Reserved</th>
+                    <th>Days before for forfeiture</th>   
                 </tr>
                 </thead>
                 <?php
@@ -384,8 +386,9 @@
                     @else
                     <td><a class="badge badge-warning">{{ $item->type_of_tenant }}</td>
                     @endif
+                    <td>{{ $item->form_of_interaction }}</td>
                     <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                    <th>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->created_at)->addDays(7), false) }} days before exp</th>
+                    <td>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->created_at)->addDays(7), false) }}</td>
                 </tr>
             @endforeach
                 @endif                        
@@ -404,7 +407,7 @@
                 <thead>
                 <tr>
                     <th class="text-center">#</th>
-                    <th>Tenant</th>
+                    <th>Name</th>
                     
                     <th>Inactive since</th>   
                     <th>Reason for moving out</th>

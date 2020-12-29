@@ -196,12 +196,14 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
         <tr>
           <th>#</th>
           <th>Profile</th>
-          <th>Tenant ID</th>
-          {{-- <th>Room</th> --}}
-          <th>Tenant</th>
-          {{-- <th>User ID</th> --}}
+          <th>ID</th>
+        
+          <th>Name</th>
+      
           <th>Mobile</th>
           <th>Email</th>
+          <th>Gender</th>
+          <th>Civil status</th>
           <th>Movein at</th>
        </tr>
       </thead>
@@ -223,7 +225,10 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
           </td>
           {{-- <td>{{ $item->user_id_foreign }} </td> --}}
             <td>{{ $item->contact_no }}</td>
+            
             <td>{{ $item->email_address }}</td>
+            <td>{{ $item->gender }}</td>
+            <td>{{ $item->civil_status }}</td>
           <td>{{ $item->movein_at }}</td>
         </tr>
         @endforeach

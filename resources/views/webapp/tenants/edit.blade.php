@@ -473,17 +473,17 @@
                 </div>
                 <div class=" col-md-4">
                     <small for="">Zipcode</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="zip_code" value="{{ $tenant->zip_code }}">
+                    <input form="editTenantForm" class="form-control" type="number" name="zip_code" value="{{ $tenant->zip_code }}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col">
-                    <small for="">Contact No</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="contact_no" value="{{ $tenant->contact_no }}">
+                    <small for="">Mobile</small>
+                    <input form="editTenantForm" class="form-control" type="number" name="contact_no" value="{{ $tenant->contact_no }}">
                 </div>
                 <div class="col" id="email_address">
-                    <small for="">Email Address</small>
+                    <small for="">Email</small>
                     <input form="editTenantForm" class="form-control" type="text" name="email_address" value="{{ $tenant->email_address }}">
                   @if($tenant->email_address === null)
                   <small class="text-danger">Please add an email</small>
@@ -554,11 +554,11 @@
             <div class="form-group row">
                 <div class="col">
                     <small for="">Address</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="employer_address" value="{{ $tenant->employer_address }}">
+                    <input form="editTenantForm" class="form-control" type="email" name="employer_address" value="{{ $tenant->employer_address }}">
                 </div>
                 <div class="col">
-                    <small for="">Contact No</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="employer_contact_no" value="{{ $tenant->employer_contact_no }}">
+                    <small for="">Mobile</small>
+                    <input form="editTenantForm" class="form-control" type="number" name="employer_contact_no" value="{{ $tenant->employer_contact_no }}">
                 </div>
                 
             </div>
