@@ -462,6 +462,7 @@ font-family: FontAwesome;
         <div class="row">
           <div class="col">
               <label>Personnel</label>
+              {{-- <select  class="form-control r" name="personnel_id_foreign" id="personnel_id_foreign" required> --}}
               <select  class="form-control form-control-user @error('personnel_id_foreign') is-invalid @enderror" name="personnel_id_foreign" id="personnel_id_foreign" required>
                 <option value="">Please select one</option>
                 @foreach ($personnels as $item)

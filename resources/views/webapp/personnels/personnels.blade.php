@@ -187,6 +187,7 @@
           <th>Mobile NO</th>
           <th>Role</th>
           <th>Added On</th>
+          <th></th>
      </tr>
     </thead>
     <tbody>
@@ -198,6 +199,15 @@
        
         <td>{{ $item->personnel_type }}</td>
         <td>{{ $item->created_at }}</td>
+        <td class="text-center">
+          @if(Auth::user()->user_type === 'manager')
+          <form action="/property/{{ $property->property_id }}/personnel/{{ $item->personnel_id }}" method="POST">
+            @csrf
+            @method('delete')
+            <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
+          </form>
+          @endif
+        </td>
     </tr>
       @endforeach
     </tbody>
@@ -224,21 +234,21 @@
             <input type="hidden" form="addPersonnelForm" name="property_id" value="{{ $property->property_id }}" required>
            <div class="row">
              <div class="col">
-              <small>Name</small>
+              <label>Name</label>
               <input type="text" form="addPersonnelForm" class="form-control" name="personnel_name" required >
              </div>
            </div>
            <br>
            <div class="row">
              <div class="col">
-               <small>Mobile</small>
+               <label>Mobile</label>
                <input form="addPersonnelForm" type="number" class="form-control" name="personnel_contact_no" required>
              </div>
            </div>
            <br>
            <div class="row">
              <div class="col">
-               <small>Role</small>
+               <label>Role</label>
                <select class="form-control" form="addPersonnelForm" name="personnel_type" id="" required>
                  <option value="" selected>Please select one</option>
                  <option value="housekeeping">housekeeping</option>
@@ -247,8 +257,8 @@
              </div>
            </div>
            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button> 
-            <button type="submit" form="addPersonnelForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Submit</button>
+            
+            <button type="submit" form="addPersonnelForm" class="btn btn-primary"> Submit</button>
         </div>
      
     </div>

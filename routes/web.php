@@ -76,6 +76,7 @@ Route::get('/property/{property_id}', 'PropertyController@show')->middleware(['a
 Route::post('/property/', 'PropertyController@store')->middleware(['auth', 'verified']);
 Route::post('/property/select', 'PropertyController@select')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
+Route::delete('/property/{property_id}/personnel/{personnel_id}/', 'PersonnelController@destroy')->middleware(['auth', 'verified']);
 
 //routes for dashboard
 Route::get('/property/{property_id}/dashboard', 'PropertyController@show')->middleware(['auth', 'verified']);

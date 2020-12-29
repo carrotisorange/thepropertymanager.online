@@ -52,7 +52,7 @@ class PersonnelController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        return back()->with('success',  'new personnel has been saved!');
+        return back()->with('success',  'Personnel has been added!');
     }
 
     /**
@@ -95,8 +95,10 @@ class PersonnelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($property_id, $personnel_id)
     {
-        //
+        DB::table('personnels')->where('personnel_id', $personnel_id)->delete();
+
+        return back()->with('success', 'Personnel has been deleted!');
     }
 }

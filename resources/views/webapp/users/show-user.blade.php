@@ -188,7 +188,7 @@
     
     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="nav-profile-tab">
       
-      <br><br>
+      <br>
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <table class="table">
@@ -225,6 +225,7 @@
             <th>Ownership</th>
             <th>Mobile</th>
             <th>Address</th>
+            <th></th>
           </tr>
           </thead>
           @foreach ($properties as $item)
@@ -235,6 +236,7 @@
             <td>{{ $item->ownership }}</td>
             <td>{{ $item->mobile }}</td>
             <td>{{ $item->address.', '.$item->country.', '.$item->zip }}</td>
+            <th><a href="/property/{{ Session::get('property_id') }}/edit" class="btn btn-sm btn-primary"> Edit</a></th>
           </tr>
           @endforeach
       </table>

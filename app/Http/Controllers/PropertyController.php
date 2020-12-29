@@ -927,8 +927,8 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy(Property $property, $property_id)
     {
-        //
+      
     }
 }
