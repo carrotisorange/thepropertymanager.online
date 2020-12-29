@@ -580,16 +580,14 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
 
     Mail::send('webapp.tenants.send-contract-alert-mail', $data, function($message) use ($data){
         $message->to($data['email']);
-        $message->bcc(['landleybernardo@thepropertymanager.online','customercare@thepropertymanager.online']);
+        $message->bcc(['customercare@thepropertymanager.online']);
         $message->subject('Contract Termination Alert');
 
     });
 
-    return back()->with('success', 'email has been sent to '.$tenant->first_name.' '.$unit->unit_no);
+    return back()->with('success', 'Email has been sent to '.$tenant->first_name.' '.$unit->unit_no);
 
 }
-
-
 
     public function update(Request $request, $property_id, $tenant_id, $contract_id)
     {
