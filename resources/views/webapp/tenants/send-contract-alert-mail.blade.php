@@ -3,16 +3,8 @@
     
     <br>
     
-    Thanks for staying in {{ $property }}.
-    <br>
-    
-    <br><br>
-    To keep track of your bills and payments, and to report concerns, go to your tenant portal through this link <a href="/thepropertymanager.online/login">here</a> and use the following credentials:
-    <br>
-    <br>
-    Email: {{ $email }}
-    <br>
-    Password: {{ $password }}
+   This email is to remind you that your contract in unit {{ $unit }} is set to end on {{ Carbon\Carbon::parse($moveout_at)->format('M d Y') }}, exactly {{ $days_before_moveout }} days from now. 
+    Would you like to extend your contract? If yes, for how long? Please send your response to {{ Auth::user()->email }}.
     
     <br><br>
     

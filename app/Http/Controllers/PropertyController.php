@@ -640,7 +640,7 @@ $walkin = DB::table('contracts')
 
 $wordofmouth = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
- ->where('property_id_foreign', Session::get('property_id'))
+->where('property_id_foreign', Session::get('property_id'))
 ->where('form_of_interaction','Word of mouth')
 ->count();
 

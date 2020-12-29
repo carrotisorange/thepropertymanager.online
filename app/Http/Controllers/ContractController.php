@@ -566,14 +566,14 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
     $property  = Property::findOrFail($property_id);
     $contract  = Contract::findOrFail($contract_id);
 
-    $diffInDays =  number_format(Carbon::now()->DiffInDays(Carbon::parse($contract->moveout_at), false));
+     $diffInDays =  number_format(Carbon::now()->DiffInDays(Carbon::parse($contract->moveout_at), false));
 
     $data = array(
         'email' => $tenant->email_address,
         'name' => $tenant->first_name,
         'property' => $property->name,
         'unit' => $unit->unit_no,
-        'moveout_at'  => $tenant->moveout_at,
+        'moveout_at'  => $contract->moveout_at,
         'days_before_moveout' => $diffInDays
     );
 

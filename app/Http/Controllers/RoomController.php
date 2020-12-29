@@ -277,7 +277,7 @@ class RoomController extends Controller
             $occupancy->save();
         }
      
-        return redirect('/property/'. $property_id.'/home')->with('success','changes have been saved!');
+        return redirect('/property/'. $property_id.'/home')->with('success','Changes have been saved!');
                  
      }
 
