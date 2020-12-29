@@ -592,7 +592,7 @@
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS</h6>
           
-          
+          <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/collections">View all</a></small>
             {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
           
           
