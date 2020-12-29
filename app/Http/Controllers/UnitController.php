@@ -240,7 +240,6 @@ class UnitController extends Controller
             $unit->save();
         }
 
-       
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
         $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
@@ -249,8 +248,7 @@ class UnitController extends Controller
 
         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
 
-       
-        if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
+        if($current_occupancy_rate !== $new_occupancy_rate){
             $occupancy = new OccupancyRate();
             $occupancy->occupancy_rate = $new_occupancy_rate;
             $occupancy->occupancy_date = Carbon::now();
@@ -287,11 +285,11 @@ class UnitController extends Controller
 
         $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
 
-         $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
-         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
 
-        if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
+        if($current_occupancy_rate !== $new_occupancy_rate){
             $occupancy = new OccupancyRate();
             $occupancy->occupancy_rate = $new_occupancy_rate;
             $occupancy->occupancy_date = Carbon::now();
@@ -311,9 +309,35 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $property_id, $unit_id)
     {
-        //
+
+        $unit = Unit::findOrFail($unit_id);
+        $unit->unit_no = $request->unit_no;
+        $unit->floor = $request->floor;
+        $unit->building = $request->building;
+        $unit->type = $request->type;
+        $unit->occupancy = $request->occupancy;
+        $unit->status = $request->status;
+        $unit->save();
+
+        $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
+
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+
+        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+
+        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+
+        if($current_occupancy_rate !== $new_occupancy_rate){
+            $occupancy = new OccupancyRate();
+            $occupancy->occupancy_rate = $new_occupancy_rate;
+            $occupancy->occupancy_date = Carbon::now();
+            $occupancy->property_id_foreign =  Session::get('property_id');
+            $occupancy->save();
+        }
+
+        return back()->with('success', 'Changes have been saved!');
     }
 
     /**

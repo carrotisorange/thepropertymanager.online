@@ -197,8 +197,8 @@ class CollectionController extends Controller
         $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
-       
-        if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
+
+        if($current_occupancy_rate !== $new_occupancy_rate){
             $occupancy = new OccupancyRate();
             $occupancy->occupancy_rate = $new_occupancy_rate;
             $occupancy->occupancy_date = Carbon::now();

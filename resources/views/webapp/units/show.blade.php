@@ -594,7 +594,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <form id="editUnitForm" action="/units/{{$home->unit_id }}" method="POST">
+        <form id="editUnitForm" action="/property/{{ Session::get('property_id') }}/unit/{{ $home->unit_id }}" method="POST">
             @method('put')
             @csrf
         </form>
@@ -656,7 +656,7 @@
         </div>
         <div class="modal-footer">
        
-        <button type="submit" form="editUnitForm" class="btn btn-primary" this.disabled = true;><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>  
+        <button type="submit" form="editUnitForm" class="btn btn-primary" this.disabled = true;> Update</button>  
         </div>
     </div>
     </div>

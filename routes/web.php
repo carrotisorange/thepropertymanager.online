@@ -76,7 +76,9 @@ Route::get('/property/{property_id}', 'PropertyController@show')->middleware(['a
 Route::post('/property/', 'PropertyController@store')->middleware(['auth', 'verified']);
 Route::post('/property/select', 'PropertyController@select')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
-Route::delete('/property/{property_id}/personnel/{personnel_id}/', 'PersonnelController@destroy')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/edit', 'PropertyController@edit')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/', 'PropertyController@update')->middleware(['auth', 'verified']);
+
 
 //routes for dashboard
 Route::get('/property/{property_id}/dashboard', 'PropertyController@show')->middleware(['auth', 'verified']);
@@ -320,6 +322,7 @@ Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->mid
 //routes for personnels
 Route::get('/property/{property_id}/personnels', 'PersonnelController@index')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/personnel', 'PersonnelController@store')->middleware(['auth', 'verified']);
+Route::delete('/property/{property_id}/personnel/{personnel_id}/', 'PersonnelController@destroy')->middleware(['auth', 'verified']);
 
 //routes for bills
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
@@ -713,6 +716,7 @@ Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->mid
 Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
 Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/unit/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
 
 
 

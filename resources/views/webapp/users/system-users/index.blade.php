@@ -29,14 +29,16 @@
           <div class="table-responsive text-nowrap">
               <table class="table">
                   <?php $ctr=1; ?>
+                <thead>
                   <tr>
-                      <th>#</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Property</th>
-                      <th>Status</th>
-                  </tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Property</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
                   @foreach ($users as $item)
                       <tr>
                           <th>{{ $ctr++ }}</th>
@@ -62,13 +64,13 @@
       <hr>
       <div class="row">
         <div class="col">
-           <a href="/property/all/" class="btn btn-primary btn-user btn-block"><i class="fas fa-home"></i> Home</a>
+           <a href="/property/all/" class="btn btn-primary btn-user btn-block"> Home</a>
        </div>
        <div class="col">
         @if($users->count() < 1)
-        <a href="#/" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus-circle"></i> User </a
+        <a href="#/" class="btn btn-primary btn-user btn-block"> User </a
         @else
-        <a href="/user/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus-circle"></i> User </a>
+        <a href="/user/create" class="btn btn-primary btn-user btn-block"> User </a>
         @endif
      
     </div>

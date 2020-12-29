@@ -323,7 +323,7 @@ $owners = DB::table('certificates')
 ->where('property_id_foreign', Session::get('property_id'))
 ->get();
 
-$current_occupancy_rate = Property::findOrFail(Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+ $current_occupancy_rate = Property::findOrFail(Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
 $occupancy_rate_5 = DB::table('occupancy_rate')
 ->where('property_id_foreign', Session::get('property_id'))
@@ -343,13 +343,13 @@ $occupancy_rate_5 = DB::table('occupancy_rate')
 ->where('occupancy_date', '<=', Carbon::now()->subMonths(3)->endOfMonth())
 ->max('occupancy_rate');
 
- $occupancy_rate_2 = DB::table('occupancy_rate')
+  $occupancy_rate_2 = DB::table('occupancy_rate')
 ->where('property_id_foreign', Session::get('property_id'))
 ->where('occupancy_date', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
 ->where('occupancy_date', '<=', Carbon::now()->subMonths(4)->endOfMonth())
 ->max('occupancy_rate');
 
-  $occupancy_rate_1 = DB::table('occupancy_rate')
+$occupancy_rate_1 = DB::table('occupancy_rate')
 ->where('property_id_foreign', Session::get('property_id'))
 ->where('occupancy_date', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
 ->where('occupancy_date', '<=', Carbon::now()->subMonths(5)->endOfMonth())
@@ -372,7 +372,7 @@ $movein_rate->dataset('Occupancy Rate: ', 'line',
                         )
     ->color("#858796")
     ->backgroundcolor("rgba(78, 115, 223, 0.05)")
-    ->fill(false)
+    ->fill(true)
     ->linetension(0.3);
 
 
@@ -904,9 +904,11 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property)
+    public function edit($property_id)
     {
-        //
+        $property = Property::findOrFail($property_id);
+
+        return view('webapp.properties.edit', compact('property'));
     }
 
     /**
@@ -918,7 +920,27 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
      */
     public function update(Request $request, Property $property)
     {
-        //
+        $property = Property::findOrFail(Session::get('property_id'));
+        $property->name = $request->name;
+        $property->type = $request->type;
+        $property->ownership = $request->ownership;
+        $property->mobile = $request->mobile;
+        $property->address = $request->address;
+        $property->country = $request->country;
+        $property->zip = $request->zip;
+        $property->save();
+
+        Session::put('property_id', $request->property_id);
+       
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
+
+        Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
+
+        Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
+
+        return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#property')->with('success','Changes have been saved!');
     }
 
     /**

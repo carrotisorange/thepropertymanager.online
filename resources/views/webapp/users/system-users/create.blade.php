@@ -74,16 +74,16 @@
 
                    <div class="row">
                      <div class="col">
-                      <a href="/property/all" class="btn btn-primary btn-user btn-block" > <i class="fas fa-home"></i> Home</a>
+                      <a href="/property/all" class="btn btn-primary btn-user btn-block" > Home</a>
                      
                      </div>
                      <div class="col">
        
-                      <a href="/user/all/" class="btn btn-primary btn-user btn-block"> <i class="fas fa-user"></i> Users </a>
+                      <a href="/user/all/" class="btn btn-primary btn-user btn-block"> Users </a>
                   
                   </div>
                      <div class="col">
-                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> <i class="fas fa-check"></i> Submit</button>
+                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
                      </div>
                    </div>
                   </form>  

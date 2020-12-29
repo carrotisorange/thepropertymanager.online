@@ -176,7 +176,7 @@ class OccupantController extends Controller
     
             $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
     
-            if($current_occupancy_rate? $new_occupancy_rate/$current_occupancy_rate !== 1: 0){
+            if($current_occupancy_rate !== $new_occupancy_rate){
                 $occupancy = new OccupancyRate();
                 $occupancy->occupancy_rate = $new_occupancy_rate;
                 $occupancy->occupancy_date = Carbon::now();

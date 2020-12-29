@@ -29,17 +29,24 @@
                       
                         @if (old('type'))
                         <option value="{{ old('type') }}" selected>{{ old('type') }}</option>
-                
-                        <option value="Dormitory">Dormitory</option>
                         <option value="Apartment Rentals">Apartment Rentals</option>
                         <option value="Commercial Complex">Commercial Complex</option>
                         <option value="Condominium Associations">Condominium Associations</option>
+                        <option value="Dormitory">Dormitory</option>
+                        <option value="House">House</option>
+                        <option value="Lot">Lot</option>
+                        <option value="Office">Office</option>
+                        
+                    
                         @else
-                        <option value="">Please select type</option>
-                        <option value="Dormitory">Dormitory</option>
+                        <option value="">Select your property type</option>
                         <option value="Apartment Rentals">Apartment Rentals</option>
                         <option value="Commercial Complex">Commercial Complex</option>
                         <option value="Condominium Associations">Condominium Associations</option>
+                        <option value="Dormitory">Dormitory</option>
+                        <option value="House">House</option>
+                        <option value="Lot">Lot</option>
+                        <option value="Office">Office</option>
                         @endif
                        
                       </select>
@@ -59,7 +66,7 @@
                         <option value="Single Owner">Single Owner</option>
                         <option value="Multiple Owners">Multiple Owners</option>
                         @else
-                      <option value="">Please select ownership</option>
+                      <option value="">Please your property ownership</option>
                         <option value="Single Owner">Single Owner</option>
                         <option value="Multiple Owners">Multiple Owners</option>
                         @endif
@@ -617,12 +624,12 @@
                     <hr>
                    <div class="row">
                      <div class="col">
-                      <a href="/property/all" class="btn btn-secondary btn-user btn-block" ><i class="fas fa-home"></i> Home</a>
+                      <a href="/property/all" class="btn btn-primary btn-user btn-block" > Home</a>
                      
                      </div>
                     
                      <div class="col">
-                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle"></i> Submit</button>
+                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Add</button>
                      </div>
                    </div>
                   </form>  

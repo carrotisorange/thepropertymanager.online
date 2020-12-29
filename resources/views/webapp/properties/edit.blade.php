@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Edit Units')
+@section('title', $property->name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -25,7 +25,7 @@
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link active" href="/property/{{$property->property_id }}/home">
+              <a class="nav-link" href="/property/{{$property->property_id }}/home">
                 <i class="fas fa-home text-indigo"></i>
                 <span class="nav-link-text">Home</span>
               </a>
@@ -161,134 +161,97 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0"><a href="/property/{{ $property->property_id }}/home" class="btn btn-primary" ><i class="fas fa-home"></i> Back</a></h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $property->name }}</h6>
+    
   </div>
 
 </div>
+
+  <form id="editPropertyForm" action="/property/{{ $property->property_id }}/" method="POST">
+    @method('put')
+    @csrf
+
+
 <div class="row">
-
-  <!-- Content Column -->
-  <div class="col-lg-12 mb-4">
-    <!-- DataTales Example -->
-
-      {{-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">LOGINS HISTORY </h6>
-        <div class="dropdown no-arrow">
-          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-          </a> 
-           <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink"> --}}
-            {{-- <div class="dropdown-header">Dropdown Header:</div> --}}
-            {{-- <a class="dropdown-item" target="_blank" href="/logins">See All</a> --}}
-            {{-- <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a> --}}
-          {{-- </div> 
-        </div>
-      </div> --}}
- 
-      <div class="table-responsive">
-          <form id="editUnitsForm" action="/property/{{ $property->property_id }}/units/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
-  
-              @csrf
-              @method('PUT')
-
-          </form>
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th>#</th>
-                      <th>Building</th>
-                      <th>Unit</th>
-                      <th>Floor</th>
-                      <th>Type</th>
-                      <th>Status</th>
-                      <th></th>
-                  </tr>
-              </thead>
-              <tbody> 
-                  <?php 
-                      $ctr = 1;
-                      $unit_id = 1;
-                      $unit_no = 1;
-                      $type = 1;
-                      $status =1;
-                      $building =1;
-                      $floor = 1;
-                  ?>
-                  @foreach ($units as $item)
-                      <tr>
-                          <th> {{ $ctr++ }}</th>
-                            <td><input form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
-                          <td>
-                            <input col-md-12" form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
-                            <input form="editUnitsForm" type="hidden" name="unit_id{{ $unit_id++  }}" id="" value="{{ $item->unit_id }}">
-                          </td>
-                          <td>
-                            <select form="editUnitsForm" type="number" name="floor{{ $floor++ }}">
-                              <option value="{{ $item->floor }}" readonly selected class="bg-primary">{{ $item->floor }}</option>
-                              <option value="-5">5th basement</option>
-                              <option value="-4">4th basement</option>
-                              <option value="-3">3rd basement</option>
-                              <option value="-2">2nd basement</option>
-                              <option value="-1">1st basement</option>
-                               
-                                <option value="1">1st floor</option>
-                                <option value="2">2nd floor</option>
-                                <option value="3">3rd floor</option>
-                                <option value="4">4th floor</option>
-                                <option value="5">5th floor</option>
-                                <option value="6">6th floor</option>
-                                <option value="7">7th floor</option>
-                                <option value="8">8th floor</option>
-                                <option value="9">9th floor</option>
-                            </select>
-                           
-                          </td>
-                          <td>
-                            <select class="" form="editUnitsForm" type="text" name="type{{ $type++  }}">
-                              <option value="{{ $item->type }}" readonly selected class="bg-primary">{{ $item->type }}</option>
-                              <option value="commercial">commercial</option>
-                              <option value="residential">residential</option>
-                          </select>
-                           
-                          </td>
-                          <td>
-                            <select form="editUnitsForm" type="text" name="status{{ $status++  }}" id="" >
-                              <option value="{{ $item->status }}" readonly selected class="bg-primary">{{ $item->status }}</option>
-                              <option value="reserved">accepted</option>
-                              <option value="occupied">occupied</option>
-                              <option value="vacant">vacant</option>
-                              
-                             
-                          </select>
-                          
-                          </td>    
-                          <td>
-                            <form action="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" method="POST">
-                              @csrf
-                              @method('delete')
-                              
-                              <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                            </form> 
-                          </td>
-                      </tr>
-                  @endforeach
-              </tbody>
+    <div class="col">
+        <label>Name</label>
+        <input form="editPropertyForm" class="form-control" type="text" name="name" value="{{ $property->name }}" >
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Type</label>
+        <select form="editPropertyForm" class="form-control" name="type" type="text" id="">
+            <option value="{{ $property->type }}">{{ $property->type }}</option>
+            <option value="Apartment Rentals">Apartment Rentals</option>
+            <option value="Commercial Complex">Commercial Complex</option>
+            <option value="Condominium Associations">Condominium Associations</option>
+            <option value="Dormitory">Dormitory</option>
+            <option value="House">House</option>
+            <option value="Lot">Lot</option>
+            <option value="Office">Office</option>
+        </select>
+    </div>
+   
+</div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Ownership</label>
+        <select form="editPropertyForm" class="form-control" name="ownership" type="text" id="">
+            <option value="{{ $property->ownership }}">{{ $property->ownership }}</option>
+            <option value="Single Owner">Single Owner</option>
+            <option value="Multiple Owners">Multiple Owners</option>
+        </select>
+    </div>
+</div>
+                
             
-        </table>
+     
+     <br>
+     <div class="row">
+        <div class="col">
+            <label>Mobile</label>
+            <input form="editPropertyForm" class="form-control" type="number" name="mobile" value="{{ $property->mobile }}" >
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <label>Address</label>
+            <input form="editPropertyForm" class="form-control" type="text" name="address" value="{{ $property->address }}" >
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <label>Country</label>
+            <input form="editPropertyForm" class="form-control" type="text" name="country" value="{{ $property->country }}" >
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <label>Zip</label>
+            <input form="editPropertyForm" class="form-control" type="number" name="zip" value="{{ $property->zip }}" >
+        </div>
+    </div>
+    <br>
+         <div class="row">
+         <div class="col">
+          <p class="text-right">   
+           
+            <button type="submit" form="editPropertyForm" class="btn btn-primary" > Update</button>
+        </p>   
          </div>
-         <br>
-         @if($units->count() <=0 )
-
-         @else
-        <p class="text-right">
-                <button type="submit" form="editUnitsForm" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
-            </p>
-         @endif
+        </div>  
   
+
+
+
 </div>
-</div>
+
 @endsection
 
 @section('main-content')

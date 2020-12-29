@@ -77,7 +77,7 @@
     @else
     
     <div class="col-md-4">
-    <a href="/user/upgrade" class="btn btn-primary btn-user btn-block"> Property</a>
+    <a href="/property/create" class="btn btn-primary btn-user btn-block"> Property</a>
     </div>
 
     <div class="col-md-4">
