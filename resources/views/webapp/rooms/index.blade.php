@@ -160,12 +160,13 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-3">
+  <div class="col-lg-1">
     <h6 class="h2 text-dark d-inline-block mb-0">Home</h6>
     
   </div>
 
-  <div class="col-lg-6 text-center">
+  <div class="col-lg-8 text-center">
+    <a href="#" class="btn btn-dark"> <i class="fas fa-home"></i>Dirty ({{ $units_dirty }})</a>
     <a href="#" class="btn btn-danger"><i class="fas fa-home"></i> Vacant ({{ $units_vacant }})</a>
     <a href="#" class="btn btn-success"><i class="fas fa-home"></i> Occupied ({{ $units_occupied }})</a>
     <a href="#" class="btn btn-warning"> <i class="fas fa-home"></i>Reserved ({{ $units_reserved }})</a>

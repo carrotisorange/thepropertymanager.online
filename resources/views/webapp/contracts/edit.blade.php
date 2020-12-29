@@ -166,7 +166,7 @@
           <div class="table-responsive">
             <table class="table">
                <tr>
-                   <th>Tenant</th>
+                   <th>Name</th>
                    <td><select form="editContractForm" class="form-control" name="tenant_id_foreign" id="tenant_id_foreign">
                        <option value="{{ $contract->tenant_id_foreign }}" selected>{{ $contract->tenant_id_foreign }}</option>
                        @foreach ($tenants as $item)

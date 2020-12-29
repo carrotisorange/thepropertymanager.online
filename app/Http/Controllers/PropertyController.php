@@ -295,6 +295,7 @@ $increase_in_room_acquired = number_format($no_of_rooms_previous_month == 0 ? 0 
 
   $units_reserved =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'reserved')->count();
 
+
 $tenants = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -867,7 +868,6 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->groupBy('payment_id')
     ->get();
 }
-
 
 $property = Property::findOrFail(Session::get('property_id'));
 
