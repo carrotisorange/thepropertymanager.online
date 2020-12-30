@@ -65,6 +65,8 @@ class PropertyController extends Controller
                 return redirect('/user/'.Auth::user()->id.'/owner/portal');
             }elseif(Auth::user()->user_type == 'dev'){
 
+                Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
+
                 $properties = Property::all();
         
                 $paying_users = DB::table('users')
@@ -268,7 +270,6 @@ class PropertyController extends Controller
             
                         return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 'users'));
             
-      
             }
             else{
                 if(Auth::user()->lower_access_user_id == null){
