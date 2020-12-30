@@ -395,7 +395,7 @@
             <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
               <div class="pic"><img src="{{ asset('/arsha/assets/img/team/.png') }}" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Hanimary Ordonez</h4>
+                <h4>Hanimary </h4>
                 <span>Marketing Specialist at Courtyards Condominium</span>
                 <p class="font-italic">"As a marketing specialist, being able to access and monitor the status of the rooms are central to my job. 
                   Through the PMO, I am able to provide accurate information and options for tenants for selecting rooms."</p>
@@ -407,10 +407,10 @@
             <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="200">
               <div class="pic"><img src="{{ asset('/arsha/assets/img/team-1/.png') }}" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Kate Bauzon</h4>
+                <h4>Kate </h4>
                 <span>Admin at North Cambridge Condominium</span>
-                <p class="font-italic">"It makes my life less stressful because the application provides an easy way for tenants to report concerns, and as I resolve the concern, it gives allows them to 
-                  monitor its status in real-time."</p>
+                <p class="font-italic">"It makes my life less stressful because the application provides an easy way for tenants to report concerns, and as I resolve the concern, it provides an option for them 
+                  to monitor its status in real-time."</p>
                
               </div>
             </div>
@@ -482,7 +482,7 @@
                 <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
               </ul>
               <form action="/register" method="GET">
-                <input type="hidden" name="plan" value="large">
+                <input type="hidden" name="plan" value="basic">
                 <button type="submit" href="/register" class="buy-btn">Get Started for Free</button>
               </form>
             </div>
