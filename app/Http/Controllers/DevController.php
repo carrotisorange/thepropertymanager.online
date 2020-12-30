@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Session;
+use App\Notification;
+use App\Property;
+use App\User;
+use Carbon\Carbon;
+use App\Charts\DashboardChart;
+use Auth;
 
 class DevController extends Controller
 {
@@ -16,14 +24,42 @@ class DevController extends Controller
         //
     }
 
+    public function activities()
+    {
+        $activities =  DB::table('notifications')
+        ->join('users','user_id_foreign', 'id')
+        ->select('*', 'notifications.created_at as action_made')
+       
+        ->orderBy('notification_id', 'desc')
+        ->get();
+
+        Session::put('notifications', Notification::orderBy('notification_id', 'desc')->limit(5)->get());
+
+        return view('layouts.dev.activities', compact('activities'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function properties()
     {
-        //
+         $properties = Property::all();
+
+        return view('layouts.dev.properties', compact('properties'));
+    }
+
+    public function users()
+    {
+        
+        $users = DB::table('users')
+        ->orderBy('email_verified_at', 'desc')
+        ->where('user_type','<>', 'tenant')
+        ->paginate(10);
+
+        return view('layouts.dev.users', compact( 'users'));
     }
 
     /**
@@ -32,9 +68,24 @@ class DevController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function starter()
     {
-        //
+        return view('layouts.dev.starter');
+    }
+
+    public function updates()
+    {
+        return view('layouts.dev.updates');
+    }
+
+    public function issues()
+    {
+        return view('layouts.dev.issues');
+    }
+
+    public function announcements()
+    {
+        return view('layouts.dev.announcements');
     }
 
     /**

@@ -167,89 +167,6 @@
 
 </div>
 
-<div class="row">
-
-
-  <!-- Earnings (Monthly) Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="#/">  PROPERTIES</a></div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $properties->count() }}</div>
-            {{-- <small>PENDING ({{ $pending_tenants->count() }})</small> --}}
-            
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-home fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <!-- Earnings (Monthly) Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-info shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a class="text-info" href="#/"> ACTIVE USERS</a> </div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $active_users->count() }}</div>
-            {{-- <small>|</small> --}}
-            
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-user-check fa-2x text-gray-300"></i>
-          
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><a class="text-success"  href="#/">  PAYING USERS</a></div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $paying_users->count() }}</div>
-  {{--                            
-            <small>PENDING ({{ $pending_concerns->count() }})</small> --}}
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i>
-           
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Pending Requests Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-warning shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a class="text-warning"  href="#/">  UNVERFIFIED USERS</a></div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $unverified_users->count() }}</div>
-  {{--                            
-            <small>PENDING ({{ $pending_concerns->count() }})</small> --}}
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-user-clock fa-2x text-gray-300"></i>
-      
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  </div>
 
 
 <h4>Active today ({{ $sessions->count() }}) </h4>
@@ -295,70 +212,15 @@
 
 </div>
 <br>
-<h4>All Users ({{ $users->count() }})</h4>
-<div class="table-responsive text-nowrap">
-<table class="table" >
-  <?php $ctr=1; ?>
-  <thead>
-    <tr>
-     <th>#</th>
-     <th>Name</th>
-     <th>Email</th>
-  
-     <th>Role</th>
-
-     <th>Created at</th>
-     <th>Verified at</th>
-   
-
- 
-  </tr>
-  </thead>
-  <tbody>
-   @foreach ($users as $item)
-   <tr>
-    <th>{{ $ctr++ }}</th>
-     <td><a href="/property/{{ $property->property_id }}/user/{{ $item->id }}">{{ $item->name }}</a></td>
-     <td>{{ $item->email }}</td>
-     <td>{{ $item->user_type }}</td>
-
-      <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y').' '.Carbon\Carbon::parse($item->created_at)->toTimeString() }}</td>
-      <td>{{ Carbon\Carbon::parse($item->email_verified_at)->format('M d Y').' '.Carbon\Carbon::parse($item->email_verified_at)->toTimeString() }}</td>
-   
-     
-   @endforeach
-  </tbody>
-</table>
-@if(Auth::user()->email === 'thepropertymanager2020@gmail.com' || Auth::user()->email === 'tecson.pamela@gmail.com' || Auth::user()->email === 'sales@thepropertymanager.online')
-{{ $users->links() }}
-@endif
-
-</div>
 
 
 
-<div class="row">
-<!-- Area Chart -->
-<div class="col-xl-12 col-lg-12">
-  <div class="card shadow mb-4">
-    <!-- Card Header - Dropdown -->
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">SIGN UP RATE</h6>
-      
-    </div>
-    <!-- Card Body -->
-    <div class="card-body">
-     
-        {!! $signup_rate->container() !!}
-      
-    </div>
-  </div>
-</div>
-        </div>
+
+
 @endsection
 
 @section('scripts')
-{!! $signup_rate->script() !!}
+
 @endsection
 
 

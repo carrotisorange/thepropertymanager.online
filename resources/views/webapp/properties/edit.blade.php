@@ -176,6 +176,7 @@
     <div class="col">
         <label>Name</label>
         <input form="editPropertyForm" class="form-control" type="text" name="name" value="{{ $property->name }}" >
+        <input form="editPropertyForm" class="form-control" type="hidden" name="property_id" value="{{ $property->property_id }}" >
     </div>
 </div>
 <br>

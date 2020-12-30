@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Activities')
+@section('title', 'Announcements')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -25,7 +25,7 @@
             </li>
         
             <li class="nav-item">
-              <a class="nav-link active" href="/dev/activities">
+              <a class="nav-link" href="/dev/activities">
                 <i class="fas fa-snowboarding text-indigo"></i>
                 <span class="nav-link-text">Activities</span>
               </a>
@@ -75,7 +75,7 @@
               </a>
             </li>
           <li class="nav-item">
-              <a class="nav-link" href="/dev/announcements" target="_blank">
+              <a class="nav-link active" href="/dev/announcements" target="_blank">
                 <i class="fas fa-microphone text-purple"></i>
                 <span class="nav-link-text">Announcements</span>
               </a>
@@ -92,63 +92,18 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Activities</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Annoucements</h6>
     
   </div>
   
 
 </div>
-<div class="row">
-    <div class="col">
-        <div class="list-group list-group-flush">
-            @foreach ($activities as $item)
-         
-            <a href="#!" class="list-group-item list-group-item-action">
-              <div class="row align-items-center">
-                <div class="col-auto">
-                  <!-- Avatar -->
-                @if($item->type === 'tenant')
-                <i class="fas fa-user text-success fa-lg"></i>
-                @elseif($item->type === 'payable')
-                <i class="fas fa-file-export text-indigo"></i>
-                @elseif($item->type === 'owner')
-                <i class="fas fa-user-tie text-teal"></i>
-                @elseif($item->type === 'concern')
-                <i class="fas fa-tools text-cyan"></i>
-                @elseif($item->type === 'payment')
-                <i class="fas fa-coins text-yellow"></i>
-                @elseif($item->type === 'bill')
-                <i class="fas fa-file-invoice-dollar text-pink"></i>
-                @elseif($item->type === 'joborder')
-                <i class="fas fa-list text-dark"></i>
-                @elseif($item->type === 'unit')
-                <i class="fas fa-home text-indigo"></i>
-                @elseif($item->type === 'contract')
-                <i class="fas fa-file-signature text-teal"></i>
-                @else
-                <i class="fas fa-building text-primary"></i>
-                @endif
-                </div>
-                <div class="col">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h4 class="mb-0 text-sm">{{ $item->message }}</h4>
-                    </div>
-                    <div class="text-right text-muted">
-                      <small>{{ $item->name }}</small>
-                    </div>
-                  </div>
-                  <p class="text-sm text-muted mb-0">{{ $item->action_made }}</p>
-                </div>
-              </div>
-            </a>
-     
-            @endforeach
-  
-          </div>
-    </div>
-</div>
 
+<div class="row">
+
+    
+    </div>
+    
 @endsection
 
 @section('main-content')
@@ -156,7 +111,7 @@
 @endsection
 
 @section('scripts')
-  
+
 @endsection
 
 

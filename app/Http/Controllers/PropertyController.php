@@ -47,11 +47,6 @@ class PropertyController extends Controller
                ->orWhere('id', Auth::user()->id)  
                ->count();
        
-
-                // $existing_users = DB::table('users')->where('property', Auth::user()->property)
-                // ->where('id','<>',Auth::user()->id )
-                // ->count();
-
         return view('webapp.properties.index', compact('properties', 'users')); 
 
             }elseif(Auth::user()->user_type == 'tenant'){
@@ -70,16 +65,210 @@ class PropertyController extends Controller
                 return redirect('/user/'.Auth::user()->id.'/owner/portal');
             }elseif(Auth::user()->user_type == 'dev'){
 
-                $activities =  DB::table('notifications')
-                ->join('users','user_id_foreign', 'id')
-                ->select('*', 'notifications.created_at as action_made')
-               
-                ->orderBy('notification_id', 'desc')
+                $properties = Property::all();
+        
+                $paying_users = DB::table('users')
+                ->where('account_type','!=','Free')
+                ->where('user_type', '<>','tenant')
                 ->get();
-
-                Session::put('notifications', Notification::orderBy('notification_id', 'desc')->limit(5)->get());
-
-                return view('layouts.dev.activities', compact('activities'));
+            
+                $unverified_users = DB::table('users')
+                ->whereNull('email_verified_at')
+                ->orderBy('users.created_at', 'desc')
+                ->where('user_type', '<>','tenant')
+                ->get();
+            
+            
+                $signup_rate_1 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
+                ->where('user_type', 'manager')
+            
+                ->whereNull('email_verified_at')
+                ->count();
+            
+                $signup_rate_2 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
+    
+                ->where('user_type', 'manager')
+            
+                ->whereNull('email_verified_at')
+                ->count();
+            
+                $signup_rate_3 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
+    
+                ->where('user_type', 'manager')
+            
+                ->whereNull('email_verified_at')
+                ->count();
+            
+                $signup_rate_4 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
+            
+        
+                ->where('user_type', 'manager')
+            
+                ->whereNull('email_verified_at')
+                ->count();
+            
+                $signup_rate_5 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
+            
+            
+                ->where('user_type', 'manager')
+            
+                ->whereNull('email_verified_at')
+                ->count();
+            
+                $signup_rate_6 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
+            
+           
+                ->where('user_type', 'manager')
+            
+                ->whereNull('email_verified_at')
+                ->count();
+            
+            
+                $verified_users_1 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
+    
+                ->where('user_type', 'manager')
+            
+                ->whereNotNull('account_type')
+                ->whereNotNull('email_verified_at')
+                ->count();
+            
+                $verified_users_2 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
+    
+            
+                ->where('user_type', 'manager')
+                ->whereNotNull('account_type')
+                ->whereNotNull('email_verified_at')
+                ->count();
+            
+                $verified_users_3 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
+            
+                ->where('user_type', 'manager')
+                ->whereNotNull('account_type')
+                ->whereNotNull('email_verified_at')
+                ->count();
+            
+                $verified_users_4 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
+            
+       
+                ->where('user_type', 'manager')
+                ->whereNotNull('account_type')
+                ->whereNotNull('email_verified_at')
+                ->count();
+            
+                $verified_users_5 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
+    
+            
+                ->where('user_type', 'manager')
+                ->whereNotNull('account_type')
+                ->whereNotNull('email_verified_at')
+                ->count();
+            
+                $verified_users_6 = DB::table('users')
+                ->where('email_verified_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
+                ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
+    
+            
+                ->where('user_type', 'manager')
+                ->whereNotNull('account_type')
+                ->whereNotNull('email_verified_at')
+                ->count();
+            
+                $signup_rate = new DashboardChart;
+            
+                $signup_rate->barwidth(4.0);
+                $signup_rate->displaylegend(true);
+                $signup_rate->labels([Carbon::now()->subMonth(5)->format('M Y'),Carbon::now()->subMonth(4)->format('M Y'),Carbon::now()->subMonth(3)->format('M Y'),Carbon::now()->subMonths(2)->format('M Y'),Carbon::now()->subMonth()->format('M Y'),Carbon::now()->format('M Y')]);
+                $signup_rate->dataset
+                                        (
+                                            'Sign Ups', 'line',
+                                                                            [
+                                                                                $signup_rate_6,
+                                                                                $signup_rate_5,
+                                                                                $signup_rate_4,
+                                                                                $signup_rate_3,
+                                                                                $signup_rate_2,
+                                                                                $signup_rate_1,
+                                                                        
+            
+            
+                                                                            ]
+                                        )
+            ->color("#0000FF")
+            ->fill(true)
+            ->backgroundcolor("#0000FF");
+            
+                $signup_rate->dataset
+                                        (
+                                            'Active Users', 'line',
+                                                                            [
+            
+                                                                                $verified_users_6,
+                                                                                $verified_users_5,
+                                                                                $verified_users_4,
+                                                                                $verified_users_3,
+                                                                                $verified_users_2,
+                                                                                $verified_users_1,
+                                                                       
+            
+                                                                            ],
+            
+                                            )
+            
+                ->color("#008000")
+                ->backgroundcolor("#008000")
+                ->fill(true)
+                ->linetension(0.4);
+            
+                $active_users = DB::table('users')
+            
+            
+                ->where('user_type', '<>','tenant')
+                ->whereNotNull('email_verified_at')
+    
+            
+                ->get();
+            
+            
+            
+                        $users = DB::table('users')
+                        ->orderBy('email_verified_at', 'desc')
+                        ->where('user_type','<>', 'tenant')
+                        ->paginate(10);
+            
+                        $sessions = DB::table('users')
+                        ->join('sessions', 'id', 'session_user_id')
+                        ->join('properties', 'id', 'user_id_property')
+                        ->select('*', 'properties.name as property_name', 'users.name as user_name')
+            
+                        ->whereDay('session_last_login_at', now()->day)
+                        ->get();
+            
+            
+                        return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 'users'));
+            
+      
             }
             else{
                 if(Auth::user()->lower_access_user_id == null){
@@ -920,7 +1109,12 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
      */
     public function update(Request $request, Property $property)
     {
-        $property = Property::findOrFail(Session::get('property_id'));
+        if(Auth::user()->user_type === 'dev'){
+            $property = Property::findOrFail($request->property_id);
+        }else{
+            $property = Property::findOrFail(Session::get('property_id'));
+        }
+
         $property->name = $request->name;
         $property->type = $request->type;
         $property->ownership = $request->ownership;
@@ -940,7 +1134,13 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
 
-        return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#property')->with('success','Changes have been saved!');
+        if(Auth::user()->user_type === 'dev'){
+            return redirect('/dev/properties/')->with('success','Changes have been saved!');
+        }else{
+          
+            return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#property')->with('success','Changes have been saved!');
+        }
+     
     }
 
     /**
