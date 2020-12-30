@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Mail\TenantRegisteredMail;
 use Illuminate\Support\Facades\Mail;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -73,9 +74,6 @@ class RegisterController extends Controller
  
             Mail::to($data['email'])
             ->bcc(['landleybernardo@thepropertymanager.online',
-                'sales@thepropertymanager.online',
-                'customercare@thepropertymanager.online', 
-                'pamelatecson@thepropertymanager.online',
                 ])
             ->send(new TenantRegisteredMail());
 
@@ -87,9 +85,12 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'created_at' => Carbon::now(),
             'email_verified_at' => Carbon::now(),
+            'account_type' => Session::get('plan'),
             'trial_ends_at' => Carbon::now()->addDays(14),
         
         ]);
 
     }
+
+
 }

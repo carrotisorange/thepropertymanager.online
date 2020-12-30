@@ -8,10 +8,10 @@
         @csrf
 
 
-          <div class="text-center">
-            <h1 class="h4 text-gray-900 mb-4">Register for free!</h1>
+          {{-- <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">REGISTER FOR FREE!</h1>
           </div>
-          
+           --}}
             <div class="form-group">
              
                 <input form="registrationForm"  id="name" type="text" class="form-control form-control-user @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus placeholder="Full Name" required>
@@ -63,7 +63,7 @@
               </div>
            
             <button form="registrationForm" type="submit" class="btn btn-primary btn-user btn-block" id="registerButton" onclick="this.form.submit(); this.disabled = true;">
-          Sign up
+          REGISTER
         </button>
       
       </form>

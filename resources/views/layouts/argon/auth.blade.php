@@ -102,7 +102,7 @@
             </li>
             @else
             <li class="nav-item d-none d-lg-block ml-lg-4">
-              <a href="/register" target="_blank" class="btn btn-neutral btn-icon">
+              <a href="/#pricing" target="_blank" class="btn btn-neutral btn-icon">
              
                 <span class="nav-link-inner--text">Register for FREE</span>
               </a>

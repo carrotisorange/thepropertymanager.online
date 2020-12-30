@@ -431,12 +431,38 @@
         </div>
 
         <div class="row">
-
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="box">
+              <h3>Starter</h3>
+              <h4><sup>₱</sup>600<span>per month</span></h4>
+              <ul>
+                <li><i class="bx bx-check"></i> 1 property</li>
+                <li><i class="bx bx-check"></i> <20 rooms</li>
+                  <li><i class="bx bx-check"></i> Room management</li>
+                  <li><i class="bx bx-check"></i> Tenant management</li>
+                  <li><i class="bx bx-check"></i> Bulk billing for rent, utilities, and etc.</li>
+                  <li><i class="bx bx-check"></i> Record payments</li>
+                  <li><i class="bx bx-check"></i> Concern tracker</li>
+                  <li><i class="bx bx-check"></i> Job order</li>
+                  <li><i class="bx bx-check"></i> Marketing services</span></li>
+                  <li><i class="bx bx-check"></i> Owner portal</li>
+                  <li><i class="bx bx-check"></i> Tenant portal</li>
+                  <li><i class="bx bx-check"></i> Online payment</li>
+                  <li><i class="bx bx-check"></i> Concierge services</li>
+                  <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
+              </ul>
+              <form action="/register" method="GET">
+                <input type="hidden" name="plan" value="starter">
+                <button type="submit" href="/register" class="buy-btn">Get Started for Free</button>
+              </form>
+              
+            </div>
+          </div>
        
          
 
           <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="100">
-            <div class="box">
+            <div class="box featured">
               <h3>Basic</h3>
               <h4><sup>₱</sup>950<span>per month</span></h4>
               <ul>
@@ -455,12 +481,15 @@
                 <li><i class="bx bx-check"></i> Concierge services</li>
                 <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
               </ul>
-              <a href="/register" class="buy-btn">Get Started for Free</a>
+              <form action="/register" method="GET">
+                <input type="hidden" name="plan" value="large">
+                <button type="submit" href="/register" class="buy-btn">Get Started for Free</button>
+              </form>
             </div>
           </div>
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="box featured">
+            <div class="box">
               <h3>Large</h3>
               <h4><sup>₱</sup>1400<span>per month</span></h4>
               <ul>
@@ -480,11 +509,21 @@
                 <li><i class="bx bx-check"></i> Concierge services</li>
                 <li class="na"><i class="bx bx-x"></i> <span>Portforlio management</span></li>
               </ul>
-              <a href="/register" class="buy-btn">Get Started for Free</a>
+              <form action="/register" method="GET">
+                <input type="hidden" name="plan" value="large">
+                <button type="submit" href="/register" class="buy-btn">Get Started for Free</button>
+              </form>
             </div>
           </div>
 
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+   
+
+        </div>
+
+        
+        <div class="row">
+          
+          <div class="col-lg-4 mt-4 mt-lg-0 mx-auto" data-aos="fade-up" data-aos-delay="400">
             <div class="box">
               <h3>Advanced</h3>
               <h4><sup>₱</sup>2400<span>per month</span></h4>
@@ -506,15 +545,14 @@
                 <li><i class="bx bx-check"></i>Portforlio management</li>
               </ul>
          
-              <a href="/register" class="buy-btn">Get Started for Free</a>
+              <form action="/register" method="GET">
+                <input type="hidden" name="plan" value="advanced">
+                <button type="submit" href="/register" class="buy-btn">Get Started for Free</button>
+              </form>
             </div>
           </div>
-
-        </div>
-
-        
-        <div class="row">
-          <div class="col-lg-5 mt-4 mt-lg-0 mx-auto" data-aos="fade-up" data-aos-delay="400">
+          
+          <div class="col-lg-4 mt-4 mt-lg-0 mx-auto" data-aos="fade-up" data-aos-delay="400">
             <div class="box">
               <h3>Enterprise</h3>
               <h4><sup>₱</sup>N<span>per month</span></h4>
@@ -535,7 +573,10 @@
               <li><i class="bx bx-check"></i> <span>Concierge services</span></li>
               <li><i class="bx bx-check"></i> <span>Portforlio Management</span></li>
               </ul>
-              <a href="#" class="buy-btn">customercare@thepropertymanager.online</a>
+              <form action="/register" method="GET">
+                <input type="hidden" name="plan" value="enterprise">
+                <button type="submit" href="/register" class="buy-btn">Get Started for Free</button>
+              </form>
             </div>
           </div>
         </div>
