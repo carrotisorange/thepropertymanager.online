@@ -173,14 +173,36 @@
   </div>
 
   <div class="col-md-3 text-right">
-    @if(Auth::user()->account_type === 'starter' )
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Starter</a>
+    @if(Auth::user()->account_type === 'starter')
+      @if($units->count()>20)
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @else
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @endif
+    @elseif(Auth::user()->account_type === 'basic' )
+      @if($units->count()>30)
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @else
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @endif
     @elseif(Auth::user()->account_type === 'large' )
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @if($units->count()>50)
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @else
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @endif
     @elseif(Auth::user()->account_type === 'advanced' )
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
-    @elseif(Auth::user()->account_type === 'large' )
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @if($units->count()>75)
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @else
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @endif
+    @elseif(Auth::user()->account_type === 'enterprise' )
+      @if($units->count()>100)
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @else
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+      @endif
     @endif
 
     <a href="/property/{{ $property->property_id }}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
@@ -317,7 +339,29 @@
   @endforeach 
 </div>
 
-@endif
+@endif<div class="modal fade" id="upgradeToPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel" >Upgrade to PRO</h5>
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">
+          You've reached the limit number of rooms that your plan can add. 
+        </p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal"> Dismiss</button>
+      </div>
+  </div>
+  </div>
+</div>
+
 <div class="modal fade" id="addMultipleUnits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
