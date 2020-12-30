@@ -283,7 +283,7 @@
 
          @else
         <p class="text-right">
-                <button type="submit" form="editUnitsForm" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
+                <button type="submit" form="editUnitsForm" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Update</button>
             </p>
          @endif
   
