@@ -65,7 +65,7 @@ class PropertyController extends Controller
                 return redirect('/user/'.Auth::user()->id.'/owner/portal');
             }elseif(Auth::user()->user_type == 'dev'){
 
-                Session::put('notifications', Notification::all());
+                Session::put('notifications', Notification::orderBy('notification_id', 'DESC')->get());
 
                 $properties = Property::all();
         
