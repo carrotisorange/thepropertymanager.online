@@ -28,7 +28,7 @@
         <h1>Simplifying Property Management</h1>
         <h2></h2>
         <div class="d-lg-flex">
-          <a href="/register" class="btn-get-started scrollto">Get Started For Free</a>
+          <a href="/#pricing" class="btn-get-started scrollto">Get Started For Free</a>
     
           <a href="#myModal"  style="display:none" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a>
         </div>

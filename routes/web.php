@@ -400,7 +400,7 @@ Route::get('/dev/updates/', 'DevController@updates')->middleware(['auth', 'verif
 
 Route::get('/register', function(Request $request){
     \Session::put('plan', $request->plan);
-
+    
     return view('auth.register');
 });
 

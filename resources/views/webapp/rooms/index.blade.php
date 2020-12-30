@@ -173,7 +173,16 @@
   </div>
 
   <div class="col-md-3 text-right">
+    @if(Auth::user()->account_type === 'starter' )
+    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Starter</a>
+    @elseif(Auth::user()->account_type === 'large' )
     <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+    @elseif(Auth::user()->account_type === 'advanced' )
+    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+    @elseif(Auth::user()->account_type === 'large' )
+    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+    @endif
+
     <a href="/property/{{ $property->property_id }}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
   </div>
 
