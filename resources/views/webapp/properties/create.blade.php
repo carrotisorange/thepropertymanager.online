@@ -1,6 +1,6 @@
 @extends('layouts.argon.dashboard')
 
-@section('title', 'Add Property')
+@section('title', 'Enter property details...')
 @section('welcome')
 <h1 class="text-white">Add your property here!</h1>
 @endsection
@@ -62,17 +62,15 @@
             
                         @if (old('ownership'))
                         <option value="{{ old('ownership') }}" selected>{{ old('ownership') }}</option>
-          
-                        <option value="Single Owner">Single Owner</option>
                         <option value="Multiple Owners">Multiple Owners</option>
+                        <option value="Single Owner">Single Owner</option>
+                      
                         @else
-                      <option value="">Please your property ownership</option>
-                        <option value="Single Owner">Single Owner</option>
+                      <option value="">Select your property ownership</option>
                         <option value="Multiple Owners">Multiple Owners</option>
+                        <option value="Single Owner">Single Owner</option> 
                         @endif
 
-
-                   
                       </select>
                             @error('ownership')
                                 <span class="invalid-feedback" role="alert">
@@ -81,7 +79,7 @@
                             @enderror
                     </div>
 
-                    <hr>
+              
                     
                     <div class="form-group">
                       <input id="mobile" type="number" class="form-control form-control-user @error('mobile') is-invalid @enderror" placeholder="Mobile" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile" autofocus>

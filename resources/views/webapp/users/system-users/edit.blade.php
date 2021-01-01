@@ -49,12 +49,12 @@
                     <td>{{ $user->user_type }}</td>
                 </tr>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <th>Created on</th>
                     <td>{{ Carbon\Carbon::parse($user->created_at)->format('M d Y') }}</td>
-                </tr>
+                </tr> --}}
                 
-                    <tr>
+                    {{-- <tr>
                        
                       
                  
@@ -62,7 +62,7 @@
              
                        
                         <td>{{ $user->email_verified_at? Carbon\Carbon::parse($user->email_verified_at)->format('M d Y'): ' ' }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>Property</th>
                         <td>
@@ -142,13 +142,13 @@
 
         <div class="col">
 
-            <button form="editUserForm" type="submit" class="btn btn-success btn-user btn-block"> Complete </button>
+            <button form="editUserForm" type="submit" class="btn btn-success btn-user btn-block"> Assign </button>
         
           </div>
         @else
         <div class="col">
         
-            <a href="/property/all/" class="btn btn-primary btn-user btn-block"><i class="fas fa-home"></i> Home </a>
+            <a href="/property/all/" class="btn btn-primary btn-user btn-block"> Home </a>
         
         </div>
         {{-- <div class="col">

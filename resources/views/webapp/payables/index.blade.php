@@ -555,7 +555,7 @@
       </div>
       <div class="modal-footer">
 
-          <button form="addPayableEntryForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+          <button form="addPayableEntryForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Add</button>
           </div>
   </div>
   </div>
@@ -602,7 +602,7 @@
       </div>
       <div class="modal-footer">
          
-          <button form="requestFundsForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+          <button form="requestFundsForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Add</button>
           </div>
   </div>
   </div>

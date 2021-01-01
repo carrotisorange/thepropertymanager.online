@@ -46,7 +46,7 @@
                     
                         <option value="treasury">treasury</option>
                         @else
-                        <option value="">Select role</option>
+                        <option value="">Select user role</option>
                         <option value="admin">admin</option>
                         <option value="ap">ap</option>
                         <option value="billing">billing</option>
@@ -83,7 +83,7 @@
                   
                   </div>
                      <div class="col">
-                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Add</button>
                      </div>
                    </div>
                   </form>  

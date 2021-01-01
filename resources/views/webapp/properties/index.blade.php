@@ -55,7 +55,7 @@
 @endforeach
 
 @if ($properties->count() <= 0)
-<h1 class="">Add your first property...</h1>
+{{-- <h1 class="">Add your first property...</h1> --}}
 @else
 @if(Auth::user()->trial_ends_at <= Carbon\Carbon::today())
 <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Trial ends on {{ Carbon\Carbon::parse(Auth::user()->trial_ends_at)->format('M d Y') }} </p>
@@ -65,14 +65,14 @@
 @endif
 
 
-<hr>
+{{-- <hr> --}}
 
 
 <div class="row">
   
     @if ($properties->count() <= 0)
     <div class="col">
-    <a href="/property/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus-circle"></i> Add a property </a>
+    <a href="/property/create" class="btn btn-primary btn-user btn-block"> Add your first property</a>
     </div>
     @else
     
