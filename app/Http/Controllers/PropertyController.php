@@ -695,12 +695,12 @@ $expenses_rate->dataset
                         (
                             'Collection', 'line',
                                                             [
-                                                                $collection_rate_6,
-                                                                $collection_rate_5,
-                                                                $collection_rate_4,
-                                                                $collection_rate_3,
-                                                                $collection_rate_2,
-                                                                $collection_rate_1,
+                                                                number_format($collection_rate_6,2),
+                                                                number_format($collection_rate_5,2),
+                                                                number_format($collection_rate_4,2),
+                                                                number_format($collection_rate_3,2),
+                                                                number_format($collection_rate_2,2),
+                                                                number_format($collection_rate_1,2),
                                                           
 
                                                             ]
@@ -713,12 +713,12 @@ $expenses_rate->dataset
                         (
                             'Expenses', 'line',
                                                             [
-                                                                $expenses_6,
-                                                                $expenses_5,
-                                                                $expenses_4,
-                                                                $expenses_3,
-                                                                $expenses_2,
-                                                                $expenses_1,
+                                                                number_format($expenses_6,2),
+                                                                number_format($expenses_5,2),
+                                                                number_format($expenses_4,2),
+                                                                number_format($expenses_3,2),
+                                                                number_format($expenses_2,2),
+                                                                number_format($expenses_1,2),
                                                             
                                                             ]
                         )
@@ -730,12 +730,12 @@ $expenses_rate->dataset
                         (
                             'Income', 'line',
                                                             [
-                                                                $collection_rate_6 -  $expenses_6,
-                                                                $collection_rate_5 -  $expenses_5,
-                                                                $collection_rate_4 -  $expenses_4,
-                                                                $collection_rate_3 - $expenses_3,
-                                                                $collection_rate_2 -  $expenses_2,
-                                                                $collection_rate_1 - $expenses_1,
+                                                                number_format($collection_rate_6 - $expenses_6,2),
+                                                                number_format($collection_rate_5 - $expenses_5,2),
+                                                                number_format($collection_rate_4 - $expenses_4,2),
+                                                                number_format($collection_rate_3 - $expenses_3,2),
+                                                                number_format($collection_rate_2 - $expenses_2,2),
+                                                                number_format($collection_rate_1 - $expenses_1,2),
                                                       
                                                             ],
 
