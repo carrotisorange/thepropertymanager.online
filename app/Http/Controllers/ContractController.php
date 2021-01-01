@@ -552,7 +552,7 @@ class ContractController extends Controller
         ->where('contracts.status', 'active')
         ->where('moveout_at', '<=', Carbon::now()->addMonth())
         ->orderBy('moveout_at', 'asc')
-        ->paginate(5);
+        ->get();
 
         return view('webapp.contracts.expired', compact('tenants_to_watch_out'));
     }
