@@ -407,16 +407,15 @@ Route::get('property/{property_id}/delinquents', 'CollectionController@delinquen
 Route::get('property/{property_id}/pending-concerns', 'ConcernController@pending')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/expiring-contracts', 'ContractController@expired')->middleware(['auth', 'verified']);
 
-
 //routes for the the layouts.arsha
 Route::get('/', function(){
     $users = User::where('user_type','manager')->count();
 
     $properties = Property::whereNotIn('property_id',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->count();
 
-    $rooms = Unit::whereNotIn('property_id_foreign',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->count();
+    $rooms = Unit::whereNotIn('property_id_foreign',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->whereNotIn('status',['deleted'])->count();
 
-     $tenants = DB::table('users_properties_relations')
+    $tenants = DB::table('users_properties_relations')
      ->join('properties', 'property_id_foreign', 'property_id')
      ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
      ->where('property_id','<>' ,'2b5e65e0-1701-11eb-bf70-a74337c91b16')
