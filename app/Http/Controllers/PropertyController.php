@@ -218,7 +218,7 @@ class PropertyController extends Controller
                                                                             ]
                                         )
             ->color("#0000FF")
-            ->fill(true)
+            ->fill(false)
             ->backgroundcolor("#0000FF");
             
                 $signup_rate->dataset
@@ -240,8 +240,8 @@ class PropertyController extends Controller
             
                 ->color("#008000")
                 ->backgroundcolor("#008000")
-                ->fill(true)
-                ->linetension(0.4);
+                ->fill(false)
+                ->linetension(0.3);
             
                 $active_users = DB::table('users')
             
@@ -559,7 +559,7 @@ $movein_rate->dataset('Occupancy Rate: ', 'line',
                         )
     ->color("#858796")
     ->backgroundcolor("rgba(78, 115, 223, 0.05)")
-    ->fill(true)
+    ->fill(false)
     ->linetension(0.3);
 
 
@@ -706,7 +706,7 @@ $expenses_rate->dataset
                                                             ]
                         )
 ->color("#0000FF")
-->fill(true)
+->fill(false)
 ->backgroundcolor("#0000FF");
 
 $expenses_rate->dataset
@@ -723,7 +723,7 @@ $expenses_rate->dataset
                                                             ]
                         )
 ->color("#ff0000")
-->fill(true)
+->fill(false)
 ->backgroundcolor("#ff0000");
 
 $expenses_rate->dataset
@@ -743,8 +743,8 @@ $expenses_rate->dataset
 
     ->color("#008000")
     ->backgroundcolor("#008000")
-    ->fill(true)
-    ->linetension(0.4);
+    ->fill(false)
+    ->linetension(0.3);
 
 
     if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
@@ -956,8 +956,8 @@ $moveout_rate->dataset('Moveouts', 'bar', [
                 )
 ->color("#858796")
 ->backgroundcolor("rgba(78, 115, 223, 0.05)")
-->fill(true)
-->linetension(0.1);
+->fill(false)
+->linetension(0.3);
 
 $end_of_contract = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
