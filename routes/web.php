@@ -268,22 +268,16 @@ Route::get('/asa', function(){
 //          }
 //         }
 
-// $tenants = Tenant::all()->max('tenant_id');
+//  $tenants = Tenant::all()->max('tenant_id');
 
 // for ($i=1; $i <=$tenants ; $i++) { 
 
 //         if (Tenant::where('tenant_id', $i)->exists()) {
 //           $tenant = Tenant::findOrFail($i);
 
-
-         
-//             $guardian = new Guardian();
-//             $guardian->tenant_id_foreign =  $tenant->tenant_id;
-//             $guardian->name =  $tenant->guardian.' ';
-//             $guardian->relationship =  $tenant->guardian_relationship.' ';
-//             $guardian->mobile = $tenant->guardian_contact_no.' ';
-//             $guardian->save();
-          
+//             $tenant = new Tenant($tenant->tenant_id);
+//             $tenant->name = $tenant->first_name.$tenant->middle_name.$tenant->last_name;
+//             $tenant->save();
 
 //          }
 //         }
@@ -416,11 +410,11 @@ Route::get('property/{property_id}/expiring-contracts', 'ContractController@expi
 
 //routes for the the layouts.arsha
 Route::get('/', function(){
-    $users = User::where('user_type','<>','tenant')->where('id','<>', 36)->count();
+    $users = User::where('user_type','manager')->count();
 
     $properties = Property::whereNotIn('property_id',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->count();
 
-     $rooms = Unit::whereNotIn('property_id_foreign',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->count();
+    $rooms = Unit::whereNotIn('property_id_foreign',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->count();
 
      $tenants = DB::table('users_properties_relations')
      ->join('properties', 'property_id_foreign', 'property_id')

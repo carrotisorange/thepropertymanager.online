@@ -134,11 +134,13 @@ class OccupantController extends Controller
             'contact_no' => ['required', 'unique:tenants'],
         ]);
 
+        $latest_tenant_id = Tenant::all()->max('tenant_id')+1;
+
         $tenant_unique_id = Str::random(8);
 
         $tenant_id = DB::table('tenants')->insertGetId(
             [
-                'tenant_unique_id' => $tenant_unique_id,
+                'tenant_unique_id' => $latest_tenant_id.$tenant_unique_id,
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
                 'last_name'=> $request->last_name,

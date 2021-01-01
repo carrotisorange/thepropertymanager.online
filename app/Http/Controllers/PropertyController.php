@@ -245,11 +245,8 @@ class PropertyController extends Controller
             
                 $active_users = DB::table('users')
             
-            
-                ->where('user_type', '<>','tenant')
+                ->where('user_type','manager')
                 ->whereNotNull('email_verified_at')
-    
-            
                 ->get();
             
             
