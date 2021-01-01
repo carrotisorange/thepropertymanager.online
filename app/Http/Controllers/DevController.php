@@ -57,7 +57,7 @@ class DevController extends Controller
         $users = DB::table('users')
         ->orderBy('email_verified_at', 'desc')
         ->where('user_type','<>', 'tenant')
-        ->paginate(10);
+        ->get();
 
         return view('layouts.dev.users', compact( 'users'));
     }
