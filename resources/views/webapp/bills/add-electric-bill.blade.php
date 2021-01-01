@@ -284,8 +284,7 @@
 
   <br>
   <p class="text-right">
-    <a href="/property/{{ $property->property_id }}/bills" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</a>
-    <button type="submit" form="add_billings" id="addBillsButton" class="btn btn-primary"  onclick="return confirm('Are you sure you want to perform this action?');"><i class="fas fa-check"></i> Submit</button>
+    <button type="submit" form="add_billings" id="addBillsButton" class="btn btn-primary"  onclick="return confirm('Are you sure you want to perform this action?');"> Add</button>
   </p>
   
   
