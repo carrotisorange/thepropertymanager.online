@@ -399,7 +399,10 @@ Route::get('/dev/user/{user_id}/plans', 'DevController@user_plans')->middleware(
 
 Route::get('/register', function(Request $request){
     \Session::put('plan', $request->plan);
-    
+    if(\Session::get('plan') == null){
+        return redirect('/#pricing');
+    }
+
     return view('auth.register');
 });
 

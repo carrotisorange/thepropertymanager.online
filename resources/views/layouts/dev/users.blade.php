@@ -121,8 +121,6 @@
      <th>Created at</th>
      <th>Verified at</th>
    
-
- 
   </tr>
   </thead>
   <tbody>

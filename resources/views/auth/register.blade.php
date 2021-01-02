@@ -12,6 +12,13 @@
             <h1 class="h4 text-gray-900 mb-4">REGISTER FOR FREE!</h1>
           </div>
            --}}
+
+           <div class="form-group">
+             
+            <input form="registrationForm" id="account_type" type="text" class="form-control" name="name" value="{{ Session::get('plan') }}" readonly>
+
+          </div>
+
             <div class="form-group">
              
                 <input form="registrationForm"  id="name" type="text" class="form-control form-control-user @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus placeholder="Full Name" required>
