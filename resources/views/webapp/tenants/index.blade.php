@@ -201,7 +201,9 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
           <th>Name</th>
       
           <th>Mobile</th>
+         
           <th>Email</th>
+          <th>Type</th>
           <th>Gender</th>
           <th>Civil status</th>
           <th>Movein at</th>
@@ -227,6 +229,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
             <td>{{ $item->contact_no }}</td>
             
             <td>{{ $item->email_address }}</td>
+            <td>{{ $item->type_of_tenant }}</td>
             <td>{{ $item->gender }}</td>
             <td>{{ $item->civil_status }}</td>
           <td>{{ $item->movein_at }}</td>
