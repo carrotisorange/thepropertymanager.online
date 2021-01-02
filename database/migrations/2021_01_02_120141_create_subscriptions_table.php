@@ -18,8 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('user_id');
             $table->foreign('plan_id')->references('id')->on('plans');
-            $table->unsignedBigIntege
-            r('plan_id');
+            $table->unsignedBigInteger('plan_id');
             $table->date('starts_at');
             $table->date('ends_at');
             $table->string('status');
