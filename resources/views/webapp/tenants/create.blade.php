@@ -178,12 +178,11 @@
   </div>
   <div class="col-lg-3">
     <small class="">Refferer <span class="text-danger">*</span></small>
-    <select class="form-control" form="addTenantForm1" name="referrer_id" id="referrer_id" required>
+    <select class="form-control" form="addTenantForm1" name="referrer_id" id="referrer_id">
      <option value="">Please select one</option>
      @foreach ($users as $item)
        <option value="{{ $item->id }}">{{ $item->name }}</option>
      @endforeach
-       <option value="">None</option>
     </select>
  
   

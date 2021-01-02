@@ -639,11 +639,9 @@ class UserController extends Controller
 
         if(($user_id == Auth::user()->id)){
 
-            $concerns = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
+             $concerns = DB::table('concerns')
+            ->join('tenants', 'concern_tenant_id', 'tenant_id')
+            ->join('users', 'concern_user_id', 'id')
             ->select('*', 'concerns.status as concern_status')
             ->where('tenant_id', $tenant_id)
             ->orderBy('concern_id', 'desc')

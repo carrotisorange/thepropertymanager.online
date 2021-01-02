@@ -552,10 +552,7 @@
             </div>
              <table class="table">
                
-                 <tr>  
-                   <th>Name</th>
-                   <td>{{ $item->name }}</td>
-                 </tr>
+                
                
                  <tr>
                    <th>Email</th>

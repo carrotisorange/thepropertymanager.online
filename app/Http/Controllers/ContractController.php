@@ -610,7 +610,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
             'updated_at' => Carbon::now()
        ]);
 
-       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract has been updated!');
+       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract added successfully!');
     }
 
     /**

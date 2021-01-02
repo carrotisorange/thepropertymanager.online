@@ -405,7 +405,7 @@ class TenantController extends Controller
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'tenant has been added!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Tenant added succesfully!');
        
 
        
@@ -559,19 +559,14 @@ class TenantController extends Controller
     
             $property = Property::findOrFail($property_id);
 
-
-            $concerns = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
+            $concerns = DB::table('concerns')
+            ->join('tenants', 'concern_tenant_id', 'tenant_id')
+            ->join('users', 'concern_user_id', 'id')
+            ->leftJoin('units', 'concern_unit_id', 'unit_id')
             ->select('*', 'concerns.status as concern_status')
             ->where('tenant_id', $tenant_id)
-            ->orderBy('reported_at', 'desc')
-            ->orderBy('urgency', 'desc')
-            ->orderBy('concerns.status', 'desc')
+            ->orderBy('concern_id', 'desc')
             ->get();
-
 
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
