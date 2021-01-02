@@ -169,7 +169,7 @@
     @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager' )
     <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addEntry" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Entry</a>
     @endif
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Payable</a>
+    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Request</a>
   
   </div>
 
@@ -218,7 +218,7 @@
 <hr>
 <div class="row">
   <div class="col">
-    <h3>Payables</h3>
+    <h3>Requests</h3>
     
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -238,7 +238,7 @@
               
                 <tr>
                   <th class="text-center">#</th>
-                  <th>No</th>
+             
                   <th>Entry</th>
                   <th>Amount</th>
                   <th>Requested</th>
@@ -257,7 +257,7 @@
                 @foreach ($pending as $item)
                    <tr>
                      <th class="text-center">{{ $ctr++ }}</th>
-                    <td class="text-center">{{ $item->no }}</td>
+                   
                     <td>{{ $item->entry }}</td>
                     <td>{{ number_format($item->amt, 2) }}</td>
                     <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
@@ -300,7 +300,7 @@
              <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">No</th>
+               
                   <th>Entry</th>
                   <th>Amount</th>
                   <th>Requested</th>
@@ -319,7 +319,7 @@
                 @foreach ($approved as $item)
                    <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td class="text-center">{{ $item->no }}</td>
+                    
                     <td>{{ $item->entry }}</td>
                     <td>{{ number_format($item->amt, 2) }}</td>
                     <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
@@ -347,7 +347,7 @@
              <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">No</th>
+            
                   <th>Entry</th>
                   <th>Amount</th>
                   <th>Requested</th>
@@ -366,7 +366,7 @@
                 @foreach ($released as $item)
                    <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td class="text-center">{{ $item->no }}</td>
+                  
                     <td>{{ $item->entry }}</td>
                     <td>{{ number_format($item->amt, 2) }}</td>
                     <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
@@ -394,7 +394,7 @@
              <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">No</th>
+             
                   <th>Entry</th>
                   <th>Amount</th>
                   <th>Requested</th>
@@ -409,7 +409,7 @@
                 @foreach ($declined as $item)
                    <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td class="text-center">{{ $item->no }}</td>
+               
                     <td>{{ $item->entry }}</td>
                     <td>{{ number_format($item->amt, 2) }}</td>
                     <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>

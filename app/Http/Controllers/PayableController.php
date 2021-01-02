@@ -33,6 +33,7 @@ class PayableController extends Controller
              ->join('payable_entry', 'entry_id', 'payable_entry.id')
              ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
             ->where('payable_request.status', 'pending')
+            ->where('payable_entry.property_id_foreign', Session::get('property_id'))
             ->get();
      
             $approved = DB::table('payable_request')
@@ -40,6 +41,7 @@ class PayableController extends Controller
             ->join('payable_entry', 'entry_id', 'payable_entry.id')
             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
            ->where('payable_request.status', 'approved')
+           ->where('payable_entry.property_id_foreign', Session::get('property_id'))
            ->get();
 
            $released = DB::table('payable_request')
@@ -47,6 +49,7 @@ class PayableController extends Controller
            ->join('payable_entry', 'entry_id', 'payable_entry.id')
            ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
           ->where('payable_request.status', 'released')
+          ->where('payable_entry.property_id_foreign', Session::get('property_id'))
           ->get();
     
      
@@ -55,6 +58,7 @@ class PayableController extends Controller
           ->join('payable_entry', 'entry_id', 'payable_entry.id')
           ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
          ->where('payable_request.status', 'declined')
+         ->where('payable_entry.property_id_foreign', Session::get('property_id'))
          ->get();
 
             $property = Property::findOrFail(Session::get('property_id'));
@@ -92,7 +96,7 @@ class PayableController extends Controller
                     'entry' =>  $request->input('entry'.$i),
                     'description' => $request->input('description'.$i),
                     'created_at' => Carbon::now(),
-                  
+                    'property_id_foreign' => Session::get('property_id'),
                 ]);
 
                 $notification = new Notification();
