@@ -73,8 +73,7 @@ class RegisterController extends Controller
     {
  
             Mail::to($data['email'])
-            ->bcc(['landleybernardo@thepropertymanager.online',
-                ])
+            ->bcc(['landleybernardo@thepropertymanager.online', 'customercare@thepropertymanager.online '])
             ->send(new TenantRegisteredMail());
 
          return User::create([
@@ -87,7 +86,6 @@ class RegisterController extends Controller
             'email_verified_at' => Carbon::now(),
             'account_type' => Session::get('plan'),
             'trial_ends_at' => Carbon::now()->addDays(14),
-        
         ]);
 
     }

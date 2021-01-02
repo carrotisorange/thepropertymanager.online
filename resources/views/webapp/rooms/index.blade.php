@@ -335,7 +335,9 @@
   @endforeach 
 </div>
 
-@endif<div class="modal fade" id="upgradeToPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@endif
+
+<div class="modal fade" id="upgradeToPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">

@@ -45,6 +45,13 @@
                 <span class="nav-link-text">Users</span>
               </a>
             </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/dev/plans">
+                <i class="fas fa-tags text-pink"></i>
+                <span class="nav-link-text">Plans</span>
+              </a>
+            </li>
 
 
           </ul>

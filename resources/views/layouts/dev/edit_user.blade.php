@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Users')
+@section('title',  $user->name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -47,13 +47,12 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/dev/plans">
-                <i class="fas fa-tags text-pink"></i>
-                <span class="nav-link-text">Plans</span>
-              </a>
-            </li>
-
-
+                <a class="nav-link" href="/dev/plans">
+                  <i class="fas fa-tags text-pink"></i>
+                  <span class="nav-link-text">Plans</span>
+                </a>
+              </li>
+  
 
           </ul>
           <!-- Divider -->
@@ -100,49 +99,67 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Users</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $user->name }}</h6>
     
   </div>
   
 
 </div>
+
+<form id="editPropertyForm" action="/dev/user/{{ $user->id }}/" method="POST">
+    @method('put')
+    @csrf
+
+
 <div class="row">
-<div class="table-responsive text-nowrap">
-<table class="table" >
-  <?php $ctr=1; ?>
-  <thead>
-    <tr>
-     <th>#</th>
-     <th>Name</th>
-     <th>Email</th>
-  
-     <th>Role</th>
-      <th>Plan</th>
-     <th>Created at</th>
-     <th>Verified at</th>
-   
-
- 
-  </tr>
-  </thead>
-  <tbody>
-   @foreach ($users as $item)
-   <tr>
-    <th>{{ $ctr++ }}</th>
-     <td><a href="/dev/user/{{ $item->id }}">{{ $item->name }}</a></td>
-     <td>{{ $item->email }}</td>
-     <td>{{ $item->user_type }}</td>
-     <td><a href="/dev/user/{{ $item->id }}/plans">{{ $item->account_type }}</a></td>
-      <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y').' '.Carbon\Carbon::parse($item->created_at)->toTimeString() }}</td>
-      <td>{{ Carbon\Carbon::parse($item->email_verified_at)->format('M d Y').' '.Carbon\Carbon::parse($item->email_verified_at)->toTimeString() }}</td>
-   
-     
-   @endforeach
-  </tbody>
-</table>
-
-
+    <div class="col">
+        <label>Name</label>
+        <input form="editPropertyForm" class="form-control" type="text" name="name" value="{{ $user->name }}" >
+    </div>
 </div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Email</label>
+        <input form="editPropertyForm" class="form-control" type="email" name="email" value="{{ $user->email }}" >
+    </div>
+   
+</div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Role</label>
+        <select form="editPropertyForm" class="form-control" name="user_type" type="text" id="">
+            <option value="{{ $user->user_type }}">{{ $user->user_type }}</option>
+            <option value="admin">admin</option>
+            <option value="ap">ap</option>
+            <option value="billing">billing</option>
+        
+            <option value="treasury">treasury</option>
+        </select>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Email verified at</label>
+        <input form="editPropertyForm" class="form-control" type="date" name="email_verified_at" value="{{ Carbon\Carbon::parse($user->email_verified_at)->format('Y-m-d') }}" >
+    </div>
+   
+</div>
+            <br>    
+         <div class="row">
+         <div class="col">
+          <p class="text-right">   
+           
+            <button type="submit" form="editPropertyForm" class="btn btn-primary" > Update</button>
+        </p>   
+         </div>
+        </div>  
+  
+
+
+
 </div>
   
 

@@ -391,6 +391,11 @@ Route::get('/dev/starter/', 'DevController@starter')->middleware(['auth', 'verif
 Route::get('/dev/announcements\/', 'DevController@announcements')->middleware(['auth', 'verified']);
 Route::get('/dev/issues/', 'DevController@issues')->middleware(['auth', 'verified']);
 Route::get('/dev/updates/', 'DevController@updates')->middleware(['auth', 'verified']);
+Route::get('/dev/user/{user_id}', 'DevController@edit_user')->middleware(['auth', 'verified']);
+Route::put('/dev/user/{user_id}', 'DevController@post_user')->middleware(['auth', 'verified']);
+Route::get('/dev/plans', 'DevController@plans')->middleware(['auth', 'verified']);
+Route::post('/plan', 'DevController@post_plan')->middleware(['auth', 'verified']);
+Route::get('/dev/user/{user_id}/plans', 'DevController@user_plans')->middleware(['auth', 'verified']);
 
 Route::get('/register', function(Request $request){
     \Session::put('plan', $request->plan);

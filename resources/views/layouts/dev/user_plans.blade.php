@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Starter')
+@section('title', $user->name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -40,7 +40,7 @@
  
   
             <li class="nav-item">
-              <a class="nav-link" href="/dev/users">
+              <a class="nav-link active" href="/dev/users">
                 <i class="fas fa-user text-teal"></i>
                 <span class="nav-link-text">Users</span>
               </a>
@@ -54,6 +54,7 @@
             </li>
 
 
+
           </ul>
           <!-- Divider -->
           <hr class="my-3">
@@ -63,33 +64,33 @@
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
-                   <li class="nav-item">
-              <a class="nav-link active" href="/dev/starter" target="_blank">
-                <i class="ni ni-spaceship"></i>
-                <span class="nav-link-text">Getting started</span>
-              </a>
-            </li>
-        </li> <li class="nav-item">
-              <a class="nav-link" href="/dev/issues" target="_blank">
-                <i class="fas fa-dizzy text-red"></i>
-                <span class="nav-link-text">Issues</span>
-              </a>
-            </li>
             <li class="nav-item">
-              <a class="nav-link" href="/dev/updates" target="_blank">
-                <i class="fas fa-bug text-green"></i>
-                <span class="nav-link-text">System Updates</span>
-              </a>
-            </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/dev/announcements" target="_blank">
-                <i class="fas fa-microphone text-purple"></i>
-                <span class="nav-link-text">Announcements</span>
-              </a>
-            </li>
+       <a class="nav-link" href="/dev/starter" target="_blank">
+         <i class="ni ni-spaceship"></i>
+         <span class="nav-link-text">Getting started</span>
+       </a>
+     </li>
+ </li> <li class="nav-item">
+       <a class="nav-link" href="/dev/issues" target="_blank">
+         <i class="fas fa-dizzy text-red"></i>
+         <span class="nav-link-text">Issues</span>
+       </a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link" href="/dev/updates" target="_blank">
+         <i class="fas fa-bug text-green"></i>
+         <span class="nav-link-text">System Updates</span>
+       </a>
+     </li>
+   <li class="nav-item">
+       <a class="nav-link" href="/dev/announcements" target="_blank">
+         <i class="fas fa-microphone text-purple"></i>
+         <span class="nav-link-text">Announcements</span>
+       </a>
+     </li>
 
-            
-          </ul>
+     
+   </ul>
         </div>
       </div>
     </div>
@@ -99,18 +100,17 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Starter</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $user->name }}</h6>
     
   </div>
   
 
 </div>
-
 <div class="row">
 
-    
-    </div>
-    
+</div>
+  
+
 @endsection
 
 @section('main-content')
@@ -118,7 +118,7 @@
 @endsection
 
 @section('scripts')
-
+  
 @endsection
 
 
