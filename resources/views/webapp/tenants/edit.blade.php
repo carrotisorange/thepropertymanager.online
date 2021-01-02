@@ -194,7 +194,7 @@
               </div>
               <div class="col">
                 <small for="">Type</small>
-                <select form="editTenantForm" name="type_of_tenant" id="type_of_tenant" class="form-control" onchange ="openForm()">
+                <select form="editTenantForm" name="type_of_tenant" id="type_of_tenant" class="form-control" onchange ="openForm()" required>
                   <option value="{{ $tenant->type_of_tenant }}">{{ $tenant->type_of_tenant }}</option>
                   <option value="studying">studying</option>
                   <option value="working">working</option>
