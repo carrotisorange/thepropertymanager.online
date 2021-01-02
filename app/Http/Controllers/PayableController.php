@@ -30,28 +30,28 @@ class PayableController extends Controller
      
               $pending = DB::table('payable_request')
              ->join('users', 'requester_id', 'users.id')
-             ->select('*', 'payable_request.note as pb_note')
+             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->where('payable_request.status', 'pending')
             ->get();
      
             $approved = DB::table('payable_request')
             ->join('users', 'requester_id', 'users.id')
-            ->select('*', 'payable_request.note as pb_note')
+            ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
            ->where('property_id_foreign', Session::get('property_id'))
            ->where('payable_request.status', 'approved')
            ->get();
 
            $released = DB::table('payable_request')
            ->join('users', 'requester_id', 'users.id')
-           ->select('*', 'payable_request.note as pb_note')
+           ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
           ->where('property_id_foreign', Session::get('property_id'))
           ->where('payable_request.status', 'released')
           ->get();
      
              $expense_report = DB::table('payable_request')
              ->join('users', 'requester_id', 'users.id')
-             ->select('*', 'payable_request.note as pb_note')
+             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
              ->where('property_id_foreign', Session::get('property_id'))
             ->where('payable_request.status', 'released')
             ->orderBy('released_at', 'desc')
@@ -104,6 +104,7 @@ class PayableController extends Controller
                     'description' => $request->input('description'.$i),
                     'property_id_foreign' => Session::get('property_id'),
                     'created_at' => Carbon::now(),
+                  
                 ]);
 
                 $notification = new Notification();

@@ -349,7 +349,7 @@
                         @if(Auth::user()->user_type === 'manager')
                         <td class="text-right"> 
                           
-                          <form action="/property/{{ $property->property_id }}/payable/{{ $item->id }}/decline" method="POST">
+                          <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/decline" method="POST">
                           @csrf
                           <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Decline</button>
                         </form>
@@ -357,7 +357,7 @@
  
                       </td> 
                       <td class="text-left">
-                        <form action="/property/{{ $property->property_id }}/payable/{{ $item->id }}/approve" method="POST">
+                        <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/approve" method="POST">
                           @csrf
                 
                           <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Approve</button>
@@ -410,7 +410,7 @@
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
                         @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
                         <td class="text-center"> 
-                          <form action="/property/{{ $property->property_id }}/payable/{{ $item->id }}/release" method="POST">
+                          <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/release" method="POST">
                           @csrf
                           <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Release</button>
                         </form>
