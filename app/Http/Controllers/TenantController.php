@@ -829,7 +829,7 @@ class TenantController extends Controller
 
         ]);
         
-       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','changes have been saved!');
+       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','Changes have been saved!');
     }
 
 

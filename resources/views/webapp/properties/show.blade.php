@@ -360,9 +360,13 @@
             <div class="col-lg-6 mb-4">
               <!-- Illustrations -->
               <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">SOURCES</h6>
-                </div>
+          
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">SOURCES</h6>
+                    <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small>
+                  </div>
+
+            
                 <div class="card-body">
                   {!! $point_of_contact->container() !!}
                 </div>

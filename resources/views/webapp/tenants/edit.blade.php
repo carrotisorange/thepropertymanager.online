@@ -588,14 +588,15 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function(){
-    $("#type_of_tenant").click(function(){
+ function openForm(){
+  $type_of_tenant = document.getElementById('type_of_tenant').value;
+
+  if($type_of_tenant === 'studying')
+     alert()
+  }else{
       $(".studying").hide();
-    });
-    $("#type_of_tenant").click(function(){
-      $(".working").show();
-    });
-  });
+
+ }
   </script>
 @endsection
 
