@@ -141,6 +141,20 @@
 </div>
 <br>
 <div class="row">
+  <div class="col">
+      <label>Plan</label>
+      <select form="editPropertyForm" class="form-control" name="account_type" type="text" id="">
+          <option value="{{ $user->account_type }}">{{ $user->account_type }}</option>
+          <option value="starter">starter</option>
+          <option value="basic">basic</option>
+          <option value="large">large</option>
+          <option value="advanced">advanced</option>
+          <option value="enterprise">enterprise</option>
+      </select>
+  </div>
+</div>
+<br>
+<div class="row">
     <div class="col">
         <label>Email verified at</label>
         <input form="editPropertyForm" class="form-control" type="date" name="email_verified_at" value="{{ Carbon\Carbon::parse($user->email_verified_at)->format('Y-m-d') }}" >
