@@ -26,7 +26,7 @@ class PayableController extends Controller
             $entry = DB::table('payable_entry')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
      
             $pending = DB::table('payable_request')
              ->join('users', 'requester_id', 'users.id')
