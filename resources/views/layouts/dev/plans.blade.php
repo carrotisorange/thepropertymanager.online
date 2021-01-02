@@ -122,7 +122,7 @@
              <th>Room limit</th>
              <th>User limit</th>
              <th>Property limit</th>
-             <th>Trial expired at</th>
+             <th>Trial expired in</th>
           </tr>
           </thead>
           <tbody>
@@ -130,12 +130,12 @@
            <tr>
             <th>{{ $ctr++ }}</th>
            <td>{{ $item->plan }}</td>
-           <td>{{ $item->price_per_month }}</td>
-           <td>{{ $item->price_per_year }}</td>
+           <td>{{ number_format($item->price_per_month, 2) }}</td>
+           <td>{{ number_format($item->price_per_year, 2) }}</td>
            <td>{{ $item->room_limit }}</td>
            <td>{{ $item->user_limit }}</td>
            <td>{{ $item->property_limit }}</td>
-           <td>{{ $item->trial_expired_at }}</td>
+           <td>{{ $item->trial_expired_at }} <b>days</b> </td>
            @endforeach
           </tbody>
         </table>
