@@ -256,12 +256,13 @@
                </select>
              </div>
            </div>
-           <div class="modal-footer">
-            
-            <button type="submit" form="addPersonnelForm" class="btn btn-primary"> Submit</button>
-        </div>
+         
      
     </div>
+    <div class="modal-footer">
+            
+      <p class="text-right"> <button type="submit" form="addPersonnelForm" class="btn btn-primary"> Add</button></p>
+   </div>
     </div>
 </div>
 </div>

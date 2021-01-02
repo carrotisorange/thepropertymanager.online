@@ -144,7 +144,7 @@ class PropertyController extends Controller
     
                 ->where('user_type', 'manager')
             
-                ->whereNotNull('account_type')
+              
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -154,7 +154,7 @@ class PropertyController extends Controller
     
             
                 ->where('user_type', 'manager')
-                ->whereNotNull('account_type')
+         
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -163,7 +163,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
             
                 ->where('user_type', 'manager')
-                ->whereNotNull('account_type')
+      
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -173,7 +173,7 @@ class PropertyController extends Controller
             
        
                 ->where('user_type', 'manager')
-                ->whereNotNull('account_type')
+    
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -183,7 +183,7 @@ class PropertyController extends Controller
     
             
                 ->where('user_type', 'manager')
-                ->whereNotNull('account_type')
+               
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -193,13 +193,11 @@ class PropertyController extends Controller
     
             
                 ->where('user_type', 'manager')
-                ->whereNotNull('account_type')
+            
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $signup_rate = new DashboardChart;
-            
-                $signup_rate->barwidth(4.0);
                 $signup_rate->displaylegend(true);
                 $signup_rate->labels([Carbon::now()->subMonth(5)->format('M Y'),Carbon::now()->subMonth(4)->format('M Y'),Carbon::now()->subMonth(3)->format('M Y'),Carbon::now()->subMonths(2)->format('M Y'),Carbon::now()->subMonth()->format('M Y'),Carbon::now()->format('M Y')]);
                 $signup_rate->dataset
@@ -219,7 +217,8 @@ class PropertyController extends Controller
                                         )
             ->color("#0000FF")
             ->fill(false)
-            ->backgroundcolor("#0000FF");
+            ->backgroundcolor("#0000FF")
+            ->linetension(0.3);
             
                 $signup_rate->dataset
                                         (
@@ -242,6 +241,8 @@ class PropertyController extends Controller
                 ->backgroundcolor("#008000")
                 ->fill(false)
                 ->linetension(0.3);
+
+                
             
                 $active_users = DB::table('users')
             

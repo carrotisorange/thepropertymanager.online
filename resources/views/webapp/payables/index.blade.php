@@ -175,341 +175,258 @@
 
 </div>
 <div class="row">
-  <div class="col-md-12">
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-entries-tab" data-toggle="tab" href="#entries" role="tab" aria-controls="nav-entries" aria-selected="true"><i class="fas fa-sticky-note fa-sm text-primary-50"></i> Entries</a>
-        <a class="nav-item nav-link" id="nav-payables-tab" data-toggle="tab" href="#payables" role="tab" aria-controls="nav-payables" aria-selected="false"><i class="fas fa-hand-holding-usd fa-sm text-primary-50"></i> Payables</a>
-        <a class="nav-item nav-link" id="nav-expense-report-tab" data-toggle="tab" href="#expense-report" role="tab" aria-controls="nav-expense-report" aria-selected="false"><i class="fas fa-chart-bar fa-sm text-primary-50"></i> Expense Report</a>
-      </div>
-    </nav>
+  <div class="col">
+    <h3>Entries</h3>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <?php $ctr = 1; ?>
+          @foreach ($entry as $item)
+             <tr>
+              <th>{{ $ctr++ }}</th>
+              <td>{{ $item->entry }}</td>
+              <td>{{ $item->description }}</td>
+              <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+               {{-- <td class="text-right"> 
+                @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager')
+               <form action="/account-payable/{{ $item->id }}/" method="POST">
+                  @csrf
+                  @method('delete')
+                  <button title="remove this entry" type="submit" class="btn btn-sm btn-danger"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+                </form> 
+                @endif
+               </td>--}}
+         
+             </tr>
+          @endforeach
+        </tbody>
+      </table>
+      {{ $entry->links() }}
+    </div>
   </div>
 </div>
+<hr>
 <div class="row">
-  <div class="col-md-12">
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="entries" role="tabpanel" aria-labelledby="nav-home-tab">
-     
-        
-        <div class="col-md-12 mx-auto">
-        <br>
+  <div class="col">
+    <h3>Payables</h3>
+    
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="nav-pending" aria-selected="true"><i class="fas fa-clock fa-sm text-primary-50"></i> Pending <span class="badge badge-primary badge-counter">{{ $pending->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="nav-approved" aria-selected="false"><i class="fas fa-check-circle fa-sm text-primary-50"></i> Approved</a>
+          <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#released" role="tab" aria-controls="nav-released" aria-selected="false"><i class="fas fa-clipboard-check fa-sm text-primary-50"></i> Released</a>
+          <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="nav-declined" aria-selected="false"><i class="fas fa-times-circle fa-sm text-primary-50"></i> Declined</a>
+        </div>
+      </nav>
+      <br>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
           <div class="table-responsive text-nowrap">
-            <table class="table table">
+            <table class="table">
+              <?php $ctr=1;?>
               <thead>
+              
                 <tr>
                   <th class="text-center">#</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Created</th>
-                  <th class="text-center" colspan="2">Action</th>
+                  <th>No</th>
+                  <th>Entry</th>
+                  <th>Amount</th>
+                  <th>Requested</th>
+                  <th>Requester</th>
+                  <th>Note</th>
+                  @if(Auth::user()->user_type === 'manager')
+                  <th colspan="2" class="text-center"></th>
+                  @endif
+                
+                  {{-- <th colspan="2" class="text-center">Action</th> --}}
+                  
                 </tr>
               </thead>
               <tbody>
-                <?php $ctr = 1; ?>
-                @foreach ($entry as $item)
+               
+                @foreach ($pending as $item)
                    <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
+                     <th class="text-center">{{ $ctr++ }}</th>
+                    <td class="text-center">{{ $item->no }}</td>
                     <td>{{ $item->entry }}</td>
-                    <td>{{ $item->description }}</td>
-                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+                    <td>{{ number_format($item->amt, 2) }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
+                   
+                    @if(Auth::user()->user_type === 'manager')
                     <td class="text-right"> 
-                      @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager')
-                      {{-- <form action="/account-payable/{{ $item->id }}/" method="POST">
-                        @csrf
-                        @method('delete')
-                        <button title="remove this entry" type="submit" class="btn btn-sm btn-danger"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                      </form> --}}
-                      @endif
-                     </td>
-                     <td class="text-left">
-                      {{-- <form action="">
-                        @csrf
-                        <button class="btn btn-primary" type="submit" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-edit fa-sm text-white-50"></i></button>
-                      </form> --}}
-                     </td>
+                      
+                      <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/decline" method="POST">
+                      @csrf
+                      <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Decline</button>
+                    </form>
+                 
+
+                  </td> 
+                  <td class="text-left">
+                    <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/approve" method="POST">
+                      @csrf
+            
+                      <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Approve</button>
+                    </form>
+                  </td> 
+                   
+                  
+                  @endif
+                    
+                   
                    </tr>
                 @endforeach
               </tbody>
             </table>
-          </div>
+            </div>
         </div>
-      </div>
-
-      <div class="tab-pane fade" id="expense-report" role="tabpanel" aria-labelledby="nav-expense-report-tab">
-        <br>
-        <div class="table-responsive text-nowrap">
-          <table class="table">
-            @foreach ($expense_report as $day => $list)
-           <thead>
-            <tr>
-              <th colspan="12">{{ $day }} ({{ $list->count() }})</th>
-          </tr>
-          <?php $ctr=1;?>
-        
-        <tr>
-          <th class="text-center">#</th>
-          <th class="text-center">No</th>
-            <th>Entry</th>
-            
-            <th>Requested</th>
-            <th>Requester</th>
-            <th>Note</th>
-            <th>Released</th>
-            <th class="text-right">Amount</th>
-            {{-- @if(Auth::user()->user_type === 'manager')
-            <th colspan="2" class="text-center">Action</th>
-            @endif --}}
-          </tr>
-           
-           </thead>
-         
-              @foreach ($list as $item)
-            
+       
+        <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="nav-approved-tab">
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              <?php $ctr=1;?>
+             <thead>
               <tr>
-               <th class="text-center">{{ $ctr++ }}</th>
-               <td class="text-center">{{ $item->no }}</td>
-               <td>{{ $item->entry }}</td>
-              
-               <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-               <td>{{ $item->name }}</td>
-               <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>       
-               <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>    
-               <td class="text-right">{{ number_format($item->amt, 2) }}</td> 
-               {{-- @if(Auth::user()->user_type === 'manager')
-               <td class="text-center"> 
-                 <form action="/" method="POST">
-                 @csrf
-                 <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle fa-sm text-white-50"></i></button>
-               </form>
-             @endif --}}
-              
-              </tr>
-           @endforeach
-       
-                  <tr>
-                    <th>Total</th>
-                    <th colspan="7" class="text-right">{{ number_format($list->sum('amt'),2) }}</th>
-                  </tr>
-                
-            @endforeach
-        </table>
-         
-          </div>
-      </div>
-
-      <div class="tab-pane fade" id="payables" role="tabpanel" aria-labelledby="nav-payables-tab">
-      
-        <div class="col-md-12 mx-auto">
-          <br>
-       
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="nav-pending" aria-selected="true"><i class="fas fa-clock fa-sm text-primary-50"></i> Pending <span class="badge badge-primary badge-counter">{{ $pending->count() }}</span></a>
-              <a class="nav-item nav-link" id="nav-approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="nav-approved" aria-selected="false"><i class="fas fa-check-circle fa-sm text-primary-50"></i> Approved</a>
-              <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#released" role="tab" aria-controls="nav-released" aria-selected="false"><i class="fas fa-clipboard-check fa-sm text-primary-50"></i> Released</a>
-              <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="nav-declined" aria-selected="false"><i class="fas fa-times-circle fa-sm text-primary-50"></i> Declined</a>
-            </div>
-          </nav>
-          <br>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
-              <div class="table-responsive text-nowrap">
-                <table class="table">
-                  <?php $ctr=1;?>
-                  <thead>
+                <th class="text-center">#</th>
+                <th class="text-center">No</th>
+                  <th>Entry</th>
+                  <th>Amount</th>
+                  <th>Requested</th>
+                  <th>Requester</th>
+                  <th>Note</th>
+                  <th>Aprroved</th>
                   
-                    <tr>
-                      <th class="text-center">#</th>
-                      <th>No</th>
-                      <th>Entry</th>
-                      <th>Amount</th>
-                      <th>Requested</th>
-                      <th>Requester</th>
-                      <th>Note</th>
-                      @if(Auth::user()->user_type === 'manager')
-                      <th colspan="2" class="text-center"></th>
-                      @endif
-                    
-                      {{-- <th colspan="2" class="text-center">Action</th> --}}
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
+                  @if(Auth::user()->user_type === 'manager')
+                  <th colspan="2" class="text-center"></th>
+                  @endif
+                </tr>
+             </thead>
+              </thead>
+              <tbody>
+               
+                @foreach ($approved as $item)
+                   <tr>
+                    <th class="text-center">{{ $ctr++ }}</th>
+                    <td class="text-center">{{ $item->no }}</td>
+                    <td>{{ $item->entry }}</td>
+                    <td>{{ number_format($item->amt, 2) }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
+                    <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
+                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
+                    <td class="text-center"> 
+                      <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/release" method="POST">
+                      @csrf
+                      <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Release</button>
+                    </form>
+                  @endif
                    
-                    @foreach ($pending as $item)
-                       <tr>
-                         <th class="text-center">{{ $ctr++ }}</th>
-                        <td class="text-center">{{ $item->no }}</td>
-                        <td>{{ $item->entry }}</td>
-                        <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
-                       
-                        @if(Auth::user()->user_type === 'manager')
-                        <td class="text-right"> 
-                          
-                          <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/decline" method="POST">
-                          @csrf
-                          <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Decline</button>
-                        </form>
-                     
- 
-                      </td> 
-                      <td class="text-left">
-                        <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/approve" method="POST">
-                          @csrf
-                
-                          <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Approve</button>
-                        </form>
-                      </td> 
-                       
-                      
-                      @endif
-                        
-                       
-                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                </div>
+                   </tr>
+                @endforeach
+              </tbody>
+            </table>
             </div>
-           
-            <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="nav-approved-tab">
-              <div class="table-responsive text-nowrap">
-                <table class="table">
-                  <?php $ctr=1;?>
-                 <thead>
-                  <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">No</th>
-                      <th>Entry</th>
-                      <th>Amount</th>
-                      <th>Requested</th>
-                      <th>Requester</th>
-                      <th>Note</th>
-                      <th>Aprroved</th>
-                      
-                      @if(Auth::user()->user_type === 'manager')
-                      <th colspan="2" class="text-center"></th>
-                      @endif
-                    </tr>
-                 </thead>
-                  </thead>
-                  <tbody>
+        </div>
+        <div class="tab-pane fade" id="released" role="tabpanel" aria-labelledby="nav-released-tab">
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              <?php $ctr=1;?>
+             <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">No</th>
+                  <th>Entry</th>
+                  <th>Amount</th>
+                  <th>Requested</th>
+                  <th>Requester</th>
+                  <th>Note</th>
+                  <th>Released</th>
+                  
+                  {{-- @if(Auth::user()->user_type === 'manager')
+                  <th colspan="2" class="text-center">Action</th>
+                  @endif --}}
+                </tr>
+             </thead>
+              </thead>
+              <tbody>
+               
+                @foreach ($released as $item)
+                   <tr>
+                    <th class="text-center">{{ $ctr++ }}</th>
+                    <td class="text-center">{{ $item->no }}</td>
+                    <td>{{ $item->entry }}</td>
+                    <td>{{ number_format($item->amt, 2) }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
+                    <td>{{ Carbon\Carbon::parse($item->released_at)->format('M d Y') }}</td>     
+                    {{-- @if(Auth::user()->user_type === 'manager')
+                    <td class="text-center"> 
+                      <form action="/" method="POST">
+                      @csrf
+                      <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle fa-sm text-white-50"></i></button>
+                    </form>
+                  @endif --}}
                    
-                    @foreach ($approved as $item)
-                       <tr>
-                        <th class="text-center">{{ $ctr++ }}</th>
-                        <td class="text-center">{{ $item->no }}</td>
-                        <td>{{ $item->entry }}</td>
-                        <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
-                        <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
-                        @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
-                        <td class="text-center"> 
-                          <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/release" method="POST">
-                          @csrf
-                          <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Release</button>
-                        </form>
-                      @endif
-                       
-                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                </div>
+                   </tr>
+                @endforeach
+              </tbody>
+            </table>
             </div>
-            <div class="tab-pane fade" id="released" role="tabpanel" aria-labelledby="nav-released-tab">
-              <div class="table-responsive text-nowrap">
-                <table class="table">
-                  <?php $ctr=1;?>
-                 <thead>
-                  <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">No</th>
-                      <th>Entry</th>
-                      <th>Amount</th>
-                      <th>Requested</th>
-                      <th>Requester</th>
-                      <th>Note</th>
-                      <th>Released</th>
-                      
-                      {{-- @if(Auth::user()->user_type === 'manager')
-                      <th colspan="2" class="text-center">Action</th>
-                      @endif --}}
-                    </tr>
-                 </thead>
-                  </thead>
-                  <tbody>
-                   
-                    @foreach ($released as $item)
-                       <tr>
-                        <th class="text-center">{{ $ctr++ }}</th>
-                        <td class="text-center">{{ $item->no }}</td>
-                        <td>{{ $item->entry }}</td>
-                        <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
-                        <td>{{ Carbon\Carbon::parse($item->released_at)->format('M d Y') }}</td>     
-                        {{-- @if(Auth::user()->user_type === 'manager')
-                        <td class="text-center"> 
-                          <form action="/" method="POST">
-                          @csrf
-                          <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle fa-sm text-white-50"></i></button>
-                        </form>
-                      @endif --}}
-                       
-                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                </div>
+        </div>
+        <div class="tab-pane fade" id="declined" role="tabpanel" aria-labelledby="nav-declined-tab">
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              <?php $ctr=1;?>
+             <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">No</th>
+                  <th>Entry</th>
+                  <th>Amount</th>
+                  <th>Requested</th>
+                  <th>Requester</th>
+                  <th>Note</th>
+                  <th>Declined</th>
+                </tr>
+             </thead>
+              </thead>
+              <tbody>
+               
+                @foreach ($declined as $item)
+                   <tr>
+                    <th class="text-center">{{ $ctr++ }}</th>
+                    <td class="text-center">{{ $item->no }}</td>
+                    <td>{{ $item->entry }}</td>
+                    <td>{{ number_format($item->amt, 2) }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
+                     <td>{{ $item->name }}</td>
+                    <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>     
+                    <td>{{ Carbon\Carbon::parse($item->declined_at)->format('M d Y') }}</td>            
+                   </tr>
+                @endforeach
+              </tbody>
+            </table>
             </div>
-            <div class="tab-pane fade" id="declined" role="tabpanel" aria-labelledby="nav-declined-tab">
-              <div class="table-responsive text-nowrap">
-                <table class="table">
-                  <?php $ctr=1;?>
-                 <thead>
-                  <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">No</th>
-                      <th>Entry</th>
-                      <th>Amount</th>
-                      <th>Requested</th>
-                      <th>Requester</th>
-                      <th>Note</th>
-                      <th>Declined</th>
-                    </tr>
-                 </thead>
-                  </thead>
-                  <tbody>
-                   
-                    @foreach ($declined as $item)
-                       <tr>
-                        <th class="text-center">{{ $ctr++ }}</th>
-                        <td class="text-center">{{ $item->no }}</td>
-                        <td>{{ $item->entry }}</td>
-                        <td>{{ number_format($item->amt, 2) }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>     
-                        <td>{{ Carbon\Carbon::parse($item->declined_at)->format('M d Y') }}</td>            
-                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-  </div>
+  
 </div>
+
 
 
 
@@ -641,7 +558,7 @@
      var j=1;
          
          $("#add_request").click(function(){
-             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->entry }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+i+"' type='text'></td>");
+             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+i+"' type='text'></td>");
      
      
           $('#request_table').append('<tr id="request'+(j+1)+'"></tr>');

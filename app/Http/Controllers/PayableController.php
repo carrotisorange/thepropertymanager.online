@@ -26,51 +26,40 @@ class PayableController extends Controller
             $entry = DB::table('payable_entry')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
      
-              $pending = DB::table('payable_request')
+            $pending = DB::table('payable_request')
              ->join('users', 'requester_id', 'users.id')
+             ->join('payable_entry', 'entry_id', 'payable_entry.id')
              ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-            ->where('property_id_foreign', Session::get('property_id'))
             ->where('payable_request.status', 'pending')
             ->get();
      
             $approved = DB::table('payable_request')
             ->join('users', 'requester_id', 'users.id')
+            ->join('payable_entry', 'entry_id', 'payable_entry.id')
             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-           ->where('property_id_foreign', Session::get('property_id'))
            ->where('payable_request.status', 'approved')
            ->get();
 
            $released = DB::table('payable_request')
            ->join('users', 'requester_id', 'users.id')
+           ->join('payable_entry', 'entry_id', 'payable_entry.id')
            ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-          ->where('property_id_foreign', Session::get('property_id'))
           ->where('payable_request.status', 'released')
           ->get();
+    
      
-             $expense_report = DB::table('payable_request')
-             ->join('users', 'requester_id', 'users.id')
-             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-             ->where('property_id_foreign', Session::get('property_id'))
-            ->where('payable_request.status', 'released')
-            ->orderBy('released_at', 'desc')
-            ->get()
-            ->groupBy(function($item) {
-                return \Carbon\Carbon::parse($item->updated_at)->format('M d Y');
-            });
-     
-     
-            $declined = DB::table('payable_request')
-            ->join('users', 'requester_id', 'users.id')
-            ->select('*', 'payable_request.note as pb_note')
-           ->where('property_id_foreign', Session::get('property_id'))
-           ->where('payable_request.status', 'declined')
-           ->get();
+          $declined = DB::table('payable_request')
+          ->join('users', 'requester_id', 'users.id')
+          ->join('payable_entry', 'entry_id', 'payable_entry.id')
+          ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
+         ->where('payable_request.status', 'declined')
+         ->get();
 
             $property = Property::findOrFail(Session::get('property_id'));
      
-             return view('webapp.payables.index', compact('entry','pending','approved','declined','released','expense_report', 'property'));
+             return view('webapp.payables.index', compact('entry','pending','approved','declined','released', 'property'));
          }else{
              return view('layouts.arsha.unregistered');
     }
@@ -102,7 +91,6 @@ class PayableController extends Controller
                 [
                     'entry' =>  $request->input('entry'.$i),
                     'description' => $request->input('description'.$i),
-                    'property_id_foreign' => Session::get('property_id'),
                     'created_at' => Carbon::now(),
                   
                 ]);
@@ -133,12 +121,11 @@ class PayableController extends Controller
            DB::table('payable_request')->insert(
                [
                    'no' => $current_payable_no++,
-                   'entry' =>  $request->input('entry'.$i),
+                   'entry_id' =>  $request->input('entry'.$i),
                    'amt' =>  $request->input('amt'.$i),
                    'note' =>  $request->input('note'.$i),
                    'requester_id' => Auth::user()->id,
                    'requested_at' => $request->input('requested_at'.$i),
-                   'property_id_foreign' => Session::get('property_id')
                ]);
 
                $notification = new Notification();
