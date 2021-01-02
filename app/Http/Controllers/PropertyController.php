@@ -29,8 +29,8 @@ class PropertyController extends Controller
     public function index()
     {
             if(Auth::user()->user_type == 'manager'){
-                $properties = User::findOrFail(Auth::user()->id)->properties;
-
+               $properties = User::findOrFail(Auth::user()->id)->properties;
+            
                $users = DB::table('users_properties_relations')
                ->join('properties', 'property_id_foreign', 'property_id')
                ->join('users', 'user_id_foreign', 'id')

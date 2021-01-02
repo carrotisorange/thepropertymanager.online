@@ -77,27 +77,34 @@
     @else
     
     <div class="col-md-4">
-    <a href="/property/create" class="btn btn-primary btn-user btn-block"> Property</a>
+      @if($properties->count()>1)
+        <a href="/property/create" class="btn btn-primary btn-user btn-block"> Portforlio</a>
+      @else
+       @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced')
+        <a href="/property/create" class="btn btn-primary btn-user btn-block"> Property</a>
+        @else
+        <a href="#" class="btn btn-primary btn-user btn-block" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"> Property</a>
+        @endif
+      @endif
     </div>
 
     <div class="col-md-4">
       @if (Auth::user()->user_type === 'manager')
         @if($users > 1)
-        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block">   Users ({{ $users }}) </a>
+        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block">   User </a>
         @else
-        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> Users ({{ $users }})</a>
+        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> User</a>
         @endif
       @else
-      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"> Users</a>
+      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"> User</a>
       @endif
     </div>
 
     <div class="col-md-4">
       @if(Auth::user()->trial_ends_at > Carbon\Carbon::today())
-      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Manage</button>
+      <button type="submit" class="btn btn-success btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Manage</button>
       @else
       <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block"> Manage</a>
-  
       @endif
   
     </div> 
@@ -140,5 +147,27 @@
 </div>
 
 
+<div class="modal fade" id="upgradeToPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel" >Upgrade to PRO</h5>
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">
+          The current plan you have reached the limit of properties that you are allowed to add. 
+        </p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal"> Dismiss</button>
+      </div>
+  </div>
+  </div>
+</div>
 
 @endsection

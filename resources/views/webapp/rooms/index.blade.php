@@ -349,7 +349,7 @@
       </div>
       <div class="modal-body">
         <p class="text-center">
-          You've reached the limit number of rooms that your plan can add. 
+          The current plan you have reached the limit of rooms that you are allowed to add. 
         </p>
 
       </div>
