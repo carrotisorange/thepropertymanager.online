@@ -191,8 +191,8 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
 
 <div class="table-responsive text-nowrap">
     <table class="table">
+      <?php $ctr=1;?>
       <thead>
-        <?php $ctr=1;?>
         <tr>
           <th>#</th>
           <th>Profile</th>
@@ -212,27 +212,19 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
       <tbody>
         @foreach ($tenants as $item)
         <tr>
-          <th>{{ $ctr++ }}</th>
-          <td>  <span class="avatar avatar-sm rounded-circle">
-            <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
-          </span></td>
-          <td>{{ $item->tenant_unique_id }}</td>
-          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td> --}}
-          <td>
-            {{-- @if($item->user_id_foreign == null) --}}
-            <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
-            {{-- @else
-            <a  href="/asa/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
-            @endif --}}
-          </td>
-          {{-- <td>{{ $item->user_id_foreign }} </td> --}}
+            <th>{{ $ctr++ }}</th>
+            <td>  <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
+              </span>
+            </td>
+            <td>{{ $item->tenant_unique_id }}</td>
+            <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
             <td>{{ $item->contact_no }}</td>
-            
             <td>{{ $item->email_address }}</td>
             <td>{{ $item->type_of_tenant }}</td>
             <td>{{ $item->gender }}</td>
             <td>{{ $item->civil_status }}</td>
-          <td>{{ $item->movein_at }}</td>
+            <td>{{ $item->movein_at }}</td>
         </tr>
         @endforeach
       </tbody>
