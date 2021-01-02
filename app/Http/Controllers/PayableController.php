@@ -50,9 +50,11 @@ class PayableController extends Controller
           ->get();
      
              $expense_report = DB::table('payable_request')
+             ->join('users', 'requester_id', 'users.id')
+             ->select('*', 'payable_request.note as pb_note')
              ->where('property_id_foreign', Session::get('property_id'))
-            ->where('status', 'released')
-            ->orderBy('updated_at', 'desc')
+            ->where('payable_request.status', 'released')
+            ->orderBy('released_at', 'desc')
             ->get()
             ->groupBy(function($item) {
                 return \Carbon\Carbon::parse($item->updated_at)->format('M d Y');

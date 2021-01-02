@@ -248,7 +248,7 @@
         
         <tr>
           <th class="text-center">#</th>
-          <th class="text-center">Payable No</th>
+          <th class="text-center">No</th>
             <th>Entry</th>
             
             <th>Requested</th>
@@ -271,8 +271,8 @@
                <td>{{ $item->entry }}</td>
               
                <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-               <td>{{ $item->requester_id }}</td>
-               <td>{{ $item->note? $item->note: '-' }}</td>       
+               <td>{{ $item->name }}</td>
+               <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>       
                <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>    
                <td class="text-right">{{ number_format($item->amt, 2) }}</td> 
                {{-- @if(Auth::user()->user_type === 'manager')
@@ -382,7 +382,7 @@
                  <thead>
                   <tr>
                     <th class="text-center">#</th>
-                    <th class="text-center">Payable No</th>
+                    <th class="text-center">No</th>
                       <th>Entry</th>
                       <th>Amount</th>
                       <th>Requested</th>
@@ -429,7 +429,7 @@
                  <thead>
                   <tr>
                     <th class="text-center">#</th>
-                    <th class="text-center">Payable No</th>
+                    <th class="text-center">No</th>
                       <th>Entry</th>
                       <th>Amount</th>
                       <th>Requested</th>
@@ -476,7 +476,7 @@
                  <thead>
                   <tr>
                     <th class="text-center">#</th>
-                    <th class="text-center">Payable No</th>
+                    <th class="text-center">No</th>
                       <th>Entry</th>
                       <th>Amount</th>
                       <th>Requested</th>
