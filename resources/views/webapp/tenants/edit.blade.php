@@ -2,6 +2,9 @@
 
 @section('title',  $tenant->first_name.' '.$tenant->last_name)
 
+@section('css')
+
+@endsection
 @section('sidebar')
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -163,7 +166,7 @@
  
             <div class="form-group row">
                 <div class="col">
-                    <small>First Name</small>
+                    <small class>First Name</small>
                     <input form="editTenantForm" class="form-control" type="text" name="first_name" value="{{ $tenant->first_name }}">
                 </div>
                 <div class="col">
@@ -175,7 +178,31 @@
                     <input form="editTenantForm" class="form-control" type="text" name="last_name" value="{{ $tenant->last_name }}">
                 </div>
             </div>
-     
+
+
+            <div class="form-group row">
+              <div class="col">
+                  <small for="">Mobile</small>
+                  <input form="editTenantForm" class="form-control" type="number" name="contact_no" value="{{ $tenant->contact_no }}">
+              </div>
+              <div class="col" id="email_address">
+                  <small for="">Email</small>
+                  <input form="editTenantForm" class="form-control" type="text" name="email_address" value="{{ $tenant->email_address }}">
+                @if($tenant->email_address === null)
+                <small class="text-danger">Please add an email</small>
+                @endif
+              </div>
+              <div class="col">
+                <small for="">Type</small>
+                <select form="editTenantForm" name="type_of_tenant" id="type_of_tenant" class="form-control" onchange ="openForm()">
+                  <option value="{{ $tenant->type_of_tenant }}">{{ $tenant->type_of_tenant }}</option>
+                  <option value="studying">studying</option>
+                  <option value="working">working</option>
+                </select>
+            </div>
+             
+          </div>
+       
             <div class="form-group row">
                 <div class="col">
                     <small>Gender</small>
@@ -472,29 +499,16 @@
                     </select>
                 </div>
                 <div class=" col-md-4">
-                    <small for="">Zipcode</small>
+                    <small for="">Zip</small>
                     <input form="editTenantForm" class="form-control" type="number" name="zip_code" value="{{ $tenant->zip_code }}">
                 </div>
             </div>
 
-            <div class="form-group row">
-                <div class="col">
-                    <small for="">Mobile</small>
-                    <input form="editTenantForm" class="form-control" type="number" name="contact_no" value="{{ $tenant->contact_no }}">
-                </div>
-                <div class="col" id="email_address">
-                    <small for="">Email</small>
-                    <input form="editTenantForm" class="form-control" type="text" name="email_address" value="{{ $tenant->email_address }}">
-                  @if($tenant->email_address === null)
-                  <small class="text-danger">Please add an email</small>
-                  @endif
-                </div>
-            </div>
       
 
             <hr>
-
-            <div class="form-group row">
+            <h3>For student...</h3>
+            <div class="form-group row studying">
                 <div class="col">
                     <small for="">High School</small>
                     <input form="editTenantForm" class="form-control" type="text" name="high_school" value="{{ $tenant->high_school }}">
@@ -504,7 +518,7 @@
                     <input form="editTenantForm" class="form-control" type="text" name="high_school_address" value="{{ $tenant->high_school_address }}">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row studying">
                 <div class="col">
                     <small for="">College/University</small>
                     <input form="editTenantForm" class="form-control" type="text" name="college_school" value="{{ $tenant->college_school }}">
@@ -514,7 +528,7 @@
                     <input form="editTenantForm" class="form-control" type="text" name="college_school_address" value="{{ $tenant->college_school_address }}">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row studying">
                 <div class="col">
                     <small for="">Course</small>
                     <input form="editTenantForm" class="form-control" type="text" name="course" value="{{ $tenant->course }}">
@@ -533,11 +547,9 @@
                       </select>
                 </div>
             </div>
-
-            <hr>
-
-
-            <div class="form-group row">
+<hr>
+            <h3>For working...</h3>
+            <div class="form-group row working">
                 <div class="col">
                     <small for="">Employer/Company</small>
                     <input form="editTenantForm" class="form-control" type="text" name="employer" value="{{ $tenant->employer }}">
@@ -551,10 +563,10 @@
                     <input form="editTenantForm" class="form-control" type="number" name="years_of_employment" value="{{ $tenant->years_of_employment }}">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row working">
                 <div class="col">
                     <small for="">Address</small>
-                    <input form="editTenantForm" class="form-control" type="email" name="employer_address" value="{{ $tenant->employer_address }}">
+                    <input form="editTenantForm" class="form-control" type="text" name="employer_address" value="{{ $tenant->employer_address }}">
                 </div>
                 <div class="col">
                     <small for="">Mobile</small>
@@ -562,17 +574,6 @@
                 </div>
                 
             </div>
-            <hr>
-            {{-- @if($tenant->tenants_note !== 'new' )
-            <div class="form-group row">
-                <div class="col">
-                  <small>Note</small>
-                    <textarea form="editTenantForm" class="form-control" name="tenants_note" id="" cols="30" rows="5">
-                        {{ $tenant->tenants_note }}
-                    </textarea>
-                </div>
-            </div>
-            @endif --}}
 
 
 <p class="text-right">   
@@ -586,7 +587,16 @@
 @endsection
 
 @section('scripts')
-  
+<script>
+  $(document).ready(function(){
+    $("#type_of_tenant").click(function(){
+      $(".studying").hide();
+    });
+    $("#type_of_tenant").click(function(){
+      $(".working").show();
+    });
+  });
+  </script>
 @endsection
 
 

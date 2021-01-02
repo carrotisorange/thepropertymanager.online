@@ -248,6 +248,11 @@
               <tr>
                   <th>Name</th>
                   <td>{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }} 
+                    @if($tenant->type_of_tenant === 'studying')
+                    <span class="text-white bg-primary">({{ $tenant->type_of_tenant }})</span>
+                    @else
+                    <span class="text-white bg-success">({{ $tenant->type_of_tenant }})</span>
+                    @endif
                      
                   </td>
               </tr>

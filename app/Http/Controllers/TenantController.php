@@ -825,13 +825,8 @@ class TenantController extends Controller
                 'job' => $request->job,
                 'years_of_employment' => $request->years_of_employment,
 
-                'tenants_note' => $request->tenants_note,
+                'type_of_tenant' => $request->type_of_tenant,
 
-                //  'tenant_status' => 'pending',
-
-                // 'created_at' => null,
-
-                // 'updated_at' => null
         ]);
         
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','changes have been saved!');
