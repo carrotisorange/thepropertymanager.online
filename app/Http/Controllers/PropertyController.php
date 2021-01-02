@@ -70,8 +70,8 @@ class PropertyController extends Controller
                 $properties = Property::all();
         
                 $paying_users = DB::table('users')
-                ->where('account_type','!=','Free')
-                ->where('user_type', '<>','tenant')
+                ->whereNotNull('email_verified_at')
+                ->where('user_type','manager')
                 ->get();
             
                 $unverified_users = DB::table('users')
@@ -86,7 +86,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
                 ->where('user_type', 'manager')
             
-                ->whereNull('email_verified_at')
+              
                 ->count();
             
                 $signup_rate_2 = DB::table('users')
@@ -94,8 +94,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
     
                 ->where('user_type', 'manager')
-            
-                ->whereNull('email_verified_at')
+        
                 ->count();
             
                 $signup_rate_3 = DB::table('users')
@@ -103,8 +102,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
     
                 ->where('user_type', 'manager')
-            
-                ->whereNull('email_verified_at')
+       
                 ->count();
             
                 $signup_rate_4 = DB::table('users')
@@ -114,7 +112,7 @@ class PropertyController extends Controller
         
                 ->where('user_type', 'manager')
             
-                ->whereNull('email_verified_at')
+                
                 ->count();
             
                 $signup_rate_5 = DB::table('users')
@@ -124,7 +122,7 @@ class PropertyController extends Controller
             
                 ->where('user_type', 'manager')
             
-                ->whereNull('email_verified_at')
+     
                 ->count();
             
                 $signup_rate_6 = DB::table('users')
@@ -134,7 +132,7 @@ class PropertyController extends Controller
            
                 ->where('user_type', 'manager')
             
-                ->whereNull('email_verified_at')
+             
                 ->count();
             
             
@@ -210,9 +208,6 @@ class PropertyController extends Controller
                                                                                 $signup_rate_3,
                                                                                 $signup_rate_2,
                                                                                 $signup_rate_1,
-                                                                        
-            
-            
                                                                             ]
                                         )
             ->color("#0000FF")
@@ -224,7 +219,6 @@ class PropertyController extends Controller
                                         (
                                             'Active Users', 'line',
                                                                             [
-            
                                                                                 $verified_users_6,
                                                                                 $verified_users_5,
                                                                                 $verified_users_4,
@@ -232,7 +226,6 @@ class PropertyController extends Controller
                                                                                 $verified_users_2,
                                                                                 $verified_users_1,
                                                                        
-            
                                                                             ],
             
                                             )
@@ -249,6 +242,44 @@ class PropertyController extends Controller
                 ->where('user_type','manager')
                 ->whereNotNull('email_verified_at')
                 ->get();
+
+                $active_today = DB::table('users')
+                ->join('sessions', 'id', 'session_user_id')
+                ->join('properties', 'id', 'user_id_property')
+                ->select('*', 'properties.name as property_name', 'users.name as user_name')
+                ->where('session_last_login_at', '>=', Carbon::today())
+                ->paginate(5);
+
+                $starter_plan = DB::table('users')
+                ->where('account_type','starter')
+                ->where('user_type','manager')
+                ->whereNotNull('email_verified_at')
+                ->count();
+
+                $basic_plan = DB::table('users')
+                ->where('account_type','basic')
+                ->where('user_type','manager')
+                ->whereNotNull('email_verified_at')
+                ->count();
+
+                $large_plan = DB::table('users')
+                ->where('account_type','large')
+                ->where('user_type','manager')
+                ->whereNotNull('email_verified_at')
+                ->count();
+
+                $advanced_plan = DB::table('users')
+                ->where('account_type','advanced')
+                ->where('user_type','manager')
+                ->whereNotNull('email_verified_at')
+                ->count();
+
+
+                $enterprise_plan = DB::table('users')
+                ->where('account_type','enterprise')
+                ->where('user_type','manager')
+                ->whereNotNull('email_verified_at')
+                ->count();
             
             
             
@@ -266,7 +297,8 @@ class PropertyController extends Controller
                         ->get();
             
             
-                        return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 'users'));
+                        return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 
+                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'active_today'));
             
             }
             else{

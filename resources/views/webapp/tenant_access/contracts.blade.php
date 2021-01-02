@@ -114,7 +114,7 @@
 
 @section('upper-content')
 <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Rooms</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Contracts</h6>
     
   </div>
 @endsection

@@ -156,13 +156,10 @@
             </div>
           </div>
           <p class="mt-3 mb-0 text-sm">
-            {{-- @if($increase_in_room_acquired > 0)
-            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $increase_in_room_acquired }}%</span>
-            @else
-            <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i> {{ $increase_in_room_acquired }}%</span>
-            @endif
-            <span class="text-nowrap">Since last month</span>
-            </p> --}}
+            <span class="text-nowrap">S <b>({{$starter_plan}})</b> B <b>({{$basic_plan}})</b> A <b>({{$advanced_plan}})</b> L <b>({{$large_plan}})</b> E <b>({{$enterprise_plan}})</b> </span>
+          
+           
+            </p>
         </div>
       </div>
     </div>
@@ -225,7 +222,7 @@
     </div>
     <div class="row">
         <!-- Area Chart -->
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-6 col-lg-6">
           <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -236,6 +233,44 @@
             <div class="card-body">
              
                 {!! $signup_rate->container() !!}
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6">
+          <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">ACTIVE TODAY</h6>
+              
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="table-responsive text-nowrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      
+                      <th>Property</th>
+                      <th>Since</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($active_today as $item)
+                    <tr>
+                        <td>{{ $item->user_name }}</td>
+                        
+                        <td>{{ $item->property_name }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() }}</td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                  
+                </table>
+               {{ $active_today->links() }}
+              </div>
               
             </div>
           </div>
