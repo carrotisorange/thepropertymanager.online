@@ -132,7 +132,7 @@
             <th>Moveout at</th>
             <th>Status</th>
             <th>Rent</th>
-            <th>Term</th>
+            
         </tr>
        </thead>
        <tbody>

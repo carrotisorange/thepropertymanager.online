@@ -315,11 +315,12 @@
             <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
               <div class="table-responsive text-nowrap">
                 <table class="table">
+                  <?php $ctr=1;?>
                   <thead>
-                    <?php $ctr=1;?>
+                  
                     <tr>
                       <th class="text-center">#</th>
-                      <td class="text-center">Payable No</td>
+                      <th>No</th>
                       <th>Entry</th>
                       <th>Amount</th>
                       <th>Requested</th>
@@ -342,8 +343,8 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requester_id }}</td>
-                        <td>{{ $item->note? $item->note: '-' }}</td>    
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
                        
                         @if(Auth::user()->user_type === 'manager')
                         <td class="text-right"> 
@@ -404,8 +405,8 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requester_id }}</td>
-                        <td>{{ $item->note? $item->note: '-' }}</td>       
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
                         @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
                         <td class="text-center"> 
@@ -451,8 +452,8 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requester_id }}</td>
-                        <td>{{ $item->note? $item->note: '-' }}</td>       
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
                         <td>{{ Carbon\Carbon::parse($item->released_at)->format('M d Y') }}</td>     
                         {{-- @if(Auth::user()->user_type === 'manager')
                         <td class="text-center"> 
@@ -494,8 +495,8 @@
                         <td>{{ $item->entry }}</td>
                         <td>{{ number_format($item->amt, 2) }}</td>
                         <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                        <td>{{ $item->requester_id }}</td>
-                        <td>{{ $item->note? $item->note: '-' }}</td>       
+                         <td>{{ $item->name }}</td>
+                        <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>     
                         <td>{{ Carbon\Carbon::parse($item->declined_at)->format('M d Y') }}</td>            
                        </tr>
                     @endforeach

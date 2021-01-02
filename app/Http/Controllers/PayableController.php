@@ -28,21 +28,26 @@ class PayableController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
      
-             $pending = DB::table('payable_request')
+              $pending = DB::table('payable_request')
+             ->join('users', 'requester_id', 'users.id')
+             ->select('*', 'payable_request.note as pb_note')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->where('status', 'pending')
+            ->where('payable_request.status', 'pending')
             ->get();
      
             $approved = DB::table('payable_request')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('status', 'approved')
-            ->get();
-     
-     
-            $released = DB::table('payable_request')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('status', 'released')
-            ->get();
+            ->join('users', 'requester_id', 'users.id')
+            ->select('*', 'payable_request.note as pb_note')
+           ->where('property_id_foreign', Session::get('property_id'))
+           ->where('payable_request.status', 'approved')
+           ->get();
+
+           $released = DB::table('payable_request')
+           ->join('users', 'requester_id', 'users.id')
+           ->select('*', 'payable_request.note as pb_note')
+          ->where('property_id_foreign', Session::get('property_id'))
+          ->where('payable_request.status', 'released')
+          ->get();
      
              $expense_report = DB::table('payable_request')
              ->where('property_id_foreign', Session::get('property_id'))
@@ -55,9 +60,11 @@ class PayableController extends Controller
      
      
             $declined = DB::table('payable_request')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('status', 'declined')
-            ->get();
+            ->join('users', 'requester_id', 'users.id')
+            ->select('*', 'payable_request.note as pb_note')
+           ->where('property_id_foreign', Session::get('property_id'))
+           ->where('payable_request.status', 'declined')
+           ->get();
 
             $property = Property::findOrFail(Session::get('property_id'));
      
@@ -148,7 +155,7 @@ class PayableController extends Controller
     }
 
     public function approve(Request $request,  $property_id, $payable_id){
-        
+
         DB::table('payable_request')
         ->where('id', $payable_id)
         ->update(
