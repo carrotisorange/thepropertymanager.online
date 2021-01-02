@@ -287,7 +287,8 @@
               </tr>
              
            
-            <tr>
+              @if($tenant->type_of_tenant === 'studying')
+              <tr>
                 <th>High School</th>
                 <td>{{ $tenant->high_school.', '.$tenant->high_school_address }}</td>
             </tr>
@@ -299,29 +300,31 @@
                 <th>Course/Year</th>
                 <td>{{ $tenant->course.', '.$tenant->year_level }}</td>
             </tr>
-            
+            @else
+            <tr>
+              <th>Employer</th>
+              <td>{{ $tenant->employer}}</td>
+          </tr>
+          <tr>
+              <th>Address</th>
+              <td>{{ $tenant->employer_address }}</td>
+          </tr>
+          <tr>
+              <th>Contact No</th>
+              <td>{{ $tenant->employer_contact_no }}</td>
+          </tr>
+          
+          <tr>
+              <th>Job description</th>
+              <td>{{ $tenant->job }}</td>
+          </tr>
+          <tr>
+              <th>Years of employment</th>
+              <td>{{ $tenant->years_of_employment }}</td>
+          </tr>
            
-            <tr>
-                <th>Employer</th>
-                <td>{{ $tenant->employer}}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ $tenant->employer_address }}</td>
-            </tr>
-            <tr>
-                <th>Contact No</th>
-                <td>{{ $tenant->employer_contact_no }}</td>
-            </tr>
+              @endif
             
-            <tr>
-                <th>Job description</th>
-                <td>{{ $tenant->job }}</td>
-            </tr>
-            <tr>
-                <th>Years of employment</th>
-                <td>{{ $tenant->years_of_employment }}</td>
-            </tr>
               
 
           </table>
