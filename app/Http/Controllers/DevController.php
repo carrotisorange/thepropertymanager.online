@@ -90,12 +90,18 @@ class DevController extends Controller
 
     public function post_user(Request $request, $user_id)
     {
+        if($request->email_verified_at == null){
+            $email_verified_at  = null;
+        }else{
+            $email_verified_at  = $request->email_verified_at;
+        }
+
          $user = User::findOrFail($user_id);
          $user->name = $request->name;
          $user->email = $request->email;
          $user->user_type = $request->user_type;
          $user->account_type = $request->account_type;
-         $user->email_verified_at = $request->email_verified_at;
+         $user->email_verified_at = $email_verified_at;
          $user->save();
 
         return redirect('/dev/users')->with('success','Changes have been saved!');
@@ -106,8 +112,9 @@ class DevController extends Controller
     {
         
         $users = DB::table('users')
-        ->orderBy('email_verified_at', 'desc')
+      
         ->where('user_type','<>', 'tenant')
+        ->orderBy('created_at', 'desc')
         ->get();
 
         return view('layouts.dev.users', compact( 'users'));

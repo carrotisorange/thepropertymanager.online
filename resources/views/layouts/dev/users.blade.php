@@ -132,7 +132,13 @@
      <td>{{ $item->user_type }}</td>
      <td><a href="/dev/user/{{ $item->id }}/plans">{{ $item->account_type }}</a></td>
       <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y').' '.Carbon\Carbon::parse($item->created_at)->toTimeString() }}</td>
-      <td>{{ Carbon\Carbon::parse($item->email_verified_at)->format('M d Y').' '.Carbon\Carbon::parse($item->email_verified_at)->toTimeString() }}</td>
+      <td>
+        @if($item->email_verified_at == null)
+        null
+        @else
+        {{ Carbon\Carbon::parse($item->email_verified_at)->format('M d Y').' '.Carbon\Carbon::parse($item->email_verified_at)->toTimeString() }}
+        @endif
+      </td>
    
      
    @endforeach

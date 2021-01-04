@@ -157,7 +157,7 @@
 <div class="row">
     <div class="col">
         <label>Email verified at</label>
-        <input form="editPropertyForm" class="form-control" type="date" name="email_verified_at" value="{{ Carbon\Carbon::parse($user->email_verified_at)->format('Y-m-d') }}" >
+        <input form="editPropertyForm" class="form-control" type="date" name="email_verified_at" value="{{ $user->email_verified_at? Carbon\Carbon::parse($user->email_verified_at)->format('Y-m-d'): null }}" >
     </div>
    
 </div>
