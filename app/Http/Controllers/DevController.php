@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use Auth;
 use App\Plan;
+use App\Tenant;
 
 class DevController extends Controller
 {
@@ -71,6 +72,250 @@ class DevController extends Controller
          $plans = Plan::all();
 
         return view('layouts.dev.plans', compact('plans'));
+    }
+
+    public function tenants()
+    {
+         $tenants = Tenant::all();
+
+         $active_tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('contracts.status', 'active')
+        ->get();
+
+        $inactive_tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('contracts.status', 'inactive')
+        ->get();
+
+        $pending_tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('contracts.status', 'pending')
+        ->get();
+
+        
+
+$moveout_rate_1 = DB::table('contracts')
+ ->where('actual_moveout_at', '>=', Carbon::now()->firstOfMonth())
+->where('actual_moveout_at', '<=', Carbon::now()->endOfMonth())
+ ->where('contracts.status', 'inactive')
+ ->count();
+
+$moveout_rate_2 = DB::table('contracts')
+ ->where('actual_moveout_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
+->where('actual_moveout_at', '<=', Carbon::now()->subMonth()->endOfMonth())
+ ->where('contracts.status', 'inactive')
+ ->count();
+
+$moveout_rate_3 = DB::table('contracts')
+ ->where('actual_moveout_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
+->where('actual_moveout_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
+ ->where('contracts.status', 'inactive')
+ ->count();
+
+$moveout_rate_4 = DB::table('contracts')
+ ->where('actual_moveout_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
+->where('actual_moveout_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
+ ->where('contracts.status', 'inactive')
+ ->count();
+
+$moveout_rate_5 = DB::table('contracts')
+ ->where('actual_moveout_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
+->where('actual_moveout_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
+ ->where('contracts.status', 'inactive')
+ ->count();
+
+ $moveout_rate_6 = DB::table('contracts')
+ ->where('actual_moveout_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
+->where('actual_moveout_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
+ ->where('contracts.status', 'inactive')
+ ->count();
+
+$moveout_rate = new DashboardChart;
+$moveout_rate->displaylegend(false);
+$moveout_rate->labels([Carbon::now()->subMonth(5)->format('M Y'),Carbon::now()->subMonth(4)->format('M Y'),Carbon::now()->subMonth(3)->format('M Y'),Carbon::now()->subMonths(2)->format('M Y'),Carbon::now()->subMonth()->format('M Y'),Carbon::now()->format('M Y')]);
+$moveout_rate->dataset('Moveouts', 'bar', [
+                                                $moveout_rate_6,
+                                                $moveout_rate_5,
+                                                $moveout_rate_4,
+                                                $moveout_rate_3,
+                                                $moveout_rate_2,
+                                                $moveout_rate_1,
+                                           
+                                              ]
+                )
+->color("#858796")
+->backgroundcolor("rgba(78, 115, 223, 0.05)")
+->fill(false)
+->linetension(0.3);
+
+$end_of_contract = DB::table('contracts')
+->where('moveout_reason','End of contract')
+->get();
+
+$delinquent = DB::table('contracts')
+->where('moveout_reason','Delinquent')
+->get();
+
+$force_majeure = DB::table('contracts')
+->where('moveout_reason','Force majeure')
+->get();
+
+$run_away = DB::table('contracts')
+->where('moveout_reason','Run away')
+->get();
+
+$unruly = DB::table('contracts')
+->where('moveout_reason','Unruly')
+->get();
+
+$graduated = DB::table('contracts')
+->where('moveout_reason','Graduated')
+->get();
+
+$reason_for_moving_out_chart = new DashboardChart;
+$reason_for_moving_out_chart->displaylegend(true);
+$reason_for_moving_out_chart->labels(
+                                        [ 'End Of Contract'.' ('.$end_of_contract->count(). ')',
+                                          'Graduated'.' ('.$graduated->count(). ')', 
+                                          'Delinquent'.' ('.$delinquent->count(). ')', 
+                                          'Force Majeure'.' ('.$force_majeure->count(). ')', 
+                                          'Run Away'.' ('.$run_away->count(). ')', 
+                                          'Unruly'.' ('.$unruly->count(). ')',
+                                          'Total'.' ('.$inactive_tenants->count(). ')'
+                                          ]
+                                    );
+$reason_for_moving_out_chart->dataset('', 'pie', 
+                                        [
+                                            number_format(($inactive_tenants->count() == 0 ? 0 : $end_of_contract->count()/$inactive_tenants->count()) * 100,1),
+                                            number_format(($inactive_tenants->count() == 0 ? 0 : $graduated->count()/$inactive_tenants->count()) * 100,1),
+                                            number_format(($inactive_tenants->count() == 0 ? 0 : $delinquent->count()/$inactive_tenants->count()) * 100,1),
+                                            number_format(($inactive_tenants->count() == 0 ? 0 : $force_majeure->count()/$inactive_tenants->count()) * 100,1),
+                                            number_format(($inactive_tenants->count() == 0 ? 0 : $run_away->count()/$inactive_tenants->count()) * 100,1), 
+                                            number_format(($inactive_tenants->count() == 0 ? 0 : $unruly->count()/$inactive_tenants->count()) * 100,1),
+                                        ]
+                                    )
+->backgroundColor(
+                    [
+                        '#008000',
+                        '#FFF000', 
+                        '#FF0000',
+                        '#0E0601',
+                        '#DE7835',
+                        '#211979'
+                    ]
+                );
+
+$contracts = DB::table('contracts')
+->count();
+
+                
+ $facebook = DB::table('contracts')
+ ->where('form_of_interaction','Facebook')
+ ->count();
+ 
+ $flyers = DB::table('contracts')
+ ->where('form_of_interaction','Flyers')
+ ->count();
+ 
+ $inhouse = DB::table('contracts')
+ ->where('form_of_interaction','In house')
+ ->count();
+ 
+ $instagram = DB::table('contracts')
+ ->where('form_of_interaction','Instagram')
+ ->count();
+ 
+ $website = DB::table('contracts')
+ ->where('form_of_interaction','Website')
+ ->count();
+ 
+ $walkin = DB::table('contracts')
+ ->where('form_of_interaction','Walk in')
+ ->count();
+ 
+ $wordofmouth = DB::table('contracts')
+ ->where('form_of_interaction','Word of mouth')
+ ->count();
+ 
+ $point_of_contact = new DashboardChart;
+ $point_of_contact->displaylegend(true);
+ $point_of_contact->labels
+                             (
+                                 [ 
+                                     'Facebook'.' ('.$facebook.')',
+                                     'Flyers'.' ('.$flyers.')', 
+                                     'In house'.' ('.$inhouse.')', 
+                                     'Instagram'.' ('.$instagram.')', 
+                                     'Website'.' ('.$website.')',
+                                     'Walk in'.' ('.$walkin.')', 
+                                     'Word of mouth'.' ('.$wordofmouth.')',
+                                     'Total'.' ('.$contracts. ')'
+                                 ]
+                             );
+ $point_of_contact->dataset
+                             ('', 'pie',
+                                 [   
+                                     number_format(($contracts == 0 ? 1 : $facebook/$contracts) * 100,1),
+                                     number_format(($contracts == 0 ? 1 : $flyers/$contracts) * 100,1),
+                                     number_format(($contracts == 0 ? 1 : $inhouse/$contracts) * 100,1),
+                                     number_format(($contracts == 0 ? 1 : $instagram/$contracts) * 100,1),
+                                     number_format(($contracts== 0 ? 1 : $website/$contracts) * 100,1), 
+                                     number_format(($contracts== 0 ? 1 : $walkin/$contracts) * 100,1), 
+                                     number_format(($contracts == 0 ? 1 : $wordofmouth/$contracts) * 100,1),
+                                 
+                                 ]
+                             )
+ ->backgroundColor
+                     (
+                         [
+                             '#3b5998',
+                             '#211939', 
+                             '#008000',
+                             '#C13584',
+                             '#DE7835',
+                             '#211979',
+                             '#FF0000',
+                         ]
+                     );
+           
+
+                 
+ $working = Tenant::where('type_of_tenant', 'working')->count();
+
+ $studying = Tenant::where('type_of_tenant', 'studying')->count();
+ 
+ $status = new DashboardChart;
+ $status->displaylegend(true);
+ $status->labels
+                             (
+                                 [ 
+                                     'Working'.' ('.$working.')',
+                                     'Studying'.' ('.$studying.')', 
+                                     'Total'.' ('.$tenants->count(). ')'
+                                 ]
+                             );
+ $status->dataset
+                             ('', 'pie',
+                                 [   
+                                     number_format(( $working/$tenants->count()) * 100,1),
+                                     number_format(( $studying/$tenants->count()) * 100,1),                                 
+                                 ]
+                             )
+ ->backgroundColor
+                     (
+                         [
+                             '#3b5998',
+                             '#211939', 
+                         ]
+                     );
+           
+
+
+        return view('layouts.dev.tenants', compact('tenants', 'active_tenants', 'inactive_tenants', 'pending_tenants', 'moveout_rate', 'reason_for_moving_out_chart', 'point_of_contact', 'status'));
     }
 
     public function post_plan(Request $request)

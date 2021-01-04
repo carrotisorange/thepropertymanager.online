@@ -53,6 +53,12 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a class="nav-link" href="/dev/tenants">
+                <i class="fas fa-user-circle text-red"></i>
+                <span class="nav-link-text">Tenants</span>
+              </a>
+            </li>
 
           </ul>
           <!-- Divider -->

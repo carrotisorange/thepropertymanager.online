@@ -895,6 +895,7 @@ $point_of_contact->labels
                                     'Website'.' ('.$website.')',
                                     'Walk in'.' ('.$walkin.')', 
                                     'Word of mouth'.' ('.$wordofmouth.')',
+                                    'Total'.' ('.$contracts. ')'
                                 ]
                             );
 $point_of_contact->dataset
