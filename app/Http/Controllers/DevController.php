@@ -308,7 +308,7 @@ $contracts = DB::table('contracts')
  ->backgroundColor
                      (
                          [
-                             '#3b5998',
+                             '#008000',
                              '#211939', 
                          ]
                      );
