@@ -312,10 +312,68 @@ $contracts = DB::table('contracts')
                              '#211939', 
                          ]
                      );
+
+                     $occupancy_rate_6 = DB::table('occupancy_rate')
+            
+                     ->where('occupancy_date', '>=', Carbon::now()->firstOfMonth())
+                     ->where('occupancy_date', '<=', Carbon::now()->endOfMonth())
+                     ->max('occupancy_rate');
+
+                     $occupancy_rate_5 = DB::table('occupancy_rate')
+                  
+                     ->where('occupancy_date', '>=', Carbon::now()->subMonth()->firstOfMonth())
+                     ->where('occupancy_date', '<=', Carbon::now()->subMonth()->endOfMonth())
+                     ->max('occupancy_rate');
+                     
+                      $occupancy_rate_4 = DB::table('occupancy_rate')
+              
+                     ->where('occupancy_date', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
+                     ->where('occupancy_date', '<=', Carbon::now()->subMonths(2)->endOfMonth())
+                     ->max('occupancy_rate');
+                     
+                      $occupancy_rate_3 = DB::table('occupancy_rate')
+                     
+                     ->where('occupancy_date', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
+                     ->where('occupancy_date', '<=', Carbon::now()->subMonths(3)->endOfMonth())
+                     ->max('occupancy_rate');
+                     
+                       $occupancy_rate_2 = DB::table('occupancy_rate')
+                    
+                     ->where('occupancy_date', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
+                     ->where('occupancy_date', '<=', Carbon::now()->subMonths(4)->endOfMonth())
+                     ->max('occupancy_rate');
+                     
+                     $occupancy_rate_1 = DB::table('occupancy_rate')
+                 
+                     ->where('occupancy_date', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
+                     ->where('occupancy_date', '<=', Carbon::now()->subMonths(5)->endOfMonth())
+                     ->max('occupancy_rate');
+                     
+                     $movein_rate = new DashboardChart;
+                     $movein_rate->barwidth(0.0);
+                     $movein_rate->displaylegend(false);
+                     $movein_rate->labels([Carbon::now()->subMonths(5)->format('M Y'),Carbon::now()->subMonths(4)->format('M Y'),Carbon::now()->subMonths(3)->format('M Y'),Carbon::now()->subMonths(2)->format('M Y'),Carbon::now()->subMonth()->format('M Y'),Carbon::now()->format('M Y')]);
+                     $movein_rate->dataset('Occupancy Rate: ', 'line',
+                                                             [ 
+                                                                 $occupancy_rate_1,
+                                                                 $occupancy_rate_2,
+                                                                 $occupancy_rate_3,
+                                                                 $occupancy_rate_4,
+                                                                 $occupancy_rate_5,
+                                                                 $occupancy_rate_6,
+                                                             ]
+                     
+                                             )
+                         ->color("#858796")
+                         ->backgroundcolor("rgba(78, 115, 223, 0.05)")
+                         ->fill(false)
+                         ->linetension(0.3);
+                     
+                     
            
 
 
-        return view('layouts.dev.tenants', compact('tenants', 'active_tenants', 'inactive_tenants', 'pending_tenants', 'moveout_rate', 'reason_for_moving_out_chart', 'point_of_contact', 'status'));
+        return view('layouts.dev.tenants', compact('tenants', 'active_tenants', 'inactive_tenants', 'pending_tenants', 'moveout_rate', 'reason_for_moving_out_chart', 'point_of_contact', 'status', 'movein_rate'));
     }
 
     public function post_plan(Request $request)

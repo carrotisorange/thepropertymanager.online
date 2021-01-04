@@ -229,6 +229,24 @@
   </div>
 
   <div class="row">
+
+    <!-- Occupancy Line Chart -->
+    <div class="col-xl-12 col-lg-12">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">OCCUPANCY RATE</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            {!! $movein_rate->container() !!}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
     <div class="col-lg-6 mb-4">
         <!-- Illustrations -->
         <div class="card shadow mb-4">
@@ -304,6 +322,7 @@
 {!! $reason_for_moving_out_chart->script() !!}
 {!! $point_of_contact->script() !!}
 {!! $status->script() !!}
+{!! $movein_rate->script() !!}
 @endsection
 
 
