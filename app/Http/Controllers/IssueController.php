@@ -69,9 +69,19 @@ class IssueController extends Controller
      * @param  \App\Issue  $issue
      * @return \Illuminate\Http\Response
      */
-    public function show(Issue $issue)
+    public function show($property_id, $issue_id)
     {
-        //
+        $issue = Issue::findOrFail($issue_id);
+
+        $responses = DB::table('issue_responses')
+        ->join('issues', 'issues.issue_id', 'issue_responses.issue_id')
+        ->join('users', 'issue_responses.user_id', 'users.id')
+        ->select('*', 'issue_responses.created_at as responded_at')
+        ->where('issue_responses.issue_id', $issue_id)
+        ->orderBy('issue_responses.created_at', 'desc')
+        ->get();
+
+        return view('webapp.properties.show_issues', compact('issue', 'responses'));
     }
 
     /**

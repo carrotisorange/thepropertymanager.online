@@ -117,7 +117,7 @@
       <div class="list-group list-group-flush">
           @foreach ($issues as $item)
        
-          <a href="/dev/issue/{{ $item->issue_id }}/edit" class="list-group-item list-group-item-action">
+          <span class="list-group-item list-group-item-action">
             <div class="row align-items-center">
               <div class="col-auto">
                 <!-- Avatar -->
@@ -133,13 +133,17 @@
                     <h4 class="mb-0 text-sm">{{ $item->name }}</h4>
                   </div>
                   <div class="text-right text-muted">
-                    <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }}</small>
+
+                    <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }} </small>
+                   
+                    
                   </div>
                 </div>
-                <p class="text-sm text-muted mb-0">{{ $item->details }}</p>
+                <p class="text-sm text-muted mb-0"><a href="/dev/issue/{{ $item->issue_id }}/edit">{{ $item->details }}</a></p>
+               
               </div>
             </div>
-          </a>
+          </span>
 
           @endforeach
 

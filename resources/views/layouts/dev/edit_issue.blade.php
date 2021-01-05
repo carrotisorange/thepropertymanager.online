@@ -105,7 +105,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Issues</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Issue # {{ $issue->issue_id }}</h6>
     
   </div>
   
@@ -117,14 +117,6 @@
     @method('put')
     @csrf
 
-
-<div class="row">
-    <div class="col">
-        <label>Reported by</label>
-        <input form="editPropertyForm" class="form-control" type="text" name="reported_by" value="{{ $issue->reported_by }}" >
-    </div>
-</div>
-<br>
 <div class="row">
     <div class="col">
         <label>Status</label>
@@ -155,10 +147,86 @@
          </div>
         </div>  
 </form>
-
-
+<hr>
+<div class="row align-items-center py-4">
+  <div class="col-lg-6 col-7">
+    <h6 class="h2 text-dark d-inline-block mb-0">Responses </h6>
+    
+  </div>
+  
 
 </div>
+
+<div class="row">
+  <div class="col">
+
+      
+
+        <form action="/dev/issue/{{ $issue->issue_id }}/responses" method="POST">
+          @csrf
+      
+    
+          <textarea  class="form-control form-control-user @error('response') is-invalid @enderror" name="response" id="" cols="30" rows="3" placeholder="enter your response here..."></textarea required>
+          
+            @error('response')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+      
+        <br>
+      <p class="text-right">
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add </button>
+      </p>
+      </form>
+    
+  
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    
+      <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
+      <br><br>
+
+     
+    
+      
+            <div class="list-group list-group-flush">
+                @foreach ($responses as $item)
+             
+                <a href="#/" class="list-group-item list-group-item-action">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <!-- Avatar -->
+                    @if($item->user_type === 'dev')
+                    <i class="fas fa-user-secret text-red"></i>
+                    @else
+                    <i class="fas fa-user-circle text-primary"></i>
+                    @endif
+                    </div>
+                    <div class="col">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <h4 class="mb-0 text-sm">{{ $item->name }}</h4>
+                        </div>
+                        <div class="text-right text-muted">
+                          <small>{{ Carbon\Carbon::parse($item->responded_at)->format('M-d-Y') }}</small>
+                        </div>
+                      </div>
+                      <p class="text-sm text-muted mb-0">{{ $item->response }}</p>
+                    </div>
+                  </div>
+                </a>
+      
+                @endforeach
+      
+              </div>
+      
+ 
+    </div>
+  </div>
     
 @endsection
 

@@ -462,14 +462,40 @@ $contracts = DB::table('contracts')
     {
         $issue = Issue::findOrFail($issue_id);
 
-        return view('layouts.dev.edit_issue', compact('issue'));
+        $responses = DB::table('issue_responses')
+        ->join('issues', 'issues.issue_id', 'issue_responses.issue_id')
+        ->join('users', 'issue_responses.user_id', 'users.id')
+        ->select('*', 'issue_responses.created_at as responded_at')
+        ->where('issue_responses.issue_id', $issue_id)
+        ->orderBy('issue_responses.created_at', 'desc') 
+        ->get();
+
+        return view('layouts.dev.edit_issue', compact('issue', 'responses'));
+    }
+
+    public function add_response(Request $request, $issue_id)
+    {   
+
+        $request->validate([
+            'response' => ['required'],
+        ]);
+
+        DB::table('issue_responses')->insert(
+            [
+               'issue_id' => $issue_id, 
+               'user_id' => Auth::user()->id,
+               'response' => $request->response,
+               'created_at' => Carbon::now(),
+            ]
+        );
+
+        return back()->with('success', 'Response is successfully sent!');
     }
 
     
     public function update_issue(Request $request, $issue_id)
     {   
         $issue = Issue::findOrFail($issue_id);
-        $issue->reported_by = $request->reported_by;
         $issue->status = $request->status;
         $issue->details = $request->details;
         $issue->save();

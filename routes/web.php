@@ -53,6 +53,7 @@ Route::get('property/{property_id}/announcements', function($property_id){
 
 //route for issues
 Route::get('/property/{property_id}/issues', 'IssueController@index');
+Route::get('/property/{property_id}/issue/{issue_id}', 'IssueController@show');
 Route::post('/property/{property_id}/issue/create', 'IssueController@store');
 
 
@@ -391,6 +392,7 @@ Route::get('/dev/starter/', 'DevController@starter')->middleware(['auth', 'verif
 Route::get('/dev/announcements\/', 'DevController@announcements')->middleware(['auth', 'verified']);
 Route::get('/dev/issues/', 'DevController@issues')->middleware(['auth', 'verified']);
 Route::get('/dev/issue/{issue_id}/edit', 'DevController@edit_issue')->middleware(['auth', 'verified']);
+Route::post('/dev/issue/{issue_id}/responses', 'DevController@add_response')->middleware(['auth', 'verified']);
 Route::put('/dev/issue/{issue_id}/update', 'DevController@update_issue')->middleware(['auth', 'verified']);
 Route::get('/dev/updates/', 'DevController@updates')->middleware(['auth', 'verified']);
 Route::get('/dev/user/{user_id}', 'DevController@edit_user')->middleware(['auth', 'verified']);
