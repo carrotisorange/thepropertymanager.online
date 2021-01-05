@@ -52,7 +52,7 @@
 
                             @else
 
-                            <strong  title="verified" class="text-primary"><i class="fas fa-check-circle"></i> </strong>
+                            <strong  title="verified" class="text-success"><i class="fas fa-check-circle fa-lg"></i> </strong>
                             @endif
                           </td>
                           

@@ -338,7 +338,6 @@ class PropertyController extends Controller
 
          $search_key = $request->search_key;
 
-           
          $notification = new Notification();
          $notification->user_id_foreign = Auth::user()->id;
          $notification->property_id_foreign = Session::get('property_id');
@@ -484,6 +483,16 @@ class PropertyController extends Controller
         Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
 
         Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
+
+           
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'property';
+        $notification->message = 'User '.Auth::user()->id.' managed '.Session::get('property_name').'.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
     
 
          $top_agents = DB::table('contracts')

@@ -42,6 +42,16 @@ class CollectionController extends Controller
 
     public function index(Request $request, $property_id)
     {
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        $notification->message = 'User '.Auth::user()->id.' opened collections page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
         $search = $request->search;
 
         Session::put(Auth::user()->id.'date', $search);

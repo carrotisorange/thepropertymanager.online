@@ -61,7 +61,7 @@
                 <div class="col-auto">
                   <!-- Avatar -->
                 @if($item->type === 'tenant')
-                <i class="fas fa-user text-success fa-lg"></i>
+                <i class="fas fa-user text-green fa-lg"></i>
                 @elseif($item->type === 'payable')
                 <i class="fas fa-file-export text-indigo fa-lg"></i>
                 @elseif($item->type === 'owner')
@@ -80,6 +80,10 @@
                 <i class="fas fa-file-signature text-teal fa-lg"></i>
                 @elseif($item->type === 'search')
                 <i class="fas fa-search text-blue fa-lg"></i>
+                @elseif($item->type === 'financial')
+                <i class="fas fa-file-export text-indigo fa-lg"></i>
+                @elseif($item->type === 'user')
+                <i class="fas fa-user-circle text-green fa-lg"></i>
                 @else
                 <i class="fas fa-building text-primary fa-lg"></i>
                 @endif

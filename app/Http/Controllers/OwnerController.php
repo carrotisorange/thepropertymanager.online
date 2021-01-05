@@ -22,6 +22,16 @@ class OwnerController extends Controller
      */
     public function index($property_id)
     {
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'owner';
+        $notification->message = 'User '.Auth::user()->id.' opened owners page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
         $owners = DB::table('certificates')
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->join('units', 'unit_id_foreign', 'unit_id')

@@ -34,6 +34,14 @@ class TenantController extends Controller
      */
     public function index(Request $request, $property_id)
     {
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'tenant';
+        $notification->message = 'User '.Auth::user()->id.' opened tenants page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         $search = $request->tenant_search;
 

@@ -8,6 +8,7 @@ use App\Property;
 use Auth;
 use Session;
 use Carbon\Carbon;
+use App\Notification;
 
 class FinancialController extends Controller
 {
@@ -18,6 +19,14 @@ class FinancialController extends Controller
      */
     public function index($property_id)
     {
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'financial';
+        $notification->message = 'User '.Auth::user()->id.' opened financials page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
 
         $collection_rate_1 = DB::table('contracts')
