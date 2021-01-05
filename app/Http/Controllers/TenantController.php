@@ -247,6 +247,7 @@ class TenantController extends Controller
             'discount' => [],
             'term' => ['required'],
             'birthdate' => ['required'],
+            'type_of_tenant' => ['required'],
             'gender' => ['required'],
             'form_of_interaction' => [],
             'civil_status' => ['required'],
@@ -269,6 +270,7 @@ class TenantController extends Controller
                 'last_name'=> $request->last_name,
                 'birthdate'=>$request->birthdate,
                 'gender' => $request->gender,
+                'type_of_tenant' => $request->type_of_tenant,
                 'civil_status'=> $request->civil_status,
                 'id_number' => $request->id_number,
                 //contact number
@@ -395,13 +397,23 @@ class TenantController extends Controller
         ]);
 
         $tenant = Tenant::findOrFail($tenant_id);
+        if($no_of_bills === null){  
 
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'tenant';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added to the property!';
+        $notification->save();
+          }else{  
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as pending!';
         $notification->save();
+          }
+       
         
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 

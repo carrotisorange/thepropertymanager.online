@@ -13,6 +13,7 @@ use App\Charts\DashboardChart;
 use Auth;
 use App\Plan;
 use App\Tenant;
+use Illuminate\Support\Facades\Hash;
 
 class DevController extends Controller
 {
@@ -378,6 +379,7 @@ $contracts = DB::table('contracts')
 
     public function post_plan(Request $request)
     {
+
          $plan = new Plan();
          $plan->plan = $request->plan;
          $plan->price_per_month = $request->price_per_month;
@@ -392,11 +394,17 @@ $contracts = DB::table('contracts')
     }
 
     public function post_user(Request $request, $user_id)
-    {
+    { 
         if($request->email_verified_at == null){
             $email_verified_at  = null;
         }else{
             $email_verified_at  = $request->email_verified_at;
+        }
+
+        if($request->password == null){
+            $password  =  User::findOrFail($user_id)->password;
+        }else{
+            $password  = Hash::make($request->password);
         }
 
          $user = User::findOrFail($user_id);
@@ -404,6 +412,7 @@ $contracts = DB::table('contracts')
          $user->email = $request->email;
          $user->user_type = $request->user_type;
          $user->account_type = $request->account_type;
+         $user->password = $password;
          $user->email_verified_at = $email_verified_at;
          $user->save();
 
@@ -415,9 +424,8 @@ $contracts = DB::table('contracts')
     {
         
         $users = DB::table('users')
-      
         ->where('user_type','<>', 'tenant')
-        ->orderBy('created_at', 'desc')
+    ->orderBy('created_at', 'desc')
         ->get();
 
         return view('layouts.dev.users', compact( 'users'));

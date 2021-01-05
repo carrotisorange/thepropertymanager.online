@@ -303,6 +303,20 @@
   <input type="hidden" form="addTenantForm1" value="{{ $property->property_id }}" name="property_id">
   <br>
   <div class="row">
+    <div class="col">
+      <small class="">Type of tenant <span class="text-danger">*</span></small></small>
+      <select form="addTenantForm1"  id="type_of_tenant" name="type_of_tenant" class="form-control" required>
+        <option value="{{ old('type_of_tenant')? old('type_of_tenant'): '' }}" selected>{{ old('type_of_tenant')? old('type_of_tenant'): 'Please select one' }} </option>
+          <option value="studying">studying</option>
+          <option value="working">working</option>
+      </select>
+
+      @error('type_of_tenant')
+      <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+      </span>
+      @enderror
+  </div>
       <div class="col">
           <small class="">Mobile <span class="text-danger">*</span></small>
         <input form="addTenantForm1" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ old('contact_no') }}">

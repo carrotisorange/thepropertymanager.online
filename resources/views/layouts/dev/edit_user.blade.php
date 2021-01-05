@@ -164,10 +164,7 @@
 <div class="row">
   <div class="col">
       <label>Password</label>
-      <select form="editPropertyForm" class="form-control" name="account_type" type="text" id="">
-          <option value="{{ $user->password }}">{{ $user->password }}</option>
-         
-      </select>
+      <input form="editPropertyForm" class="form-control" type="password" name="password" >
   </div>
 </div>
 <br>
