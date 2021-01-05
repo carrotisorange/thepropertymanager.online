@@ -450,7 +450,10 @@ $contracts = DB::table('contracts')
 
     public function issues()
     {
-        $issues = DB::table('issues')->orderBy('created_at', 'desc')->get();
+        $issues = DB::table('issues')
+        ->join('users', 'user_id_foreign', 'id')
+        ->select('*', 'issues.status as issue_status')
+        ->orderBy('issues.created_at', 'desc')->get();
 
         return view('layouts.dev.issues', compact('issues'));
     }

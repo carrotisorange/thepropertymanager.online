@@ -217,7 +217,7 @@
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <!-- Avatar -->
-                    @if($item->status === 'closed')
+                    @if($item->issue_status === 'closed')
                     <i class="fas fa-check-circle text-success"></i>
                     @else
                     <i class="fas fa-clock text-warning"></i>
@@ -226,7 +226,7 @@
                     <div class="col">
                       <div class="d-flex justify-content-between align-items-center">
                         <div>
-                          <h4 class="mb-0 text-sm">{{ $item->reported_by }}</h4>
+                          <h4 class="mb-0 text-sm">{{ $item->name }}</h4>
                         </div>
                         <div class="text-right text-muted">
                           <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }}</small>
