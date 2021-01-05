@@ -6,7 +6,7 @@
 Thanks for staying in {{ $property }}.
 <br>
 <br>
-{{-- Your contract starts on {{ Carbon\Carbon::parse($movein_at)->format('M d Y') }} and ends on {{ Carbon\Carbon::parse($moveout_at)->format('M d Y') }}. --}}
+Your contract in room {{ $unit }} starts on {{ Carbon\Carbon::parse($movein_at)->format('M d Y') }} and ends on {{ Carbon\Carbon::parse($moveout_at)->format('M d Y') }}.
 Please take note that the billing cycle starts every 1st day of the month. If your movein date happens to be not on the first day of the month, then
 your first bill will be prorated, which means that you'll only have to pay from the date of your movein to the last day of the current month.
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegisteredMail;
 use App\Bill;
 use App\Property;
 use App\User;
@@ -397,6 +398,7 @@ class TenantController extends Controller
         ]);
 
         $tenant = Tenant::findOrFail($tenant_id);
+        $unit = Unit::findOrFail($unit_id);
         if($no_of_bills === null){  
 
         $notification = new Notification();
@@ -417,10 +419,25 @@ class TenantController extends Controller
         
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Tenant added succesfully!');
-       
 
-       
+         $data = array(
+            'email' => $tenant->email_address,
+            'mobile' => $tenant->mobile,
+            'name' => $tenant->first_name.' '.$tenant->last_name,
+            'property' => Session::get('property_name'),
+            'unit' => $unit->building.' '.$unit->unit_no,
+            'movein_at' => $request->movein_at,
+            'moveout_at' => $request->moveout_at,
+        );
+
+        
+                Mail::send('webapp.tenants.user-generated-mail', $data, function($message) use ($data){
+                $message->to($data['email']);
+                $message->subject('Welcome Tenant');
+            });
+
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Tenant added succesfully!');
+    
     }
 
     public function store_occupant_prefilled(Request $request, $property_id, $unit_id )
@@ -851,6 +868,7 @@ class TenantController extends Controller
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
         
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','Changes have been saved!');
     }
