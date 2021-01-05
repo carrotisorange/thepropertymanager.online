@@ -15,7 +15,6 @@ use App\Plan;
 use App\Tenant;
 use Illuminate\Support\Facades\Hash;
 use App\Issue;
-use App\Notification;
 
 class DevController extends Controller
 {
