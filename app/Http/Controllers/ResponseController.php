@@ -78,7 +78,7 @@ class ResponseController extends Controller
         $notification->message = Auth::user()->name.' has responded to concern regarding '.$concern->title;
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
     
         return back()->with('success', 'reponse has been saved!');

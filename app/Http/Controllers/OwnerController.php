@@ -11,6 +11,7 @@ use App\Certificate;
 use Uuid;
 use Carbon\Carbon;
 use Session;
+use App\Notification;
 
 class OwnerController extends Controller
 {
@@ -115,7 +116,7 @@ class OwnerController extends Controller
         $notification->message = $request->name.' '.$last_name.' has been as an owner! ';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'new owner has been added! Please complete the fields below...');
     }
@@ -212,6 +213,15 @@ class OwnerController extends Controller
             'payment_type' => $request->payment_type, 
             'updated_at' => Carbon::now()
         ]);
+           
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'owner';
+        $notification->message = $request->unit_owner.' profile has been updated!';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return redirect('/property/'.$property_id.'/owner/'.$owner_id)->with('success', 'changes have been saved!');
     }

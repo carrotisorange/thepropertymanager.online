@@ -467,7 +467,7 @@ class PropertyController extends Controller
     {   
         Session::put('property_id', $request->property_id);
        
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
 
@@ -1182,7 +1182,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         Session::put('property_id', $request->property_id);
        
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
 

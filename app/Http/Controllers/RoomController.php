@@ -10,12 +10,13 @@ use Carbon\Carbon;
 use App\Property;
 use App\OccupancyRate;
 use Session;
+use App\Notification;
 
 class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *n
      * @return \Illuminate\Http\Response
      */
     public function index($property_id)
@@ -331,6 +332,15 @@ class RoomController extends Controller
                 $occupancy->save();
             }
             
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'room';
+            $notification->message = 'Room '.Unit::findOrFail($id)->unit_no.' has been updated!';
+            $notification->save();
+                        
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
             return back()->with('success', 'changes have been saved!');
        
     }

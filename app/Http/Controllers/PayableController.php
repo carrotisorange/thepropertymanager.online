@@ -107,7 +107,7 @@ class PayableController extends Controller
                 $notification->save();
         }
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
     
         return back()->with('success', 'entries have been saved!');
@@ -141,7 +141,7 @@ class PayableController extends Controller
        }
 
      
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
    
    
@@ -170,7 +170,7 @@ class PayableController extends Controller
         $notification->message = ' request for '.$entry.' on '.$date.' has been approved!';
         $notification->save();
                 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
     return redirect('property/'.Session::get('property_id').'/payables#approved/')->with('success', 'request has been approved!');
     }
@@ -197,7 +197,7 @@ class PayableController extends Controller
         $notification->message = ' request for '.$entry.' on '.$date.' has been declined!';
         $notification->save();
                 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);             
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));             
 
     return redirect('/property/'.$property_id.'/payables#declined/')->with('success', 'request has been declined!');
     }
@@ -223,7 +223,7 @@ class PayableController extends Controller
         $notification->message = ' request for '.$entry.' on '.$date.' has been released!';
         $notification->save();
                 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
     return redirect('/property/'.$property_id.'/payables#released/')->with('success', 'request has been released!');
     }

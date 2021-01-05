@@ -72,7 +72,7 @@ class ConcernController extends Controller
         $notification->message = $unit.' reported a concern regarding '.$request->category.'.';
         $notification->save();
                 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return redirect('/property/'.$property_id.'/home/'.$unit_id.'#concerns')->with('success', 'concern has been saved!');
 
@@ -100,7 +100,7 @@ class ConcernController extends Controller
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' reported a concern regarding '.$request->category.'.';
         $notification->save();
                 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
@@ -203,7 +203,7 @@ class ConcernController extends Controller
         $notification->message = Auth::user()->name.' has made changes in concern ID '.$concern->concern_id.' regarding the '.$concern->title.'.';
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return back()->with('success', 'changes have been saved!');
     }
@@ -250,7 +250,7 @@ class ConcernController extends Controller
         $notification->message =  $request->name.' was rated '.$request->rating.' for resolving concern ID '.$concern->concern_id.' regarding '.$concern->title;
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
     
         return back()->with('success', 'concern has been closed!');
         }

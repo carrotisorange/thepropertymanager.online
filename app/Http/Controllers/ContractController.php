@@ -309,7 +309,7 @@ class ContractController extends Controller
                 $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been moved out of the property! ';
                 $notification->save();
                             
-                Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+                 Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
             $pdf = \PDF::loadView('webapp.tenants.gatepass', $data)->setPaper('a4', 'portrait');
       
@@ -412,7 +412,7 @@ class ContractController extends Controller
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' contract has been terminated! ';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract has been terminated! Continue with the moveout.');
     }

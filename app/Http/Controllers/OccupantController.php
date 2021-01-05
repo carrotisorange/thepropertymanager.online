@@ -220,7 +220,7 @@ class OccupantController extends Controller
         $notification->message = $occupant->first_name.' '.$occupant->last_name.' has been added as occupant!';
         $notification->save();
         
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
        

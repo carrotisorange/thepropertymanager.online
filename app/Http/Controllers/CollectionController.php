@@ -242,7 +242,7 @@ class CollectionController extends Controller
             $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as active!';
             $notification->save();
                         
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
            
         }
 
@@ -255,7 +255,7 @@ class CollectionController extends Controller
         $notification->message = ($no_of_payments-1).' payments have been recorded to '.$tenant->first_name.' '.$tenant->last_name;
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
     
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
  
@@ -304,7 +304,7 @@ class CollectionController extends Controller
         $notification->message = ($no_of_payments-1).' payments have been recorded to '.$unit->unit_no;
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
     
             return redirect('/property/'.$property_id.'/home/'.$home_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
  
@@ -359,7 +359,7 @@ class CollectionController extends Controller
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' payments have been exported.';
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
   
@@ -431,7 +431,7 @@ class CollectionController extends Controller
         $notification->message = 'Payment with AR no '.$payment->ar_no.' amounting '.number_format($payment->amt_paid,2).' has been deleted! ';
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         DB::table('payments')->where('payment_id', $payment_id)->delete();
 

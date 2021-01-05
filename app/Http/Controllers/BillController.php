@@ -383,7 +383,7 @@ class BillController extends Controller
             $notification->message = ($request->no_of_bills-1).' bills have been posted to '.$tenant->first_name.' '.$tenant->last_name;
             $notification->save();
     
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
     //     if($tenant->email_address !== null){
     //         //send welcome email to the tenant
@@ -464,7 +464,7 @@ class BillController extends Controller
         $notification->message = ($request->no_of_bills-1).' bills have been posted to '.$unit->unit_no;
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
             return redirect('/property/'.Session::get('property_id').'/home/'.$unit_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
     
@@ -580,7 +580,7 @@ class BillController extends Controller
         $notification->message = ($no_of_billed-1).' '.$request->particular1.' bills have been posted! ';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
             return redirect('/property/'.$request->property_id.'/bills')->with('success', ($no_of_billed-1).' '.$request->particular1.' bills have been posted!');
         
@@ -739,7 +739,7 @@ class BillController extends Controller
                     $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been updated! ';
                     $notification->save();
 
-                    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+                     Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
           
                    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                     return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
@@ -797,7 +797,7 @@ class BillController extends Controller
             $notification->message = $unit->unit_no.' bills have been updated! ';
             $notification->save();
                         
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
           
                     return redirect('/property/'.$property_id.'/home/'.$unit_id.'#bills')->with('success','changes have been saved!');
            
@@ -832,7 +832,7 @@ class BillController extends Controller
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been deleted! ';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         DB::table('bills')->where('bill_id', $billing_id)->delete();
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'bill has been deleted!');
@@ -870,7 +870,7 @@ class BillController extends Controller
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been exported! ';
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
 
         $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');
@@ -932,7 +932,7 @@ class BillController extends Controller
         $notification->message = 'Bill no '.$billing_id.' amounting '. number_format($bill->amount,2).' has been deleted! ';
         $notification->save();
 
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         DB::table('bills')->where('bill_id', $billing_id)->delete();
 

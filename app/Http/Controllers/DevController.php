@@ -15,6 +15,7 @@ use App\Plan;
 use App\Tenant;
 use Illuminate\Support\Facades\Hash;
 use App\Issue;
+use App\Notification;
 
 class DevController extends Controller
 {
@@ -488,6 +489,7 @@ $contracts = DB::table('contracts')
                'created_at' => Carbon::now(),
             ]
         );
+
 
         return back()->with('success', 'Response is successfully sent!');
     }

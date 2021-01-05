@@ -415,7 +415,7 @@ class TenantController extends Controller
           }
        
         
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
             return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Tenant added succesfully!');
        
@@ -521,7 +521,7 @@ class TenantController extends Controller
         $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added as occupant!';
         $notification->save();
         
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
        
@@ -840,6 +840,17 @@ class TenantController extends Controller
                 'type_of_tenant' => $request->type_of_tenant,
 
         ]);
+
+        $tenant =Tenant::findOrFail($tenant_id);
+           
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'tenant';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' profile has been updated!';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
         
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','Changes have been saved!');
     }
