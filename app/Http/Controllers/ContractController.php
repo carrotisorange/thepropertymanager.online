@@ -492,6 +492,17 @@ class ContractController extends Controller
                     ]
                 );
             }
+
+            $tenant =Tenant::findOrFail($tenant_id);
+        
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'contract';
+            $notification->message = $tenant->first_name.' '.$tenant->last_name.' new contract has been added!';
+            $notification->save();
+                        
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
       
 
         return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract has been extended!');
@@ -585,6 +596,17 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
 
     });
 
+    $tenant =Tenant::findOrFail($tenant_id);
+        
+    $notification = new Notification();
+    $notification->user_id_foreign = Auth::user()->id;
+    $notification->property_id_foreign = Session::get('property_id');
+    $notification->type = 'contract';
+    $notification->message = $tenant->first_name.' '.$tenant->last_name.' contract alert has been sent!';
+    $notification->save();
+                
+    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
     return back()->with('success', 'Email has been sent to '.$tenant->first_name.' '.$unit->unit_no);
 
 }
@@ -610,6 +632,17 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
             'updated_at' => Carbon::now()
        ]);
 
+       $tenant =Tenant::findOrFail($tenant_id);
+           
+       $notification = new Notification();
+       $notification->user_id_foreign = Auth::user()->id;
+       $notification->property_id_foreign = Session::get('property_id');
+       $notification->type = 'contract';
+       $notification->message = $tenant->first_name.' '.$tenant->last_name.' contract has been updated!';
+       $notification->save();
+                   
+       Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract added successfully!');
     }
 
@@ -622,6 +655,17 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
     public function destroy($property_id, $tenant_id, $contract_id)
     {
 
+        $tenant =Tenant::findOrFail($tenant_id);
+        
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'contract';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' contract has been deleted!';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
         $contract = Contract::findOrFail($contract_id);
 
         DB::table('units')
@@ -633,6 +677,8 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
         DB::table('contracts')
         ->where('contract_id', $contract_id)
         ->delete();
+
+    
         
 
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract has been deleted!');
