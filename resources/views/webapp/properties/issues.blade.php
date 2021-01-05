@@ -204,28 +204,43 @@
 <div class="row">
   <div class="col">
     
-      <h6 class="h2 text-dark d-inline-block mb-0">Issues posted by other users ({{ $issues->count() }})</h6>
-      <br>
+      <h6 class="h2 text-dark d-inline-block mb-0">Other issues ({{ $issues->count() }})</h6>
+      <br><br>
 
      
     
-    <div class="row">
-      <div class="col">
-        @foreach ($issues as $item)
-
-        <div class="card">
-          <div class="card-body">
-          
-            <small class="font-italic">issue raised by {{ $item->reported_by }} at {{ Carbon\Carbon::parse($item->created_at) }} ({{ $item->status }})</small>
-                <br><br>
-                {!! $item->details !!}
-            
-        </div>
-      </div>
-      </table>
-     @endforeach
-      </div>
-    </div>
+      
+            <div class="list-group list-group-flush">
+                @foreach ($issues as $item)
+             
+                <a href="#/" class="list-group-item list-group-item-action">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <!-- Avatar -->
+                    @if($item->status === 'closed')
+                    <i class="fas fa-check-circle text-success"></i>
+                    @else
+                    <i class="fas fa-clock text-warning"></i>
+                    @endif
+                    </div>
+                    <div class="col">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <h4 class="mb-0 text-sm">{{ $item->reported_by }}</h4>
+                        </div>
+                        <div class="text-right text-muted">
+                          <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }}</small>
+                        </div>
+                      </div>
+                      <p class="text-sm text-muted mb-0">{{ $item->details }}</p>
+                    </div>
+                  </div>
+                </a>
+      
+                @endforeach
+      
+              </div>
+      
  
     </div>
   </div>

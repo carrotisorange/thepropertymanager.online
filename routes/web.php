@@ -390,6 +390,8 @@ Route::get('/dev/users/', 'DevController@users')->middleware(['auth', 'verified'
 Route::get('/dev/starter/', 'DevController@starter')->middleware(['auth', 'verified']);
 Route::get('/dev/announcements\/', 'DevController@announcements')->middleware(['auth', 'verified']);
 Route::get('/dev/issues/', 'DevController@issues')->middleware(['auth', 'verified']);
+Route::get('/dev/issue/{issue_id}/edit', 'DevController@edit_issue')->middleware(['auth', 'verified']);
+Route::put('/dev/issue/{issue_id}/update', 'DevController@update_issue')->middleware(['auth', 'verified']);
 Route::get('/dev/updates/', 'DevController@updates')->middleware(['auth', 'verified']);
 Route::get('/dev/user/{user_id}', 'DevController@edit_user')->middleware(['auth', 'verified']);
 Route::put('/dev/user/{user_id}', 'DevController@post_user')->middleware(['auth', 'verified']);

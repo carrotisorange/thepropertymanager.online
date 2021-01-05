@@ -112,42 +112,53 @@
 
 </div>
 
+
+<form id="editPropertyForm" action="/dev/issue/{{ $issue->issue_id }}/update" method="POST">
+    @method('put')
+    @csrf
+
+
 <div class="row">
-  <div class="col">
-      <div class="list-group list-group-flush">
-          @foreach ($issues as $item)
-       
-          <a href="/dev/issue/{{ $item->issue_id }}/edit" class="list-group-item list-group-item-action">
-            <div class="row align-items-center">
-              <div class="col-auto">
-                <!-- Avatar -->
-              @if($item->status === 'closed')
-              <i class="fas fa-check-circle text-success"></i>
-              @else
-              <i class="fas fa-clock text-warning"></i>
-              @endif
-              </div>
-              <div class="col">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h4 class="mb-0 text-sm">{{ $item->reported_by }}</h4>
-                  </div>
-                  <div class="text-right text-muted">
-                    <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }}</small>
-                  </div>
-                </div>
-                <p class="text-sm text-muted mb-0">{{ $item->details }}</p>
-              </div>
-            </div>
-          </a>
-
-          @endforeach
-
-        </div>
-  </div>
+    <div class="col">
+        <label>Reported by</label>
+        <input form="editPropertyForm" class="form-control" type="text" name="reported_by" value="{{ $issue->reported_by }}" >
+    </div>
 </div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Status</label>
+        <select form="editPropertyForm" class="form-control" name="status" type="text" id="">
+            <option value="{{ $issue->status }}">{{ $issue->status }}</option>
+            <option value="closed">closed</option>
+            <option value="active">active</option>
+        </select>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col">
+        <label>Details</label>
+        <textarea form="editPropertyForm" class="form-control" name="details">{{ $issue->details }}</textarea>
+    </div>
+   
+</div>
+<br>
+
+        
+         <div class="row">
+         <div class="col">
+          <p class="text-right">   
+           
+            <button type="submit" form="editPropertyForm" class="btn btn-primary" > Update</button>
+        </p>   
+         </div>
+        </div>  
+</form>
 
 
+
+</div>
     
 @endsection
 

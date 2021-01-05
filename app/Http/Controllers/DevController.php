@@ -14,6 +14,7 @@ use Auth;
 use App\Plan;
 use App\Tenant;
 use Illuminate\Support\Facades\Hash;
+use App\Issue;
 
 class DevController extends Controller
 {
@@ -438,7 +439,7 @@ $contracts = DB::table('contracts')
      * @return \Illuminate\Http\Response
      */
     public function starter()
-    {
+    {   
         return view('layouts.dev.starter');
     }
 
@@ -449,7 +450,28 @@ $contracts = DB::table('contracts')
 
     public function issues()
     {
-        return view('layouts.dev.issues');
+        $issues = DB::table('issues')->orderBy('created_at', 'desc')->get();
+
+        return view('layouts.dev.issues', compact('issues'));
+    }
+
+    public function edit_issue($issue_id)
+    {
+        $issue = Issue::findOrFail($issue_id);
+
+        return view('layouts.dev.edit_issue', compact('issue'));
+    }
+
+    
+    public function update_issue(Request $request, $issue_id)
+    {   
+        $issue = Issue::findOrFail($issue_id);
+        $issue->reported_by = $request->reported_by;
+        $issue->status = $request->status;
+        $issue->details = $request->details;
+        $issue->save();
+
+        return redirect('/dev/issues')->with('success', 'Changes have been saved!');
     }
 
     public function announcements()

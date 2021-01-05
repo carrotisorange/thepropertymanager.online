@@ -21,9 +21,9 @@ class IssueController extends Controller
     {
         $property = Property::findOrFail(Session::get('property_id'));
 
-        $issues = DB::table('issues')->get();
+        $issues = DB::table('issues')->orderBy('created_at', 'desc')->get();
 
-        return view('webapp.properties.issues',compact('property', 'property', 'issues'));
+        return view('webapp.properties.issues',compact('property', 'issues'));
     }
 
     /**
