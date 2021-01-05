@@ -286,6 +286,50 @@
           </div>
         </div>
                 </div>
+
+                <div class="row">
+                  
+        <div class="col-xl-12 col-lg-12">
+          <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">ACTIVE ISSUES</h6>
+              
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="table-responsive text-nowrap">
+                <table class="table">
+                  <thead>
+                    <?php $ctr= 1; ?>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      
+                      <th>Details</th>
+                      <th>Reported at</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($issues as $item)
+                    <tr>
+                      <th>{{ $ctr++ }}</th>
+                        <td>{{ $item->name }}</td>
+                        
+                        <td><a href="/dev/issue/{{ $item->issue_id }}/edit">{{ $item->details }}</a></td>
+                        <td>{{ Carbon\Carbon::parse($item->created_at) }}</td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                  
+                </table>
+               {{ $active_today->links() }}
+              </div>
+              
+            </div>
+          </div>
+        </div>
+                </div>
 @endsection
 
 @section('main-content')

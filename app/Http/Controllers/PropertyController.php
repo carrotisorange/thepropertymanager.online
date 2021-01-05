@@ -65,6 +65,11 @@ class PropertyController extends Controller
                 return redirect('/user/'.Auth::user()->id.'/owner/portal');
             }elseif(Auth::user()->user_type == 'dev'){
 
+                $issues = DB::table('issues')
+                ->join('users', 'user_id_foreign', 'id')
+                ->where('issues.status', 'active')
+                ->orderBy('issues.created_at', 'desc')->get();
+
                 Session::put('notifications', Notification::orderBy('notification_id', 'DESC')->get());
 
                 $properties = Property::all();
@@ -298,7 +303,7 @@ class PropertyController extends Controller
             
             
                         return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 
-                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'active_today'));
+                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'active_today', 'issues'));
             
             }
             else{
