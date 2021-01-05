@@ -131,7 +131,7 @@
 <div class="row">
     <div class="col">
         <label>Details</label>
-        <textarea form="editPropertyForm" class="form-control" name="details">{{ $issue->details }}</textarea>
+        <textarea form="editPropertyForm" rows="4" cols="50" class="form-control" name="details">{{ $issue->details }}</textarea>
     </div>
    
 </div>
