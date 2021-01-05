@@ -186,43 +186,18 @@ class OccupantController extends Controller
                 $occupancy->save();
             }
 
-
-        $user_id =  DB::table('users')->insertGetId([
-            'name' => $request->first_name.' '.$request->last_name,
-            'email' => $request->email_address,
-            'user_type' => 'tenant',
-            'property' => '',
-            'property_type' => '',
-            'property_ownership' => '',
-            'password' => Hash::make($request->contact_no),
-            'created_at' => Carbon::now(),
-            'account_type' => '',
-            'email_verified_at' => Carbon::now(),
-            'trial_ends_at' => '',
-        ]);
-
-        $tenant = Tenant::find($tenant_id);
-        $tenant->user_id_foreign = $user_id;
-        $tenant->save();
-
-        DB::table('users_properties_relations')
-        ->insert([
-            'property_id_foreign' => $property_id,
-            'user_id_foreign' => $user_id,
-        ]);
-
         $occupant = Tenant::findOrFail($tenant_id);
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-        $notification->message = $occupant->first_name.' '.$occupant->last_name.' has been added as occupant!';
+        $notification->message = $occupant->first_name.' '.$occupant->last_name.' has been added to the property!';
         $notification->save();
         
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-        return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
+        return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'Occupant has been added!');
        
     }
    

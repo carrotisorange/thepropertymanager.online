@@ -166,6 +166,9 @@ class TenantController extends Controller
                                   );      
 
 
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Credentials created succesfully!');
+                                  
+
     return back()->with('success', 'Tenant access to the system has been created!');
     }
 
@@ -422,7 +425,7 @@ class TenantController extends Controller
 
          $data = array(
             'email' => $tenant->email_address,
-            'mobile' => $tenant->mobile,
+            'mobile' => $tenant->contact_no,
             'name' => $tenant->first_name.' '.$tenant->last_name,
             'property' => Session::get('property_name'),
             'unit' => $unit->building.' '.$unit->unit_no,
@@ -507,9 +510,6 @@ class TenantController extends Controller
             'name' => $request->first_name.' '.$request->last_name,
             'email' => $request->email_address,
             'user_type' => 'tenant',
-            'property' => '',
-            'property_type' => '',
-            'property_ownership' => '',
             'password' => Hash::make($request->contact_no),
             'created_at' => Carbon::now(),
             'account_type' => '',
