@@ -752,7 +752,7 @@
                            <div class="row">
                               <div class="col">
                                   <label for="movein_date">Assign concern to</label>
-                                  <select class="form-control" form="concernForm" name="concern_user_id" required>
+                                  <select class="form-control" form="concernForm" name="concern_user_id">
                                     <option value="" selected>Please select one</option>
                                     @foreach($users as $item)
                                         <option value="{{ $item->id }}"> {{ $item->user_type }}</option>
@@ -762,8 +762,8 @@
                           </div>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button> 
-                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Submit</button>
+                              
+                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
                           </div>
                       </div>
                       </div>

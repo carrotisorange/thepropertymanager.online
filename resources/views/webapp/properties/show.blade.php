@@ -333,6 +333,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
+                  <div class="table-responsive text-nowrap">
                   <table class="table">
                  
                    <thead>
@@ -354,6 +355,7 @@
                      @endforeach
                    </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             </div>

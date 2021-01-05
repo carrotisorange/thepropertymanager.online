@@ -102,7 +102,7 @@
 
     <div class="col-md-4">
       @if(Auth::user()->trial_ends_at > Carbon\Carbon::today())
-      <button type="submit" class="btn btn-success btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Manage</button>
+      <button id="manageButton" type="submit" class="btn btn-success btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Manage</button>
       @else
       <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block"> Manage</a>
       @endif
@@ -170,4 +170,11 @@
   </div>
 </div>
 
+@endsection
+@section('scripts')
+{{-- <script>
+  window.onload=function(){
+   $("#manageButton").click();
+   }
+  </script> --}}
 @endsection

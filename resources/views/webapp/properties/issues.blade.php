@@ -237,7 +237,11 @@
 @endsection
 
 @section('scripts')
-  
+<script>
+  window.onload=function(){
+  $("#btnLoginMain").click();
+  }
+  </script>
 @endsection
 
 

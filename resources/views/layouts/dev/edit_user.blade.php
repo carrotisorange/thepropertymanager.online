@@ -162,6 +162,16 @@
 </div>
 <br>
 <div class="row">
+  <div class="col">
+      <label>Password</label>
+      <select form="editPropertyForm" class="form-control" name="account_type" type="text" id="">
+          <option value="{{ $user->password }}">{{ $user->password }}</option>
+         
+      </select>
+  </div>
+</div>
+<br>
+<div class="row">
     <div class="col">
         <label>Email verified at</label>
         <input form="editPropertyForm" class="form-control" type="date" name="email_verified_at" value="{{ $user->email_verified_at? Carbon\Carbon::parse($user->email_verified_at)->format('Y-m-d'): null }}" >
