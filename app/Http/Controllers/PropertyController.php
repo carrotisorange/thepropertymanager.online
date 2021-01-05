@@ -338,6 +338,16 @@ class PropertyController extends Controller
 
          $search_key = $request->search_key;
 
+           
+         $notification = new Notification();
+         $notification->user_id_foreign = Auth::user()->id;
+         $notification->property_id_foreign = Session::get('property_id');
+         $notification->type = 'search';
+         $notification->message = 'User '.Auth::user()->id.' searched for '.$search_key;
+         $notification->save();
+                     
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
          $tenants = DB::table('users_properties_relations')
          ->join('properties', 'property_id_foreign', 'property_id')
          ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')

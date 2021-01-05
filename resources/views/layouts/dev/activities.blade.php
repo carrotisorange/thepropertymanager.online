@@ -120,27 +120,29 @@
               <div class="row align-items-center">
                 <div class="col-auto">
                   <!-- Avatar -->
-                @if($item->type === 'tenant')
-                <i class="fas fa-user text-success fa-lg"></i>
-                @elseif($item->type === 'payable')
-                <i class="fas fa-file-export text-indigo"></i>
-                @elseif($item->type === 'owner')
-                <i class="fas fa-user-tie text-teal"></i>
-                @elseif($item->type === 'concern')
-                <i class="fas fa-tools text-cyan"></i>
-                @elseif($item->type === 'payment')
-                <i class="fas fa-coins text-yellow"></i>
-                @elseif($item->type === 'bill')
-                <i class="fas fa-file-invoice-dollar text-pink"></i>
-                @elseif($item->type === 'joborder')
-                <i class="fas fa-list text-dark"></i>
-                @elseif($item->type === 'unit')
-                <i class="fas fa-home text-indigo"></i>
-                @elseif($item->type === 'contract')
-                <i class="fas fa-file-signature text-teal"></i>
-                @else
-                <i class="fas fa-building text-primary"></i>
-                @endif
+                  @if($item->type === 'tenant')
+                  <i class="fas fa-user text-success fa-lg"></i>
+                  @elseif($item->type === 'payable')
+                  <i class="fas fa-file-export text-indigo fa-lg"></i>
+                  @elseif($item->type === 'owner')
+                  <i class="fas fa-user-tie text-teal fa-lg"></i>
+                  @elseif($item->type === 'concern')
+                  <i class="fas fa-tools text-cyan fa-lg"></i>
+                  @elseif($item->type === 'payment')
+                  <i class="fas fa-coins text-yellow fa-lg"></i>
+                  @elseif($item->type === 'bill')
+                  <i class="fas fa-file-invoice-dollar text-pink fa-lg"></i>
+                  @elseif($item->type === 'joborder')
+                  <i class="fas fa-list text-dark fa-lg"></i>
+                  @elseif($item->type === 'unit')
+                  <i class="fas fa-home text-indigo fa-lg"></i>
+                  @elseif($item->type === 'contract')
+                  <i class="fas fa-file-signature text-teal fa-lg"></i>
+                  @elseif($item->type === 'search')
+                  <i class="fas fa-search text-blue fa-lg"></i>
+                  @else
+                  <i class="fas fa-building text-primary fa-lg"></i>
+                  @endif
                 </div>
                 <div class="col">
                   <div class="d-flex justify-content-between align-items-center">
