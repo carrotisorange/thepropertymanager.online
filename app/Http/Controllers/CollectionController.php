@@ -262,7 +262,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = ($no_of_payments-1).' payments have been recorded to '.$tenant->first_name.' '.$tenant->last_name;
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' pays '.($no_of_payments-1). ' bill/s.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

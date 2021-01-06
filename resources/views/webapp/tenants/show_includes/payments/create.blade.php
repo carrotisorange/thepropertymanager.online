@@ -22,8 +22,8 @@
                 </div>
                 <div class="col">
                     <p class="text-right">
-                        <a href="#/" id='delete_payment' class="btn btn-sm btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
-                      <a href="#/" id="add_payment" class="btn btn-sm btn-primary" ><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>     
+                        <a href="#/" id='delete_payment' class="btn btn-danger"> Remove</a>
+                      <a href="#/" id="add_payment" class="btn btn-primary" > Add</a>     
                       </p>
                 </div>
                 
@@ -54,8 +54,7 @@
           
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button>
-            <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check fa-sm text-white-50f"></i> Submit</button>
+            <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Add</button>
         </div>
     
     </div>
