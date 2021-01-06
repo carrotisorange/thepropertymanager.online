@@ -47,7 +47,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = 'User '.Auth::user()->id.' opened collections page.';
+        $notification->message = 'User '.Auth::user()->id.' opens collections page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -249,7 +249,7 @@ class CollectionController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'payment';
-            $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as active!';
+            $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added to the property!';
             $notification->save();
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

@@ -40,7 +40,7 @@ class OccupantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = 'User '.Auth::user()->id.' opened tenants page.';
+        $notification->message = 'User '.Auth::user()->id.' opens tenants page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

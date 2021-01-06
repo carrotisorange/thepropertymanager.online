@@ -27,7 +27,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
-        $notification->message = 'User '.Auth::user()->id.' opened owners page.';
+        $notification->message = 'User '.Auth::user()->id.' opens owners page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

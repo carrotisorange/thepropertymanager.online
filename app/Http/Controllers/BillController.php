@@ -31,7 +31,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = 'User '.Auth::user()->id.' opened bills page.';
+        $notification->message = 'User '.Auth::user()->id.' opens bills page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

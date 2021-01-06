@@ -25,7 +25,7 @@ class RoomController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'unit';
-        $notification->message = 'User '.Auth::user()->id.' opened rooms page.';
+        $notification->message = 'User '.Auth::user()->id.' opens rooms page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
