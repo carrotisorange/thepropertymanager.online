@@ -84,6 +84,8 @@
                 <i class="fas fa-file-export text-indigo fa-lg"></i>
                 @elseif($item->type === 'user')
                 <i class="fas fa-user-circle text-green fa-lg"></i>
+                @elseif($item->type === 'issue')
+                <i class="fas fa-dizzy text-red text-red fa-lg"></i>
                 @else
                 <i class="fas fa-building text-primary fa-lg"></i>
                 @endif

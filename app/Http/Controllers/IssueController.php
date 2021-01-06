@@ -9,6 +9,7 @@ use App\User;
 use Session;
 use Auth;
 use DB;
+use App\Notification;
 
 class IssueController extends Controller
 {
@@ -19,6 +20,16 @@ class IssueController extends Controller
      */
     public function index()
     {
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'issue';
+        $notification->message = 'User '.Auth::user()->id.' opened issues page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
         $property = Property::findOrFail(Session::get('property_id'));
 
         $issues = DB::table('issues')

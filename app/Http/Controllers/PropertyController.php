@@ -70,7 +70,7 @@ class PropertyController extends Controller
                 ->where('issues.status', 'active')
                 ->orderBy('issues.created_at', 'desc')->get();
 
-                Session::put('notifications', Notification::orderBy('notification_id', 'DESC')->get());
+                Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
                 $properties = Property::all();
         
