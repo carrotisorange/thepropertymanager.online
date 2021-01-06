@@ -203,7 +203,7 @@
 
   <div class="row align-items-center py-4">
     <div class="col-lg-12 col-12">
-      <h6 class="h2 text-dark d-inline-block mb-0">Interactions ({{ $responses->count() }})</h6>
+      <h6 class="h2 text-dark d-inline-block mb-0">Threads ({{ $responses->count() }})</h6>
       
     </div>
   

@@ -226,7 +226,7 @@
                     <div class="col">
                       <div class="d-flex justify-content-between align-items-center">
                         <div>
-                          <h4 class="mb-0 text-sm">{{ $item->name }}</h4>
+                          <h4 class="mb-0 text-sm">{{ $item->name }} ({{ $item->responses }})</h4>
                         </div>
                         <div class="text-right text-muted">
                           <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }}</small>

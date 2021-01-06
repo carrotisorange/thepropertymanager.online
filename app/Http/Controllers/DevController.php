@@ -450,10 +450,13 @@ $contracts = DB::table('contracts')
 
     public function issues()
     {
-        $issues = DB::table('issues')
+         $issues = DB::table('issues')
         ->join('users', 'user_id_foreign', 'id')
-        ->select('*', 'issues.status as issue_status')
-        ->orderBy('issues.created_at', 'desc')->get();
+        ->join('issue_responses', 'issues.issue_id', 'issue_responses.issue_id')
+        ->select('*', 'issues.status as issue_status', DB::raw('count(issue_responses.id) as responses'))
+        ->groupBy('issues.issue_id')
+        ->orderBy('issues.created_at', 'desc')
+        ->get();
 
         return view('layouts.dev.issues', compact('issues'));
     }

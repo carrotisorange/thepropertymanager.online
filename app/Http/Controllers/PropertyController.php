@@ -243,12 +243,11 @@ class PropertyController extends Controller
                 
             
                 $active_users = DB::table('users')
-            
                 ->where('user_type','manager')
                 ->whereNotNull('email_verified_at')
                 ->get();
 
-                $active_today = DB::table('users')
+                 $active_today = DB::table('users')
                 ->join('sessions', 'id', 'session_user_id')
                 ->join('properties', 'id', 'user_id_property')
                 ->select('*', 'properties.name as property_name', 'users.name as user_name')
