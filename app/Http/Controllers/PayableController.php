@@ -127,14 +127,13 @@ class PayableController extends Controller
 
         $no_of_request = (int) $request->no_of_request;
 
-        $current_payable_no = DB::table('payable_request')
-        ->where('property_id_foreign',Session::get('property_id'))
-        ->max('no') + 1;
+        // $current_payable_no = DB::table('payable_request')
+        // ->where('property_id_foreign',Session::get('property_id'))
+        // ->max('no') + 1;
    
        for($i = 1; $i<$no_of_request; $i++){
            DB::table('payable_request')->insert(
                [
-                   'no' => $current_payable_no++,
                    'entry_id' =>  $request->input('entry'.$i),
                    'amt' =>  $request->input('amt'.$i),
                    'note' =>  $request->input('note'.$i),
@@ -146,16 +145,13 @@ class PayableController extends Controller
                $notification->user_id_foreign = Auth::user()->id;
                $notification->property_id_foreign = Session::get('property_id');
                $notification->type = 'payable';
-               $notification->message = $request->input('entry'.$i).' for '.$request->input('requested_at'.$i).' has been requested!';
+               $notification->message = 'User '.Auth::user()->id. ' requests for funds amounting to P'.$request->input('amt'.$i).'.';
                $notification->save();
-       }
 
-     
-             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
-
+               Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+       }   
    
-   
-       return redirect('property/'.Session::get('property_id').'/payables#payables/')->with('success', 'request has been sent!');
+       return redirect('property/'.Session::get('property_id').'/payables#payables/')->with('success', 'Request is sent successfully!');
     }
 
     public function approve(Request $request,  $property_id, $payable_id){
@@ -170,14 +166,15 @@ class PayableController extends Controller
                     ]
                 );
 
-        $entry = Payable::findOrFail($payable_id)->entry;
+      
+        $entry = Payable::findOrFail($payable_id)->amt;
         $date = Payable::findOrFail($payable_id)->requested_at;
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->message = ' request for '.$entry.' on '.$date.' has been approved!';
+        $notification->message = 'Request of funds amounting '.$entry.' on '.$date.' has been approved!';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -197,14 +194,14 @@ class PayableController extends Controller
                     ]
                 );
 
-        $entry = Payable::findOrFail($payable_id)->entry;
+        $entry = Payable::findOrFail($payable_id)->amt;
         $date = Payable::findOrFail($payable_id)->requested_at;
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->message = ' request for '.$entry.' on '.$date.' has been declined!';
+        $notification->message = 'Request of funds amounting '.$entry.' on '.$date.' has been declined!';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));             
@@ -223,14 +220,14 @@ class PayableController extends Controller
                     ]
                 );
 
-        $entry = Payable::findOrFail($payable_id)->entry;
+        $entry = Payable::findOrFail($payable_id)->amt;
         $date = Payable::findOrFail($payable_id)->requested_at;
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->message = ' request for '.$entry.' on '.$date.' has been released!';
+        $notification->message = 'Request of funds amounting '.$entry.' on '.$date.' has been released!';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
