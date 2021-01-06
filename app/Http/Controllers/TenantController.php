@@ -416,14 +416,14 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added to the property!';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' moves in.';
         $notification->save();
           }else{  
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been marked as pending!';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' marks as pending!';
         $notification->save();
           }
        
@@ -543,7 +543,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added as occupant!';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' becomes occupant.';
         $notification->save();
         
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -872,7 +872,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' profile has been updated!';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' updates his profile.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

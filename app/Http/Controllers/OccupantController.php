@@ -201,7 +201,7 @@ class OccupantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-        $notification->message = $occupant->first_name.' '.$occupant->last_name.' has been added to the property!';
+        $notification->message = $occupant->first_name.' '.$occupant->last_name.' becomes occupant.';
         $notification->save();
         
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
