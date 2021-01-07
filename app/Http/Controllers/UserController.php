@@ -652,7 +652,7 @@ class UserController extends Controller
 
              $concerns = DB::table('concerns')
             ->join('tenants', 'concern_tenant_id', 'tenant_id')
-            ->join('users', 'concern_user_id', 'id')
+            ->leftJoin('users', 'concern_user_id', 'id')
             ->select('*', 'concerns.status as concern_status')
             ->where('tenant_id', $tenant_id)
             ->orderBy('concern_id', 'desc')

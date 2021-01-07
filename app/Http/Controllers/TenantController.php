@@ -267,6 +267,7 @@ class TenantController extends Controller
             'movein_at' => ['date'],
             'moveout_at' => ['date'],
             'email_address' => ['required', 'string', 'email', 'max:255', 'unique:tenants'],
+            'email' => ['unique:users'],
             'contact_no' => ['required', 'unique:tenants'],
         ]);
 
@@ -598,7 +599,7 @@ class TenantController extends Controller
 
             $concerns = DB::table('concerns')
             ->join('tenants', 'concern_tenant_id', 'tenant_id')
-            ->join('users', 'concern_user_id', 'id')
+            ->leftJoin('users', 'concern_user_id', 'id')
             ->leftJoin('units', 'concern_unit_id', 'unit_id')
             ->select('*', 'concerns.status as concern_status')
             ->where('tenant_id', $tenant_id)

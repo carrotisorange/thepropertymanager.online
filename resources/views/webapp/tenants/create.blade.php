@@ -329,9 +329,16 @@
       </div>
       <div class="col">
           <small class="">Email <span class="text-danger">*</span></small>
-        <input form="addTenantForm1" type="email" class="form-control form-control-user @error('email_address') is-invalid @enderror" name="email_address" id="email_address" value="{{ old('email_address') }}">
+        <input form="addTenantForm1" type="email" class="form-control form-control-user @error('email_address') is-invalid @enderror" name="email_address" id="email_address" onchange='autoFillEmail()' value="{{ old('email_address') }}">
+        <input form="addTenantForm1" type="hidden" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" id="email" >
   
         @error('email_address')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+
+        @error('email')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
@@ -528,6 +535,14 @@
      
      
     }
+  }
+</script>
+
+<script>
+
+  function autoFillEmail(){
+    var email_address = document.getElementById('email_address').value;
+    document.getElementById('email').value = email_address  
   }
 </script>
 
