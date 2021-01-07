@@ -708,6 +708,7 @@ class UserController extends Controller
                    
                     'concern_user_id' => $request->concern_user_id,
                 ]);
+
     
            $tenant = Tenant::findOrFail($tenant_id);
 
