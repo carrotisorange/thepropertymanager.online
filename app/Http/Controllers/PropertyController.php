@@ -65,6 +65,8 @@ class PropertyController extends Controller
                 return redirect('/user/'.Auth::user()->id.'/owner/portal');
             }elseif(Auth::user()->user_type == 'dev'){
 
+                Session::put('notifications', Notifications::where('isOpen', '1'));
+
                 $issues = DB::table('issues')
                 ->join('users', 'user_id_foreign', 'id')
                 ->where('issues.status', 'active')
