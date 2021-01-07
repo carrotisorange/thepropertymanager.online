@@ -315,7 +315,7 @@
                                 <th>{{ $ctr++ }}</th>
                                   <td>{{ $item->name }}</td>
                                   <td>{{ $item->user_type }}</td>
-                                  <td>{{ Carbon\Carbon::parse($item->session_last_login_at) }}</td>
+                                  <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() }}</td>
                               </tr>
                               @endforeach
                             </tbody>
