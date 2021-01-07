@@ -286,7 +286,7 @@ class RoomController extends Controller
             $occupancy->save();
         }
      
-        return redirect('/property/'. $property_id.'/home')->with('success','Changes have been saved!');
+        return redirect('/property/'. $property_id.'/home')->with('success','Changes saved.');
                  
      }
 
@@ -344,12 +344,12 @@ class RoomController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'room';
-            $notification->message = 'Room '.Unit::findOrFail($id)->unit_no.' updates room information!';
+            $notification->message = 'User '.Auth::user()->id.' updates '.Unit::findOrFail($id)->unit_no.'.';
             $notification->save();
                         
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-            return back()->with('success', 'changes have been saved!');
+            return back()->with('success', 'Changes saved.');
        
     }
 

@@ -1209,10 +1209,10 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
         Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
 
         if(Auth::user()->user_type === 'dev'){
-            return redirect('/dev/properties/')->with('success','Changes have been saved!');
+            return redirect('/dev/properties/')->with('success','Changes saved.');
         }else{
           
-            return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#property')->with('success','Changes have been saved!');
+            return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#property')->with('success','Changes saved.');
         }
      
     }

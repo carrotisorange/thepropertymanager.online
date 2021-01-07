@@ -158,7 +158,7 @@
                 </span>
             @enderror
       <p class="text-right">
-        <button form="editUserForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
+        <button form="editUserForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"> Update</button>
       </p>
 
      

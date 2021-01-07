@@ -233,7 +233,7 @@ class OwnerController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-        return redirect('/property/'.$property_id.'/owner/'.$owner_id)->with('success', 'changes have been saved!');
+        return redirect('/property/'.$property_id.'/owner/'.$owner_id)->with('success', 'Changes saved.');
     }
 
     /**

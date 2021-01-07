@@ -417,7 +417,7 @@ $contracts = DB::table('contracts')
          $user->email_verified_at = $email_verified_at;
          $user->save();
 
-        return redirect('/dev/users')->with('success','Changes have been saved!');
+        return redirect('/dev/users')->with('success','Changes saved.');
     }
 
 
@@ -504,7 +504,7 @@ $contracts = DB::table('contracts')
         $issue->details = $request->details;
         $issue->save();
 
-        return redirect('/dev/issues')->with('success', 'Changes have been saved!');
+        return redirect('/dev/issues')->with('success', 'Changes saved.');
     }
 
     public function announcements()

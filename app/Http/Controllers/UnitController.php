@@ -306,7 +306,7 @@ class UnitController extends Controller
             $occupancy->save();
         }
      
-        return redirect('/property/'. $property_id.'/home')->with('success','changes have been saved!');
+        return redirect('/property/'. $property_id.'/home')->with('success','Changes saved.');
                  
      }
 
@@ -346,7 +346,7 @@ class UnitController extends Controller
             $occupancy->save();
         }
 
-        return back()->with('success', 'Changes have been saved!');
+        return back()->with('success', 'Changes saved.');
     }
 
     /**

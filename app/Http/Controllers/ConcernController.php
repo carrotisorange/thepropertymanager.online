@@ -222,7 +222,7 @@ class ConcernController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-        return back()->with('success', 'changes have been saved!');
+        return back()->with('success', 'Changes saved.');
     }
 
     public function pending()

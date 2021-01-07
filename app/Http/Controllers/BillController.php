@@ -120,7 +120,7 @@ class BillController extends Controller
 }     
    $property = Property::findOrFail(Session::get('property_id'));
 
-    return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'changes have been saved!');
+    return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'Changes saved.');
 
     }
 
@@ -159,7 +159,7 @@ class BillController extends Controller
 
    $property = Property::findOrFail(Session::get('property_id'));
 
-    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'changes have been saved!');
+    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'Changes saved.');
 
     }
 
@@ -202,7 +202,7 @@ class BillController extends Controller
 
    $property = Property::findOrFail($property_id);
 
-    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'electric_rate_kwh', 'property'))->with('success', 'changes have been saved!');
+    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'electric_rate_kwh', 'property'))->with('success', 'Changes saved.');
 
 
        
@@ -248,7 +248,7 @@ class BillController extends Controller
 
        $property = Property::findOrFail($property_id);
     
-        return view('webapp.bills.add-water-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end', 'water_rate_cum'))->with('success', 'changes have been saved!');
+        return view('webapp.bills.add-water-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end', 'water_rate_cum'))->with('success', 'Changes saved.');
     
 
       
@@ -286,7 +286,7 @@ class BillController extends Controller
 
        $property = Property::findOrFail($property_id);
     
-        return view('webapp.bills.add-surcharge-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end'))->with('success', 'changes have been saved!');
+        return view('webapp.bills.add-surcharge-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end'))->with('success', 'Changes saved.');
     
 
       
@@ -752,9 +752,9 @@ class BillController extends Controller
                      Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
           
                    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                    return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
+                    return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','Changes saved.');
                 }else{
-                    return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','changes have been saved!');
+                    return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','Changes saved.');
                 }
 
            
@@ -809,7 +809,7 @@ class BillController extends Controller
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
           
-                    return redirect('/property/'.$property_id.'/home/'.$unit_id.'#bills')->with('success','changes have been saved!');
+                    return redirect('/property/'.$property_id.'/home/'.$unit_id.'#bills')->with('success','Changes saved.');
            
            
         }else{

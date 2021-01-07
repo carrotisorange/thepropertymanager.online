@@ -374,7 +374,7 @@ class OccupantController extends Controller
         $occupant->country = $request->country;
         $occupant->save();
         
-       return redirect('/property/'.$property_id.'/occupant/'.$tenant_id)->with('success','changes have been saved!');
+       return redirect('/property/'.$property_id.'/occupant/'.$tenant_id)->with('success','Changes saved.');
     }
 
     /**

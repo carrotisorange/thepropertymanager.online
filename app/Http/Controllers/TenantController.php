@@ -879,7 +879,7 @@ class TenantController extends Controller
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
         
-       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','Changes have been saved!');
+       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','Changes saved.');
     }
 
 

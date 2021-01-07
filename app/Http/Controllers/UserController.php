@@ -542,7 +542,7 @@ class UserController extends Controller
                     ]
                 );
 
-                return back()->with('success', 'changes have been saved!');
+                return back()->with('success', 'Changes saved.');
         }else{
             DB::table('users')
             ->where('id', $user_id)
@@ -764,7 +764,7 @@ class UserController extends Controller
                 'contact_no'=> $request->contact_no
             ]);
 
-            return back()->with('success', 'Changes have been saved!');
+            return back()->with('success', 'Changes saved.');
         }else{
             DB::table('users')
             ->where('id', $user_id)
@@ -787,7 +787,7 @@ class UserController extends Controller
                     Auth::logout();
                     return redirect('/login')->with('success', 'New password has been saved!');
                 }else{
-                    return back()->with('success', 'Changes have been saved!');
+                    return back()->with('success', 'Changes saved.');
                 }
             
           
