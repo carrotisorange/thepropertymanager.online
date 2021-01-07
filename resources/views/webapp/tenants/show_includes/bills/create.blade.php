@@ -23,8 +23,8 @@
             </div>
             <div class="col">
               <p class="text-right">
-                <span id='delete_bill' class="btn btn-sm btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</span>
-              <span id="add_bill" class="btn btn-sm btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</span>     
+                <span id='delete_bill' class="btn btn-danger"> Remove</span>
+              <span id="add_bill" class="btn btn-primary"> Add</span>     
               </p>
             </div>
           </div>
@@ -53,8 +53,8 @@
          
         </div>
         <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel </button>
-         <button form="addBillForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check fa-sm text-white-50"></i> Submit</button>
+
+         <button form="addBillForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Add</button>
         </div> 
         </div>
         </div>

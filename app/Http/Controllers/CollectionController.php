@@ -248,8 +248,8 @@ class CollectionController extends Controller
             $notification = new Notification();
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
-            $notification->type = 'payment';
-            $notification->message = $tenant->first_name.' '.$tenant->last_name.' has been added to the property!';
+            $notification->type = 'tenant';
+            $notification->message = $tenant->first_name.' '.$tenant->last_name.' moves in.';
             $notification->save();
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -366,7 +366,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' payments have been exported.';
+        $notification->message = $tenant->first_name.' '.$tenant->last_name.' exports payments.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
