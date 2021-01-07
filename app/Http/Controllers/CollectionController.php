@@ -228,11 +228,11 @@ class CollectionController extends Controller
             $data = array(
                 'email' => $tenant->email_address,
                 'name' => $tenant->first_name,
-                'property' => $property->name,
+                'property' => Session::get('property_name'),
                 'mobile' => $tenant->contact_no,
-                // 'movein'  => $pending_contract->movein_at,
-                // 'moveout'  => $pending_contract->moveout_at,
-                // 'monthly_rent'=> $pending_contract->rent
+                'unit' => ' ',
+                'movein_at' => ' ',
+                'moveout_at' => ' ', 
             );
 
             if($tenant->email_address !== null){
