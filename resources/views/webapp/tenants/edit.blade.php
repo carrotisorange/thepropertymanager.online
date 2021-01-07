@@ -183,7 +183,7 @@
             <div class="form-group row">
               <div class="col">
                   <small for="">Mobile</small>
-                  <input form="editTenantForm" class="form-control" type="number" name="contact_no" value="{{ $tenant->contact_no }}">
+                  <input form="editTenantForm" class="form-control" type="text" name="contact_no" value="{{ $tenant->contact_no }}">
               </div>
               <div class="col" id="email_address">
                   <small for="">Email</small>

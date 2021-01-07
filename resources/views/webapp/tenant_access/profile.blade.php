@@ -142,7 +142,7 @@
             @enderror
       <br>
       <label>Mobile</label>
-      <input form="editUserForm" id="contact_no" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ $tenant->contact_no }}" required autocomplete="contact_no">
+      <input form="editUserForm" id="contact_no" type="text" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ $tenant->contact_no }}" required autocomplete="contact_no">
             @error('contact_no')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

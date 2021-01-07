@@ -254,6 +254,12 @@ class PropertyController extends Controller
                 ->where('session_last_login_at', '>=', Carbon::today())
                 ->paginate(5);
 
+                 $all_active_today = DB::table('users')
+                ->join('sessions', 'id', 'session_user_id')
+                ->where('session_last_login_at', '>=', Carbon::today())
+                ->get();
+
+
                 $starter_plan = DB::table('users')
                 ->where('account_type','starter')
                 ->where('user_type','manager')
@@ -302,7 +308,7 @@ class PropertyController extends Controller
             
             
                         return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 
-                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'active_today', 'issues'));
+                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'active_today', 'issues', 'all_active_today'));
             
             }
             else{
