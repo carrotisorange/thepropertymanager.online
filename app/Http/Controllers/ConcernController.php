@@ -210,7 +210,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message = Auth::user()->name.' has made changes in concern ID '.$concern->concern_id.' regarding the '.$concern->title.'.';
+        $notification->message = 'User '. Auth::user()->id.' updates concern '.$concern->concern_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -257,7 +257,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message =  $request->name.' was rated '.$request->rating.' for resolving concern ID '.$concern->concern_id.' regarding '.$concern->title;
+        $notification->message =  'User '.Auth::user()->id.' rates User '.$request->id.' for resolving concern '.$concern->concern_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

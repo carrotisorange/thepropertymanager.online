@@ -114,40 +114,47 @@
 
 @section('upper-content')
 <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Responses</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
     
   </div>
 @endsection
 
 @section('main-content')
+@if($responses->count() < 1)
+  <p class="text-center text-red">No responses found!</p>
+@else
 <div class="row">
-    <div class="col">
-    
-      
-    
+  <div class="col">
+      <div class="list-group list-group-flush">
           @foreach ($responses as $item)
-      
-
-
-          <div class="card">
-            <div class="card-body">
-            
-                 
-                  {!! $item->response !!}
+       
+          <span class="list-group-item list-group-item-action">
+            <div class="row align-items-center">
               
-          </div>
-          <div class="card-footer">
-           <small class="text-right"> {{ $item->posted_by }} at {{ Carbon\Carbon::parse($item->created_at) }}</small>
-            
-          </div>
+              <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
+                  </div>
+                  <div class="text-right text-muted">
+
+                    <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }} </small>
+                   
+                    
+                  </div>
+                </div>
+                <p class="text-sm text-muted mb-0"> {!! $item->response !!}</p>
+               
+              </div>
+            </div>
+          </span>
+
+          @endforeach
+
         </div>
-        </table>
-       @endforeach
-     
-   
-      </div>
-    </div>
-     
+  </div>
+</div>
+@endif
 @endsection
 
 @section('scripts')

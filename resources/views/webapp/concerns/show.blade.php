@@ -194,12 +194,8 @@ font-family: FontAwesome;
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-md-4">
-    <h6 class="h2 text-dark d-inline-block mb-0"> {{ $concern->details }}</h6>
-    
-  </div>
 
-  <div class="col-lg-8 text-right">
+  <div class="col-auto">
     <a href="/property/{{ $property->property_id }}/concerns" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a> 
     
    
@@ -220,13 +216,11 @@ font-family: FontAwesome;
 </div>
 
 
-
 <div class="row">
 
   <div class="col">
-    <div class="card">
-    
-      <div class="card-body">
+    <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id}}: {{ $concern->details }}</h6>
+    <br>
     <div class="table-responsive">
       @foreach ($concern_details as $concern)
           
@@ -301,8 +295,8 @@ font-family: FontAwesome;
        </table>
        @endforeach
     </div>
-  </div>
-    </div>
+
+   
   </div>
 </div>
 
@@ -311,49 +305,43 @@ font-family: FontAwesome;
 <div class="row">
   <div class="col">
     <div class="col-lg-5">
-      <h6 class="h2 text-dark d-inline-block mb-0">Details of the concern</h6>
+      <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{$responses->count()}})</h6>
       <br>
     </div>
-   <div class="card">
-    
-     <div class="card-body">
-       {{ $concern->details }}
-     </div>
-  </div>
+
    </div>
  </div>
-
-        <div class="row">
-          <div class="col">
-            <div class="col-lg-5">
-              <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
-              <br>
-            </div>
+<br>
+ <div class="row">
+  <div class="col">
+      <div class="list-group list-group-flush">
+          @foreach ($responses as $item)
+       
+          <span class="list-group-item list-group-item-action">
+            <div class="row align-items-center">
              
-            
-            <div class="row">
               <div class="col">
-                @foreach ($responses as $item)
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
+                  </div>
+                  <div class="text-right text-muted">
 
-                <div class="card">
-                  <div class="card-body">
-                  
-                    <small class="font-italic">{{ $item->posted_by }} at {{ Carbon\Carbon::parse($item->created_at) }}</small>
-                        <br><br>
-                        {!! $item->response !!}
+                    <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }} </small>
+                   
                     
+                  </div>
                 </div>
-              </div>
-              </table>
-             @endforeach
+                <p class="text-sm text-muted mb-0"> {!! $item->response !!}</p>
+               
               </div>
             </div>
-         
-            </div>
-          </div>
+          </span>
+
+          @endforeach
+
         </div>
-      
-    
+  </div>
 </div>
 
 
@@ -373,14 +361,14 @@ font-family: FontAwesome;
       </form>
         <div class="row">
             <div class="col">
-                <small>Date reported</small>
+                <label>Date reported</label>
                 <input type="date" form="editConcernDetailsForm" class="form-control" name="reported_at" value="{{ $concern->reported_at }}" required>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
-                <small>Category</small>
+                <label>Category</label>
                 <select class="form-control" form="editConcernDetailsForm" name="category" id="" required>
                     <option value="{{ $concern->category }}" readonly selected class="bg-primary">{{ $concern->category }}</option>
                     <option value="billing">billing</option>
@@ -399,14 +387,14 @@ font-family: FontAwesome;
         <br>
         <div class="row">
             <div class="col">
-                <small>Short tile</small>
+                <label>Title</label>
                 <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
             </div>
         </div>
 <br>
         <div class="row">
             <div class="col">
-                <small>Urgency</small>
+                <label>Urgency</label>
                 <select class="form-control" form="editConcernDetailsForm" name="urgency" id="" required>
                     <option value="{{ $concern->urgency }}" readonly selected class="bg-primary">{{ $concern->urgency }}</option>
                     <option value="minor and not urgent">minor and not urgent</option>
@@ -420,7 +408,7 @@ font-family: FontAwesome;
      
         <div class="row">
           <div class="col">
-              <small>Details</small>
+              <label>Details</label>
              <textarea form="editConcernDetailsForm" class="form-control" name="details" id="" cols="30" rows="10" required>
               {{ $concern->details }}
              </textarea>
@@ -430,7 +418,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
 
-          <button form="editConcernDetailsForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
+          <button form="editConcernDetailsForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Update</button>
       </div>
   </div>
   </div>
@@ -569,7 +557,7 @@ font-family: FontAwesome;
 
   @foreach ($concern_details as $concern)
   
-  <input form="markAsCompleteModalForm" type="hidden" name="name" value="{{ $concern->name }}">
+  <input form="markAsCompleteModalForm" type="hidden" name="id" value="{{ $concern->id }}">
 
   @endforeach
 
