@@ -21,7 +21,7 @@
 
     <!-- End of Topbar -->
     <div class="container">
-          <h5 class="text-black-50">{{ $property }} - Moveout Clearance</h5>
+          <h5 class="text-black-50">  {{ Session::get('property_name') }} - Moveout Clearance</h5>
           {{-- <p class="text-right"> <b>AR #:</b> </p> --}}
           <p>
             <b>Actual Moveout Date:</b> {{ Carbon\Carbon::parse($actual_moveout_at)->format('M d Y') }}

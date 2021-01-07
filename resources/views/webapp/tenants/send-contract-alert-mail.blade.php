@@ -10,6 +10,6 @@
     
     
     Thanks,<br>
-    {{ $property }}
+    {{ Session::get('property_name') }}
     </p>
     
