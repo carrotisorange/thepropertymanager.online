@@ -359,6 +359,14 @@ font-family: FontAwesome;
         @method('put')
         {{ csrf_field() }}
       </form>
+      
+      <div class="row">
+          <div class="col">
+              <label>Title</label>
+              <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
+          </div>
+      </div>
+      <br>
         <div class="row">
             <div class="col">
                 <label>Date reported</label>
@@ -384,13 +392,7 @@ font-family: FontAwesome;
                 </select>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col">
-                <label>Title</label>
-                <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
-            </div>
-        </div>
+      
 <br>
         <div class="row">
             <div class="col">
@@ -414,6 +416,19 @@ font-family: FontAwesome;
              </textarea>
           </div>
       </div>
+
+      <br>
+        <div class="row">
+            <div class="col">
+                <label>Assigned to</label>
+                <select class="form-control" form="editConcernDetailsForm" name="concern_user_id" id="" required>
+                    <option value="{{ $concern->concern_user_id }}" readonly selected class="bg-primary">{{ $concern->concern_user_id }}</option>
+                    @foreach ($users as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
       </div>
       <div class="modal-footer">

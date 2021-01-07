@@ -140,6 +140,12 @@ class ConcernController extends Controller
 
             $concern = Concern::findOrFail($concern_id);
 
+             $users = DB::table('users_properties_relations')
+            ->join('properties', 'property_id_foreign', 'property_id')
+            ->join('users', 'user_id_foreign', 'id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('user_type','<>' ,'tenant')
+            ->get();
             
             $concern_details = DB::table('contracts')
             ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -166,7 +172,7 @@ class ConcernController extends Controller
 
             $property = Property::findOrFail($property_id);
       
-       return view('webapp.concerns.show', compact('concern', 'responses', 'property','concern_details', 'personnels'));
+       return view('webapp.concerns.show', compact('concern', 'responses', 'property','concern_details', 'personnels', 'users'));
    }else{
        return view('layouts.arsha.unregistered');
    }
@@ -201,6 +207,7 @@ class ConcernController extends Controller
             'title' => $request->title,
             'category' => $request->category,
             'details' => $request->details,
+            'concern_user_id' => $request->concern_user_id,
             'urgency' => $request->urgency
         ]);
 

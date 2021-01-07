@@ -135,7 +135,7 @@
            
           
            <th>Category</th>
-            <th>Title</th>
+            <th>Description</th>
             <th>Urgency</th>
             <th>Status</th>
             <th>Assigned to</th>
@@ -153,7 +153,7 @@
             
         <td>{{ $item->category }}</td>
           
-            <td>{{ $item->title }}</td>
+            <td><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses">{{ $item->title }}</a></td>
             <td>
                 @if($item->urgency === 'urgent')
                 <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -165,17 +165,16 @@
             </td>
             <td>
                 @if($item->concern_status === 'pending')
-                <span class="badge badge-warning">{{ $item->concern_status }}</span>
+                <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
                 @elseif($item->concern_status === 'active')
-                <span class="badge badge-primary">{{ $item->concern_status }}</span>
+                <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
                 @else
-                <span class="badge badge-success">{{ $item->concern_status }}</span>
+                <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
                 @endif
             </td>
             <td>{{ $item->name? $item->name: 'NULL' }}</td>
             <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
             <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
-            <td ><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses"><button class="btn btn-sm btn-primary">View</button></a></td>
         </tr>
         @endforeach
       </tbody>

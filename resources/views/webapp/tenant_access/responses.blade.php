@@ -117,9 +117,29 @@
     <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
     
   </div>
+
 @endsection
 
 @section('main-content')
+
+<div class="row">
+
+ <div class="col">
+      
+    
+        <form action="/concern/{{ $concern_id }}/response" method="POST">
+          @csrf
+          <input type="hidden" name="concern_id" value={{ $concern_id }}>
+    
+          <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
+    <br>
+      <p class="text-right">  <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button></p>
+      </form>
+  
+    </div>
+
+</div>
+<br>
 @if($responses->count() < 1)
   <p class="text-center text-red">No responses found!</p>
 @else
@@ -155,10 +175,18 @@
   </div>
 </div>
 @endif
+
+
 @endsection
 
 @section('scripts')
-  
+<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace( 'response', {
+      filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+      filebrowserUploadMethod: 'form',
+  });
+  </script>
 @endsection
 
 

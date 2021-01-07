@@ -683,8 +683,9 @@ class UserController extends Controller
 
              $tenant = Tenant::findOrFail($tenant_id);
 
+             $concern_id = $concern_id;
 
-            return view('webapp.tenant_access.responses', compact('responses','tenant'));
+            return view('webapp.tenant_access.responses', compact('responses','tenant', 'concern_id'));
          }else{
              return view('layouts.arsha.unregistered');
          }
