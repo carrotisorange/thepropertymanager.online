@@ -240,7 +240,6 @@ class PropertyController extends Controller
                 ->fill(false)
                 ->linetension(0.3);
 
-                
             
                 $active_users = DB::table('users')
                 ->where('user_type','manager')
@@ -252,11 +251,13 @@ class PropertyController extends Controller
                 ->join('properties', 'id', 'user_id_property')
                 ->select('*', 'properties.name as property_name', 'users.name as user_name')
                 ->where('session_last_login_at', '>=', Carbon::today())
+                ->where('user_type', 'manager')
                 ->paginate(5);
 
                  $all_active_today = DB::table('users')
                 ->join('sessions', 'id', 'session_user_id')
                 ->where('session_last_login_at', '>=', Carbon::today())
+                ->where('user_type', '<>', 'manager')
                 ->get();
 
 
