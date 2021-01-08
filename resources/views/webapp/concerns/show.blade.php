@@ -229,7 +229,7 @@ font-family: FontAwesome;
         
         <tr>
           <th>Date Reported</th>
-          <td>{{ $concern->reported_at }}</td>
+          <td>{{ Carbon\Carbon::parse($concern->reported_at)->format('M-d-Y') }}</td>
         </tr>
            <tr>
                 <th>Reported by</th>
@@ -268,13 +268,13 @@ font-family: FontAwesome;
        <tr>
           <th>Status</th>
             <td>
-                @if($concern->status === 'pending')
-                <span class="badge badge-warning">{{ $concern->status }} for {{ number_format(Carbon\Carbon::parse($concern->reported_at)->DiffInDays(Carbon\Carbon::now()), 0) }} days</span>
-                @elseif($concern->status === 'active')
-                <span class="badge badge-primary">{{ $concern->status }} for {{ number_format(Carbon\Carbon::parse($concern->updated_at)->DiffInDays(Carbon\Carbon::now()), 0) }} days </span> 
-                @else
-                <span class="badge badge-secondary">{{ $concern->status }} on {{ Carbon\Carbon::parse($concern->updated_at)->format('M d Y')}}</span> 
-                @endif
+              @if($concern->concern_status === 'pending')
+              <i class="fas fa-clock text-warning"></i> {{ $concern->concern_status }}
+              @elseif($concern->concern_status === 'active')
+              <i class="fas fa-snowboarding text-primary"></i> {{ $concern->concern_status }}
+              @else
+              <i class="fas fa-check-circle text-success"></i> {{ $concern->concern_status }}
+              @endif
             </td>
        </tr>
        <tr>
