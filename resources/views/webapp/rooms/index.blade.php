@@ -161,7 +161,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
 
-  <div class="col-lg-9 text-center">
+  <div class="col-lg-9">
     <a href="#" class="btn btn-dark"> <i class="fas fa-home"></i> Dirty ({{ $units_dirty }})</a>
     <a href="#" class="btn btn-danger"><i class="fas fa-home"></i> Vacant ({{ $units_vacant }})</a>
     <a href="#" class="btn btn-success"><i class="fas fa-home"></i> Occupied ({{ $units_occupied }})</a>
