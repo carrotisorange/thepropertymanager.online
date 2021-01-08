@@ -495,6 +495,7 @@ class PropertyController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'property';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' manages '.Session::get('property_name').'.';
         $notification->save();
                     
