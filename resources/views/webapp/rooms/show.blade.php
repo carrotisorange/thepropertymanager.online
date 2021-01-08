@@ -324,7 +324,7 @@
                 @if($tenant_active->count() <= 0)
                 <tr>
                     <br><br><br>
-                    <p class="text-center">No tenants found!</p>
+                    <p class="text-center text-danger">No tenants found!</p>
                 </tr>
                 @else
                 <thead>
@@ -345,7 +345,7 @@
                     <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
                     <td>{{ $item->movein_at }}</td>
                     <td>{{ $item->moveout_at }}</td>
-                    <td>{{ $item->term }}</td>
+                    <td>{{ $item->contract_term }}</td>
                     {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }} days left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}</> --}}
                       <td>{{ number_format($item->contract_rent, 2) }}</td>
                       <td>{{ $item->form_of_interaction }}</td>
@@ -361,7 +361,7 @@
                 @if($tenant_reserved->count() <= 0)
                 <tr>
                     <br><br><br>
-                    <p class="text-center">No tenants found!</p>
+                    <p class="text-center text-danger">No tenants found!</p>
                 </tr>
                 @else
                 <thead>
@@ -401,7 +401,7 @@
                 @if($tenant_inactive->count() <= 0)
                 <tr>
                     <br><br><br>
-                    <p class="text-center">No tenants found!</p>
+                    <p class="text-center text-danger">No tenants found!</p>
                 </tr>
                 @else
                 <thead>

@@ -133,13 +133,13 @@ class UnitController extends Controller
             ->where('unit_id', $unit_id)
             ->get();
 
-           $tenant_active = DB::table('contracts')
-           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-           ->join('units', 'unit_id_foreign', 'unit_id')
-           ->select('*', 'contracts.rent as contract_rent')
-           ->where('unit_id', $unit_id)
-           ->where('contracts.status', 'active')
-           ->get();
+            $tenant_active = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term')
+            ->where('unit_id', $unit_id)
+            ->where('contracts.status', 'active')
+            ->get();
 
            $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
            ->where('bill_unit_id', $unit_id)

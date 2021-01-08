@@ -130,10 +130,10 @@ class RoomController extends Controller
             ->where('unit_id', $unit_id)
             ->get();
 
-           $tenant_active = DB::table('contracts')
+            $tenant_active = DB::table('contracts')
            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
            ->join('units', 'unit_id_foreign', 'unit_id')
-           ->select('*', 'contracts.rent as contract_rent')
+           ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term')
            ->where('unit_id', $unit_id)
            ->where('contracts.status', 'active')
            ->get();
