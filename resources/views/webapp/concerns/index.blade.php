@@ -213,13 +213,13 @@
               @endif
           </td>
           <td>
-              @if($item->status === 'pending')
-              <span class="badge badge-warning">{{ $item->status }}</span>
-              @elseif($item->status === 'active')
-              <span class="badge badge-primary">{{ $item->status }}</span>
-              @else
-              <span class="badge badge-success">{{ $item->status }}</span>
-              @endif
+            @if($item->concern_status === 'pending')
+            <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
+            @elseif($item->concern_status === 'active')
+            <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+            @else
+            <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+            @endif
           </td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>

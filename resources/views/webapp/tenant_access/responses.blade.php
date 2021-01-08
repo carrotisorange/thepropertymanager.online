@@ -3,6 +3,40 @@
 @section('title', 'Responses')
 
 
+@section('css')
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+<style>
+  div.stars {
+width: 270px;
+display: inline-block;
+}
+input.star { display: none; }
+label.star {
+float: right;
+padding: 10px;
+font-size: 36px;
+color: #444;
+transition: all .2s;
+}
+input.star:checked ~ label.star:before {
+content: '\f005';
+color: #FD4;
+transition: all .25s;
+}
+input.star-5:checked ~ label.star:before {
+color: #FE7;
+text-shadow: 0 0 20px #952;
+}
+input.star-1:checked ~ label.star:before { color: #F62; }
+label.star:hover { transform: rotate(-15deg) scale(1.3); }
+label.star:before {
+content: '\f006';
+font-family: FontAwesome;
+}
+</style>
+@endsection
+
 @section('sidebar')
 
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -113,10 +147,18 @@
 @endsection
 
 @section('upper-content')
-<div class="col-lg-6 col-7">
+<div class="col-lg-6">
     <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
     
   </div>
+<div class="col-md-6">
+    
+  @if($concern->status != 'closed')
+  <p class="text-right"><a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Mark as complete</a></p>
+  @else
+  <p class="text-right"><button class="btn btn-success">The concern has been marked as closed.</button></p>
+  @endif
+</div>
 
 @endsection
 
@@ -127,9 +169,9 @@
  <div class="col">
       
     
-        <form action="/concern/{{ $concern_id }}/response" method="POST">
+        <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
           @csrf
-          <input type="hidden" name="concern_id" value={{ $concern_id }}>
+          <input type="hidden" name="concern_id" value={{ $concern->concern_id }}>
     
           <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
     <br>
@@ -175,6 +217,123 @@
   </div>
 </div>
 @endif
+
+<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content  text-center">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add Response</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
+          @csrf
+          <input type="hidden" name="concern_id" value={{ $concern->concern_id }}>
+    
+          <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
+        
+    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
+      </form>
+      </div>
+  </div>
+  </div>
+
+</div>
+
+
+
+<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content  text-center">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add Response</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
+          @csrf
+          <input type="hidden" name="concern_id" value={{ $concern->concern_id }}>
+    
+          <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
+        
+    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
+      </form>
+      </div>
+  </div>
+  </div>
+
+</div>
+
+
+
+<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-content  text-center">
+      <div class="modal-header">
+
+      <h5 class="modal-title" id="exampleModalLabel">Rate employee</h5>
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <p>
+       
+          How did the employee handle the concern?
+
+
+        </p>
+      <form id="markAsCompleteModalForm" action="/concern/{{ $concern->concern_id }}/closed" method="POST">
+        @method('put')
+        {{ csrf_field() }}
+      </form>
+      <div class="stars">
+          <input  form="markAsCompleteModalForm" class="star star-5" id="star-5" type="radio" value="5" name="rating"/>
+          <label class="star star-5" for="star-5"></label>
+          <input  form="markAsCompleteModalForm" class="star star-4" id="star-4" type="radio" value="4" name="rating"/>
+          <label class="star star-4" for="star-4"></label>
+          <input  form="markAsCompleteModalForm" class="star star-3" id="star-3" type="radio" value="3" name="rating"/>
+          <label class="star star-3" for="star-3"></label>
+          <input  form="markAsCompleteModalForm" class="star star-2" id="star-2" type="radio" value="2" name="rating"/>
+          <label class="star star-2" for="star-2"></label>
+          <input  form="markAsCompleteModalForm" class="star star-1" id="star-1" type="radio" value="1" name="rating"/>
+          <label class="star star-1" for="star-1"></label>
+      </div>
+  <br>
+
+ 
+  
+  <input form="markAsCompleteModalForm" type="hidden" name="id" value="{{ $concern->concern_user_id }}">
+
+
+     
+      <p class="">Feedback</p>
+      <textarea form="markAsCompleteModalForm" class="form-control" id="" cols="30" rows="5" name="feedback" required>
+        
+      </textarea>
+  
+ 
+      </div>
+      <div class="modal-footer">
+          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+      </div>
+  </div>
+  </div>
+
+</div>
+
+
 
 
 @endsection

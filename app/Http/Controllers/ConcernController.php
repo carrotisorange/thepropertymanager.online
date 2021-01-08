@@ -33,6 +33,7 @@ class ConcernController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
             ->join('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
             ->where('property_id_foreign', $property_id)
             ->orderBy('reported_at', 'desc')
             ->orderBy('urgency', 'desc')

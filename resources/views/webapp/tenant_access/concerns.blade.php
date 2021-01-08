@@ -273,7 +273,7 @@
                         </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
+                            <button type="submit" form="concernForm" class="btn btn-primary"> Add</button>
                         </div>
                     </div>
                     </div>
