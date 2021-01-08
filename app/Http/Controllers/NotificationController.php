@@ -24,7 +24,7 @@ class NotificationController extends Controller
          ->orderBy('notification_id', 'desc')
          ->get();
 
-          DB::table('notifications')->where('user_id_foreign', Auth::user()->id)->update(['isOpen' => 1]);
+          DB::table('notifications')->where('property_id_foreign', Session::get('property_id'))->update(['isOpen' => 1]);
 
           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
         

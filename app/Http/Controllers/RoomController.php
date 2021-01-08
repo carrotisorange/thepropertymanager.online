@@ -272,12 +272,11 @@ class RoomController extends Controller
              $room->save();
         }
         
-      
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+        $occupied_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
 
-        $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
+        $current_occupancy_rate = Property::findOrFail(Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
         $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
 

@@ -732,7 +732,7 @@ Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upl
 Route::get('/property/{property_id}/home', 'UnitController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/home/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/rooms/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
 Route::post('/units/add/multiple', 'UnitController@add_multiple_units')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/unit/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
 
