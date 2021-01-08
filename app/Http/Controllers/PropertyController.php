@@ -489,6 +489,7 @@ class PropertyController extends Controller
         Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
 
         Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
+        
 
            
         $notification = new Notification();

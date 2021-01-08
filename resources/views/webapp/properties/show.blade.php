@@ -545,7 +545,7 @@
                     <div class="card shadow mb-3">
                       <!-- Card Header - Dropdown -->
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">THE LAST 5 PENDING CONCERNS</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">THE LAST 5 PENDING CONCERNS <span id="pending_concerns">{{ $pending_concerns->count() }}</span></h6>
                         <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/pending-concerns">View all</a></small>
                         
                       </div>
@@ -665,19 +665,18 @@
   <div class="modal-dialog modal-md" role="modal">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Pending concerns.</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Pending concerns</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
     </div>
    <div class="modal-body">
-    Please help us improve your experience in managing your property by reporting the issues and bugs you encountered while using the system.
-  
+   You have <b>{{ $pending_concerns->count() }}</b> pending concern/s that need to be addressed.
   </div>
   <div class="modal-footer">
    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss </button>
-   <a href="/property/{{  Session::get('property_id') }}/issues" class="btn btn-primary" >Report now</a>
+   <a href="/property/{{  Session::get('property_id') }}/concerns" class="btn btn-primary" >Proceed</a>
   </form>
   </div> 
   </div>
@@ -723,8 +722,12 @@
 <script>
   $(document).ready(function(){
 
-  if(document.getElementById('count_rooms').innerHTML <= 0){
-      $("#myModal").modal('show');
+  if(document.getElementById('pending_concerns').innerHTML > 0){
+    $("#showModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
     }
   });
 </script>
@@ -734,12 +737,12 @@
       $('#showModal').modal('show');
   });
 </script> --}}
-
+{{-- 
 <script type="text/javascript">
   $(window).on('load',function(){
       $('#showModal').modal('show');
   });
-</script>
+</script> --}}
 
 
 @endsection
