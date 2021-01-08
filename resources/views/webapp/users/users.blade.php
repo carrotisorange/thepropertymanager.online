@@ -9,7 +9,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-          {{-- <img src="{{ asset('/argon/assets/img/brand/logo.png') }}" class="navbar-brand-img" alt="...">--}}{{ $property->name }} 
+          {{-- <img src="{{ asset('/argon/assets/img/brand/logo.png') }}" class="navbar-brand-img" alt="...">--}}{{ Session::get('property_name' }} 
         </a>
       </div>
       <div class="navbar-inner">
@@ -18,14 +18,14 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/dashboard">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/dashboard">
                 <i class="fas fa-tachometer-alt text-orange"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{$property->property_id }}/home">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/home">
                 <i class="fas fa-home text-indigo"></i>
                 <span class="nav-link-text">Home</span>
               </a>
@@ -36,7 +36,7 @@
          
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             <li class="nav-item">
-                <a class="nav-link" href="/property/{{$property->property_id }}/occupants">
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/occupants">
                   <i class="fas fa-user text-green"></i>
                   <span class="nav-link-text">Occupants</span>
                 </a>
@@ -51,7 +51,7 @@
             @endif
           
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{Session::get('property_id')}}/owners">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/owners">
                 <i class="fas fa-user-tie text-teal"></i>
                 <span class="nav-link-text">Owners</span>
               </a>
@@ -59,21 +59,21 @@
             @endif
 
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{Session::get('property_id')}}/concerns">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/concerns">
                 <i class="fas fa-tools text-cyan"></i>
                 <span class="nav-link-text">Concerns</span>
               </a>
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{Session::get('property_id')}}/joborders">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/joborders">
                 <i class="fas fa-list text-dark"></i>
                 <span class="nav-link-text">Job Orders</span>
               </a>
             </li>
            
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{Session::get('property_id')}}/personnels">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/personnels">
                 <i class="fas fa-user-secret text-gray"></i>
                 <span class="nav-link-text">Personnels</span>
               </a>
@@ -82,7 +82,7 @@
 
             @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{Session::get('property_id')}}/bills">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bills</span>
               </a>
@@ -90,7 +90,7 @@
             @endif
             @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{Session::get('property_id')}}/collections">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
                 <i class="fas fa-coins text-yellow"></i>
                 <span class="nav-link-text">Collections</span>
               </a>

@@ -68,9 +68,9 @@
        </div>
        <div class="col">
         @if($users->count() < 1)
-        <a href="#/" class="btn btn-primary btn-user btn-block"> User </a
+        <a href="#/" class="btn btn-primary btn-user btn-block"> Add </a
         @else
-        <a href="/user/create" class="btn btn-primary btn-user btn-block"> User </a>
+        <a href="/user/create" class="btn btn-primary btn-user btn-block"> Add </a>
         @endif
      
     </div>

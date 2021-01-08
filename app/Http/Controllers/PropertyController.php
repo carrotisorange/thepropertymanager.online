@@ -251,7 +251,7 @@ class PropertyController extends Controller
                 ->join('properties', 'id', 'user_id_property')
                 ->select('*', 'properties.name as property_name', 'users.name as user_name')
                 ->where('session_last_login_at', '>=', Carbon::today())
-                ->where('user_type', 'manager')
+                ->wheref('user_type', 'manager')
                 ->paginate(5);
 
                  $all_active_today = DB::table('users')
