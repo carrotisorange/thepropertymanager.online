@@ -448,8 +448,8 @@
  
         
            <p class="text-right">
-             <a  href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove </a>
-           <a href="#/"  id="add_entry" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add </a>     
+             <a  href="#/" id='delete_entry' class="btn btn-danger"> Remove </a>
+           <a href="#/"  id="add_entry" class="btn btn-primary"> Add </a>     
            </p>
              <div class="table-responsive text-nowrap">
              <table class = "table" id="tab_logic">
@@ -495,8 +495,8 @@
           @csrf
        </form>
             <p class="text-right">
-              <a href="#/" id='delete_request' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove </a>
-              <a href="#/" id="add_request" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add </a>     
+              <a href="#/" id='delete_request' class="btn btn-danger"> Remove </a>
+              <a href="#/" id="add_request" class="btn btn-primary"> Add </a>     
             </p>
               <div class="table-responsive text-nowrap">
                 <table class = "table" id="request_table">

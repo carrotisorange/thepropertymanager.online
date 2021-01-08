@@ -34,33 +34,19 @@ class UserController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-        $active_users = DB::table('users')
-
-        ->where('user_type', '<>','tenant')
-        ->whereNotNull('email_verified_at')
-        ->where('email', '!=','thepropertymanager2020@gmail.com')
-
-        ->get();
-
-   
-                $users = DB::table('users')
-                ->where('lower_access_user_id', Auth::user()->id)
-                ->get();
-        
            
             $sessions = DB::table('users')
             ->join('sessions', 'id', 'session_user_id')
             ->join('properties', 'id', 'user_id_property')
             ->select('*', 'properties.name as property_name', 'users.name as user_name')
-            ->where('id', Auth::user()->id)
-            ->orWhere('lower_access_user_id', Auth::user()->id )
-            ->whereDay('session_last_login_at', now()->day)
+            ->where('property_id', Session::get('property_id'))
+            ->where('session_last_login_at', '>=', Carbon::today())
             ->get();
 
-            $property = Property::findOrFail($property_id);
+           
 
 
-        return view('webapp.users.users', compact('active_users', 'users'));
+        return view('webapp.users.users', compact('sessions'));
 }
 
     public function search(Request $request){

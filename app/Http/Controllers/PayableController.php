@@ -113,7 +113,7 @@ class PayableController extends Controller
                 $notification->user_id_foreign = Auth::user()->id;
                 $notification->property_id_foreign = Session::get('property_id');
                 $notification->type = 'payable';
-                $notification->message = $request->input('entry'.$i).' has been added as an entry to payable!';
+                $notification->message = $request->input('entry'.$i).' has been added as an entry to payable.';
                 $notification->save();
         }
                     
@@ -174,7 +174,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->message = 'Request of funds amounting to '.$entry.' on '.$date.' has been approved!';
+        $notification->message = 'Request of funds amounting to '.$entry.' on '.$date.' has been approved.';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -201,7 +201,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->message = 'Request of funds amounting to '.$entry.' on '.$date.' has been declined!';
+        $notification->message = 'Request of funds amounting to '.$entry.' on '.$date.' has been declined.';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));             
