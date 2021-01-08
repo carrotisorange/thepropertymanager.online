@@ -205,6 +205,7 @@
                       <th>Status</th>
                       <th>Occupancy</th>
                       <th>Rent</th>
+                      <th>Term</th>
                       <th></th>
                   </tr>
               </thead>
@@ -219,6 +220,7 @@
                       $floor = 1;
                       $occupancy =1;
                       $rent = 1;
+                      $term =1;
                   ?>
                   @foreach ($units as $item)
               
@@ -273,6 +275,14 @@
                        
                           <td><input class="col" form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"> pax</td>
                           <td><input class="" form="editUnitsForm" type="number" step="0.001" name="rent{{ $rent++  }}"  min="0" id="" value="{{$item->rent }}"></td>
+                          <td>
+                            <select form="editUnitsForm" type="text" name="term{{ $term++  }}" id="" >
+                              <option value="{{ $item->term }}" readonly selected class="bg-primary">{{ $item->term }}</option>
+                              <option value="lt">lt</option>
+                              <option value="st">st</option>
+                          </select>
+                          
+                          </td>
                           <td>
                             <form action="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" method="POST">
                               @csrf

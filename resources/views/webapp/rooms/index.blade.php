@@ -160,16 +160,13 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-1">
-    <h6 class="h2 text-dark d-inline-block mb-0">Home</h6>
-    
-  </div>
 
-  <div class="col-lg-8 text-center">
-    <a href="#" class="btn btn-dark"> <i class="fas fa-home"></i>Dirty ({{ $units_dirty }})</a>
+  <div class="col-lg-9 text-center">
+    <a href="#" class="btn btn-dark"> <i class="fas fa-home"></i> Dirty ({{ $units_dirty }})</a>
     <a href="#" class="btn btn-danger"><i class="fas fa-home"></i> Vacant ({{ $units_vacant }})</a>
     <a href="#" class="btn btn-success"><i class="fas fa-home"></i> Occupied ({{ $units_occupied }})</a>
-    <a href="#" class="btn btn-warning"> <i class="fas fa-home"></i>Reserved ({{ $units_reserved }})</a>
+    <a href="#" class="btn btn-warning"> <i class="fas fa-home"></i> Reserved ({{ $units_reserved }})</a>
+    <a href="#" class="btn btn-primary"> <i class="fas fa-home"></i> Short Term ({{ $st_contract }})</a>
   </div>
 
   <div class="col-md-3 text-right">
@@ -259,13 +256,28 @@
          {{ $item->unit_no }}
         </a>
       @elseif($item->status=== 'occupied')
-        <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
+          @if($item->term=== 'st')
+          <a title="short term contract" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-primary">
           <i class="fas fa-home fa-3x"></i>
           <br>
           {{ $item->unit_no }}
-          </a>
+          </a> 
+          @else
+          <a title="long term contract" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
+            <i class="fas fa-home fa-3x"></i>
+            <br>
+            {{ $item->unit_no }}
+            </a>
+            
+          @endif
           @elseif($item->status=== 'dirty')
           <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-dark">
+            <i class="fas fa-home fa-3x"></i>
+            <br>
+            {{ $item->unit_no }}
+            </a> 
+            @elseif($item->term=== 'st')
+          <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-primary">
             <i class="fas fa-home fa-3x"></i>
             <br>
             {{ $item->unit_no }}
@@ -315,17 +327,27 @@
                {{ $item->unit_no }}
               </a>
             @elseif($item->status=== 'occupied')
-              <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
+              @if($item->term=== 'st')
+              <a title="short term contract" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-primary">
+              <i class="fas fa-home fa-3x"></i>
+              <br>
+              {{ $item->unit_no }}
+              </a> 
+              @else
+              <a title="long term contract" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-success">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
                 </a>
-                @elseif($item->status=== 'dirty')
+                
+              @endif
+            @elseif($item->status=== 'dirty')
                 <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}" class="btn btn-dark">
                   <i class="fas fa-home fa-3x"></i>
                   <br>
                   {{ $item->unit_no }}
-                  </a>  
+                  </a> 
+           
             @endif   
           @endif
       @endforeach

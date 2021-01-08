@@ -46,6 +46,8 @@ class UnitController extends Controller
 
              $units_dirty =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'dirty')->count();
              
+             $st_contract =  Property::findOrFail(Session::get('property_id'))->units->where('term', 'st')->count();
+    
             
     
            $units = Property::findOrFail($property_id)
@@ -66,7 +68,7 @@ class UnitController extends Controller
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.index',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty'));
            }else{
-            return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property', 'units_dirty'));
+            return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
            }
         }else{
             return view('layouts.arsha.unregistered');

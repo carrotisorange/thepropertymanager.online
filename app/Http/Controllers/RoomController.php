@@ -45,6 +45,8 @@ class RoomController extends Controller
             
              
             $units_dirty =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'dirty')->count();
+
+            $st_contract =  Property::findOrFail(Session::get('property_id'))->units->where('term', 'st')->count();
     
            $units = Property::findOrFail($property_id)
            ->units()->where('status','<>','deleted')
@@ -62,9 +64,9 @@ class RoomController extends Controller
             $property = Property::findOrFail($property_id);
     
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty'));
+            return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
            }else{
-            return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property', 'units_dirty'));
+            return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
            }
         }else{
             return view('layouts.arsha.unregistered');
@@ -266,6 +268,7 @@ class RoomController extends Controller
              $room->floor = $request->input('floor'.$i);
              $room->occupancy = $request->input('occupancy'.$i);
              $room->rent = $request->input('rent'.$i);
+             $room->term = $request->input('term'.$i);
              $room->save();
         }
         

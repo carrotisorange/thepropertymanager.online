@@ -493,6 +493,12 @@ class ContractController extends Controller
                 );
             }
 
+            $previous_contract = Contract::findOrFail($contract_id);
+            $previous_contract->status = 'inactive';
+            $previous_contract->moveout_reason = 'End of contract';
+            $previous_contract->form_of_interaction = 'Renewal';
+            $previous_contract->save();
+
             $tenant =Tenant::findOrFail($tenant_id);
         
             $notification = new Notification();

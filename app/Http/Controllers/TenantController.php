@@ -317,7 +317,8 @@ class TenantController extends Controller
                     ->where('unit_id', $unit_id)
                     ->update(
                         [
-                            'status' => 'occupied'
+                            'status' => 'occupied',
+                            'term' => 'st',
                         ]
                     );
                   }else{  
@@ -325,7 +326,8 @@ class TenantController extends Controller
                     ->where('unit_id', $unit_id)
                     ->update(
                         [
-                            'status' => 'reserved'
+                            'status' => 'reserved',
+                            'term' => 'st',
                         ]
                     );
                   }
@@ -585,6 +587,7 @@ class TenantController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->select('*', 'contracts.status as contract_status')
             ->where('tenant_id', $tenant_id)
+            ->orderBy('contracts.created_at', 'desc')
             ->get();
 
             $guardians = Tenant::findOrFail($tenant_id)->guardians;
