@@ -585,7 +585,7 @@ class TenantController extends Controller
             $contracts = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
-            ->select('*', 'contracts.status as contract_status')
+            ->select('*', 'contracts.status as contract_status', 'contracts.term as contract_term')
             ->where('tenant_id', $tenant_id)
             ->orderBy('contracts.created_at', 'desc')
             ->get();
