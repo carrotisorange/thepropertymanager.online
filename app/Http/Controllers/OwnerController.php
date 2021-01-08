@@ -27,7 +27,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
-        $notification->message = 'User '.Auth::user()->id.' opens owners page.';
+        $notification->message = Auth::user()->name.' opens owners page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -123,7 +123,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
-        $notification->message = $request->name.' '.$last_name.' has been as an owner! ';
+        $notification->message = Auth::user()->name.' adds '.$request->name.' '.$last_name.' as an owner in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
                     
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -228,7 +228,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
-        $notification->message = $request->unit_owner.' profile has been updated!';
+        $notification->message = Auth::user()->name.' updates '.$request->unit_owner.' profile.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

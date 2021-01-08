@@ -348,7 +348,7 @@ class PropertyController extends Controller
          $notification->user_id_foreign = Auth::user()->id;
          $notification->property_id_foreign = Session::get('property_id');
          $notification->type = 'search';
-         $notification->message = 'User '.Auth::user()->id.' searches for '.$search_key;
+         $notification->message = Auth::user()->name.' searches for '.$search_key;
          $notification->save();
                      
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -495,7 +495,7 @@ class PropertyController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'property';
-        $notification->message = 'User '.Auth::user()->id.' manages '.Session::get('property_name').'.';
+        $notification->message = Auth::user()->name.' manages '.Session::get('property_name').'.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

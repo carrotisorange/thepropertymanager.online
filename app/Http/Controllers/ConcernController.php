@@ -8,6 +8,7 @@ use App\Property;
 use App\Response;
 use Session;
 use App\Notification;
+use App\User;
 
 class ConcernController extends Controller
 {
@@ -23,7 +24,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message = 'User '.Auth::user()->id.' opens concerns page.';
+        $notification->message = Auth::user()->name.' opens concerns page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -80,7 +81,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message = $unit.' reports a concern.';
+        $notification->message = Auth::user()->name. ' adds a concern in '.$unit.'.';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -108,7 +109,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message = 'User '. Auth::user()->id.' adds a concern.';
+        $notification->message = Auth::user()->name. ' adds a concern for reported by '. $tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -219,7 +220,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message = 'User '. Auth::user()->id.' updates concern '.$concern->concern_id.'.';
+        $notification->message = Auth::user()->name.' updates concern '.$concern->concern_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -262,11 +263,13 @@ class ConcernController extends Controller
 
         $concern = Concern::findOrFail($request->concern_id);
 
+        $user = User::findOrFail($concern->concern_user_id);
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->message =  'User '.Auth::user()->id.' rates User '.$request->id.' for resolving concern '.$concern->concern_id.'.';
+        $notification->message =  Auth::user()->name.' rates  '.$user->name.' for resolving concern '.$concern->concern_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

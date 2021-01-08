@@ -29,7 +29,7 @@ class UserController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'user';
-        $notification->message = 'User '.Auth::user()->id.' opens users page.';
+        $notification->message = Auth::user()->name.' opens users page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

@@ -31,7 +31,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = 'User '.Auth::user()->id.' opens bills page.';
+        $notification->message = Auth::user()->name.' opens bills page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -390,7 +390,7 @@ class BillController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'bill';
-            $notification->message = 'User '.Auth::user()->id.' posts '.($request->no_of_bills-1).' bill/s to '.$tenant->first_name.' '.$tenant->last_name.'.';
+            $notification->message = Auth::user()->name.' posts '.($request->no_of_bills-1).' bill/s to '.$tenant->first_name.' '.$tenant->last_name.'.';
             $notification->save();
     
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -471,7 +471,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = 'User '.Auth::user()->id.' posts'.($request->no_of_bills-1).' bill/s to '.$unit->unit_no;
+        $notification->message = Auth::user()->name.' posts'.($request->no_of_bills-1).' bill/s to '.$unit->unit_no;
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -587,7 +587,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = ($no_of_billed-1).' '.$request->particular1.' bills have been posted! ';
+        $notification->message = Auth::user()->name. 'posts '.($no_of_billed-1).' '.$request->particular1.'.';
         $notification->save();
                     
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -746,7 +746,7 @@ class BillController extends Controller
                     $notification->user_id_foreign = Auth::user()->id;
                     $notification->property_id_foreign = Session::get('property_id');
                     $notification->type = 'bill';
-                    $notification->message = $tenant->first_name.' '.$tenant->last_name.' bills have been updated! ';
+                    $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' bills.';
                     $notification->save();
 
                      Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -804,7 +804,7 @@ class BillController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'bill';
-            $notification->message = $unit->unit_no.' bills have been updated! ';
+            $notification->message = Auth::user()->name.' updates '.$unit->unit_no.' bills.';
             $notification->save();
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -839,7 +839,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = 'User '.Auth::user()->id.' deletes '. $tenant->first_name.' '.$tenant->last_name.' bills.';
+        $notification->message = Auth::user()->name.' deletes '. $tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
                     
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -877,7 +877,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = 'User '.Auth::user()->id.' exports '.$tenant->first_name.' '.$tenant->last_name.' bills.';
+        $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -921,7 +921,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = $unit_no.' bills have been exported! ';
+        $notification->message = Auth::user()->name.' updates '.$unit_no.' bills.';
         $notification->save();
 
 
@@ -939,7 +939,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->message = 'User '.Auth::user()->id.' deletes bill  amounting to '. number_format($bill->amount,2).'.';
+        $notification->message = Auth::user()->name.' deletes bill '. $billing_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

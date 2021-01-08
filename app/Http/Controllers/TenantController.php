@@ -38,7 +38,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = 'User '.Auth::user()->id.' opens tenants page.';
+        $notification->message = Auth::user()->name.' opens tenants page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -419,14 +419,14 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' moves in.';
+        $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
           }else{  
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' marks as pending!';
+        $notification->message = Auth::user()->name.' reserves '.Unit::findOrFail($unit_id)->unit_no.' for '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
           }
        
@@ -546,7 +546,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' becomes occupant.';
+        $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' as an occupant in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
         
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -876,7 +876,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' updates his profile.';
+        $notification->message = Auth::user()->name().' updates '.$tenant->first_name.' '.$tenant->last_name.' profile.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));

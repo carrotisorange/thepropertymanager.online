@@ -26,7 +26,7 @@ class JobOrderController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'joborder';
-        $notification->message = 'User '.Auth::user()->id.' opens joborders page.';
+        $notification->message = Auth::user()->name.' opens joborders page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -86,7 +86,7 @@ class JobOrderController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'joborder';
-            $notification->message =  Auth::user()->name.' filed a job order for concern ID '.$concern->concern_id.' regarding '.$concern->title.' and assigned it to '.$personnel->personnel_name.' .';
+            $notification->message =  Auth::user()->name.' files a job order and assigns it to '.$personnel->personnel_name.'.';
             $notification->save();
 
          return redirect('/property/'.$property_id.'/joborders')->with('success', 'job order has been filed!');

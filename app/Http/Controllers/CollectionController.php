@@ -47,7 +47,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = 'User '.Auth::user()->id.' opens collections page.';
+        $notification->message = Auth::user()->name.' opens collections page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -249,7 +249,7 @@ class CollectionController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'tenant';
-            $notification->message = $tenant->first_name.' '.$tenant->last_name.' moves in.';
+            $notification->message = Auth::user()->name. ' moves in '. $tenant->first_name.' '.$tenant->last_name.'.';
             $notification->save();
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -262,7 +262,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' pays '.($no_of_payments-1). ' bill/s.';
+        $notification->message = Auth::user()->name.' records '. ($no_of_payments-1) .' payment/s made by '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -311,7 +311,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = ($no_of_payments-1).' payments have been recorded to '.$unit->unit_no;
+        $notification->message = Auth::user()->name.' records '. ($no_of_payments-1) .' payment/s made by '.$unit->unit_no.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -366,7 +366,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = $tenant->first_name.' '.$tenant->last_name.' exports payments.';
+        $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' payments.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
@@ -434,11 +434,13 @@ class CollectionController extends Controller
 
         $payment = Payment::findOrFail($payment_id);
 
+        $tenant = Tenant::findOrFail($tenant_id);
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->message = 'Payment with AR no '.$payment->ar_no.' amounting '.number_format($payment->amt_paid,2).' has been deleted! ';
+        $notification->message = Auth::user()->name.' deletes payment made by '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
