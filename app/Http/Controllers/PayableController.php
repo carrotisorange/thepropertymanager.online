@@ -25,6 +25,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens payables page.';
         $notification->save();
                     

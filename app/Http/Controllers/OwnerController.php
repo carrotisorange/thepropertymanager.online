@@ -27,6 +27,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens owners page.';
         $notification->save();
                     
