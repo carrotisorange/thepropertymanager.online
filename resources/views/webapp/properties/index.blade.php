@@ -81,9 +81,9 @@
         <a href="/property/create" class="btn btn-primary btn-user btn-block"> Portforlio</a>
       @else
        @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced')
-        <a href="/property/create" class="btn btn-primary btn-user btn-block"> Property</a>
+        <a href="/property/create" class="btn btn-primary btn-user btn-block"> Add property</a>
         @else
-        <a href="#" class="btn btn-primary btn-user btn-block" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"> Property</a>
+        <a href="#" class="btn btn-primary btn-user btn-block" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"> Add property</a>
         @endif
       @endif
     </div>
@@ -91,12 +91,12 @@
     <div class="col-md-4">
       @if (Auth::user()->user_type === 'manager')
         @if($users > 1)
-        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block">   User </a>
+        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block"> Add user </a>
         @else
-        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> User</a>
+        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> Add user</a>
         @endif
       @else
-      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"> User</a>
+      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"> Add user</a>
       @endif
     </div>
 
