@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Contract')
+@section('title', $tenant->first_name.' '.$tenant->last_name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -156,7 +156,7 @@
 </div>
 <div class="row">
     <div class="col-md-10">
-        <a href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}#contracts"  class="btn btn-primary"><i class="fas fa-user"></i> Tenant</a> 
+        {{-- <a href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}#contracts"  class="btn btn-primary"><i class="fas fa-user"></i> Tenant</a>  --}}
         <a class="btn btn-primary" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/edit"><i class="fas fa-edit"></i> Edit</a>
         <a class="btn btn-primary" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> Extend</a>
         @if(!$contract->terminated_at)
@@ -193,10 +193,10 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
-                 <tr>
+                 {{-- <tr>
                      <th>Tenant </th>
                      <td><a target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}">View</a></td>
-                 </tr>
+                 </tr> --}}
                  <tr>
                   <th>Room </th>
                   <td><a target="_blank" href="/property/{{ $property->property_id }}/home/{{ $contract->unit_id_foreign }}">View</a></td>
@@ -229,11 +229,11 @@
               </tr>
               <tr>
                   <th>Movein</th>
-                  <td>{{ $contract->movein_at }}</td>
+                  <td>{{ Carbon\Carbon::parse($contract->movein_at)->format('M d, Y') }}</td>
               </tr>
               <tr>
                   <th>Moveout</th>
-                  <td>{{ $contract->moveout_at }}</td>
+                  <td>{{ Carbon\Carbon::parse($contract->moveout_at)->format('M d, Y') }}</td>
               </tr>
               <tr>
                   <th>Length of stay</th>
@@ -244,12 +244,12 @@
                   <td>{{ $contract->term }}</td>
               </tr>
               <tr>
-                  <th>Terminated</th>
-                  <td>{{ $contract->terminated_at? $contract->terminated_at: 'NA' }}</td>
+                  <th>Dater terminated</th>
+                  <td>{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('M d, Y'): 'NA' }}</td>
               </tr>
               <tr>
                   <th>Actual moveout</th>
-                  <td>{{ $contract->actual_moveout_at? $contract->actual_moveout_at: 'NA' }}</td>
+                  <td>{{ $contract->actual_moveout_at? Carbon\Carbon::parse($contract->actual_moveout_at)->format('M d, Y'): 'NA' }}</td>
               </tr>
               <tr>
                   <th>Reason for termination</th>

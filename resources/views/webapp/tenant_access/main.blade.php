@@ -18,7 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
         <meta name="author" content="Creative Tim">
-        <title>Portal</title>
+        <title>Tenant Portal</title>
         <!-- Favicon -->
         <link rel="icon" href="{{ asset('/argon/assets/img/brand/favicon.ico') }}" type="image/png">
         <!-- Fonts -->
@@ -62,7 +62,7 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a href="/" target="_blank" class="nav-link">
-              <span class="nav-link-inner--text">The Property Manager Tenant Portal</span>
+              <span class="nav-link-inner--text">Tenant Portal</span>
             </a>
           </li>
           {{-- <li class="nav-item">

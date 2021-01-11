@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Edit')
+@section('title', $tenant->first_name.' '.$tenant->last_name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -166,7 +166,7 @@
           <div class="table-responsive">
             <table class="table">
                <tr>
-                   <th>Name</th>
+                   <th>Tenant</th>
                    <td><select form="editContractForm" class="form-control" name="tenant_id_foreign" id="tenant_id_foreign">
                        <option value="{{ $contract->tenant_id_foreign }}" selected>{{ $contract->tenant_id_foreign }}</option>
                        @foreach ($tenants as $item)
@@ -247,12 +247,12 @@
                 <td><input form="editContractForm" type="text" class="form-control" name="term" id="term" value="{{ $contract->term? $contract->term: 'NULL' }}" required readonly></td>
             </tr>
             <tr>
-                <th>Terminated</th>
-                <td><input form="editContractForm" type="date" class="form-control" name="terminated_at" id="terminated_at" value="{{ $contract->terminated_at? $contract->terminated_at: 'NULL' }}" ></td>
+                <th>Date terminated</th>
+                <td><input form="editContractForm" type="date" class="form-control" name="terminated_at" id="terminated_at" value="{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('Y-m-d'): 'NA' }}" ></td>
             </tr>
             <tr>
                 <th>Actual moveout</th>
-                <td><input form="editContractForm" type="date" class="form-control" name="actual_moveout_at" id="actual_moveout_at" value="{{ $contract->actual_moveout_at? $contract->actual_moveout_at: 'NULL' }}" ></td>
+                <td><input form="editContractForm" type="date" class="form-control" name="actual_moveout_at" id="actual_moveout_at" value="{{ $contract->actual_moveout_at? Carbon\Carbon::parse($contract->moveout_at)->format('Y-m-d'): 'NA' }}" ></td>
             </tr>
             <tr>
                 <th>Reason for termination</th>

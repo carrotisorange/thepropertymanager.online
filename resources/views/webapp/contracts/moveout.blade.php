@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Movoeout')
+@section('title', $tenant->first_name.' '.$tenant->last_name)
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -152,18 +152,18 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Moveout</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">You're about to moveout {{ $tenant->first_name.' '.$tenant->last_name }} 's contract</h6>
     
   </div>
 
 </div>
-<div class="row">
+{{-- <div class="row">
   <div class="col">
     <h1 class="text-center">
       <i class="fas fa-people-carry fa-lg"></i>
     </h1>
   </div>
-</div>
+</div> --}}
 <div class="row">
     <div class="col">
       <div class="card">
@@ -174,10 +174,10 @@
             @method('PUT')
         </form>
 
-            {{ $tenant->first_name.' '.$tenant->last_name }} stayed for <?php   $diffInDays =  number_format((Carbon\Carbon::parse($contract->movein_at))->DiffInDays(Carbon\Carbon::parse($contract->moveout_at))) ?> {{ $contract->number_of_months? $contract->number_of_months: 'NULL' }} months in your property. 
-            The reason for his/her moveout is {{ $contract->moveout_reason }}. He/she is scheduled to moveout on {{ Carbon\Carbon::parse($contract->actual_moveout_at )->format('M d Y') }}. 
+          <b>{{ $tenant->first_name.' '.$tenant->last_name }}</b> stayed for <?php   $diffInDays =  number_format((Carbon\Carbon::parse($contract->movein_at))->DiffInDays(Carbon\Carbon::parse($contract->moveout_at))) ?> <b>{{ $contract->number_of_months? $contract->number_of_months: 'NULL' }}</b> in <b>{{ Session::get('property_name') }}</b>. 
+            The reason for his/her moveout is <b>{{ $contract->moveout_reason }}</b>. He/she is scheduled to moveout on <b>{{ Carbon\Carbon::parse($contract->actual_moveout_at )->format('M d Y') }}</b>. 
             Please click  <button type="submit" form="moveoutTenantForm">here</button> to export the gatepass. 
-            The tenant will present the gatepass to the guard before leaving the property. Also, don't forget to remind the tenant to rate their stay at their tenant portal.
+            Please remind the tenant to present the gatepass to the guard before leaving the property. Also, don't forget to remind the tenant to rate their stay at their tenant portal.
         </div>
       </div>      
     </div>

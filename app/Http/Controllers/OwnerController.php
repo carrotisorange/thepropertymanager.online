@@ -124,6 +124,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' adds '.$request->name.' '.$last_name.' as an owner in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
                     
@@ -229,6 +230,7 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' updates '.$request->unit_owner.' profile.';
         $notification->save();
                     

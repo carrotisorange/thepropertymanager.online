@@ -1,6 +1,6 @@
 @extends('webapp.tenant_access.template')
 
-@section('title', 'Responses')
+@section('title', $concern->details)
 
 
 @section('css')
@@ -148,15 +148,15 @@ font-family: FontAwesome;
 
 @section('upper-content')
 <div class="col-lg-6">
-    <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
-    
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $concern->details }}</h6>
+   
   </div>
 <div class="col-md-6">
     
   @if($concern->status != 'closed')
-  <p class="text-right"><a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Mark as complete</a></p>
+  <p class="text-right"><a href="#" title="You can close the concern once you're satisfied with the action made the person/s in charge." data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Did the employee address your concern?</a></p>
   @else
-  <p class="text-right"><button class="btn btn-success">The concern has been marked as closed.</button></p>
+  <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p>
   @endif
 </div>
 
@@ -166,22 +166,23 @@ font-family: FontAwesome;
 
 <div class="row">
 
- <div class="col">
-      
+ <div class="col-md-12">
+  <p class="text-danger">This page will serve as your way of communicating to the person/s in charge of your concern. Please provide as many details as possible to properly address your concern. </p>
     
         <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
           @csrf
-          <input type="hidden" name="concern_id" value={{ $concern->concern_id }}>
     
           <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
     <br>
-      <p class="text-right">  <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button></p>
+      <p class="text-right">  <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Response </button></p>
       </form>
   
     </div>
 
 </div>
-<br>
+<hr>
+<h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
+<br><br>
 @if($responses->count() < 1)
   <p class="text-center text-red">No responses found!</p>
 @else
@@ -196,7 +197,8 @@ font-family: FontAwesome;
               <div class="col">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
-                    <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
+                   <?php $explode = explode(" ", $item->posted_by );?>
+                    <h4 class="mb-0 text-sm">{{ $explode[0] }}</h4>
                   </div>
                   <div class="text-right text-muted">
 

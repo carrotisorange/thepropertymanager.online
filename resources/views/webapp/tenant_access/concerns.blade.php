@@ -117,13 +117,12 @@
     <h6 class="h2 text-dark d-inline-block mb-0">Concerns</h6>
     
   </div>
+  <div class="col-md-6 text-right">
+    <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  
+  </div>
 @endsection
 
 @section('main-content')
-
-<a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  
-<br>
-<br>
 <div class="table-responsive text-nowrap">
     <table class="table">
       <?php $ctr = 1; ?>
@@ -135,7 +134,7 @@
            
           
            <th>Category</th>
-            <th>Description</th>
+            <th>Title</th>
             <th>Urgency</th>
             <th>Status</th>
             <th>Assigned to</th>
@@ -172,7 +171,9 @@
                 <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
                 @endif
             </td>
-            <td>{{ $item->name? $item->name: 'NULL' }}</td>
+            <?php $explode = explode(" ", $item->name );?>
+           
+            <td>{{ $item->name? $explode[0]: 'NULL' }}</td>
             <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
             <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
         </tr>
@@ -208,9 +209,18 @@
                               </div>
                           </div>
                           <br>
+                          <div class="row">
+                            <div class="col">
+                                <label>Title</label>
+                              
+                                <input type="text" form="concernForm" class="form-control" name="title" required >
+                            </div>
+                          </div>  
+                          
+                          <br>
                             <div class="row">
                                 <div class="col">
-                                   <label>Type</label>
+                                   <label>Category</label>
                                     <select class="form-control" form="concernForm" name="category" id="" required>
                                       <option value="" selected>Please select one</option>
                                       <option value="billing">billing</option>
@@ -241,18 +251,11 @@
                           </div>
                           <br>
                          
-                        <div class="row">
-                          <div class="col">
-                              <label>Title</label>
-                            
-                              <input type="text" form="concernForm" class="form-control" name="title" required >
-                          </div>
-                        </div>  
-                        <br>
+                  
                         
                          <div class="row">
                               <div class="col">
-                                  <label>Details</label>
+                                  <label>Details <span class="text-danger">(Make it as explicit as possible)</span></label>
                                   
                                   <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
                               </div>

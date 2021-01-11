@@ -348,6 +348,7 @@ class PropertyController extends Controller
          $notification->user_id_foreign = Auth::user()->id;
          $notification->property_id_foreign = Session::get('property_id');
          $notification->type = 'search';
+         $notification->isOpen = '1';
          $notification->message = Auth::user()->name.' searches for '.$search_key;
          $notification->save();
                      
@@ -445,6 +446,7 @@ class PropertyController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = $property_id;
         $notification->type = 'property';
+        $notification->isOpen = '1';
         $notification->message = 'Congratulations! You have successfully added your first property.';
         $notification->save();
     

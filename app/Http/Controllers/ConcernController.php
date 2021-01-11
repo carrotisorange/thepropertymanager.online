@@ -82,12 +82,13 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name. ' adds a concern in '.$unit.'.';
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-        return redirect('/property/'.$property_id.'/home/'.$unit_id.'#concerns')->with('success', 'concern has been saved!');
+        return redirect('/property/'.$property_id.'/home/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
 
     }
   
@@ -110,6 +111,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name. ' adds a concern for reported by '. $tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
                 
@@ -117,9 +119,9 @@ class ConcernController extends Controller
 
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');
+                return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#concerns')->with('success', 'Concern is added sucessfully.');
             }else{
-                return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#concerns')->with('success', 'concern has been added!');
+                return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#concerns')->with('success', 'Concern is added sucessfully.');
             }
             
 
@@ -221,6 +223,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' updates concern '.$concern->concern_id.'.';
         $notification->save();
 
@@ -270,12 +273,13 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
+        $notification->isOpen = '1';
         $notification->message =  Auth::user()->name.' rates  '.$user->name.' for resolving concern '.$concern->concern_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
     
-        return back()->with('success', 'concern has been closed!');
+        return back()->with('success', 'Concern is closed sucessfully.');
         }
     }
 

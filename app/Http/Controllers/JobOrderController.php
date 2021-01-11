@@ -87,6 +87,7 @@ class JobOrderController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'joborder';
+            $notification->isOpen = '1';
             $notification->message =  Auth::user()->name.' files a job order and assigns it to '.$personnel->personnel_name.'.';
             $notification->save();
 

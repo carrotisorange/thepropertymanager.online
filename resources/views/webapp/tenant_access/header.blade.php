@@ -40,40 +40,73 @@
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="ni ni-bell-55"></i>
+      <i class="ni ni-bell-55"></i><span class="badge badge-primary">{{  Session::get('notifications')->count() }}</span>
     </a>
     <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
       <!-- Dropdown header -->
       <div class="px-3 py-3">
-        <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">0</strong> notifications.</h6>
+        <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">{{ Session::get('notifications')->count() }}</strong> notifications.</h6>
       </div>
       <!-- List group -->
       <div class="list-group list-group-flush">
-        {{-- <a href="#!" class="list-group-item list-group-item-action">
+
+        
+      
+        @foreach (Session::get('notifications') as $item)
+     
+        <a href="#!" class="list-group-item list-group-item-action">
           <div class="row align-items-center">
             <div class="col-auto">
               <!-- Avatar -->
-              <img alt="Image placeholder" src="assets/img/theme/team-1.jpg" class="avatar rounded-circle">
+            @if($item->type === 'tenant')
+            <i class="fas fa-user text-green fa-lg"></i>
+            @elseif($item->type === 'payable')
+            <i class="fas fa-file-export text-indigo fa-lg"></i>
+            @elseif($item->type === 'owner')
+            <i class="fas fa-user-tie text-teal fa-lg"></i>
+            @elseif($item->type === 'concern')
+            <i class="fas fa-tools text-cyan fa-lg"></i>
+            @elseif($item->type === 'payment')
+            <i class="fas fa-coins text-yellow fa-lg"></i>
+            @elseif($item->type === 'bill')
+            <i class="fas fa-file-invoice-dollar text-pink fa-lg"></i>
+            @elseif($item->type === 'joborder')
+            <i class="fas fa-list text-dark fa-lg"></i>
+            @elseif($item->type === 'unit')
+            <i class="fas fa-home text-indigo fa-lg"></i>
+            @elseif($item->type === 'contract')
+            <i class="fas fa-file-signature text-teal fa-lg"></i>
+            @elseif($item->type === 'search')
+            <i class="fas fa-search text-blue fa-lg"></i>
+            @elseif($item->type === 'financial')
+            <i class="fas fa-file-export text-indigo fa-lg"></i>
+            @elseif($item->type === 'user')
+            <i class="fas fa-user-circle text-green fa-lg"></i>
+            @elseif($item->type === 'issue')
+            <i class="fas fa-dizzy text-red text-red fa-lg"></i>
+            @else
+            <i class="fas fa-building text-primary fa-lg"></i>
+            @endif
             </div>
-            <div class="col ml--2">
+            <div class="col">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <h4 class="mb-0 text-sm">John Snow</h4>
+                  <h4 class="mb-0 text-sm">{{ $item->message }}</h4>
                 </div>
                 <div class="text-right text-muted">
-                  <small>2 hrs ago</small>
+                  {{-- <small>{{ $item->created_at }}</small> --}}
                 </div>
               </div>
-              <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
+              <p class="text-sm text-muted mb-0">{{ $item->created_at }}</p>
             </div>
           </div>
-        </a> --}}
-    
-      
-      
+        </a>
+ 
+        @endforeach
+
       </div>
       <!-- View all -->
-      {{-- <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a> --}}
+      {{-- <a href="/property/{{Session::get('property_id')}}/notifications" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a> --}}
     </div>
   </li>
   

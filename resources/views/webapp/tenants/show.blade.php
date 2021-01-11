@@ -358,6 +358,10 @@
       <div class="tab-pane fade" id="guardians" role="tabpanel" aria-labelledby="nav-guardians-tab">
         <a  href="#" class="btn btn-primary " data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>  
         <br><br>
+        
+        @if($guardians->count() < 1)
+        <p class="text-danger text-center">No guardians found!</p>
+        @else
         <div class="row" >
           <div class="col-md-12 mx-auto" >
         <div class="table-responsive text-nowrap">
@@ -388,13 +392,18 @@
         </div>
           </div>
         </div>
+        @endif
+   
       </div>
 
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
         <a  href="#" class="btn btn-primary " data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>  
         <br><br>
+        @if($concerns->count() < 1)
+        <p class="text-danger text-center">No concerns found!</p>
+        @else
         <div class="row" >
-          <div class="col-md-12 mx-auto" >
+          <div class="col-md-12" >
         <div class="table-responsive text-nowrap">
          <table class="table">
            <?php $ctr = 1; ?>
@@ -459,6 +468,7 @@
                 
           </div>
       </div>
+      @endif
       </div>
       <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
 
@@ -543,21 +553,7 @@
 
              @else
              @foreach ($access as $item)
-             <div class="row">
-              <div class="col">
-               
-                <div class="alert alert-success alert-dismissable custom-success-box">
-                  
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-                   
-                      By default, the password would be the mobile number of the tenant. If the password is not letting you in, try using 12345678 as the password instead. <br> Please ask the tenant to immediately change the password.</strong>
-                      
-                    
-                </div>
-            
-              </div>
-            </div>
+       
              <table class="table">
                
                 
@@ -566,14 +562,18 @@
                    <th>Email</th>
                    <td>{{ $item->email }}</td>
                  </tr>
-               
+                 <tr>
+                  <th>Password</th>
+                  <td>{{ $item->contact_no }} or <b>12345678</b></td>
+                </tr>
+              
                  <tr>
                   <th>Created at</th>
-                  <td>{{ $item->created_at }}</td>
+                  <td>{{ $item->created_at? $item->created_at: null }}</td>
                 </tr>
 
                 <tr>
-                  <th>Updated at</th>
+                  <th>Verified at</th>
                   <td>{{ $item->updated_at? $item->updated_at: null }}</td>
                 </tr>
              </table>
