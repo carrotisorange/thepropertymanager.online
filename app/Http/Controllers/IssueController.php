@@ -69,7 +69,6 @@ class IssueController extends Controller
 
         $issue = new Issue();
         $issue->user_id_foreign = Auth::user()->id;
-        $issue->reported_by = Auth::user()->name;
         $issue->details = $request->details;
         $issue->status = 'active';
         $issue->save();
