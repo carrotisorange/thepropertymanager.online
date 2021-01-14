@@ -212,10 +212,10 @@
                       <h4 class="mb-0 text-sm">{{ $item->message }}</h4>
                     </div>
                     <div class="text-right text-muted">
-                      <small>{{ $item->name }}</small>
+                      <small>{{ Carbon\Carbon::parse($item->action_made)->diffForHumans() }}</small>
                     </div>
                   </div>
-                  <p class="text-sm text-muted mb-0">{{ $item->action_made }}</p>
+                  <p class="text-sm text-muted mb-0">{{ $item->name }}</p>
                 </div>
               </div>
             </a>

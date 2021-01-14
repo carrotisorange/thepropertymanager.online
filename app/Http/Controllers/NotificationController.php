@@ -17,12 +17,14 @@ class NotificationController extends Controller
      */
     public function index()
     {
+
          $notifications =  DB::table('notifications')
-         ->join('users','user_id_foreign', 'id')
-         ->select('*', 'notifications.created_at as action_made')
-         ->where('property_id_foreign', Session::get('property_id'))
-         ->orderBy('notification_id', 'desc')
-         ->get();
+        ->join('users','user_id_foreign', 'id')
+        ->join('properties','property_id_foreign', 'property_id')
+        ->select('*', 'notifications.created_at as action_made')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('notification_id', 'desc')
+        ->get();
 
           DB::table('notifications')->where('property_id_foreign', Session::get('property_id'))->update(['isOpen' => 1]);
 

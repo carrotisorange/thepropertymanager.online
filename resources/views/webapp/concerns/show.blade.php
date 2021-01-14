@@ -327,7 +327,7 @@ font-family: FontAwesome;
                   </div>
                   <div class="text-right text-muted">
 
-                    <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }} </small>
+                    <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
                    
                     
                   </div>

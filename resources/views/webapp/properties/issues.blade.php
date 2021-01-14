@@ -229,7 +229,7 @@
                           <h4 class="mb-0 text-sm">{{ $item->name }} ({{ $item->responses }})</h4>
                         </div>
                         <div class="text-right text-muted">
-                          <small>{{ Carbon\Carbon::parse($item->created_at)->format('M-d-Y') }}</small>
+                          <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
                         </div>
                       </div>
                       <p class="text-sm text-muted mb-0">{{ $item->details }}</p>

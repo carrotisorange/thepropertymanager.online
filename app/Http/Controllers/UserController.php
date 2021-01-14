@@ -35,7 +35,6 @@ class UserController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
 
-           
             $sessions = DB::table('users')
             ->join('sessions', 'id', 'session_user_id')
             ->join('properties', 'id', 'user_id_property')
@@ -699,7 +698,7 @@ class UserController extends Controller
 
     public function show_portal_tenant(){
 
-          $tenant = User::findOrFail(Auth::user()->id)->access;
+        $tenant = User::findOrFail(Auth::user()->id)->access;
 
         return view('webapp.tenant_access.main', compact('tenant'));
     }

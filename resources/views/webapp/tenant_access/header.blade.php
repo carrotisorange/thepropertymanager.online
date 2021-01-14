@@ -97,7 +97,7 @@
                   {{-- <small>{{ $item->created_at }}</small> --}}
                 </div>
               </div>
-              <p class="text-sm text-muted mb-0">{{ $item->created_at }}</p>
+              <p class="text-sm text-muted mb-0">{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</p>
             </div>
           </div>
         </a>
