@@ -273,7 +273,7 @@
                         <td>{{ $item->user_name }}</td>
                         
                         <td>{{ $item->property_name }}</td>
-                        <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->diffForHumans() }}</td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -315,7 +315,7 @@
                                 <th>{{ $ctr++ }}</th>
                                   <td>{{ $item->name }}</td>
                                   <td>{{ $item->user_type }}</td>
-                                  <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() }}</td>
+                                  <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->diffForHumans() }}</td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -358,7 +358,7 @@
                         <td>{{ $item->name }}</td>
                         
                         <td><a href="/dev/issue/{{ $item->issue_id }}/edit">{{ $item->details }}</a></td>
-                        <td>{{ Carbon\Carbon::parse($item->created_at) }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
                     </tr>
                     @endforeach
                   </tbody>
