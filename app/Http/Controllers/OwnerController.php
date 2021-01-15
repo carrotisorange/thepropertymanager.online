@@ -31,7 +31,7 @@ class OwnerController extends Controller
         $notification->message = Auth::user()->name.' opens owners page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $owners = DB::table('certificates')
         ->join('owners', 'owner_id_foreign', 'owner_id')
@@ -128,7 +128,7 @@ class OwnerController extends Controller
         $notification->message = Auth::user()->name.' adds '.$request->name.' '.$last_name.' as an owner in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
                     
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'new owner has been added! Please complete the fields below...');
     }
@@ -234,7 +234,7 @@ class OwnerController extends Controller
         $notification->message = Auth::user()->name.' updates '.$request->unit_owner.' profile.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return redirect('/property/'.$property_id.'/owner/'.$owner_id)->with('success', 'Changes saved.');
     }

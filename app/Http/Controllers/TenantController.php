@@ -42,7 +42,7 @@ class TenantController extends Controller
         $notification->message = Auth::user()->name.' opens tenants page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $search = $request->tenant_search;
 
@@ -434,7 +434,7 @@ class TenantController extends Controller
           }
        
         
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
 
          $data = array(
@@ -553,7 +553,7 @@ class TenantController extends Controller
         $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' as an occupant in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
         
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'occupant has been added!');
        
@@ -884,7 +884,7 @@ class TenantController extends Controller
         $notification->message = Auth::user()->name().' updates '.$tenant->first_name.' '.$tenant->last_name.' profile.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id)->with('success','Changes saved.');

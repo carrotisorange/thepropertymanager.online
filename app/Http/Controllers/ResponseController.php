@@ -79,7 +79,7 @@ class ResponseController extends Controller
         $notification->message = Auth::user()->name.' respond to a concern.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
     
         return back()->with('success', 'reponse has been saved!');

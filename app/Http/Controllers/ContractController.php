@@ -311,7 +311,7 @@ class ContractController extends Controller
                 $notification->message = Auth::user()->name.' moves out '.$tenant->first_name.' '.$tenant->last_name.'.';
                 $notification->save();
                             
-                 Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+                 Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
             $pdf = \PDF::loadView('webapp.tenants.gatepass', $data)->setPaper('a4', 'portrait');
       
@@ -415,7 +415,7 @@ class ContractController extends Controller
         $notification->message = Auth::user()->name.' terminates '.$tenant->first_name.' '.$tenant->last_name.' contract.';
         $notification->save();
                     
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract has been terminated! Continue with the moveout.');
     }
@@ -512,7 +512,7 @@ class ContractController extends Controller
             $notification->message = Auth::user()->name.' extends '.$tenant->first_name.' '.$tenant->last_name.' contract.';
             $notification->save();
                         
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
       
 
         return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract has been extended!');
@@ -616,7 +616,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
     $notification->message = Auth::user()->name.' sends notice to expire contract to '.$tenant->first_name.' '.$tenant->last_name.'.';
     $notification->save();
                 
-    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
     return back()->with('success', 'Email has been sent to '.$tenant->first_name.' '.$unit->unit_no);
 
@@ -653,7 +653,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
        $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' contract.';
        $notification->save();
                    
-       Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+       Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Changes saved.');
     }
@@ -677,7 +677,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
         $notification->message = Auth::user()->name.' deletes '.$tenant->first_name.' '.$tenant->last_name.' contract.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $contract = Contract::findOrFail($contract_id);
 

@@ -30,7 +30,7 @@ class JobOrderController extends Controller
         $notification->message = Auth::user()->name.' opens joborders page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
           $joborders = DB::table('job_orders')
         ->join('concerns', 'concern_id_foreign', 'concern_id')

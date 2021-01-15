@@ -27,7 +27,7 @@ class FinancialController extends Controller
         $notification->message = Auth::user()->name.' opens financials page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
 
         $collection_rate_1 = DB::table('contracts')

@@ -29,7 +29,7 @@ class IssueController extends Controller
         $notification->message = Auth::user()->name.' opens issues page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $property = Property::findOrFail(Session::get('property_id'));
 

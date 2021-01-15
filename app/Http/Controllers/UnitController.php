@@ -30,7 +30,7 @@ class UnitController extends Controller
         $notification->message = Auth::user()->name.' opens rooms page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         if(auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
 

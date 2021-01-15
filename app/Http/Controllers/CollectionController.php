@@ -51,7 +51,7 @@ class CollectionController extends Controller
         $notification->message = Auth::user()->name.' opens collections page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $search = $request->search;
 
@@ -254,7 +254,7 @@ class CollectionController extends Controller
             $notification->message = Auth::user()->name. ' moves in '. $tenant->first_name.' '.$tenant->last_name.'.';
             $notification->save();
                         
-             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
            
         }
 
@@ -268,7 +268,7 @@ class CollectionController extends Controller
         $notification->message = Auth::user()->name.' records '. ($no_of_payments-1) .' payment/s made by '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
  
@@ -318,7 +318,7 @@ class CollectionController extends Controller
         $notification->message = Auth::user()->name.' records '. ($no_of_payments-1) .' payment/s made by '.$unit->unit_no.'.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
             return redirect('/property/'.$property_id.'/home/'.$home_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
  
@@ -374,7 +374,7 @@ class CollectionController extends Controller
         $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' payments.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
   
@@ -449,7 +449,7 @@ class CollectionController extends Controller
         $notification->message = Auth::user()->name.' deletes payment made by '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         DB::table('payments')->where('payment_id', $payment_id)->delete();
 

@@ -44,7 +44,7 @@ class OccupantController extends Controller
         $notification->message = Auth::user()->name.' opens occupants page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
         
         $search = $request->tenant_search;
 
@@ -206,7 +206,7 @@ class OccupantController extends Controller
         $notification->message = Auth::user()->name.' adds '.$occupant->first_name.' '.$occupant->last_name.' as an occupant in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
         
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'Occupant has been added!');
        

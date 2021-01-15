@@ -28,7 +28,7 @@ class ConcernController extends Controller
         $notification->message = Auth::user()->name.' opens concerns page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
          $concerns = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -86,7 +86,7 @@ class ConcernController extends Controller
         $notification->message = Auth::user()->name. ' adds a concern in '.$unit.'.';
         $notification->save();
                 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return redirect('/property/'.$property_id.'/home/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
 
@@ -115,7 +115,7 @@ class ConcernController extends Controller
         $notification->message = Auth::user()->name. ' adds a concern for reported by '. $tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
                 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
@@ -227,7 +227,7 @@ class ConcernController extends Controller
         $notification->message = Auth::user()->name.' updates concern '.$concern->concern_id.'.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         return back()->with('success', 'Changes saved.');
     }
@@ -277,7 +277,7 @@ class ConcernController extends Controller
         $notification->message =  Auth::user()->name.' rates  '.$user->name.' for resolving concern '.$concern->concern_id.'.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
         return back()->with('success', 'Concern is closed sucessfully.');
         }

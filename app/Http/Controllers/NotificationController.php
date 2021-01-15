@@ -28,7 +28,7 @@ class NotificationController extends Controller
 
         //   DB::table('notifications')->where('property_id_foreign', Session::get('property_id'))->update(['isOpen' => 1]);
 
-          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
         
         return view('webapp.notifications.index', compact('notifications'));
     }

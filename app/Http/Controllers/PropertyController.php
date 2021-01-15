@@ -348,11 +348,11 @@ class PropertyController extends Controller
          $notification->user_id_foreign = Auth::user()->id;
          $notification->property_id_foreign = Session::get('property_id');
          $notification->type = 'search';
-         $notification->isOpen = '1';
+     
          $notification->message = Auth::user()->name.' searches for '.$search_key;
          $notification->save();
                      
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
          $tenants = DB::table('users_properties_relations')
          ->join('properties', 'property_id_foreign', 'property_id')
@@ -446,7 +446,7 @@ class PropertyController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = $property_id;
         $notification->type = 'property';
-        $notification->isOpen = '1';
+    
         $notification->message = 'Congratulations! You have successfully added your first property.';
         $notification->save();
     
@@ -484,7 +484,7 @@ class PropertyController extends Controller
     {   
         Session::put('property_id', $request->property_id);
        
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
 
@@ -498,11 +498,11 @@ class PropertyController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'property';
-        $notification->isOpen = '1';
+    
         $notification->message = Auth::user()->name.' manages '.Session::get('property_name').'.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
 
          $top_agents = DB::table('contracts')
@@ -1211,7 +1211,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         Session::put('property_id', $request->property_id);
        
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
 
