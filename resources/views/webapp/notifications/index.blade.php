@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Notifications')
+@section('title', 'Activities')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -161,7 +161,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Notifications</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Activities</h6>
     
   </div>
   

@@ -40,12 +40,18 @@
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="ni ni-bell-55"></i><span class="badge badge-primary">{{  Session::get('notifications')->count() }}</span>
+      @if(Session::get('notifications')->count() > 4)
+      <i class="ni ni-archive-2"></i><span class="badge badge-primary">5 <sup>+</sup></span>
+      @else
+      <i class="ni ni-archive-2"></i><span class="badge badge-primary">{{  Session::get('notifications')->count() }}</span>
+      @endif
+       
+       
     </a>
     <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
       <!-- Dropdown header -->
       <div class="px-3 py-3">
-        <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">{{ Session::get('notifications')->count() }}</strong> notifications.</h6>
+        <h6 class="text-sm text-muted m-0">Your last <strong class="text-primary">{{ Session::get('notifications')->count() }}</strong> activities.</h6>
       </div>
       <!-- List group -->
       <div class="list-group list-group-flush">

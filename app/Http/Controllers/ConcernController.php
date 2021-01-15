@@ -24,7 +24,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' opens concerns page.';
         $notification->save();
                     
@@ -82,7 +82,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name. ' adds a concern in '.$unit.'.';
         $notification->save();
                 
@@ -111,7 +111,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name. ' adds a concern for reported by '. $tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
                 
@@ -223,7 +223,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' updates concern '.$concern->concern_id.'.';
         $notification->save();
 
@@ -273,7 +273,7 @@ class ConcernController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-        $notification->isOpen = '1';
+       
         $notification->message =  Auth::user()->name.' rates  '.$user->name.' for resolving concern '.$concern->concern_id.'.';
         $notification->save();
 

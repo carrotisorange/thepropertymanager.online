@@ -25,7 +25,7 @@ class IssueController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'issue';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' opens issues page.';
         $notification->save();
                     
@@ -35,7 +35,7 @@ class IssueController extends Controller
 
         $issues = DB::table('issues')
         ->join('users', 'user_id_foreign', 'id')
-        ->join('issue_responses', 'issues.issue_id', 'issue_responses.issue_id')
+        ->leftJoin('issue_responses', 'issues.issue_id', 'issue_responses.issue_id')
         ->select('*', 'issues.status as issue_status', DB::raw('count(issue_responses.id) as responses'))
         ->groupBy('issues.issue_id')
         ->orderBy('issues.created_at', 'desc')
@@ -62,7 +62,6 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'details' => 'required'
         ]);
@@ -73,7 +72,7 @@ class IssueController extends Controller
         $issue->status = 'active';
         $issue->save();
 
-        return back()->with('success', 'new issue has been posted!');
+        return back()->with('success', 'Issue is successfully reported.');
 
     }
 

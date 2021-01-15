@@ -25,7 +25,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' opens payables page.';
         $notification->save();
                     
@@ -114,7 +114,7 @@ class PayableController extends Controller
                 $notification->user_id_foreign = Auth::user()->id;
                 $notification->property_id_foreign = Session::get('property_id');
                 $notification->type = 'payable';
-                $notification->isOpen = '1';
+               
                 $notification->message = Auth::user()->name.' adds '.$request->input('entry'.$i).' as an entry in payable.';
                 $notification->save();
         }
@@ -147,7 +147,7 @@ class PayableController extends Controller
                $notification->user_id_foreign = Auth::user()->id;
                $notification->property_id_foreign = Session::get('property_id');
                $notification->type = 'payable';
-               $notification->isOpen = '1';
+              
                $notification->message = Auth::user()->name. ' requests for funds.';
                $notification->save();
 
@@ -177,7 +177,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' approves the requested funds for '.$entry.'.';
         $notification->save();
                 
@@ -205,7 +205,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' declines the requested funds for '.$entry.'.';
         $notification->save();
                 
@@ -232,7 +232,7 @@ class PayableController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payable';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' releases the requested funds for '.$entry.'.';
         $notification->save();
                 

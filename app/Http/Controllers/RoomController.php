@@ -25,7 +25,7 @@ class RoomController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'unit';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' opens rooms page.';
         $notification->save();
                     
@@ -347,7 +347,7 @@ class RoomController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'room';
-            $notification->isOpen = '1';
+           
             $notification->message = Auth::user()->name.' updates '.Unit::findOrFail($id)->unit_no.'.';
             $notification->save();
                         

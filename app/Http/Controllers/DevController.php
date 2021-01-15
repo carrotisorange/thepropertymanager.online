@@ -451,9 +451,9 @@ $contracts = DB::table('contracts')
 
     public function issues()
     {
-         $issues = DB::table('issues')
+          $issues = DB::table('issues')
         ->join('users', 'user_id_foreign', 'id')
-        ->join('issue_responses', 'issues.issue_id', 'issue_responses.issue_id')
+        ->leftJoin('issue_responses', 'issues.issue_id', 'issue_responses.issue_id')
         ->select('*', 'issues.status as issue_status', DB::raw('count(issue_responses.id) as responses'))
         ->groupBy('issues.issue_id')
         ->orderBy('issues.created_at', 'desc')
@@ -464,6 +464,7 @@ $contracts = DB::table('contracts')
 
     public function edit_issue($issue_id)
     {
+
         $issue = Issue::findOrFail($issue_id);
 
         $responses = DB::table('issue_responses')

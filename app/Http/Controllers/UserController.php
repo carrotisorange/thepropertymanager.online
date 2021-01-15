@@ -29,11 +29,12 @@ class UserController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'user';
-        $notification->isOpen = '1';
+       
         $notification->message = Auth::user()->name.' opens users page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));;
 
             $sessions = DB::table('users')
             ->join('sessions', 'id', 'session_user_id')
@@ -367,11 +368,12 @@ class UserController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'tenant';
-            $notification->isOpen = '1';
+           
             $notification->message = Auth::user()->name. ' accesses his tenant portal.';
             $notification->save();
 
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
             return view('webapp.tenant_access.index', compact('tenant'));
          }else{
@@ -400,11 +402,11 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'bill';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' checks his bills.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
 
             return view('webapp.tenant_access.bills', compact('bills','tenant'));
@@ -436,11 +438,12 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'payment';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' checks his payments.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
 
             return view('webapp.tenant_access.payments', compact('payments','tenant'));
@@ -476,11 +479,12 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'concern';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' checks his concerns.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
             return view('webapp.tenant_access.concerns', compact('concerns','tenant','users'));
          }else{
@@ -506,11 +510,12 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'concern';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' checks the responses for his concern regarding '.$concern->title.'.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
             return view('webapp.tenant_access.responses', compact('responses','tenant', 'concern'));
          }else{
@@ -548,7 +553,8 @@ class UserController extends Controller
            $notification->message = Auth::user()->name. ' reports a concern regarding '. $request->category.'.';
            $notification->save();
                    
-            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
            return back()->with('success', 'Your concern is successfully reported! Please keep your line open. One of our employees will get back to you.');
 
@@ -573,11 +579,11 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' checks his profile.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
             return view('webapp.tenant_access.profile', compact('tenant','user'));
          }else{
@@ -617,11 +623,12 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' updates his profile.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
             return back()->with('success', 'Changes saved.');
         }else{
@@ -647,11 +654,12 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-           $notification->isOpen = '1';
+          
            $notification->message = Auth::user()->name. ' updates his password.';
            $notification->save();
 
-           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+  
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
             
                 if(Auth::user()->user_type != 'manager'){
                     Auth::logout();
@@ -687,11 +695,12 @@ class UserController extends Controller
          $notification->user_id_foreign = Auth::user()->id;
          $notification->property_id_foreign = Session::get('property_id');
          $notification->type = 'concern';
-         $notification->isOpen = '1';
+        
          $notification->message = Auth::user()->name. ' checks his contracts.';
          $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('isOpen', '0'));
+  
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
         return view('webapp.tenant_access.contracts', compact('rooms', 'tenant'));
     }

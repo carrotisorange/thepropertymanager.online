@@ -53,7 +53,7 @@ class Property extends Model
 
     public function unseen_notifications()
     {
-        return $this->hasMany('App\Notification', 'property_id_foreign')->orderBy('created_at', 'desc');
+        return $this->hasMany('App\Notification', 'property_id_foreign')->orderBy('created_at', 'desc')->limit(5);
     }
 
     public function notifications()
