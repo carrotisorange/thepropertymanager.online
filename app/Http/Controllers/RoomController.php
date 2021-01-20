@@ -231,7 +231,7 @@ class RoomController extends Controller
 
         $property = Property::findOrFail(Session::get('property_id'));
  
-            return back()->with('success', $request->no_of_rooms.' room/s have been added!');
+            return back()->with('success', $request->no_of_rooms.' room is created sucessfully!');
         
      }
 

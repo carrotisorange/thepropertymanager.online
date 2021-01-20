@@ -881,7 +881,7 @@ class TenantController extends Controller
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
        
-        $notification->message = Auth::user()->name().' updates '.$tenant->first_name.' '.$tenant->last_name.' profile.';
+        $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' profile.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
