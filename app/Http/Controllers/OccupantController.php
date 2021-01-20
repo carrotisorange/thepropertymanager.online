@@ -134,11 +134,11 @@ class OccupantController extends Controller
             'middle_name' => ['max:255'],
             'last_name' => ['required', 'string', 'max:255'],
     
-            'birthdate' => [],
-            'gender' => [],
+            'birthdate' => ['required'],
+            'gender' => ['required'],
     
-            'civil_status' => [],
-            'id_number' => [],
+            'civil_status' => ['required'],
+            'id_number' => ['required'],
         
             'email_address' => ['required', 'string', 'email', 'max:255', 'unique:tenants'],
             'contact_no' => ['required', 'unique:tenants'],
@@ -208,7 +208,7 @@ class OccupantController extends Controller
         
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'Occupant has been added!');
+        return redirect('/property/'.$request->property_id.'/occupant/'.$tenant_id)->with('success', 'Occupant is added successfully.');
        
     }
    

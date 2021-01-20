@@ -392,7 +392,7 @@ $contracts = DB::table('contracts')
          $plan->trial_expired_at = $request->trial_expired_at;
          $plan->save();
 
-        return back()->with('success', 'Added succesfully!');
+        return back()->with('success', 'Added successfully.');
     }
 
     public function post_user(Request $request, $user_id)

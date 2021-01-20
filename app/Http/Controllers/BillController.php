@@ -334,9 +334,9 @@ class BillController extends Controller
         }
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
         }else{
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
         }
         
 
@@ -408,9 +408,9 @@ class BillController extends Controller
         }
         
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
         }else{
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
         }
     }
 
@@ -479,7 +479,7 @@ class BillController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return redirect('/property/'.Session::get('property_id').'/home/'.$unit_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
+            return redirect('/property/'.Session::get('property_id').'/unit/'.$unit_id.'#bills')->with('success', ($i-1).' bill/s have been posted!');
     
     }
 
@@ -685,13 +685,12 @@ class BillController extends Controller
             }     
 
            
-            $balance = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-            ->join('units', 'bill_unit_id', 'unit_id')
-            ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('unit_id', $unit_id)
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_unit_id', $unit_id)
             ->groupBy('bill_id')
             ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
+            // ->havingRaw('balance > 0')
             ->get();
           
                 return view('webapp.bills.edit_occupant_bills', compact('current_bill_no','unit', 'balance', 'property'));  
@@ -775,16 +774,14 @@ class BillController extends Controller
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
 
 
-             
-            $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-            ->join('units', 'bill_unit_id', 'unit_id')
-            ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('unit_id', $unit_id)
+            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_unit_id', $unit_id)
             ->groupBy('bill_id')
             ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
+            // ->havingRaw('balance > 0')
             ->get();
-
+             
 
             for ($i=1; $i <= $bills->count(); $i++) { 
                  $bill = Bill::find($request->input('billing_id_ctr'.$i));
@@ -815,7 +812,7 @@ class BillController extends Controller
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
           
-                    return redirect('/property/'.$property_id.'/home/'.$unit_id.'#bills')->with('success','Changes saved.');
+                    return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#bills')->with('success','Changes saved.');
            
            
         }else{
@@ -852,7 +849,7 @@ class BillController extends Controller
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         DB::table('bills')->where('bill_id', $billing_id)->delete();
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'bill has been deleted!');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'Bill is deleted successfully.');
     }
 
     public function export($property_id,$tenant_id)
@@ -956,7 +953,7 @@ class BillController extends Controller
 
         DB::table('bills')->where('bill_id', $billing_id)->delete();
 
-        return back()->with('success', 'bill has been deleted!');
+        return back()->with('success', 'Bill is deleted successfully.');
     }
    
 }

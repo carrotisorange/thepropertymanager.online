@@ -320,7 +320,7 @@ class CollectionController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
-            return redirect('/property/'.$property_id.'/home/'.$home_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
+            return redirect('/property/'.$property_id.'/unit/'.$home_id.'#payments')->with('success', ($i-1).' Payment is added successfully.');
  
 
             
@@ -454,9 +454,9 @@ class CollectionController extends Controller
         DB::table('payments')->where('payment_id', $payment_id)->delete();
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
         }else{
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' payment has been deleted!');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
         }
     }
 

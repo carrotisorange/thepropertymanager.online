@@ -130,7 +130,7 @@ class OwnerController extends Controller
                     
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'new owner has been added! Please complete the fields below...');
+        return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'Owner is created successfully.');
     }
 
     /**

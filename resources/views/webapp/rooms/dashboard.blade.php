@@ -20,9 +20,17 @@
             </div>  
           @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
           <li class="nav-item">
-            <a class="nav-link" href="/home">
-              <i class="fas fa-home"></i>
-              <span>Home</span></a>
+                      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units">
+                <i class="fas fa-home text-indigo"></i>
+                <span class="nav-link-text">Units</span>
+              </a>
+              @else
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms">
+                <i class="fas fa-home text-indigo"></i>
+                <span class="nav-link-text">Rooms</span>
+              </a>
+              @endif
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/calendar">
@@ -147,7 +155,7 @@
             <i class="fas fa-question-circle fa-sm text-dark-50"></i> Users Page> <a href="/users">Try it here...</a>
             <li >You can now send a message for any concern/request regarding the usage of the The Property Manager by clicking the messenger logo at the most left-button of your screen. - <span class="font-italic">October 01, 2020</span></li>
             <li >You can now edit multiple rooms all at the same time. - <span class="font-italic">October 1, 2020</span></li>
-            <i class="fas fa-question-circle fa-sm text-dark-50"></i> Home Page>Click the Edit button at the most left-top of your screen, <a href="/home">Try it here...</a>
+            <i class="fas fa-question-circle fa-sm text-dark-50"></i> Home Page>Click the Edit button at the most left-top of your screen, <a href="/rooms">Try it here...</a>
             <li >You can now request, approve, decline, release payables to monitor expenses. - <span class="font-italic">October 10, 2020</span></li>
             <i class="fas fa-question-circle fa-sm text-dark-50"></i> Payables Page>Click the add button, <a href="/payables">Try it here </a>.
             <li >You can now add response to a particular concern. Also, you can now rate an employee based on how the concern is resolved (Only available for admin and manager roles). - <span class="font-italic">October 20, 2020</span></li>
@@ -172,7 +180,7 @@
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/home">  ROOMS</a> </div>
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/rooms">  ROOMS</a> </div>
             <div id="count_rooms" class="h5 mb-0 font-weight-bold text-gray-800">{{ $units->count() }}</div>
 {{--                             
             <small>O ({{ $units_occupied->count() }})</small>
@@ -257,7 +265,7 @@
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/home">  ROOMS</a></div>
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/rooms">  ROOMS</a></div>
             <div id="count_rooms" class="h5 mb-0 font-weight-bold text-gray-800">{{ $units->count() }}</div>
             
             {{-- <small>O ({{ $units_occupied->count() }})</small>

@@ -21,9 +21,17 @@
             </div>  
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
           <li class="nav-item">
-            <a class="nav-link" href="/home">
-              <i class="fas fa-home"></i>
-              <span>Home</span></a>
+                      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units">
+                <i class="fas fa-home text-indigo"></i>
+                <span class="nav-link-text">Units</span>
+              </a>
+              @else
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms">
+                <i class="fas fa-home text-indigo"></i>
+                <span class="nav-link-text">Rooms</span>
+              </a>
+              @endif
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/calendar">

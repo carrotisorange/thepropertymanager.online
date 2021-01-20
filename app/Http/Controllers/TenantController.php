@@ -175,7 +175,7 @@ class TenantController extends Controller
                                   );      
 
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Credentials created succesfully!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Credentials created successfully.');
                                   
 
     return back()->with('success', 'Tenant access to the system has been created!');
@@ -453,7 +453,7 @@ class TenantController extends Controller
                 $message->subject('Welcome Tenant');
             });
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Tenant added succesfully!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Tenant added successfully.');
     
     }
 

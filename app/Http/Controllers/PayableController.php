@@ -154,7 +154,7 @@ class PayableController extends Controller
                Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
        }   
    
-       return redirect('property/'.Session::get('property_id').'/payables#payables/')->with('success', 'Request is sent successfully!');
+       return redirect('property/'.Session::get('property_id').'/payables#payables/')->with('success', 'Request is sent successfully.');
     }
 
     public function approve(Request $request,  $property_id, $payable_id){

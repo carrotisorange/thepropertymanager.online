@@ -88,7 +88,7 @@ class ConcernController extends Controller
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return redirect('/property/'.$property_id.'/home/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
+        return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
 
     }
   

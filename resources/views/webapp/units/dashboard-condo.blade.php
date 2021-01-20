@@ -21,9 +21,17 @@
             </div>  
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
           <li class="nav-item">
-            <a class="nav-link" href="/home">
-              <i class="fas fa-home"></i>
-              <span>Home</span></a>
+                      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units">
+                <i class="fas fa-home text-indigo"></i>
+                <span class="nav-link-text">Units</span>
+              </a>
+              @else
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms">
+                <i class="fas fa-home text-indigo"></i>
+                <span class="nav-link-text">Rooms</span>
+              </a>
+              @endif
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/calendar">
@@ -142,7 +150,7 @@
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/home">  ROOMS</a> </div>
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/units">  ROOMS</a> </div>
             <div id="count_rooms" class="h5 mb-0 font-weight-bold text-gray-800">{{ $units->count() }}</div>
 {{--                             
             <small>O ({{ $units_occupied->count() }})</small>
@@ -227,7 +235,7 @@
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/home">  ROOMS</a></div>
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a class="text-primary" href="/rooms">  ROOMS</a></div>
             <div id="count_rooms" class="h5 mb-0 font-weight-bold text-gray-800">{{ $units->count() }}</div>
             
             {{-- <small>O ({{ $units_occupied->count() }})</small>

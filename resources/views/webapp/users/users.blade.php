@@ -25,9 +25,9 @@
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/home">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms">
                 <i class="fas fa-home text-indigo"></i>
-                <span class="nav-link-text">Home</span>
+                <span class="nav-link-text">Rooms</span>
               </a>
             </li>
             @endif
@@ -111,7 +111,7 @@
             </li>
             @endif
             <li class="nav-item">
-              <a class="nav-link active active" href="/property/{{Session::get('property_id')}}/users">
+              <a class="nav-link active" href="/property/{{Session::get('property_id')}}/users">
                 <i class="fas fa-user-circle text-green"></i>
                 <span class="nav-link-text">Users</span>
               </a>

@@ -84,16 +84,6 @@ class RoomController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-      
-    }
 
     /**
      * Display the specified resource.
@@ -189,7 +179,7 @@ class RoomController extends Controller
         
     }
 
-    public function add_multiple_rooms(Request $request){
+    public function store(Request $request){
         if(!$request->building){
             $building = 'Building-1';
         }else{
@@ -227,7 +217,6 @@ class RoomController extends Controller
             $occupancy->property_id_foreign =  Session::get('property_id');
             $occupancy->save();
         }
-
 
         $property = Property::findOrFail(Session::get('property_id'));
  
@@ -289,7 +278,7 @@ class RoomController extends Controller
             $occupancy->save();
         }
      
-        return redirect('/property/'. $property_id.'/home')->with('success','Changes saved.');
+        return redirect('/property/'. $property_id.'/rooms')->with('success','Changes saved.');
                  
      }
 
@@ -451,9 +440,9 @@ class RoomController extends Controller
                         );
   
                         if(Session::get('property_id') === 'Condominium Corporation'){
-                            return redirect('/property/'.$property_id.'/home')->with('success', 'unit has been archived!');
+                            return redirect('/property/'.$property_id.'/units')->with('success', 'Unit is archived successfully.');
                         }else{
-                            return redirect('/property/'.$property_id.'/home')->with('success', 'room has been archived!');
+                            return redirect('/property/'.$property_id.'/rooms')->with('success', 'Unit is archived successfully.');
                         }
        
     }

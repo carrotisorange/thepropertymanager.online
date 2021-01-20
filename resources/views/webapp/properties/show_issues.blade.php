@@ -27,7 +27,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/property/{{Session::get('property_id') }}/home">
                 <i class="fas fa-home text-indigo"></i>
-                <span class="nav-link-text">Home</span>
+                <span class="nav-link-text">Rooms</span>
               </a>
             </li>
             @endif

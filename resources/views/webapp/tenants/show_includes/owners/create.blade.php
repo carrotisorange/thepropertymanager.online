@@ -7,7 +7,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <form id="addInvestorForm" action="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/owner" method="POST">
+        <form id="addInvestorForm" action="/property/{{ $property->property_id }}/room/{{ $home->unit_id }}/owner" method="POST">
             @csrf
         </form>
         <div class="modal-body">
@@ -25,8 +25,7 @@
             </div>            
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button>
-        <button type="submit" form="addInvestorForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check text-white-50"></i> Submit</button>  
+        <button type="submit" form="addInvestorForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>  
         </div>
     </div>
     </div>

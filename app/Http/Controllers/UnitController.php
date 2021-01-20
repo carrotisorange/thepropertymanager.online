@@ -39,17 +39,10 @@ class UnitController extends Controller
             ->count();
     
         
-            $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
+            $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'accepted')->count();
     
             $units_vacant = Property::findOrFail(Session::get('property_id'))->units->where('status', 'vacant')->count();
-           
-             $units_reserved =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'reserved')->count();
-
-             $units_dirty =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'dirty')->count();
-             
-             $st_contract =  Property::findOrFail(Session::get('property_id'))->units->where('term', 'st')->count();
     
-            
     
            $units = Property::findOrFail($property_id)
            ->units()->where('status','<>','deleted')
@@ -65,12 +58,9 @@ class UnitController extends Controller
             ->get('building', 'status','count');
                
             $property = Property::findOrFail($property_id);
-    
-           if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return view('webapp.units.index',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty'));
-           }else{
-            return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
-           }
+
+            return view('webapp.units.index',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property'));
+          
         }else{
             return view('layouts.arsha.unregistered');
         }
@@ -92,10 +82,6 @@ class UnitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
     
 
     /**
@@ -187,12 +173,8 @@ class UnitController extends Controller
             
             $property = Property::findOrFail(Session::get('property_id'));
 
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'payments'));
-            }else{
-                return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
-            }
-          
+           
              
           
         }else{
@@ -221,19 +203,11 @@ class UnitController extends Controller
         ->orderBy('unit_no', 'asc')
         ->get();
 
-        $property = Property::findOrFail($property_id);
-
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return view('webapp.units.edit-all', compact('units', 'property'));
-        }else{
-            return view('webapp.rooms.edit', compact('units', 'property'));
-        }
-
-
+        return view('webapp.units.edit-all', compact('units'));
  }
 
     
-    public function add_multiple_units(Request $request){
+    public function store(Request $request){
         if(!$request->building){
             $building = 'Building-1';
         }else{
@@ -254,7 +228,7 @@ class UnitController extends Controller
 
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'accepted')->count();
 
         $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
@@ -270,7 +244,7 @@ class UnitController extends Controller
         
         $property = Property::findOrFail(Session::get('property_id'));
 
-        return back()->with('success', $request->no_of_rooms.' units have been added!');
+        return back()->with('success', $request->no_of_rooms.' unit is successfully created!');
       
         
      }
@@ -280,12 +254,17 @@ class UnitController extends Controller
         $all_rooms = Property::findOrFail($property_id)->units->count();
 
         for($i = 1; $i<=$all_rooms; $i++){
-
+            if(!$request->input('building'.$i)){
+                $building = 'Building-1';
+            }else{
+                $building =  str_replace(' ', '-',$request->input('building'.$i));
+            }
+            
              $room = Unit::findOrFail($request->input('unit_id'.$i));
              $room->unit_no = $request->input('unit_no'.$i);
              $room->type = $request->input('type'.$i);
              $room->status = $request->input('status'.$i);
-             $room->building = $request->input('building'.$i);
+             $room->building = $building;
              $room->floor = $request->input('floor'.$i);
              $room->occupancy = $request->input('occupancy'.$i);
              $room->rent = $request->input('rent'.$i);
@@ -295,7 +274,7 @@ class UnitController extends Controller
       
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'accepted')->count();
 
         $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
@@ -309,7 +288,7 @@ class UnitController extends Controller
             $occupancy->save();
         }
      
-        return redirect('/property/'. $property_id.'/home')->with('success','Changes saved.');
+        return redirect('/property/'. $property_id.'/units')->with('success','Changes saved.');
                  
      }
 
@@ -335,11 +314,11 @@ class UnitController extends Controller
 
         $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
-        $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
+        $accepted_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'accepted')->count();
 
         $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
 
-        $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
+        $new_occupancy_rate = number_format(($accepted_rooms/$active_rooms) * 100,2);
 
         if($current_occupancy_rate !== $new_occupancy_rate){
             $occupancy = new OccupancyRate();
