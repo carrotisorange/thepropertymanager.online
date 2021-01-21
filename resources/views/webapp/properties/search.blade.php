@@ -227,7 +227,13 @@
             <tr>
                 <th>{{ $unit_ctr++ }}</th>
                 <td>{{ $unit->building }}</td>
-                <td><a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a></td>
+                <td>
+                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+                    <a href="/property/{{ $property->property_id }}/unit/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
+               @else
+               <a href="/property/{{ $property->property_id }}/room/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
+                 @endif
+                </td>
                 <td>{{ $unit->floor }}</td>
                 <td>{{ $unit->type }}</td>
                 <td>{{ $unit->status }}</td>
