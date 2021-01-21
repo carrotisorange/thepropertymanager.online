@@ -11,6 +11,9 @@ use App\Property;
 use DB;
 use App\Bill;
 use App\Unit;
+use App\User;
+use Carbon\Carbon;
+use Hash;
 
 class OwnerAccessController extends Controller
 {
@@ -50,6 +53,93 @@ class OwnerAccessController extends Controller
          }
       
       
+       
+    }
+
+    
+    public function update_profile(Request $request, $user_id, $owner_id){
+
+        if(($user_id == Auth::user()->id)){
+          
+        if($request->password === null){
+
+
+            DB::table('users')
+            ->where('id', $user_id)
+            ->update(
+                    [
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'updated_at' => Carbon::now()
+                      
+                    ]
+                );
+            
+            DB::table('owners')
+            ->where('owner_id', $owner_id)
+            ->update([
+                'mobile'=> $request->contact_no
+            ]);
+
+            
+           $notification = new Notification();
+           $notification->user_id_foreign = Auth::user()->id;
+           $notification->property_id_foreign = Session::get('property_id');
+           $notification->type = 'user';
+          
+           $notification->message = Auth::user()->name. ' updates his profile.';
+           $notification->save();
+
+
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+
+            return back()->with('success', 'Changes saved.');
+        }else{
+            DB::table('users')
+            ->where('id', $user_id)
+            ->update(
+                [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'updated_at' => Carbon::now(),
+                ]
+                );
+            
+                DB::table('owners')
+                ->where('owner_id', $owner_id)
+                ->update([
+                    'mobile'=> $request->contact_no
+                ]);
+
+                
+           $notification = new Notification();
+           $notification->user_id_foreign = Auth::user()->id;
+           $notification->property_id_foreign = Session::get('property_id');
+           $notification->type = 'user';
+          
+           $notification->message = Auth::user()->name. ' updates his password.';
+           $notification->save();
+
+  
+           Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+            
+                if(Auth::user()->user_type != 'manager'){
+                    Auth::logout();
+                    return redirect('/login')->with('success', 'New password has been saved!');
+                }else{
+                    return back()->with('success', 'Changes saved.');
+                }
+            
+          
+        } 
+
+            return view('webapp.tenant_access.profile', compact('tenant','user'));
+         }else{
+             return view('layouts.arsha.unregistered');
+         }
+      
+
        
     }
 
@@ -206,6 +296,34 @@ public function concern($user_id, $owner_id){
        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
         return view('webapp.owner_access.concerns', compact('concerns','owner'));
+     }else{
+         return view('layouts.arsha.unregistered');
+     }
+  
+
+   
+}
+
+public function profile($user_id, $owner_id){
+
+    if(($user_id == Auth::user()->id)){
+
+        $user = User::findOrFail($user_id);
+
+        $owner = Owner::findOrFail($owner_id);
+
+        
+       $notification = new Notification();
+       $notification->user_id_foreign = Auth::user()->id;
+       $notification->property_id_foreign = Session::get('property_id');
+       $notification->type = 'user';
+      
+       $notification->message = Auth::user()->name. ' checks his profile.';
+       $notification->save();
+
+       Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+
+        return view('webapp.owner_access.profile', compact('owner','user'));
      }else{
          return view('layouts.arsha.unregistered');
      }

@@ -66,7 +66,7 @@
 
 @section('main-content')
 <div class="col-md-12 mx-auto">
-<form id="editUserForm" action="/user/{{ Auth::user()->id }}/tenant/{{ $owner->owner_id }}/profile" method="POST">
+<form id="editUserForm" action="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/profile" method="POST">
       @method('put')
       @csrf
     </form>
@@ -87,7 +87,7 @@
             @enderror
       <br>
       <label>Mobile</label>
-      <input form="editUserForm" id="contact_no" type="text" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ $tenant->contact_no }}" required autocomplete="contact_no">
+      <input form="editUserForm" id="contact_no" type="text" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ $owner->mobile }}" required autocomplete="contact_no">
             @error('contact_no')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
