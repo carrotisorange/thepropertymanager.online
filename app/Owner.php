@@ -28,6 +28,6 @@ class Owner extends Model
 
     public function units()
     {
-        return $this->hasMany('App\Unit', 'owner_id');
+        return $this->hasMany('App\Unit', 'unit_id');
     }
 }

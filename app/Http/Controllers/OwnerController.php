@@ -12,6 +12,7 @@ use Uuid;
 use Carbon\Carbon;
 use Session;
 use App\Notification;
+use Illuminate\Support\Facades\Hash;
 
 class OwnerController extends Controller
 {
@@ -155,28 +156,61 @@ class OwnerController extends Controller
            ->where('owner_id_foreign', $owner_id)
            ->get();
 
+            $access = DB::table('users')
+           ->join('owners', 'id', 'user_id_foreign')
+           ->where('owner_id', $owner_id)
+           ->get();
    
-   
-  
-        //    $bills = Billing::leftJoin('payments', 'billings.bill_no', '=', 'payments.payment_bill_no')
-        //    ->join('tenants', 'bill_tenant_id', 'tenant_id')
-           
-        // //    ->selectRaw('*, billings.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-        // //    ->where('unit_tenant_id', $unit_id)
-        // //    ->groupBy('billing_id')
-        // //    ->orderBy('bill_no', 'desc')
-        // //    ->havingRaw('balance > 0')
-        // //    ->get();
-    
-        $property = Property::findOrFail($property_id);
-   
-            return view('webapp.owners.show', compact('owner','rooms','property'));
+            return view('webapp.owners.show', compact('owner','rooms','access'));
         }else{
             return view('layouts.arsha.unregistered');
         }
 
        
        
+    }
+
+    public function create_user_access(Request $request, $property_id, $owner_id){
+   
+         $request->all();
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required'],
+        ]);
+
+      $user_id =  DB::table('users')->insertGetId([
+            'name' => $request->name,
+            'email' => $request->email,
+            'user_type' => 'owner',
+            'password' => Hash::make($request->password),
+            'created_at' => Carbon::now(),
+            'account_type' => Auth::user()->account_type,
+            'created_at' => Carbon::now(),
+            'email_verified_at' => Carbon::now(),
+            'trial_ends_at' => Auth::user()->trial_ends_at,
+        ]);
+
+    DB::table('owners')
+    ->where('owner_id', $owner_id)
+    ->update([
+        'user_id_foreign' => $user_id,
+    ]);
+
+
+    DB::table('users_properties_relations')
+                          ->insert
+                                  (
+                                      [
+                                          'user_id_foreign' => $user_id,
+                                        
+                                          'property_id_foreign' => $property_id,
+                                      ]
+                                  );      
+                                  
+
+    return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#user')->with('success', 'Owner access to the system is created successfully!');
     }
 
     /**

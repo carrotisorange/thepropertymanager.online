@@ -62,7 +62,15 @@ class PropertyController extends Controller
 
            
             }elseif(Auth::user()->user_type == 'owner'){
-                return redirect('/user/'.Auth::user()->id.'/owner/portal');
+                $property_id = DB::table('users_properties_relations')
+                ->join('users', 'user_id_foreign', 'id')
+                ->where('user_id_foreign', Auth::user()->id)
+                ->limit(1)
+                ->get('property_id_foreign');
+ 
+                  $owner = User::findOrFail(Auth::user()->id)->owner_access;
+                 
+                 return view('webapp.owner_access.main', compact('property_id', 'owner'));
             }elseif(Auth::user()->user_type == 'dev'){
 
                 Session::put('notifications', Notification::where('isOpen', 1)->orderBy('created_at','desc')->limit(5)->get());

@@ -9,7 +9,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-          {{-- <img src="{{ asset('/argon/assets/img/brand/logo.png') }}" class="navbar-brand-img" alt="...">--}}{{ $property->name }} 
+          {{-- <img src="{{ asset('/argon/assets/img/brand/logo.png') }}" class="navbar-brand-img" alt="...">--}}{{Session::get('property_name')}}
         </a>
       </div>
       <div class="navbar-inner">
@@ -181,7 +181,12 @@
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-owner-tab" data-toggle="tab" href="#owner" role="tab" aria-controls="nav-owner" aria-selected="true"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Profile</a>
-          <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="fas fa-money-check fa-sm text-primary-50"></i> Bank <span class="badge badge-primary"></span></a>
+          @if($access->count() <=0  )
+          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>  </a>
+          @else
+          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access </a>
+          @endif
+          <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="fas fa-money-check fa-sm text-primary-50"></i> Banks <span class="badge badge-primary"></span></a>
           <a class="nav-item nav-link" id="nav-certificates-tab" data-toggle="tab" href="#certificates" role="tab" aria-controls="nav-certificates" aria-selected="false"><i class="fas fa-home fa-sm text-primary-50"></i> 
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             Certificates
@@ -205,8 +210,8 @@
       <div class="tab-pane fade show active" id="owner" role="tabpanel" aria-labelledby="nav-owner-tab">
         <div class="row">
           <div class="col-md-8">
-            <a href="/property/{{ $property->property_id }}/owners"  class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>
-            <a href="/property/{{ $property->property_id }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+            <a href="/property/{{ Session::get('property_id') }}/owners"  class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>
+            <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
             <br><br>
   
                <div class="table-responsive text-nowrap">
@@ -259,6 +264,52 @@
        
          </div> </div>
       </div>
+
+      <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
+        @if($access->count() <=0  )
+        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</button>
+        <br><br>
+        @endif
+     
+        
+        <div class="col-md-12 mx-auto">
+          <div class="table-responsive">
+            <div class="table-responsive text-nowrap">
+             @if($access->count() <= 0)
+              <p class="text-center text-danger">No credentials found!</p>
+
+             @else
+             @foreach ($access as $item)
+       
+             <table class="table">
+                 <tr>
+                   <th>Email</th>
+                   <td>{{ $item->email }}</td>
+                 </tr>
+                 <tr>
+                  <th>Password</th>
+                  <td>{{ $item->mobile }} or <b>12345678</b></td>
+                </tr>
+              
+                 <tr>
+                  <th>Created at</th>
+                  <td>{{ $item->created_at? $item->created_at: null }}</td>
+                </tr>
+
+                <tr>
+                  <th>Verified at</th>
+                  <td>{{ $item->updated_at? $item->updated_at: null }}</td>
+                </tr>
+             </table>
+             @endforeach
+
+
+             @endif
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="nav-certificates-tab">
         {{-- <a href="#/"  data-toggle="modal" data-target="#addRoomModal" data-whatever="@mdo" type="button" class="btn btn-primary">
           <i class="fas fa-plus fa-sm text-white-50"></i> Add 
@@ -289,7 +340,14 @@
               <tr>
                 <th>{{ $ctr++ }}</th>
                 <td>{{ $item->building }}</td>
-                <td><a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a></td>
+                <td>
+                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                  <a href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                  @else
+                  <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                  @endif
+                 
+                </td>
        
                 <td>{{ $item->type }}</td>
               
@@ -330,6 +388,71 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="userAccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Add Credential</h5>
+  
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+   <div class="modal-body">
+      
+     <form id="userForm" action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/user/create" method="POST">
+    @csrf
+    </form>
+     <table class="table table-borderless">
+      <tr>
+        <th>Name</th>
+        <td><input type="text" name="name" form="userForm" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $owner->name }}" required>
+        <br>
+        @error('name')
+          <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+          </span>
+      @enderror
+      </td>
+      
+      </tr>
+       <tr>
+         <th>Email</th>
+         <td><input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $owner->email }}" required>
+        <br>
+        @error('email')
+          <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+          </span>
+      @enderror
+    </td>
+       
+       </tr>
+       <tr>
+         <th>Password</th>
+         <td><input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="" required>
+        <br>
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+      </td>
+         
+       </tr>
+    
+     </table>
+   </div>
+  <div class="modal-footer">
+
+    <button type="submit" form="userForm" class="btn btn-primary"> Add</button> 
+  </div> 
+  </div>
+  </div>
+  
+  </div>
 
 @endsection
 

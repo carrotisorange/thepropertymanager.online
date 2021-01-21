@@ -121,6 +121,8 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/guardian', 'GuardianCont
 
 Route::post('property/{property_id}/tenant/{tenant_id}/user/create', 'TenantController@create_user_access')->middleware(['auth', 'verified']);
 
+Route::post('property/{property_id}/owner/{owner_id}/user/create', 'OwnerController@create_user_access')->middleware(['auth', 'verified']);
+
 //routes for owners
 Route::get('/property/{property_id}/owners', 'OwnerController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/owners/search', 'OwnerController@search')->middleware(['auth', 'verified']);
@@ -365,7 +367,7 @@ Route::post('/property/{property_id}/payable/{payable_id}/approve', 'PayableCont
 Route::post('/property/{property_id}/payable/{payable_id}/decline', 'PayableController@decline')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/payable/{payable_id}/release', 'PayableController@release')->middleware(['auth', 'verified']);
 
-//routes for users
+//routes for tenant users
 Route::get('/property/{property_id}/users', 'UserController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/user/{user_id}', 'UserController@show')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/user/{user_id}', 'UserController@update')->middleware(['auth', 'verified']);
@@ -382,6 +384,25 @@ Route::get('/user/{user_id}/tenant/{tenant_id}/concern/{concern_id}/responses', 
 Route::get('/user/{user_id}/tenant/{tenant_id}/profile', 'UserController@show_profile_tenant')->middleware(['auth', 'verified']);
 Route::put('/user/{user_id}/tenant/{tenant_id}/profile', 'UserController@show_update_tenant')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/portal/tenant/', 'UserController@show_portal_tenant')->middleware(['auth', 'verified']);
+
+
+//routes for owner users
+Route::get('/property/{property_id}/users', 'UserController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/user/{user_id}', 'UserController@show')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/user/{user_id}', 'UserController@update')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}', 'UserController@upgrade')->middleware(['auth', 'verified']);
+
+Route::post('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/rooms', 'OwnerAccessController@room')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/bills', 'OwnerAccessController@bill')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/payments', 'OwnerAccessController@payment')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@concern')->middleware(['auth', 'verified']);
+Route::post('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@store_concern')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/concern/{concern_id}/responses', 'OwnerAccessController@show_concern_responses')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@profile')->middleware(['auth', 'verified']);
+Route::put('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@update_profile')->middleware(['auth', 'verified']);
+
 
 
 //routes for dev
