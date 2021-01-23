@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Calendar')
+@section('title', 'Calenda')
 
 @section('css')
     
