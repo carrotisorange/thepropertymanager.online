@@ -13,7 +13,7 @@ class CreateBillingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('billings', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->bigIncrements('billing_id')->unsigned();
             $table->unsignedBigInteger('bill_tenant_id');
             $table->date('date_posted');
