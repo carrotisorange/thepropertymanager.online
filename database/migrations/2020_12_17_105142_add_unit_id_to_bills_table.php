@@ -13,7 +13,7 @@ class AddUnitIdToBillsTable extends Migration
      */
     public function up()
     {
-        Schema::table('bills', function (Blueprint $table) {
+        Schema::table('billings', function (Blueprint $table) {
             $table->foreign('bill_unit_id')->references('unit_id')->on('units');
             $table->unsignedBigInteger('bill_unit_id')->nullable();
         });
