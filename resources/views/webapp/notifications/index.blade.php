@@ -183,32 +183,34 @@
               <div class="row align-items-center">
                 <div class="col-auto">
                   <!-- Avatar -->
-                  @if($item->type === 'tenant')
+                  @if($item->action === 'tenant')
                   <i class="fas fa-user text-green fa-lg"></i>
-                  @elseif($item->type === 'payable')
+                  @elseif($item->action === 'payable')
                   <i class="fas fa-file-export text-indigo fa-lg"></i>
-                  @elseif($item->type === 'owner')
+                  @elseif($item->action === 'owner')
                   <i class="fas fa-user-tie text-teal fa-lg"></i>
-                  @elseif($item->type === 'concern')
+                  @elseif($item->action === 'concern')
                   <i class="fas fa-tools text-cyan fa-lg"></i>
-                  @elseif($item->type === 'payment')
+                  @elseif($item->action === 'payment')
                   <i class="fas fa-coins text-yellow fa-lg"></i>
-                  @elseif($item->type === 'bill')
+                  @elseif($item->action === 'bill')
                   <i class="fas fa-file-invoice-dollar text-pink fa-lg"></i>
-                  @elseif($item->type === 'joborder')
+                  @elseif($item->action === 'joborder')
                   <i class="fas fa-list text-dark fa-lg"></i>
-                  @elseif($item->type === 'unit')
+                  @elseif($item->action === 'unit')
                   <i class="fas fa-home text-indigo fa-lg"></i>
-                  @elseif($item->type === 'contract')
+                  @elseif($item->action === 'contract')
                   <i class="fas fa-file-signature text-teal fa-lg"></i>
-                  @elseif($item->type === 'search')
+                  @elseif($item->action === 'search')
                   <i class="fas fa-search text-blue fa-lg"></i>
-                  @elseif($item->type === 'financial')
+                  @elseif($item->action === 'financial')
                   <i class="fas fa-file-export text-indigo fa-lg"></i>
-                  @elseif($item->type === 'user')
+                  @elseif($item->action === 'user')
                   <i class="fas fa-user-circle text-green fa-lg"></i>
-                  @elseif($item->type === 'issue')
+                  @elseif($item->action === 'issue')
                   <i class="fas fa-dizzy text-red text-red fa-lg"></i>
+                  @elseif($item->action === 'remittance')
+                  <i class="fas fa-hand-holding-usd text-teal fa-lg"></i>
                   @else
                   <i class="fas fa-building text-primary fa-lg"></i>
                   @endif

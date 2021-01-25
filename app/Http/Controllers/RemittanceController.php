@@ -9,6 +9,8 @@ use Session;
 use App\Property;
 use Uuid;
 use DB;
+use App\Notification;
+use Auth;
 
 
 class RemittanceController extends Controller
@@ -20,6 +22,17 @@ class RemittanceController extends Controller
      */
     public function index()
     {
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'remittance';
+       
+        $notification->message = Auth::user()->name.' opens remittances page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
         $rooms = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
 
          $remittances = DB::table('units')

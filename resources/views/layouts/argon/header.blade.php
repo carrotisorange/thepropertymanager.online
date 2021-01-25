@@ -95,6 +95,8 @@
                 <i class="fas fa-user-circle text-green fa-lg"></i>
                 @elseif($item->type === 'issue')
                 <i class="fas fa-dizzy text-red text-red fa-lg"></i>
+                @elseif($item->type === 'remittance')
+                <i class="fas fa-hand-holding-usd text-teal fa-lg"></i>
                 @else
                 <i class="fas fa-building text-primary fa-lg"></i>
                 @endif
