@@ -195,6 +195,7 @@
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants</a>
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
           <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd fa-sm text-primary-50"></i> Remittances <span class="badge badge-primary badge-counter">{{ $remittances->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export fa-sm text-primary-50"></i> Expenses <span class="badge badge-primary badge-counter"></span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
         </div>
       </nav>
@@ -283,7 +284,18 @@
           </div>  
         </div>
         </div>
+
         
+        <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
+          <div class="col-md-12 mx-auto">
+          <div class="table-responsive text-nowrap">
+           
+        
+            </div>
+        </div>
+        </div>
+
+
         <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
