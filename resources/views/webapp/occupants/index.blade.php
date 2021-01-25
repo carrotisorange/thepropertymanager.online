@@ -98,12 +98,20 @@
             </li>
             @endif
             @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
-            <li class="nav-item">
+              <li class="nav-item">
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
                 <i class="fas fa-coins text-yellow"></i>
                 <span class="nav-link-text">Collections</span>
               </a>
             </li>
+            @if(Session::get('property_type') === 'Apartment Rentals')
+            <li class="nav-item">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/remittances">
+                <i class="fas fa-hand-holding-usd text-teal"></i>
+                <span class="nav-link-text">Remittances</span>
+              </a>
+            </li>
+            @endif
             <li class="nav-item">
                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
                 <i class="fas fa-chart-line text-purple"></i>

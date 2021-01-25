@@ -33,7 +33,7 @@ class Property extends Model
 
     public function units()
     {
-        return $this->hasMany('App\Unit', 'property_id_foreign')->orderBy('floor', 'asc')->orderBy('unit_no', 'asc');
+        return $this->hasMany('App\Unit', 'property_id_foreign')->orderBy('floor', 'asc')->orderBy('building', 'asc')->orderBy('unit_no', 'asc');
     }
 
     public function personnels()
