@@ -401,6 +401,7 @@ Route::get('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@c
 Route::post('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@store_concern')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/concern/{concern_id}/responses', 'OwnerAccessController@show_concern_responses')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@profile')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/remittances', 'OwnerAccessController@remittance')->middleware(['auth', 'verified']);
 Route::put('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@update_profile')->middleware(['auth', 'verified']);
 
 

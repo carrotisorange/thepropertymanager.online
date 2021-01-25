@@ -73,7 +73,7 @@ class RemittanceController extends Controller
         $remittance->particular=$request->particular;
         $remittance->save();
 
-        return back()->with('Remittance is created successfully!');
+        return back()->with('success', 'Remittance is created successfully!');
 
     }
 

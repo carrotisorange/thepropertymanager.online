@@ -44,6 +44,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittances">
+              <i class="fas fa-hand-holding-usd text-teal"></i>
+              <span class="nav-link-text">Remittances</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/concerns">
               <i class="fas fa-tools text-cyan"></i>
               <span class="nav-link-text">Concerns</span>

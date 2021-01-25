@@ -169,6 +169,33 @@ class OwnerAccessController extends Controller
       return view('webapp.owner_access.contracts', compact('rooms', 'owner'));
   }
 
+  public function remittance($user_id, $owner_id){
+
+    $remittances = DB::table('units')
+    ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+    ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
+    ->join('owners', 'owner_id_foreign', 'owner_id')
+    ->select('*', 'remittances.created_at as dateRemitted')
+    ->where('owner_id',$owner_id)
+    ->get();
+
+    $owner = Owner::findOrFail($owner_id);
+
+   $notification = new Notification();
+   $notification->user_id_foreign = Auth::user()->id;
+   $notification->property_id_foreign = Session::get('property_id');
+   $notification->type = 'concern';
+  
+   $notification->message = Auth::user()->name. ' checks his remittances.';
+   $notification->save();
+
+
+   Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+
+  return view('webapp.owner_access.remittances', compact('remittances', 'owner'));
+}
+
+
   public function bill($user_id, $owner_id){
 
     if(($user_id == Auth::user()->id)){
