@@ -166,8 +166,9 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-12">
-    <h6 class="h2 text-dark d-inline-block mb-0">You're about to add a remittance.</h6>
-    
+    <h6 class="h2 text-dark d-inline-block mb-0">You're about to add a remittance. </h6>
+    <br>
+    <small><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}">Return to {{ $tenant->first_name }}'s profile</a> </small>
   </div>
 
 </div>
@@ -229,7 +230,7 @@
        <p class="text-right">
         
         
-        <button type="submit" form="addRemittanceForm" class="btn btn-primary btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
+        <button type="submit" form="addRemittanceForm" class="btn btn-primary btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Submit</button>
        </p>
       </div>
   </div>

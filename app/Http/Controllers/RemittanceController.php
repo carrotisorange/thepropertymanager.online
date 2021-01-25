@@ -11,6 +11,7 @@ use Uuid;
 use DB;
 use App\Notification;
 use Auth;
+use App\Tenant;
 
 
 class RemittanceController extends Controller
@@ -53,14 +54,19 @@ class RemittanceController extends Controller
      */
     public function create($property_id, $tenant_id, $payment_id)
     {
-        $rooms = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
+        $rooms = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->where('tenant_id_foreign', $tenant_id)
+        ->get();
 
         $remittance_info = DB::table('bills')
         ->join('payments', 'bill_id', 'payment_bill_id')
         ->where('payment_id', $payment_id)
         ->get();
 
-        return view('webapp.remittances.create', compact('rooms', 'remittance_info'));
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.remittances.create', compact('rooms', 'remittance_info', 'tenant'));
     }
 
     /**
