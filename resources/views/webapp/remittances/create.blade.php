@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', $tenant->first_name.' '.$tenant->last_name)
+@section('title', 'Remittance')
 
 @section('sidebar')
   <!-- Sidenav -->
@@ -42,7 +42,7 @@
            
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
             <li class="nav-item">
-               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/tenants">
+               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/tenants">
                 <i class="fas fa-user text-green"></i>
                 <span class="nav-link-text">Tenants</span>
               </a>
@@ -95,7 +95,7 @@
             </li>
             @if(Session::get('property_type') === 'Apartment Rentals')
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/remittances">
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/remittances">
                 <i class="fas fa-hand-holding-usd text-teal"></i>
                 <span class="nav-link-text">Remittances</span>
               </a>
@@ -163,41 +163,77 @@
   </nav>
 @endsection
 
-
-
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">You're about to moveout {{ $tenant->first_name.' '.$tenant->last_name }} 's contract</h6>
+  <div class="col-lg-12">
+    <h6 class="h2 text-dark d-inline-block mb-0">You're about to add a remittance.</h6>
     
   </div>
 
 </div>
-{{-- <div class="row">
-  <div class="col">
-    <h1 class="text-center">
-      <i class="fas fa-people-carry fa-lg"></i>
-    </h1>
-  </div>
-</div> --}}
 <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          
-          <form id="moveoutTenantForm" action="/property/{{Session::get('property_id')}}/home/{{ $contract->unit_id_foreign }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/moveout" method="POST">
-            @csrf
-            @method('PUT')
-        </form>
-
-          <b>{{ $tenant->first_name.' '.$tenant->last_name }}</b> stayed for <?php   $diffInDays =  number_format((Carbon\Carbon::parse($contract->movein_at))->DiffInDays(Carbon\Carbon::parse($contract->moveout_at))) ?> <b>{{ $contract->number_of_months? $contract->number_of_months: 'NULL' }}</b> in <b>{{ Session::get('property_name') }}</b>. 
-            The reason for his/her moveout is <b>{{ $contract->moveout_reason }}</b>. He/she is scheduled to moveout on <b>{{ Carbon\Carbon::parse($contract->actual_moveout_at )->format('M d Y') }}</b>. 
-            Please click  <button type="submit" form="moveoutTenantForm">here</button> to export the gatepass. 
-            Please remind the tenant to present the gatepass to the guard before leaving the property. Also, don't forget to remind the tenant to rate their stay at their tenant portal.
-        </div>
-      </div>      
-    </div>
+    <form id="addRemittanceForm" action="/property/{{ Session::get('property_id') }}/remittances/store" method="POST">
+        @csrf
+      </form>
 </div>
+      <div class="row">
+        <div class="col-md-12">
+           <label>Room</label>
+            <select class="form-control" form="addRemittanceForm" name="unit_id" required>
+                <option value="">Please select one</option>
+                    @foreach ($rooms as $item)
+                    <option value="{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</option>   
+                    @endforeach
+
+            </select>
+        </div>
+    </div>
+    <br>
+    @foreach ($remittance_info as $item)
+    <label>Period covered</label>
+    <div class="row">
+       
+        <div class="col">
+            
+            <small for="">Start</small>
+            <input form="addRemittanceForm" type="date" class="form-control" name="start" value="{{ Carbon\Carbon::parse($item->start)->format('Y-m-d') }}" required>
+        </div>
+        <div class="col">
+            <small>End</small>
+            <input form="addRemittanceForm" type="date" class="form-control" name="end" value="{{ Carbon\Carbon::parse($item->end)->format('Y-m-d') }}" required>
+        </div>
+    </div>    
+    <br>
+    <div class="row">
+        <div class="col">
+            <label>Particular</label>
+            <select  form="addRemittanceForm" class="form-control" name="particular" id="" required>
+                <option value="">Please select one</option>
+                <option value="Rent">Rent</option>
+            </select>
+        </div>
+    </div>
+   
+    
+  <br>
+  <div class="row">
+      <div class="col">
+        <label>Amount</label>
+        <input form="addRemittanceForm" type="number" min="1" class="form-control" name="amt" step="0.001" value="{{ $item->amt_paid }}" required>
+      </div>
+  </div>
+  @endforeach
+  <br>
+  <div class="row">
+      <div class="col-md-12">
+       <p class="text-right">
+        
+        
+        <button type="submit" form="addRemittanceForm" class="btn btn-primary btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
+       </p>
+      </div>
+  </div>
+ 
 
 @endsection
 
@@ -206,7 +242,7 @@
 @endsection
 
 @section('scripts')
-  
+
 @endsection
 
 

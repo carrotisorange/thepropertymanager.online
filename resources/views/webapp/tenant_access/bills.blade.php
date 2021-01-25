@@ -168,7 +168,7 @@
             </td>
             {{-- <td class="text-center">
               @if(Auth::user()->user_type === 'manager')
-              <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
+              <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
                 @csrf
                 @method('delete')
                 <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>

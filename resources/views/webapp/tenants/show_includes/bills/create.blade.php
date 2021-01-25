@@ -10,7 +10,7 @@
           </button>
           </div>
          <div class="modal-body">
-          <form id="addBillForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/create" method="POST">
+          <form id="addBillForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/create" method="POST">
              @csrf
           </form>
   

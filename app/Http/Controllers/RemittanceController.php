@@ -51,9 +51,16 @@ class RemittanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($property_id, $tenant_id, $payment_id)
     {
-        //
+        $rooms = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
+
+        $remittance_info = DB::table('bills')
+        ->join('payments', 'bill_id', 'payment_bill_id')
+        ->where('payment_id', $payment_id)
+        ->get();
+
+        return view('webapp.remittances.create', compact('rooms', 'remittance_info'));
     }
 
     /**
@@ -64,6 +71,8 @@ class RemittanceController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
+        
         $remittance = new Remittance();
         $remittance->remittance_id = Uuid::generate()->string;
         $remittance->unit_id_foreign = $request->unit_id;

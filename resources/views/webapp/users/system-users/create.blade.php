@@ -23,7 +23,7 @@
                             @enderror
                     </div>
                   
-                   {{-- <input type="hidden" name="property_id" value="{{ $property->property_id }}"> --}}
+                   {{-- <input type="hidden" name="property_id" value="{{Session::get('property_id')}}"> --}}
                    
                     <div class="form-group">
                         <input id="email" type="text" value="" class="form-control form-control-user @error('email') is-invalid @enderror" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>

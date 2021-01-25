@@ -251,18 +251,18 @@
                 
                 <td>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
+                  <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
                   @else
-                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
+                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
                   @endif
                  
                 </td>
                 
                 <td>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
                   @else
-                  <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+                  <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
                   @endif
                   
                 </td>

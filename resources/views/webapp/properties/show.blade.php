@@ -458,13 +458,13 @@
                         <tr>
               
                             <td>
-                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
+                              <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
                             </td>
                             <td>
                               @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                              <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
                              @else
-                             <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                             <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
                              @endif
                              
                             </td>
@@ -480,9 +480,9 @@
                             <td>{{ $item->contract_status }}</td>
                             <td>
                               @if($item->email_address === null)
-                              <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
+                              <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
                               @else
-                              <form action="/property/{{ $property->property_id }}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
+                              <form action="/property/{{Session::get('property_id')}}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
                                 @csrf
                                 @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                                 <button class="btn btn-sm btn btn-primary" type="submit" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send email</button>
@@ -537,15 +537,15 @@
                               <tr>
                                 <td>
                       
-                                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
+                                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
                             
                                 </td>
                                 <td>
                                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                                  <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
                                  @else
-                                 <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                                 <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
                                  @endif
                                  
                                   @else
@@ -592,15 +592,15 @@
                               <tr>
                                 <td>
                       
-                                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+                                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
                             
                                 </td>
                                 <td>
                                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                                  <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
                                  @else
-                                 <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                                 <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
                                  @endif
                                   
                                   @else
@@ -608,7 +608,7 @@
                                   @endif
                                 </td>
                                 <td>
-                                  <a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
+                                  <a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
                                 </td>
                               </tr>
                               @endforeach
@@ -663,13 +663,13 @@
                  <td>{{ $item->payment_bill_no }}</td>
                  <td>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
+                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
                  @else
-                 <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
+                 <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
                  @endif
 
                   </td>
-                  <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
+                  <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
                 
                   <td>
                     {{ $item->particular }}</td>
@@ -679,7 +679,7 @@
                   </td>
                   <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                      {{-- <td class="text-center">
-                 <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
+                 <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
                     {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
               </tr> --}}
                   

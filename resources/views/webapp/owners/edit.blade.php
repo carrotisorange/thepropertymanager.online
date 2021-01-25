@@ -183,7 +183,7 @@
 
 </div>
 <div class="row">
-  <form id="editInvestorForm" action="/property/{{ $property->property_id }}/owner/{{ $owner->owner_id }}" method="POST">
+  <form id="editInvestorForm" action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}" method="POST">
     @method('put')
     @csrf
 </form>

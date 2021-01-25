@@ -208,7 +208,7 @@
           
     <br>
       <div class="col-md-11 mx-auto">
-        <form action="/property/{{ $property->property_id }}/blog" method="POST">
+        <form action="/property/{{Session::get('property_id')}}/blog" method="POST">
           @csrf
           <input class="form-control" type="text" name="title" placeholder="Title" required>
           <br>
@@ -229,7 +229,7 @@
           
           <br>
           
-           <input type="hidden" name="property" value="{{ $property->property_id }}" class="form-control">
+           <input type="hidden" name="property" value="{{Session::get('property_id')}}" class="form-control">
           
           <p class="text-right">                
             <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-share fa-sm text-white-50"></i> share </button>

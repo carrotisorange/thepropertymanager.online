@@ -9,7 +9,7 @@
         </button>
         </div>
         <div class="modal-body">
-            <form id="guardianForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/guardian" method="POST">
+            <form id="guardianForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/guardian" method="POST">
                 @csrf
             </form>
 

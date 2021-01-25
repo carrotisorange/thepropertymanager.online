@@ -283,7 +283,7 @@
                     @if(Auth::user()->user_type === 'manager')
                     <td class="text-right"> 
                       
-                      <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/decline" method="POST">
+                      <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/decline" method="POST">
                       @csrf
                       <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Decline</button>
                     </form>
@@ -291,7 +291,7 @@
 
                   </td> 
                   <td class="text-left">
-                    <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/approve" method="POST">
+                    <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/approve" method="POST">
                       @csrf
             
                       <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Approve</button>
@@ -344,7 +344,7 @@
                     <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
                     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
                     <td class="text-center"> 
-                      <form action="/property/{{ $property->property_id }}/payable/{{ $item->pb_id }}/release" method="POST">
+                      <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/release" method="POST">
                       @csrf
                       <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Release</button>
                     </form>
@@ -458,7 +458,7 @@
       </div>
       <div class="modal-body">
    
-        <form id="addPayableEntryForm" action="/property/{{ $property->property_id }}/payable" method="POST">
+        <form id="addPayableEntryForm" action="/property/{{Session::get('property_id')}}/payable" method="POST">
           @csrf
        </form>
  
@@ -479,7 +479,7 @@
                </tr>
                    <input form="addPayableEntryForm" type="hidden" id="no_of_entry" name="no_of_entry" >
 
-                   <input form="addPayableEntryForm" type="hidden" id="" name="property_id"  value="{{ $property->property_id }}">
+                   <input form="addPayableEntryForm" type="hidden" id="" name="property_id"  value="{{Session::get('property_id')}}">
                <tr id='addr1'></tr>
              
              </table>
@@ -507,7 +507,7 @@
       </button>
       </div>
       <div class="modal-body">
-        <form id="requestFundsForm" action="/property/{{ $property->property_id }}/payable/request" method="POST">
+        <form id="requestFundsForm" action="/property/{{Session::get('property_id')}}/payable/request" method="POST">
           @csrf
        </form>
             <p class="text-right">
@@ -528,7 +528,7 @@
                 </thead>
                       <input form="requestFundsForm" type="hidden" id="no_of_request" name="no_of_request" >
 
-                      <input form="requestFundsForm" type="hidden" id="" name="property_id"  value="{{ $property->property_id }}">
+                      <input form="requestFundsForm" type="hidden" id="" name="property_id"  value="{{Session::get('property_id')}}">
                   <tr id='request1'></tr>
               </table>
             </div>

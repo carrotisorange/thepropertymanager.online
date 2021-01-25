@@ -272,7 +272,7 @@
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
           <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
           @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
-            <a href="/property/{{ $property->property_id }}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
             @endif
             @if($bills->count() > 0)
             <a  target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
@@ -334,7 +334,7 @@
                 </td>
                 {{-- <td class="text-center">
                   @if(Auth::user()->user_type === 'manager')
-                  <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
+                  <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
                     @csrf
                     @method('delete')
                     <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
@@ -420,7 +420,7 @@
                            @endif
                          </td>   
                          <td class="text-center">
-                           <a title="export" target="_blank" href="/property/{{ $property->property_id }}/home/{{ $item->bill_unit_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                           <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/home/{{ $item->bill_unit_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
    
          
        </td>    --}}
@@ -524,7 +524,7 @@
                     {{ $item->category }}
                     
                 </td>
-                <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
                 <td>
                     @if($item->urgency === 'urgent')
                     <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -582,7 +582,7 @@
                   @foreach ($owners as $item)
                   <tr>
                     <th>{{ $ctr++ }}</th>
-                     <td><a href="/property/{{ $property->property_id }}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
+                     <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
               
                     <td>{{ $item-> email}}</td>
                     <td>{{ $item->mobile }}</td>
@@ -653,7 +653,7 @@
                 <option value="residential">residential</option>
             </select>
             </div>
-            <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
+            <input  form="editUnitForm"  type="hidden" name="property_id" value="{{Session::get('property_id')}}">
             <div class="form-group">
               <label>Occupancy</label>
               <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy }}" name="occupancy" class="form-control"> 
@@ -690,7 +690,7 @@
                           </button>
                           </div>
                           <div class="modal-body">
-                              <form id="concernForm" action="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/concern" method="POST">
+                              <form id="concernForm" action="/property/{{Session::get('property_id')}}/home/{{ $home->unit_id }}/concern" method="POST">
                                   @csrf
                               </form>
     
@@ -804,8 +804,8 @@
            </p>
         </div>
          <div class="modal-footer">
-          <a href="/property/{{ $property->property_id }}/unit/{{ $home->unit_id }}/occupant"  type="button" class="btn btn-secondary">  No</a>
-          <a href="/property/{{ $property->property_id }}/unit/{{ $home->unit_id }}/occupant/prefilled"  type="button" class="btn btn-primary"> Yes</a>
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant"  type="button" class="btn btn-secondary">  No</a>
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant/prefilled"  type="button" class="btn btn-primary"> Yes</a>
           </div>
         
     </div>
@@ -849,7 +849,7 @@
     </button>
     </div>
    <div class="modal-body">
-    <form id="addBillForm" action="/property/{{ $property->property_id }}/unit/{{ $home->unit_id }}/bills/create" method="POST">
+    <form id="addBillForm" action="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/create" method="POST">
        @csrf
     </form>
 
@@ -911,7 +911,7 @@
       </button>
       </div>
       <div class="modal-body">
-          <form id="acceptPaymentForm" action="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/collection" method="POST">
+          <form id="acceptPaymentForm" action="/property/{{Session::get('property_id')}}/home/{{ $home->unit_id }}/collection" method="POST">
           @csrf
           </form>
           

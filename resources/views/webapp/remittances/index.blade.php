@@ -217,7 +217,7 @@
                 <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
                 <td>{{ $item->particular }}</td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->unit_no }}</td>
+                <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
                
                 <td>{{ number_format($item->amt_remitted,2) }}</td>
             </tr>   

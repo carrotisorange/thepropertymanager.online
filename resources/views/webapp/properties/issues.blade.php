@@ -194,7 +194,7 @@
 
       
 
-        <form action="/property/{{ $property->property_id }}/issue/create" method="POST">
+        <form action="/property/{{Session::get('property_id')}}/issue/create" method="POST">
           @csrf
       
     
@@ -208,7 +208,7 @@
       
         <br>
       <p class="text-right">
-        <a href="/property/{{ $property->property_id }}/issues" class="btn btn-danger"> Clear</a>
+        <a href="/property/{{Session::get('property_id')}}/issues" class="btn btn-danger"> Clear</a>
         <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
       </p>
       </form>

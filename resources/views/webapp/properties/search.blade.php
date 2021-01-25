@@ -201,7 +201,7 @@
             @foreach ($all_tenants as $tenant)
             <tr>
                 <th>{{ $tenant_ctr++ }}</th>
-                <td><a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></td>
+                <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></td>
                 
               
                 <td>{{ $tenant->email_address }}</td>
@@ -237,9 +237,9 @@
                 <td>{{ $unit->building }}</td>
                 <td>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                    <a href="/property/{{ $property->property_id }}/unit/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
+                    <a href="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
                @else
-               <a href="/property/{{ $property->property_id }}/room/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
+               <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
                  @endif
                 </td>
                 <td>{{ $unit->floor }}</td>
@@ -270,7 +270,7 @@
             @foreach ($all_owners as $owner)
             <tr>
                 <th>{{ $owner_ctr++ }}</th>
-                <td><a href="/property/{{ $property->property_id }}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></td>
+                <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></td>
               
                <td>{{ $owner->email}}</td>
                <td>{{ $owner->mobile }}</td>

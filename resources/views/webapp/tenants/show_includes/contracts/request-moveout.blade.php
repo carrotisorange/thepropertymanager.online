@@ -10,7 +10,7 @@
         </div>
 
         <div class="modal-body">
-        <form id="requestMoveoutForm" action="/property/{{ $property->property_id }}/home/{{ $tenant->unit_tenant_id }}/tenant/{{ $tenant->tenant_id }}/request" method="POST">
+        <form id="requestMoveoutForm" action="/property/{{Session::get('property_id')}}/home/{{ $tenant->unit_tenant_id }}/tenant/{{ $tenant->tenant_id }}/request" method="POST">
           @method('put')
            @csrf
           </form>

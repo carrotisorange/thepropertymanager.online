@@ -177,12 +177,12 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-4">
-    {{-- <a class="btn btn-primary" href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a> --}}
+    {{-- <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a> --}}
     <h6 class="h2 text-dark d-inline-block mb-0">Occupant registration form</h6> 
     
   </div>
 </div>
-<form id="addTenantForm1" action="/property/{{ $property->property_id }}/unit/{{ $unit->unit_id }}/occupant" method="POST">
+<form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}/occupant" method="POST">
   @csrf
   </form>
   <?php $explode = explode(" ", $current_owner->name);?>
@@ -260,7 +260,7 @@
       </div>
   </div>
 
-  <input type="hidden" form="addTenantForm1" value="{{ $property->property_id }}" name="property_id">
+  <input type="hidden" form="addTenantForm1" value="{{Session::get('property_id')}}" name="property_id">
   <br>
   <div class="row">
       <div class="col">
@@ -286,7 +286,7 @@
   </div>
   <hr>
     
-      {{-- <a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
+      {{-- <a href="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
       <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block"> Submit</button>
 
   

@@ -182,7 +182,7 @@
     
   </div>
   <div class="col-lg-6 col-5 text-right">
-    <form  action="/property/{{ $property->property_id }}/occupants/search" method="GET" >
+    <form  action="/property/{{Session::get('property_id')}}/occupants/search" method="GET" >
       @csrf
       <div class="input-group">
           <input type="text" class="form-control" name="tenant_search" placeholder="Enter name..." >
@@ -234,9 +234,9 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
           {{-- <td>{{ $item->building.' '.$item->unit_no }}</td> --}}
           <td>
             {{-- @if($item->user_id_foreign == null) --}}
-            <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
+            <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
             {{-- @else
-            <a  href="/asa/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+            <a  href="/asa/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
             @endif --}}
           </td>
           {{-- <td>{{ $item->user_id_foreign }} </td> --}}

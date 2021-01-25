@@ -237,7 +237,7 @@
                   @csrf
                   <input form="eventForm" type="text" class="form-control" name="event_name" required>
 
-                  <input form="eventForm" type="hidden" class="form-control" name="property_id" value="{{ $property->property_id }}" required>
+                  <input form="eventForm" type="hidden" class="form-control" name="property_id" value="{{Session::get('property_id')}}" required>
                 
                
               </form>

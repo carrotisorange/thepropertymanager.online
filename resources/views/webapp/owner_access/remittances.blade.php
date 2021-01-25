@@ -87,7 +87,7 @@
            
            
               
-                <th>Amount</th>
+                <th class="text-right">Amount</th>
     
             </tr>    
         </thead>
@@ -102,9 +102,13 @@
                
               
                
-                <td>{{ number_format($item->amt_remitted,2) }}</td>
+                <td class="text-right">{{ number_format($item->amt_remitted,2) }}</td>
             </tr>   
             @endforeach
+            <tr>
+              <th>TOTAL</th>
+              <th colspan="5" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
+            </tr>
         </tbody>
     </table>
    

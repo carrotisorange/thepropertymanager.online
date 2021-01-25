@@ -349,7 +349,7 @@
                 {{ $item->category }}
                 
             </td>
-            <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+            <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
             <td>
                 @if($item->urgency === 'urgent')
                 <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -420,7 +420,7 @@
     <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="nav-settings-tab">  
       <br><br>
       <div class="col-md-11 mx-auto">
-        <form id="editUserForm" action="/property/{{ $property->property_id }}/user/{{ $user->id }}" method="POST">
+        <form id="editUserForm" action="/property/{{Session::get('property_id')}}/user/{{ $user->id }}" method="POST">
           @method('put')
           @csrf
         </form>

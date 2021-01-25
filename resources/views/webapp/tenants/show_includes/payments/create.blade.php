@@ -10,7 +10,7 @@
         </button>
         </div>
         <div class="modal-body">
-            <form id="acceptPaymentForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/collection" method="POST">
+            <form id="acceptPaymentForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/collection" method="POST">
             @csrf
             </form>
             

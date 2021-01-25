@@ -172,7 +172,7 @@
   </div>
 
 </div>
-<form id="editTenantForm" action="/property/{{ $property->property_id }}/occupant/{{ $tenant->tenant_id }}" method="POST">
+<form id="editTenantForm" action="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}" method="POST">
     @method('put')
     @csrf
 </form>
@@ -511,7 +511,7 @@
 
 
 <p class="text-right">   
-    <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</a>
+    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}" class="btn btn-secondary"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</a>
     <button type="submit" form="editTenantForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
 </p>
 @endsection

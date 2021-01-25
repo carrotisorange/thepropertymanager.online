@@ -212,7 +212,7 @@ font-family: FontAwesome;
 <div class="row align-items-center py-4">
 
   <div class="col-auto">
-    <a href="/property/{{ $property->property_id }}/concerns" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a> 
+    <a href="/property/{{Session::get('property_id')}}/concerns" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a> 
     
    
     <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-white-50"></i> Response</a> 
@@ -249,7 +249,7 @@ font-family: FontAwesome;
         </tr>
            <tr>
                 <th>Reported by</th>
-                <td><a target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></td>
+                <td><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></td>
            </tr>  
            
           </tr>
@@ -260,9 +260,9 @@ font-family: FontAwesome;
             <th>Room</th>
             @endif
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            <td><a target="_blank" href="/property/{{ $property->property_id }}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->unit_no }}</a></td>
+            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->unit_no }}</a></td>
             @else
-            <td><a target="_blank" href="/property/{{ $property->property_id }}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->unit_no }}</a></td>
+            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->unit_no }}</a></td>
             @endif
            
             
@@ -302,7 +302,7 @@ font-family: FontAwesome;
        </tr>
        <tr>
          <th>Assigned to</th>
-         <td><a target="_blank" href="/property/{{ $property->property_id }}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></td>
+         <td><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></td>
        </tr>
        
       
@@ -475,7 +475,7 @@ font-family: FontAwesome;
       </button>
       </div>
       <div class="modal-body">
-        <form action="/property/{{ $property->property_id }}/concern/{{ $concern->concern_id }}/joborder" method="POST">
+        <form action="/property/{{Session::get('property_id')}}/concern/{{ $concern->concern_id }}/joborder" method="POST">
           @csrf
 
           <div class="row">

@@ -177,7 +177,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0"><a href="/property/{{ $property->property_id }}/home" class="btn btn-primary" ><i class="fas fa-home"></i> Back</a></h6>
+    <h6 class="h2 text-dark d-inline-block mb-0"><a href="/property/{{Session::get('property_id')}}/home" class="btn btn-primary" ><i class="fas fa-home"></i> Back</a></h6>
   </div>
 
 </div>
@@ -204,7 +204,7 @@
       </div> --}}
  
       <div class="table-responsive">
-          <form id="editUnitsForm" action="/property/{{ $property->property_id }}/rooms/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
+          <form id="editUnitsForm" action="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
   
               @csrf
               @method('PUT')
@@ -300,7 +300,7 @@
                           
                           </td>
                           <td>
-                            <form action="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" method="POST">
+                            <form action="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" method="POST">
                               @csrf
                               @method('delete')
                               

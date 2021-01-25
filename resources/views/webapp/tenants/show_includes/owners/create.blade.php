@@ -7,7 +7,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <form id="addInvestorForm" action="/property/{{ $property->property_id }}/room/{{ $home->unit_id }}/owner" method="POST">
+        <form id="addInvestorForm" action="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/owner" method="POST">
             @csrf
         </form>
         <div class="modal-body">

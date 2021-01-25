@@ -9,7 +9,7 @@
         </button>
         </div>
         <div class="modal-body text-center">
-          <form id="contractForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id}}/contract/create" method="POST">
+          <form id="contractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id}}/contract/create" method="POST">
             @csrf
   
           </form>

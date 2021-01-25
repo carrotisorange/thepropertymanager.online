@@ -143,7 +143,6 @@ class RoomController extends Controller
             ->where('contracts.status', 'pending')
             ->get();
 
-    
        
             $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
            ->join('units', 'bill_unit_id', 'unit_id')
@@ -154,25 +153,30 @@ class RoomController extends Controller
            ->havingRaw('balance > 0')
            ->get();
 
+           $remittances = DB::table('units')
+           ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+           ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
+           ->join('owners', 'owner_id_foreign', 'owner_id')
+           ->select('*', 'remittances.created_at as dateRemitted')
+           ->where('remittances.unit_id_foreign',$unit_id)
+           ->get();
+
 
            $concerns = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
             ->join('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
             ->where('unit_id', $unit_id)
             ->orderBy('reported_at', 'desc')
             ->orderBy('urgency', 'desc')
             ->orderBy('concerns.status', 'desc')
             ->get();
-            
-            $property = Property::findOrFail(Session::get('property_id'));
           
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
-            }else{
-                return view('webapp.rooms.show',compact('occupants','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns'));
-            }
+           
+            return view('webapp.rooms.show',compact('occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'remittances'));
+           
         }else{
                 return view('layouts.arsha.unregistered');
         }

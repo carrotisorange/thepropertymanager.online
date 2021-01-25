@@ -242,11 +242,11 @@
 <div class="row">
   <div class="col-md-8">
 
-    {{-- <a href="/asa/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
+    {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{ $property->property_id }}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
+    <a href="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
      <br><br>
@@ -359,7 +359,7 @@
                      {{ $item->category }}
                      
                  </td>
-                 <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
                  <td>
                      @if($item->urgency === 'urgent')
                      <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -444,7 +444,7 @@
                  </th> --}}
                  <th>{{ $ctr++ }}</th>
                  <td>{{ $item->building }}</td>
-                 <td><a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></td>
+                 <td><a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></td>
                  
                  <td>{{ $item->movein_at }}</td>
                  <td>{{ $item->initial_electric }}</td>
@@ -553,7 +553,7 @@
                     </span>
                     <hr>
                   
-                    <form action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/alert/contract">
+                    <form action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/alert/contract">
                       @csrf
                     <span>
                       <p class="text-right">
@@ -646,7 +646,7 @@
       </button>
       </div>
      <div class="modal-body">
-      <form id="addBillForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/create" method="POST">
+      <form id="addBillForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/create" method="POST">
          @csrf
       </form>
 

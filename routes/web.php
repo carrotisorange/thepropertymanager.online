@@ -444,6 +444,7 @@ Route::get('property/{property_id}/pending-concerns', 'ConcernController@pending
 //routes for remittances
 Route::get('property/{property_id}/remittances', 'RemittanceController@index')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/remittances/store', 'RemittanceController@store')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/tenant/{tenant_id}/payment/{payment_id}/remittance/create', 'RemittanceController@create')->middleware(['auth', 'verified']);
 
 //routes for the the layouts.arsha
 Route::get('/', function(){

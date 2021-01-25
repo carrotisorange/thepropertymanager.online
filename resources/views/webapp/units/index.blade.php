@@ -188,7 +188,7 @@
 
   <div class="col-md-3 text-right">
     <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
-    <a href="/property/{{ $property->property_id }}/units/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+    <a href="/property/{{Session::get('property_id')}}/units/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
   </div>
 
  
@@ -234,14 +234,14 @@
 
 @foreach ($floor_no_list as $item)
 @if($item->status === 'vacant' || $item->status=== 'accepted')
-<a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" class="btn btn-danger">
+<a title="{{ $item->type_of_units }}" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-danger">
     <i class="fas fa-home fa-3x"></i>
     <br>
     {{ $item->unit_no }}
 </a>
 
 @elseif($item->status=== 'occupied')
-  <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" class="btn btn-success">
+  <a title="{{ $item->type_of_units }}" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-success">
     <i class="fas fa-home fa-3x"></i>
     <br>
     {{ $item->unit_no }}
@@ -279,14 +279,14 @@
       @foreach ($floor_no_list as $item)
       @if($building->building === $item->building)
         @if($item->status === 'vacant' || $item->status=== 'accepted')
-            <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" class="btn btn-danger">
+            <a title="{{ $item->type_of_units }}" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-danger">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
             </a>
          
             @elseif($item->status=== 'occupied')
-              <a title="{{ $item->type_of_units }}" href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}" class="btn btn-success">
+              <a title="{{ $item->type_of_units }}" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-success">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
@@ -353,7 +353,7 @@
                   <option value="residential">residential</option>         
               </select>
           </div> 
-            <input form="addUMultipleUnitForm" type="hidden" value="{{ $property->property_id }}" name="property_id">
+            <input form="addUMultipleUnitForm" type="hidden" value="{{Session::get('property_id')}}" name="property_id">
           
               {{-- <div class="form-group">
                 <label>Occupancy</label>

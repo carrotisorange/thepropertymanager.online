@@ -173,23 +173,23 @@
 </div>
 {{-- 
 @if(Auth::user()->user_type === 'manager') --}}
-{{-- <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a> --}}
+{{-- <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a> --}}
 
-<h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
+<h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}'s Statement of Accounts</h6>
 {{-- @else
 <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Bills</a>
 @endif
  --}}
-
+<br><br>
 
 <div class="row">
   <div class="col-md-12">
 
-    <form id="editBillsForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/update" method="POST">
+    <form id="editBillsForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/update" method="POST">
       @csrf
       @method('PUT')
     </form>
-    <p class="text-right">Statement of Accounts </p>
+    {{-- <p class="text-right"> </p> --}}
     <div class="table-responsive text-nowrap">
       <table class="table">
         <?php $ctr=1; ?>
@@ -212,6 +212,7 @@
           $amount = 1;
           $billing_id_ctr =1;
         ?>
+        <tbody>
         @foreach ($balance as $item)
         <tr>
             <th class="text-center">{{ $ctr++ }}</th>
@@ -237,13 +238,17 @@
             </td>   
           </tr>
         @endforeach
+
         <tr>
-          <th>Total</th>
+          <th>TOTAL</th>
           <th colspan="6" class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
-         </tr>    
+         </tr>  
+         <tbody>  
     </table>
   </div>
-  <p>Message footer</p>
+  <hr>
+  <h6 class="h2 text-dark d-inline-block mb-0">Footer Message</h6>
+  <br><br>
   <textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">
     {{ Auth::user()->note }}
     </textarea> 

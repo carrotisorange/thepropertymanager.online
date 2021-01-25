@@ -175,7 +175,7 @@
   </div>
 
 </div>
-<form id="editTenantForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}" method="POST">
+<form id="editTenantForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}" method="POST">
     @method('put')
     {{ csrf_field() }}
 </form>

@@ -172,7 +172,7 @@
 </div>
 
 <div class="row">
-    <form id="editContractForm" action="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/update" method="POST">
+    <form id="editContractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/update" method="POST">
     @csrf
     @method('PUT')
     </form>

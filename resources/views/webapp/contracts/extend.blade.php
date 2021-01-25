@@ -171,7 +171,7 @@
 
 </div>
 <div class="row">
-    <form id="extendContractForm" action="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/extend" method="POST">
+    <form id="extendContractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/extend" method="POST">
         @csrf
       </form>
 </div>

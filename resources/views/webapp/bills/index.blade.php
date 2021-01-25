@@ -188,14 +188,14 @@
         
       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
              
-      <form id="billingCondoDuesForm" action="/property/{{ $property->property_id }}/bills/condodues/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
+      <form id="billingCondoDuesForm" action="/property/{{Session::get('property_id')}}/bills/condodues/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingCondoDuesForm" name="billing_option" value="rent">
           <button class="btn btn-primary"  type="submit" form="billingCondoDuesForm"><i class="fas fa-plus"></i> Condo Dues</button>
       @else
 
-      <form id="billingRentForm" action="/property/{{ $property->property_id }}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
+      <form id="billingRentForm" action="/property/{{Session::get('property_id')}}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingRentForm" name="billing_option" value="rent">
@@ -207,7 +207,7 @@
         
   
       
-        <form id="billingElectricForm" action=" /property/{{ $property->property_id }}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
+        <form id="billingElectricForm" action=" /property/{{Session::get('property_id')}}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
       <input type="hidden" form="billingElectricForm" name="billing_option" value="electric">
@@ -218,7 +218,7 @@
 
          
     
-      <form id="billingWaterForm" action="/property/{{ $property->property_id }}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
+      <form id="billingWaterForm" action="/property/{{Session::get('property_id')}}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
     </form>
     <input type="hidden" form="billingWaterForm" name="billing_option" value="water">
@@ -227,7 +227,7 @@
     
          
     
-        <form id="billingSurchargeForm" action="/property/{{ $property->property_id }}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
+        <form id="billingSurchargeForm" action="/property/{{Session::get('property_id')}}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
       <input type="hidden" form="billingSurchargeForm" name="billing_option" value="surcharge">
@@ -288,18 +288,18 @@
         
         <td>
          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-         <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
+         <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
          @else
-         <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
+         <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
          @endif
           
         
         </td>
         <td>
           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-          <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
           @else
-          <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+          <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
           @endif
          
         </td>
@@ -313,7 +313,7 @@
      
         <td class="text-center">
           @if(Auth::user()->user_type === 'manager')
-          <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}" method="POST">
+          <form action="/property/{{Session::get('property_id')}}/bill/{{ $item->bill_id }}" method="POST">
             @csrf
             @method('delete')
             <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>

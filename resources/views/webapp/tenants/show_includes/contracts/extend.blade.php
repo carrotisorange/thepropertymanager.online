@@ -9,7 +9,7 @@
         </button>
         </div>
         <div class="modal-body">
-            <form id="extendTenantForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/extend" method="POST">
+            <form id="extendTenantForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/extend" method="POST">
                 @csrf
             </form>
 

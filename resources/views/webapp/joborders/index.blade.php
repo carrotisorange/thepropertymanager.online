@@ -206,7 +206,7 @@
       <tr>
         <th>{{ $ctr++ }}</th>
         <td>{{ $item->created_at }}</td>
-        <td><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id_foreign }}">{{ $item->details }}</a></td>
+        <td><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id_foreign }}">{{ $item->details }}</a></td>
         <td>{{ $item->summary }}</td>
         <td>{{ $item->personnel_name }}</td>
         <td>{{ $item->joborder_status }}</td>

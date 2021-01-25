@@ -194,7 +194,7 @@
           <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="nav-room" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Room</a>
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants</a>
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
-          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter"></span></a>
+          <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd fa-sm text-primary-50"></i> Remittances <span class="badge badge-primary badge-counter">{{ $remittances->count() }}</span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
         </div>
       </nav>
@@ -284,35 +284,56 @@
         </div>
         </div>
         
-  
-        <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
+        <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <table class="table">
-              <?php $ctr=1; ?>
+              <?php $rem_ctr=1; ?>
               <thead>
-            <tr>
-              <th>#</th>
-              <th>Date Billed</th>
-              <th>Bill No</th>
-              <th>Tenant</th>
-              <th>Description</th>
-              <th colspan="2">Period Covered</th>
-              <th class="text-right">Amount</th>
-            
-            </tr>
-     
-            
+                <tr>
+                  <th>#</th>
+                  <th>Date Remitted</th>
+             
+                <th>Period Covered</th>
+                <th>Particular</th>
+                <th>Owner</th>
+    
+              
+                <th class="text-right">Amount</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+              @foreach ($remittances as $item)
+                <tr>
+                  <th>{{ $rem_ctr++ }}</th>
+                  <td>{{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}</td>
+                
+                  <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
+                  <td>{{ $item->particular }}</td>
+                  <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+               
+                 
+                  <td class="text-right">{{ number_format($item->amt_remitted,2) }}</td>
+                </tr>    
+              @endforeach
+              <tr>
+                <th>TOTAL</th>
+                <th colspan="5" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
+              </tr>
+            </tbody>
             </table>
         
            
             </div>
         </div>
         </div>
+
+
   
         <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
           @if ($tenant_active->count() < $home->occupancy)
-          <a href="/property/{{ $property->property_id }}/room/{{ $home->unit_id }}/tenant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
+          <a href="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/tenant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
               <i class="fas fa-user-plus"></i> Add </a>
     
           @else
@@ -358,7 +379,7 @@
             @foreach ($tenant_active as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
+                    <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
                     <td>{{ $item->movein_at }}</td>
                     <td>{{ $item->moveout_at }}</td>
                     <td>{{ $item->contract_term }}</td>
@@ -396,7 +417,7 @@
             @foreach ($tenant_reserved as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
+                    <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
                     @if($item->type_of_tenant === 'online')
                     <td><a class="badge badge-success">{{ $item->type_of_tenant }}</td>
                     @else
@@ -436,7 +457,7 @@
             @foreach ($tenant_inactive as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
+                    <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
                     
                     <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d Y') }}</td>
                     <td>{{ $item->moveout_reason }}</td>
@@ -482,7 +503,7 @@
                 
   
                
-                <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
                 <td>
                     @if($item->urgency === 'urgent')
                     <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -493,13 +514,13 @@
                     @endif
                 </td>
                 <td>
-                    @if($item->status === 'pending')
-                    <span class="badge badge-warning">{{ $item->status }}</span>
-                    @elseif($item->status === 'active')
-                    <span class="badge badge-primary">{{ $item->status }}</span>
-                    @else
-                    <span class="badge badge-success">{{ $item->status }}</span>
-                    @endif
+                  @if($item->concern_status === 'pending')
+                  <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
+                  @elseif($item->concern_status === 'active')
+                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+                  @else
+                  <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+                  @endif
                 </td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
@@ -539,7 +560,7 @@
                   @foreach ($owners as $item)
                   <tr>
                     <th>{{ $ctr++ }}</th>
-                     <td><a href="/property/{{ $property->property_id }}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
+                     <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
               
                     <td>{{ $item-> email}}</td>
                     <td>{{ $item->mobile }}</td>
@@ -609,7 +630,7 @@
                 <option value="residential">residential</option>
             </select>
             </div>
-            <input  form="editUnitForm"  type="hidden" name="property_id" value="{{ $property->property_id }}">
+            <input  form="editUnitForm"  type="hidden" name="property_id" value="{{Session::get('property_id')}}">
             <div class="form-group">
               <label>Occupancy</label>
               <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy? $home->occupancy: 0 }}" name="occupancy" class="form-control"> 
@@ -649,7 +670,7 @@
                           </button>
                           </div>
                           <div class="modal-body">
-                              <form id="concernForm" action="/property/{{ $property->property_id }}/home/{{ $home->unit_id }}/concern" method="POST">
+                              <form id="concernForm" action="/property/{{Session::get('property_id')}}/home/{{ $home->unit_id }}/concern" method="POST">
                                   @csrf
                               </form>
     

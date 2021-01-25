@@ -172,7 +172,7 @@
 
 </div>
 <div class="row">
-    <form id="preterminateContractForm" action="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/preterminate_post" method="POST">
+    <form id="preterminateContractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/preterminate_post" method="POST">
         @csrf
         @method('PUT')
       </form>

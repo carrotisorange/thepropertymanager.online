@@ -214,7 +214,7 @@
         <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
     @endif
 
-    <a href="/property/{{ $property->property_id }}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+    <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
   </div>
 
  
@@ -260,26 +260,26 @@
 
 @foreach ($floor_no_list as $item)
   @if($item->status === 'vacant')
-      <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-danger ">
+      <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-danger ">
           <i class="fas fa-home fa-3x"></i>
           <br>
           {{ $item->unit_no }}
       </a>
       @elseif($item->status=== 'reserved')
-      <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-warning">
+      <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-warning">
           <i class="fas fa-home fa-3x"></i>
           <br>
          {{ $item->unit_no }}
         </a>
       @elseif($item->status=== 'occupied')
           @if($item->term=== 'st')
-          <a title="short term contract" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-success">
+          <a title="short term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
           <i class="fas fa-home fa-3x text-yellow"></i>
           <br>
           <span class="text-yellow"> {{ $item->unit_no }}</span>
           </a> 
           @else
-          <a title="long term contract" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-success">
+          <a title="long term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
             <i class="fas fa-home fa-3x"></i>
             <br>
             {{ $item->unit_no }}
@@ -287,7 +287,7 @@
             
           @endif
           @elseif($item->status=== 'dirty')
-          <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-dark">
+          <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-dark">
             <i class="fas fa-home fa-3x"></i>
             <br>
             {{ $item->unit_no }}
@@ -326,26 +326,26 @@
       @foreach ($floor_no_list as $item)
       @if($building->building === $item->building)
         @if($item->status === 'vacant')
-            <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-danger">
+            <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-danger">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
             </a>
             @elseif($item->status=== 'reserved')
-            <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-warning">
+            <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-warning">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                {{ $item->unit_no }}
               </a>
             @elseif($item->status=== 'occupied')
               @if($item->term=== 'st')
-              <a title="short term contract" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-success">
+              <a title="short term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
               <i class="fas fa-home fa-3x text-yellow"></i>
               <br>
               <span class="text-yellow"> {{ $item->unit_no }}</span>
               </a> 
               @else
-              <a title="long term contract" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-success">
+              <a title="long term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
                 <i class="fas fa-home fa-3x"></i>
                 <br>
                 {{ $item->unit_no }}
@@ -353,7 +353,7 @@
                 
               @endif
             @elseif($item->status=== 'dirty')
-                <a title="{{ $item->type }}" href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}" class="btn btn-dark">
+                <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-dark">
                   <i class="fas fa-home fa-3x"></i>
                   <br>
                   {{ $item->unit_no }}
@@ -444,7 +444,7 @@
                   <option value="residential">residential</option>         
               </select>
           </div> 
-            <input form="addUMultipleUnitForm" type="hidden" value="{{ $property->property_id }}" name="property_id">
+            <input form="addUMultipleUnitForm" type="hidden" value="{{Session::get('property_id')}}" name="property_id">
           
               <div class="form-group">
                 <label>Occupancy</label>

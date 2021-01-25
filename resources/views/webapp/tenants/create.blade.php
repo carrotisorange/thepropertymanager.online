@@ -177,7 +177,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-3">
-    <a class="btn btn-primary" href="/property/{{ $property->property_id }}/room/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
+    <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
     {{-- <h6 class="h2 text-dark d-inline-block mb-0">iBack</h6> --}}
     
   </div>
@@ -228,7 +228,7 @@
 
 </div>
 <hr>
-<form id="addTenantForm1" action="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/tenant/" method="POST">
+<form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}/tenant/" method="POST">
   {{ csrf_field() }}
   </form>
   
@@ -316,7 +316,7 @@
       </div>
   </div>
 
-  <input type="hidden" form="addTenantForm1" value="{{ $property->property_id }}" name="property_id">
+  <input type="hidden" form="addTenantForm1" value="{{Session::get('property_id')}}" name="property_id">
   <br>
   <div class="row">
     <div class="col">
@@ -473,7 +473,7 @@
   
   <br>
     
-      {{-- <a href="/property/{{ $property->property_id }}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
+      {{-- <a href="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
       <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Submit</button>
 
   

@@ -174,14 +174,14 @@
   </div>
   
   <div class="col-lg-8 text-right">
-    <a href="/property/{{ $property->property_id }}/bills"  class="btn btn-primary"><i class="fas fa-file-invoice-dollar"></i> Bills </a> 
+    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-file-invoice-dollar"></i> Bills </a> 
     <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Period covered</a> 
   </div>
 </div>
 
 <div class="row">
   <div class="table-responsive text-nowrap">
-    <form id="add_billings" action="/property/{{ $property->property_id }}/bills/create/" method="POST">
+    <form id="add_billings" action="/property/{{Session::get('property_id')}}/bills/create/" method="POST">
    @csrf
     </form>
     <table class="table">
@@ -247,18 +247,18 @@
       <td>{{ $ctr++ }}</td>
       <td>
         @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-        <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
+        <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
         @else
-        <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
+        <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
         @endif
    
          
       </td>
       <td>
         @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-        <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+        <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
         @else
-        <a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+        <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
         @endif
          
       </td>
@@ -266,7 +266,7 @@
         <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
         <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
   
-        <input type="hidden" form="add_billings" name="property_id" value="{{ $property->property_id }}" required>
+        <input type="hidden" form="add_billings" name="property_id" value="{{Session::get('property_id')}}" required>
   
       </td>
       <input class="" type="hidden" form="add_billings" name="contract_id{{ $contract_id++ }}" value="{{ $item->contract_id }}" required readonly>
@@ -312,7 +312,7 @@
     </button>
     </div>
    <div class="modal-body">
-    <form id="periodCoveredForm" action="/property/{{ $property->property_id }}/bills/electric/{{ $updated_start? Carbon\Carbon::parse($updated_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_end)->format('Y-m-d') }}/" method="POST">
+    <form id="periodCoveredForm" action="/property/{{Session::get('property_id')}}/bills/electric/{{ $updated_start? Carbon\Carbon::parse($updated_start)->format('Y-m-d'): null }}-{{ Carbon\Carbon::parse($updated_end)->format('Y-m-d') }}/" method="POST">
       @csrf
     <div class="row">
       <div class="col">

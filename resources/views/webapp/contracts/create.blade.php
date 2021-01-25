@@ -154,13 +154,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/system-updates" target="_blank">
+              <a class="nav-link" href="/property/{{Session::get('property_id')}}/system-updates" target="_blank">
                 <i class="fas fa-bug text-green"></i>
                 <span class="nav-link-text">System Updates</span>
               </a>
             </li>
           <li class="nav-item">
-              <a class="nav-link" href="/property/{{ $property->property_id }}/announcements" target="_blank">
+              <a class="nav-link" href="/property/{{Session::get('property_id')}}/announcements" target="_blank">
                 <i class="fas fa-microphone text-purple"></i>
                 <span class="nav-link-text">Announcements</span>
               </a>
@@ -177,12 +177,12 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-3">
-    <a class="btn btn-primary" href="/property/{{ $property->property_id }}/room/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
+    <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
     {{-- <h6 class="h2 text-dark d-inline-block mb-0">iBack</h6> --}}
     
   </div>
   <div class="col-lg-3">
-    <form id="contractForm" action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id}}/contract/add" method="POST">
+    <form id="contractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id}}/contract/add" method="POST">
       @csrf
     </form>
     <small class="">Room <span class="text-danger">*</span></small>
@@ -239,7 +239,7 @@
   </div>
 </div>
 <hr>
-<form id="addTenantForm1" action="/property/{{ $property->property_id }}/room/{{ $unit->unit_id }}/tenant/{{ $tenant->tenant_id }}/contract/add" method="POST">
+<form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/tenant/{{ $tenant->tenant_id }}/contract/add" method="POST">
   @csrf
   </form>
   
@@ -271,7 +271,7 @@
       </div>
       </div>
   
-  <input type="hidden" form="addTenantForm1" value="{{ $property->property_id }}" name="property_id">
+  <input type="hidden" form="addTenantForm1" value="{{Session::get('property_id')}}" name="property_id">
   <hr>
 
   <h2>Contract Details</h2>
@@ -384,7 +384,7 @@
   <br>
   <p class="text-right">   
      
-      {{-- <a href="/property/{{ $property->property_id }}/room/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
+      {{-- <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
       <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Submit</button>
   </p>
   

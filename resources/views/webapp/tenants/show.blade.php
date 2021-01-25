@@ -245,13 +245,13 @@
         
 <div class="row">
   <div class="col-md-8">
-    <a href="/property/{{ $property->property_id }}/tenants"  class="btn btn-primary"><i class="fas fa-user"></i> Tenants</a>
+    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary"><i class="fas fa-user"></i> Tenants</a>
 
-    {{-- <a href="/asa/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
+    {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
+    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
      <br><br>
@@ -452,7 +452,7 @@
                      {{ $item->category }}
                      
                  </td>
-                 <td ><a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
                  <td>
                      @if($item->urgency === 'urgent')
                      <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -533,14 +533,14 @@
                 </th> --}}
                 <th>{{ $ctr++ }}</th>
                 <td>{{ $item->building }}</td>
-                <td><a href="/property/{{ $property->property_id }}/room/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></td>
+                <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></th>
                 <td>{{ $item->contract_status }}</td>
                 <td>{{ $item->movein_at }}</td>
                 <td>{{ $item->moveout_at }}</td>
                 <td>{{ $item->contract_term }}</td>
                 <td>{{ number_format($item->rent, 2) }}</td>
                 <td>
-                  <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><button class="btn btn-primary btn-sm">View</button></a>
+                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><button class="btn btn-primary btn-sm">View</button></a>
                 </td>
                
  
@@ -605,7 +605,7 @@
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
         <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
         @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
-          <a href="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
           @endif
           @if($balance->count() > 0)
           <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
@@ -667,7 +667,7 @@
               </td>
               {{-- <td class="text-center">
                 @if(Auth::user()->user_type === 'manager')
-                <form action="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
+                <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
                   @csrf
                   @method('delete')
                   <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
@@ -734,9 +734,9 @@
                     <th>Form</th>
                     <th class="text-right">Amount</th>
                    
-                   {{-- <th colspan="2">Action</th> --}}
-                     {{-- <th></th> --}}
-                    </tr>
+                    <th colspan="3" class="text-center">Action</th> 
+                    
+                  
               </tr>
              </thead>
               @foreach ($collection_list as $item)
@@ -755,7 +755,7 @@
                       <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                        
                        
-                       <td class="text-center">
+                       <td class="text-left">
                        @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
                         <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
                           @csrf
@@ -764,12 +764,12 @@
                         </form>
                         @endif
                       </td>   
-                      <td class="text-center">
-                        <a title="export" target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
-
-      
-    </td>   
-                     
+                      <td class="text-right">
+                        <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-primary"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a>
+                        <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                      </td>   
+    
+  
                   </tr>
               @endforeach
                   <tr>
@@ -839,7 +839,7 @@
                     </span>
                     <hr>
                   
-                    <form action="/property/{{ $property->property_id }}/tenant/{{ $tenant->tenant_id }}/alert/contract">
+                    <form action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/alert/contract">
                       @csrf
                     <span>
                       <p class="text-right">
@@ -858,15 +858,14 @@
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Create credentials</h5>
+    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Add credentials</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
     </div>
    <div class="modal-body">
-     <p class="text-danger"><i class="fas fa-exclamation-triangle"></i>  Tenant needs to verify email before can access the system. 
-      <br> Please make sure that the email is valid before creating credentials. </p>
+    
       
      <form id="userForm" action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/user/create" method="POST">
     @csrf
@@ -913,7 +912,7 @@
    </div>
   <div class="modal-footer">
 
-    <button type="submit" form="userForm" class="btn btn-primary"> Create</button> 
+    <button type="submit" form="userForm" class="btn btn-primary"> Add</button> 
   </div> 
   </div>
   </div>

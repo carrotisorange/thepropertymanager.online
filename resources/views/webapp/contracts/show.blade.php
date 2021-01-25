@@ -172,14 +172,14 @@
 </div>
 <div class="row">
     <div class="col-md-10">
-        {{-- <a href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}#contracts"  class="btn btn-primary"><i class="fas fa-user"></i> Tenant</a>  --}}
-        <a class="btn btn-primary" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/edit"><i class="fas fa-edit"></i> Edit</a>
-        <a class="btn btn-primary" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> Extend</a>
+        {{-- <a href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}#contracts"  class="btn btn-primary"><i class="fas fa-user"></i> Tenant</a>  --}}
+        <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/edit"><i class="fas fa-edit"></i> Edit</a>
+        <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> Extend</a>
         @if(!$contract->terminated_at)
           @if($balance->count()>0)
           <a href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-danger"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i> Terminate</a>
           @else
-          <a class="btn btn-danger" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/preterminate"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i> Terminate</a>
+          <a class="btn btn-danger" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/preterminate"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i> Terminate</a>
           @endif
        @endif
         @if($contract->terminated_at)
@@ -187,7 +187,7 @@
           <a href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-danger"><i class="fas fa-sign-out-alt text-white-50"></i> Moveout</a>
           @else
             @if($contract->status != 'inactive')
-            <a class="btn btn-success" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/moveout"><i class="fas fa-sign-out-alt text-white-50"></i>  Moveout</a>
+            <a class="btn btn-success" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/moveout"><i class="fas fa-sign-out-alt text-white-50"></i>  Moveout</a>
             @endif
           @endif
         @endif
@@ -195,7 +195,7 @@
        
     </div>
     <div class="col-md-2 text-right">
-        <form action="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}" method="POST">
+        <form action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}" method="POST">
             @csrf
             @method('delete')
             <button type="submit" class="d-none d-sm-inline-block btn btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt"></i> Delete</button>
@@ -211,17 +211,17 @@
               <table class="table">
                  {{-- <tr>
                      <th>Tenant </th>
-                     <td><a target="_blank" href="/property/{{ $property->property_id }}/tenant/{{ $contract->tenant_id_foreign }}">View</a></td>
+                     <td><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}">View</a></td>
                  </tr> --}}
                  <tr>
                   <th>Room </th>
-                  <td><a target="_blank" href="/property/{{ $property->property_id }}/room/{{ $contract->unit_id_foreign }}">View</a></td>
+                  <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $contract->unit_id_foreign }}">View</a></td>
               </tr>
               <tr>
                   <th>Referrer </th>
                   <td>
                     @if($contract->referrer_id_foreign != '36')
-                    <a target="_blank" href="/property/{{ $property->property_id }}/user/{{ $contract->referrer_id_foreign }}">View</a>
+                    <a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $contract->referrer_id_foreign }}">View</a>
                     @else
                     None
                     @endif

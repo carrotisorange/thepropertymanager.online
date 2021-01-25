@@ -181,7 +181,7 @@
     
   </div>
   <div class="col-lg-6 col-5 text-right">
-    <form  action="/property/{{ $property->property_id }}/owners/search" method="GET" >
+    <form  action="/property/{{Session::get('property_id')}}/owners/search" method="GET" >
       @csrf
       <div class="input-group">
           <input type="text" class="form-control" name="owner_search" placeholder="Enter name..." value="{{ Session::get('owner_search') }}">
@@ -220,7 +220,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
            @foreach ($owners as $item)
           <tr>
             <th>{{ $ctr++ }}</th>
-            <td><a href="/property/{{ $property->property_id }}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
+            <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
             <td>{{ $item->email}}</td>
             <td>{{ $item->mobile }}</td>
             <td>{{ $item->representative }}</td>

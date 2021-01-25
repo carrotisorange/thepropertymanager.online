@@ -183,7 +183,7 @@
 
 </div>
 
-  <form id="editPropertyForm" action="/property/{{ $property->property_id }}/" method="POST">
+  <form id="editPropertyForm" action="/property/{{Session::get('property_id')}}/" method="POST">
     @method('put')
     @csrf
 
@@ -192,7 +192,7 @@
     <div class="col">
         <label>Name</label>
         <input form="editPropertyForm" class="form-control" type="text" name="name" value="{{ $property->name }}" >
-        <input form="editPropertyForm" class="form-control" type="hidden" name="property_id" value="{{ $property->property_id }}" >
+        <input form="editPropertyForm" class="form-control" type="hidden" name="property_id" value="{{Session::get('property_id')}}" >
     </div>
 </div>
 <br>

@@ -344,12 +344,12 @@
                         <tr>
                           <td>
                 
-                            <a href="/property/{{ $property->property_id }}/occupant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
+                            <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
                       
                           </td>
                           <td>
                             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                            <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id}}#bills">{{ $item->unit_no }}</a>
+                            <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id}}#bills">{{ $item->unit_no }}</a>
                             @else
                            {{ $item->unit_no }}
                             @endif
@@ -391,18 +391,18 @@
                         <tr>
                           <td>
                 
-                            <a href="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+                            <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
                       
                           </td>
                           <td>
                             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                            <a href="/property/{{ $property->property_id }}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                            <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
                             @else
                             {{ $item->unit_no }}
                             @endif
                           </td>
                           <td>
-                            <a href="/property/{{ $property->property_id }}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
+                            <a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
                           </td>
                         </tr>
                         @endforeach
