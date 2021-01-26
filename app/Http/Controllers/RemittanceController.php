@@ -88,12 +88,14 @@ class RemittanceController extends Controller
 
         DB::table('remittances')->insertGetId([
         'remittance_id' => $remittance_id,
+        'isRemitted' => 'pending',
         'unit_id_foreign' => $request->unit_id,
         'amt_remitted' => $request->amt,
         'start' => $request->start,
         'end' => $request->end,
         'particular' => $request->particular,
         'created_at' => Carbon::now(),
+        
     ]);
 
     for ($i=1; $i < $no_of_bills; $i++) { 
@@ -122,9 +124,15 @@ class RemittanceController extends Controller
      * @param  \App\Remittance  $remittance
      * @return \Illuminate\Http\Response
      */
-    public function show(Remittance $remittance)
+    public function show($property_id, $room_id, $remittance_id)
     {
-        //
+        $remittance = DB::table('units')
+        ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+        ->select('*', 'remittances.created_at as dateRemitted')
+        ->where('remittance_id',$remittance_id)
+        ->get();
+     
+        return view('webapp.remittances.show', compact('remittance'));
     }
 
     /**
@@ -145,9 +153,15 @@ class RemittanceController extends Controller
      * @param  \App\Remittance  $remittance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Remittance $remittance)
+    public function update(Request $request, $property_id, $remittance_id)
     {
-        //
+        $remittance = Remittance::findOrFail($remittance_id);
+        $remittance->amt_remitted = $request->amt_remitted;
+        $remittance->dateRemitted = $request->dateRemitted;
+        $remittance->isRemitted = 'remitted';
+        $remittance->save();
+
+        return back()->with('success', 'Remittance is updated successfully!');
     }
 
     /**

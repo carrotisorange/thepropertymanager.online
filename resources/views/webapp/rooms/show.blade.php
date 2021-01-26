@@ -342,7 +342,7 @@
                   <th>#</th>
                   <th>Remittance ID</th>
                   <th>Date Remitted</th>
-             
+                  <th>Status</th>
                 <th>Period Covered</th>
                 <th>Particular</th>
               
@@ -357,19 +357,32 @@
                 <tr>
                   <th>{{ $rem_ctr++ }}</th>
                   <td>{{ $item->remittance_id }}</td>
-                  <td>{{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}</td>
+                  <td>
+                    @if($item->isRemitted === 'pending')
+                    NA
+                    @else
+                    {{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}
+                    @endif
+                  </td>
+                  <td>
+                    @if($item->isRemitted === 'pending')
+                    <span class="badge badge-danger">{{ $item->isRemitted }}</span>
+                    @else
+                    <span class="badge badge-success">{{ $item->isRemitted }}</span>
+                    @endif
+                   
+                  </td>
                  
                   <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
                   <td>{{ $item->particular }}</td>
  
-               
-                 
-                  <td class="text-right">{{ number_format($item->amt_remitted,2) }}</td>
+              
+                  <th class="text-right"><a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/remittance/{{ $item->remittance_id }}">{{ number_format($item->amt_remitted,2) }}</a></th>
                 </tr>    
               @endforeach
               <tr>
                 <th>TOTAL</th>
-                <th colspan="5" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
+                <th colspan="6" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
               </tr>
             </tbody>
             </table>

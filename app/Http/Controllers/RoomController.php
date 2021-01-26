@@ -159,6 +159,7 @@ class RoomController extends Controller
          
            ->select('*', 'remittances.created_at as dateRemitted')
            ->where('remittances.unit_id_foreign',$unit_id)
+           ->orderBy('remittances.created_at')
            ->get();
 
             $expenses = DB::table('units')
@@ -168,6 +169,7 @@ class RoomController extends Controller
       
            ->select('*', 'expenses.created_at as dateCreated')
            ->where('expenses.unit_id_foreign',$unit_id)
+           ->orderBy('expenses.created_at')
            ->get();
 
 
