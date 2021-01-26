@@ -156,7 +156,6 @@ class RemittanceController extends Controller
     public function update(Request $request, $property_id, $remittance_id)
     {
         $remittance = Remittance::findOrFail($remittance_id);
-        $remittance->amt_remitted = $request->amt_remitted;
         $remittance->dateRemitted = $request->dateRemitted;
         $remittance->isRemitted = 'remitted';
         $remittance->save();

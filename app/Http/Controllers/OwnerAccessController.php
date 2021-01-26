@@ -184,7 +184,7 @@ class OwnerAccessController extends Controller
    $notification = new Notification();
    $notification->user_id_foreign = Auth::user()->id;
    $notification->property_id_foreign = Session::get('property_id');
-   $notification->type = 'concern';
+   $notification->type = 'remittance';
   
    $notification->message = Auth::user()->name. ' checks his remittances.';
    $notification->save();
@@ -195,6 +195,31 @@ class OwnerAccessController extends Controller
   return view('webapp.owner_access.remittances', compact('remittances', 'owner'));
 }
 
+
+public function expense($user_id, $owner_id, $remittance_id){
+     $expenses = DB::table('units')
+    ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
+    ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
+    ->select('*', 'expenses.created_at as dateCreated')
+    ->where('remittance_id_foreign',$remittance_id)
+    ->orderBy('expenses.created_at')
+    ->get();
+
+    $owner = Owner::findOrFail($owner_id);
+
+   $notification = new Notification();
+   $notification->user_id_foreign = Auth::user()->id;
+   $notification->property_id_foreign = Session::get('property_id');
+   $notification->type = 'expense';
+  
+   $notification->message = Auth::user()->name. ' checks his expenses.';
+   $notification->save();
+
+
+   Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+
+  return view('webapp.owner_access.expenses', compact('expenses', 'owner'));
+}
 
   public function bill($user_id, $owner_id){
 

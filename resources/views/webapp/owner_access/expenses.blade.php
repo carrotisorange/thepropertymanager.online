@@ -1,6 +1,6 @@
 @extends('webapp.owner_access.template')
 
-@section('title', 'Remittances')
+@section('title', 'Expenses')
 
 
 @section('sidebar')
@@ -65,7 +65,7 @@
 
 @section('upper-content')
 <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Remittances</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Expenses</h6>
     
   </div>
   {{-- <div class="col-md-6 text-right">
@@ -74,54 +74,37 @@
 @endsection
 
 @section('main-content')
+@if($expenses->count() <= 0 )
+<p class="text-danger text-center">No expenses found!</p>
+@else
 <div class="table-responsive text-nowrap">
     <table class="table">
         <thead>
             <?php $ctr=1;?>
             <tr>
                 <th>#</th>
-                <th>Date Remitted</th>
-                <th>Room</th>
-                <th>Period Covered</th>
                 <th>Particular</th>
-                <th>Status</th>
-           
-              
                 <th class="text-right">Amount</th>
     
             </tr>    
         </thead>
         <tbody>
-            @foreach ($remittances as $item)
+            @foreach ($expenses as $item)
             <tr>
                 <th>{{ $ctr++ }}</th>     
-                <td>
-                  @if($item->isRemitted === 'pending')
-                  NA
-                  @else
-                  {{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}
-                  @endif
-                <td>{{ $item->unit_no }}</td>
-                <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
-                <td>{{ $item->particular }}</td>
-                <td>
-                  @if($item->isRemitted === 'pending')
-                  <span class="badge badge-danger">{{ $item->isRemitted }}</span>
-                  @else
-                  <span class="badge badge-success">{{ $item->isRemitted }}</span>
-                  @endif
-                 </td>
-                <th class="text-right"><a href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                <td>{{ $item->expense_particular }}</td>
+                <td class="text-right">{{ number_format($item->expense_amt, 2) }}</td>
             </tr>   
             @endforeach
             <tr>
               <th>TOTAL</th>
-              <th colspan="6" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
+              <th colspan="4" class="text-right">{{  number_format($expenses->sum('expense_amt'),2) }}</th>
             </tr>
         </tbody>
     </table>
    
   </div>
+@endif
        
 
 @endsection
