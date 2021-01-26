@@ -295,7 +295,12 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    {!! $movein_rate->container() !!}
+                  @if($contracts <= 0)
+                  <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                  @else
+                  {!! $movein_rate->container() !!}
+                  @endif
+                   
                 </div>
               </div>
             </div>
@@ -311,7 +316,12 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    {!! $renewed_chart->container() !!}
+                  @if($contracts <= 0)
+                  <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                  @else
+                  {!! $renewed_chart->container() !!}
+                  @endif
+                   
                 </div>
               </div>
             </div>
@@ -330,7 +340,12 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    {!! $expenses_rate->container() !!}
+                  @if($contracts <= 0)
+                  <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                  @else
+                  {!! $expenses_rate->container() !!}
+                  @endif
+                  
                 </div>
               </div>
             </div>
@@ -350,7 +365,10 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="table-responsive text-nowrap">
+                @if($top_agents->count() <=0)
+                <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                @else
+                <div class="table-responsive text-nowrap">
                   <table class="table">
                  
                    <thead>
@@ -373,6 +391,7 @@
                    </tbody>
                   </table>
                   </div>
+              @endif
                 </div>
               </div>
             </div>
@@ -387,7 +406,11 @@
 
             
                 <div class="card-body">
-                  {!! $point_of_contact->container() !!}
+                @if($contracts <= 0)
+                <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                @else
+                {!! $point_of_contact->container() !!}
+                @endif
                 </div>
               </div>
           
@@ -404,7 +427,12 @@
                   <h6 class="m-0 font-weight-bold text-primary">MOVEOUT FOR THE LAST 6 MONTHS</h6>
                 </div>
                 <div class="card-body">
-                    {!! $moveout_rate->container() !!}
+                  @if($contracts <= 0)
+                  <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                  @else
+                  {!! $moveout_rate->container() !!}
+                  @endif
+                   
                 </div>
               </div>
           
@@ -417,7 +445,12 @@
                   <h6 class="m-0 font-weight-bold text-primary">REASON FOR MOVING-OUT</h6>
                 </div>
                 <div class="card-body">
+                  @if($contracts <= 0)
+                  <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+                  @else
                   {!! $reason_for_moving_out_chart->container() !!}
+                  @endif
+                
               </div>
               </div>
           
@@ -642,61 +675,66 @@
           
           </div>
           <div class="card-body">
-          <div class="table-responsive text-nowrap">
-           <table class="table" >
-             <thead>
-       
-              <tr>
-           
-                  <th>AR No</th>
-                  <th>Bill No</th>
-                  <th>Room</th>
-                  <th>Tenant</th>
-               
-                 
-                  <th>Particular</th>
-                  <th colspan="2">Period Covered</th>
-                  <th class="text-right">Amount</th>
-                  
-              </tr>
+            @if($collections_for_the_day->count() <=0)
+            <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> No collections recorded for today!</p>
+            @else
+            <div class="table-responsive text-nowrap">
+              <table class="table" >
+                <thead>
+          
+                 <tr>
               
-            </thead>
-             <tbody>
-              @foreach ($collections_for_the_day as $item)
-              <tr>
-    
-                <td>{{ $item->ar_no }}</td>
-                 <td>{{ $item->payment_bill_no }}</td>
-                 <td>
-                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
-                 @else
-                 <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
-                 @endif
-
-                  </td>
-                  <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
-                
-                  <td>
-                    {{ $item->particular }}</td>
-                  <td colspan="2">
-                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                  </td>
-                  <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
-                     {{-- <td class="text-center">
-                 <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
-                    {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
-              </tr> --}}
+                     <th>AR No</th>
+                     <th>Bill No</th>
+                     <th>Room</th>
+                     <th>Tenant</th>
                   
-              @endforeach
-              <tr>
-                <th>TOTAL</th>
-                <th class="text-right" colspan="8">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
-               </tr>
-             </tbody>
-           </table>
-          </div>
+                    
+                     <th>Particular</th>
+                     <th colspan="2">Period Covered</th>
+                     <th class="text-right">Amount</th>
+                     
+                 </tr>
+                 
+               </thead>
+                <tbody>
+                 @foreach ($collections_for_the_day as $item)
+                 <tr>
+       
+                   <td>{{ $item->ar_no }}</td>
+                    <td>{{ $item->payment_bill_no }}</td>
+                    <td>
+                     @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                     <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
+                    @else
+                    <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
+                    @endif
+   
+                     </td>
+                     <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
+                   
+                     <td>
+                       {{ $item->particular }}</td>
+                     <td colspan="2">
+                     {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                     {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                     </td>
+                     <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
+                        {{-- <td class="text-center">
+                    <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
+                       {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
+                 </tr> --}}
+                     
+                 @endforeach
+                 <tr>
+                   <th>TOTAL</th>
+                   <th class="text-right" colspan="8">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
+                  </tr>
+                </tbody>
+              </table>
+             </div>
+            @endif
+          
           </div>
           </div>
           </div>

@@ -877,7 +877,7 @@ $expenses_rate->dataset
 // ->havingRaw('balance > 0')
 // ->get();
 
-$contracts = DB::table('contracts')
+ $contracts = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->count();
@@ -1171,7 +1171,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'tenants', 'pending_tenants', 'owners',
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
-                'collections_for_the_day',
+                'collections_for_the_day','contracts',
                 'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns'
             )
     );
@@ -1182,7 +1182,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'tenants', 'pending_tenants', 'owners',
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
-                'collections_for_the_day','concerns',
+                'collections_for_the_day','concerns','contracts',
                 'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns'
             )
     );
