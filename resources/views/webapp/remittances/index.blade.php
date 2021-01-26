@@ -203,7 +203,7 @@
                 <th>Particular</th>
                 <th>Owner</th>
                 <th>Room</th>
-              
+                <th>Status</th>
                 <th>Amount</th>
     
             </tr>    
@@ -218,7 +218,13 @@
                 <td>{{ $item->particular }}</td>
                 <td>{{ $item->name }}</td>
                 <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
-               
+               <td>
+                @if($item->isRemitted === 'pending')
+                <span class="badge badge-danger">{{ $item->isRemitted }}</span>
+                @else
+                <span class="badge badge-success">{{ $item->isRemitted }}</span>
+                @endif
+               </td>
                 <td>{{ number_format($item->amt_remitted,2) }}</td>
             </tr>   
             @endforeach

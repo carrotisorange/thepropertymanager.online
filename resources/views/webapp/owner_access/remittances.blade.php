@@ -84,7 +84,7 @@
                 <th>Room</th>
                 <th>Period Covered</th>
                 <th>Particular</th>
-           
+                <th>Status</th>
            
               
                 <th class="text-right">Amount</th>
@@ -95,11 +95,22 @@
             @foreach ($remittances as $item)
             <tr>
                 <th>{{ $ctr++ }}</th>     
-                <td>{{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}</td>
+                <td>
+                  @if($item->isRemitted === 'pending')
+                  NA
+                  @else
+                  {{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}
+                  @endif
                 <td>{{ $item->unit_no }}</td>
                 <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
                 <td>{{ $item->particular }}</td>
-               
+                <td>
+                  @if($item->isRemitted === 'pending')
+                  <span class="badge badge-danger">{{ $item->isRemitted }}</span>
+                  @else
+                  <span class="badge badge-success">{{ $item->isRemitted }}</span>
+                  @endif
+                 </td>
               
                
                 <td class="text-right">{{ number_format($item->amt_remitted,2) }}</td>
@@ -107,7 +118,7 @@
             @endforeach
             <tr>
               <th>TOTAL</th>
-              <th colspan="5" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
+              <th colspan="6" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
             </tr>
         </tbody>
     </table>
