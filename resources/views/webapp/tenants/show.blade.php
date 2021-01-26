@@ -429,9 +429,9 @@
                
                  <th>Date Reported</th>
                 
-                 <th>Room</th>
+            
                  <th>Type</th>
-                 <th>Description</th>
+                 <th>Title</th>
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>
@@ -446,7 +446,7 @@
             
                <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
                  
-                 <td>{{ $item->unit_no }}</td>
+               
                  <td>
                    
                      {{ $item->category }}
@@ -454,22 +454,22 @@
                  </td>
                  <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
                  <td>
-                     @if($item->urgency === 'urgent')
+                     @if($item->urgency === 'major and urgent')
                      <span class="badge badge-danger">{{ $item->urgency }}</span>
-                     @elseif($item->urgency === 'major')
+                     @elseif($item->urgency === 'major but nor urgent')
                      <span class="badge badge-warning">{{ $item->urgency }}</span>
                      @else
                      <span class="badge badge-primary">{{ $item->urgency }}</span>
                      @endif
                  </td>
                  <td>
-                     @if($item->concern_status === 'pending')
-                     <span class="badge badge-warning">{{ $item->concern_status }}</span>
-                     @elseif($item->concern_status === 'active')
-                     <span class="badge badge-primary">{{ $item->concern_status }}</span>
-                     @else
-                     <span class="badge badge-success">{{ $item->concern_status }}</span>
-                     @endif
+                  @if($item->concern_status === 'pending')
+                  <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
+                  @elseif($item->concern_status === 'active')
+                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+                  @else
+                  <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+                  @endif
                  </td>
                  <td>{{ $item->name? $item->name: 'NULL' }}</td>
                  <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>

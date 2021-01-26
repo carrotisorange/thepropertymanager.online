@@ -17,7 +17,7 @@
             <table class="table text-right">
               <tr>
                 <th>Bill No</th>
-                <th>Description</th>
+                <th>Particular</th>
                 <th>Period Covered</th>
                 <th>Amount</th>
               </tr>

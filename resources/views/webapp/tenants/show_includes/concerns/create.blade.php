@@ -21,6 +21,14 @@
                               </div>
                           </div>
                           <br>
+                          <div class="row">
+                            <div class="col">
+                                <label>Title</label>
+                              
+                                <input type="text" form="concernForm" class="form-control" name="title" placeholder="Uncessary charges to my account" required >
+                            </div>
+                          </div>  
+                          <br>
                             <div class="row">
                                 <div class="col">
                                    <label>Category</label>
@@ -54,14 +62,7 @@
                           </div>
                           <br>
                          
-                        <div class="row">
-                          <div class="col">
-                              <label>Title</label>
-                            
-                              <input type="text" form="concernForm" class="form-control" name="title" placeholder="Uncessary charges to my account" required >
-                          </div>
-                        </div>  
-                        <br>
+                        
                         
                          <div class="row">
                               <div class="col">
@@ -78,7 +79,7 @@
                                   <option value="" selected>Please select one</option>
                                   
                                   @foreach($users as $item)
-                                      <option value="{{ $item->user_id_foreign }}" selected> {{ $item->user_type }}</option>
+                                      <option value="{{ $item->user_id_foreign }}"> {{ $item->user_type }}</option>
                                   @endforeach
                                 </select>
                             </div>

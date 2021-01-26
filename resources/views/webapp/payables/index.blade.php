@@ -200,7 +200,7 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Particular</th>
             <th>Created</th>
            
           </tr>
@@ -473,7 +473,7 @@
                  <tr>
                    <th>#</th>
                    <th>Entry</th>
-                   <th>Description</th>
+                   <th>Particular</th>
                    <th>Date</th>
                  </thead>
                </tr>

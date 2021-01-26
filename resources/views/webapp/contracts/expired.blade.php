@@ -186,7 +186,7 @@
                     <th>Tenant</th>
                     <th>Room</th>
                     <th>Moveout</th>
-                    <th>Days since moveout</th>
+                    
                     <th>Status</th>
                     <th>Action</th>
                  
@@ -203,15 +203,8 @@
                        <td>
                          <a href="/property/{{  Session::get('property_id') }}/home/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
                        </td>
-                       <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}}</td>
-                       <td>
-                         <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($item->moveout_at))) ?>
-                           @if($diffInDays < 1)
-                           <span class="badge badge-info">contract expires in {{ $diffInDays }} days </span>
-                            @else
-                            <span class="badge badge-danger">contract has expired {{ $diffInDays }} days ago</span>
-                            @endif
-                       </td>
+                      <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}} ({{ Carbon\Carbon::parse($item->moveout_at)->diffForHumans() }})</td>
+                      
                        <td>{{ $item->contract_status }}</td>
                        <td>
                          @if($item->email_address === null)

@@ -212,7 +212,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
         <tr>
           <th>#</th>
           <th>Profile</th>
-          <th>ID</th>
+          <th>Tenant ID</th>
         
           <th>Name</th>
       
@@ -240,7 +240,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
             <td>{{ $item->type_of_tenant }}</td>
             <td>{{ $item->gender }}</td>
             <td>{{ $item->civil_status }}</td>
-            <td>{{ $item->movein_at }}</td>
+            <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
         </tr>
         @endforeach
       </tbody>

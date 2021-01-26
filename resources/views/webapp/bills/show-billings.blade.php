@@ -200,7 +200,7 @@
             <th>#</th>
               <th>Bill No</th>
              
-              <th>Description</th>
+              <th>Particular</th>
               <th>Period Covered</th>
               <th class="text-right" colspan="3">Amount</th>
               
@@ -265,7 +265,7 @@
                     <th>AR No</th>
                     <th>Bill No</th>
                     <th>Room</th>  
-                    <th>Description</th>
+                    <th>Particular</th>
                     <th colspan="2">Period Covered</th>
                     <th>Form of Payment</th>
                     <th class="text-right">Amount</th>
@@ -460,7 +460,7 @@
         <table class = "table table-bordered" id="tab_logic">
             <tr>
                 <th>#</th>
-                <th>Description</th>
+                <th>Particular</th>
                 <th colspan="2">Period Covered</th>
                 <th>Amount</th>
                 

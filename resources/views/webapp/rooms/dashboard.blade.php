@@ -571,7 +571,7 @@
         <th>Tenant</th>
         <th>Owner</th>
        
-        <th>Description</th>
+        <th>Particular</th>
         <th colspan="2">Period Covered</th>
         <th>Amount</th>
         <th>Action</th>
@@ -630,7 +630,7 @@
           <th>Tenant</th>
           <th>Room</th>
           <th>Type</th>
-          <th>Description</th>
+          <th>Title</th>
           <th>Urgency</th>
           <th>Status</th>
          

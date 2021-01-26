@@ -369,7 +369,7 @@
              <thead>
               <tr>
                 <th>#</th>
-                <th>Description</th>
+                <th>Particular</th>
                 <th>Amount</th>
                
             </tr>

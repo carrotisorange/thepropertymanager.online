@@ -48,7 +48,7 @@
                
                     <th>Bill No</th>
                    
-                    <th>Description</th>
+                    <th>Particular</th>
                     <th>Period Covered</th>
                     <th class="text-right" colspan="3">Amount</th>
                     <th>Action</th>

@@ -433,72 +433,70 @@
               <!-- DataTales Example -->
               <div class="card shadow mb-4">
                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">THE LAST 5 EXPIRING CONTRACTS</h6>
+                 <h6 class="m-0 font-weight-bold text-primary">EXPIRING CONTRACTS</h6>
                  <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/expiring-contracts">View all</a></small>
                </div>
                <div class="card-body">
-                <div class="table-responsive text-nowrap">
-                   <table class="table" >
-                     <thead>
-                 
-                       <tr>
-                  
-                         <th>Tenant</th>
-                         <th>Room</th>
-                         <th>Moveout</th>
-                         <th>Days since moveout</th>
-                         <th>Status</th>
-                         <th>Action</th>
-                      
-                     </tr>
-                     </thead>
-                     <tbody>
-                       @foreach($tenants_to_watch_out as $item)
-                      
-                        <tr>
+                @if($tenants_to_watch_out->count() <=0)
+                <p class="text-success text-center"><i class="fas fa-check-circle"></i> No expiring contracts.</p>
+               @else
+               <div class="table-responsive text-nowrap">
+                <table class="table" >
+                  <thead>
               
-                            <td>
-                              <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
-                            </td>
-                            <td>
-                              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
-                             @else
-                             <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
-                             @endif
-                             
-                            </td>
-                            <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}}</td>
-                            <td>
-                              <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($item->moveout_at))) ?>
-                                @if($diffInDays < 1)
-                                <span class="badge badge-info">contract expires in {{ $diffInDays }} days </span>
-                                 @else
-                                 <span class="badge badge-danger">contract has expired {{ $diffInDays }} days ago</span>
-                                 @endif
-                            </td>
-                            <td>{{ $item->contract_status }}</td>
-                            <td>
-                              @if($item->email_address === null)
-                              <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
-                              @else
-                              <form action="/property/{{Session::get('property_id')}}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
-                                @csrf
-                                @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                                <button class="btn btn-sm btn btn-primary" type="submit" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send email</button>
-                                @else
-                                <button class="btn btn-sm btn btn-primary" title="for manager and admin access only" type="submit" onclick="this.form.submit(); this.disabled = true;" disabled><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send Email</button>
-                                @endif
-                              </form>
-                              @endif
-                            </td>
+                    <tr>
+               
+                      <th>Tenant</th>
+                      <th>Room</th>
+                      <th>Moveout</th>
+                     
+                      <th>Status</th>
+                      <th>Action</th>
+                   
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($tenants_to_watch_out as $item)
+                   
+                     <tr>
+           
+                         <td>
+                           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
+                         </td>
+                         <td>
+                           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                           <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                          @else
+                          <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                          @endif
                           
-                       </tr>
-                       @endforeach
-                     </tbody>
-                   </table>
-  
-                 </div>
+                         </td>
+                         <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}} <span class="text-danger">({{ Carbon\Carbon::parse($item->moveout_at)->diffForHumans() }})</span></td>
+                         
+                         <td>{{ $item->contract_status }}</td>
+                         <td>
+                           @if($item->email_address === null)
+                           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
+                           @else
+                           <form action="/property/{{Session::get('property_id')}}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
+                             @csrf
+                             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                             <button class="btn btn-sm btn btn-primary" type="submit" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send email</button>
+                             @else
+                             <button class="btn btn-sm btn btn-primary" title="for manager and admin access only" type="submit" onclick="this.form.submit(); this.disabled = true;" disabled><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send Email</button>
+                             @endif
+                           </form>
+                           @endif
+                         </td>
+                       
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+
+              </div>
+               @endif
+         
                </div>
              </div>
           
@@ -522,47 +520,51 @@
                       </div>
                       <!-- Card Body -->
                       <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                          <table class="table">
-                            <thead>
-                              
-                              <tr>
-                                <th>Tenant</th>
-                                <th>Room</th>
-                                <th>Balance</th>
+                        @if($delinquent_accounts->count() <=0)
+                        <p class="text-success text-center"><i class="fas fa-check-circle"></i> No delinquent tenants.</p>
+                       @else
+                       <div class="table-responsive text-nowrap">
+                        <table class="table">
+                          <thead>
+                            
+                            <tr>
+                              <th>Tenant</th>
+                              <th>Room</th>
+                              <th>Balance</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($delinquent_accounts as $item)
+                            <tr>
+                              <td>
+                    
+                                <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
+                          
+                              </td>
+                              <td>
+                                @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                                <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                               @else
+                               <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                               @endif
+                               
+                                @else
+                               {{ $item->unit_no }}
+                                @endif
+                              </td>
+                              <td>
+                                <a>{{ number_format($item->balance,2) }}
+                              </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($delinquent_accounts as $item)
-                              <tr>
-                                <td>
-                      
-                                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
-                            
-                                </td>
-                                <td>
-                                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
-                                 @else
-                                 <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
-                                 @endif
-                                 
-                                  @else
-                                 {{ $item->unit_no }}
-                                  @endif
-                                </td>
-                                <td>
-                                  <a>{{ number_format($item->balance,2) }}
-                                </td>
-                              </tr>
-                              @endforeach
-                            </tbody>
-                            
-                          </table>
-                         
-                        </div>
+                            @endforeach
+                          </tbody>
+                          
+                        </table>
                        
+                      </div>
+                     
+                        @endif
                       </div>
                     </div>
                     
@@ -572,50 +574,54 @@
                     <div class="card shadow mb-3">
                       <!-- Card Header - Dropdown -->
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">THE LAST 5 PENDING CONCERNS <span hidden id="pending_concerns">{{ $pending_concerns->count() }}</span></h6>
+                        <h6 class="m-0 font-weight-bold text-primary">PENDING CONCERNS <span hidden id="pending_concerns">{{ $pending_concerns->count() }}</span></h6>
                         <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/pending-concerns">View all</a></small>
                         {{-- <b class="text-success">({{ $concerns->count()? 0: number_format($concerns->sum('rating')/$concerns->count(), 2) }}/5) SATISFACTION RATE</b> --}}
                       </div>
                       <!-- Card Body -->
                       <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Tenant</th>
-                                <th>Room</th>
-                                <th>Concern</th>
+                       @if($pending_concerns->count() <=0)
+                        <p class="text-success text-center"><i class="fas fa-check-circle"></i> No pending concerns.</p>
+                       @else
+                       <div class="table-responsive text-nowrap">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Tenant</th>
+                              <th>Room</th>
+                              <th>Concern</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($pending_concerns as $item)
+                            <tr>
+                              <td>
+                    
+                                <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+                          
+                              </td>
+                              <td>
+                                @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                                <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                               @else
+                               <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
+                               @endif
+                                
+                                @else
+                                {{ $item->unit_no }}
+                                @endif
+                              </td>
+                              <td>
+                                <a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
+                              </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($pending_concerns as $item)
-                              <tr>
-                                <td>
-                      
-                                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
-                            
-                                </td>
-                                <td>
-                                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
-                                 @else
-                                 <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
-                                 @endif
-                                  
-                                  @else
-                                  {{ $item->unit_no }}
-                                  @endif
-                                </td>
-                                <td>
-                                  <a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
-                                </td>
-                              </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
-                     {{ $pending_concerns->links() }}
-                        </div>
+                            @endforeach
+                          </tbody>
+                        </table>
+                   {{ $pending_concerns->links() }}
+                      </div>
+                       @endif
                       </div>
                     </div>
                   </div>

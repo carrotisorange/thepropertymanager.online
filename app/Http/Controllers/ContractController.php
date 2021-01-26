@@ -565,6 +565,7 @@ class ContractController extends Controller
 
     public function expired()
     {
+
         $tenants_to_watch_out = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')

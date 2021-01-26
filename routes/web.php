@@ -441,6 +441,7 @@ Route::post('concern/{concern_id}/response', 'ResponseController@store')->middle
 Route::get('property/{property_id}/notifications', 'NotificationController@index')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/delinquents', 'CollectionController@delinquents')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/pending-concerns', 'ConcernController@pending')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/expiring-contracts', 'ContractController@expired')->middleware(['auth', 'verified']);
 
 //routes for remittances
 Route::get('property/{property_id}/remittances', 'RemittanceController@index')->middleware(['auth', 'verified']);

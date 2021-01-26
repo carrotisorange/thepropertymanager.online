@@ -213,7 +213,7 @@
                             <div class="col">
                                 <label>Title</label>
                               
-                                <input type="text" form="concernForm" class="form-control" name="title" required >
+                                <input type="text" form="concernForm" class="form-control" name="title" placeholder="Uncessary charges to my account" required >
                             </div>
                           </div>  
                           

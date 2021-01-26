@@ -549,7 +549,7 @@
                 
                
     
-                 <th>Description</th>
+                 <th>Title</th>
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>

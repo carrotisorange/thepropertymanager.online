@@ -41,7 +41,7 @@
                         <table class ="table table-bordered" id="extend_table">
                             <tr>
                                 <th>Bill No</th>
-                                <th>Description</th>
+                                <th>Particular</th>
                                 <th colspan="2">Period Covered</th>
                                 <th>Amount</th>
                             </tr>
