@@ -129,7 +129,7 @@ Route::get('/property/{property_id}/owners/search', 'OwnerController@search')->m
 Route::get('/property/{property_id}/owner/{owner_id}/edit', 'OwnerController@edit')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/owner/{owner_id}', 'OwnerController@update')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/home/{unit_id}/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{unit_id}/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
 
 Route::get('/asa', function(){
 

@@ -25,7 +25,7 @@
             </div>            
         </div>
         <div class="modal-footer">
-        <button type="submit" form="addInvestorForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>  
+        <button type="submit" form="addInvestorForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add</button>  
         </div>
     </div>
     </div>

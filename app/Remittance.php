@@ -8,7 +8,7 @@ class Remittance extends Model
 {
     protected $table = 'remittances';
 
-    protected $primaryKey = 'remttaine_id';
+    protected $primaryKey = 'remittance_id';
 
     public $incrementing = false;
 

@@ -96,6 +96,8 @@ class OwnerController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id)
     {
+   
+
         $explode = explode(" ", $request->name);
 
         if(count($explode)<=1){

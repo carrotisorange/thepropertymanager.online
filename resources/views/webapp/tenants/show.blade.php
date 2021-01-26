@@ -518,9 +518,7 @@
                   <th>Moveout</th>
                   <th>Term</th>
                   <th>Rent</th>
-            <th></th>
-
-                  
+      
                 </tr>
               </thead>
               <tbody>
@@ -537,13 +535,9 @@
                 <td>{{ $item->contract_status }}</td>
                 <td>{{ $item->movein_at }}</td>
                 <td>{{ $item->moveout_at }}</td>
-                <td>{{ $item->contract_term }}</td>
+                <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}">{{ $item->contract_term }}</a></th>
                 <td>{{ number_format($item->rent, 2) }}</td>
-                <td>
-                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><button class="btn btn-primary btn-sm">View</button></a>
-                </td>
-               
- 
+              
          
               </tr>
                @endforeach
@@ -618,86 +612,92 @@
 
     <br>
     <br>
-    <div class="col-md-12 mx-auto">
-    <div class="table-responsive">
-      <div class="table-responsive text-nowrap">
-        <table class="table">
-          <?php $ctr=1; ?>
-        <thead>
-          <tr>
-            <th class="text-center">#</th>
-             <th>Date posted</th>
-       
-               <th>Bill no</th>
-               
-               <th>Particular</th>
-         
-               <th>Period covered</th>
-               
-               <th class="text-right" >Bill amount</th>
-               <th class="text-right" >Amount paid</th>
-               <th class="text-right" >Balance</th>
-               {{-- <th></th> --}}
-             </tr>
-        </thead>
-          @foreach ($bills as $item)
-          <tr>
-         <th class="text-center">{{ $ctr++ }}</th>
-            <td>
-              {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
-            </td>   
-             
+    @if($bills->count() <= 0)
+    <p class="text-danger text-center">No bills found!</p>
 
-              <td>{{ $item->bill_no }}</td>
-      
-              <td>{{ $item->particular }}</td>
-            
-              <td>
-                {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-              </td>
-              <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
-              <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
-              <td class="text-right" >
-                @if($item->balance > 0)
-                <span class="text-danger">{{ number_format($item->balance,2) }}</span>
-                @else
-                <span >{{ number_format($item->balance,2) }}</span>
-                @endif
-              </td>
-              {{-- <td class="text-center">
-                @if(Auth::user()->user_type === 'manager')
-                <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
-                </form>
-                @endif
-              </td> --}}
+            @else
+            <div class="col-md-12 mx-auto">
+              <div class="table-responsive">
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <?php $ctr=1; ?>
+                  <thead>
+                    <tr>
+                      <th class="text-center">#</th>
+                       <th>Date posted</th>
+                 
+                         <th>Bill no</th>
+                         
+                         <th>Particular</th>
+                   
+                         <th>Period covered</th>
+                         
+                         <th class="text-right" >Bill amount</th>
+                         <th class="text-right" >Amount paid</th>
+                         <th class="text-right" >Balance</th>
+                         {{-- <th></th> --}}
+                       </tr>
+                  </thead>
+                    @foreach ($bills as $item)
+                    <tr>
+                   <th class="text-center">{{ $ctr++ }}</th>
+                      <td>
+                        {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
+                      </td>   
+                       
+          
+                        <td>{{ $item->bill_no }}</td>
+                
+                        <td>{{ $item->particular }}</td>
+                      
+                        <td>
+                          {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                          {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                        </td>
+                        <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
+                        <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
+                        <td class="text-right" >
+                          @if($item->balance > 0)
+                          <span class="text-danger">{{ number_format($item->balance,2) }}</span>
+                          @else
+                          <span >{{ number_format($item->balance,2) }}</span>
+                          @endif
+                        </td>
+                        {{-- <td class="text-center">
+                          @if(Auth::user()->user_type === 'manager')
+                          <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
+                          </form>
+                          @endif
+                        </td> --}}
+                               </tr>
+                               
+                    @endforeach
+                    <tr>
+                      <th>TOTAL</th>
+                      
+                      <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
+                      <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
+                      <th class="text-right text-danger" colspan="">
+                        @if($bills->sum('balance') > 0)
+                        <span class="text-danger">{{ number_format($bills->sum('balance'),2) }}</span>
+                        @else
+                        <span >{{ number_format($bills->sum('balance'),2) }}</span>
+                        @endif
+                   
+                       </th>
                      </tr>
-                     
-          @endforeach
-          <tr>
-            <th>TOTAL</th>
-            
-            <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
-            <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
-            <th class="text-right text-danger" colspan="">
-              @if($bills->sum('balance') > 0)
-              <span class="text-danger">{{ number_format($bills->sum('balance'),2) }}</span>
-              @else
-              <span >{{ number_format($bills->sum('balance'),2) }}</span>
-              @endif
-         
-             </th>
-           </tr>
-        
-      </table>
+                  
+                </table>
+          
+              </div>
+              </div>
+              
+                </div>
 
-    </div>
-    </div>
-    
-      </div>
+            @endif
       <br>
       <div class="row">
         <div class="col-md-11 mx-auto">
@@ -714,73 +714,77 @@
         <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
         @endif 
         <br><br>
-        <div class="col-md-12 mx-auto">
-        <div class="table-responsive text-nowrap">
-          <table class="table">
-            @foreach ($payments as $day => $collection_list)
-             <thead>
-                <tr>
-                    <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $collection_list->count() }})</th>
+        @if($payments->count() <= 0)
+        <p class="text-danger text-center">No collections found!</p>
+        @else
+        <div class="col-md-12">
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              @foreach ($payments as $day => $collection_list)
+               <thead>
+                  <tr>
+                      <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $collection_list->count() }})</th>
+                      
+                  </tr>
+                  <tr>
+                    <?php $ctr = 1; ?>
+                      <th class="text-center">#</th>
+                      <th>AR No</th>
+                      <th>Bill No</th>
+                      {{-- <th>Room</th>   --}}
+                      <th>Particular</th>
+                      <th colspan="2">Period Covered</th>
+                      <th>Form</th>
+                      <th class="text-right">Amount</th>
+                     
+                      <th colspan="3" class="text-center">Action</th> 
+                      
                     
                 </tr>
+               </thead>
+                @foreach ($collection_list as $item)
+               
                 <tr>
-                  <?php $ctr = 1; ?>
-                    <th class="text-center">#</th>
-                    <th>AR No</th>
-                    <th>Bill No</th>
-                    {{-- <th>Room</th>   --}}
-                    <th>Particular</th>
-                    <th colspan="2">Period Covered</th>
-                    <th>Form</th>
-                    <th class="text-right">Amount</th>
-                   
-                    <th colspan="3" class="text-center">Action</th> 
-                    
-                  
-              </tr>
-             </thead>
-              @foreach ($collection_list as $item)
-             
-              <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                      <td>{{ $item->ar_no }}</td>
-                      <td>{{ $item->payment_bill_no }}</td>
-                        {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
-                       <td>{{ $item->particular }}</td> 
-                       <td colspan="2">
-                        {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                        {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                      </td>
-                      <td>{{ $item->form }}</td>
-                      <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
-                       
-                       
-                       <td class="text-left">
-                       @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
-                        <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
-                          @csrf
-                          @method('delete')
-                          <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                        </form>
-                        @endif
-                      </td>   
-                      <td class="text-right">
-                        <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-primary"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a>
-                        <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
-                      </td>   
+                      <th class="text-center">{{ $ctr++ }}</th>
+                        <td>{{ $item->ar_no }}</td>
+                        <td>{{ $item->payment_bill_no }}</td>
+                          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
+                         <td>{{ $item->particular }}</td> 
+                         <td colspan="2">
+                          {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                          {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                        </td>
+                        <td>{{ $item->form }}</td>
+                        <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
+                         
+                         
+                         <td class="text-left">
+                         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+                          <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+                          </form>
+                          @endif
+                        </td>   
+                        <td class="text-right">
+                          <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-primary"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a>
+                          <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                        </td>   
+      
     
-  
-                  </tr>
+                    </tr>
+                @endforeach
+                    <tr>
+                      <th>TOTAL</th>
+                      <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
+                    </tr>
+                    
               @endforeach
-                  <tr>
-                    <th>TOTAL</th>
-                    <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
-                  </tr>
-                  
-            @endforeach
-        </table>
+          </table>
+          </div>
         </div>
-      </div>
+        @endif
       </div>
     </div>
   </div>

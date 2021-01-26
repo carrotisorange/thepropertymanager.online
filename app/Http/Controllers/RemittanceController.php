@@ -12,6 +12,8 @@ use DB;
 use App\Notification;
 use Auth;
 use App\Tenant;
+use App\Expense;
+use Carbon\Carbon;
 
 
 class RemittanceController extends Controller
@@ -54,8 +56,9 @@ class RemittanceController extends Controller
      */
     public function create($property_id, $tenant_id, $payment_id)
     {
-        $rooms = DB::table('contracts')
+         $rooms = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.rent as contract_rent')
         ->where('tenant_id_foreign', $tenant_id)
         ->get();
 
@@ -77,15 +80,36 @@ class RemittanceController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
         
-        $remittance = new Remittance();
-        $remittance->remittance_id = Uuid::generate()->string;
-        $remittance->unit_id_foreign = $request->unit_id;
-        $remittance->amt_remitted = $request->amt;
-        $remittance->start = $request->start;
-        $remittance->end=$request->end;
-        $remittance->particular=$request->particular;
+       $no_of_bills = $request->no_of_bills;
+
+       $remittance_id = Uuid::generate()->string;
+       $total_expenses = 0;
+
+        DB::table('remittances')->insertGetId([
+        'remittance_id' => $remittance_id,
+        'unit_id_foreign' => $request->unit_id,
+        'amt_remitted' => $request->amt,
+        'start' => $request->start,
+        'end' => $request->end,
+        'particular' => $request->particular,
+        'created_at' => Carbon::now(),
+    ]);
+
+    for ($i=1; $i < $no_of_bills; $i++) { 
+        $expense = new Expense();
+        $expense->expense_id = Uuid::generate()->string;
+        $expense->unit_id_foreign = $request->unit_id;
+        $expense->remittance_id_foreign = $remittance_id;
+        $expense->expense_particular = $request->input('particular'.$i);
+        $expense->expense_amt = $request->input('amount'.$i);
+        $expense->save();
+
+        $total_expenses = $request->input('amount'.$i) + $total_expenses;
+    }
+
+        $remittance = Remittance::findOrFail($remittance_id);
+        $remittance->amt_remitted = $request->amt-$total_expenses;
         $remittance->save();
 
         return back()->with('success', 'Remittance is created successfully!');

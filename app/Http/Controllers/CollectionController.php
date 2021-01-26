@@ -222,7 +222,7 @@ class CollectionController extends Controller
 
             $property = Property::findOrFail(Session::get('property_id'));
 
-            // //retrieve all the unit information
+             //retrieve all the unit information
             // $unit  = Unit::findOrFail($request->unit_tenant_id);
 
             //assign the value of tenant and unit information to variable data
@@ -241,7 +241,7 @@ class CollectionController extends Controller
 
                 Mail::send('webapp.tenants.user-generated-mail', $data, function($message) use ($data){
                 $message->to($data['email']);
-                $message->bcc(['landleybernardo@thepropertymanager.online','customercare@thepropertymanager.online']);
+                $message->bcc('customercare@thepropertymanager.online');
                 $message->subject('Welcome Tenant');
             });
             }
@@ -270,7 +270,7 @@ class CollectionController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
  
 
             

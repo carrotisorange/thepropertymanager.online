@@ -303,7 +303,6 @@ class BillController extends Controller
     public function post_bill(Request $request, $property_id, $tenant_id)
     {
 
-
         $no_of_bills = $request->no_of_bills;
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')

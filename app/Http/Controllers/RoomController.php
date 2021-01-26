@@ -156,9 +156,18 @@ class RoomController extends Controller
            $remittances = DB::table('units')
            ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
            ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
-           ->join('owners', 'owner_id_foreign', 'owner_id')
+         
            ->select('*', 'remittances.created_at as dateRemitted')
            ->where('remittances.unit_id_foreign',$unit_id)
+           ->get();
+
+            $expenses = DB::table('units')
+           ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
+           
+           ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
+      
+           ->select('*', 'expenses.created_at as dateCreated')
+           ->where('expenses.unit_id_foreign',$unit_id)
            ->get();
 
 
@@ -175,7 +184,7 @@ class RoomController extends Controller
             ->get();
           
            
-            return view('webapp.rooms.show',compact('occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'remittances'));
+            return view('webapp.rooms.show',compact('occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'remittances', 'expenses'));
            
         }else{
                 return view('layouts.arsha.unregistered');

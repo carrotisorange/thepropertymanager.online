@@ -195,7 +195,7 @@
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants</a>
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
           <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd fa-sm text-primary-50"></i> Remittances <span class="badge badge-primary badge-counter">{{ $remittances->count() }}</span></a>
-          <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export fa-sm text-primary-50"></i> Expenses <span class="badge badge-primary badge-counter"></span></a>
+          <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export fa-sm text-primary-50"></i> Expenses <span class="badge badge-primary badge-counter">{{ $expenses->count() }}</span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
         </div>
       </nav>
@@ -289,7 +289,43 @@
         <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
-           
+            <table class="table">
+              <?php $exp_ctr=1; ?>
+              <thead>
+                <tr>
+                  <th>#</th>
+              
+                  <th>Remittance ID</th>
+  
+             
+            
+                <th>Particular</th>
+              
+    
+              
+                <th class="text-right">Amount</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+              @foreach ($expenses as $item)
+                <tr>
+                  <th>{{ $exp_ctr++ }}</th>
+                  
+         
+                  <td>{{ $item->remittance_id_foreign }}</td>
+               
+                  <td>{{ $item->expense_particular }}</td>
+              
+                  <td class="text-right">{{ number_format($item->expense_amt,2) }}</td>
+                </tr>    
+              @endforeach
+              <tr>
+                <th>TOTAL</th>
+                <th colspan="5" class="text-right">{{  number_format($expenses->sum('expense_amt'),2) }}</th>
+              </tr>
+            </tbody>
+            </table>
         
             </div>
         </div>
@@ -304,11 +340,12 @@
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>Remittance ID</th>
                   <th>Date Remitted</th>
              
                 <th>Period Covered</th>
                 <th>Particular</th>
-                <th>Owner</th>
+              
     
               
                 <th class="text-right">Amount</th>
@@ -319,11 +356,12 @@
               @foreach ($remittances as $item)
                 <tr>
                   <th>{{ $rem_ctr++ }}</th>
+                  <td>{{ $item->remittance_id }}</td>
                   <td>{{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}</td>
-                
+                 
                   <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
                   <td>{{ $item->particular }}</td>
-                  <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+ 
                
                  
                   <td class="text-right">{{ number_format($item->amt_remitted,2) }}</td>
@@ -770,8 +808,8 @@
                           </div>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times fa-sm text-dark-50"></i> Cancel</button> 
-                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check fa-sm text-white-50"></i> Submit</button>
+                            
+                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
                           </div>
                       </div>
                       </div>
