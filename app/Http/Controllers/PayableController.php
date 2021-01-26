@@ -45,7 +45,7 @@ class PayableController extends Controller
              ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
             ->where('payable_request.status', 'pending')
             ->where('payable_entry.property_id_foreign', Session::get('property_id'))
-            ->orderBy('requested_at_at', 'desc')
+            ->orderBy('requested_at', 'desc')
             ->get();
      
             $approved = DB::table('payable_request')
