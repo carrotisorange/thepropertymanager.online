@@ -201,14 +201,14 @@
   
                             <input type="hidden" form="concernForm" id="tenant_id" name="tenant_id" value="{{ $tenant->tenant_id }}"required>
                             <input type="hidden" form="concernForm" id="unit_tenant_id" name="unit_tenant_id" value="{{ $tenant->unit_tenant_id }}"required>
-  
+{{--   
                             <div class="row">
                               <div class="col">
                                   <label>Date Reported</label>
                                   <input type="date" form="concernForm" class="form-control" name="reported_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
                               </div>
                           </div>
-                          <br>
+                          <br> --}}
                           <div class="row">
                             <div class="col">
                                 <label>Title</label>
@@ -261,7 +261,7 @@
                               </div>
                           </div>
                           <br>
-                         <div class="row">
+                         {{-- <div class="row">
                             <div class="col">
                                 <label for="movein_date">Assign concern to</label>
                                 <select class="form-control" form="concernForm" name="concern_user_id">
@@ -273,7 +273,7 @@
                                  
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         </div>
                         <div class="modal-footer">
                             <button type="submit" form="concernForm" class="btn btn-primary"> Add</button>

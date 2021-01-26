@@ -533,13 +533,11 @@ class UserController extends Controller
              DB::table('concerns')->insertGetId(
                 [
                     'concern_tenant_id' => $tenant_id,
-                    'reported_at' => $request->reported_at,
+                    'reported_at' => Carbon::now(),
                     'category'=> $request->category,
                     'urgency' => $request->urgency,
                     'title' => $request->title,
                     'details' => $request->details,
-                   
-                    'concern_user_id' => $request->concern_user_id,
                 ]);
 
     

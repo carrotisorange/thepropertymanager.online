@@ -43,6 +43,7 @@ class RemittanceController extends Controller
         ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->select('*', 'remittances.created_at as dateRemitted')
+        ->where('isRemitted', 'pending')
         ->where('property_id_foreign',Session::get('property_id'))
         ->get();
 

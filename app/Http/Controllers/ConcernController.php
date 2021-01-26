@@ -274,15 +274,28 @@ class ConcernController extends Controller
 
         $concern = Concern::findOrFail($request->concern_id);
 
-        $user = User::findOrFail($concern->concern_user_id);
+        if($concern->concern_user_id!=null){
 
-        $notification = new Notification();
-        $notification->user_id_foreign = Auth::user()->id;
-        $notification->property_id_foreign = Session::get('property_id');
-        $notification->type = 'concern';
-       
-        $notification->message =  Auth::user()->name.' rates  '.$user->name.' for resolving concern '.$concern->concern_id.'.';
-        $notification->save();
+            $user = User::findOrFail($concern->concern_user_id); 
+
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'concern';
+           
+            $notification->message =  Auth::user()->name.' rates  '.$user->name.' for resolving a concern.';
+            $notification->save();
+         
+        }else{
+             
+            $notification = new Notification();
+            $notification->user_id_foreign = Auth::user()->id;
+            $notification->property_id_foreign = Session::get('property_id');
+            $notification->type = 'concern';
+           
+            $notification->message =  Auth::user()->name.' rates no one for resolving a concern.';
+            $notification->save();
+        }
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
