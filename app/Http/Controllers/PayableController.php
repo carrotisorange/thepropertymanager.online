@@ -45,6 +45,7 @@ class PayableController extends Controller
              ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
             ->where('payable_request.status', 'pending')
             ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+            ->orderBy('requested_at_at', 'desc')
             ->get();
      
             $approved = DB::table('payable_request')
@@ -53,6 +54,7 @@ class PayableController extends Controller
             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
            ->where('payable_request.status', 'approved')
            ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+           ->orderBy('approved_at', 'desc')
            ->get();
 
            $released = DB::table('payable_request')
@@ -61,6 +63,7 @@ class PayableController extends Controller
            ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
           ->where('payable_request.status', 'released')
           ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+          ->orderBy('released_at', 'desc')
           ->get();
     
      
@@ -70,6 +73,7 @@ class PayableController extends Controller
           ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
          ->where('payable_request.status', 'declined')
          ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+         ->orderBy('declined_at', 'desc')
          ->get();
 
             $property = Property::findOrFail(Session::get('property_id'));
