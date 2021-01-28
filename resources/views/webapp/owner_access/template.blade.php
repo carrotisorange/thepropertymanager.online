@@ -36,7 +36,6 @@
         @yield('css')
       </head>
 <body>
-  @include('layouts.argon.chat-messenger')
   <!-- Sidenav -->
 @yield('sidebar')
 @show

@@ -311,6 +311,59 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-12">
+      <h6 class="h2 text-dark d-inline-block mb-0">Tenants</h6>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <?php $ctr=1;?>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Profile</th>
+              <th>Tenant ID</th>
+            
+              <th>Name</th>
+          
+              <th>Mobile</th>
+             
+              <th>Email</th>
+              <th>Type</th>
+              <th>Gender</th>
+              <th>Civil status</th>
+              <th>Movein at</th>
+           </tr>
+          </thead>
+          <tbody>
+            @foreach ($tenants as $item)
+            <tr>
+                <th>{{ $ctr++ }}</th>
+                <td>  <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
+                  </span>
+                </td>
+                <td>{{ $item->tenant_unique_id }}</td>
+                <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
+                <td>{{ $item->contact_no }}</td>
+                <td>{{ $item->email_address }}</td>
+                <td>{{ $item->type_of_tenant }}</td>
+                <td>{{ $item->gender }}</td>
+                <td>{{ $item->civil_status }}</td>
+                <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+    
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 @section('main-content')

@@ -79,7 +79,7 @@ class DevController extends Controller
 
     public function tenants()
     {
-         $tenants = Tenant::all();
+         $tenants = DB::table('tenants')->orderBy('created_at', 'desc')->get();
 
          $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
