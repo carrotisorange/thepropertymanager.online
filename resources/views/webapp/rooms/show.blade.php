@@ -443,8 +443,8 @@
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
                     <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
-                    <td>{{ $item->movein_at }}</td>
-                    <td>{{ $item->moveout_at }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
                     <td>{{ $item->contract_term }}</td>
                     {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }} days left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}</> --}}
                       <td>{{ number_format($item->contract_rent, 2) }}</td>

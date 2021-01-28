@@ -533,8 +533,8 @@
                 <td>{{ $item->building }}</td>
                 <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></th>
                 <td>{{ $item->contract_status }}</td>
-                <td>{{ $item->movein_at }}</td>
-                <td>{{ $item->moveout_at }}</td>
+                <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
                 <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}">{{ $item->contract_term }}</a></th>
                 <td>{{ number_format($item->rent, 2) }}</td>
               
