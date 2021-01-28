@@ -228,7 +228,7 @@
 
 </div>
 <hr>
-<form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}/tenant/" method="POST">
+<form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/tenant/" method="POST">
   {{ csrf_field() }}
   </form>
   

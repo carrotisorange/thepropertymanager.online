@@ -190,8 +190,6 @@ class TenantController extends Controller
     {   
         $unit = Unit::findOrFail($unit_id);
 
-        $property = Property::findOrFail($property_id);
-
         $users = DB::table('users_properties_relations')
         ->join('properties', 'property_id_foreign', 'property_id')
         ->join('users', 'user_id_foreign', 'id')
@@ -201,7 +199,7 @@ class TenantController extends Controller
         ->orderBy('users.name')
         ->get();
 
-         $units = Property::findOrFail($property_id)
+         $units = Property::findOrFail(Session::get('property_id'))
         ->units
         ->whereIn('status',['vacant', 'reserved']);
 
@@ -220,7 +218,7 @@ class TenantController extends Controller
             ->max('bill_no') + 1;
         }     
 
-        return view('webapp.tenants.create', compact('unit', 'property', 'current_bill_no', 'users', 'units'));
+        return view('webapp.tenants.create', compact('unit', 'current_bill_no', 'users', 'units'));
     }
 
 

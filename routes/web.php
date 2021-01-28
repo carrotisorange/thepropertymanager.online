@@ -100,8 +100,8 @@ Route::get('/property/{property_id}/tenants', 'TenantController@index')->middlew
 Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}', 'TenantController@update')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/home/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenants/search', 'TenantController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend_post')->middleware(['auth', 'verified']);
@@ -111,7 +111,7 @@ Route::put('/property/{property_id}/tenant/{tenant_id}/upload/img','TenantContro
 
 //routes for contracts
 Route::post('/property/{property_id}/tenant/{tenant_id}/contract/create', 'ContractController@create')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/add', 'ContractController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/contract/add', 'ContractController@store')->middleware(['auth', 'verified']);
 
 //upload img
 //post F image
