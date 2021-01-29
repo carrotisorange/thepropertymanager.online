@@ -127,12 +127,13 @@ class BillController extends Controller
 
     public function post_bills_condodues(Request $request, $property_id)
     {
+        
 
     $updated_start = $request->start;
     $updated_end = $request->end;
 
 
-  $active_tenants = DB::table('contracts')
+   $active_tenants = DB::table('contracts')
   ->join('units', 'unit_id_foreign', 'unit_id')
   ->join('tenants', 'tenant_id_foreign', 'tenant_id')
   ->select('*', 'contracts.rent as contract_rent')
