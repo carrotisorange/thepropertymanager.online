@@ -184,12 +184,16 @@
 
 <div class="row">
   <div class="col-md-12">
-
+   
     <form id="editBillsForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/update" method="POST">
       @csrf
       @method('PUT')
     </form>
     {{-- <p class="text-right"> </p> --}}
+    @if($balance->count() <=0)
+    <p class="text-danger text-center">No bills found!</p>
+    @else
+
     <div class="table-responsive text-nowrap">
       <table class="table">
         <?php $ctr=1; ?>
@@ -246,6 +250,7 @@
          <tbody>  
     </table>
   </div>
+  @endif
   <hr>
   <h6 class="h2 text-dark d-inline-block mb-0">Footer Message</h6>
   <br><br>
@@ -253,7 +258,8 @@
     {{ Auth::user()->note }}
     </textarea> 
     <br>
-    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button> </p>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update</button> </p>
+ 
   </div>
   <br>
 </div>

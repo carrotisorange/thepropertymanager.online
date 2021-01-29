@@ -689,9 +689,9 @@
                       <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
                       <th class="text-right text-danger" colspan="">
                         @if($bills->sum('balance') > 0)
-                        <span class="text-danger">{{ number_format($total_balance->sum('balance'),2) }}</span>
+                        <span class="text-danger">{{ number_format($balance->sum('balance'),2) }}</span>
                         @else
-                        <span >{{ number_format($total_balance->sum('balance'),2) }}</span>
+                        <span >{{ number_format($balance->sum('balance'),2) }}</span>
                         @endif
                    
                        </th>

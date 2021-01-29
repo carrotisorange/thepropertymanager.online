@@ -663,8 +663,8 @@ class TenantController extends Controller
             ->where('bill_tenant_id', $tenant_id)
             ->where('bill_status', '<>', 'deleted')
             ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            // ->havingRaw('balance > 0')
+
+           
             ->get();
 
 
