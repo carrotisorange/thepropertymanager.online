@@ -458,7 +458,7 @@
                      <th>Name</th>
                      <th>Mobile</th>
                      <th>Email</th>
-                     <th>Movein at</th>
+                     <th>Resided on</th>
            
                    </tr>
                  </thead>

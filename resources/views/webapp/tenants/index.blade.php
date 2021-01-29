@@ -222,7 +222,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
           <th>Type</th>
           <th>Gender</th>
           <th>Civil status</th>
-          <th>Movein at</th>
+          <th>Movein </th>
        </tr>
       </thead>
       <tbody>

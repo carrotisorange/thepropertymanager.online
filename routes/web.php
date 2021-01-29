@@ -131,6 +131,9 @@ Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show')->
 Route::put('/property/{property_id}/owner/{owner_id}', 'OwnerController@update')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/{unit_id}/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
 
+
+Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'CertificateController@store')->middleware(['auth', 'verified']);
+
 Route::get('/asa', function(){
 
     // $rooms = Property::findOrFail('4b3cc400-181c-11eb-b718-f9aa30fde187')->units;

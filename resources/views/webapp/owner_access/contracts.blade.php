@@ -81,7 +81,7 @@
           <th>#</th>
           <th>Building</th>
             <th>Room</th>
-            {{-- <th>Movein at</th>
+            {{-- <th>Movein </th>
             <th>Moveout at</th> --}}
             <th>Status</th>
             <th>Rent</th>

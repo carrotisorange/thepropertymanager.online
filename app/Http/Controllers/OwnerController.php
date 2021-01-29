@@ -153,17 +153,23 @@ class OwnerController extends Controller
            ->join('bills', 'owner_id', 'bill_tenant_id')
            ->get();
 
-           $rooms = DB::table('certificates')
+            $rooms = DB::table('certificates')
            ->join('units', 'certificates.unit_id_foreign', 'unit_id')
            ->where('owner_id_foreign', $owner_id)
            ->get();
+
+            $all_units = DB::table('units')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->orderBy('building', 'asc')
+            ->orderBy('unit_no', 'asc')
+            ->get();
 
             $access = DB::table('users')
            ->join('owners', 'id', 'user_id_foreign')
            ->where('owner_id', $owner_id)
            ->get();
    
-            return view('webapp.owners.show', compact('owner','rooms','access'));
+            return view('webapp.owners.show', compact('owner','rooms','access', 'all_units'));
         }else{
             return view('layouts.arsha.unregistered');
         }

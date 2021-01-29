@@ -127,7 +127,6 @@ class BillController extends Controller
 
     public function post_bills_condodues(Request $request, $property_id)
     {
-        
 
     $updated_start = $request->start;
     $updated_end = $request->end;
@@ -140,6 +139,12 @@ class BillController extends Controller
   ->where('property_id_foreign', Session::get('property_id'))
   ->where('contracts.status', 'active')
   ->get();
+
+//   $active_tenants = DB::table('certificates')
+//   ->join('units', 'unit_id_foreign', 'unit_id')
+//   ->join('owners', 'owner_id_foreign', 'owner_id')
+//   ->where('property_id_foreign', Session::get('property_id'))
+//   ->get();
 
 
    //get the number of last added bills

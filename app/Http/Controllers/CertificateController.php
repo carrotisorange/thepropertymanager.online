@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Certificate;
 use Illuminate\Http\Request;
+use Uuid;
+use Carbon\Carbon;
 
 class CertificateController extends Controller
 {
@@ -33,9 +35,18 @@ class CertificateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $property_id, $owner_id)
     {
-        //
+        $certificate = new Certificate();
+        $certificate->certificate_id =  Uuid::generate()->string;
+        $certificate->unit_id_foreign =  $request->unit_id;
+        $certificate->owner_id_foreign =  $owner_id;
+        $certificate->date_purchased =  $request->date_purchased;
+        $certificate->date_accepted =  Carbon::now();
+        $certificate->status =  'active';
+        $certificate->save();
+
+        return back()->with('success',' Certificate is created sucessfully!');
     }
 
     /**
