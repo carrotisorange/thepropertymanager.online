@@ -6,6 +6,7 @@ use App\Certificate;
 use Illuminate\Http\Request;
 use Uuid;
 use Carbon\Carbon;
+use Session;
 
 class CertificateController extends Controller
 {
