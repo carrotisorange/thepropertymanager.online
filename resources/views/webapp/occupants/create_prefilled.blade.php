@@ -265,8 +265,8 @@
   <div class="row">
       <div class="col">
           <small class="">Mobile <span class="text-danger">*</span></small>
-        <input form="addTenantForm1" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ $current_owner->mobile }}">
-  
+        {{-- <input form="addTenantForm1" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ $current_owner->mobile }}"> --}}
+        <input form="addTenantForm1" type="number" class="form-control form-control-user @error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="12">
         @error('contact_no')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
