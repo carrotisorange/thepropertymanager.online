@@ -376,7 +376,7 @@
                   
                       <th>Name</th>
                       <th>Role</th>
-                      <th>Total referrals</th>
+                      <th>Referrals</th>
                     </tr>
                    </thead>
                    <tbody>
