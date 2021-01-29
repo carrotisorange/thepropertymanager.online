@@ -28,11 +28,25 @@ class OwnerController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens owners page.';
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        // $owners = DB::table('users_properties_relations')
+        // ->join('properties', 'property_id_foreign', 'property_id')
+        // ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
+        // ->where('property_id', $property_id)
+        // ->orderBy('owner_id', 'desc')
+        // ->get();
+
+        // $count_owners = DB::table('users_properties_relations')
+        // ->join('properties', 'property_id_foreign', 'property_id')
+        // ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
+        // ->where('property_id', $property_id)
+        // ->orderBy('owner_id', 'desc')
+        // ->count();
 
         $owners = DB::table('certificates')
         ->join('owners', 'owner_id_foreign', 'owner_id')
@@ -166,6 +180,7 @@ class OwnerController extends Controller
 
             $access = DB::table('users')
            ->join('owners', 'id', 'user_id_foreign')
+           ->select('*', 'users.email as user_email')
            ->where('owner_id', $owner_id)
            ->get();
    
@@ -179,8 +194,7 @@ class OwnerController extends Controller
     }
 
     public function create_user_access(Request $request, $property_id, $owner_id){
-   
-         $request->all();
+
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

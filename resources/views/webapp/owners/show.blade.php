@@ -292,7 +292,7 @@
              <table class="table">
                  <tr>
                    <th>Email</th>
-                   <td>{{ $item->email }}</td>
+                   <td>{{ $item->user_email }}</td>
                  </tr>
                  <tr>
                   <th>Password</th>
@@ -492,7 +492,7 @@
       </tr>
        <tr>
          <th>Email</th>
-         <td><input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $owner->email }}" required>
+         <td><input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ Str::random(8) }}@thepropertymanager.online" required>
         <br>
         @error('email')
           <span class="invalid-feedback" role="alert">
@@ -504,7 +504,7 @@
        </tr>
        <tr>
          <th>Password</th>
-         <td><input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="" required>
+         <td><input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="12345678" required>
         <br>
         @error('password')
         <span class="invalid-feedback" role="alert">
