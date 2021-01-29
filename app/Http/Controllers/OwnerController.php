@@ -52,6 +52,7 @@ class OwnerController extends Controller
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
+        ->orderBy('owners.name')
         ->get();
 
         $count_owners = DB::table('certificates')
