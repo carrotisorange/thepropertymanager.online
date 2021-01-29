@@ -220,6 +220,13 @@
           <div class="col-md-8">
             <a href="/property/{{ Session::get('property_id') }}/owners"  class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>
             <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+            @if(Auth::user()->user_type === 'manager')
+            <form action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/delete" method="POST">
+              @csrf
+              @method('delete')
+              <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
+            </form>
+            @endif
             <br><br>
   
                <div class="table-responsive text-nowrap">
