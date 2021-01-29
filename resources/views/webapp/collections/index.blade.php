@@ -236,8 +236,8 @@
           @endif
           <th>Particular</th>
           <th>Period Covered</th>
-          <th>Form</th>
-          <th>Amount</th>
+          {{-- <th>Form</th> --}}
+          <th class="text-right">Amount</th>
       
       </tr>
 
@@ -245,7 +245,13 @@
         @foreach ($collection_list as $item)
         <tr>
                 <th>{{ $ctr++ }}</th>
-                <td>{{ $item->ar_no }}</td>
+                <td> 
+                  @if($item->payment_status === 'deleted')
+                  <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
+                  @else
+                  {{ $item->ar_no }}
+                  @endif
+                </td>
                 <td>{{ $item->payment_bill_no }}</td>
                 {{-- <td><a href="units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td> --}}
 
@@ -272,8 +278,8 @@
                   {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                   {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                 </td>
-                <td>{{ $item->form }}</td>
-                <td >{{ number_format($item->amt_paid,2) }}</td>
+                {{-- <td>{{ $item->form }}</td> --}}
+                <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                
                 {{-- <td class="text-center">
                   <a title="export pdf" target="_blank" href="/units/{{ $item->unit_tenant_id }}/tenants/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
@@ -282,17 +288,22 @@
                   
                 </td>--}}
                <td>
+                @if($item->payment_status === 'deleted')
+              
+                @else
                 <form action="/property/{{$property->property_id}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
                   @csrf
                   @method('delete')
                   <button title="remove this payment" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
                 </form>
+                @endif
+               
                </td>
             </tr>
         @endforeach
             <tr>
               <th>TOTAL</th>
-              <th colspan="9">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
+              <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
             </tr>
           
       @endforeach

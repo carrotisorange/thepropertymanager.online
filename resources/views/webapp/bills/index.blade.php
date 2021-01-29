@@ -282,7 +282,13 @@
       @foreach ($bill as $item)
       <tr>
         <th>{{ $ctr++ }}</th>
-        <td>{{ $item->bill_no }}</th>  
+        <td>
+        @if($item->bill_status === 'deleted')
+        <span class="text-danger"> {{ $item->bill_no }} (deleted)</span>
+        @else
+        {{ $item->bill_no }}
+        @endif
+        </th>  
         {{-- <td>  {{ Carbon\Carbon::parse($item->date_posted)->format('M d Y') }}</td> --}}
        
         
@@ -312,6 +318,9 @@
         <td>{{ number_format($item->amount,2) }}</td>
      
         <td class="text-center">
+          @if($item->bill_status === 'deleted')
+         
+          @else
           @if(Auth::user()->user_type === 'manager')
           <form action="/property/{{Session::get('property_id')}}/bill/{{ $item->bill_id }}" method="POST">
             @csrf
@@ -319,6 +328,8 @@
             <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
           </form>
           @endif
+          @endif
+       
         </td>
         </tr>
       @endforeach

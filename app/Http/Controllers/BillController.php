@@ -319,18 +319,7 @@ class BillController extends Controller
             ->max('bill_no') + 1;
         }     
 
-        for ($i=1; $i < $no_of_bills; $i++) { 
-            $bill = new Bill();
-            $bill->bill_tenant_id = $tenant_id;
-            $bill->bill_no = $current_bill_no++;
-            $bill->date_posted = $request->date_posted;
-            $bill->particular = $request->input('particular'.$i);
-            $bill->start = $request->input('start'.$i);
-            $bill->end = $request->input('end'.$i);
-            $bill->amount = $request->input('amount'.$i);
-            $bill->save();
-
-        }
+        
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
@@ -827,13 +816,6 @@ class BillController extends Controller
      */
     public function destroy($property_id,$tenant_id, $billing_id)
     {
-        //  DB::table("billings")
-        //  ->join('tenants', 'bill_tenant_id', 'tenant_id')
-        //  ->join('units', 'unit_tenant_id', 'unit_id')
-        // ->where('unit_property', Auth::user()->property)
-        // // ->whereIn('particular', ['Water', 'Electricity'])
-        // ->where('particular', 'Rent')
-        // ->delete();
 
         $tenant = Tenant::findOrFail($tenant_id);
 
@@ -847,7 +829,11 @@ class BillController extends Controller
                     
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        DB::table('bills')->where('bill_id', $billing_id)->delete();
+        
+         $bill = Bill::findOrFail($billing_id);
+         $bill->bill_status = 'deleted';
+         $bill->save();
+
         return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'Bill is deleted successfully.');
     }
 
@@ -863,6 +849,15 @@ class BillController extends Controller
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
+
+           $total_balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
+            ->where('bill_status', '<>', 'deleted')
+            ->groupBy('bill_id')
+            ->orderBy('bill_no', 'desc')
+            // ->havingRaw('balance > 0')
+            ->get();
         
         $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
 
@@ -871,6 +866,7 @@ class BillController extends Controller
         $data = [
             'tenant' => $tenant->first_name.' '.$tenant->last_name ,
             'bills' => $bills,
+            'total_balance' => $total_balance,
             'current_room' => $current_room,
         ];
 
@@ -939,6 +935,8 @@ class BillController extends Controller
     public function destroy_bill_from_bills_page($property_id, $billing_id)
     {
         $bill = Bill::findOrFail($billing_id);
+        $bill->bill_status = 'deleted';
+        $bill->save();
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -949,8 +947,6 @@ class BillController extends Controller
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
-
-        DB::table('bills')->where('bill_id', $billing_id)->delete();
 
         return back()->with('success', 'Bill is deleted successfully.');
     }

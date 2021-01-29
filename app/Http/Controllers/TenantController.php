@@ -643,6 +643,7 @@ class TenantController extends Controller
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
             ->where('bill_tenant_id', $tenant_id)
+            
             ->groupBy('bill_id')
             ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
@@ -657,6 +658,15 @@ class TenantController extends Controller
             // ->havingRaw('balance > 0')
             ->get();
 
+             $total_balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            ->where('bill_tenant_id', $tenant_id)
+            ->where('bill_status', '<>', 'deleted')
+            ->groupBy('bill_id')
+            ->orderBy('bill_no', 'desc')
+            // ->havingRaw('balance > 0')
+            ->get();
+
 
 
                $access = DB::table('users')
@@ -664,7 +674,7 @@ class TenantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
+                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property', 'total_balance'));  
         }else{
                 return view('layouts.arsha.unregistered');
         }

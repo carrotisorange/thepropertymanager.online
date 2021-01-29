@@ -646,7 +646,14 @@
                       </td>   
                        
           
-                        <td>{{ $item->bill_no }}</td>
+                        <td>
+                          @if($item->bill_status === 'deleted')
+                          <span class="text-danger"> {{ $item->bill_no }} (deleted)</span>
+                          @else
+                          {{ $item->bill_no }}
+                          @endif
+  
+                        </td>
                 
                         <td>{{ $item->particular }}</td>
                       
@@ -682,9 +689,9 @@
                       <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
                       <th class="text-right text-danger" colspan="">
                         @if($bills->sum('balance') > 0)
-                        <span class="text-danger">{{ number_format($bills->sum('balance'),2) }}</span>
+                        <span class="text-danger">{{ number_format($total_balance->sum('balance'),2) }}</span>
                         @else
-                        <span >{{ number_format($bills->sum('balance'),2) }}</span>
+                        <span >{{ number_format($total_balance->sum('balance'),2) }}</span>
                         @endif
                    
                        </th>
@@ -746,8 +753,16 @@
                
                 <tr>
                       <th class="text-center">{{ $ctr++ }}</th>
-                        <td>{{ $item->ar_no }}</td>
-                        <td>{{ $item->payment_bill_no }}</td>
+                        <td>
+                          @if($item->payment_status === 'deleted')
+                          <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
+                          @else
+                          {{ $item->ar_no }}
+                          @endif
+                        
+                        </td>
+                        <td>{{ $item->payment_bill_no }}
+                        </td>
                           {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
                          <td>{{ $item->particular }}</td> 
                          <td colspan="2">
@@ -760,16 +775,26 @@
                          
                          <td class="text-left">
                          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
-                          <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                          </form>
+                         @if($item->payment_status === 'deleted')
+                         
+                        @else
+                        <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
+                          @csrf
+                          @method('delete')
+                          <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+                        </form>
+                         @endif
+                         
                           @endif
                         </td>   
                         <td class="text-right">
+                          @if($item->payment_status === 'deleted')
+                          
+                          @else
                           <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-primary"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a>
                           <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                          @endif
+                          
                         </td>   
       
     

@@ -51,7 +51,13 @@
               <tr>
                 <th>{{ $ctr++ }}</th>
       
-                  <td>{{ $item->bill_no }}</th>
+                  <td>
+                    @if($item->bill_status === 'deleted')
+                    <span class="text-danger"> {{ $item->bill_no }} (deleted)</span>
+                    @else
+                    {{ $item->bill_no }}
+                    @endif
+                  </th>
                   <td>{{ $item->particular }}</td>
                  
                   <td colspan="2">
@@ -62,8 +68,8 @@
               </tr>
               @endforeach
               <tr>
-                <th>Total</th>
-                <th class="text-right" colspan="6">{{ number_format($bills->sum('balance'),2) }} </th>
+                <th>TOTAL</th>
+                <th class="text-right" colspan="6">{{ number_format($total_balance->sum('balance'),2) }} </th>
                </tr>
         
           </table>
