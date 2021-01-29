@@ -131,6 +131,8 @@ Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show')->
 Route::put('/property/{property_id}/owner/{owner_id}', 'OwnerController@update')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/{unit_id}/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
 
+Route::delete('/property/{property_id}/owner/{owner_id}/delete', 'OwnerController@destroy')->middleware(['auth', 'verified']);
+
 
 Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'CertificateController@store')->middleware(['auth', 'verified']);
 
@@ -649,9 +651,6 @@ Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantControll
 Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 
 Route::delete('property/{property_id}/bill/{bill_id}', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
-
-//delete owners
-Route::delete('owners/{owner_id}', 'OwnerController@destroy')->middleware(['auth', 'verified']);
 
 
 //route for users

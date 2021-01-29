@@ -46,7 +46,7 @@ class CertificateController extends Controller
         $certificate->status =  'active';
         $certificate->save();
 
-        return back()->with('success',' Certificate is created sucessfully!');
+        return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'#certificates')->with('success',' Certificate is created sucessfully!');
     }
 
     /**

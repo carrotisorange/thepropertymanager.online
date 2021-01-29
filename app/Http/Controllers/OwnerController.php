@@ -287,10 +287,22 @@ class OwnerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        DB::table('owners')->where('owner_id', $id)->delete();
+    public function destroy($property_id, $owner_id)
+    { 
+        DB::table('owners')->where('owner_id', $owner_id)->delete();
+        DB::table('certificates')->where('owner_id_foreign', $owner_id)->delete();
 
-        return back();
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'owner';
+        $notification->isOpen = '1';
+        $notification->message = Auth::user()->name.' deletes an owner.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        
+
+        return back()->with('success', 'Owner is deleted successfully.');
     }
 }
