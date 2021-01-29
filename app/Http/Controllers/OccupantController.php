@@ -53,33 +53,37 @@ class OccupantController extends Controller
         if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' ){
             
             if($search === null){
-                $tenants = DB::table('users_properties_relations')
-                ->join('properties', 'property_id_foreign', 'property_id')
-                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-                ->select('*', 'tenants.created_at as movein_at')
-                ->where('property_id', $property_id)
-                ->orderBy('tenant_id', 'desc')
+                $tenants = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->select('*', 'contracts.rent as contract_rent')
+                ->where('property_id_foreign', Session::get('property_id'))
+         
                 ->get();
     
-                $count_tenants = DB::table('users_properties_relations')
-                ->join('properties', 'property_id_foreign', 'property_id')
-                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-                ->where('property_id', $property_id)
+                $count_tenants = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->select('*', 'contracts.rent as contract_rent')
+                ->where('property_id_foreign', Session::get('property_id'))
+          
                 ->count();
             }else{
-                $tenants = DB::table('users_properties_relations')
-                ->join('properties', 'property_id_foreign', 'property_id')
-                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-                ->select('*', 'tenants.created_at as movein_at')
-                ->where('property_id', $property_id)
+
+                $tenants = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->select('*', 'contracts.rent as contract_rent')
+                ->where('property_id_foreign', Session::get('property_id'))
                 ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
-                ->orderBy('tenant_id', 'desc')
                 ->get();
     
-                $count_tenants = DB::table('users_properties_relations')
-                ->join('properties', 'property_id_foreign', 'property_id')
-                ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-                ->where('property_id', $property_id)
+                $count_tenants = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->select('*', 'contracts.rent as contract_rent')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
                 ->count();
             }
 
@@ -129,20 +133,20 @@ class OccupantController extends Controller
     public function store(Request $request, $property_id, $unit_id )
     {
 
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+        // $request->validate([
+        //     'first_name' => ['required', 'string', 'max:255'],
+        //     'middle_name' => ['max:255'],
+        //     'last_name' => ['required', 'string', 'max:255'],
     
-            'birthdate' => ['required'],
-            'gender' => ['required'],
+        //     'birthdate' => ['required'],
+        //     'gender' => ['required'],
     
-            'civil_status' => ['required'],
-            'id_number' => ['required'],
+        //     'civil_status' => ['required'],
+        //     'id_number' => ['required'],
         
-            'email_address' => ['required', 'string', 'email', 'max:255', 'unique:tenants'],
-            'contact_no' => ['required', 'unique:tenants'],
-        ]);
+        //     'email_address' => ['required', 'string', 'email', 'max:255', 'unique:tenants'],
+        //     'contact_no' => ['required', 'unique:tenants'],
+        // ]);
 
         $latest_tenant_id = Tenant::all()->max('tenant_id')+1;
 

@@ -446,7 +446,7 @@
                  <td>{{ $item->building }}</td>
                  <td><a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></td>
                  
-                 <td>{{ $item->movein_at }}</td>
+                 <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
                  <td>{{ $item->initial_electric }}</td>
                <td>{{ $item->initial_water }}</td>
                 

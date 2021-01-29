@@ -470,7 +470,7 @@
                   <th><a href="/property/{{ Session::get('property_id') }}/occupant/{{ $item->tenant_id }}/">{{ $item->first_name.' '.$item->middle_name.' '.$item->last_name }}</a></th>
                   <td>{{ $item->contact_no }}</td>
                   <td>{{ $item->email_address }}</td>
-                  <td>{{ $item->movein_at }}</td>
+                   <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
 
                   </tr>
               @endforeach
