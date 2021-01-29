@@ -212,7 +212,7 @@ class OwnerController extends Controller
                                   );      
                                   
 
-    return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#user')->with('success', 'Owner access to the system is created successfully!');
+    return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#user')->with('success', 'Credentials are created successfully!');
     }
 
     /**

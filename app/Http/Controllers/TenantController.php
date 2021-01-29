@@ -178,7 +178,7 @@ class TenantController extends Controller
             return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id)->with('success', 'Credentials created successfully.');
                                   
 
-    return back()->with('success', 'Tenant access to the system has been created!');
+    return back()->with('success', 'Credentials are created successfully.');
     }
 
     /**

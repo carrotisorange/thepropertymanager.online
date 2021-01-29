@@ -287,7 +287,7 @@ Route::get('/asa', function(){
 
 
 
-        return back()->with('success', 'Tenant access to the system has been created!');
+        return back()->with('success', 'Credentials are created successfully!');
 
 
 });

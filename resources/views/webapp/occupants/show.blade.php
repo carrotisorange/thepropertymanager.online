@@ -572,15 +572,14 @@
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Tenant Credentials</h5>
+    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Add Credentials</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
     </div>
    <div class="modal-body">
-     <p class="text-danger"><i class="fas fa-exclamation-triangle"></i>  Tenant needs to verify email before can access the system. 
-      <br> Please make sure that the email is valid before creating credentials. </p>
+   
       
      <form id="userForm" action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/user/create" method="POST">
     @csrf
@@ -626,8 +625,7 @@
      </table>
    </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close"><i class="fas fa-times fa-sm text-white-50"></i> Close </button>
-    <button type="submit" form="userForm" class="btn btn-primary"><i class="fas fa-check"></i> Create</button> 
+    <button type="submit" form="userForm" class="btn btn-primary"> Add</button> 
   </div> 
   </div>
   </div>
