@@ -34,32 +34,32 @@ class OwnerController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        // $owners = DB::table('users_properties_relations')
-        // ->join('properties', 'property_id_foreign', 'property_id')
-        // ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
-        // ->where('property_id', $property_id)
-        // ->orderBy('owner_id', 'desc')
-        // ->get();
-
-        // $count_owners = DB::table('users_properties_relations')
-        // ->join('properties', 'property_id_foreign', 'property_id')
-        // ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
-        // ->where('property_id', $property_id)
-        // ->orderBy('owner_id', 'desc')
-        // ->count();
-
-        $owners = DB::table('certificates')
-        ->join('owners', 'owner_id_foreign', 'owner_id')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->where('property_id_foreign', $property_id)
-        ->orderBy('owners.name')
+        $owners = DB::table('users_properties_relations')
+        ->join('properties', 'property_id_foreign', 'property_id')
+        ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
+        ->where('property_id', $property_id)
+        ->orderBy('owner_id', 'desc')
         ->get();
 
-        $count_owners = DB::table('certificates')
-        ->join('owners', 'owner_id_foreign', 'owner_id')
-        ->join('units', 'certificates.unit_id_foreign', 'unit_id')
-        ->where('property_id_foreign', $property_id)
+        $count_owners = DB::table('users_properties_relations')
+        ->join('properties', 'property_id_foreign', 'property_id')
+        ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
+        ->where('property_id', $property_id)
+        ->orderBy('owner_id', 'desc')
         ->count();
+
+        // $owners = DB::table('certificates')
+        // ->join('owners', 'owner_id_foreign', 'owner_id')
+        // ->join('units', 'unit_id_foreign', 'unit_id')
+        // ->where('property_id_foreign', $property_id)
+        // ->orderBy('owners.name')
+        // ->get();
+
+        // $count_owners = DB::table('certificates')
+        // ->join('owners', 'owner_id_foreign', 'owner_id')
+        // ->join('units', 'certificates.unit_id_foreign', 'unit_id')
+        // ->where('property_id_foreign', $property_id)
+        // ->count();
 
         $property = Property::findOrFail($property_id);
         
