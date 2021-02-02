@@ -209,14 +209,24 @@ class ContractController extends Controller
     public function show($property_id, $tenant_id, $contract_id)
     {
 
-         $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        //  $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        // ->where('bill_tenant_id', $tenant_id)
+        // ->where('bill_status', '<>', 'deleted')
+        // ->groupBy('bill_id')
+        // ->orderBy('bill_no', 'desc')
+        // ->havingRaw('balance > 0')
+        // ->get();
+
+        $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
-        ->groupBy('bill_id')
-        ->orderBy('bill_no', 'desc')
+        ->where('bill_status', '<>', 'deleted')
         ->havingRaw('balance > 0')
-        ->get();
 
+       
+        ->get();
+       
         $tenant = Tenant::findOrFail($tenant_id);
 
         $contract = Contract::findOrFail($contract_id);
@@ -628,7 +638,6 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
        DB::table('contracts')
        ->where('contract_id', $contract_id)
        ->update([
-            'tenant_id_foreign' => $request->tenant_id_foreign,
             'unit_id_foreign' => $request->unit_id_foreign,
             'referrer_id_foreign' => $request->referrer_id_foreign,
             'form_of_interaction' => $request->form_of_interaction,

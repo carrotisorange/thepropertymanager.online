@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Guardian;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 
 class GuardianController extends Controller
 {
@@ -45,7 +46,7 @@ class GuardianController extends Controller
             'relationship' => $request->relationship
         ]);
     
-        return back()->with('success', 'guardian has been added!');
+        return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'#guardians')->with('success', 'Guardian is created successfully.');
     }
 
     /**

@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col">
                   <label>Mobile</label>
-                  <input type="text" form="guardianForm" class="form-control" name="mobile" required >
+                  <input type="number" form="guardianForm" class="form-control" name="mobile" required >
               </div>
           </div>
           <br>
@@ -60,9 +60,8 @@
         
 
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button> 
-            <button type="submit" form="guardianForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+        <div class="modal-footer"> 
+            <button type="submit" form="guardianForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
         </div>
     </div>
     </div>

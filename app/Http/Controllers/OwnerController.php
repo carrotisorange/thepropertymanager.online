@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Session;
 use App\Notification;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class OwnerController extends Controller
 {
@@ -101,6 +102,29 @@ class OwnerController extends Controller
     public function create()
     {
         
+    }
+
+    public function upload_img(Request $request, $property_id, $owner_id)
+    {
+        $request->validate([
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+     $extension = $request->img->getClientOriginalExtension();
+    
+      $filename = $owner_id.Str::random(8).'.'.$extension;
+    
+      $request->img->storeAs('public/img/owners', $filename);
+    
+        DB::table('owners')
+        ->where('owner_id', $owner_id)
+        ->update(
+                [
+                    'img' => $filename
+                ]
+            );
+    
+        return back()->with('success', 'Image is uploaded successfully.');
     }
 
     /**

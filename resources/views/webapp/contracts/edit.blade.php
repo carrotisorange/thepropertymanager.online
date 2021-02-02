@@ -166,7 +166,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-8">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}'s contract</h6>
     
   </div>
 </div>
@@ -181,7 +181,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
-               <tr>
+               {{-- <tr>
                    <th>Tenant</th>
                    <td><select form="editContractForm" class="form-control" name="tenant_id_foreign" id="tenant_id_foreign">
                        <option value="{{ $contract->tenant_id_foreign }}" selected>{{ $contract->tenant_id_foreign }}</option>
@@ -190,7 +190,7 @@
                        @endforeach
                        </select>
                     </td>
-               </tr>
+               </tr> --}}
                <tr>
                 <th>Room</th>
               <td>

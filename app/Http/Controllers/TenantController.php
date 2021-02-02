@@ -658,11 +658,11 @@ class TenantController extends Controller
             // ->havingRaw('balance > 0')
             ->get();
 
-             $total_balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+              $total_balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('bill_tenant_id', $tenant_id)
             ->where('bill_status', '<>', 'deleted')
-            ->groupBy('bill_id')
+            ->havingRaw('balance > 0')
 
            
             ->get();
@@ -701,7 +701,7 @@ class TenantController extends Controller
                 ]
             );
     
-        return back()->with('success', 'image has been uploaded!');
+        return back()->with('success', 'Image is uploaded successfully.');
     }
 
     public function show_billings($unit_id, $tenant_id){

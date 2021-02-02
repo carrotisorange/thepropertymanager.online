@@ -176,14 +176,14 @@
         <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/edit"><i class="fas fa-edit"></i> Edit</a>
         <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> Extend</a>
         @if(!$contract->terminated_at)
-          @if($balance->count()>0)
+          @if($balance->count()<0)
           <a href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-danger"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i> Terminate</a>
           @else
           <a class="btn btn-danger" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/preterminate"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i> Terminate</a>
           @endif
        @endif
         @if($contract->terminated_at)
-          @if($balance->count()>0)
+          @if($balance->count()<0)
           <a href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-danger"><i class="fas fa-sign-out-alt text-white-50"></i> Moveout</a>
           @else
             @if($contract->status != 'inactive')
@@ -260,7 +260,7 @@
                   <td>{{ $contract->term }}</td>
               </tr>
               <tr>
-                  <th>Dater terminated</th>
+                  <th>Date terminated</th>
                   <td>{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('M d, Y'): 'NA' }}</td>
               </tr>
               <tr>

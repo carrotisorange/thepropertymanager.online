@@ -214,7 +214,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
                <th>Email</th>
                <th>Mobile</th>
                <th>Representative</th>
-               <th></th>
+               {{-- <th></th> --}}
            </tr>
         </thead>   
            <tbody>
@@ -225,7 +225,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
             <td>{{ $item->email}}</td>
             <td>{{ $item->mobile }}</td>
             <td>{{ $item->representative }}</td>
-            <td>
+            {{-- <td>
               @if(Auth::user()->user_type === 'manager')
               <form action="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}/delete" method="POST">
                 @csrf
@@ -233,7 +233,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
                 <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
               </form>
               @endif
-            </td>
+            </td> --}}
           </tr>
            @endforeach
            </tbody>

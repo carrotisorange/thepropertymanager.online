@@ -130,6 +130,7 @@ Route::get('/property/{property_id}/owner/{owner_id}/edit', 'OwnerController@edi
 Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/owner/{owner_id}', 'OwnerController@update')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/{unit_id}/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/owner/{owner_id}/upload/img','OwnerController@upload_img')->middleware(['auth', 'verified']);
 
 Route::delete('/property/{property_id}/owner/{owner_id}/delete', 'OwnerController@destroy')->middleware(['auth', 'verified']);
 

@@ -183,7 +183,7 @@
   
   <div class="col-lg-8 text-right">
     <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-file-invoice-dollar"></i> Bills </a> 
-    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Period covered</a> 
+    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
   </div>
 </div>
 
@@ -310,7 +310,7 @@
   <div class="modal-dialog modal-md" role="modal">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Period Covered</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Options</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>

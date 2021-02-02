@@ -220,13 +220,13 @@
           <div class="col-md-8">
             <a href="/property/{{ Session::get('property_id') }}/owners"  class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>
             <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-            @if(Auth::user()->user_type === 'manager')
+            {{-- @if(Auth::user()->user_type === 'manager')
             <form action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/delete" method="POST">
               @csrf
               @method('delete')
               <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
             </form>
-            @endif
+            @endif --}}
             <br><br>
   
                <div class="table-responsive text-nowrap">
@@ -259,16 +259,16 @@
           </div>
           <div class="col-md-4">
          
-           <img  src="{{ $owner->tenant_img? asset('/storage/tenants/'.$owner->tenant_img): asset('/arsha/assets/img/no-image.png') }}" alt="..." class="img-thumbnail">
+           <img  src="{{ $owner->img? asset('/storage/img/owners/'.$owner->img): asset('/arsha/assets/img/no-image.png') }}" alt="..." class="img-thumbnail">
           
-           <form id="uploadImageForm" action="/units/{{ $owner->unit_tenant_id }}/tenants/{{ $owner->tenant_id }}/edit/img" method="POST" enctype="multipart/form-data">
+           <form id="uploadImageForm" action="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/upload/img" method="POST" enctype="multipart/form-data">
              @method('put')
              @csrf
            </form>
          <br>
        
-           <input type="file" form="uploadImageForm" name="tenant_img" class="form-control @error('tenant_img') is-invalid @enderror">
-           @error('tenant_img')
+           <input type="file" form="uploadImageForm" name="img" class="form-control @error('img') is-invalid @enderror">
+           @error('img')
            <span class="invalid-feedback" role="alert">
                <strong>{{ $message }}</strong>
            </span>
@@ -277,7 +277,8 @@
           
            <button class="btn btn-primary btn-user btn-block" form="uploadImageForm"><i class="fas fa-upload fa-sm text-white-50"></i> Upload Image </button>
        
-         </div> </div>
+         </div> 
+        </div>
       </div>
 
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
