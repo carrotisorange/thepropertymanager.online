@@ -664,7 +664,7 @@
                         <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
                         <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
                         <td class="text-right" >
-                          @if($item->balance > 0)
+                          @if($item->balance > 0 && $item->bill_status != 'deleted')
                           <span class="text-danger">{{ number_format($item->balance,2) }}</span>
                           @else
                           <span >{{ number_format($item->balance,2) }}</span>
@@ -688,10 +688,10 @@
                       <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
                       <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
                       <th class="text-right text-danger" colspan="">
-                        @if($bills->sum('balance') > 0)
-                        <span class="text-danger">{{ number_format($total_balance->sum('balance'),2) }}</span>
+                        @if($item->balance > 0)
+                        <span class="text-danger">{{ number_format($total_balance, 2) }}</span>
                         @else
-                        <span >{{ number_format($total_balance->sum('balance'),2) }}</span>
+                        <span >{{ number_format($total_balance,2) }}</span>
                         @endif
                    
                        </th>
@@ -791,7 +791,7 @@
                           @if($item->payment_status === 'deleted')
                           
                           @else
-                          <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-primary"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a>
+                          <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-success"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a>
                           <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
                           @endif
                           

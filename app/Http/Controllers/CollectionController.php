@@ -270,7 +270,7 @@ class CollectionController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment/s have been recorded!');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment is recorded. Please use the HAND WITH DOLLAR BUTTON to add remittance for the owner.');
  
 
             

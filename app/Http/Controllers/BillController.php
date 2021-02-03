@@ -617,7 +617,7 @@ class BillController extends Controller
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
             
             //get the tenant information
-            $tenant = Tenant::findOrFail($tenant_id);
+              $tenant = Tenant::findOrFail($tenant_id);
 
             $property = Property::findOrFail($property_id);
     
@@ -636,11 +636,20 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('bill_tenant_id', $tenant_id)
-            ->where('bill_status', '<>', 'deleted')
+            // ->where('bill_status', '<>', 'deleted')
             ->groupBy('bill_no')
             ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
+            // ->havingRaw('balance > 0')
             ->get();
+
+            // $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            // ->where('bill_tenant_id', $tenant_id)
+            // ->where('bill_status', '<>', 'deleted')
+            // ->groupBy('bill_id')
+            // ->orderBy('bill_no', 'desc')
+            // ->havingRaw('balance > 0')
+            // ->get();
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
@@ -713,13 +722,17 @@ class BillController extends Controller
 
 
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->join('tenants', 'bill_tenant_id', 'tenant_id')
+            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('bill_tenant_id', $tenant_id)
-            ->where('bill_status','<>','deleted')
-            ->groupBy('bill_id')
+            // ->where('bill_status', '<>', 'deleted')
+            ->groupBy('bill_no')
             ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
             ->get();
+
 
 
             for ($i=1; $i <= $balance->count(); $i++) { 
@@ -855,17 +868,15 @@ class BillController extends Controller
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
-        ->havingRaw('balance > 0')
+        // ->havingRaw('balance > 0')
         ->get();
 
-           $total_balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('bill_tenant_id', $tenant_id)
-            ->where('bill_status', '<>', 'deleted')
-            ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            // ->havingRaw('balance > 0')
-            ->get();
+        $total_balance = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status', null)->sum('amount');
+
+      
+
+        $total_balance = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status', null)->sum('amount');
+
         
         $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
 

@@ -614,7 +614,7 @@ class TenantController extends Controller
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
 
-        $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('payment_id')
         ->orderBy('ar_no', 'desc')
@@ -658,14 +658,10 @@ class TenantController extends Controller
             // ->havingRaw('balance > 0')
             ->get();
 
-              $total_balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('bill_tenant_id', $tenant_id)
-            ->where('bill_status', '<>', 'deleted')
-            ->havingRaw('balance > 0')
+            $total_balance = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status', null)->sum('amount');
 
-           
-            ->get();
+          
+        
 
 
 

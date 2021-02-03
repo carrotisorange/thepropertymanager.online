@@ -69,7 +69,7 @@
               @endforeach
               <tr>
                 <th>TOTAL</th>
-                <th class="text-right" colspan="6">{{ number_format($total_balance->sum('balance'),2) }} </th>
+                <th class="text-right" colspan="6">{{ number_format($total_balance, 2) }} </th>
                </tr>
         
           </table>

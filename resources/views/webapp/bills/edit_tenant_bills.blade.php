@@ -220,7 +220,13 @@
         @foreach ($balance as $item)
         <tr>
             <th class="text-center">{{ $ctr++ }}</th>
-            <td>{{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
+            <td>
+            @if($item->bill_status === 'deleted')
+            <span class="text-danger"> {{ $item->bill_no }} (deleted)</span> <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"> 
+            @else
+           {{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}">
+            @endif
+          </td>
             <td>{{$item->unit_no}}</td>
             <td>{{ $item->particular }}</td>
             <td>
@@ -232,21 +238,25 @@
             <td><input form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
             <td>
               @if(Auth::user()->user_type === 'manager')
-  
+              @if($item->bill_status === 'deleted')
+
+              @else
               <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}" method="POST">
                 @csrf
                 @method('delete')
                 <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
               </form>
               @endif
+              
+              @endif
             </td>   
           </tr>
         @endforeach
 
-        <tr>
+        {{-- <tr>
           <th>TOTAL</th>
           <th colspan="6" class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
-         </tr>  
+         </tr>   --}}
          <tbody>  
     </table>
   </div>

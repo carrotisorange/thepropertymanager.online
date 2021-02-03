@@ -166,7 +166,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-12">
-    <h6 class="h2 text-dark d-inline-block mb-0">You're about to add a remittance. </h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">You're about to add a remittance to the owner. </h6>
     <br>
     <small><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}">Return to {{ $tenant->first_name }}'s profile</a> </small>
   </div>
@@ -220,8 +220,8 @@
     <br>
     <div class="row">
         <div class="col">
-          <label>Net profit</label> <small class="text-danger">(Amount to be remitted to the owner)</small>
-          <input form="addRemittanceForm" type="number" min="1" class="form-control" name="amt" step="0.001" value="{{ $item->amt_paid }}" required>
+          <label>Net profit</label> <small class="text-danger">(Amount to be remitted to the owner.)</small>
+          <input form="addRemittanceForm" type="number" min="1" class="form-control" name="amt" step="0.001" value="{{ $item->amt_paid }}" required readonly>
         </div>
     </div>
     @endforeach
