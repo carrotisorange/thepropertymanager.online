@@ -39,7 +39,7 @@ class UnitController extends Controller
             ->count();
     
         
-            $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'accepted')->count();
+            $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
     
             $units_vacant = Property::findOrFail(Session::get('property_id'))->units->where('status', 'vacant')->count();
     

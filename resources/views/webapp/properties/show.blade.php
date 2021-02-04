@@ -759,7 +759,7 @@
   </div>
   <div class="modal-footer">
    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss </button>
-   <a href="/property/{{  Session::get('property_id') }}/concerns" class="btn btn-primary" >Proceed</a>
+   <a href="/property/{{  Session::get('property_id') }}/pending-concerns" class="btn btn-primary" >Proceed</a>
   </form>
   </div> 
   </div>

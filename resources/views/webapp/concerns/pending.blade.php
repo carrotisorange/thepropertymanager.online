@@ -185,7 +185,7 @@
                     <th>Date reported</th>
                     <th>Tenant</th>
                     <th>Room</th>
-                    <th>Concern</th>
+                    <th>Title</th>
                     <th>Assigned to</th>
                 </tr>
                 </thead>
@@ -193,7 +193,7 @@
                   @foreach($pending_concerns as $item)
                   <tr>
                     <th>{{ $ctr++ }}</th>
-                    <td>{{ $item->reported_at }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
                     <td>
           
                       <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}

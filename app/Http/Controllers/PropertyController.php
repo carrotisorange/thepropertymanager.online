@@ -523,13 +523,6 @@ class PropertyController extends Controller
         ->limit(5)
         ->get();
 
-        // $active_concerns = DB::table('tenants')
-        // ->join('units', 'unit_id', 'unit_tenant_id')
-        // ->join('concerns', 'tenant_id', 'concern_tenant_id')
-        // ->where('status', 'active')
-        // ->where('property_id_foreign', Session::get('property_id'))
-        // ->get();
-
 $units = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
 
 
@@ -550,11 +543,11 @@ $units = Property::findOrFail(Session::get('property_id'))->units->where('status
 
 $increase_in_room_acquired = number_format($no_of_rooms_previous_month == 0 ? 0 : (($no_of_rooms_current_month-$no_of_rooms_previous_month)/$no_of_rooms_previous_month ) * 100 ,1);
 
- $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
+$units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
 
- $units_vacant = Property::findOrFail(Session::get('property_id'))->units->where('status', 'vacant')->count();
+$units_vacant = Property::findOrFail(Session::get('property_id'))->units->where('status', 'vacant')->count();
 
-  $units_reserved =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'reserved')->count();
+$units_reserved =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'reserved')->count();
 
 
  $tenants = DB::table('contracts')
