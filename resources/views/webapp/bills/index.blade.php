@@ -179,75 +179,45 @@
 <div class="row align-items-center py-4">
   <div class="col-lg-4">
     <h6 class="h2 text-dark d-inline-block mb-0">Bills</h6>
-    
   </div>
   <div class="col text-right">
-  
     <div class=" row">
-      
-        
       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-             
       <form id="billingCondoDuesForm" action="/property/{{Session::get('property_id')}}/bills/condodues/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingCondoDuesForm" name="billing_option" value="rent">
           <button class="btn btn-primary"  type="submit" form="billingCondoDuesForm"><i class="fas fa-plus"></i> Condo Dues</button>
       @else
-
       <form id="billingRentForm" action="/property/{{Session::get('property_id')}}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingRentForm" name="billing_option" value="rent">
           <button class="btn btn-primary"  type="submit" form="billingRentForm"><i class="fas fa-plus"></i> Rent</button>
-  
       @endif
-    
-    
-        
-  
-      
         <form id="billingElectricForm" action=" /property/{{Session::get('property_id')}}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
       <input type="hidden" form="billingElectricForm" name="billing_option" value="electric">
         <button class="btn btn-primary"  type="submit" form="billingElectricForm" ><i class="fas fa-plus"></i> Electric</button>
-     
-      
- 
-
-         
-    
       <form id="billingWaterForm" action="/property/{{Session::get('property_id')}}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
     </form>
     <input type="hidden" form="billingWaterForm" name="billing_option" value="water">
         <button class="btn btn-primary" type="submit" form="billingWaterForm" ><i class="fas fa-plus"></i> Water</button>
-       
-    
-         
-    
         <form id="billingSurchargeForm" action="/property/{{Session::get('property_id')}}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
       <input type="hidden" form="billingSurchargeForm" name="billing_option" value="surcharge">
           <button class="btn btn-primary" type="submit" form="billingSurchargeForm" ><i class="fas fa-plus"></i> Surcharge</button>
-   
     </div>
-     
-   
-    
- 
-    
-   
   </div>
-
 </div>
 @if($bills->count() <=0 )
 <p class="text-danger text-center">No bills found!</p>
 
 @else
-<div class="table-responsive text-nowrap">
+<div class="table-responsive">
   <table class="table">
     @foreach ($bills as $day => $bill)
 <thead>
@@ -292,7 +262,7 @@
         {{-- <td>  {{ Carbon\Carbon::parse($item->date_posted)->format('M d Y') }}</td> --}}
        
         
-        <td>
+        <th>
          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
          <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
          @else
@@ -300,15 +270,15 @@
          @endif
           
         
-        </td>
-        <td>
+        </th>
+        <th>
           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-          <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->building.' '.$item->unit_no }}</a>
           @else
-          <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+          <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->building.' '.$item->unit_no }}</a>
           @endif
          
-        </td>
+        </th>
         <td>{{ $item->particular }}</td>
        
         <td colspan="2">

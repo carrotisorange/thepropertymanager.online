@@ -26,7 +26,6 @@ class BillController extends Controller
      */
     public function index()
     {
-
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');

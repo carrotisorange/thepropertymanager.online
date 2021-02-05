@@ -221,7 +221,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
            @foreach ($owners as $item)
           <tr>
             <th>{{ $ctr++ }}</th>
-            <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
+            <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></th>
             <td>{{ $item->email}}</td>
             <td>{{ $item->mobile }}</td>
             <td>{{ $item->representative }}</td>

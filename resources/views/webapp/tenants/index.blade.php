@@ -234,7 +234,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
               </span>
             </td>
             <td>{{ $item->tenant_unique_id }}</td>
-            <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
+            <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></th>
             <td>{{ $item->contact_no }}</td>
             <td>{{ $item->email_address }}</td>
             <td>{{ $item->type_of_tenant }}</td>

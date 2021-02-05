@@ -25,7 +25,7 @@
             </li>
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms">
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms">
                 <i class="fas fa-home text-indigo"></i>
                 <span class="nav-link-text">Rooms</span>
               </a>
@@ -82,7 +82,7 @@
 
             @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
             <li class="nav-item">
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bills</span>
               </a>
@@ -168,13 +168,12 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-md-4">
-    <h6 class="h2 text-dark d-inline-block mb-0">Electric Bills</h6>
-    
+  <div class="col-md-9 text-left">
+    <h6 class="h2 text-dark d-inline-block mb-0">You're about to post electric bills of tenants for {{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('M d, Y') }} - {{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('M d, Y') }}...</h6>
   </div>
   
-  <div class="col-lg-8 text-right">
-    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-file-invoice-dollar"></i> Bills </a> 
+  <div class="col-md-3 text-right">
+    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back </a> 
     <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
   </div>
 </div>
@@ -245,7 +244,7 @@
   
     <tr>
       <td>{{ $ctr++ }}</td>
-      <td>
+      <th>
         @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
         <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
         @else
@@ -253,15 +252,15 @@
         @endif
    
          
-      </td>
-      <td>
+      </th>
+      <th>
         @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-        <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+        <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
         @else
-        <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+        <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
         @endif
          
-      </td>
+      </th>
       <td colspan="2">
         <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
         <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
@@ -297,7 +296,7 @@
 
   <br>
   <p class="text-right">
-    <button type="submit" form="add_billings" id="addBillsButton" class="btn btn-primary"  onclick="return confirm('Are you sure you want to perform this action?');"> Add</button>
+    <button type="submit" form="add_billings" id="addBillsButton" class="btn btn-primary"  onclick="return confirm('Are you sure you want to perform this action?');"> Post bills</button>
   </p>
   
   
@@ -373,7 +372,10 @@
 </script> 
 <script type="text/javascript">
   $(window).on('load',function(){
-      $('#editPeriodCovered').modal('show');
+    $("#editPeriodCovered").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
   });
 </script>
 @endsection

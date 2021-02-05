@@ -214,10 +214,10 @@
         <th>{{ $ctr++ }}</th>
      
         <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-          <td>
+          <th>
           <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
-          </td>
-          <td>
+          </th>
+          <th>
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
             @else
@@ -225,8 +225,8 @@
             @endif
              
            
-          </td>
-                <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+          </th>
+                <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
           <td>
               @if($item->urgency === 'urgent')
               <span class="badge badge-danger">{{ $item->urgency }}</span>

@@ -232,13 +232,13 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
           </span></td>
           <td>{{ $item->tenant_unique_id }}</td>
           {{-- <td>{{ $item->building.' '.$item->unit_no }}</td> --}}
-          <td>
+          <th>
             {{-- @if($item->user_id_foreign == null) --}}
             <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
             {{-- @else
             <a  href="/asa/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
             @endif --}}
-          </td>
+          </th>
           {{-- <td>{{ $item->user_id_foreign }} </td> --}}
             <td>{{ $item->contact_no }}</td>
             <td>{{ $item->email_address }}</td>
