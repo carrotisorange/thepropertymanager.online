@@ -405,8 +405,8 @@
                   
                     <td>{{ $item->contract_id }}</td>
                     
-                    <td>{{ $item->movein_at }}</td>
-                    <td>{{ $item->moveout_at }}</td>
+                    <td>{{ Carbon\Carbon::parse( $item->movein_at)->format('M d, Y') }}</td>
+                    <td>{{ Carbon\Carbon::parse( $item->moveout_at)->format('M d, Y') }}</td>
                  
                     <td>{{ $item->term }}</td>
                     <td>{{ $item->form_of_interaction }}</td>
@@ -449,7 +449,7 @@
                     </span>
                 @enderror
           <p class="text-right">
-            <button form="editUserForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-check fa-sm text-white-50"></i> Save Changes</button>
+            <button form="editUserForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"> Update</button>
           </p>
 
           <br>
