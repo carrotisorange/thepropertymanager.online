@@ -265,11 +265,12 @@
                   <th>Name</th>
                   <td>{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }} 
                     @if($tenant->type_of_tenant === 'studying')
-                    <span class="text-white bg-primary">({{ $tenant->type_of_tenant }})</span>
+                    
+                    <span class="text-primary"><i class="fas fa-user-circle"></i> {{ $tenant->type_of_tenant }}</span>
                     @else
-                    <span class="text-white bg-success">({{ $tenant->type_of_tenant }})</span>
+                    <span class="text-warning"><i class="fas fa-user-tie"></i> {{ $tenant->type_of_tenant }}</span>
                     @endif
-                     
+                 
                   </td>
               </tr>
               <tr>
@@ -301,8 +302,13 @@
                   <th>Email</th>
                   <td>{{ $tenant->email_address }}</td>
               </tr>
-             
-           
+            </table>
+
+            
+            <table class="table">
+           <tr>
+             <th>Employment Information</th>
+           </tr>
               @if($tenant->type_of_tenant === 'studying')
               <tr>
                 <th>High School</th>
@@ -326,7 +332,7 @@
               <td>{{ $tenant->employer_address }}</td>
           </tr>
           <tr>
-              <th>Contact No</th>
+              <th>Mobile</th>
               <td>{{ $tenant->employer_contact_no }}</td>
           </tr>
           
@@ -335,15 +341,14 @@
               <td>{{ $tenant->job }}</td>
           </tr>
           <tr>
-              <th>Years of employment</th>
-              <td>{{ $tenant->years_of_employment }}</td>
+              <th>Employment length</th>
+              <td>{{ $tenant->years_of_employment? $tenant->years_of_employment: 'NULL'  }} years</td>
           </tr>
            
               @endif
             
-              
-
           </table>
+          
         </div>
   </div>
   <div class="col-md-4">

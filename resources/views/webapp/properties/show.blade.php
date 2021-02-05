@@ -493,20 +493,27 @@
                    
                      <tr>
            
-                         <td>
+                         <th>
                            <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
-                         </td>
-                         <td>
+                           </th>
+                         <th>
                            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                           <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                           <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
                           @else
-                          <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                          <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
                           @endif
                           
-                         </td>
+                         </th>
                          <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}} <span class="text-danger">({{ Carbon\Carbon::parse($item->moveout_at)->diffForHumans() }})</span></td>
                          
-                         <td>{{ $item->contract_status }}</td>
+                         <td>
+                           @if($item->contract_status === 'active')
+                          <span class="text-success"><i class="fas fa-check-circle"></i> {{ $item->contract_status }}</span>
+                           @else
+                           <span class="text-warning"><i class="fa-clock"></i> {{ $item->contract_status }}</span>
+                 
+                           @endif
+                         </td>
                          <td>
                            @if($item->email_address === null)
                            <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
