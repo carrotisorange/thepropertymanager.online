@@ -40,7 +40,7 @@ class OwnerAccessController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'owner';
-           
+            $notification->isOpen = '1';
             $notification->message = Auth::user()->name. ' accesses his owner portal.';
             $notification->save();
 
@@ -86,7 +86,7 @@ class OwnerAccessController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' updates his profile.';
            $notification->save();
 
@@ -117,7 +117,7 @@ class OwnerAccessController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' updates his password.';
            $notification->save();
 
@@ -159,7 +159,7 @@ class OwnerAccessController extends Controller
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'concern';
-      
+       $notification->isOpen = '1';
        $notification->message = Auth::user()->name. ' checks his contracts.';
        $notification->save();
 
@@ -185,7 +185,7 @@ class OwnerAccessController extends Controller
    $notification->user_id_foreign = Auth::user()->id;
    $notification->property_id_foreign = Session::get('property_id');
    $notification->type = 'remittance';
-  
+   $notification->isOpen = '1';
    $notification->message = Auth::user()->name. ' checks his remittances.';
    $notification->save();
 
@@ -211,7 +211,7 @@ public function expense($user_id, $owner_id, $remittance_id){
    $notification->user_id_foreign = Auth::user()->id;
    $notification->property_id_foreign = Session::get('property_id');
    $notification->type = 'expense';
-  
+   $notification->isOpen = '1';
    $notification->message = Auth::user()->name. ' checks his expenses.';
    $notification->save();
 
@@ -254,7 +254,7 @@ public function expense($user_id, $owner_id, $remittance_id){
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'bill';
-      
+       $notification->isOpen = '1';
        $notification->message = Auth::user()->name. ' checks his bills.';
        $notification->save();
 
@@ -304,7 +304,7 @@ public function payment($user_id, $owner_id){
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'payment';
-      
+       $notification->isOpen = '1';
        $notification->message = Auth::user()->name. ' checks his payments.';
        $notification->save();
 
@@ -340,7 +340,7 @@ public function concern($user_id, $owner_id){
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'concern';
-      
+       $notification->isOpen = '1';
        $notification->message = Auth::user()->name. ' checks his concerns.';
        $notification->save();
 
@@ -369,7 +369,7 @@ public function profile($user_id, $owner_id){
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'user';
-      
+       $notification->isOpen = '1';
        $notification->message = Auth::user()->name. ' checks his profile.';
        $notification->save();
 

@@ -189,7 +189,7 @@ class ContractController extends Controller
                     $notification->user_id_foreign = Auth::user()->id;
                     $notification->property_id_foreign = Session::get('property_id');
                     $notification->type = 'contract';
-                   
+                    $notification->isOpen = '1';
                     $notification->message = Auth::user()->name. ' adds new contract for '.$tenant->first_name.' in '.$unit->unit_no.'.';
                     $notification->save();
                     
@@ -218,13 +218,11 @@ class ContractController extends Controller
         // ->havingRaw('balance > 0')
         // ->get();
 
-        $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        $balance = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
-        ->where('bill_status', '<>', 'deleted')
+        ->where('bill_status', NULL)
         ->havingRaw('balance > 0')
-
-       
         ->get();
        
         $tenant = Tenant::findOrFail($tenant_id);
@@ -317,7 +315,7 @@ class ContractController extends Controller
                 $notification->user_id_foreign = Auth::user()->id;
                 $notification->property_id_foreign = Session::get('property_id');
                 $notification->type = 'contract';
-               
+                $notification->isOpen = '1';
                 $notification->message = Auth::user()->name.' moves out '.$tenant->first_name.' '.$tenant->last_name.'.';
                 $notification->save();
                             
@@ -421,7 +419,7 @@ class ContractController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'contract';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' terminates '.$tenant->first_name.' '.$tenant->last_name.' contract.';
         $notification->save();
                     
@@ -518,7 +516,7 @@ class ContractController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'contract';
-           
+            $notification->isOpen = '1';
             $notification->message = Auth::user()->name.' extends '.$tenant->first_name.' '.$tenant->last_name.' contract.';
             $notification->save();
                         
@@ -623,7 +621,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
     $notification->user_id_foreign = Auth::user()->id;
     $notification->property_id_foreign = Session::get('property_id');
     $notification->type = 'contract';
-   
+    $notification->isOpen = '1';
     $notification->message = Auth::user()->name.' sends notice to expire contract to '.$tenant->first_name.' '.$tenant->last_name.'.';
     $notification->save();
                 
@@ -659,7 +657,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'contract';
-      
+       $notification->isOpen = '1';
        $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' contract.';
        $notification->save();
                    
@@ -683,7 +681,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'contract';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' deletes '.$tenant->first_name.' '.$tenant->last_name.' contract.';
         $notification->save();
                     

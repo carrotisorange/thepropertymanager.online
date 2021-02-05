@@ -38,7 +38,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens tenants page.';
         $notification->save();
                     
@@ -418,7 +418,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
           }else{  
@@ -426,7 +426,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' reserves '.Unit::findOrFail($unit_id)->unit_no.' for '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
           }
@@ -547,7 +547,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' as an occupant in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
         
@@ -658,10 +658,8 @@ class TenantController extends Controller
             // ->havingRaw('balance > 0')
             ->get();
 
-            $total_balance = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status', null)->sum('amount');
+              $deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
 
-          
-        
 
 
 
@@ -670,7 +668,7 @@ class TenantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property', 'total_balance'));  
+                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property', 'deleted_bills'));  
         }else{
                 return view('layouts.arsha.unregistered');
         }
@@ -884,7 +882,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' profile.';
         $notification->save();
                     

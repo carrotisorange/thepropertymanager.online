@@ -176,22 +176,17 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-3">
-    <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
-    {{-- <h6 class="h2 text-dark d-inline-block mb-0">iBack</h6> --}}
+  <div class="col-auto text-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/room/{{ $unit->unit_id }}/#tenants">{{ $unit->building.' '.$unit->unit_no }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tenant Information Sheet</li>
+      </ol>
+    </nav>
+    
     
   </div>
-  <div class="col-lg-3">
-    <small class="">Room <span class="text-danger">*</span></small>
-    <select class="form-control" form="addTenantForm1" name="unit_id" id="unit_id" required readonly>
-      <option value="{{ $unit->unit_id }}" selected>{{ $unit->building.' '.$unit->unit_no }}</option>
-      {{-- @foreach ($units as $item)
-        <option value="{{ $item->id }}">{{ $item->building.' '.$item->unit_no }}</option>
-      @endforeach --}}
-     </select>
-
- 
-  </div>
+  
   <div class="col-lg-3">
     <small class="">Refferer <span class="text-danger">*</span></small>
     <select class="form-control" form="addTenantForm1" name="referrer_id" id="referrer_id">
@@ -225,9 +220,10 @@
    </div>
 
   
-
+  
 </div>
-<hr>
+
+
 <form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/tenant/" method="POST">
   {{ csrf_field() }}
   </form>
@@ -447,10 +443,10 @@
     <div class="row">
       <div class="col">
      
-        <h2>Bills and movein charges <span class="text-danger"><small>(Optional)</small></span>
+        <h2>Movein charges <small>(Optional)</span>
           <p class="text-right">
-            <a href="#/" id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
-            <a href="#/" id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>    
+            <a href="#/" id='delete_row' class="btn btn-danger"> Remove</a>
+            <a href="#/" id="add_row" class="btn btn-primary"> Add</a>    
           </p>
         </h2>
        
@@ -474,7 +470,7 @@
   <br>
     
       {{-- <a href="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
-      <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Submit</button>
+      <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Proceed to movein</button>
 
   
 

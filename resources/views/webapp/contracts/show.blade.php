@@ -165,14 +165,20 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-md-8">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}' contract</h6>
+  <div class="col-auto text-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Contract ID: {{ $contract->contract_id }}</li>
+      </ol>
+    </nav>
+    
     
   </div>
 </div>
 <div class="row">
     <div class="col-md-10">
-        {{-- <a href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}#contracts"  class="btn btn-primary"><i class="fas fa-user"></i> Tenant</a>  --}}
+        {{-- <a href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}#contracts"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>  --}}
         <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/edit"><i class="fas fa-edit"></i> Edit</a>
         <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> Extend</a>
         @if(!$contract->terminated_at)
@@ -214,9 +220,12 @@
                      <td><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign }}">View</a></td>
                  </tr> --}}
                  <tr>
+                   <thead>
                   <th>Room </th>
                   <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $contract->unit_id_foreign }}">View</a></td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Referrer </th>
                   <td>
@@ -227,58 +236,79 @@
                     @endif
                   </td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Source</th>
                   <td>{{ $contract->form_of_interaction }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Rent</th>
                   <td>{{ number_format($contract->rent, 2) }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Discount</th>
                   <td>{{  number_format($contract->discount, 2) }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Status</th>
-                  <td>{{ $contract->status }}</td>
+                  <td>
+                    @if($contract->status != 'active')
+                  <i class="fas fa-clock text-warning"></i> {{ $contract->status }}
+                
+                  @else
+                  <i class="fas fa-check-circle text-success"></i> {{ $contract->status }}
+                  @endif
+                  </td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Movein</th>
                   <td>{{ Carbon\Carbon::parse($contract->movein_at)->format('M d, Y') }}</td>
               </tr>
+              <thead>
               <tr>
                   <th>Moveout</th>
                   <td>{{ Carbon\Carbon::parse($contract->moveout_at)->format('M d, Y') }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Length of stay</th>
                   <td>{{ $contract->number_of_months }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Term</th>
                   <td>{{ $contract->term }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Date terminated</th>
-                  <td>{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('M d, Y'): 'NA' }}</td>
+                  <td>{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('M d, Y'): 'NOT AVAILABLE' }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Actual moveout</th>
-                  <td>{{ $contract->actual_moveout_at? Carbon\Carbon::parse($contract->actual_moveout_at)->format('M d, Y'): 'NA' }}</td>
+                  <td>{{ $contract->actual_moveout_at? Carbon\Carbon::parse($contract->actual_moveout_at)->format('M d, Y'): 'NOT AVAILABLE' }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Reason for termination</th>
-                  <td>{{ $contract->moveout_reason? $contract->moveout_reason: 'NA' }}</td>
+                  <td>{{ $contract->moveout_reason? $contract->moveout_reason: 'NOT AVAILABLE' }}</td>
               </tr>
-              {{-- <tr>
-                  <th>Created at</th>
-                  <td>{{ $contract->created_at? $contract->created_at: 'NA' }}</td>
-              </tr>
-              <tr>
-                  <th>Updated at</th>
-                  <td>{{ $contract->created_at? $contract->created_at: 'NA' }}</td>
-              </tr> --}}
+             
               </table>
           </div>
           </div>

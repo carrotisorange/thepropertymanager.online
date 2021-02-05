@@ -29,7 +29,7 @@ class UserController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'user';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens users page.';
         $notification->save();
                     
@@ -368,7 +368,7 @@ class UserController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'tenant';
-           
+            $notification->isOpen = '1';
             $notification->message = Auth::user()->name. ' accesses his tenant portal.';
             $notification->save();
 
@@ -402,7 +402,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'bill';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' checks his bills.';
            $notification->save();
 
@@ -438,7 +438,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'payment';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' checks his payments.';
            $notification->save();
 
@@ -479,7 +479,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'concern';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' checks his concerns.';
            $notification->save();
 
@@ -510,7 +510,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'concern';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' checks the responses for his concern regarding '.$concern->title.'.';
            $notification->save();
 
@@ -577,7 +577,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' checks his profile.';
            $notification->save();
 
@@ -621,7 +621,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' updates his profile.';
            $notification->save();
 
@@ -652,7 +652,7 @@ class UserController extends Controller
            $notification->user_id_foreign = Auth::user()->id;
            $notification->property_id_foreign = Session::get('property_id');
            $notification->type = 'user';
-          
+           $notification->isOpen = '1';
            $notification->message = Auth::user()->name. ' updates his password.';
            $notification->save();
 
@@ -693,7 +693,7 @@ class UserController extends Controller
          $notification->user_id_foreign = Auth::user()->id;
          $notification->property_id_foreign = Session::get('property_id');
          $notification->type = 'concern';
-        
+         $notification->isOpen = '1';
          $notification->message = Auth::user()->name. ' checks his contracts.';
          $notification->save();
 

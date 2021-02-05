@@ -165,10 +165,17 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-12">
-    <h6 class="h2 text-dark d-inline-block mb-0">You're about to extend {{ $tenant->first_name }}'s contract</h6>
+  <div class="col-auto text-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/#contracts"">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/">Contract ID: {{ $contract->contract_id }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Extend</li>
+      </ol>
+    </nav>
+    
+    
   </div>
-
 </div>
 <div class="row">
     <form id="extendContractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/extend" method="POST">

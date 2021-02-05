@@ -165,11 +165,17 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-12">
-    <h6 class="h2 text-dark d-inline-block mb-0">You're about to terminate {{ $tenant->first_name }}'s contract.</h6>
+  <div class="col-auto text-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/#contracts">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/">Contract ID: {{ $contract->contract_id }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Terminate</li>
+      </ol>
+    </nav>
+    
     
   </div>
-
 </div>
 <div class="row">
     <form id="preterminateContractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/preterminate_post" method="POST">
@@ -204,10 +210,10 @@
   <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-3">
-                <h6 class="h2 text-dark d-inline-block mb-0">Moveout charges</h6>
+            <div class="col-md-5">
+                <h6 class="h2 text-dark d-inline-block mb-0">Moveout charges <small>(Optional)</small></h6>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <p class="text-right">
                     <span id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</span>
                   <span id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add </span>     

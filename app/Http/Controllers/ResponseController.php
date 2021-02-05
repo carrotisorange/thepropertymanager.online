@@ -75,14 +75,14 @@ class ResponseController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'concern';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' respond to a concern.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
     
-        return back()->with('success', 'reponse has been saved!');
+        return back()->with('success', 'Response added successfully.');
     }
 
     /**

@@ -53,7 +53,7 @@
       
                   <td>
                     @if($item->bill_status === 'deleted')
-                    <span class="text-danger"> {{ $item->bill_no }} (deleted)</span>
+                    <strike> {{ $item->bill_no }}</strike>
                     @else
                     {{ $item->bill_no }}
                     @endif
@@ -64,12 +64,19 @@
                     {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                       {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                   </td>
-                  <td class="text-right" >{{ number_format($item->balance,2) }}</td>
+                  
+                  <td class="text-right" >
+                    @if($item->balance > 0 && $item->bill_status != 'deleted')
+                      <span class="text-danger">{{ number_format($item->balance,2) }}</span>
+                             @else
+                             <span >{{ number_format($item->balance,2) }}</span>
+                             @endif
+                  </td>
               </tr>
               @endforeach
               <tr>
                 <th>TOTAL</th>
-                <th class="text-right" colspan="6">{{ number_format($total_balance, 2) }} </th>
+                <th class="text-right" colspan="6">{{ number_format($bills->sum('balance') - $deleted_bills, 2) }} </th>
                </tr>
         
           </table>

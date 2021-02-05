@@ -393,11 +393,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="addMultipleUnits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addMultipleUnits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" >Add Room</h5>
+      <h5 class="modal-title" id="exampleModalLabel" >Room Information</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -409,7 +409,12 @@
           </form>
 
           <div class="form-group">
-              <label >Building</label>
+            <label>Number of rooms</label>
+            <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
+        </div>
+
+          <div class="form-group">
+              <label >Building <small>(Optional)</small></label>
               <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="ex. Building A, Building 1">
               
           </div>
@@ -436,25 +441,20 @@
               </select>
           </div>
 
-           <div class="form-group">
+           {{-- <div class="form-group">
               <label>Type</label>
               <select form="addUMultipleUnitForm" class="form-control" name="type" required>
                   <option value="" selected>Please select one</option>
                   <option value="commercial">commercial</option>
                   <option value="residential">residential</option>         
               </select>
-          </div> 
+          </div>  --}}
             <input form="addUMultipleUnitForm" type="hidden" value="{{Session::get('property_id')}}" name="property_id">
           
               <div class="form-group">
                 <label>Occupancy</label>
                 <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
             </div>
-
-          <div class="form-group">
-              <label>Number of rooms to be created</label>
-              <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
-          </div>
 
         
               <input form="addUMultipleUnitForm" type="hidden" class="form-control" name="unit_no" id="unit_no" required>
@@ -469,7 +469,7 @@
       </div>
       <div class="modal-footer">
         
-          <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
+          <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Create Room/s</button>
           </div>
   </div>
   </div>

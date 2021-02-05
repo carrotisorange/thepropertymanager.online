@@ -210,49 +210,57 @@ font-family: FontAwesome;
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-
-  <div class="col-auto">
-    <a href="/property/{{Session::get('property_id')}}/concerns" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a> 
+  <div class="col-md-9 text-left">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Concern # {{ $concern->concern_id}}: {{ $concern->details }}</a></li>
+        {{-- <li class="breadcrumb-item active" aria-current="page">Moveout</li> --}}
+      </ol>
+    </nav>
     
-   
-    <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-white-50"></i> Response</a> 
-  
-    @if($concern->status != 'closed')
-    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-white-50"></i> Edit</a> 
-    <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-success"><i class="fas fa-check-square text-white-50"></i> Mark as complete</a> 
-    {{-- @else
-    <a href="#" data-toggle="modal" data-target="#/" class="btn btn-success"><i class="fas fa-check text-white-50"></i> Closed</a>  --}}
-    @endif
-
-    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Job order</a>  
-
+    
   </div>
-
+  <div class="col-md-3 text-right">
+    @if($concern->status != 'closed')
+    
+    <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"><i class="fas fa-star text-white-50"></i> Rate this concern</a> 
+    
+    @endif 
+  </div>
 
 </div>
 
-
 <div class="row">
 
-  <div class="col">
-    <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id}}: {{ $concern->details }}</h6>
-    <br>
+  <div class="col-md-6">
+
+    @if($concern->status != 'closed')
+    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-white-50"></i> Edit</a> 
+
+    
+    @endif 
+    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Job order</a>
+    <br><br>
     <div class="table-responsive">
       @foreach ($concern_details as $concern)
           
    
       <table class="table">
-        
+        <thead>
         <tr>
           <th>Date Reported</th>
-          <td>{{ Carbon\Carbon::parse($concern->reported_at)->format('M-d-Y') }}</td>
+          <td>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }}</td>
         </tr>
+      </thead>
+        <thead>
            <tr>
                 <th>Reported by</th>
-                <td><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></td>
+                <th><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></th>
            </tr>  
            
           </tr>
+        </thead>
+          <thead>
           <tr>
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
             <th>Unit</th>
@@ -260,22 +268,24 @@ font-family: FontAwesome;
             <th>Room</th>
             @endif
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->unit_no }}</a></td>
+            <th><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></th>
             @else
-            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->unit_no }}</a></td>
+            <th><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></th>
             @endif
            
             
            
           </tr>  
-     
+        </thead>
+          <thead>
        <tr>
             <th>Category</th>
             <td>
               {{ $concern->category }}
             </td>
        </tr>
-      
+      </thead>
+       <thead>
        <tr>
             <th>Urgency</th>
             <td>
@@ -288,6 +298,8 @@ font-family: FontAwesome;
               @endif
             </td>
        </tr>
+      </thead>
+       <thead>
        <tr>
           <th>Status</th>
             <td>
@@ -300,70 +312,80 @@ font-family: FontAwesome;
               @endif
             </td>
        </tr>
+      </thead>
+       <thead>
        <tr>
          <th>Assigned to</th>
-         <td><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></td>
+         <th><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></th>
        </tr>
-       
-      
+      </thead>
+       <thead>
        <tr>
         <th>Rating</th>
         <td>{{ $concern->rating? $concern->rating.'/5' : 'NA' }}</td>
      </tr>
+    </thead>
+     <thead>
      <tr>
       <th>Feedback</th>
       <td>{{ $concern->feedback? $concern->feedback : 'NA' }}</td>
    </tr>
-      
+  </thead>
        </table>
        @endforeach
     </div>
 
    
   </div>
-</div>
-
-
-<hr>
-<div class="row">
-  <div class="col">
-    <div class="col-lg-5">
-      <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{$responses->count()}})</h6>
-      <br>
-    </div>
-
-   </div>
- </div>
-<br>
- <div class="row">
-  <div class="col">
-      <div class="list-group list-group-flush">
-          @foreach ($responses as $item)
-       
-          <span class="list-group-item list-group-item-action">
-            <div class="row align-items-center">
-             
-              <div class="col">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
-                  </div>
-                  <div class="text-right text-muted">
-
-                    <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col">
+        <div class="col-lg-5">
+          <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{$responses->count()}})</h6>
+          <br>
+        </div>
+    
+       </div>
+     </div>
+    <br>
+     <div class="row">
+      <div class="col">
+          <div class="list-group list-group-flush">
+              @foreach ($responses as $item)
+           
+              <span class="list-group-item list-group-item-action">
+                <div class="row align-items-center">
+                 
+                  <div class="col">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
+                      </div>
+                      <div class="text-right text-muted">
+    
+                        <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
+                       
+                        
+                      </div>
+                    </div>
+                    <p class="text-sm text-muted mb-0"> {!! $item->response !!}</p>
                    
-                    
                   </div>
                 </div>
-                <p class="text-sm text-muted mb-0"> {!! $item->response !!}</p>
-               
-              </div>
+              </span>
+    
+              @endforeach
+    
             </div>
-          </span>
-
-          @endforeach
-
-        </div>
+            <br>
+          <p class="text-right">
+            <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-white-50"></i> Add response</a> 
+          </p>
+      </div>
+      
+    </div>
+    
+    
   </div>
 </div>
 
@@ -562,7 +584,7 @@ font-family: FontAwesome;
   <div class="modal-content  text-center">
       <div class="modal-header">
 
-      <h5 class="modal-title" id="exampleModalLabel">Rate employee</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Concern rating</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -608,7 +630,7 @@ font-family: FontAwesome;
  
       </div>
       <div class="modal-footer">
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Rate </button>
       </div>
   </div>
   </div>

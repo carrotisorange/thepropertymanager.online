@@ -47,7 +47,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens collections page.';
         $notification->save();
                     
@@ -250,7 +250,7 @@ class CollectionController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'tenant';
-           
+            $notification->isOpen = '1';
             $notification->message = Auth::user()->name. ' moves in '. $tenant->first_name.' '.$tenant->last_name.'.';
             $notification->save();
                         
@@ -264,7 +264,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' records '. ($no_of_payments-1) .' payment/s made by '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
 
@@ -314,7 +314,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' records '. ($no_of_payments-1) .' payment/s made by '.$unit->unit_no.'.';
         $notification->save();
 
@@ -370,7 +370,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' payments.';
         $notification->save();
 
@@ -445,7 +445,7 @@ class CollectionController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' deletes payment made by '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
 

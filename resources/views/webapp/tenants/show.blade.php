@@ -169,13 +169,17 @@
 <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($tenant->moveout_date), false)) ?>
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
-    {{-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-      <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-        <li class="breadcrumb-item"><a href="#"><i class="fas fa-user"></i></a></li>
-        <li class="breadcrumb-item active" aria-current="page"></li>
-      </ol>
-    </nav> --}}
+    <h6 class="h2 text-dark d-inline-block mb-0">
+      {{ $tenant->first_name.' '.$tenant->last_name }}
+    
+                   
+                    @if($tenant->type_of_tenant === 'studying')
+                    
+                    <span class="text-primary"><i class="fas fa-user-circle"></i> {{ $tenant->type_of_tenant }}</span>
+                    @else
+                    <span class="text-warning"><i class="fas fa-user-tie"></i> {{ $tenant->type_of_tenant }}</span>
+                    @endif
+    </h6>
   </div>
 
 </div>
@@ -245,7 +249,7 @@
         
 <div class="row">
   <div class="col-md-8">
-    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary"><i class="fas fa-user"></i> Tenants</a>
+    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
 
     {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
@@ -260,94 +264,150 @@
      @endif
       <div class="table-responsive text-nowrap">
         <table class="table" >
-            
               <tr>
+                <thead>
+                <th>Tenant ID</th>
+                <td>{{ $tenant->tenant_unique_id }}</td>
+              </tr>
+            </thead>
+              {{-- <tr>
                   <th>Name</th>
                   <td>{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }} 
+                   
                     @if($tenant->type_of_tenant === 'studying')
                     
-                    <span class="text-primary"><i class="fas fa-user-circle"></i> {{ $tenant->type_of_tenant }}</span>
+                    (<span class="text-primary"><i class="fas fa-user-circle"></i> {{ $tenant->type_of_tenant }}</span>)
                     @else
-                    <span class="text-warning"><i class="fas fa-user-tie"></i> {{ $tenant->type_of_tenant }}</span>
+                    (<span class="text-warning"><i class="fas fa-user-tie"></i> {{ $tenant->type_of_tenant }}</span>)
                     @endif
-                 
+                   
                   </td>
-              </tr>
+              </tr> --}}
+              <thead>
+              <tr>
+                <th>Mobile</th>
+                <td>{{ $tenant->contact_no }}</td>
+            </tr>
+          </thead>
+            <thead>
+            <tr>
+                <th>Email</th>
+                <td>{{ $tenant->email_address }}</td>
+            </tr>
+          </thead>
+            <thead>
               <tr>
                   <th>Gender</th>
                   <td>{{ $tenant->gender }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Birthdate</th>
                   <td>{{ Carbon\Carbon::parse($tenant->birthdate)->format('M d Y') }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Civil Status</th>
                   <td>{{ $tenant->civil_status }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>ID/ID Number</th>
                   <td>{{ $tenant->id_number }}</td>
               </tr>
+            </thead>
+              <thead>
               <tr>
                   <th>Address</th>
                   <td>{{ $tenant->barangay.', '.$tenant->city.', '.$tenant->province.', '.$tenant->country.', '.$tenant->zip_code }}</td>
               </tr>
-          
-              <tr>
-                  <th>Mobile</th>
-                  <td>{{ $tenant->contact_no }}</td>
-              </tr>
-              <tr>
-                  <th>Email</th>
-                  <td>{{ $tenant->email_address }}</td>
-              </tr>
+            </thead>
             </table>
-
-            
-            <table class="table">
-           <tr>
-             <th>Employment Information</th>
-           </tr>
-              @if($tenant->type_of_tenant === 'studying')
-              <tr>
-                <th>High School</th>
-                <td>{{ $tenant->high_school.', '.$tenant->high_school_address }}</td>
-            </tr>
-            <tr>
-                <th>College/University</th>
-                <td>{{ $tenant->college_school.', '.$tenant->college_school_address }}</td>
-            </tr>
-            <tr>
-                <th>Course/Year</th>
-                <td>{{ $tenant->course.', '.$tenant->year_level }}</td>
-            </tr>
+            @if($tenant->type_of_tenant === 'studying')
+            <p>
+              <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">View Educational Background</a>
+             
+            </p>
             @else
-            <tr>
-              <th>Employer</th>
-              <td>{{ $tenant->employer}}</td>
-          </tr>
-          <tr>
-              <th>Address</th>
-              <td>{{ $tenant->employer_address }}</td>
-          </tr>
-          <tr>
-              <th>Mobile</th>
-              <td>{{ $tenant->employer_contact_no }}</td>
-          </tr>
-          
-          <tr>
-              <th>Job description</th>
-              <td>{{ $tenant->job }}</td>
-          </tr>
-          <tr>
-              <th>Employment length</th>
-              <td>{{ $tenant->years_of_employment? $tenant->years_of_employment: 'NULL'  }} years</td>
-          </tr>
-           
+            <p>
+              <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">View Employment Information</a>
+             
+            </p>
+            @endif
+            <div class="row">
+              @if($tenant->type_of_tenant === 'studying')
+              <div class="col">
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                 
+                    <table class="table">     
+                      <thead>    
+                        <tr>
+                          <th>High School</th>
+                          <td>{{ $tenant->high_school.', '.$tenant->high_school_address }}</td>
+                      </tr>
+                    </thead>   
+                      <thead>
+                      <tr>
+                          <th>College/University</th>
+                          <td>{{ $tenant->college_school.', '.$tenant->college_school_address }}</td>
+                      </tr>
+                    </thead>   
+                      <thead>
+                      <tr>
+                          <th>Course/Year</th>
+                          <td>{{ $tenant->course.', '.$tenant->year_level }}</td>
+                      </tr>
+                    </thead>   
+                    </table>
+                 
+                </div>
+              </div>
+              
+              @else
+              <div class="col">
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Employer</th>
+                      <td>{{ $tenant->employer? $tenant->employer: 'NOT AVAILABLE' }}</td>
+                  </tr>
+                </thead>
+                  <thead>
+                  <tr>
+                      <th>Address</th>
+                      <td>{{ $tenant->employer_address? $tenant->employer_address: 'NOT AVAILABLE' }}</td>
+                  </tr>
+                </thead>
+                  <thead>
+                  <tr>
+                      <th>Mobile</th>
+                      <td>{{ $tenant->employer_contact_no? $tenant->employer_contact_no: 'NOT AVAILABLE' }}</td>
+                  </tr>
+                </thead>
+                  <thead>
+                  <tr>
+                      <th>Job description</th>
+                      <td>{{ $tenant->job? $tenant->job: 'NOT AVAILABLE' }}</td>
+                  </tr>
+                </thead>
+                  <thead>
+                  <tr>
+                      <th>Employment length</th>
+                      <td>{{ $tenant->years_of_employment? $tenant->years_of_employment.' years': 'NOT AVAILABLE'  }} </td>
+                  </tr>
+                </thead>
+                  </table>
+                </div>
+              </div>
+              
               @endif
-            
-          </table>
+        
+            </div>
+      
           
         </div>
   </div>
@@ -572,25 +632,30 @@
              <table class="table">
                
                 
-               
+               <thead>
                  <tr>
                    <th>Email</th>
                    <td>{{ $item->email }}</td>
                  </tr>
+                </thead>
+                 <thead>
                  <tr>
                   <th>Password</th>
                   <td>{{ $item->contact_no }} or <b>12345678</b></td>
                 </tr>
-              
+              </thead>
+                <thead>
                  <tr>
                   <th>Created at</th>
-                  <td>{{ $item->created_at? $item->created_at: null }}</td>
+                  <td>{{ $item->created_at? $item->created_at: 'NOT AVAILABLE' }}</td>
                 </tr>
-
+              </thead>
+                <thead>
                 <tr>
                   <th>Verified at</th>
-                  <td>{{ $item->updated_at? $item->updated_at: null }}</td>
+                  <td>{{ $item->updated_at? $item->updated_at: 'NOT AVAILABLE' }}</td>
                 </tr>
+              </thead>
              </table>
              @endforeach
 
@@ -644,47 +709,70 @@
                        </tr>
                   </thead>
                     @foreach ($bills as $item)
+                    @if($item->bill_status === 'deleted')
+                    <tr class="bg-success">
+                      <th class="text-center">{{ $ctr++ }}</th>
+                         <td>
+                           {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
+                         </td>   
+                          
+             
+                           <td>
+                           
+                             {{ $item->bill_no }}
+                            
+     
+                           </td>
+                   
+                           <td>{{ $item->particular }}</td>
+                         
+                           <td>
+                             {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                             {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                           </td>
+                           <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
+                           <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
+                           <td class="text-right" >
+                             @if($item->balance > 0 && $item->bill_status != 'deleted')
+                             <span class="text-danger">{{ number_format($item->balance,2) }}</span>
+                             @else
+                             <span >{{ number_format($item->balance,2) }}</span>
+                             @endif
+                           
+                                  </tr>
+                    @else
                     <tr>
-                   <th class="text-center">{{ $ctr++ }}</th>
-                      <td>
-                        {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
-                      </td>   
-                       
-          
-                        <td>
-                          @if($item->bill_status === 'deleted')
-                          <span class="text-danger"> {{ $item->bill_no }} (deleted)</span>
-                          @else
-                          {{ $item->bill_no }}
-                          @endif
-  
-                        </td>
-                
-                        <td>{{ $item->particular }}</td>
+                      <th class="text-center">{{ $ctr++ }}</th>
+                         <td>
+                           {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
+                         </td>   
+                          
+             
+                           <td>
+                            
+                             {{ $item->bill_no }}
                       
-                        <td>
-                          {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                          {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                        </td>
-                        <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
-                        <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
-                        <td class="text-right" >
-                          @if($item->balance > 0 && $item->bill_status != 'deleted')
-                          <span class="text-danger">{{ number_format($item->balance,2) }}</span>
-                          @else
-                          <span >{{ number_format($item->balance,2) }}</span>
-                          @endif
-                        </td>
-                        {{-- <td class="text-center">
-                          @if(Auth::user()->user_type === 'manager')
-                          <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
-                          </form>
-                          @endif
-                        </td> --}}
-                               </tr>
+                           </td>
+                   
+                           <td>{{ $item->particular }}</td>
+                         
+                           <td>
+                             {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                             {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                           </td>
+                           <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
+                           <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
+                           <td class="text-right" >
+                             @if($item->balance > 0 && $item->bill_status != 'deleted')
+                             <span class="text-danger">{{ number_format($item->balance,2) }}</span>
+                             @else
+                             <span >{{ number_format($item->balance,2) }}</span>
+                             @endif
+                           </td>
+                          
+                                  </tr>
+                    @endif
+                    
                                
                     @endforeach
                     <tr>
@@ -693,10 +781,10 @@
                       <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
                       <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
                       <th class="text-right text-danger" colspan="">
-                        @if($item->balance > 0)
-                        <span class="text-danger">{{ number_format($total_balance, 2) }}</span>
+                        @if(($bills->sum('balance')-$deleted_bills) > 0)
+                        <span >{{ number_format($bills->sum('balance')-$deleted_bills,2) }}</span>
                         @else
-                        <span >{{ number_format($total_balance,2) }}</span>
+                        <span >{{ number_format($bills->sum('balance')-$deleted_bills,2) }}</span>
                         @endif
                    
                        </th>

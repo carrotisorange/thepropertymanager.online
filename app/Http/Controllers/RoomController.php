@@ -51,9 +51,10 @@ class RoomController extends Controller
     
            $units = Property::findOrFail($property_id)
            ->units()->where('status','<>','deleted')
+      
            ->get()->groupBy(function($item) {
                 return $item->floor;
-            });;
+            });
     
             $buildings = Property::findOrFail($property_id)
             ->units()
@@ -210,7 +211,7 @@ class RoomController extends Controller
             $unit->building = $building;
             $unit->status = 'vacant';
             $unit->rent = $request->rent;
-            $unit->type = $request->type;
+            $unit->type = 'residential';
             $unit->occupancy = $request->occupancy;
             $unit->property_id_foreign = Session::get('property_id');
             $unit->save();
@@ -293,7 +294,7 @@ class RoomController extends Controller
             $occupancy->save();
         }
      
-        return redirect('/property/'. $property_id.'/rooms')->with('success','Changes saved.');
+        return back()->with('success','Changes saved.');
                  
      }
 

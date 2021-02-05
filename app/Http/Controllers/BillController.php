@@ -30,7 +30,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' opens bills page.';
         $notification->save();
                     
@@ -327,9 +327,9 @@ class BillController extends Controller
         
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
         }else{
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
         }
         
 
@@ -384,7 +384,7 @@ class BillController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'bill';
-           
+            $notification->isOpen = '1';
             $notification->message = Auth::user()->name.' posts '.($request->no_of_bills-1).' bill/s to '.$tenant->first_name.' '.$tenant->last_name.'.';
             $notification->save();
     
@@ -401,9 +401,9 @@ class BillController extends Controller
         }
         
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
+            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
         }else{
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill is created successfully.');
+            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
         }
     }
 
@@ -466,7 +466,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' posts'.($request->no_of_bills-1).' bill/s to '.$unit->unit_no;
         $notification->save();
 
@@ -583,7 +583,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name. 'posts '.($no_of_billed-1).' '.$request->particular1.'.';
         $notification->save();
                     
@@ -641,19 +641,12 @@ class BillController extends Controller
             // ->havingRaw('balance > 0')
             ->get();
 
-            // $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
-            // ->where('bill_tenant_id', $tenant_id)
-            // ->where('bill_status', '<>', 'deleted')
-            // ->groupBy('bill_id')
-            // ->orderBy('bill_no', 'desc')
-            // ->havingRaw('balance > 0')
-            // ->get();
+            $deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
-                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property'));  
+                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property','deleted_bills'));  
             }
 
         }else{
@@ -757,18 +750,13 @@ class BillController extends Controller
                     $notification->user_id_foreign = Auth::user()->id;
                     $notification->property_id_foreign = Session::get('property_id');
                     $notification->type = 'bill';
-                   
+                    $notification->isOpen = '1';
                     $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' bills.';
                     $notification->save();
 
                      Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
-          
-                   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                    return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success','Changes saved.');
-                }else{
-                    return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success','Changes saved.');
-                }
-
+             
+                    return back()->with('success','Changes saved.');
            
         }else{
             return view('layouts.arsha.unregistered');
@@ -814,7 +802,7 @@ class BillController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'bill';
-           
+            $notification->isOpen = '1';
             $notification->message = Auth::user()->name.' updates '.$unit->unit_no.' bills.';
             $notification->save();
                         
@@ -843,7 +831,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' deletes '. $tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
                     
@@ -854,7 +842,7 @@ class BillController extends Controller
          $bill->bill_status = 'deleted';
          $bill->save();
 
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', 'Bill is deleted successfully.');
+        return back()->with('success', 'Bill deleted successfully.');
     }
 
     public function export($property_id,$tenant_id)
@@ -867,16 +855,11 @@ class BillController extends Controller
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
-        // ->havingRaw('balance > 0')
+        ->havingRaw('balance > 0')
         ->get();
 
-        $total_balance = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status', null)->sum('amount');
+        $deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
 
-      
-
-        $total_balance = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status', null)->sum('amount');
-
-        
         $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
 
         $current_room = Unit::findOrFail($room_id)->unit_no;
@@ -884,7 +867,7 @@ class BillController extends Controller
         $data = [
             'tenant' => $tenant->first_name.' '.$tenant->last_name ,
             'bills' => $bills,
-            'total_balance' => $total_balance,
+            'deleted_bills' => $deleted_bills,
             'current_room' => $current_room,
         ];
 
@@ -894,7 +877,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
 
@@ -939,7 +922,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' updates '.$unit_no.' bills.';
         $notification->save();
 
@@ -960,13 +943,13 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-       
+        $notification->isOpen = '1';
         $notification->message = Auth::user()->name.' deletes bill '. $billing_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return back()->with('success', 'Bill is deleted successfully.');
+        return back()->with('success', 'Bill deleted successfully.');
     }
    
 }

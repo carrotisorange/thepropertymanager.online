@@ -442,7 +442,7 @@
             @foreach ($tenant_active as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
+                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
                     <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
                     <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
                     <td>{{ $item->contract_term }}</td>
@@ -480,7 +480,7 @@
             @foreach ($tenant_reserved as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
+                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
                     @if($item->type_of_tenant === 'online')
                     <td><a class="badge badge-success">{{ $item->type_of_tenant }}</td>
                     @else
@@ -520,7 +520,7 @@
             @foreach ($tenant_inactive as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
-                    <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></td>
+                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
                     
                     <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d Y') }}</td>
                     <td>{{ $item->moveout_reason }}</td>
@@ -566,7 +566,7 @@
                 
   
                
-                <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                <th><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
                 <td>
                     @if($item->urgency === 'urgent')
                     <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -623,7 +623,7 @@
                   @foreach ($owners as $item)
                   <tr>
                     <th>{{ $ctr++ }}</th>
-                     <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></td>
+                     <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></thf>
               
                     <td>{{ $item-> email}}</td>
                     <td>{{ $item->mobile }}</td>

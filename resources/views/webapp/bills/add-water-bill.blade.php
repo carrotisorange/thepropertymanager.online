@@ -342,7 +342,7 @@
 
   </div>
   <div class="modal-footer">
-   <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss</button>
+   {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss</button> --}}
    <button form="periodCoveredForm" type="submit" id="addBillsButton" class="btn btn-primary"> Update</button>
   </form>
   </div> 
