@@ -254,7 +254,7 @@
         <th>{{ $ctr++ }}</th>
         <td>
         @if($item->bill_status === 'deleted')
-        <span class="text-danger"> {{ $item->bill_no }} (deleted)</span>
+        <strike> {{ $item->bill_no }}</strike>
         @else
         {{ $item->bill_no }}
         @endif

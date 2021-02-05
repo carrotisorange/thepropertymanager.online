@@ -257,8 +257,18 @@
       
           <input class="" type="hidden" form="add_billings" name="particular{{ $desc_ctr++ }}" value="Condo Dues" required readonly>
       <td>
-       
-            <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="" oninput="this.value = Math.abs(this.value)">
+       @if(Session::get('property_id') === '85bb4890-1e63-11eb-a2eb-abe972caa65d')
+        @if($item->building === 'Harvard' || $item->building === 'Princeton')
+        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="525" oninput="this.value = Math.abs(this.value)">
+        @else
+        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="950" oninput="this.value = Math.abs(this.value)">
+        @endif
+       @else
+      
+        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="" oninput="this.value = Math.abs(this.value)">
+      
+       @endif
+          
     
       </td>
      
