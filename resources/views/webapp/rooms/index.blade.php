@@ -404,7 +404,7 @@
       </button>
       </div>
       <div class="modal-body">
-          <form id="addUMultipleUnitForm" action="/property/{{ Session::get('property_id') }}/store" method="POST">
+          <form id="addUMultipleUnitForm" action="/property/{{ Session::get('property_id') }}/room/store" method="POST">
               @csrf
           </form>
 

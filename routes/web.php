@@ -755,7 +755,7 @@ Route::get('/property/{property_id}/rooms', 'RoomController@index')->middleware(
 Route::get('/property/{property_id}/room/{unit_id}', 'RoomController@show')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/rooms/{date}/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/store', 'RoomController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/store', 'RoomController@store')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/unit/{unit_id}', 'RoomController@destroy')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upload')->middleware(['auth', 'verified']);
