@@ -576,12 +576,12 @@
                           <tbody>
                             @foreach($delinquent_accounts as $item)
                             <tr>
-                              <td>
+                              <th>
                     
                                 <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
                           
-                              </td>
-                              <td>
+                              </th>
+                              <th>
                                 @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                                 @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                                 <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
@@ -592,7 +592,7 @@
                                 @else
                                {{ $item->unit_no }}
                                 @endif
-                              </td>
+                              </th>
                               <td>
                                 <a>{{ number_format($item->balance,2) }}
                               </td>
@@ -635,12 +635,12 @@
                           <tbody>
                             @foreach($pending_concerns as $item)
                             <tr>
-                              <td>
+                              <th>
                     
                                 <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
                           
-                              </td>
-                              <td>
+                              </th>
+                              <th>
                                 @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                                 @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                                 <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
@@ -651,10 +651,10 @@
                                 @else
                                 {{ $item->unit_no }}
                                 @endif
-                              </td>
-                              <td>
+                              </th>
+                              <th>
                                 <a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
-                              </td>
+                              </th>
                             </tr>
                             @endforeach
                           </tbody>
@@ -710,15 +710,15 @@
        
                    <td>{{ $item->ar_no }}</td>
                     <td>{{ $item->payment_bill_no }}</td>
-                    <td>
+                    <th>
                      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                      <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
                     @else
                     <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
                     @endif
    
-                     </td>
-                     <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></td>
+                     </th>
+                     <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></th>
                    
                      <td>
                        {{ $item->particular }}</td>
