@@ -193,7 +193,7 @@
         
           <br>
         <p class="text-right">
-          <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add </button>
+          <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Response</button>
         </p>
         </form>
       
