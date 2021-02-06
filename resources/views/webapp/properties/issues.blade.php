@@ -198,7 +198,7 @@
           @csrf
       
     
-          <textarea  class="form-control form-control-user @error('details') is-invalid @enderror" name="details" id="" cols="30" rows="3" placeholder="enter the problems you encounter while using the system..."></textarea required>
+          <textarea  class="form-control form-control-user @error('details') is-invalid @enderror" name="details" id="" cols="30" rows="3" placeholder="I just created 3 rooms but it is not showing on the rooms page..."></textarea required>
           
             @error('details')
             <span class="invalid-feedback" role="alert">
