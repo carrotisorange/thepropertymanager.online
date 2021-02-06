@@ -15,6 +15,7 @@ use App\Plan;
 use App\Tenant;
 use Illuminate\Support\Facades\Hash;
 use App\Issue;
+use App\Update;
 
 class DevController extends Controller
 {
@@ -446,7 +447,9 @@ $contracts = DB::table('contracts')
 
     public function updates()
     {
-        return view('layouts.dev.updates');
+        $updates = Update::orderBy('created_at', 'desc')->get();
+
+        return view('layouts.dev.updates', compact('updates'));
     }
 
     public function issues()

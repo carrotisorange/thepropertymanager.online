@@ -13,6 +13,7 @@ use App\Certificate;
 use App\Guardian;
 use Illuminate\Support\Facades\Hash;
 use App\Room;
+use App\Update;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,12 @@ Route::get('/blogs', 'BlogController@index');
 Route::post('ckeditor/image_upload', 'BlogController@upload')->name('upload');
 
 Route::get('property/{property_id}/system-updates', function($property_id){
+
+    $updates = Update::orderBy('created_at', 'desc')->get();
+
     $property = Property::findOrFail($property_id);
 
-    return view('webapp.properties.system-updates',compact('property'));
+    return view('webapp.properties.system-updates',compact('property','updates'));
 });
 
 Route::get('property/{property_id}/getting-started', function($property_id){
@@ -430,6 +434,7 @@ Route::get('/dev/plans', 'DevController@plans')->middleware(['auth', 'verified']
 Route::get('/dev/tenants', 'DevController@tenants')->middleware(['auth', 'verified']);
 Route::post('/plan', 'DevController@post_plan')->middleware(['auth', 'verified']);
 Route::get('/dev/user/{user_id}/plans', 'DevController@user_plans')->middleware(['auth', 'verified']);
+Route::post('/dev/updates/store', 'UpdateController@store')->middleware(['auth', 'verified']);
 
 Route::get('/register', function(Request $request){
     \Session::put('plan', $request->plan);
@@ -748,7 +753,6 @@ Route::post('/users/{user_id}/charge', function(Request $request){
     }
 
 });
-
 
 //routes for rooms
 Route::get('/property/{property_id}/rooms', 'RoomController@index')->middleware(['auth', 'verified']);
