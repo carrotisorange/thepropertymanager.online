@@ -208,8 +208,8 @@
       
         <br>
       <p class="text-right">
-        <a href="/property/{{Session::get('property_id')}}/issues" class="btn btn-danger"> Clear</a>
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
+        {{-- <a href="/property/{{Session::get('property_id')}}/issues" class="btn btn-danger"> Clear Field</a> --}}
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Post Issue </button>
       </p>
       </form>
     
