@@ -241,18 +241,18 @@
 @foreach ($units as $floor_no => $floor_no_list)
 <p class="text-center">
 @if($floor_no >= 1)
-{{ $numberFormatter->format($floor_no).' floor  ('.$floor_no_list->count().')' }}
+<b>{{ $numberFormatter->format($floor_no).' floor  ('.$floor_no_list->count().')' }}</b>
 @else
   @if($floor_no >= -1)
-  {{ '1st basement ('.$floor_no_list->count().')' }} 
+  <b>{{ '1st basement ('.$floor_no_list->count().')' }} </b>
   @elseif($floor_no >= -2)
-  {{ '2nd basement ('.$floor_no_list->count().')' }} 
+ <b> {{ '2nd basement ('.$floor_no_list->count().')' }} </b>
   @elseif($floor_no >= -3)
-  {{ '3rd basement ('.$floor_no_list->count().')' }} 
+ <b> {{ '3rd basement ('.$floor_no_list->count().')' }} </b>
   @elseif($floor_no >= -4)
-  {{ '4th basement ('.$floor_no_list->count().')' }} 
+ <b> {{ '4th basement ('.$floor_no_list->count().')' }} </b>
   @elseif($floor_no >= -5)
-  {{ '5th basement ('.$floor_no_list->count().')' }} 
+ <b> {{ '5th basement ('.$floor_no_list->count().')' }} </b>
   @endif
 @endif
 
@@ -306,18 +306,18 @@
       @foreach ($units as $floor_no => $floor_no_list)
       <p class="text-center">
       @if($floor_no >= 1)
-      {{ $numberFormatter->format($floor_no).' floor' }}
+     <b> {{ $numberFormatter->format($floor_no).' floor' }}</b>
       @else
       @if($floor_no >= -1)
-        {{ '1st basement' }} 
+       <b> {{ '1st basement' }} </b>
         @elseif($floor_no >= -2)
-       {{ '2nd basement' }} 
+      <b> {{ '2nd basement' }} </b>
         @elseif($floor_no >= -3)
-        {{ '3rd basement' }} 
+        <b>{{ '3rd basement' }} </b>
         @elseif($floor_no >= -4)
-        {{ '4th basement' }} 
+       <b> {{ '4th basement' }} </b>
         @elseif($floor_no >= -5)
-        {{ '5th basement' }} 
+        <b>{{ '5th basement' }} </b>
         @endif
       @endif
       
