@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Room selection</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Select Room</h5>
   
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -71,7 +71,7 @@
           </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" form="contractForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Select</button>
+            <button type="submit" form="contractForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Proceed to selected room</button>
         </div>
     </div>
     </div>

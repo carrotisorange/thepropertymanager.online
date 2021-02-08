@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Owner</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Owner Information</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -25,7 +25,7 @@
             </div>            
         </div>
         <div class="modal-footer">
-        <button type="submit" form="addInvestorForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add</button>  
+        <button type="submit" form="addInvestorForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Owner</button>  
         </div>
     </div>
     </div>

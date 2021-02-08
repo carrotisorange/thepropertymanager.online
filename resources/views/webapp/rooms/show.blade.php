@@ -726,7 +726,7 @@
                       <div class="modal-dialog modal-md" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Add Concern</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Concern Information</h5>
                   
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
@@ -744,6 +744,14 @@
                                 </div>
                             </div>
                             <br>
+                            <div class="row">
+                              <div class="col">
+                                  <label>Title</label>
+                                
+                                  <input type="text" form="concernForm" class="form-control" name="title" required >
+                              </div>
+                            </div>  
+                            <br>
                             
                             <div class="row">
                               <div class="col">
@@ -760,7 +768,7 @@
                           <br>
                               <div class="row">
                                   <div class="col">
-                                     <label>Type</label>
+                                     <label>Category</label>
                                       <select class="form-control" form="concernForm" name="category" id="" required>
                                         <option value="" selected>Please select one</option>
                                         <option value="billing">billing</option>
@@ -791,14 +799,7 @@
                             </div>
                             <br>
                            
-                          <div class="row">
-                            <div class="col">
-                                <label>Title</label>
-                              
-                                <input type="text" form="concernForm" class="form-control" name="title" required >
-                            </div>
-                          </div>  
-                          <br>
+                        
                           
                            <div class="row">
                                 <div class="col">
@@ -822,7 +823,7 @@
                           </div>
                           <div class="modal-footer">
                             
-                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
+                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add Concern</button>
                           </div>
                       </div>
                       </div>

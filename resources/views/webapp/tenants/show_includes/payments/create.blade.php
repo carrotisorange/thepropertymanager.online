@@ -1,9 +1,9 @@
 
 <div class="modal fade" id="acceptPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Payment</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Payment Information</h5>
         
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -54,7 +54,7 @@
           
         </div>
         <div class="modal-footer">
-            <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Add</button>
+            <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Record Payments</button>
         </div>
     
     </div>

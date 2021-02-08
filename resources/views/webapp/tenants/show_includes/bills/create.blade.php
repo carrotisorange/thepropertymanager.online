@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-lg" role="modal">
         <div class="modal-content">
           <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Bill</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Bill Information</h5>
         
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -54,7 +54,7 @@
         </div>
         <div class="modal-footer">
 
-         <button form="addBillForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Add</button>
+         <button form="addBillForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Post Bills</button>
         </div> 
         </div>
         </div>

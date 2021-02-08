@@ -181,12 +181,12 @@
     
   </div>
   <div class="col-md-3 text-right">
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addRemittance" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+    {{-- <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addRemittance" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a> --}}
   </div>
 
 </div>
 
-@if($remittances->count() <=-1 )
+@if($remittances->count() <=0 )
 <p class="text-danger text-center">No remittances found!</p>
 
 @else

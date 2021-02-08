@@ -231,27 +231,37 @@
   
                <div class="table-responsive text-nowrap">
                  <table class="table" >
+                   <thead>
                     <tr>
-                        <th>Name</th>
-                        <td>{{ $owner->name }}</td>
+                      <th>Name</th>
+                      <td>{{ $owner->name }}</td>
+                  </tr>
+                   </thead>
+                    <thead>
+                      <tr>
+                        <th>Email</th>
+                        <td>{{ $owner->email }}</td>
                     </tr>
-                    <tr>
-                     <th>Email</th>
-                     <td>{{ $owner->email }}</td>
-                 </tr>
+                    </thead>
+                 <thead>
                   <tr>
-                     <th>Mobile</th>
-                     <td>{{ $owner->mobile }}</td>
-                 </tr>
+                    <th>Mobile</th>
+                    <td>{{ $owner->mobile }}</td>
+                </tr>
+                 </thead>
                
-               <tr>
-                 <th>Address</th>
-                 <td>{{ $owner->address }}</td>
-               </tr>
-               <tr>
-                <th>Representative</th>
-                <td>{{ $owner->representative }}</td>
-            </tr>
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <td>{{ $owner->address }}</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr>
+                  <th>Representative</th>
+                  <td>{{ $owner->representative }}</td>
+              </tr>
+              </thead>
                  </table>
                </div>
          
@@ -298,24 +308,32 @@
              @foreach ($access as $item)
        
              <table class="table">
-                 <tr>
-                   <th>Email</th>
-                   <td>{{ $item->user_email }}</td>
-                 </tr>
-                 <tr>
-                  <th>Password</th>
-                  <td>{{ $item->mobile }} or <b>12345678</b></td>
+               <thead>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ $item->user_email }}</td>
                 </tr>
-              
-                 <tr>
+               </thead>
+                <thead>
+                  <tr>
+                    <th>Password</th>
+                    <td>{{ $item->mobile }} or <b>12345678</b></td>
+                  </tr>
+                </thead>
+              <thead>
+                
+                <tr>
                   <th>Created at</th>
                   <td>{{ $item->created_at? $item->created_at: null }}</td>
                 </tr>
+              </thead>
 
+              <thead>
                 <tr>
                   <th>Verified at</th>
                   <td>{{ $item->updated_at? $item->updated_at: null }}</td>
                 </tr>
+              </thead>
              </table>
              @endforeach
 
@@ -356,14 +374,14 @@
               <tr>
                 <th>{{ $ctr++ }}</th>
                 <td>{{ $item->building }}</td>
-                <td>
+                <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                   <a href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
                   @else
                   <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
                   @endif
                  
-                </td>
+                </th>
        
                 <td>{{ $item->type }}</td>
               
@@ -384,17 +402,24 @@
       
         <div class="table-responsive text-nowrap">
           <table class="table" >
-         <th>Bank</th>
-         <td>{{ $owner->bank_name }}</td>
-       </tr>
-       <tr>
-         <th>Account name</th>
-         <td>{{ $owner->account_name }}</td>
-       </tr>
-       <tr>
-         <th>Account number</th>
-         <td>{{ $owner->account_number }}</td>
-       </tr>
+        <thead>
+          <tr>
+            <th>Bank</th>
+            <td>{{ $owner->bank_name }}</td>
+          </tr>
+        </thead>
+      <thead>
+        <tr>
+          <th>Account name</th>
+          <td>{{ $owner->account_name }}</td>
+        </tr>
+      </thead>
+     <thead>
+      <tr>
+        <th>Account number</th>
+        <td>{{ $owner->account_number }}</td>
+      </tr>
+     </thead>
           </table>
         </div>
       </div>
@@ -405,7 +430,7 @@
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"> Add Certificate</h5>
+    <h5 class="modal-title text-primary" id="exampleModalLabel"> Certificate Information</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -462,7 +487,7 @@
    </div>
   <div class="modal-footer">
 
-    <button type="submit" form="certificateForm" class="btn btn-primary"> Add</button> 
+    <button type="submit" form="certificateForm" class="btn btn-primary"> Add Certificate</button> 
   </div> 
   </div>
   </div>
@@ -474,7 +499,7 @@
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Add Credential</h5>
+    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i>Credential Information</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -527,7 +552,7 @@
    </div>
   <div class="modal-footer">
 
-    <button type="submit" form="userForm" class="btn btn-primary"> Add</button> 
+    <button type="submit" form="userForm" class="btn btn-primary"> Add Credential</button> 
   </div> 
   </div>
   </div>
