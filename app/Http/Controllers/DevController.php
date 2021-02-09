@@ -31,7 +31,7 @@ class DevController extends Controller
 
     public function activities()
     {
-        $activities =  DB::table('notifications')
+        $activities =  DB::table('activities')
         ->join('users','user_id_foreign', 'id')
         ->join('properties','property_id_foreign', 'property_id')
         ->select('*', 'notifications.created_at as action_made', 'notifications.type as action')
