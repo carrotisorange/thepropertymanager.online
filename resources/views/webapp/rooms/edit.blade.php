@@ -176,11 +176,30 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0"><a href="/property/{{Session::get('property_id')}}/rooms" class="btn btn-primary" ><i class="fas fa-arrow-left"></i> Back</a></h6>
+  <div class="col-auto text-left">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/rooms/">{{ Session::get('property_name')}}</a></li>
+     
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+      </ol>
+    </nav>
+    
+    
   </div>
+ <div class="col">
+  <div class="alert alert-danger alert-dismissable custom-danger-box">
+                  
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
+   
+        <strong><i class="fas fa-info-circle"></i> Scroll the bar from left to right to see the delete/restore button. </strong>
+      
+    
 </div>
+ </div>
+</div>
+
 <div class="row">
 
   <!-- Content Column -->
@@ -289,7 +308,7 @@
                           </td>
                         
                        
-                          <td><input class="col" form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"> pax</td>
+                          <td><input class="col" form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"></td>
                           <td><input class="" form="editUnitsForm" type="number" step="0.001" name="rent{{ $rent++  }}"  min="0" id="" value="{{$item->rent }}"></td>
                           <td>
                             <select form="editUnitsForm" type="text" name="term{{ $term++  }}" id="" >
@@ -300,12 +319,21 @@
                           
                           </td>
                           <td>
-                            <form action="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" method="POST">
-                              @csrf
-                              @method('delete')
-                              
-                              <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                            </form> 
+                           @if($item->status === 'deleted')
+                           <form action="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/restore" method="POST">
+                            @csrf
+                            @method('put')
+                            
+                            <button title="restore this room" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-dark-50"></i></button>
+                          </form> 
+                           @else
+                           <form action="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/delete" method="POST">
+                            @csrf
+                            @method('delete')
+                            
+                            <button title="archive this room" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-dark-50"></i></button>
+                          </form> 
+                           @endif
                           </td>
                       </tr>
                  

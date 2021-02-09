@@ -2,6 +2,10 @@
 
 @section('title', 'Rooms')
 
+@section('css')
+
+@endsection
+
 @section('sidebar')
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -177,198 +181,159 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
 
-  <div class="col-lg-9 text-center">
-    <a href="#" class="btn btn-dark"> <i class="fas fa-home"></i> Dirty ({{ $units_dirty }})</a>
-    <a href="#" class="btn btn-danger"><i class="fas fa-home"></i> Vacant ({{ $units_vacant }})</a>
-    <a href="#" class="btn btn-success"><i class="fas fa-home"></i> Occupied ({{ $units_occupied }})</a>
-    <a href="#" class="btn btn-warning"> <i class="fas fa-home"></i> Reserved ({{ $units_reserved }})</a>
-    {{-- <a href="#" class="btn btn-primary"> <i class="fas fa-home"></i> Short Term ({{ $st_contract }})</a> --}}
+  <div class="col-lg-6 text-left">
+   
+      <h6 class="h2 text-dark d-inline-block mb-0">Rooms</h6>
+     
   </div>
 
-  <div class="col-md-3 text-right">
+  <div class="col-md-6 text-right">
     @if(Auth::user()->account_type === 'starter')
       @if($units->count()>20)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'basic' )
       @if($units->count()>30)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'large' )
       @if($units->count()>50)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'advanced' )
       @if($units->count()>75)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'enterprise' )
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
     @endif
 
-    <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
+    <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit Rooms</a>
+    <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger" ><i class="fas fa-backspace fa-sm text-dark-50"></i> Clear Filters</a>
   </div>
 
  
 </div>
-@if($units->count() <=0 )
-<p class="text-danger text-center">No rooms found!</p>
-@else
 
-
-  <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{Session::get('property_name')}}<span id="count_rooms" class="badge badge-primary">{{ $units_count }}</span></a>
-      @foreach ($buildings as $building)
-      <a class="nav-item nav-link" id="{{ $building->building }}-tab" data-toggle="tab" href="#{{ $building->building }}" role="tab" aria-controls="{{ $building->building }}" aria-selected="false">{{ $building->building }} <span id="count_rooms" class="badge badge-primary">{{ $building->count }}</a>
-      @endforeach
-    </div>
-  </nav>
-
-<div class="tab-content" id="">
-  <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-    <br>
+<div class="row">
   
-@foreach ($units as $floor_no => $floor_no_list)
-<p class="text-center">
-@if($floor_no >= 1)
-<b>{{ $numberFormatter->format($floor_no).' floor  ('.$floor_no_list->count().')' }}</b>
-@else
-  @if($floor_no >= -1)
-  <b>{{ '1st basement ('.$floor_no_list->count().')' }} </b>
-  @elseif($floor_no >= -2)
- <b> {{ '2nd basement ('.$floor_no_list->count().')' }} </b>
-  @elseif($floor_no >= -3)
- <b> {{ '3rd basement ('.$floor_no_list->count().')' }} </b>
-  @elseif($floor_no >= -4)
- <b> {{ '4th basement ('.$floor_no_list->count().')' }} </b>
-  @elseif($floor_no >= -5)
- <b> {{ '5th basement ('.$floor_no_list->count().')' }} </b>
-  @endif
-@endif
+  <form id="filter" action="/property/{{ Session::get('property_id') }}/rooms/filter"></form>
+  <div class="col-md-3">
+    <div class="col-left">
+     <label for=""><b>Status</b></label>
 
-</p>
+     <br>
+    </div>
+   
+    @foreach ($statuses as $status)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="status" value="{{ $status->status }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">{{ $status->status }} ({{ $status->count }})</label>
+    </div>
+    @endforeach
+    <hr>
+    <label for=""><b>Building</b></label>
+   <br>
+    @foreach ($buildings as $building)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="building" value="{{ $building->building }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">{{ $building->building }} ({{ $building->count }})</label>
+    </div>
+    @endforeach
 
-@foreach ($floor_no_list as $item)
-  @if($item->status === 'vacant')
-      <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-danger ">
-          <i class="fas fa-home fa-3x"></i>
-          <br>
-          {{ $item->unit_no }}
-      </a>
-      @elseif($item->status=== 'reserved')
-      <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-warning">
-          <i class="fas fa-home fa-3x"></i>
-          <br>
-         {{ $item->unit_no }}
-        </a>
-      @elseif($item->status=== 'occupied')
-          @if($item->term=== 'st')
-          <a title="short term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
-          <i class="fas fa-home fa-3x text-yellow"></i>
-          <br>
-          <span class="text-yellow"> {{ $item->unit_no }}</span>
-          </a> 
-          @else
-          <a title="long term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
-            <i class="fas fa-home fa-3x"></i>
-            <br>
-            {{ $item->unit_no }}
-            </a>
-            
-          @endif
-          @elseif($item->status=== 'dirty')
-          <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-dark">
-            <i class="fas fa-home fa-3x"></i>
-            <br>
-            {{ $item->unit_no }}
-            </a> 
-         
-      @endif   
-@endforeach
-<hr>
-@endforeach
+    <hr>
+    <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
+    <label for=""><b>Floor</b></label>
+    @foreach ($floors as $floor)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="floor" value="{{ $floor->floor }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">{{ $numberFormatter->format($floor->floor) }} floor ({{ $floor->count }})</label>
+    </div>
+    @endforeach
+    <hr>
+   
+    <label for=""><b>Type</b></label>
+    @foreach ($types as $type)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="type" value="{{ $type->type }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">{{ $type->type }} ({{ $type->count }})</label>
+    </div>
+    @endforeach
+
+    <hr>
+   
+    <label for=""><b>Occupancy</b></label>
+    @foreach ($occupancies as $occupancy)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="occupancy" value="{{ $occupancy->occupancy }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">{{ $occupancy->occupancy }} pax ({{ $occupancy->count }})</label>
+    </div>
+    @endforeach
+
+    <hr>
+   
+    <label for=""><b>Rent</b></label>
+    @foreach ($rents as $rent)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="rent" value="{{ $rent->rent }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">₱ {{ number_format($rent->rent, 2) }} ({{ $rent->count }})</label>
+    </div>
+    @endforeach
+
 
   </div>
-   @foreach ($buildings as $building)
-    <div class="tab-pane fade show" id="{{ $building->building }}" role="tabpanel" aria-labelledby="{{ $building->building }}-tab">
-      <br>
   
-      @foreach ($units as $floor_no => $floor_no_list)
-      <p class="text-center">
-      @if($floor_no >= 1)
-     <b> {{ $numberFormatter->format($floor_no).' floor' }}</b>
-      @else
-      @if($floor_no >= -1)
-       <b> {{ '1st basement' }} </b>
-        @elseif($floor_no >= -2)
-      <b> {{ '2nd basement' }} </b>
-        @elseif($floor_no >= -3)
-        <b>{{ '3rd basement' }} </b>
-        @elseif($floor_no >= -4)
-       <b> {{ '4th basement' }} </b>
-        @elseif($floor_no >= -5)
-        <b>{{ '5th basement' }} </b>
-        @endif
-      @endif
-      
-      </p>
+  <div class="col-md-9">
+    @if($units->count() <=0 )
+    <p class="">No rooms found!</p>
+    @else
+    <p class=""><b>Showing {{ $units->count() }} rooms...</b></p>
+
     
-      @foreach ($floor_no_list as $item)
-      @if($building->building === $item->building)
-        @if($item->status === 'vacant')
-            <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-danger">
-                <i class="fas fa-home fa-3x"></i>
-                <br>
-                {{ $item->unit_no }}
-            </a>
-            @elseif($item->status=== 'reserved')
-            <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-warning">
-                <i class="fas fa-home fa-3x"></i>
-                <br>
-               {{ $item->unit_no }}
-              </a>
-            @elseif($item->status=== 'occupied')
-              @if($item->term=== 'st')
-              <a title="short term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
-              <i class="fas fa-home fa-3x text-yellow"></i>
-              <br>
-              <span class="text-yellow"> {{ $item->unit_no }}</span>
-              </a> 
-              @else
-              <a title="long term contract" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-success">
-                <i class="fas fa-home fa-3x"></i>
-                <br>
-                {{ $item->unit_no }}
-                </a>
-                
-              @endif
-            @elseif($item->status=== 'dirty')
-                <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-dark">
-                  <i class="fas fa-home fa-3x"></i>
-                  <br>
-                  {{ $item->unit_no }}
-                  </a> 
-           
-            @endif   
-          @endif
-      @endforeach
-      <hr>
-    @endforeach
+        @foreach ($units as $item)
+     
+        <div class="card card-body">
+     
+        <div class="row">  
+          <div class="col-md-7">
+            <h1 class="display-6">   <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></h1>
+            <p class="">
+              Floor &#9671 {{ $numberFormatter->format($item->floor) }} <br>
+              Status &#9671 {{ $item->status }} <br>
+              Rent &#9671 ₱{{ number_format($item->rent,2) }}<br>
+              Type &#9671 {{ $item->type }}
+            </p>
+  
+          </div>
+          <div class="col-md-5">
+            <img  src="{{ asset('/arsha/assets/img/not-available.png') }}" width = "70%" alt="image of the room" class="img-thumbnail">
+          </div>
+         </div>
+
+          </div>
+
+{{--        
+        <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-primary ">
+          <i class="fas fa-home"></i>
+        
+           {{ $item->unit_no }}
+         </a>  --}}
+       
+          @endforeach
+
+    @endif
+
     </div>
-  @endforeach 
 </div>
 
-@endif
 
 <div class="modal fade" id="upgradeToPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">

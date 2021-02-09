@@ -19,8 +19,9 @@ class RoomController extends Controller
      *n
      * @return \Illuminate\Http\Response
      */
-    public function index($property_id)
+    public function index(Request $request, $property_id)
     {
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
@@ -33,42 +34,117 @@ class RoomController extends Controller
 
         if(auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
 
-            $units_count = Property::findOrFail($property_id)
-            ->units->where('status','<>','deleted')
-            ->count();
-    
-        
-            $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
-    
-            $units_vacant = Property::findOrFail(Session::get('property_id'))->units->where('status', 'vacant')->count();
-           
-             $units_reserved =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'reserved')->count();
-            
-             
-            $units_dirty =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'dirty')->count();
+            Session::put('status', $request->status);
+            Session::put('type', $request->type);
+            Session::put('building', $request->building);
+            Session::put('occupancy', $request->occupancy);
+            Session::put('rent', $request->rent);
+            Session::put('floor', $request->floor);
 
-            $st_contract =  Property::findOrFail(Session::get('property_id'))->units->where('term', 'st')->count();
-    
-           $units = Property::findOrFail($property_id)
-           ->units()->where('status','<>','deleted')
+            // $units = DB::table('units')
+            // ->where('property_id_foreign', Session::get('property_id'))
+            // ->orWhere(function($query) {
+            //     $query->where('status', Session::get('status'))
+            //     ->where('type', Session::get('type'))
+            //     ->where('building', Session::get('building'))
+            //     ->where('occupancy', Session::get('occupancy'))
+            //     ->where('rent', Session::get('rent'))
+            //     ->where('floor', Session::get('floor'));
+            // })
+                
+            // ->get();
+
+        //    $units = Property::findOrFail($property_id)
+        //    ->units()->where('status','<>','deleted')
       
-           ->get()->groupBy(function($item) {
-                return $item->floor;
-            });
-    
+        //    ->get()->groupBy(function($item) {
+        //         return $item->floor;
+        //     });
+
+            if(Session::has('status')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('status', Session::get('status'))
+                ->get();
+            }
+            elseif(Session::has('type')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('type', Session::get('type'))
+                ->get();
+            }
+            elseif(Session::has('building')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('building', Session::get('building'))
+                
+                ->get();
+            }
+            elseif(Session::has('floor')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('floor', Session::get('floor'))
+              
+                ->get();
+            }
+            elseif(Session::has('occupancy')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('occupancy', Session::get('occupancy'))
+                ->get();
+            }
+            else{
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('rent', Session::get('rent'))
+                ->get();
+            }
+
             $buildings = Property::findOrFail($property_id)
             ->units()
             ->where('status','<>','deleted')
             ->select('building', 'status', DB::raw('count(*) as count'))
             ->groupBy('building')
             ->get('building', 'status','count');
+
+            $statuses = Property::findOrFail($property_id)
+            ->units()
+            ->select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->get('status','count');
+
+            $floors = Property::findOrFail($property_id)
+            ->units()
+            ->select('floor', DB::raw('count(*) as count'))
+            ->groupBy('floor')
+            ->get('floor','count');
+
+            $types = Property::findOrFail($property_id)
+            ->units()
+            ->select('type', DB::raw('count(*) as count'))
+            ->groupBy('type')
+            ->get('type','count');
+
+            $occupancies = Property::findOrFail($property_id)
+            ->units()
+            ->select('occupancy', DB::raw('count(*) as count'))
+            ->groupBy('occupancy')
+            ->get('occupancy','count');
+
+            $rents = Property::findOrFail($property_id)
+            ->units()
+            
+            ->select('rent', DB::raw('count(*) as count'))
+            ->orderBy('rent', 'asc')
+            ->groupBy('rent')
+
+            ->get('rent','count');
                
-            $property = Property::findOrFail($property_id);
     
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
            }else{
-            return view('webapp.rooms.index',compact('units_occupied','units_vacant','units_reserved','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
+            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents'));
            }
         }else{
             return view('layouts.arsha.unregistered');
@@ -83,6 +159,13 @@ class RoomController extends Controller
     public function create()
     {
         //
+    }
+
+    public function clear($property_id)
+    {
+        // Session::forget(['status', 'type', 'building', 'occupancy', 'rent', 'floor']);
+
+        return redirect('/property/'.$property_id.'/rooms');
     }
 
 
@@ -455,11 +538,37 @@ class RoomController extends Controller
                             ]
                         );
   
-                        if(Session::get('property_id') === 'Condominium Corporation'){
-                            return redirect('/property/'.$property_id.'/units')->with('success', 'Unit is archived successfully.');
-                        }else{
-                            return redirect('/property/'.$property_id.'/rooms')->with('success', 'Unit is archived successfully.');
-                        }
+        return back()->with('success', 'Room archived successfully.');
+       
+    }
+
+    public function restore(Request $request, $property_id, $unit_id)
+    {
+        DB::table('units')->where('unit_id', $unit_id)
+            ->update([
+                'status' => NULL,
+            ]);
+
+            $units = DB::table('units')
+            ->where('property_id_foreign', $property_id)
+            ->where('status','<>','deleted')
+            ->count();
+
+            $occupied_units = DB::table('units')
+            ->where('property_id_foreign', $property_id)
+            ->where('status', 'occupied')
+            ->count();
+    
+            DB::table('occupancy_rate')
+                ->insert(
+                            [
+                                'occupancy_rate' => ($occupied_units/$units) * 100,
+                                'property_id_foreign' => $property_id,
+                               'occupancy_date' => Carbon::now(),'created_at' => Carbon::now(),
+                            ]
+                        );
+  
+        return back()->with('success', 'Room restored successfully.');
        
     }
 }

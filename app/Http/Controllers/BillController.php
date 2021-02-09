@@ -731,6 +731,7 @@ class BillController extends Controller
                  $bill = Bill::find( $request->input('billing_id_ctr'.$i));
                   $bill->start = $request->input('start_ctr'.$i);
                   $bill->end = $request->input('end_ctr'.$i);
+                  $bill->particular = $request->input('particular_ctr'.$i);
                   $bill->amount = $request->input('amount_ctr'.$i);
                  $bill->save();
                }
@@ -931,6 +932,24 @@ class BillController extends Controller
         return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
     
+    public function restore_bill($property_id, $billing_id)
+    {
+        $bill = Bill::findOrFail($billing_id);
+        $bill->bill_status = NULL;
+        $bill->save();
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->isOpen = '1';
+        $notification->message = Auth::user()->name.' restores bill '. $billing_id.'.';
+        $notification->save();
+
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        return back()->with('success', 'Bill restored successfully.');
+    }
 
 
     public function destroy_bill_from_bills_page($property_id, $billing_id)
@@ -944,12 +963,12 @@ class BillController extends Controller
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
         $notification->isOpen = '1';
-        $notification->message = Auth::user()->name.' deletes bill '. $billing_id.'.';
+        $notification->message = Auth::user()->name.' archives bill '. $billing_id.'.';
         $notification->save();
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return back()->with('success', 'Bill deleted successfully.');
+        return back()->with('success', 'Bill archived successfully.');
     }
    
 }

@@ -165,7 +165,7 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-auto text-right">
+  <div class="col-md-9 text-left">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/#bills">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
@@ -175,6 +175,9 @@
     </nav>
     
     
+  </div>
+  <div class="col-md-3 text-right">
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update Bills And Message</button> </p>
   </div>
 </div>
 
@@ -212,32 +215,50 @@
           $end_ctr = 1;
           $amount = 1;
           $billing_id_ctr =1;
+          $particular_ctr =1;
         ?>
         <tbody>
         @foreach ($balance as $item)
         @if($item->bill_status === 'deleted')
-        <tr class="bg-success">
+        <tr>
           <th class="text-center">{{ $ctr++ }}</th>
-          <td>
+          <th>
      
-         {{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}">
+       <strike>
+        {{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}">
+       </strike>
        
-        </td>
+      </th>
           <td>{{$item->unit_no}}</td>
-          <td>{{ $item->particular }}</td>
           <td>
-            <input form="editBillsForm" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
+            <select class="form-control" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
+              <option value='{{ $item->particular }}' selected>{{ $item->particular }}</option>
+              <option value='Advance Rent'>Advance Rent</option>
+              <option value='Electric'>Electric</option>
+              <option value='Rent'>Rent</option>
+              <option value='Security Deposit (Rent)'>Security Deposit (Rent)</option>
+              <option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option>
+              <option value='Surcharge'>Surcharge</option>
+              <option value='Water'>Water</option>
+            </select>
           </td>
           <td>
-            <input form="editBillsForm"  type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
+            <input class="form-control" form="editBillsForm" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
           </td>
-          <td><input form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
+          <td>
+            <input class="form-control" form="editBillsForm"  type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
+          </td>
+          <td><input class="form-control" form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
           <td>
             @if(Auth::user()->user_type === 'manager')
             @if($item->bill_status === 'deleted')
-
+            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
+              @csrf
+              @method('put')
+              <button title="restore this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-white-50"></i></button>
+            </form>
             @else
-            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}" method="POST">
+            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
               @csrf
               @method('delete')
               <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
@@ -250,32 +271,46 @@
         @else
         <tr>
           <th class="text-center">{{ $ctr++ }}</th>
-          <td>
+          <th>
      
          {{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}">
        
-        </td>
+          </th>
           <td>{{$item->unit_no}}</td>
-          <td>{{ $item->particular }}</td>
           <td>
-            <input form="editBillsForm" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
+            <select class="form-control" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
+              <option value='{{ $item->particular }}' selected>{{ $item->particular }}</option>
+              <option value='Advance Rent'>Advance Rent</option>
+              <option value='Electric'>Electric</option>
+              <option value='Rent'>Rent</option>
+              <option value='Security Deposit (Rent)'>Security Deposit (Rent)</option>
+              <option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option>
+              <option value='Surcharge'>Surcharge</option>
+              <option value='Water'>Water</option>
+            </select>
           </td>
           <td>
-            <input form="editBillsForm"  type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
+            <input form="editBillsForm" class="form-control" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
           </td>
-          <td><input form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
+          <td>
+            <input form="editBillsForm"  class="form-control" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
+          </td>
+          <td><input form="editBillsForm" class="form-control" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
           <td>
             @if(Auth::user()->user_type === 'manager')
-            @if($item->bill_status === 'deleted')
-
-            @else
-            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}" method="POST">
-              @csrf
-              @method('delete')
-              <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-            </form>
-            @endif
-            
+              @if($item->bill_status === 'deleted')
+              <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
+                @csrf
+                @method('put')
+                <button title="restore this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-white-50"></i></button>
+              </form>
+              @else
+              <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
+                @csrf
+                @method('delete')
+                <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+              </form>
+              @endif    
             @endif
           </td>   
         </tr>
@@ -285,15 +320,18 @@
 
         <tr>
           <th>TOTAL</th>
-          <th colspan="6" class="text-right">{{ number_format($balance->sum('balance')-$deleted_bills,2) }} </th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><input class="form-control" type="" step="0.01" value="{{ number_format($balance->sum('balance')-$deleted_bills,2) }}" readonly> </th>
          </tr>  
          <tbody>  
     </table>
   </div>
-
-  <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update Bills And Message</button> </p>
   @endif
-  
+  <br>
   <h6 class="h2 text-dark d-inline-block mb-0">This message will appear at the bottom of the Statement of Accounts.</h6>
   <br><br>
   <textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">

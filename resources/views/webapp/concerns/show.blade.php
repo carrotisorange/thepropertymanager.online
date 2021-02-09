@@ -223,7 +223,7 @@ font-family: FontAwesome;
   <div class="col-md-3 text-right">
     @if($concern->status != 'closed')
     
-    <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"><i class="fas fa-star text-white-50"></i> Rate this concern</a> 
+    <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"><i class="fas fa-star text-dark-50"></i> Rate this concern</a> 
     
     @endif 
   </div>
@@ -235,7 +235,7 @@ font-family: FontAwesome;
   <div class="col-md-6">
 
     @if($concern->status != 'closed')
-    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-white-50"></i> Edit</a> 
+    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-dark-50"></i> Edit</a> 
 
     
     @endif 
@@ -304,11 +304,11 @@ font-family: FontAwesome;
           <th>Status</th>
             <td>
               @if($concern->concern_status === 'pending')
-              <i class="fas fa-clock text-warning"></i> {{ $concern->concern_status }}
+              <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->concern_status }}</span>
               @elseif($concern->concern_status === 'active')
-              <i class="fas fa-snowboarding text-primary"></i> {{ $concern->concern_status }}
+              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->concern_status }}</span>
               @else
-              <i class="fas fa-check-circle text-success"></i> {{ $concern->concern_status }}
+              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->concern_status }}</span>
               @endif
             </td>
        </tr>
@@ -379,7 +379,7 @@ font-family: FontAwesome;
             </div>
             <br>
           <p class="text-right">
-            <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-white-50"></i> Add response</a> 
+            <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Response</a> 
           </p>
       </div>
       
@@ -390,11 +390,11 @@ font-family: FontAwesome;
 </div>
 
 
-<div class="modal fade" id="editConcernDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editConcernDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Edit Concern</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Edit Concern Information</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
@@ -405,13 +405,7 @@ font-family: FontAwesome;
         {{ csrf_field() }}
       </form>
       
-      <div class="row">
-          <div class="col">
-              <label>Title</label>
-              <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
-          </div>
-      </div>
-      <br>
+     
         <div class="row">
             <div class="col">
                 <label>Date reported</label>
@@ -419,6 +413,13 @@ font-family: FontAwesome;
             </div>
         </div>
         <br>
+        <div class="row">
+          <div class="col">
+              <label>Title</label>
+              <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
+          </div>
+      </div>
+      <br>
         <div class="row">
             <div class="col">
                 <label>Category</label>
@@ -487,11 +488,11 @@ font-family: FontAwesome;
 
 
 
-<div class="modal fade" id="addJobOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addJobOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Add job order</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Job Order Information</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
@@ -541,7 +542,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
         
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Job Order </button>
       </form>
       </div>
   </div>
@@ -550,11 +551,11 @@ font-family: FontAwesome;
 </div>
 
 
-<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Add Response</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Response Information</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
@@ -569,7 +570,7 @@ font-family: FontAwesome;
     
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Response </button>
       </form>
       </div>
   </div>
@@ -579,12 +580,12 @@ font-family: FontAwesome;
 
 
 
-<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
 
-      <h5 class="modal-title" id="exampleModalLabel">Concern rating</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Rating Information</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -630,7 +631,7 @@ font-family: FontAwesome;
  
       </div>
       <div class="modal-footer">
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Rate </button>
+          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Mark as closed and rate </button>
       </div>
   </div>
   </div>

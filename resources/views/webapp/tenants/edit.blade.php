@@ -169,12 +169,20 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
+  <div class="col-auto text-left">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/#profile">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
+     
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+      </ol>
+    </nav>
+    
     
   </div>
-
+ 
 </div>
+
 <form id="editTenantForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}" method="POST">
     @method('put')
     {{ csrf_field() }}
@@ -182,15 +190,15 @@
  
             <div class="form-group row">
                 <div class="col">
-                    <small class>First Name</small>
+                    <label>First Name</label>
                     <input form="editTenantForm" class="form-control" type="text" name="first_name" value="{{ $tenant->first_name }}">
                 </div>
                 <div class="col">
-                    <small>Middle Name</small>
+                    <label>Middle Name</label>
                     <input form="editTenantForm" class="form-control" type="text" name="middle_name" value="{{ $tenant->middle_name }}">
                 </div>
                 <div class="col">
-                    <small>Last Name</small>
+                    <label>Last Name</label>
                     <input form="editTenantForm" class="form-control" type="text" name="last_name" value="{{ $tenant->last_name }}">
                 </div>
             </div>
@@ -198,18 +206,18 @@
 
             <div class="form-group row">
               <div class="col">
-                  <small for="">Mobile</small>
+                  <label for="">Mobile</label>
                   <input form="editTenantForm" class="form-control" type="text" name="contact_no" value="{{ $tenant->contact_no }}">
               </div>
               <div class="col" id="email_address">
-                  <small for="">Email</small>
+                  <label for="">Email</label>
                   <input form="editTenantForm" class="form-control" type="text" name="email_address" value="{{ $tenant->email_address }}">
                 @if($tenant->email_address === null)
                 <small class="text-danger">Please add an email</small>
                 @endif
               </div>
               <div class="col">
-                <small for="">Type</small>
+                <label for="">Type</label>
                 <select form="editTenantForm" name="type_of_tenant" id="type_of_tenant" class="form-control" onchange ="openForm()" required>
                   <option value="{{ $tenant->type_of_tenant }}">{{ $tenant->type_of_tenant }}</option>
                   <option value="studying">studying</option>
@@ -221,7 +229,7 @@
        
             <div class="form-group row">
                 <div class="col">
-                    <small>Gender</small>
+                    <label>Gender</label>
                     <select form="editTenantForm" class="form-control" name="gender" id="">
                         <option value="{{ $tenant->gender }}">{{ $tenant->gender }}</option>
                         <option value="female">female</option>
@@ -229,11 +237,11 @@
                     </select>
                 </div>
                 <div class=" col">
-                    <small>Birthdate</small>
+                    <label>Birthdate</label>
                     <input form="editTenantForm" class="form-control" type="date" name="birthdate" value="{{ $tenant->birthdate }}">
                 </div>
                 <div class="col">
-                    <small>Civil Status:</small>
+                    <label>Civil Status</label>
                     <select form="editTenantForm"  id="civil_status" name="civil_status" class="form-control">
                         <option value="{{ $tenant->civil_status }}" selected>{{ $tenant->civil_status }}</option>
                         <option value="single" selected>single</option>
@@ -241,29 +249,29 @@
                     </select>
                 </div>
                 <div class=" col">
-                    <small>ID/ID number</small>
+                    <label>ID/ID number</label>
                     <input form="editTenantForm" class="form-control" type="text" name="id_number" value="{{ $tenant->id_number }}">
                 </div>
             </div>
            
             <div class="form-group row">
                 <div class=" col-md-8">
-                    <small for="">Barangay</small>
+                    <label for="">Barangay</label>
                     <input form="editTenantForm" class="form-control" type="text" name="barangay" value="{{ $tenant->barangay }}">
                 </div>
                 <div class=" col-md-4">
-                    <small for="">City</small>
+                    <label for="">City</label>
                     <input form="editTenantForm" class="form-control" type="text" name="city" value="{{ $tenant->city }}">
                 </div>
                
             </div>
             <div class="form-group row">
                 <div class=" col-md-4">
-                    <small for="">Province</small>
+                    <label for="">Province</label>
                     <input form="editTenantForm" class="form-control" type="text" name="province" value="{{ $tenant->province }}">
                 </div>
                 <div class=" col-md-4">
-                    <small for="">Country</small>
+                    <label for="">Country</label>
                     <select form="editTenantForm" class="form-control" name="country">
                            <option value="{{$tenant->country}}">{{$tenant->country}}</option> 
                           <option value="Afganistan">Afghanistan</option>
@@ -515,7 +523,7 @@
                     </select>
                 </div>
                 <div class=" col-md-4">
-                    <small for="">Zip</small>
+                    <label for="">Zip</label>
                     <input form="editTenantForm" class="form-control" type="number" name="zip_code" value="{{ $tenant->zip_code }}">
                 </div>
             </div>
@@ -526,31 +534,31 @@
             <h3>For student...</h3>
             <div class="form-group row studying">
                 <div class="col">
-                    <small for="">High School</small>
+                    <label for="">High School</label>
                     <input form="editTenantForm" class="form-control" type="text" name="high_school" value="{{ $tenant->high_school }}">
                 </div>
                 <div class="col">
-                    <small for="">Adddress</small>
+                    <label for="">Adddress</label>
                     <input form="editTenantForm" class="form-control" type="text" name="high_school_address" value="{{ $tenant->high_school_address }}">
                 </div>
             </div>
             <div class="form-group row studying">
                 <div class="col">
-                    <small for="">College/University</small>
+                    <label for="">College/University</label>
                     <input form="editTenantForm" class="form-control" type="text" name="college_school" value="{{ $tenant->college_school }}">
                 </div>
                 <div class="col">
-                    <small for="">Address</small>
+                    <label for="">Address</label>
                     <input form="editTenantForm" class="form-control" type="text" name="college_school_address" value="{{ $tenant->college_school_address }}">
                 </div>
             </div>
             <div class="form-group row studying">
                 <div class="col">
-                    <small for="">Course</small>
+                    <label for="">Course</label>
                     <input form="editTenantForm" class="form-control" type="text" name="course" value="{{ $tenant->course }}">
                 </div>
                 <div class="col">
-                    <small for="">Year Level</small>
+                    <label for="">Year Level</label>
                     <select form="editTenanForm" class="form-control" name="year_level" id="">
                         <option value="{{ $tenant->year_level }}">{{ $tenant->year_level }}</option>
                           <option value="senior high">junior high</option>
@@ -567,25 +575,25 @@
             <h3>For working...</h3>
             <div class="form-group row working">
                 <div class="col">
-                    <small for="">Employer/Company</small>
+                    <label for="">Employer/Company</label>
                     <input form="editTenantForm" class="form-control" type="text" name="employer" value="{{ $tenant->employer }}">
                 </div>
                 <div class="col">
-                    <small for="">Position/Job description</small>
+                    <label for="">Position/Job description</label>
                     <input form="editTenantForm" class="form-control" type="text" name="job" value="{{ $tenant->job }}">
                 </div>
                 <div class="col">
-                    <small for="">Years of Employment</small>
+                    <label for="">Years of Employment</label>
                     <input form="editTenantForm" class="form-control" type="number" name="years_of_employment" value="{{ $tenant->years_of_employment }}">
                 </div>
             </div>
             <div class="form-group row working">
                 <div class="col">
-                    <small for="">Address</small>
+                    <label for="">Address</label>
                     <input form="editTenantForm" class="form-control" type="text" name="employer_address" value="{{ $tenant->employer_address }}">
                 </div>
                 <div class="col">
-                    <small for="">Mobile</small>
+                    <label for="">Mobile</label>
                     <input form="editTenantForm" class="form-control" type="number" name="employer_contact_no" value="{{ $tenant->employer_contact_no }}">
                 </div>
                 

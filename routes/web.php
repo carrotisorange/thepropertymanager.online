@@ -656,7 +656,8 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantControll
 Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
 Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 
-Route::delete('property/{property_id}/bill/{bill_id}', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
+Route::delete('property/{property_id}/bill/{bill_id}/delete', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
+Route::put('property/{property_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
 
 
 //route for users
@@ -760,9 +761,12 @@ Route::get('/property/{property_id}/room/{unit_id}', 'RoomController@show')->mid
 Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/rooms/{date}/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/store', 'RoomController@store')->middleware(['auth', 'verified']);
-Route::delete('/property/{property_id}/room/{unit_id}', 'RoomController@destroy')->middleware(['auth', 'verified']);
+Route::delete('/property/{property_id}/room/{unit_id}/delete', 'RoomController@destroy')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/room/{unit_id}/restore', 'RoomController@restore')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upload')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/rooms/filter', 'RoomController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/rooms/clear', 'RoomController@clear')->middleware(['auth', 'verified']);
 
 
 //routes for units

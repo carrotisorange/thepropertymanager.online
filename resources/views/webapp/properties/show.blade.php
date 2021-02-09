@@ -510,7 +510,7 @@
                            @if($item->contract_status === 'active')
                           <span class="text-success"><i class="fas fa-check-circle"></i> {{ $item->contract_status }}</span>
                            @else
-                           <span class="text-warning"><i class="fa-clock"></i> {{ $item->contract_status }}</span>
+                           <span class="text-warning"><i class="fas fa-clock"></i> {{ $item->contract_status }}</span>
                  
                            @endif
                          </td>
