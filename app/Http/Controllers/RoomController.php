@@ -65,6 +65,7 @@ class RoomController extends Controller
                $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('status', Session::get('status'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }
@@ -72,6 +73,7 @@ class RoomController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('type', Session::get('type'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }
@@ -79,6 +81,7 @@ class RoomController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('building', Session::get('building'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }
@@ -86,6 +89,7 @@ class RoomController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('floor', Session::get('floor'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
               
                 ->get();
@@ -94,6 +98,7 @@ class RoomController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('occupancy', Session::get('occupancy'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }
@@ -101,12 +106,14 @@ class RoomController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('rent', Session::get('rent'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }
             else{
                  $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
+                ->orderBy('created_at', 'desc')
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }

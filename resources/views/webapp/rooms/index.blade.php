@@ -312,6 +312,8 @@
               Rent &#9671 ₱{{ number_format($item->rent,2) }}<br>
               Type &#9671 {{ $item->type }}
               <br>
+              Room created on &#9671 {{ $item->created_at? Carbon\Carbon::parse($item->created_at)->format('M d, Y'): 'NOT AVAILABLE' }}
+              <br>
               Last contract ended on &#9671 {{ $item->updated_at? Carbon\Carbon::parse($item->updated_at)->format('M d, Y'): 'NOT AVAILABLE' }}
             </p>
   
