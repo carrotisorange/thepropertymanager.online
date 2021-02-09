@@ -295,9 +295,12 @@
     @if($units->count() <=0 )
     <p class="">No rooms found!</p>
     @else
-    <p class=""><b>Showing {{ $units->count() }} rooms...</b></p>
-
-    
+    <p class=""><b>Showing {{ $units->count() }} rooms...</b> 
+      {{-- <div class="alert alert-danger alert-dismissable custom-danger-box col-md-">       
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>{{ Session::get('status') }} </strong>
+    </div>     --}}
+    </p>
         @foreach ($units as $item)
      
         <div class="card card-body">

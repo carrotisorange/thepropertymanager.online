@@ -62,7 +62,7 @@ class RoomController extends Controller
         //     });
 
             if(Session::has('status')){
-                $units = DB::table('units')
+               $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('status', Session::get('status'))
                 ->get();
@@ -93,10 +93,16 @@ class RoomController extends Controller
                 ->where('occupancy', Session::get('occupancy'))
                 ->get();
             }
-            else{
+            elseif(Session::has('rent')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('rent', Session::get('rent'))
+                ->get();
+            }
+            else{
+                 $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                
                 ->get();
             }
 
