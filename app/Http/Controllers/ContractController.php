@@ -267,7 +267,8 @@ class ContractController extends Controller
             DB::table('units')
             ->where('unit_id', $unit_id)
             ->update([
-                'status' => 'dirty'
+                'status' => 'dirty',
+                'updated_at' => Carbon::now()
             ]);
         }
 

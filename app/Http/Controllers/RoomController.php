@@ -65,25 +65,28 @@ class RoomController extends Controller
                $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('status', Session::get('status'))
+                ->orderBy('updated_at', 'asc')
                 ->get();
             }
             elseif(Session::has('type')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('type', Session::get('type'))
+                ->orderBy('updated_at', 'asc')
                 ->get();
             }
             elseif(Session::has('building')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('building', Session::get('building'))
-                
+                ->orderBy('updated_at', 'asc')
                 ->get();
             }
             elseif(Session::has('floor')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('floor', Session::get('floor'))
+                ->orderBy('updated_at', 'asc')
               
                 ->get();
             }
@@ -91,18 +94,20 @@ class RoomController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('occupancy', Session::get('occupancy'))
+                ->orderBy('updated_at', 'asc')
                 ->get();
             }
             elseif(Session::has('rent')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('rent', Session::get('rent'))
+                ->orderBy('updated_at', 'asc')
                 ->get();
             }
             else{
                  $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
-                
+                ->orderBy('updated_at', 'asc')
                 ->get();
             }
 

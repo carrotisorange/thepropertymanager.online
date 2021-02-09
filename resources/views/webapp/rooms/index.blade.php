@@ -295,12 +295,10 @@
     @if($units->count() <=0 )
     <p class="">No rooms found!</p>
     @else
-    <p class=""><b>Showing {{ $units->count() }} rooms...</b> 
-      {{-- <div class="alert alert-danger alert-dismissable custom-danger-box col-md-">       
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>{{ Session::get('status') }} </strong>
-    </div>     --}}
+    <p class="">Showing  <b>{{ $units->count() }} {{ Session::get('status') }}  {{ Session::get('type') }}  {{ Session::get('building') }}  {{ Session::get('rent') }}  {{ Session::get('occupancy') }}  {{ Session::get('floor') }} </b>rooms...
+   
     </p>
+    
         @foreach ($units as $item)
      
         <div class="card card-body">
@@ -313,6 +311,8 @@
               Status &#9671 {{ $item->status }} <br>
               Rent &#9671 ₱{{ number_format($item->rent,2) }}<br>
               Type &#9671 {{ $item->type }}
+              <br>
+              Last contract ended on &#9671 {{ $item->updated_at? Carbon\Carbon::parse($item->updated_at)->format('M d, Y'): 'NOT AVAILABLE' }}
             </p>
   
           </div>

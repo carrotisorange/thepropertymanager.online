@@ -318,7 +318,7 @@ class TenantController extends Controller
                         [
                             'status' => 'occupied',
                             'term' => 'st',
-                            'updated_at' => Carbon::now()
+                            
                         ]
                     );
                   }else{  
@@ -328,7 +328,6 @@ class TenantController extends Controller
                         [
                             'status' => 'reserved',
                             'term' => 'st',
-                            'updated_at' => Carbon::now()
                         ]
                     );
                   }
