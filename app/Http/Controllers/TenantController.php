@@ -38,7 +38,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' opens tenants page.';
         $notification->save();
                     
@@ -419,7 +419,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
           }else{  
@@ -427,7 +427,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' reserves '.Unit::findOrFail($unit_id)->unit_no.' for '.$tenant->first_name.' '.$tenant->last_name.'.';
         $notification->save();
           }
@@ -548,7 +548,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'success';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' as an occupant in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
         
@@ -883,7 +883,7 @@ class TenantController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'tenant';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' profile.';
         $notification->save();
                     

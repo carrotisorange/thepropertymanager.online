@@ -162,7 +162,7 @@
       <div class="list-group list-group-flush">
           @foreach ($updates as $item)
        
-          <a href="#!" class="list-group-item list-group-item-action">
+          <span class="list-group-item list-group-item-action">
             <div class="row align-items-center">
               <div class="col-auto">
                 <!-- Avatar -->
@@ -208,10 +208,11 @@
                   </div>
                 </div>
                 <p class="text-sm text-muted mb-0">{{ $item->description }}</p>
+               
               </div>
             </div>
-          </a>
-   
+          </span>
+         
           @endforeach
 
         </div>

@@ -189,7 +189,7 @@ class ContractController extends Controller
                     $notification->user_id_foreign = Auth::user()->id;
                     $notification->property_id_foreign = Session::get('property_id');
                     $notification->type = 'contract';
-                    $notification->isOpen = '1';
+                    
                     $notification->message = Auth::user()->name. ' adds new contract for '.$tenant->first_name.' in '.$unit->unit_no.'.';
                     $notification->save();
                     
@@ -316,7 +316,7 @@ class ContractController extends Controller
                 $notification->user_id_foreign = Auth::user()->id;
                 $notification->property_id_foreign = Session::get('property_id');
                 $notification->type = 'contract';
-                $notification->isOpen = '1';
+                
                 $notification->message = Auth::user()->name.' moves out '.$tenant->first_name.' '.$tenant->last_name.'.';
                 $notification->save();
                             
@@ -420,7 +420,7 @@ class ContractController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'contract';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' terminates '.$tenant->first_name.' '.$tenant->last_name.' contract.';
         $notification->save();
                     
@@ -517,7 +517,7 @@ class ContractController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'contract';
-            $notification->isOpen = '1';
+            
             $notification->message = Auth::user()->name.' extends '.$tenant->first_name.' '.$tenant->last_name.' contract.';
             $notification->save();
                         
@@ -622,7 +622,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
     $notification->user_id_foreign = Auth::user()->id;
     $notification->property_id_foreign = Session::get('property_id');
     $notification->type = 'contract';
-    $notification->isOpen = '1';
+    
     $notification->message = Auth::user()->name.' sends notice to expire contract to '.$tenant->first_name.' '.$tenant->last_name.'.';
     $notification->save();
                 
@@ -658,7 +658,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
        $notification->type = 'contract';
-       $notification->isOpen = '1';
+       
        $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' contract.';
        $notification->save();
                    
@@ -682,7 +682,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'contract';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' deletes '.$tenant->first_name.' '.$tenant->last_name.' contract.';
         $notification->save();
                     
