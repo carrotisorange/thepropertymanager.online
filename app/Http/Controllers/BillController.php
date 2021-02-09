@@ -30,7 +30,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' opens bills page.';
         $notification->save();
                     
@@ -384,7 +384,7 @@ class BillController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'bill';
-            $notification->isOpen = '1';
+            
             $notification->message = Auth::user()->name.' posts '.($request->no_of_bills-1).' bill/s to '.$tenant->first_name.' '.$tenant->last_name.'.';
             $notification->save();
     
@@ -466,7 +466,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'payment';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' posts'.($request->no_of_bills-1).' bill/s to '.$unit->unit_no;
         $notification->save();
 
@@ -583,7 +583,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name. 'posts '.($no_of_billed-1).' '.$request->particular1.'.';
         $notification->save();
                     
@@ -751,7 +751,7 @@ class BillController extends Controller
                     $notification->user_id_foreign = Auth::user()->id;
                     $notification->property_id_foreign = Session::get('property_id');
                     $notification->type = 'bill';
-                    $notification->isOpen = '1';
+                    
                     $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' bills.';
                     $notification->save();
 
@@ -803,7 +803,7 @@ class BillController extends Controller
             $notification->user_id_foreign = Auth::user()->id;
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'bill';
-            $notification->isOpen = '1';
+            
             $notification->message = Auth::user()->name.' updates '.$unit->unit_no.' bills.';
             $notification->save();
                         
@@ -832,7 +832,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' deletes '. $tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
                     
@@ -878,7 +878,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
 
@@ -941,7 +941,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' restores bill '. $billing_id.'.';
         $notification->save();
 
@@ -961,7 +961,7 @@ class BillController extends Controller
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
-        $notification->isOpen = '1';
+        
         $notification->message = Auth::user()->name.' archives bill '. $billing_id.'.';
         $notification->save();
 
