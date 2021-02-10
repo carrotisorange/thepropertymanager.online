@@ -15,6 +15,5 @@ class Notification extends Model
         'message',
         'type',
         'property_id_foreign',
-        'isOpen'
     ];
 }

@@ -73,7 +73,7 @@ class PropertyController extends Controller
                  return view('webapp.owner_access.main', compact('property_id', 'owner'));
             }elseif(Auth::user()->user_type == 'dev'){
 
-                Session::put('notifications', Notification::where('isOpen', 1)->orderBy('created_at','desc')->limit(5)->get());
+                Session::put('notifications', Notification::orderBy('created_at','desc')->limit(5)->get());
 
                 $issues = DB::table('issues')
                 ->join('users', 'user_id_foreign', 'id')
