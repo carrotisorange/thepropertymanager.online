@@ -34,7 +34,7 @@ class DevController extends Controller
         $activities =  DB::table('activities')
         ->join('users','user_id_foreign', 'id')
         ->join('properties','property_id_foreign', 'property_id')
-        ->select('*', 'notifications.created_at as action_made', 'notifications.type as action')
+        ->select('*', 'activities.created_at as action_made', 'activities.type as action')
        
         ->orderBy('notification_id', 'desc')
         ->get();
