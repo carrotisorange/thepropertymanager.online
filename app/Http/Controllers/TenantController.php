@@ -91,17 +91,11 @@ class TenantController extends Controller
     }
 
     public function pending($property_id){
-
-         $tenants = DB::table('users_properties_relations')
-        ->join('properties', 'property_id_foreign', 'property_id')
-        ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-        ->join('contracts', 'tenant_id', 'contracts.tenant_id_foreign')
+        $tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('users', 'referrer_id_foreign', 'id')
-        ->select('*', 'tenants.created_at as movein_at')
-        ->where('property_id', $property_id)
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('property_id_foreign', Session::get('property_id'))
         ->where('contracts.status', 'pending')
-        ->orderBy('contracts.movein_at', 'desc')
         ->get();
 
         return view('webapp.tenants.pending', compact('tenants'));

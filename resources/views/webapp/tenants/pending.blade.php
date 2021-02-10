@@ -188,7 +188,7 @@
                     <th>Tenant</th>
                     <th>Room</th>
                     <th>Type</th>
-                    <th>Referrer</th>
+                 
                 </tr>
                 </thead>
                 <tbody>
@@ -199,7 +199,7 @@
                     <th><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></th>
                     <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></th>
                     <td>{{ $item->type_of_tenant }}</td>
-                    <td>{{ $item->name }}</td>
+                    
                 </tr>
                   @endforeach
                 </tbody>
