@@ -247,10 +247,12 @@
           <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
       </th>
     
-      <td colspan="2">
+      <td>
        
-        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
-        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
+        <input class="form-control" form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
+      </td>
+      <td> 
+        <input class="form-control" form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
        
     </td>
           <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
@@ -259,13 +261,13 @@
       <td>
        @if(Session::get('property_id') === '85bb4890-1e63-11eb-a2eb-abe972caa65d')
         @if($item->building === 'Harvard' || $item->building === 'Princeton')
-        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="525" oninput="this.value = Math.abs(this.value)">
+        <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="525" oninput="this.value = Math.abs(this.value)">
         @else
-        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="950" oninput="this.value = Math.abs(this.value)">
+        <input  class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="950" oninput="this.value = Math.abs(this.value)">
         @endif
        @else
       
-        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="" oninput="this.value = Math.abs(this.value)">
+        <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="" oninput="this.value = Math.abs(this.value)">
       
        @endif
           

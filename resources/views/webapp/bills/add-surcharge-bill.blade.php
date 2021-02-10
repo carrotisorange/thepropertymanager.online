@@ -210,7 +210,7 @@
   
      
       
-        <th>Amount</th>
+        <th>surcharge bill</th>
 
    
     </tr>
@@ -260,10 +260,12 @@
       </th>
   
     
-      <td colspan="2">
+      <td>
        
-        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
-        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
+        <input class="form-control" form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
+      </td>
+      <td> 
+        <input class="form-control" form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
       
     </td>
           <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
@@ -271,7 +273,7 @@
           <input class="" type="hidden" form="add_billings" name="particular{{ $desc_ctr++ }}" value="Surcharge" required readonly>
       <td>
    
-            <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="0" oninput="this.value = Math.abs(this.value)" required>
+            <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="0" oninput="this.value = Math.abs(this.value)" required>
       
       </td>
       

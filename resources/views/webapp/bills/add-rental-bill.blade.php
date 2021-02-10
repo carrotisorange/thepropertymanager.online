@@ -204,7 +204,7 @@
       
         <th>Amount</th>
        
-        <th></th>
+        {{-- <th></th> --}}
    
     </tr>
     </thead>
@@ -228,9 +228,9 @@
     <input type="hidden" form="add_billings" name="property_id" value="{{Session::get('property_id')}}" required>
   
     <tr>
-      <td>
+      <th>
         {{ $ctr++ }}
-      </td>
+      </th>
       <th>
         <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
         
@@ -240,11 +240,14 @@
       </th>
   
     
-      <td colspan="2">
+      <td>
        
-        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
-        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
+        <input form="add_billings" class="form-control" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
        
+       
+    </td>
+    <td>
+      <input form="add_billings" class="form-control" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
     </td>
           <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
       
@@ -255,16 +258,16 @@
               $prorated_monthly_rent =  ($item->contract_rent/30) * $prorated_rent;
         ?>
           @if($item->tenants_note === 'new' )
-            <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $prorated_monthly_rent }}" oninput="this.value = Math.abs(this.value)" required>
+            <input form="add_billings" class="form-control" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $prorated_monthly_rent }}" oninput="this.value = Math.abs(this.value)" required>
           @else
-            <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->contract_rent }}" oninput="this.value = Math.abs(this.value)" required>
+            <input form="add_billings" class="form-control" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->contract_rent }}" oninput="this.value = Math.abs(this.value)" required>
           @endif
       </td>
-      <td>
+      {{-- <td>
         @if($item->tenants_note === 'new' )
           <span class="badge badge-primary">prorated</span>
         @endif
-      </td>
+      </td> --}}
    </tr>
    @endforeach
   </table>
