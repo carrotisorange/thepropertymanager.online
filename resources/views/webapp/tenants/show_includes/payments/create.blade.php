@@ -15,7 +15,7 @@
             </form>
             
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3">Date
            {{-- <input type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required> --}}
                 <input class='form-control' type="date" form="acceptPaymentForm" class="" name="payment_created" required >
                 </div>

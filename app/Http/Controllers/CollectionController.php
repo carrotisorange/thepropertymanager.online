@@ -150,6 +150,10 @@ class CollectionController extends Controller
 
         $no_of_payments = (int) $request->no_of_payments; 
 
+        if($no_of_payments <= 1){
+                return back()->with('danger', 'Please add at least one payment.');
+        }
+
          $payment_ctr = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
