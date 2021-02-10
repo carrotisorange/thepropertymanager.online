@@ -363,7 +363,7 @@ class RoomController extends Controller
 
      public function update_all(Request $request, $property_id){
 
-        $all_rooms = Property::findOrFail($property_id)->units->count();
+        $all_rooms = Property::findOrFail(Session::get('property_id'))->units->count();
 
         for($i = 1; $i<=$all_rooms; $i++){
 
