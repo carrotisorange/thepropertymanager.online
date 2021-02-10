@@ -238,11 +238,11 @@
           </td>
           <td>
             @if($item->concern_status === 'pending')
-            <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
+            <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
             @elseif($item->concern_status === 'active')
-            <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+            <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
             @else
-            <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+            <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
             @endif
           </td>
           <td>{{ $item->name }}</td>

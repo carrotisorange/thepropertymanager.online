@@ -238,11 +238,25 @@ class RoomController extends Controller
             ->where('contracts.status', 'inactive')
             ->get();
 
+            $tenant_movingout =DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->where('unit_id', $unit_id)
+            ->where('contracts.status', 'preparing to moveout')
+            ->get();
+
             $tenant_reserved = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->where('unit_id', $unit_id)
             ->where('contracts.status', 'pending')
+            ->get();
+
+            $tenants = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->where('unit_id', $unit_id)
+            
             ->get();
 
        
@@ -288,7 +302,7 @@ class RoomController extends Controller
             ->get();
           
            
-            return view('webapp.rooms.show',compact('occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'remittances', 'expenses'));
+            return view('webapp.rooms.show',compact('tenants','occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'tenant_movingout','concerns', 'remittances', 'expenses'));
            
         }else{
                 return view('layouts.arsha.unregistered');

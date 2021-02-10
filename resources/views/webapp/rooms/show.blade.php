@@ -198,8 +198,8 @@
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="nav-room" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Room</a>
-          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants <span class="badge badge-primary badge-counter">{{ $tenant_active->count() }}</a>
-          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
+          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Tenants <span class="badge badge-primary badge-counter">{{ $tenants->count() }}</a>
+          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners <span class="badge badge-primary badge-counter">{{ $owners->count() }}</a>
           <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd fa-sm text-primary-50"></i> Remittances <span class="badge badge-primary badge-counter">{{ $remittances->count() }}</span></a>
           <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export fa-sm text-primary-50"></i> Expenses <span class="badge badge-primary badge-counter">{{ $expenses->count() }}</span></a>
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
@@ -420,6 +420,7 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active" data-toggle="tab" href="#active" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-user-check fa-sm text-50"></i> Active  <span class="badge badge-primary">{{ $tenant_active->count() }}</span></a>
               <a class="nav-item nav-link"  data-toggle="tab" href="#reserved" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-user-clock fa-sm text-50"></i> Reserved <span class="badge badge-primary">{{ $tenant_reserved->count() }}</a>
+                <a class="nav-item nav-link"  data-toggle="tab" href="#movingout" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-user-clock fa-sm text-50"></i> Moving Out <span class="badge badge-primary">{{ $tenant_movingout->count() }}</a>
               <a class="nav-item nav-link"  data-toggle="tab" href="#inactive" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-user-times fa-sm text-50"></i> Inactive <span class="badge badge-primary">{{ $tenant_inactive->count() }}</a>
             </div>
           </nav>
@@ -496,6 +497,37 @@
                     <td>{{ $item->form_of_interaction }}</td>
                     <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
                     <td>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->created_at)->addDays(7), false) }}</td>
+                </tr>
+            @endforeach
+                @endif                        
+            </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="movingout" role="tabpanel" aria-labelledby="nav-tenant-tab">
+              <div class="table-responsive text-nowrap">
+              <table class="table">
+                @if($tenant_movingout->count() <= 0)
+                <tr>
+                    <br><br><br>
+                    <p class="text-center text-danger">No tenants found!</p>
+                </tr>
+                @else
+                <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Name</th>
+                    <th>Moveout</th>
+                     
+                </tr>
+                </thead>
+                <?php
+                    $ctr = 1;
+                ?>   
+            @foreach ($tenant_movingout as $item)
+                <tr>
+                    <th class="text-center">{{ $ctr++ }}</th>
+                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
+                    <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}} <span class="text-danger">({{ Carbon\Carbon::parse($item->moveout_at)->diffForHumans() }})</span></td>
                 </tr>
             @endforeach
                 @endif                        
