@@ -41,10 +41,10 @@
   <li class="nav-item dropdown">
     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       @if(Session::get('notifications')->count() > 4)
-      <i class="ni ni-archive-2"></i><span class="badge badge-primary">5 <sup>+</sup></span>
-      @else
-      <i class="ni ni-archive-2"></i><span class="badge badge-primary">{{  Session::get('notifications')->count() }}</span>
-      @endif
+         <i class="ni ni-bell-55"></i><span class="badge badge-primary">5 <sup>+</sup></span>
+         @else
+         <i class="ni ni-bell-55"></i><span class="badge badge-primary">{{  Session::get('notifications')->count() }}</span>
+         @endif
        
        
     </a>

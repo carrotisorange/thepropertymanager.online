@@ -82,63 +82,7 @@ font-family: FontAwesome;
               <span class="nav-link-text">Concerns</span>
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a class="nav-link" href="examples/login.html">
-              <i class="ni ni-key-25 text-info"></i>
-              <span class="nav-link-text">Login</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="examples/register.html">
-              <i class="ni ni-circle-08 text-pink"></i>
-              <span class="nav-link-text">Register</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="examples/upgrade.html">
-              <i class="ni ni-send text-dark"></i>
-              <span class="nav-link-text">Upgrade</span>
-            </a>
-          </li> --}}
-        </ul>
-        <!-- Divider -->
-        {{-- <hr class="my-3">
-        <!-- Heading -->
-        <h6 class="navbar-heading p-0 text-muted">
-          <span class="docs-normal">Documentation</span>
-        </h6>
-        <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
-              <i class="ni ni-spaceship"></i>
-              <span class="nav-link-text">Getting started</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html" target="_blank">
-              <i class="ni ni-palette"></i>
-              <span class="nav-link-text">Foundation</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html" target="_blank">
-              <i class="ni ni-ui-04"></i>
-              <span class="nav-link-text">Components</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
-              <i class="ni ni-chart-pie-35"></i>
-              <span class="nav-link-text">Plugins</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active active-pro" href="examples/upgrade.html">
-              <i class="ni ni-send text-dark"></i>
-              <span class="nav-link-text">Upgrade to PRO</span>
-            </a>
-          </li> --}}
+
         </ul>
       </div>
     </div>
@@ -148,7 +92,7 @@ font-family: FontAwesome;
 
 @section('upper-content')
 <div class="col-lg-6">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $concern->details }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Concern: {{ $concern->details }}</h6>
    
   </div>
 <div class="col-md-6">
@@ -163,26 +107,14 @@ font-family: FontAwesome;
 @endsection
 
 @section('main-content')
-
 <div class="row">
-
- <div class="col-md-12">
-  <p class="text-danger">This page will serve as your way of communicating to the person/s in charge of your concern. Please provide as many details as possible to properly address your concern. </p>
-    
-        <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
-          @csrf
-    
-          <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
-    <br>
-      <p class="text-right">  <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Response </button></p>
-      </form>
-  
-    </div>
-
+  <div class="col-auto">
+    <h6 class="h2 text-dark d-inline-block mb-0">Threads ({{ $responses->count() }})</h6>
+  </div>
 </div>
-<hr>
-<h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
-<br><br>
+<br>
+
+
 @if($responses->count() < 1)
   <p class="text-center text-red">No responses found!</p>
 @else
@@ -219,7 +151,8 @@ font-family: FontAwesome;
   </div>
 </div>
 @endif
-
+<br>
+<p class="text-right"><a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addResponse" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add Response</a></p>
 <div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">
@@ -239,7 +172,7 @@ font-family: FontAwesome;
     
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit </button>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Response </button>
       </form>
       </div>
   </div>
@@ -283,16 +216,16 @@ font-family: FontAwesome;
   <div class="modal-content  text-center">
       <div class="modal-header">
 
-      <h5 class="modal-title" id="exampleModalLabel">Rate employee</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Rating Information</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
       </div>
       <div class="modal-body">
-        <p>
+        <p class="text-left">
        
-          How did the employee handle the concern?
+          How well did the employee handle your concern?
 
 
         </p>
@@ -320,7 +253,7 @@ font-family: FontAwesome;
 
 
      
-      <p class="">Feedback</p>
+   <p class="text-left">Please provide your overall feedback.</p>
       <textarea form="markAsCompleteModalForm" class="form-control" id="" cols="30" rows="5" name="feedback" required>
         
       </textarea>
@@ -328,7 +261,7 @@ font-family: FontAwesome;
  
       </div>
       <div class="modal-footer">
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Rate Employee</button>
       </div>
   </div>
   </div>

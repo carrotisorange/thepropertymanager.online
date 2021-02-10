@@ -118,7 +118,7 @@
     
   </div>
   <div class="col-md-6 text-right">
-    <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  
+    <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Report Concern</a>  
   </div>
 @endsection
 
@@ -139,8 +139,8 @@
             <th>Status</th>
             <th>Assigned to</th>
             <th>Rating</th>
-            <th>Feedback</th>
-            <th></th>
+            {{-- <th>Feedback</th> --}}
+          
        </tr>
       </thead>
       <tbody>
@@ -152,7 +152,7 @@
             
         <td>{{ $item->category }}</td>
           
-            <td><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses">{{ $item->title }}</a></td>
+            <th><a href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses">{{ $item->title }}</a></th>
             <td>
                 @if($item->urgency === 'urgent')
                 <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -175,7 +175,7 @@
            
             <td>{{ $item->name? $explode[0]: 'NULL' }}</td>
             <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-            <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+            {{-- <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td> --}}
         </tr>
         @endforeach
       </tbody>
