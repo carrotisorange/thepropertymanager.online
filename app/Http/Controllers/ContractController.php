@@ -576,14 +576,14 @@ class ContractController extends Controller
     {
 
         $tenants_to_watch_out = DB::table('contracts')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->select('*', 'contracts.status as contract_status' )
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->where('contracts.status', 'active')
-        ->where('moveout_at', '<=', Carbon::now()->addMonth())
-        ->orderBy('moveout_at', 'asc')
-        ->get();
+->join('units', 'unit_id_foreign', 'unit_id')
+->join('tenants', 'tenant_id_foreign', 'tenant_id')
+->select('*', 'contracts.status as contract_status' )
+->where('property_id_foreign', Session::get('property_id'))
+->where('contracts.status','<>', 'inactive')
+->where('moveout_at', '<=', Carbon::now()->addMonth())
+->orderBy('moveout_at', 'asc')
+->get();
 
         return view('webapp.contracts.expired', compact('tenants_to_watch_out'));
     }
