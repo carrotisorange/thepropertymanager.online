@@ -198,18 +198,21 @@
                        </select>
                     </td>
                </tr> --}}
-               <tr>
-                <th>Room</th>
-              <td>
-                <select form="editContractForm" class="form-control" name="unit_id_foreign" id="unit_id_foreign">
-                    <option value="{{ $contract->unit_id_foreign }}" selected>{{ $contract->unit_id_foreign }}</option>
-                    @foreach ($units as $item)
-                     <option value="{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</option>
-                    @endforeach
-                    </select>
-              </td>
-            </tr>
-            <tr>
+              <thead>
+                <tr>
+                  <th>Room</th>
+                <td>
+                  <select form="editContractForm" class="form-control" name="unit_id_foreign" id="unit_id_foreign">
+                      <option value="{{ $contract->unit_id_foreign }}" selected>{{ $contract->unit_id_foreign }}</option>
+                      @foreach ($units as $item)
+                       <option value="{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</option>
+                      @endforeach
+                      </select>
+                </td>
+              </tr>
+              </thead>
+            <thead>
+              <tr>
                 <th>Referrer</th>
                <td>
                 <select form="editContractForm" class="form-control" name="referrer_id" id="referrer_id">
@@ -221,7 +224,9 @@
                     </select>
                </td>
             </tr>
-            <tr>
+            </thead>
+            <thead>
+              <tr>
                 <th>Source</th>
                 <td>
                     <select form="editContractForm"  class="form-control" name="form_of_interaction" id="form_of_interaction">
@@ -236,11 +241,15 @@
                     </select>
                 </td>
             </tr>
-            <tr>
+            </thead>
+            <thead>
+              <tr>
                 <th>Rent</th>
                 <td><input form="editContractForm" type="number" step="0.001" name="rent" id="rent" class="form-control" value="{{ $contract->rent }}"></td>
             </tr>
-            <tr>
+            </thead>
+            <thead>
+              <tr>
                 <th>Status</th>
                 <td>
                     <select form="editContractForm" class="form-control" form="" name="status" id="status">
@@ -252,32 +261,46 @@
                 </td>
          
             </tr>
+            </thead>
+           <thead>
             <tr>
-                <th>Movein</th>
-                <td><input form="editContractForm" type="date"  name="movein_at" id="movein_at" onkeyup='autoFill()' class="form-control" value="{{ Carbon\Carbon::parse($contract->movein_at)->format('Y-m-d') }}"></td>
-            </tr>
-            <tr>
+              <th>Movein</th>
+              <td><input form="editContractForm" type="date"  name="movein_at" id="movein_at" onkeyup='autoFill()' class="form-control" value="{{ Carbon\Carbon::parse($contract->movein_at)->format('Y-m-d') }}"></td>
+          </tr>
+           </thead>
+            <thead>
+              <tr>
                 <th>Moveout</th>
                 <td><input form="editContractForm" type="date" name="moveout_at" id="moveout_at" onkeyup='autoFill()' class="form-control" value="{{ Carbon\Carbon::parse($contract->moveout_at)->format('Y-m-d') }}"></td>
             </tr>
+            </thead>
+           <thead>
             <tr>
-                <th>Length of stay</th>
-                <td><input form="editContractForm" type="text" class="form-control" name="number_of_months" id="number_of_months" required readonly value="{{ $contract->number_of_months? $contract->number_of_months: 'NULL' }}"></td>
-                <small class="text-danger" id="invalid_date"></small>
-            </tr>
+              <th>Length of stay</th>
+              <td><input form="editContractForm" type="text" class="form-control" name="number_of_months" id="number_of_months" required readonly value="{{ $contract->number_of_months? $contract->number_of_months: 'NULL' }}"></td>
+              <small class="text-danger" id="invalid_date"></small>
+          </tr>
+           </thead>
+          <thead>
             <tr>
-                <th>Term</th>
-                <td><input form="editContractForm" type="text" class="form-control" name="term" id="term" value="{{ $contract->term? $contract->term: 'NULL' }}" required readonly></td>
-            </tr>
+              <th>Term</th>
+              <td><input form="editContractForm" type="text" class="form-control" name="term" id="term" value="{{ $contract->term? $contract->term: 'NULL' }}" required readonly></td>
+          </tr>
+          </thead>
+          <thead>
             <tr>
-                <th>Date terminated</th>
-                <td><input form="editContractForm" type="date" class="form-control" name="terminated_at" id="terminated_at" value="{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('Y-m-d'): 'NA' }}" ></td>
-            </tr>
+              <th>Date terminated</th>
+              <td><input form="editContractForm" type="date" class="form-control" name="terminated_at" id="terminated_at" value="{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('Y-m-d'): 'NA' }}" ></td>
+          </tr>
+          </thead>
+           <thead>
             <tr>
-                <th>Actual moveout</th>
-                <td><input form="editContractForm" type="date" class="form-control" name="actual_moveout_at" id="actual_moveout_at" value="{{ $contract->actual_moveout_at? Carbon\Carbon::parse($contract->moveout_at)->format('Y-m-d'): 'NA' }}" ></td>
-            </tr>
-            <tr>
+              <th>Actual moveout</th>
+              <td><input form="editContractForm" type="date" class="form-control" name="actual_moveout_at" id="actual_moveout_at" value="{{ $contract->actual_moveout_at? Carbon\Carbon::parse($contract->moveout_at)->format('Y-m-d'): 'NA' }}" ></td>
+          </tr>
+           </thead>
+            <thead>
+              <tr>
                 <th>Reason for termination</th>
                 <td> 
                     <select form="editContractForm" class="form-control" name="moveout_reason" id="moveout_reason">
@@ -293,6 +316,7 @@
                 </select>
             </td>
             </tr>
+            </thead>
             </table>
         </div>
         </div>

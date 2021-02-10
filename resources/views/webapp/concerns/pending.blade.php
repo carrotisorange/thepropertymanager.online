@@ -194,21 +194,21 @@
                   <tr>
                     <th>{{ $ctr++ }}</th>
                     <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
-                    <td>
+                    <th>
           
                       <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
                 
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                       @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                       <a href="/property/{{ Session::get('property_id') }}/home/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
                       @else
                       {{ $item->unit_no }}
                       @endif
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                       <a href="/property/{{ Session::get('property_id') }}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
-                    </td>
+                    </th>
                     <td>{{ $item->name }}</td>
                   </tr>
                   @endforeach

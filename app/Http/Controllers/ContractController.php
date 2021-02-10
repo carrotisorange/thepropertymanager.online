@@ -195,7 +195,7 @@ class ContractController extends Controller
                     
                     Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'new contract has been added!');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract added successfully.');
        
 
     }
@@ -426,7 +426,7 @@ class ContractController extends Controller
                     
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract has been terminated! Continue with the moveout.');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id)->with('success', 'Contract terminated successfully. Continue with the moveout.');
     }
 
     public function preterminate($property_id, $tenant_id, $contract_id)
@@ -524,7 +524,7 @@ class ContractController extends Controller
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
       
 
-        return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract has been extended!');
+        return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract is extended successfully.');
     }
 
 
@@ -628,7 +628,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
                 
     Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-    return back()->with('success', 'Email has been sent to '.$tenant->first_name.' '.$unit->unit_no);
+    return back()->with('success', 'Email is sent to '.$tenant->first_name.' '.$unit->unit_no);
 
 }
 
@@ -703,6 +703,6 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
     
         
 
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract has been deleted!');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract deleted successfully.');
     }
 }
