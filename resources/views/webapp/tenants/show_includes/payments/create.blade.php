@@ -39,7 +39,7 @@
                             <th>#</th>
                             <th>Bill</th>
                             <th>Amount</th>
-                            <th>Form</th>
+                            <th>Form of Payment</th>
                             <th>Bank Name</th>
                             <th>Cheque No</th>
                         </tr>
