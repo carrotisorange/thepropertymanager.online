@@ -85,7 +85,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
-                <span class="nav-link-text">Bills</span>
+                <span class="nav-link-text">Bulk Billing</span>
               </a>
             </li>
             @endif
@@ -93,7 +93,7 @@
               <li class="nav-item">
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
                 <i class="fas fa-coins text-yellow"></i>
-                <span class="nav-link-text">Collections</span>
+                <span class="nav-link-text">Daily Collection Report</span>
               </a>
             </li>
             @if(Session::get('property_type') === 'Apartment Rentals')
@@ -122,7 +122,7 @@
             <li class="nav-item">
                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/users">
                 <i class="fas fa-user-circle text-green"></i>
-                <span class="nav-link-text">Users</span>
+                <span class="nav-link-text">User History</span>
               </a>
             </li>
           </ul>

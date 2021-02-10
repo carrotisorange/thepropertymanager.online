@@ -99,7 +99,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/property/{{Session::get('property_id') }}/collections">
                 <i class="fas fa-coins text-yellow"></i>
-                <span class="nav-link-text">Collections</span>
+                <span class="nav-link-text">Daily Collection Report</span>
               </a>
             </li>
             <li class="nav-item">
@@ -120,7 +120,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/property/{{Session::get('property_id') }}/users">
                 <i class="fas fa-user-circle text-green"></i>
-                <span class="nav-link-text">Users</span>
+                <span class="nav-link-text">User History</span>
               </a>
             </li>
           </ul>
@@ -168,7 +168,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Expiring contracts</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Watchout for expired and expiring contracts ({{ $tenants_to_watch_out->count() }})...</h6>
     
   </div>
   
