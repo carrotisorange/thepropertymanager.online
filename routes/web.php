@@ -655,10 +655,10 @@ Route::get('/maintenance', function(){
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@show_billings')->name('show-billings')->middleware(['auth', 'verified']);
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@edit_billings')->middleware(['auth', 'verified']);
 Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
-Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
+Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/delete', 'BillController@destroy')->middleware(['auth', 'verified']);
 
-Route::delete('property/{property_id}/bill/{bill_id}/delete', 'BillController@destroy_bill_from_bills_page')->middleware(['auth', 'verified']);
-Route::put('property/{property_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
+// Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
+Route::put('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
 
 
 //route for users

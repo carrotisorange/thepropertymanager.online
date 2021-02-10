@@ -825,7 +825,6 @@ class BillController extends Controller
      */
     public function destroy($property_id,$tenant_id, $billing_id)
     {
-
         $tenant = Tenant::findOrFail($tenant_id);
 
         $notification = new Notification();
@@ -931,7 +930,7 @@ class BillController extends Controller
         return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
     
-    public function restore_bill($property_id, $billing_id)
+    public function restore_bill($property_id, $tenant_id, $billing_id)
     {
         $bill = Bill::findOrFail($billing_id);
         $bill->bill_status = NULL;

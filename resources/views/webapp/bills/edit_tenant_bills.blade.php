@@ -252,13 +252,13 @@
           <td>
             @if(Auth::user()->user_type === 'manager')
             @if($item->bill_status === 'deleted')
-            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
+            <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
               @csrf
               @method('put')
               <button title="restore this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-white-50"></i></button>
             </form>
             @else
-            <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
+            <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
               @csrf
               @method('delete')
               <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
@@ -299,13 +299,13 @@
           <td>
             @if(Auth::user()->user_type === 'manager')
               @if($item->bill_status === 'deleted')
-              <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
+              <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
                 @csrf
                 @method('put')
                 <button title="restore this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-white-50"></i></button>
               </form>
               @else
-              <form action="/property/{{ $property->property_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
+              <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
                 @csrf
                 @method('delete')
                 <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>

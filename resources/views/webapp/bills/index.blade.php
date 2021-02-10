@@ -289,10 +289,15 @@
      
         <td class="text-center">
           @if($item->bill_status === 'deleted')
-         
+          <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
+            @csrf
+            @method('put')
+            
+            <button title="restore this room" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-dark-50"></i></button>
+          </form> 
           @else
           @if(Auth::user()->user_type === 'manager')
-          <form action="/property/{{Session::get('property_id')}}/bill/{{ $item->bill_id }}" method="POST">
+          <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
             @csrf
             @method('delete')
             <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-alt fa-sm text-white-50"></i></button>
