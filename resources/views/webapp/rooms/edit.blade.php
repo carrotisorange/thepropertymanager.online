@@ -223,7 +223,7 @@
       </div> --}}
  
       <div class="table-responsive">
-          <form id="editUnitsForm" action="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
+          <form id="editUnitsForm" action="/property/{{Session::get('property_id')}}/rooms/update" method="POST">
   
               @csrf
               @method('PUT')

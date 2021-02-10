@@ -1063,35 +1063,41 @@ $end_of_contract = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->where('moveout_reason','End of contract')
+->where('contracts.status', 'inactive')
 ->get();
 
 $delinquent = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->where('moveout_reason','Delinquent')
+->where('contracts.status', 'inactive')
 ->get();
 
 $force_majeure = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->where('moveout_reason','Force majeure')
+->where('contracts.status', 'inactive')
 ->get();
 
 $run_away = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->where('moveout_reason','Run away')
+->where('contracts.status', 'inactive')
 ->get();
 
 $unruly = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->where('moveout_reason','Unruly')
+->where('contracts.status', 'inactive')
 ->get();
 
 $graduated = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
+ ->where('contracts.status', 'inactive')
 ->where('moveout_reason','Graduated')
 ->get();
 
