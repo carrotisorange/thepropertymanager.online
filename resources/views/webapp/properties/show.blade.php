@@ -248,10 +248,12 @@
                       </div>
                     </div>
                   </div>
+                 <a class="text-dark" href="/property/{{ Session::get('property_id') }}/tenants/pending">
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-warning mr-2"><i class="fa fa-user-clock"></i> {{ $pending_tenants->count() }} </span>
                     <span class="text-nowrap">Marked as pending</span>
                   </p>
+                </a>
                 </div>
               </div>
             </div>
@@ -271,7 +273,7 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    @if($increase_in_room_acquired > 0)
+                    @if($increase_in_room_acquired <= 0)
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $increase_from_last_month }}%</span>
                     @else
                     <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i> {{ $increase_from_last_month }}%</span>
