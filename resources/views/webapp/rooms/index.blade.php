@@ -270,11 +270,21 @@
 
     <hr>
    
+    <label for=""><b>Size</b></label>
+    @foreach ($sizes as $size)
+    <div class="form-check">
+      <input form="filter" type="checkbox" class="form-check-input" name="size" value="{{ $size->size }}" id="exampleCheck1" onChange="this.form.submit()">
+      <label class="form-check-label" for="exampleCheck1">{{ $size->size }} <b>sqm</b> ({{ $size->count }})</label>
+    </div>
+    @endforeach
+
+    <hr>
+
     <label for=""><b>Occupancy</b></label>
     @foreach ($occupancies as $occupancy)
     <div class="form-check">
       <input form="filter" type="checkbox" class="form-check-input" name="occupancy" value="{{ $occupancy->occupancy }}" id="exampleCheck1" onChange="this.form.submit()">
-      <label class="form-check-label" for="exampleCheck1">{{ $occupancy->occupancy }} pax ({{ $occupancy->count }})</label>
+      <label class="form-check-label" for="exampleCheck1">{{ $occupancy->occupancy }} <b>pax</b> ({{ $occupancy->count }})</label>
     </div>
     @endforeach
 

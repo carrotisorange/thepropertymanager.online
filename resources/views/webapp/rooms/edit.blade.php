@@ -235,12 +235,13 @@
                       <th>#</th>
                       <th>Building</th>
                       <th>Room</th>
+                      <th>Size <small>(sqm)</small></th>
                       <th>Floor</th>
                       <th>Type</th>
                       <th>Status</th>
-                      <th>Occupancy</th>
-                      <th>Rent</th>
-                      <th>Term</th>
+                      <th>Occupancy <small>(Number of tenants allowed)</small></th>
+                      <th>Rent <small>(/month)</small></th>
+                      <th>Term <small>(Length of current contract)</small></th>
                       <th></th>
                   </tr>
               </thead>
@@ -255,6 +256,7 @@
                       $floor = 1;
                       $occupancy =1;
                       $rent = 1;
+                      $size = 1;
                       $term =1;
                   ?>
                   @foreach ($units as $item)
@@ -266,6 +268,7 @@
                             <input  form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
                             <input form="editUnitsForm" type="hidden" name="unit_id{{ $unit_id++  }}" id="" value="{{ $item->unit_id }}">
                           </td>
+                          <td><input form="editUnitsForm" type="text" name="size{{ $size++  }}" id="" value="{{ $item->size }}"></td>
                           <td>
                             <select form="editUnitsForm" type="number" name="floor{{ $floor++ }}">
                               <option value="{{ $item->floor }}" readonly selected class="bg-primary">{{ $item->floor }}</option>

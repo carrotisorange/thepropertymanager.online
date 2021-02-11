@@ -35,6 +35,7 @@ class RoomController extends Controller
         if(auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
 
             Session::put('status', $request->status);
+            Session::put('size', $request->size);
             Session::put('type', $request->type);
             Session::put('building', $request->building);
             Session::put('occupancy', $request->occupancy);
@@ -110,6 +111,14 @@ class RoomController extends Controller
                 ->orderBy('updated_at', 'asc')
                 ->get();
             }
+            elseif(Session::has('size')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('size', Session::get('size'))
+                ->orderBy('created_at', 'desc')
+                ->orderBy('updated_at', 'asc')
+                ->get();
+            }
             else{
                  $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -149,6 +158,13 @@ class RoomController extends Controller
             ->groupBy('occupancy')
             ->get('occupancy','count');
 
+            
+            $sizes = Property::findOrFail($property_id)
+            ->units()
+            ->select('size', DB::raw('count(*) as count'))
+            ->groupBy('size')
+            ->get('size','count');
+
             $rents = Property::findOrFail($property_id)
             ->units()
             
@@ -162,7 +178,7 @@ class RoomController extends Controller
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
            }else{
-            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents'));
+            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
            }
         }else{
             return view('layouts.arsha.unregistered');
@@ -385,6 +401,7 @@ class RoomController extends Controller
              $room = Unit::findOrFail($request->input('unit_id'.$i));
              $room->unit_no = $request->input('unit_no'.$i);
              $room->type = $request->input('type'.$i);
+             $room->size = $request->input('size'.$i);
              $room->status = $request->input('status'.$i);
              $room->building = $request->input('building'.$i);
              $room->floor = $request->input('floor'.$i);
