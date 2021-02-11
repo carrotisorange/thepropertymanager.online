@@ -30,7 +30,8 @@ class ConcernController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-         $concerns = DB::table('contracts')
+       if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+            $concerns = DB::table('contracts')
             ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
             ->leftJoin('units', 'unit_id_foreign', 'unit_id')
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
@@ -41,6 +42,21 @@ class ConcernController extends Controller
             ->orderBy('urgency', 'desc')
             ->orderBy('concerns.status', 'desc')
             ->get();
+       else{
+            $concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concern_user_id', Auth::user()->id)
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+       }
+       
 
         $property = Property::findOrFail($property_id);
 
@@ -141,6 +157,49 @@ class ConcernController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     
+    public function show_assigned_concerns($property_id, $concern_id, $user_id)
+    {
+
+            $concern = Concern::findOrFail($concern_id);
+
+             $users = DB::table('users_properties_relations')
+            ->join('properties', 'property_id_foreign', 'property_id')
+            ->join('users', 'user_id_foreign', 'id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->whereNotIn('user_type', ['tenant', 'owner'])
+            ->get();
+            
+            $concern_details = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('concern_id', $concern_id)
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->limit(1)
+            ->get();
+
+            $personnels = Property::findOrFail($property_id)->personnels;
+
+            $responses = Concern::findOrFail($concern_id)->responses;
+
+            // $responses = DB::table('concerns')
+            // ->join('responses', 'concern_id', 'concern_id_foreign')
+            // ->select('*', 'responses.created_at as created_at')
+            // ->where('concern_id', $concern_id)
+            // ->orderBy('responses.created_at', 'desc')
+            // ->get();
+
+            $property = Property::findOrFail($property_id);
+      
+       return view('webapp.concerns.show-assigned-concern', compact('concern', 'responses', 'property','concern_details', 'personnels', 'users'));
+
+    }
+
     public function show($property_id, $concern_id)
     {
         

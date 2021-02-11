@@ -3,182 +3,75 @@
 @section('title',   $concern->details)
 
 @section('css')
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-<style>
-  div.stars {
-width: 270px;
-display: inline-block;
-}
-input.star { display: none; }
-label.star {
-float: right;
-padding: 10px;
-font-size: 36px;
-color: #444;
-transition: all .2s;
-}
-input.star:checked ~ label.star:before {
-content: '\f005';
-color: #FD4;
-transition: all .25s;
-}
-input.star-5:checked ~ label.star:before {
-color: #FE7;
-text-shadow: 0 0 20px #952;
-}
-input.star-1:checked ~ label.star:before { color: #F62; }
-label.star:hover { transform: rotate(-15deg) scale(1.3); }
-label.star:before {
-content: '\f006';
-font-family: FontAwesome;
-}
-</style>
 @endsection
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-md-12 text-left">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Concern # {{ $concern->concern_id}}: {{ $concern->details }}</a></li>
-        {{-- <li class="breadcrumb-item active" aria-current="page">Moveout</li> --}}
-      </ol>
-    </nav>
-    
-    
-  </div>
-  {{-- <div class="col-md-3 text-right">
-    @if($concern->status != 'closed')
-    
-    <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"><i class="fas fa-star text-dark-50"></i> Rate this concern</a> 
-    
-    @endif 
-  </div> --}}
-
-</div>
-
-<div class="row">
-
-  <div class="col-md-7">
-    @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
-    @if($concern->status != 'closed')
-    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-dark-50"></i> Edit Concern</a> 
-    @endif 
-    @if($concern->concern_user_id)
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary"><i class="fas fas fa-arrow-right text-dark-50"></i> Reforward Concern</a>
-    @else
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward Concern</a>
-    @endif
-    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> File Job order</a>
-   @endif
-  <br><br>
-    <div class="table-responsive">
-      @foreach ($concern_details as $concern)
-          
-   
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Date Reported</th>
-          <td>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }}</td>
-        </tr>
-      </thead>
-        <thead>
-           <tr>
-                <th>Reported by</th>
-                <th><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></th>
-           </tr>  
-           
-          </tr>
-        </thead>
-          <thead>
-          <tr>
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            <th>Unit</th>
+    <div class="col-lg-6">
+      <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
+        ( 
+            @if($concern->status === 'pending')
+            <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
+            @elseif($concern->status === 'active')
+            <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
             @else
-            <th>Room</th>
+            <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
             @endif
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            <th><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></th>
-            @else
-            <th><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></th>
-            @endif
-           
-            
-           
-          </tr>  
-        </thead>
-          <thead>
-       <tr>
-            <th>Category</th>
-            <td>
-              {{ $concern->category }}
-            </td>
-       </tr>
-      </thead>
-       <thead>
-       <tr>
-            <th>Urgency</th>
-            <td>
-              @if($concern->urgency === 'urgent')
-              <span class="badge badge-danger">{{ $concern->urgency }}</span>
-              @elseif($concern->urgency === 'major')
-              <span class="badge badge-warning">{{ $concern->urgency }}</span>
-              @else
-              <span class="badge badge-primary">{{ $concern->urgency }}</span>
-              @endif
-            </td>
-       </tr>
-      </thead>
-       <thead>
-       <tr>
-          <th>Status</th>
-            <td>
-              @if($concern->concern_status === 'pending')
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->concern_status }}</span>
-              @elseif($concern->concern_status === 'active')
-              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->concern_status }}</span>
-              @else
-              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->concern_status }}</span>
-              @endif
-            </td>
-       </tr>
-      </thead>
-       <thead>
-       <tr>
-         <th>Assigned to</th>
-         <th><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></th>
-       </tr>
-      </thead>
-       <thead>
-       <tr>
-        <th>Rating</th>
-        <td>{{ $concern->rating? $concern->rating.'/5' : 'NA' }}</td>
-     </tr>
-    </thead>
-     <thead>
-     <tr>
-      <th>Feedback</th>
-      <td>{{ $concern->feedback? $concern->feedback : 'NA' }}</td>
-   </tr>
-  </thead>
-       </table>
-       @endforeach
+        )
+    </h6>
     </div>
 
-   
+    <div class="col-md-6 text-right">
+        <h6 class="h2 text-dark d-inline-block mb-0">
+            @if($concern->urgency === 'urgent')
+            <span class="badge badge-danger">{{ $concern->urgency }}</span>
+            @elseif($concern->urgency === 'major')
+            <span class="badge badge-warning">{{ $concern->urgency }}</span>
+            @else
+            <span class="badge badge-primary">{{ $concern->urgency }}</span>
+            @endif
+        </h6>
+    </div>
   </div>
-  <div class="col-md-5">
-    <div class="row">
-      <div class="col">
+
+   <div class="row">
+    <div class="col">
+        <div class="list-group list-group-flush">
+           
+         
+            <span class="list-group-item list-group-item-action">
+              <div class="row align-items-center">
+               
+                <div class="col">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h4 class="mb-0 text-sm">Tenant {{ $concern->concern_tenant_id }}</h4>
+                    </div>
+                    <div class="text-right text-muted">
+  
+                      <small>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }} ({{ Carbon\Carbon::parse($concern->reported_at)->diffForHumans() }}) </small>
+                     
+                      
+                    </div>
+                  </div>
+                  <p class="text-sm text-muted mb-0"> {!! $concern->details !!}</p>
+                 
+                </div>
+              </div>
+            </span>
+  
+  
+          </div>
+          
      
-        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Add Response</a> 
-        
-       </div>
-     </div>
-    <br>
-   @if($responses->count() <= 0)
+    </div>
+    
+  </div>
+ 
+<div class="row">
+    <div class="col-md-12">
+        @if($responses->count() <= 0)
      <p class="text-center text-danger">No responses found!</p>
    @else
    <div class="row">
@@ -196,7 +89,7 @@ font-family: FontAwesome;
                     </div>
                     <div class="text-right text-muted">
   
-                      <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
+                        <small>{{ Carbon\Carbon::parse($concern->created_at)->format('M d, Y') }} ({{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}) </small>
                      
                       
                     </div>
@@ -210,16 +103,57 @@ font-family: FontAwesome;
             @endforeach
   
           </div>
-          <br>
+          
      
     </div>
     
   </div>
    @endif
-    
+    </div>
+</div>
+@if($concern->status === 'closed')
+<div class="row">
+    <div class="col">
+        <div class="list-group list-group-flush">
+       
+         
+            <span class="list-group-item list-group-item-action">
+              <div class="row align-items-center">
+               
+                <div class="col">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h4 class="mb-0 text-sm">Rating: {{ $concern->rating }}/5</h4>
+                    </div>
+                    <div class="text-right text-muted">
+  
+                      <small>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }} ({{ Carbon\Carbon::parse($item->reported_at)->diffForHumans() }}) </small>
+                     
+                      
+                    </div>
+                  </div>
+                  <p class="text-sm text-muted mb-0 text-center">  <span class="text-success"><i class="fas fa-check-circle "></i> Concern has been closed!</span> </p>
+                 
+                </div>
+              </div>
+            </span>
+  
+      
+  
+          </div>
+          
+     
+    </div>
     
   </div>
+  @endif
+  <br>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Add Response</a> 
+    </div>
 </div>
+
 
 
 <div class="modal fade" id="editConcernDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">

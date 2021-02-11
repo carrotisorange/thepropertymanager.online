@@ -4,7 +4,7 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
+  <div class="col-lg-6">
     <h6 class="h2 text-dark d-inline-block mb-0">Concerns</h6>
     
   </div>
@@ -43,18 +43,36 @@
      
         <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
           <th>
-          <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
+            @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+            <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
+            @else
+           {{ $item->first_name.' '.$item->last_name }}
+            @endif
+         
           </th>
           <th>
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
+              @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
+              @else
+              {{$item->unit_no }}
+              @endif
             @else
-            <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
+              @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
+              @else
+              {{$item->unit_no }}
+              @endif
             @endif
              
            
           </th>
-                <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
+          @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+          <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
+          @else
+          <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}/assign/{{ Auth::user()->id }}">{{ $item->title }}</a></th>
+          @endif
+                
           <td>
               @if($item->urgency === 'urgent')
               <span class="badge badge-danger">{{ $item->urgency }}</span>

@@ -309,6 +309,7 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/concern', 'ConcernContro
 
 Route::post('/property/{property_id}/home/{unit_id}/concern', 'ConcernController@store_room_concern')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/concern/{concern_id}', 'ConcernController@show')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/concern/{concern_id}/assign/{user_id}', 'ConcernController@show_assigned_concerns')->middleware(['auth', 'verified']);
 //close concern 
 Route::put('/concern/{concern_id}/closed', 'ConcernController@closed')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/concern/{concern_id}/forward', 'ConcernController@forward')->middleware(['auth', 'verified']);
