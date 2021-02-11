@@ -156,7 +156,7 @@ class ConcernController extends Controller
             ->join('properties', 'property_id_foreign', 'property_id')
             ->join('users', 'user_id_foreign', 'id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->where('user_type','<>' ,'tenant')
+            ->whereNotIn('user_type', ['tenant', 'owner'])
             ->get();
             
             $concern_details = DB::table('contracts')
@@ -220,7 +220,6 @@ class ConcernController extends Controller
             'title' => $request->title,
             'category' => $request->category,
             'details' => $request->details,
-            'concern_user_id' => $request->concern_user_id,
             'urgency' => $request->urgency
         ]);
 
@@ -241,7 +240,6 @@ class ConcernController extends Controller
 
     public function pending()
     {
-       
         $pending_concerns = DB::table('contracts')
         ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
         ->leftJoin('units', 'unit_id_foreign', 'unit_id')
@@ -256,6 +254,29 @@ class ConcernController extends Controller
         ->paginate(5);
 
         return view('webapp.concerns.pending', compact('pending_concerns'));
+    }
+
+    public function forward(Request $request, $property_id, $concern_id){
+        DB::table('concerns')
+        ->where('concern_id', $concern_id)
+        ->update([
+            'concern_user_id' => $request->concern_user_id,
+            'urgency' => $request->urgency
+        ]);
+
+        $concern = Concern::findOrFail($concern_id);    
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'concern';
+        
+        $notification->message = Auth::user()->name.' forward concern '.$concern->concern_id.'.';
+        $notification->save();
+
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        return back()->with('success', 'Concern forwarded successfully.');
     }
 
     public function closed(Request $request){

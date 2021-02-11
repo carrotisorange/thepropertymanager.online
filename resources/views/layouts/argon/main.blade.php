@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,36 +22,30 @@
 
 <body>
   @include('layouts.argon.chat-messenger')
-  @yield('sidebar')
+  @include('layouts.argon.sidebar')
   @show
   <!-- Main content -->
   <div class="main-content" id="panel">
     @include('layouts.argon.header')
     @include('layouts.argon.notifications')
-      <div class="header pb-6">
-          <div class="container-fluid">
-            <div class="header-body">
-                @yield('upper-content')
-            </div>
-          </div>
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+            @yield('upper-content')
+        </div>
       </div>
+    </div>
     <!-- Page content -->
-      <div class="container-fluid mt--6">
+    <div class="container-fluid mt--6">
         @yield('body-content')
         @include('layouts.argon.footer')
-
-        
-
         @include('layouts.argon.logout')
     </div>
     <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
     <div id="preloader"></div>
   </div>
   <!-- Argon Scripts -->
-  <!-- Core -->
-
-  
-  
+  <!-- Core -->  
   <script src="{{ asset('/argon/assets/vendor/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ asset('/argon/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('/argon/assets/vendor/js-cookie/js.cookie.js') }}"></script>

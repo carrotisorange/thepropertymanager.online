@@ -309,6 +309,9 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/concern', 'ConcernContro
 
 Route::post('/property/{property_id}/home/{unit_id}/concern', 'ConcernController@store_room_concern')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/concern/{concern_id}', 'ConcernController@show')->middleware(['auth', 'verified']);
+//close concern 
+Route::put('/concern/{concern_id}/closed', 'ConcernController@closed')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/concern/{concern_id}/forward', 'ConcernController@forward')->middleware(['auth', 'verified']);
 
 //routes for contracts
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}', 'ContractController@show')->middleware(['auth', 'verified']);
@@ -802,8 +805,7 @@ Route::get('/acceptable-use-policy', function(){
 });
 
 
-//close concern 
-Route::put('/concern/{concern_id}/closed', 'ConcernController@closed')->middleware(['auth', 'verified']);
+
 
 //routes for logging in using facebook
 Route::get('/login/google', 'Auth\LoginController@redirectToProvider');

@@ -47,7 +47,7 @@ class PropertyController extends Controller
                ->orWhere('id', Auth::user()->id)  
                ->count();
        
-        return view('webapp.properties.index', compact('properties', 'users')); 
+                return view('webapp.properties.index', compact('properties', 'users')); 
 
             }elseif(Auth::user()->user_type == 'tenant'){
                 $property_id = DB::table('users_properties_relations')
