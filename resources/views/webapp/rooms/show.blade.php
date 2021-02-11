@@ -234,6 +234,10 @@
                     <th>Room</th>
                     <td>{{ $home->unit_no }}</td>
                </tr>
+               <tr>
+                <th>Size</th>
+                <td>{{ $home->size }} <b>sqm</b></td>
+           </tr>
                  </thead>
                   <thead>
                     <tr>
@@ -276,7 +280,7 @@
                    <thead>
                     <tr>
                       <th>Rent</th> 
-                      <td>{{ number_format($home->rent,2) }}</td>
+                      <td>{{ number_format($home->rent,2) }}/month</td>
                   </tr>
                    </thead>
                 
@@ -701,6 +705,11 @@
             <input form="editUnitForm" type="text" value="{{ $home->unit_no }}" name="unit_no" class="form-control" id="unit_no" >
             </div>
             <div class="form-group">
+              <label>Size <small>(sqm)</small></label>
+              <input form="editUnitForm" type="text" value="{{ $home->size }}" name="size" class="form-control" id="size" >
+              </div>
+            
+            <div class="form-group">
             <label>Floor</label>
             <select form="editUnitForm" id="floor" name="floor" class="form-control">
                 <option value="{{ $home->floor }}" readonly selected class="bg-primary">{{ $home->floor }}</option>
@@ -722,7 +731,7 @@
             </select>
             </div>
             <div class="form-group">
-                <label>Building</label>
+                <label>Building <small>(Optional)</small></label>
                 <input form="editUnitForm" type="text" value="{{ $home->building }}" name="building" class="form-control"> 
               </div>
             <div class="form-group">
@@ -735,7 +744,7 @@
             </div>
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{Session::get('property_id')}}">
             <div class="form-group">
-              <label>Occupancy</label>
+              <label>Occupancy <small>(Numner of tenants allowed)</small></label>
               <input  oninput="this.value = Math.abs(this.value)" form="editUnitForm" type="number" value="{{ $home->occupancy? $home->occupancy: 0 }}" name="occupancy" class="form-control"> 
             </div>
             <div class="form-group">
@@ -749,7 +758,7 @@
             </select>
             </div>
             <div class="form-group">
-                <label>Rent</label>
+                <label>Rent <small>(/month)</small></label>
                 <input form="editUnitForm"  oninput="this.value = Math.abs(this.value)" step="0.01" type="number" value="{{ $home->rent? $home->rent: 0 }}" name="rent" class="form-control">
                 </div>
       

@@ -385,9 +385,15 @@
 
           <div class="form-group">
               <label >Building <small>(Optional)</small></label>
-              <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="ex. Building A, Building 1">
+              <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="Building 2">
               
           </div>
+
+          <div class="form-group">
+            <label >Size <small>(sqm)</small></label>
+            <input form="addUMultipleUnitForm" type="number" step="0.001" class="form-control" name="size" placeholder="20">
+            
+        </div>
 
           <div class="form-group">
               <label>Floor</label>
@@ -419,10 +425,10 @@
                   <option value="residential">residential</option>         
               </select>
           </div>  --}}
-            <input form="addUMultipleUnitForm" type="hidden" value="{{Session::get('property_id')}}" name="property_id">
+            {{-- <input form="addUMultipleUnitForm" type="hidden" value="{{Session::get('property_id')}}" name="property_id"> --}}
           
               <div class="form-group">
-                <label>Occupancy</label>
+                <label>Occupancy <small>(Number of tenants allowed)</small></label>
                 <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
             </div>
 
@@ -431,7 +437,7 @@
     
          
             <div class="form-group">
-                <label>Rent</label>
+                <label>Rent <small>(/month)</small></label>
                 <input form="addUMultipleUnitForm" type="number" value="0" step="0.01" min="0" class="form-control" name="rent" id="rent">
             </div>
           
@@ -439,7 +445,7 @@
       </div>
       <div class="modal-footer">
         
-          <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Create Room/s</button>
+          <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Create Rooms</button>
           </div>
   </div>
   </div>

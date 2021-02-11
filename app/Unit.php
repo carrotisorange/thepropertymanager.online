@@ -11,17 +11,14 @@ class Unit extends Model
     protected $fillable = [
                             'unit_id',
                             'unit_no',
-                           
+                           'size',
                             'floor',
-                            
                             'rent',
-                            'egr',
                             'status',
                             'type',
                             'discount',
                             'property_id_foreign',
                             'building',
-                           
     ];
 
     public function owner()

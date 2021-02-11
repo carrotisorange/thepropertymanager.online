@@ -323,6 +323,7 @@ class RoomController extends Controller
             $unit = new Unit();
             $unit->unit_no = $request->unit_no.'-'.$i;
             $unit->floor = $request->floor;
+            $unit->size = $request->size;
             $unit->building = $building;
             $unit->status = 'vacant';
             $unit->rent = $request->rent;
@@ -443,7 +444,8 @@ class RoomController extends Controller
                 'status' => $request->status,
                 'building' => $request->building,
                 'type' => $request->type,
-                'rent' => $request->rent
+                'rent' => $request->rent,
+                'size' => $request->size,
             ]);
 
  
