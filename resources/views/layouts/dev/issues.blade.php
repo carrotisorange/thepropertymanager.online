@@ -7,251 +7,43 @@
  <div class="row">
       <div class="col-lg-12 col-md-12">
         <div class="card">
-          <div class="card-header card-header-tabs card-header-primary">
-            <div class="nav-tabs-navigation">
-              <div class="nav-tabs-wrapper">
-                <span class="nav-tabs-title">Tasks:</span>
-                <ul class="nav nav-tabs" data-tabs="tabs">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#profile" data-toggle="tab">
-                      <i class="material-icons">bug_report</i> Bugs
-                      <div class="ripple-container"></div>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#messages" data-toggle="tab">
-                      <i class="material-icons">code</i> Website
-                      <div class="ripple-container"></div>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#settings" data-toggle="tab">
-                      <i class="material-icons">cloud</i> Server
-                      <div class="ripple-container"></div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+          
+      
+            <div class="list-group list-group-flush">
+              @foreach ($issues as $item)
+           
+              <span class="list-group-item list-group-item-action">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                  @if($item->issue_status === 'closed')
+                  <i class="fas fa-check-circle text-success"></i>
+                  @else
+                  <i class="fas fa-clock text-warning"></i>
+                  @endif
+                  </div>
+                  <div class="col">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h4 class="mb-0 text-sm">{{ $item->name }} ({{ $item->responses }})</h4>
+                      </div>
+                      <div class="text-right text-muted">
+    
+                        <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
+                       
+                        
+                      </div>
+                    </div>
+                    <p class="text-sm text-muted mb-0"><a href="/dev/issue/{{ $item->issue_id }}/edit">{{ $item->details }}</a></p>
+                   
+                  </div>
+                </div>
+              </span>
+    
+              @endforeach
+    
             </div>
-          </div>
-          <div class="card-body">
-            <div class="tab-content">
-              <div class="tab-pane active" id="profile">
-                <table class="table">
-                  <tbody>
-                    @foreach ($issues as $item)
-                    <tr>
-                      {{-- <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked>
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td> --}}
-                      <td> <a href="/dev/issue/{{ $item->issue_id }}/edit">{{ $item->details }}</a></td>
-                      
-                      <td>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
-                      {{-- <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td> --}}
-                    </tr>
-                    @endforeach
-                    {{-- <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr> --}}
-                    {{-- <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                      </td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr> --}}
-                    {{-- <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked>
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr> --}}
-                  </tbody>
-                </table>
-              </div>
-              {{-- <div class="tab-pane" id="messages">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked>
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                      </td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Sign contract for "What are conference organizers afraid of?"</td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div> --}}
-              {{-- <div class="tab-pane" id="settings">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked>
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                      </td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked>
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td>Sign contract for "What are conference organizers afraid of?"</td>
-                      <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                          <i class="material-icons">edit</i>
-                        </button>
-                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div> --}}
-            </div>
-          </div>
+      
         </div>
       </div>
     </div>

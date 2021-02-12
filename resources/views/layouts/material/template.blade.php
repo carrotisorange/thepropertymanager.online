@@ -29,11 +29,13 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
         @include('layouts.material.sidebar')
     </div>
+    @include('layouts.argon.notifications')
     <div class="main-panel">
       <!-- Navbar -->
       @include('layouts.material.navbar')
       <!-- End Navbar -->
    @yield('content')
+   
      @include('layouts.material.footer')
     </div>
   </div>
