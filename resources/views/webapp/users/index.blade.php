@@ -8,8 +8,6 @@
     <h6 class="h2 text-dark d-inline-block mb-0">Usage History</h6>
   </div>
 </div>
-
-<h4>Active today ({{ $sessions->count() }}) </h4>
 <div class="table-responsive text-nowrap">
   <table class="table">
     <?php $ctr = 1; ?>

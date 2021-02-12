@@ -109,7 +109,7 @@
             <li class="nav-item">
                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
                 <i class="fas fa-chart-line text-purple"></i>
-                <span class="nav-link-text">Financials</span>
+                <span class="nav-link-text">Financial Reports</span>
               </a>
             </li>
             @endif

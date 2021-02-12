@@ -36,18 +36,27 @@ class UserController extends Controller
 
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));;
 
-            $sessions = DB::table('users')
-            ->join('sessions', 'id', 'session_user_id')
-            ->join('properties', 'id', 'user_id_property')
-            ->select('*', 'properties.name as property_name', 'users.name as user_name')
-            ->where('property_id', Session::get('property_id'))
-            ->where('session_last_login_at', '>=', Carbon::today())
-            ->get();
+        $sessions = DB::table('users_properties_relations')
+        ->join('users', 'user_id_foreign', 'id')
+        ->join('sessions', 'id', 'session_user_id')
+        ->join('properties', 'property_id_foreign', 'property_id')
+        ->select('*', 'properties.name as property_name', 'users.name as user_name')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('sessions.created_at', 'desc')
+        ->get();
+
+
+            // $sessions = DB::table('sessions')
+            // ->join('properties', 'id', 'user_id_property')
+            // ->select('*', 'properties.name as property_name', 'users.name as user_name')
+            // ->where('property_id', Session::get('property_id'))
+     
+            // ->get();
 
            
 
 
-        return view('webapp.users.users', compact('sessions'));
+        return view('webapp.users.index', compact('sessions'));
 }
 
     public function search(Request $request){
@@ -59,7 +68,7 @@ class UserController extends Controller
         ->whereRaw("name like '%$search%' ")
         ->get();
 
-        return view('webapp.users.users', compact('users'));
+        return view('webapp.users.index', compact('users'));
     }
 
     public function upgrade(){
