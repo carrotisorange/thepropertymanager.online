@@ -3,11 +3,11 @@
       <nav class="float-left">
         <ul>
           <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
+            <a href="https://thepropertymanager.online">
+              The Property Manager
             </a>
           </li>
-          <li>
+          {{-- <li>
             <a href="https://creative-tim.com/presentation">
               About Us
             </a>
@@ -21,15 +21,14 @@
             <a href="https://www.creative-tim.com/license">
               Licenses
             </a>
-          </li>
+          </li> --}}
         </ul>
       </nav>
       <div class="copyright float-right">
         &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, made with <i class="material-icons">favorite</i> by
-        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+        2020
+        
+        <a href="https://thepropertymanager.online" target="_blank">The PMO Co</a> for property managers and landlords.
       </div>
     </div>
   </footer>

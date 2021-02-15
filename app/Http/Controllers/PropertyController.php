@@ -254,7 +254,7 @@ class PropertyController extends Controller
                 ->whereNotNull('email_verified_at')
                 ->get();
 
-                 $active_today = DB::table('users')
+                 $all_active_managers = DB::table('users')
                 ->join('sessions', 'id', 'session_user_id')
                 ->join('properties', 'id', 'user_id_property')
                 ->select('*', 'properties.name as property_name', 'users.name as user_name')
@@ -262,7 +262,7 @@ class PropertyController extends Controller
                 ->where('user_type', 'manager')
                 ->paginate(5);
 
-                 $all_active_today = DB::table('users')
+                 $all_active_users = DB::table('users')
                 ->join('sessions', 'id', 'session_user_id')
                 ->where('session_last_login_at', '>=', Carbon::today())
                 ->where('user_type', '<>', 'manager')
@@ -317,7 +317,7 @@ class PropertyController extends Controller
             
             
                         return view('layouts.dev.dashboard', compact('users', 'sessions', 'paying_users', 'unverified_users', 'properties','signup_rate','active_users', 
-                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'active_today', 'issues', 'all_active_today'));
+                        'users','starter_plan', 'basic_plan', 'large_plan', 'advanced_plan', 'enterprise_plan', 'all_active_managers', 'issues', 'all_active_users'));
             
             }
             else{

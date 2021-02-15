@@ -40,9 +40,8 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
   </div>
  @include('layouts.material.settings')
-  <!--   Core JS Files   -->
-@include('layouts.material.js')
-
+ @include('layouts.argon.logout')
+ @include('layouts.material.js')
 </body>
 
 </html>
