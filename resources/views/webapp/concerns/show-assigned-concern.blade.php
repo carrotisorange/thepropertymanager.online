@@ -23,7 +23,7 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <h6 class="h2 text-dark d-inline-block mb-0">
+        <h6 class="h2 text-dark d-inline-block mb-0">Urgency:
             @if($concern->urgency === 'urgent')
             <span class="badge badge-danger">{{ $concern->urgency }}</span>
             @elseif($concern->urgency === 'major')
@@ -33,40 +33,6 @@
             @endif
         </h6>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col">
-        <div class="list-group list-group-flush">
-           
-         
-            <span class="list-group-item list-group-item-action">
-              <div class="row align-items-center">
-               
-                <div class="col">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h4 class="mb-0 text-sm">Tenant {{ $concern->concern_tenant_id }}</h4>
-                    </div>
-                    <div class="text-right text-muted">
-  
-                      <small>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }} ({{ Carbon\Carbon::parse($concern->reported_at)->diffForHumans() }}) </small>
-                     
-                      
-                    </div>
-                  </div>
-                  <p class="text-sm text-muted mb-0"> {!! $concern->details !!}</p>
-                 
-                </div>
-              </div>
-            </span>
-  
-  
-          </div>
-          
-     
-    </div>
-    
   </div>
  
 <div class="row">
@@ -111,43 +77,7 @@
    @endif
     </div>
 </div>
-@if($concern->status === 'closed')
-<div class="row">
-    <div class="col">
-        <div class="list-group list-group-flush">
-       
-         
-            <span class="list-group-item list-group-item-action">
-              <div class="row align-items-center">
-               
-                <div class="col">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h4 class="mb-0 text-sm">Rating: {{ $concern->rating }}/5</h4>
-                    </div>
-                    <div class="text-right text-muted">
-  
-                      <small>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }} ({{ Carbon\Carbon::parse($item->reported_at)->diffForHumans() }}) </small>
-                     
-                      
-                    </div>
-                  </div>
-                  <p class="text-sm text-muted mb-0 text-center">  <span class="text-success"><i class="fas fa-check-circle "></i> Concern has been closed!</span> </p>
-                 
-                </div>
-              </div>
-            </span>
-  
-      
-  
-          </div>
-          
-     
-    </div>
-    
-  </div>
-  @endif
-  <br>
+<br>
 <div class="row">
     <div class="col-md-12 text-right">
         <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Add Response</a> 

@@ -92,15 +92,33 @@ font-family: FontAwesome;
 
 @section('upper-content')
 <div class="col-lg-6">
-    <h6 class="h2 text-dark d-inline-block mb-0">Concern: {{ $concern->details }}</h6>
+  <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
+    ( 
+        @if($concern->status === 'pending')
+        <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
+        @elseif($concern->status === 'active')
+        <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
+        @else
+        <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
+        @endif
+    )
+</h6>
    
   </div>
-<div class="col-md-6">
-    
+<div class="col-md-6 text-right">
+  <h6 class="h2 text-dark d-inline-block mb-0">Urgency:
+    @if($concern->urgency === 'urgent')
+    <span class="badge badge-danger">{{ $concern->urgency }}</span>
+    @elseif($concern->urgency === 'major')
+    <span class="badge badge-warning">{{ $concern->urgency }}</span>
+    @else
+    <span class="badge badge-primary">{{ $concern->urgency }}</span>
+    @endif
+</h6>
   @if($concern->status != 'closed')
   <p class="text-right"><a href="#" title="You can close the concern once you're satisfied with the action made the person/s in charge." data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Did the employee address your concern?</a></p>
   @else
-  <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p>
+  {{-- <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p> --}}
   @endif
 </div>
 
@@ -109,7 +127,7 @@ font-family: FontAwesome;
 @section('main-content')
 <div class="row">
   <div class="col-auto">
-    <h6 class="h2 text-dark d-inline-block mb-0">Threads ({{ $responses->count() }})</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
   </div>
 </div>
 <br>
@@ -134,7 +152,7 @@ font-family: FontAwesome;
                   </div>
                   <div class="text-right text-muted">
 
-                    <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
+                    <small>{{ Carbon\Carbon::parse($concern->created_at)->format('M d, Y') }} ({{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}) </small>
                    
                     
                   </div>
@@ -150,14 +168,15 @@ font-family: FontAwesome;
         </div>
   </div>
 </div>
+
 @endif
 <br>
 <p class="text-right"><a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addResponse" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add Response</a></p>
-<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Add Response</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Response Information</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
@@ -211,7 +230,7 @@ font-family: FontAwesome;
 
 
 
-<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">

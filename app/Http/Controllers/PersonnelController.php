@@ -16,15 +16,21 @@ class PersonnelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($property_id)
+    public function index()
     {
-        Session::put('current-page', 'personnels');
+        Session::put('current-page', 'employees');
 
-       $personnels = Property::findOrFail($property_id)->personnels;
+     $employees = DB::table('users_properties_relations')
+               ->join('properties', 'property_id_foreign', 'property_id')
+               ->join('users', 'user_id_foreign', 'id')
+               ->select('*', 'properties.name as property')
+               ->where('lower_access_user_id', Auth::user()->id)
+               ->orWhere('id', Auth::user()->id)  
+               ->get();
 
-       $property = Property::findOrFail($property_id);
+       $personnels = Property::findOrFail(Session::get('property_id'))->personnels;
 
-       return view('webapp.personnels.personnels', compact('personnels', 'property'));
+       return view('webapp.personnels.index', compact('personnels', 'employees'));
     }
 
     /**
@@ -54,7 +60,7 @@ class PersonnelController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        return back()->with('success',  'Personnel has been added!');
+        return back()->with('success',  'Personnel added successfully.');
     }
 
     /**

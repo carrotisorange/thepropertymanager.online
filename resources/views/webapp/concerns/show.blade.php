@@ -38,24 +38,31 @@ font-family: FontAwesome;
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-md-12 text-left">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Concern # {{ $concern->concern_id}}: {{ $concern->details }}</a></li>
-        {{-- <li class="breadcrumb-item active" aria-current="page">Moveout</li> --}}
-      </ol>
-    </nav>
-    
-    
+  <div class="col-lg-6">
+    <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
+      ( 
+          @if($concern->status === 'pending')
+          <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
+          @elseif($concern->status === 'active')
+          <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
+          @else
+          <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
+          @endif
+      )
+  </h6>
   </div>
-  {{-- <div class="col-md-3 text-right">
-    @if($concern->status != 'closed')
-    
-    <a href="#" data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"><i class="fas fa-star text-dark-50"></i> Rate this concern</a> 
-    
-    @endif 
-  </div> --}}
 
+  <div class="col-md-6 text-right">
+      <h6 class="h2 text-dark d-inline-block mb-0">Urgency:
+          @if($concern->urgency === 'urgent')
+          <span class="badge badge-danger">{{ $concern->urgency }}</span>
+          @elseif($concern->urgency === 'major')
+          <span class="badge badge-warning">{{ $concern->urgency }}</span>
+          @else
+          <span class="badge badge-primary">{{ $concern->urgency }}</span>
+          @endif
+      </h6>
+  </div>
 </div>
 
 <div class="row">
@@ -117,7 +124,7 @@ font-family: FontAwesome;
             </td>
        </tr>
       </thead>
-       <thead>
+       {{-- <thead>
        <tr>
             <th>Urgency</th>
             <td>
@@ -130,8 +137,8 @@ font-family: FontAwesome;
               @endif
             </td>
        </tr>
-      </thead>
-       <thead>
+      </thead> --}}
+       {{-- <thead>
        <tr>
           <th>Status</th>
             <td>
@@ -144,7 +151,7 @@ font-family: FontAwesome;
               @endif
             </td>
        </tr>
-      </thead>
+      </thead> --}}
        <thead>
        <tr>
          <th>Assigned to</th>

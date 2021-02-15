@@ -132,15 +132,15 @@
             </li>
            {{-- Personnels --}}
             <li class="nav-item">
-              @if(Session::get('current-page') === 'personnels')
+              @if(Session::get('current-page') === 'employees')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/personnels">
-                <i class="fas fa-user-secret text-gray"></i>
-                <span class="nav-link-text">Personnels</span>
+                <i class="fas fa-id-card-alt text-gray"></i>
+                <span class="nav-link-text">Employees and Personnels</span>
               </a>
               @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/personnels">
-                <i class="fas fa-user-secret text-gray"></i>
-                <span class="nav-link-text">Personnels</span>
+                <i class="fas fa-id-card-alt text-gray"></i>
+                <span class="nav-link-text">Employees and Personnels</span>
               </a>
               @endif
             </li>

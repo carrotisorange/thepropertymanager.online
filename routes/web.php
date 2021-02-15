@@ -647,7 +647,7 @@ Route::get('/maintenance', function(){
         ->where('personnel_type', 'maintenance')
         ->get();
 
-        return view('webapp.personnels.maintenance', compact('maintenance'));
+        return view('webapp.index.maintenance', compact('maintenance'));
     }else{
         return view('layouts.arsha.unregistered');
     }

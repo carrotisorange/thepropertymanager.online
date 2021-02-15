@@ -347,8 +347,8 @@ class ConcernController extends Controller
 
     public function closed(Request $request){
 
-        if($request->rating === null || $request->feedback === null){
-            return back()->with('danger', 'Please provide a rating and feedback for the employee.');
+        if($request->rating === null){
+            return back()->with('danger', 'Please provide a rating for the employee.');
         }else{
             DB::table('concerns')
             ->where('concern_id', $request->concern_id)
@@ -356,8 +356,19 @@ class ConcernController extends Controller
                 [
                     'status' => 'closed',
                     'rating' => $request->rating,
-                    'feedback' => $request->feedback
+                    'feedback' => $request->feedback,
+                    'updated_at' => Carbon::now(),
                 ]
+            );
+
+            DB::table('responses')
+            ->insertGetId(
+                  [
+                      'concern_id_foreign' => $request->concern_id,
+                      'response' => 'Tenant closes the concern and provides a rating of '.$request->rating.'/5',
+                      'posted_by' => Auth::user()->name,
+                      'created_at' => Carbon::now(),
+                  ]
             );
 
         $concern = Concern::findOrFail($request->concern_id);
@@ -387,7 +398,7 @@ class ConcernController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
-        return back()->with('success', 'Concern is closed sucessfully.');
+        return back()->with('success', 'Concern closed sucessfully.');
         }
     }
 
