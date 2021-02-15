@@ -52,6 +52,36 @@
                   <span class="nav-link-text">Rooms</span>
                 </a>
                 @endif 
+          
+              @endif
+            </li>
+            @elseif(Auth::user()->user_type === 'ap')
+            <li class="nav-item">
+              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                @if(Session::get('current-page') === 'units')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units/remittances">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Units</span>
+                </a>
+                @else
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/units/remittances">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Units</span>
+                </a>
+                @endif 
+              @else
+                @if(Session::get('current-page') === 'rooms')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms/remittances">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Rooms</span>
+                </a>
+                @else
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms/remittances">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Rooms</span>
+                </a>
+                @endif 
+          
               @endif
             </li>
             @endif
@@ -162,17 +192,17 @@
             </li>
             @endif
             {{-- Daily Collection Report --}}
-            @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+            @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
               <li class="nav-item">
                 @if(Session::get('current-page') === 'daily-collection-report')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/collections">
                   <i class="fas fa-coins text-yellow"></i>
-                  <span class="nav-link-text">Daily Collection Report</span>
+                  <span class="nav-link-text">Daily Collection Reports</span>
                 </a>
                 @else
                 <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
                   <i class="fas fa-coins text-yellow"></i>
-                  <span class="nav-link-text">Daily Collection Report</span>
+                  <span class="nav-link-text">Daily Collection Reports</span>
                 </a>
                 @endif
             </li>

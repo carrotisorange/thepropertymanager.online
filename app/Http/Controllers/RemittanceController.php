@@ -14,7 +14,11 @@ use Auth;
 use App\Tenant;
 use App\Expense;
 use Carbon\Carbon;
-
+use App\Contract;
+use App\Unit;
+use App\Owner;
+use App\Room;
+use App\Payment;
 
 class RemittanceController extends Controller
 {
@@ -56,24 +60,28 @@ class RemittanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($property_id, $tenant_id, $payment_id)
+    public function create($property_id,$unit_id, $contract_id, $tenant_id, $bill_id, $payment_id)
     {
+
         Session::put('current-page', 'remittances');
 
-         $rooms = DB::table('contracts')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->select('*', 'contracts.rent as contract_rent')
-        ->where('tenant_id_foreign', $tenant_id)
-        ->get();
+        $owner_id = Unit::findOrFail($unit_id)->certificates()->orderBy('created_at', 'desc')->first()->owner_id_foreign;
 
-        $remittance_info = DB::table('bills')
-        ->join('payments', 'bill_id', 'payment_bill_id')
-        ->where('payment_id', $payment_id)
-        ->get();
+        $owner_info = Owner::findOrFail($owner_id);
 
-        $tenant = Tenant::findOrFail($tenant_id);
+        $room_info = Unit::findOrFail($unit_id);
 
-        return view('webapp.remittances.create', compact('rooms', 'remittance_info', 'tenant'));
+        $amount_collected = Bill::findOrFail($bill_id)->payments->sum('amt_paid');
+
+        $payment_info = Payment::findOrFail($payment_id);
+
+        $bill_info = Bill::findOrFail($bill_id);
+
+        $contract_info = Contract::findOrFail($contract_id);
+
+        $tenant_info = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.remittances.create', compact('owner_info', 'room_info', 'amount_collected', 'bill_info', 'tenant_info', 'payment_info', 'contract_info'));
     }
 
     /**
@@ -168,6 +176,15 @@ class RemittanceController extends Controller
         $remittance->save();
 
         return back()->with('success', 'Remittance is updated successfully!');
+    }
+
+    public function rooms_remittances($property_id){
+        
+        Session::put('current-page', 'rooms');
+
+        $units = Property::findOrFail($property_id)->units;
+
+        return view('webapp.remittances.rooms_remittances', compact('units'));
     }
 
     /**

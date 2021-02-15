@@ -21,7 +21,7 @@
       <?php $ctr=1; ?>
       <tr>
           <th>#</th>
-          <th>Reported</th>
+          <th>Received On</th>
           <th>Reported By</th>
           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
           <th>Unit</th>

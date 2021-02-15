@@ -1,9 +1,8 @@
 @extends('layouts.arsha.arsha-login')
 
-@section('title', 'Properties')
+@section('title', 'Not found')
 
 @section('sidebar')
-
 
 @endsection
 

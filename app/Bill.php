@@ -25,4 +25,9 @@ class Bill extends Model
     {
     return $this->belongsTo('App\Tenant', 'bill_tenant_id');
     }
+
+public function payments()
+    {
+    return $this->hasMany('App\Payment', 'payment_bill_id');
+    }
 }

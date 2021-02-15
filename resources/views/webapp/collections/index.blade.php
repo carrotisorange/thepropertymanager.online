@@ -1,11 +1,11 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Collections')
+@section('title', 'Daily Collection Reports')
 
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Collections</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Daily Collection Reports</h6>
     
   </div>
   
@@ -107,7 +107,14 @@
                   {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                 </td>
                 {{-- <td>{{ $item->form }}</td> --}}
-                <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
+                
+                <th class="text-right">
+                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
+                 <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
+                  @else
+                  {{ number_format($item->amt_paid,2) }}
+                  @endif
+                </th>
                
                 {{-- <td class="text-center">
                   <a title="export pdf" target="_blank" href="/units/{{ $item->unit_tenant_id }}/tenants/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
@@ -116,16 +123,17 @@
                   
                 </td>--}}
                <td>
-                @if($item->payment_status === 'deleted')
-              
-                @else
-                <form action="/property/{{$property->property_id}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button title="remove this payment" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                </form>
-                @endif
-               
+                @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury')
+                  @if($item->payment_status === 'deleted')
+                
+                  @else
+                  <form action="/property/{{$property->property_id}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button title="remove this payment" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+                  </form>
+                  @endif
+               @endif
                </td>
             </tr>
         @endforeach

@@ -44,10 +44,10 @@ class CertificateController extends Controller
         $certificate->owner_id_foreign =  $owner_id;
         $certificate->date_purchased =  $request->date_purchased;
         $certificate->date_accepted =  Carbon::now();
-        $certificate->status =  'active';
+        $certificate->status = 'active';
         $certificate->save();
 
-        return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'#certificates')->with('success',' Certificate is created sucessfully!');
+        return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'#certificates')->with('success',' Certificate created sucessfully!');
     }
 
     /**
