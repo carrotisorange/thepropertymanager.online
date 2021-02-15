@@ -34,7 +34,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants
 @endif
 
 
-<div class="table-responsive text-nowrap">
+<div class="table">
     <table class="table">
       <?php $ctr=1;?>
       <thead>

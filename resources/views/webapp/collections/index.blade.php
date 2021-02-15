@@ -37,7 +37,7 @@
 <p class="text-danger text-center">No collections found!</p>
 
 @else
-<div class="table-responsive text-nowrap">
+<div class="table">
   
   <table class="table">
       @foreach ($collections as $day => $collection_list)

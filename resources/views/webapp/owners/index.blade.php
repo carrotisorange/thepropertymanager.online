@@ -31,7 +31,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
  @if(Session::get('owner_search'))
 <p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">"{{ Session::get('owner_search') }}"<span></p>
 @endif 
-<div class="table-responsive text-nowrap">
+<div class="table">
 
     <table class="table">
         <thead>

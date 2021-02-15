@@ -44,7 +44,7 @@
 <p class="text-danger text-center">No bills found!</p>
 
 @else
-<div class="table-responsive">
+<div class="table">
   <table class="table">
     @foreach ($bills as $day => $bill)
 <thead>
