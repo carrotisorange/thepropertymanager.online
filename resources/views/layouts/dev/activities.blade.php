@@ -1,6 +1,6 @@
 @extends('layouts.material.template')
 
-@section('title', 'Activities')
+@section('title', 'User Activities')
 @section('content')
 <div class="content">
   <div class="container-fluid">

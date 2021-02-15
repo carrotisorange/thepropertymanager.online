@@ -75,6 +75,8 @@ class PropertyController extends Controller
 
                 Session::put('notifications', Notification::orderBy('created_at','desc')->limit(5)->get());
 
+                Session::put('current-page', 'dashboard');
+
                 $issues = DB::table('issues')
                 ->join('users', 'user_id_foreign', 'id')
                 ->where('issues.status', 'active')

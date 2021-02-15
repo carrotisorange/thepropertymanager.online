@@ -31,6 +31,8 @@ class DevController extends Controller
 
     public function activities()
     {
+        Session::put('current-page', 'user-activities');
+
         $activities =  DB::table('activities')
         ->join('users','user_id_foreign', 'id')
         ->join('properties','property_id_foreign', 'property_id')
@@ -52,6 +54,8 @@ class DevController extends Controller
      */
     public function properties()
     {
+        Session::put('current-page', 'properties');
+
          $properties = Property::all();
 
         return view('layouts.dev.properties', compact('properties'));
@@ -59,6 +63,8 @@ class DevController extends Controller
 
     public function edit_user($user_id)
     {
+        Session::put('current-page', 'system-users');
+
          $user = User::findOrFail($user_id);
 
         return view('layouts.dev.edit_user', compact('user'));
@@ -66,6 +72,8 @@ class DevController extends Controller
 
     public function user_plans($user_id)
     {
+        Session::put('current-page', 'system-users');
+
          $user = User::findOrFail($user_id);
 
         return view('layouts.dev.user_plans', compact('user'));
@@ -73,6 +81,8 @@ class DevController extends Controller
 
     public function plans()
     {
+        Session::put('current-page', 'plans');
+
          $plans = Plan::all();
 
         return view('layouts.dev.plans', compact('plans'));
@@ -425,6 +435,7 @@ $contracts = DB::table('contracts')
 
     public function users()
     {
+        Session::put('current-page', 'system-users');
         
         $users = DB::table('users')
         ->where('user_type','<>', 'tenant')
@@ -442,11 +453,15 @@ $contracts = DB::table('contracts')
      */
     public function starter()
     {   
+        Session::put('current-page', 'documentation');
+
         return view('layouts.dev.starter');
     }
 
     public function updates()
     {
+        Session::put('current-page', 'system-updates');
+
         $updates = Update::orderBy('created_at', 'desc')->get();
 
         return view('layouts.dev.updates', compact('updates'));
@@ -454,6 +469,8 @@ $contracts = DB::table('contracts')
 
     public function issues()
     {
+        Session::put('current-page', 'tasks');
+
           $issues = DB::table('issues')
         ->join('users', 'user_id_foreign', 'id')
         ->leftJoin('issue_responses', 'issues.issue_id', 'issue_responses.issue_id')
@@ -467,6 +484,7 @@ $contracts = DB::table('contracts')
 
     public function edit_issue($issue_id)
     {
+        Session::put('current-page', 'tasks');
 
         $issue = Issue::findOrFail($issue_id);
 
@@ -483,6 +501,7 @@ $contracts = DB::table('contracts')
 
     public function add_response(Request $request, $issue_id)
     {   
+        Session::put('current-page', 'tasks');
 
         $request->validate([
             'response' => ['required'],
@@ -514,6 +533,8 @@ $contracts = DB::table('contracts')
 
     public function announcements()
     {
+        Session::put('current-page', 'announcements');
+
         return view('layouts.dev.announcements');
     }
 
