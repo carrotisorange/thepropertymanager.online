@@ -15,7 +15,7 @@
 </div>
 
 <div class="row">
-  <div class="table-responsive text-nowrap">
+  <div class="table">
     <form id="add_billings" action="/property/{{Session::get('property_id')}}/bills/create/" method="POST">
    @csrf
     </form>
