@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB, Auth;
 use App\Property;
 use Carbon\Carbon;
+use Session;
 
 class PersonnelController extends Controller
 {
@@ -17,6 +18,7 @@ class PersonnelController extends Controller
      */
     public function index($property_id)
     {
+        Session::put('current-page', 'personnels');
 
        $personnels = Property::findOrFail($property_id)->personnels;
 

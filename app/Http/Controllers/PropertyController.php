@@ -28,6 +28,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
+        Session::put('current-page', 'dashboard');
+
             if(Auth::user()->user_type == 'manager'){
                $properties = User::findOrFail(Auth::user()->id)->properties;
             
@@ -75,7 +77,7 @@ class PropertyController extends Controller
 
                 Session::put('notifications', Notification::orderBy('created_at','desc')->limit(5)->get());
 
-                Session::put('current-page', 'dashboard');
+               
 
                 $issues = DB::table('issues')
                 ->join('users', 'user_id_foreign', 'id')
@@ -492,6 +494,8 @@ class PropertyController extends Controller
      */
     public function show(Request $request)
     {   
+        Session::put('current-page', 'dashboard');
+        
         Session::put('property_id', $request->property_id);
        
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);

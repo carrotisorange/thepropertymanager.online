@@ -36,6 +36,7 @@ class ContractController extends Controller
      */
     public function create(Request $request, $property_id, $tenant_id)
     {
+        Session::put('current-page', 'rooms');
 
         $request->validate([
             'unit_id' => 'required'
@@ -208,6 +209,7 @@ class ContractController extends Controller
      */
     public function show($property_id, $tenant_id, $contract_id)
     {
+        Session::put('current-page', 'rooms');
 
         //  $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
@@ -235,6 +237,8 @@ class ContractController extends Controller
     }
 
     public function moveout_get(Request $request, $property_id, $tenant_id, $contract_id){
+
+        Session::put('current-page', 'rooms');
 
         $tenant = Tenant::findOrFail($tenant_id);
 
@@ -432,6 +436,8 @@ class ContractController extends Controller
     public function preterminate($property_id, $tenant_id, $contract_id)
     {
 
+        Session::put('current-page', 'rooms');
+
         $contract = Contract::findOrFail($contract_id);
 
         $property = Property::findOrFail($property_id);
@@ -537,6 +543,9 @@ class ContractController extends Controller
      */
     public function edit($property_id, $tenant_id, $contract_id)
     {
+
+        Session::put('current-page', 'rooms');
+
         $contract = Contract::findOrFail($contract_id);
 
         $property = Property::findOrFail($property_id);
@@ -574,6 +583,8 @@ class ContractController extends Controller
 
     public function expired()
     {
+
+        Session::put('current-page', 'dashboard');
 
         $tenants_to_watch_out = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')

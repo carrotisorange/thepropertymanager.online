@@ -25,6 +25,8 @@ class UserController extends Controller
     public function index($property_id)
     {
 
+        Session::put('current-page', 'usage-history');
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');

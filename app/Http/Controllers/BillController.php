@@ -26,6 +26,8 @@ class BillController extends Controller
      */
     public function index()
     {
+        Session::put('current-page', 'bulk-billing');
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');

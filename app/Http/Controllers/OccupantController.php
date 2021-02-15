@@ -35,6 +35,7 @@ class OccupantController extends Controller
      */
     public function index(Request $request, $property_id)
     {
+        Session::put('current-page', 'occupants');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -103,6 +104,9 @@ class OccupantController extends Controller
 
     public function create($property_id, $unit_id)
     {   
+
+        Session::put('current-page', 'units');
+
         $unit = Unit::findOrFail($unit_id);
 
         $property = Property::findOrFail($property_id);
@@ -112,6 +116,7 @@ class OccupantController extends Controller
 
     public function create_prefilled($property_id, $unit_id)
     {   
+        Session::put('current-page', 'units');
 
         $current_owner_id = Unit::findOrFail($unit_id)->certificates()->orderBy('owner_id_foreign', 'desc')->first()->owner_id_foreign;
 
@@ -218,6 +223,7 @@ class OccupantController extends Controller
    
     public function show($property_id, $tenant_id)
     {
+        Session::put('current-page', 'occupants');
 
         if(Auth::user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'treasury'){
            
@@ -342,6 +348,8 @@ class OccupantController extends Controller
      */
     public function edit($property_id, $tenant_id)
     {
+        Session::put('current-page', 'occupants');
+
         $property = Property::findOrFail($property_id);
 
         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){

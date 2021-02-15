@@ -21,6 +21,7 @@ class JobOrderController extends Controller
      */
     public function index()
     {
+        Session::put('current-page', 'job-orders');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;

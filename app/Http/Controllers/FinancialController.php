@@ -19,6 +19,8 @@ class FinancialController extends Controller
      */
     public function index($property_id)
     {
+        Session::put('current-page', 'financial-reports');
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');

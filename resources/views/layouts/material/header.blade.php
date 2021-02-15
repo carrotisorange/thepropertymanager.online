@@ -8,7 +8,7 @@
       </a>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link" href="/dev/activities" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="material-icons">notifications</i>
         @if(Session::get('notifications')->count() < 5)
         <span class="notification">5+</span>

@@ -34,6 +34,8 @@ class TenantController extends Controller
      */
     public function index(Request $request, $property_id)
     {
+        Session::put('current-page', 'tenants');
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
@@ -91,6 +93,9 @@ class TenantController extends Controller
     }
 
     public function pending($property_id){
+
+        Session::put('current-page', 'dashboard');
+
         $tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -103,6 +108,8 @@ class TenantController extends Controller
 
     public function search(Request $request, $property_id){   
         
+        Session::put('current-page', 'tenants');
+
         $search = $request->get('search');
 
         //create session for the search
@@ -199,6 +206,8 @@ class TenantController extends Controller
      */
     public function create($property_id, $unit_id)
     {   
+        Session::put('current-page', 'rooms');
+
         $unit = Unit::findOrFail($unit_id);
 
         $users = DB::table('users_properties_relations')
@@ -235,6 +244,8 @@ class TenantController extends Controller
 
     public function create_occupant_prefilled($property_id, $unit_id)
     {   
+        Session::put('current-page', 'tenants');
+
         $unit = Unit::findOrFail($unit_id);
 
         $property = Property::findOrFail($property_id);

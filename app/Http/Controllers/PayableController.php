@@ -20,6 +20,7 @@ class PayableController extends Controller
      */
     public function index($property_id)
     {
+        Session::put('current-page', 'payables');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;

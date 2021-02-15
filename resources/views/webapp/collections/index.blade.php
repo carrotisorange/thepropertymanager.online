@@ -29,7 +29,7 @@
   <div class="col-md-12 text-center">
    {{-- <p class="text-left"> Showing <b>{{ $collections->count() }} </b> payments</p> --}}
     @if(Session::get(Auth::user()->id.'date'))
-    <p class="text-center"> <span class=""> <small> you searched for payments made on </small></span> <span class="text-danger">"{{ Session::get(Auth::user()->id.'date') }}"<span></p>
+    <p class="text-center"> <span class=""> <small> You searched for payments made on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
     @endif
   </div>
 </div>

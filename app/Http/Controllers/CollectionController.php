@@ -25,6 +25,9 @@ class CollectionController extends Controller
 
     public function delinquents()
     {
+
+        Session::put('current-page', 'dashboard');
+
         $delinquents = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
         ->leftJoin('payments', 'bill_id','payment_bill_id')
       ->leftJoin('contracts', 'tenant_id', 'tenant_id_foreign')
@@ -42,6 +45,8 @@ class CollectionController extends Controller
 
     public function index(Request $request, $property_id)
     {
+
+        Session::put('current-page', 'daily-collection-report');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;

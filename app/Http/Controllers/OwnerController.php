@@ -24,6 +24,7 @@ class OwnerController extends Controller
      */
     public function index($property_id)
     {
+        Session::put('current-page', 'owners');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -75,6 +76,8 @@ class OwnerController extends Controller
     
     public function search(Request $request,$property_id){   
         
+        Session::put('current-page', 'owners');
+
        $search = $request->owner_search;
 
         Session::put('owner_search', $search);
@@ -188,6 +191,8 @@ class OwnerController extends Controller
      */
     public function show($property_id,$owner_id)
     {
+        Session::put('current-page', 'owners');
+
         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
 
             $owner = Owner::findOrFail($owner_id);
@@ -273,6 +278,9 @@ class OwnerController extends Controller
      */
     public function edit($property_id,$owner_id)
     {
+
+        Session::put('current-page', 'owners');
+
         $owner = Owner::findOrFail($owner_id);
 
         $property = Property::findOrFail($property_id);

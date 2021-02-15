@@ -21,6 +21,7 @@ class RoomController extends Controller
      */
     public function index(Request $request, $property_id)
     {
+        Session::put('current-page', 'rooms');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -211,6 +212,8 @@ class RoomController extends Controller
      */
     public function show($property_id, $unit_id)
     {
+        Session::put('current-page', 'rooms');
+
         if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury'){
          
             $users = DB::table('users_properties_relations')
@@ -373,6 +376,8 @@ class RoomController extends Controller
      }
 
      public function edit_all($property_id){
+
+        Session::put('current-page', 'rooms');
 
             $units = DB::table('units')
             ->where('property_id_foreign', $property_id)

@@ -20,6 +20,7 @@ class IssueController extends Controller
      */
     public function index()
     {
+        Session::put('current-page', 'issues');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -84,6 +85,9 @@ class IssueController extends Controller
      */
     public function show($property_id, $issue_id)
     {
+
+        Session::put('current-page', 'issues');
+
         $issue = Issue::findOrFail($issue_id);
 
         $responses = DB::table('issue_responses')

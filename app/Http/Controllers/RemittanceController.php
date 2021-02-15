@@ -25,6 +25,7 @@ class RemittanceController extends Controller
      */
     public function index()
     {
+        Session::put('current-page', 'remittances');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -57,6 +58,8 @@ class RemittanceController extends Controller
      */
     public function create($property_id, $tenant_id, $payment_id)
     {
+        Session::put('current-page', 'remittances');
+
          $rooms = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->select('*', 'contracts.rent as contract_rent')
@@ -127,6 +130,9 @@ class RemittanceController extends Controller
      */
     public function show($property_id, $room_id, $remittance_id)
     {
+
+        Session::put('current-page', 'remittances');
+
         $remittance = DB::table('units')
         ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
         ->select('*', 'remittances.created_at as dateRemitted')

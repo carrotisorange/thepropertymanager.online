@@ -11,122 +11,239 @@
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
           <!-- Nav items -->
           <ul class="navbar-nav">
+            {{-- Dashboard --}}
             <li class="nav-item">
+              @if(Session::get('current-page') === 'dashboard')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/dashboard">
+                <i class="fas fa-tachometer-alt text-orange"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+              @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/dashboard">
                 <i class="fas fa-tachometer-alt text-orange"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
+              @endif
             </li>
+            {{-- Units/Rooms --}}
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
            <li class="nav-item">
               @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/units">
-                <i class="fas fa-home text-indigo"></i>
-                <span class="nav-link-text">Units</span>
-              </a>
+                @if(Session::get('current-page') === 'units')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Units</span>
+                </a>
+                @else
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/units">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Units</span>
+                </a>
+                @endif 
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms">
-                <i class="fas fa-home text-indigo"></i>
-                <span class="nav-link-text">Rooms</span>
-              </a>
+                @if(Session::get('current-page') === 'rooms')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Rooms</span>
+                </a>
+                @else
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms">
+                  <i class="fas fa-home text-indigo"></i>
+                  <span class="nav-link-text">Rooms</span>
+                </a>
+                @endif 
               @endif
             </li>
             @endif
+            {{-- Tenants/Occupants --}}
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
                 @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                 <li class="nav-item">
-                    <a class="nav-link" href="/property/{{ Session::get('property_id') }}/occupants">
+                  @if(Session::get('current-page') === 'occupants')
+                  <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/occupants">
                     <i class="fas fa-user text-green"></i>
                     <span class="nav-link-text">Occupants</span>
                     </a>
+                  @else
+                  <a class="nav-link" href="/property/{{ Session::get('property_id') }}/occupants">
+                    <i class="fas fa-user text-green"></i>
+                    <span class="nav-link-text">Occupants</span>
+                    </a>
+                  @endif 
                 </li>
                 @else
-            <li class="nav-item">
-                 <a class="nav-link" href="/property/{{ Session::get('property_id') }}/tenants">
-                  <i class="fas fa-user text-green"></i>
-                  <span class="nav-link-text">Tenants</span>
-                </a>
-              </li>
+                <li class="nav-item">
+                  @if(Session::get('current-page') === 'tenants')
+                  <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/tenants">
+                    <i class="fas fa-user text-green"></i>
+                    <span class="nav-link-text">Tenants</span>
+                  </a>
+                  @else
+                  <a class="nav-link" href="/property/{{ Session::get('property_id') }}/tenants">
+                    <i class="fas fa-user text-green"></i>
+                    <span class="nav-link-text">Tenants</span>
+                  </a>
+                  @endif
+                </li>
             @endif
-          
+          {{-- Owners --}}
             <li class="nav-item">
+              @if(Session::get('current-page') === 'owners')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/owners">
+                <i class="fas fa-user-tie text-teal"></i>
+                <span class="nav-link-text">Owners</span>
+              </a>
+              @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/owners">
                 <i class="fas fa-user-tie text-teal"></i>
                 <span class="nav-link-text">Owners</span>
               </a>
+              @endif
             </li>
             @endif
-        
+            {{-- Concerns --}}
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/concerns">
+              @if(Session::get('current-page') === 'concerns')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/concerns">
                 <i class="fas fa-tools text-cyan"></i>
                 <span class="nav-link-text">Concerns</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/concerns">
+                <i class="fas fa-tools text-cyan"></i>
+                <span class="nav-link-text">Concerns</span>
+              </a>
+              @endif
             </li>
+            {{-- Job Orders --}}
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/joborders">
+              @if(Session::get('current-page') === 'job-orders')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/joborders">
                 <i class="fas fa-list text-dark"></i>
                 <span class="nav-link-text">Job Orders</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/joborders">
+                <i class="fas fa-list text-dark"></i>
+                <span class="nav-link-text">Job Orders</span>
+              </a>
+              @endif
             </li>
-           
+           {{-- Personnels --}}
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/personnels">
+              @if(Session::get('current-page') === 'personnels')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/personnels">
                 <i class="fas fa-user-secret text-gray"></i>
                 <span class="nav-link-text">Personnels</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/personnels">
+                <i class="fas fa-user-secret text-gray"></i>
+                <span class="nav-link-text">Personnels</span>
+              </a>
+              @endif
             </li>
             @endif
-        
+            {{-- Bulk billing --}}
             @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
             <li class="nav-item">
+              @if(Session::get('current-page') === 'bulk-billing')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
+                <i class="fas fa-file-invoice-dollar text-pink"></i>
+                <span class="nav-link-text">Bulk Billing</span>
+              </a>
+              @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bulk Billing</span>
               </a>
+              @endif
             </li>
             @endif
+            {{-- Daily Collection Report --}}
             @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
               <li class="nav-item">
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
-                <i class="fas fa-coins text-yellow"></i>
-                <span class="nav-link-text">Daily Collection Report</span>
-              </a>
+                @if(Session::get('current-page') === 'daily-collection-report')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/collections">
+                  <i class="fas fa-coins text-yellow"></i>
+                  <span class="nav-link-text">Daily Collection Report</span>
+                </a>
+                @else
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
+                  <i class="fas fa-coins text-yellow"></i>
+                  <span class="nav-link-text">Daily Collection Report</span>
+                </a>
+                @endif
             </li>
             @endif
+            {{-- Remittances --}}
             @if(Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'manager')
               @if(Session::get('property_type') === 'Apartment Rentals')
               <li class="nav-item">
+                @if(Session::get('current-page') === 'remittances')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/remittances">
+                  <i class="fas fa-hand-holding-usd text-teal"></i>
+                  <span class="nav-link-text">Remittances</span>
+                </a>
+                @else
                 <a class="nav-link" href="/property/{{ Session::get('property_id') }}/remittances">
                   <i class="fas fa-hand-holding-usd text-teal"></i>
                   <span class="nav-link-text">Remittances</span>
                 </a>
+                @endif
               </li>
               @endif
             @endif
+            {{-- Financial reports --}}
             @if(Auth::user()->user_type === 'manager')
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
+              @if(Session::get('current-page') === 'financial-reports')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/financials">
                 <i class="fas fa-chart-line text-purple"></i>
                 <span class="nav-link-text">Financial Reports</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
+                <i class="fas fa-chart-line text-purple"></i>
+                <span class="nav-link-text">Financial Reports</span>
+              </a>
+              @endif
+              
             </li>
             @endif
+            {{-- Payables --}}
             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' )
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/payables">
+              @if(Session::get('current-page') === 'payables')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/payables">
                 <i class="fas fa-file-export text-indigo"></i>
                 <span class="nav-link-text">Payables</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/payables">
+                <i class="fas fa-file-export text-indigo"></i>
+                <span class="nav-link-text">Payables</span>
+              </a>
+              @endif
+              
             </li>
             @endif
+            {{-- Usage history --}}
             @if(Auth::user()->user_type === 'manager')
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/users">
+              @if(Session::get('current-page') === 'usage-history')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/users">
                 <i class="fas fa-user-circle text-green"></i>
                 <span class="nav-link-text">Usage History</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/users">
+                <i class="fas fa-user-circle text-green"></i>
+                <span class="nav-link-text">Usage History</span>
+              </a>
+              @endif
+             
             </li>
             @endif
           </ul>

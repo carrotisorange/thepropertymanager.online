@@ -20,6 +20,8 @@ class ConcernController extends Controller
     public function index($property_id)
     {
 
+        Session::put('current-page', 'concerns');
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
@@ -160,6 +162,7 @@ class ConcernController extends Controller
      
     public function show_assigned_concerns($property_id, $concern_id, $user_id)
     {
+        Session::put('current-page', 'concerns');
 
             $concern = Concern::findOrFail($concern_id);
 
@@ -203,6 +206,8 @@ class ConcernController extends Controller
     public function show($property_id, $concern_id)
     {
         
+        Session::put('current-page', 'concerns');
+
         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'treasury' || auth()->user()->user_type === 'billing'){
         
             // $tenant = Tenant::findOrFail($tenant_id);
@@ -299,6 +304,8 @@ class ConcernController extends Controller
 
     public function pending()
     {
+        Session::put('current-page', 'dashboard');
+
         $pending_concerns = DB::table('contracts')
         ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
         ->leftJoin('units', 'unit_id_foreign', 'unit_id')
