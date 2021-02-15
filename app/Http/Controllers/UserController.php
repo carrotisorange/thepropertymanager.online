@@ -247,6 +247,8 @@ class UserController extends Controller
      */
     public function show($property_id, $user_id)
     {
+        Session::put('current-page', 'usage-history');
+
         $user = User::findOrFail($user_id);
 
         $concerns = User::findOrFail($user_id)->concerns;

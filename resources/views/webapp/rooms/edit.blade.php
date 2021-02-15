@@ -15,7 +15,7 @@
     
     
   </div>
- <div class="col">
+ {{-- <div class="col">
   <div class="alert alert-danger alert-dismissable custom-danger-box">
                   
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -25,7 +25,7 @@
       
     
 </div>
- </div>
+ </div> --}}
 </div>
 
 <div class="row">
@@ -50,7 +50,7 @@
         </div>
       </div> --}}
  
-      <div class="table-responsive">
+      <div class="table">
           <form id="editUnitsForm" action="/property/{{Session::get('property_id')}}/rooms/update" method="POST">
   
               @csrf
@@ -61,13 +61,13 @@
               <thead>
                   <tr>
                       <th>#</th>
-                      <th>Building</th>
-                      <th>Room</th>
-                      <th>Size <small>(sqm)</small></th>
-                      <th>Floor</th>
-                      <th>Type</th>
-                      <th>Status</th>
-                      <th>Occupancy <small>(Number of tenants allowed)</small></th>
+                      <th>Building Name</th>
+                      <th>Name of the Room/No</th>
+                      <th>Size of the Room<small>(sqm)</small></th>
+                      <th>Floor No</th>
+                      <th>Type of the Room</th>
+                      <th>Status of the Room</th>
+                      <th>Occupancy</th>
                       <th>Rent <small>(/month)</small></th>
                       <th>Term <small>(Length of current contract)</small></th>
                       <th></th>
@@ -91,14 +91,14 @@
               
                       <tr>
                           <th> {{ $ctr++ }}</th>
-                          <td><input form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
+                          <td><input class="form-control" form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
                           <td>
-                            <input  form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
+                            <input class="form-control"  form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
                             <input form="editUnitsForm" type="hidden" name="unit_id{{ $unit_id++  }}" id="" value="{{ $item->unit_id }}">
                           </td>
-                          <td><input form="editUnitsForm" type="text" name="size{{ $size++  }}" id="" value="{{ $item->size }}"></td>
+                          <td><input class="form-control" form="editUnitsForm" type="text" name="size{{ $size++  }}" id="" value="{{ $item->size }}"></td>
                           <td>
-                            <select form="editUnitsForm" type="number" name="floor{{ $floor++ }}">
+                            <select class="form-control" form="editUnitsForm" type="number" name="floor{{ $floor++ }}">
                               <option value="{{ $item->floor }}" readonly selected class="bg-primary">{{ $item->floor }}</option>
                               <option value="-5">5th basement</option>
                               <option value="-4">4th basement</option>
@@ -119,7 +119,7 @@
                            
                           </td>
                           <td>
-                            <select class="" form="editUnitsForm" type="text" name="type{{ $type++  }}">
+                            <select class="form-control"  form="editUnitsForm" type="text" name="type{{ $type++  }}">
                               <option value="{{ $item->type }}" readonly selected class="bg-primary">{{ $item->type }}</option>
                               <option value="commercial">commercial</option>
                               <option value="residential">residential</option>
@@ -127,7 +127,7 @@
                            
                           </td>
                           <td>
-                            <select form="editUnitsForm" type="text" name="status{{ $status++  }}" id="" >
+                            <select class="form-control"  form="editUnitsForm" type="text" name="status{{ $status++  }}" id="" >
                               <option value="{{ $item->status }}" readonly selected class="bg-primary">{{ $item->status }}</option>
                               <option value="dirty">dirty</option>
                               <option value="vacant">vacant</option>
@@ -139,10 +139,10 @@
                           </td>
                         
                        
-                          <td><input class="col" form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"></td>
-                          <td><input class="" form="editUnitsForm" type="number" step="0.001" name="rent{{ $rent++  }}"  min="0" id="" value="{{$item->rent }}"></td>
+                          <td><input class="form-control" form="editUnitsForm" type="number" name="occupancy{{ $occupancy++  }}" id="" min="0" value="{{ $item->occupancy }}"></td>
+                          <td><input class="form-control"  form="editUnitsForm" type="number" step="0.001" name="rent{{ $rent++  }}"  min="0" id="" value="{{$item->rent }}"></td>
                           <td>
-                            <select form="editUnitsForm" type="text" name="term{{ $term++  }}" id="" >
+                            <select class="form-control" form="editUnitsForm" type="text" name="term{{ $term++  }}" id="" >
                               <option value="{{ $item->term }}" readonly selected class="bg-primary">{{ $item->term }}</option>
                               <option value="lt">lt</option>
                               <option value="st">st</option>

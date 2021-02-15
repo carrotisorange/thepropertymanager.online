@@ -255,29 +255,62 @@
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
-                   <li class="nav-item">
+            <li class="nav-item">
+              @if(Session::get('current-page') === 'getting-started')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/getting-started" target="_blank">
+                <i class="ni ni-spaceship"></i>
+                <span class="nav-link-text">Getting started</span>
+              </a>
+              @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/getting-started" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Getting started</span>
               </a>
+              @endif
+            
             </li>
-        </li> <li class="nav-item">
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/issues" target="_blank">
-                <i class="fas fa-dizzy text-red"></i>
-                <span class="nav-link-text">Issues</span>
-              </a>
+        </li> 
+        <li class="nav-item">
+          @if(Session::get('current-page') === 'issues')
+          <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/issues" target="_blank">
+            <i class="fas fa-dizzy text-red"></i>
+            <span class="nav-link-text">Issues</span>
+          </a>
+          @else
+          <a class="nav-link" href="/property/{{ Session::get('property_id') }}/issues" target="_blank">
+            <i class="fas fa-dizzy text-red"></i>
+            <span class="nav-link-text">Issues</span>
+          </a>
+          @endif
+             
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/system-updates" target="_blank">
+              @if(Session::get('current-page') === 'system-updates')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/system-updates" target="_blank">
                 <i class="fas fa-bug text-green"></i>
                 <span class="nav-link-text">System Updates</span>
               </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/system-updates" target="_blank">
+                <i class="fas fa-bug text-green"></i>
+                <span class="nav-link-text">System Updates</span>
+              </a>
+              @endif
+              
             </li>
           <li class="nav-item">
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/announcements" target="_blank">
-                <i class="fas fa-microphone text-purple"></i>
-                <span class="nav-link-text">Announcements</span>
-              </a>
+            @if(Session::get('current-page') === 'announcements')
+            <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/announcements" target="_blank">
+              <i class="fas fa-microphone text-purple"></i>
+              <span class="nav-link-text">Announcements</span>
+            </a>
+            @else
+            <a class="nav-link" href="/property/{{ Session::get('property_id') }}/announcements" target="_blank">
+              <i class="fas fa-microphone text-purple"></i>
+              <span class="nav-link-text">Announcements</span>
+            </a>
+            @endif
+            
             </li>
 
             
