@@ -64,7 +64,11 @@ font-family: FontAwesome;
       </h6>
   </div>
 </div>
-
+<div class="row">
+  <div class="col-md-12">
+    <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
+  </div>
+</div>
 
 <div class="row">
 
