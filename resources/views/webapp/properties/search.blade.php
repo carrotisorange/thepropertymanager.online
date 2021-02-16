@@ -31,7 +31,7 @@
             @foreach ($all_tenants as $tenant)
             <tr>
                 <th>{{ $tenant_ctr++ }}</th>
-                <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></td>
+                <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></th>
                 
               
                 <td>{{ $tenant->email_address }}</td>
@@ -67,13 +67,13 @@
             <tr>
                 <th>{{ $unit_ctr++ }}</th>
                 <td>{{ $unit->building }}</td>
-                <td>
+                <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                     <a href="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
                @else
                <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
                  @endif
-                </td>
+                </th>
                 <td>{{ $unit->floor }}</td>
                 <td>{{ $unit->type }}</td>
                 <td>{{ $unit->status }}</td>
@@ -104,7 +104,7 @@
             @foreach ($all_owners as $owner)
             <tr>
                 <th>{{ $owner_ctr++ }}</th>
-                <td><a href="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></td>
+                <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></th>
               
                <td>{{ $owner->email}}</td>
                <td>{{ $owner->mobile }}</td>
