@@ -353,7 +353,7 @@
       </tr>
        <tr>
          <th>Email</th>
-         <td><input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ Str::random(8) }}@thepropertymanager.online" required>
+         <td><input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $owner->email? $owner->email: Str::random(8).' @thepropertymanager.online' }}" required>
         <br>
         @error('email')
           <span class="invalid-feedback" role="alert">
@@ -365,7 +365,7 @@
        </tr>
        <tr>
          <th>Password</th>
-         <td><input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="12345678" required>
+         <td><input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="{{ $owner->mobile? $owner->mobile: '12345678' }}" required>
         <br>
         @error('password')
         <span class="invalid-feedback" role="alert">
