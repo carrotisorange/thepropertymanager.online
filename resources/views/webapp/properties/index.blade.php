@@ -25,10 +25,11 @@
 
           <div class="col">
             <input class="form-check-input" type="radio" name="selectedProperty" id="inlineRadio1" value="{{ $item->property_id }}" checked>
-            <span class="h2 font-weight-bold mb-0">{{ $item->name }}</span>
+            <span class="h2 font-weight-bold mb-0">{{ $item->name }} </span> <a title="Edit this property." href="/property/{{ $item->property_id }}/edit"><i class="fas fa-edit"></i></a>
             <h5 class="card-title text-uppercase text-muted mb-0">{{ $item->type}} &#9671 {{ $item->ownership }} </h5>
             <input type="hidden" name="property_id" value="{{ $item->property_id }}">
           </div>
+          
           <div class="col-auto">
 
             <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
@@ -47,6 +48,7 @@
         <p class="mt-3 mb-0 text-sm">
           {{-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> --}}
           <small class="text-nowrap">Added on {{ Carbon\Carbon::parse( $item->created_at)->format('M d Y') }}</small>
+          
         </p>
       </div>
       
@@ -78,12 +80,12 @@
     
     <div class="col-md-4">
       @if($properties->count()>1)
-        <a href="/property/create" class="btn btn-primary btn-user btn-block"> Portforlio</a>
+        <a href="/property/{{ Carbon\Carbon::now()->format('mdY') }}/portforlio" class="btn btn-primary btn-user btn-block"><i class="fas fa-columns"></i> Portforlio</a>
       @else
        @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced')
-        <a href="/property/create" class="btn btn-primary btn-user btn-block"> Add property</a>
+        <a href="/property/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-building"></i> Add property</a>
         @else
-        <a href="#" class="btn btn-primary btn-user btn-block" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"> Add property</a>
+        <a href="#" class="btn btn-primary btn-user btn-block" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-building"></i> Add property</a>
         @endif
       @endif
     </div>
@@ -91,18 +93,18 @@
     <div class="col-md-4">
       @if (Auth::user()->user_type === 'manager')
         @if($users > 1)
-        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block"> Add user </a>
+        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block"><i class="fas fa-user"></i> Add user </a>
         @else
-        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"> Add user</a>
+        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-building"></i> Add user</a>
         @endif
       @else
-      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"> Add user</a>
+      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"><i class="fas fa-building"></i> Add user</a>
       @endif
     </div>
 
     <div class="col-md-4">
       @if(Auth::user()->trial_ends_at > Carbon\Carbon::today())
-      <button id="manageButton" type="submit" class="btn btn-success btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Manage</button>
+      <button id="manageButton" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Manage</button>
       @else
       <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block"> Manage</a>
       @endif

@@ -271,7 +271,7 @@ class UserController extends Controller
         $property = Property::findOrFail($property_id);
 
          if(($user->id === Auth::user()->id) || ($manager->user_type === 'manager' && $user->property === $manager->property) || Auth::user()->email === 'thepropertymanager2020@gmail.com'){
-            return view('webapp.users.show-user', compact('referrals','concerns','properties','property','user', 'sessions', 'blogs'));
+            return view('webapp.users.show', compact('referrals','concerns','properties','property','user', 'sessions', 'blogs'));
          }else{
              return view('layouts.arsha.unregistered');
          }

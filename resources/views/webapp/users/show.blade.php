@@ -16,7 +16,6 @@
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user fa-sm text-primary-50"></i> Profile</a>
-        <a class="nav-item nav-link" id="nav-property-tab" data-toggle="tab" href="#property" role="tab" aria-controls="nav-property" aria-selected="false"><i class="fas fa-home fa-sm text-primary-50"></i> Properties</a>
         <a class="nav-item nav-link" id="nav-referrals-tab" data-toggle="tab" href="#referrals" role="tab" aria-controls="nav-referrals" aria-selected="false"><i class="fas fa-swimmer fa-sm text-primary-50"></i> Referrals</a>
         <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns</a>
         <a class="nav-item nav-link" id="nav-session-tab" data-toggle="tab" href="#session" role="tab" aria-controls="nav-session" aria-selected="false"><i class="fas fa-sign-in-alt fa-sm text-primary-50"></i> Sessions</a>
@@ -36,58 +35,35 @@
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <table class="table">
+             <thead>
               <tr>
                 <th>Name</th>
                 <td>{{ $user->name }}</td>
               </tr>
-              <tr>
-                <th>Email</th>
-                <td>{{ $user->email }}</td>
-              </tr>
-              <tr>
-                <th>Role</th>
-                <td>{{ $user->user_type }}</td>
-              </tr>
+             </thead>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ $user->email }}</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr>
+                  <th>Role</th>
+                  <td>{{ $user->user_type }}</td>
+                </tr>
+              </thead>
+            <thead>
               <tr>
                 <th>Plan</th>
                 <td>{{ $user->account_type }}</td>
               </tr>
+            </thead>
             </table>
       </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="nav-property-tab">
-      <br>
-      <div class="table-responsive text-nowrap">
-        <table class="table">
-          <thead>
-          <tr>
-            <?php $ctr = 1; ?>
-            <th>#</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Ownership</th>
-            <th>Mobile</th>
-            <th>Address</th>
-            <th></th>
-          </tr>
-          </thead>
-          @foreach ($properties as $item)
-          <tr>
-            <th>{{ $ctr++ }}</th>
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->type }}</td>
-            <td>{{ $item->ownership }}</td>
-            <td>{{ $item->mobile }}</td>
-            <td>{{ $item->address.', '.$item->country.', '.$item->zip }}</td>
-            <th><a href="/property/{{ Session::get('property_id') }}/edit" class="btn btn-sm btn-primary"> Edit</a></th>
-          </tr>
-          @endforeach
-      </table>
-      </div>    
-
-     
-    </div>
+  
     <div class="tab-pane fade" id="session" role="tabpanel" aria-labelledby="nav-session-tab">  
       <br>
       {{-- <p>Current usage time: 12123</p> --}}
@@ -188,13 +164,13 @@
                 @endif
             </td>
             <td>
-                @if($item->status === 'pending')
-                <span class="badge badge-warning">{{ $item->status }}</span>
-                @elseif($item->status === 'active')
-                <span class="badge badge-primary">{{ $item->status }}</span>
-                @else
-                <span class="badge badge-success">{{ $item->status }}</span>
-                @endif
+              @if($item->status === 'pending')
+              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->status }}</span>
+              @elseif($item->status === 'active')
+              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->status }}</span>
+              @else
+              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->status }}</span>
+              @endif
             </td>
   
             <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
@@ -252,7 +228,7 @@
           @method('put')
           @csrf
         </form>
-          <small>Name</small>
+          <label>Name</label>
           <input form="editUserForm" id="name" type="text" class="form-control form-control-user @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" >
                 @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -260,7 +236,7 @@
                     </span>
                 @enderror
           <br>
-          <small>Email</small>
+          <label>Email</label>
           <input form="editUserForm" id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -268,7 +244,7 @@
                     </span>
                 @enderror
           <br>
-          <small>New Password</small>
+          <label>New Password</label>
           <input form="editUserForm" id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" autocomplete="password">
                 <small class="text-danger">Changing your password will log you out of the application.</small>
                 @error('password')

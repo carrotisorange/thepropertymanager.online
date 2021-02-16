@@ -352,6 +352,11 @@ class PropertyController extends Controller
         return view('webapp.properties.create');
     }
 
+    public function portforlio(){
+
+        return view('webapp.properties.portforlio');
+    }
+
     public function search(Request $request, $property_id){
 
          $search_key = $request->search_key;
