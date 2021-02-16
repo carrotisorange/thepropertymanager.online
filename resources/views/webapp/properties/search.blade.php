@@ -15,16 +15,18 @@
         <p><span class="font-weight-bold">{{ $all_tenants->count() }}</span> matched for tenants...</p>
         @if($all_tenants->count() >= 1  )
         <table class="table">
+           <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-        
-                <th>Email</th>
-                <th>Mobile</th>
-    
-                <th>Civil status</th>
-              
-            </tr>
+              <th>#</th>
+              <th>Name</th>
+      
+              <th>Email</th>
+              <th>Mobile</th>
+  
+              <th>Movein on</th>
+            
+          </tr>
+           </thead>
             <?php $tenant_ctr=1;?>
             @foreach ($all_tenants as $tenant)
             <tr>
@@ -35,7 +37,7 @@
                 <td>{{ $tenant->email_address }}</td>
                 <td>{{ $tenant->contact_no }}</td>
         
-                <td>{{ $tenant->civil_status }}</td>
+                <td>{{ Carbon\Carbon::parse($tenant->created_at)->format('M d, Y') }}</td>
                
             </tr>
             @endforeach
@@ -47,17 +49,19 @@
          <p><span class="font-weight-bold">{{ $units->count() }}</span> matched for rooms...</p>
          @if($units->count() >= 1  )
         <table class="table">
+           <thead>
             <tr>
-                <th>#</th>
-                <th>Building</th>
-                <th>Room</th>
-                <th>Floor</th>
-                <th>Type</th>
-          
-                <th>Status</th>
-                <th>Occupancy</th>
-                <th>Rent</th>
-            </tr>
+              <th>#</th>
+              <th>Building</th>
+              <th>Room</th>
+              <th>Floor</th>
+              <th>Type</th>
+        
+              <th>Status</th>
+              <th>Occupancy</th>
+              <th>Rent</th>
+          </tr>
+           </thead>
             <?php $unit_ctr=1;?>
             @foreach ($units as $unit)
             <tr>
@@ -73,7 +77,7 @@
                 <td>{{ $unit->floor }}</td>
                 <td>{{ $unit->type }}</td>
                 <td>{{ $unit->status }}</td>
-                <td>{{ $unit->occupancy }} pax</td>
+                <td>{{ $unit->occupancy }} <b>pax</b></td>
                 <td>{{ number_format($unit->rent, 2) }}</td>
             </tr>
             @endforeach
@@ -84,16 +88,18 @@
          <p><span class="font-weight-bold">{{ $all_owners->count() }}</span> matched for owners...</p>
          @if($all_owners->count() >= 1  )
         <table class="table">
+           <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Representative</th>
-       
-             
-            </tr>
+              <th>#</th>
+              <th>Name</th>
+              
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Representative</th>
+     
+           
+          </tr>
+           </thead>
             <?php $owner_ctr=1;?>
             @foreach ($all_owners as $owner)
             <tr>
