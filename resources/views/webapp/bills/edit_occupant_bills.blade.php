@@ -73,7 +73,7 @@
             <form action="/property/{{Session::get('property_id')}}/bill/{{ $item->bill_id }}" method="POST">
               @csrf
               @method('delete')
-              <button title="remove this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
+              <button title="archive this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
             </form>
             @endif
           </td>   
