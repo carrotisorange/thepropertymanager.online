@@ -120,17 +120,37 @@ class BillController extends Controller
     ->where('property_id_foreign', Session::get('property_id'))
     ->max('bill_no') + 1;
 }     
-   $property = Property::findOrFail(Session::get('property_id'));
 
-    return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'Changes saved.');
+$request->session()->now('success', 'Changes saved.');
+  
+
+    return view('webapp.bills.add-rental-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end'));
 
     }
 
     public function post_bills_condodues(Request $request, $property_id)
     {
+        $buildings = Property::findOrFail(Session::get('property_id'))
+        ->units()
+        ->where('status','<>','deleted')
+        ->select('building', DB::raw('count(*) as count'), 'condodues')
+        ->groupBy('building')
+        ->get('building','count', 'condodues');
 
     $updated_start = $request->start;
     $updated_end = $request->end;
+
+    
+    
+    for($i=1; $i<=$buildings->count(); $i++){
+        DB::table('units')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('building', $request->input('building'.$i))
+        ->update([
+             'condodues' => $request->input('condodues'.$i)
+        ]);
+        
+    }
 
 
    $active_tenants = DB::table('contracts')
@@ -138,7 +158,9 @@ class BillController extends Controller
   ->join('tenants', 'tenant_id_foreign', 'tenant_id')
   ->select('*', 'contracts.rent as contract_rent')
   ->where('property_id_foreign', Session::get('property_id'))
-  ->where('contracts.status', 'active')
+//   ->where('contracts.status', 'active')
+  ->orderBy('building')
+  ->orderBy('unit_no')
   ->get();
 
 //   $active_tenants = DB::table('certificates')
@@ -165,9 +187,9 @@ class BillController extends Controller
     ->max('bill_no') + 1;
 }     
 
-   $property = Property::findOrFail(Session::get('property_id'));
+//    $request->session()->now('success', 'Changes saved.');
 
-    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'property'))->with('success', 'Changes saved.');
+    return view('webapp.bills.add-condodues-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'buildings'));
 
     }
 
@@ -208,9 +230,9 @@ class BillController extends Controller
         'electric_rate_kwh' => $request->electric_rate_kwh
    ]);
 
-   $property = Property::findOrFail($property_id);
+//    $request->session()->now('success', 'Changes saved.');
 
-    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'electric_rate_kwh', 'property'))->with('success', 'Changes saved.');
+    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'electric_rate_kwh'));
 
 
        
@@ -222,7 +244,6 @@ class BillController extends Controller
         $updated_start = $request->start;
         $updated_end = $request->end;
         $water_rate_cum = $request->water_rate_cum;
-    
     
         $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
@@ -247,16 +268,17 @@ class BillController extends Controller
         ->where('property_id_foreign', Session::get('property_id'))
         ->max('bill_no') + 1;
     }     
-    
+
        DB::table('users')
        ->where('id', Auth::user()->id)
        ->update([
             'water_rate_cum' => $request->water_rate_cum
        ]);
 
-       $property = Property::findOrFail($property_id);
+       
+    //    $request->session()->now('success', 'Changes saved.');
     
-        return view('webapp.bills.add-water-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end', 'water_rate_cum'))->with('success', 'Changes saved.');
+        return view('webapp.bills.add-water-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'water_rate_cum'));
     
 
       
@@ -291,10 +313,9 @@ class BillController extends Controller
         ->max('bill_no') + 1;
     }     
 
-
-       $property = Property::findOrFail($property_id);
+    // $request->session()->now('success', 'Changes saved.');
     
-        return view('webapp.bills.add-surcharge-bill', compact('property','active_tenants','current_bill_no', 'updated_start', 'updated_end'))->with('success', 'Changes saved.');
+        return view('webapp.bills.add-surcharge-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end'));
     
 
       

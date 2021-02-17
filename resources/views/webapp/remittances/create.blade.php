@@ -17,6 +17,9 @@
 
 </div>
 
+<form id="remittanceForm" action="/property/{{ Session::get('property_id') }}/room/{{ $room_info->unit_id }}/contract/{{ $contract_info->contract_id }}/tenant/{{ $tenant_info->tenant_id }}/bill/{{ $bill_info->bill_id }}/payment/{{ $payment_info->payment_id }}/remittance/store" method="POST">
+  @csrf
+</form>
 <div class="container card card-body">
   <div class="card-title text-center">
     Check Voucher
@@ -46,7 +49,7 @@
 
       <tr>
           <th>Bank</th>
-          <td>{{ $owner_info->bank_name }}</td>
+          <td>{{ $owner_info->bank_name? $owner_info->bank_name: 'NA' }}</td>
       </tr>
  
     </table>
@@ -56,24 +59,24 @@
     <table class="table table-borderless">
       <tr>
         <th>CV No</th>
-        <td><input type="text" name="cv_no" value=""/></td>
+        <td><input form="remittanceForm" type="text" name="cv_no" value=""/></td>
        
     </tr>
       <tr>
         
           <th>Date</th>
-          <td><input type="date" name="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"/></td>
+          <td><input form="remittanceForm" type="date" name="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"/></td>
          
       </tr>
  
       <tr>
         <th>Check No</th>
-        <td><input type="text" name="check_no" value=""/></td>
+        <td><input form="remittanceForm" type="text" name="check_no" value=""/></td>
          
       </tr>
       <tr>
         <th>Bank</th>
-        <td>{{ $owner_info->bank_name }}</td>
+        <td>{{ $owner_info->bank_name? $owner_info->bank_name: 'NA' }}</td>
     </tr>
     
     </table>
@@ -105,7 +108,7 @@
         </tr>
         <tr>
           <th>Amount Collected</th>
-          <td>{{ number_format($amount_collected, 2) }}</td>
+          <td><input type="number" step="0.001" name="amount_collected" id="amount_collected" value="{{ $amount_collected }}" readonly/></td>
         </tr>
        
         <tr>
@@ -115,58 +118,58 @@
   
             <tr>
               <td>Management Fee</td>
-              <td><input type="text" name="mgmt_fee_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="mgmt_fee_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="mgmt_fee_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="mgmt_fee_amt" oninput="computeTotalDeductions()" id="mgmt_fee_amt"  value="0.00"/></td>
             </tr>
             <tr>
               <td>Purchased Mtls/Bank Charges</td>
-              <td><input type="text" name="purchased_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="purchased_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="purchased_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="purchased_amt" oninput="computeTotalDeductions()" id="purchased_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Bladder Tank</td>
-              <td><input type="text" name="bladder_tank_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="bladder_tank_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="bladder_tank_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="bladder_tank_amt" oninput="computeTotalDeductions()" id="bladder_tank_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Pest Control</td>
-              <td><input type="text" name="pest_control_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="pest_control_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="pest_control_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="pest_control_amt" oninput="computeTotalDeductions()" id="pest_control_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Water</td>
-              <td><input type="text" name="water_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="water_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="water_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="water_amt" oninput="computeTotalDeductions()" id="water_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Electric</td>
-              <td><input type="text" name="electric_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="electric_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="electric_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="electric_amt" oninput="computeTotalDeductions()" id="electric_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Surcharge</td>
-              <td><input type="text" name="surcharge_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="surcharge_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="surcharge_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="surcharge_amt" oninput="computeTotalDeductions()" id="surcharge_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Building Insurance</td>
-              <td><input type="text" name="building_insurance_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="building_insurance_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="building_insurance_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="building_insurance_amt" oninput="computeTotalDeductions()" id="building_insurance_amt" value="0.00"/></td>
             </tr>
             <tr>
               <td>Condo Dues</td>
-              <td><input type="text" name="condo_dues_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
-              <td><input type="number" step="0.001" name="condo_dues_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="condo_dues_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="condo_dues_amt" id="condo_dues_amt" oninput="computeTotalDeductions()" value="{{ number_format($room_info->size*$room_info->condodues, 2) }}"/></td>
             </tr>
             <tr>
               <td>Unpaid Balances-Condo Corp</td>
-              <td><input type="number" step="0.001" name="unpaid_balances_desc" value=""/></td>
-              <td><input type="number" step="0.001" name="unpaid_balances_amt" value=""/></td>
+              <td><input form="remittanceForm" type="text" name="unpaid_balances_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+              <td><input form="remittanceForm" type="number" step="0.001" name="unpaid_balances_amt" id="unpaid_balances_amt" oninput="computeTotalDeductions()" value="0.00"/></td>
             </tr>
             <tr>
               <th>Total Deductions</th>
               <td></td>
-              <td><input type="number" step="0.001" name="total_deductions" id="total_deductions" value="" readonly/></td>
+              <td><input type="number" step="0.001" name="total_deductions" id="total_deductions" value="0.00" readonly/></td>
             </tr>
        
     </table>
@@ -197,10 +200,18 @@
     <table class="table table-bordered">
       
       <tr class="text-center">
-        <th class="text-center">123</th>
+        <th class="text-center"><input form="remittanceForm" type="number" step="0.001" name="amount_to_be_remitted" id="amount_to_be_remitted" value="{{ $amount_collected-($room_info->size*$room_info->condodues) }}" readonly/></th>
       </tr>
       
   </table>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <p class="text-right">
+      <button type="submit" form="remittanceForm" class="btn btn-primary">Process Remittance</button>
+    </p>
   </div>
 </div>
 </div>
@@ -213,6 +224,30 @@
 @endsection
 
 @section('scripts')
+<script>
+  function computeTotalDeductions(){
+    var mgmt_fee_amt = document.getElementById('mgmt_fee_amt').value;
+    var purchased_amt = document.getElementById('purchased_amt').value;
+    var bladder_tank_amt = document.getElementById('bladder_tank_amt').value;
+    var pest_control_amt = document.getElementById('pest_control_amt').value;
+    var water_amt = document.getElementById('water_amt').value;
+    var electric_amt = document.getElementById('electric_amt').value;
+    var surcharge_amt = document.getElementById('surcharge_amt').value;
+    var building_insurance_amt = document.getElementById('building_insurance_amt').value;
+    var condo_dues_amt = document.getElementById('condo_dues_amt').value;
+    var unpaid_balances_amt = document.getElementById('unpaid_balances_amt').value;
+
+    var total_deductions = eval(mgmt_fee_amt) + eval(purchased_amt) + eval(bladder_tank_amt) + eval(pest_control_amt) + eval(water_amt) + eval(electric_amt) + eval(surcharge_amt) + eval(building_insurance_amt) + eval(condo_dues_amt) + eval(unpaid_balances_amt);
+
+    document.getElementById('total_deductions').value = parseFloat(total_deductions, 2);
+
+    var amount_collected = document.getElementById('amount_collected').value;
+
+    document.getElementById('amount_to_be_remitted').value = eval(amount_collected)-eval(total_deductions);
+
+   
+  }
+</script>
 @endsection
 
 

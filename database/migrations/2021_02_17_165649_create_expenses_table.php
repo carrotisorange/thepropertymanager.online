@@ -18,9 +18,9 @@ class CreateExpensesTable extends Migration
             $table->unsignedBigInteger('unit_id_foreign')->nullable();
             $table->foreign('unit_id_foreign')->references('unit_id')->on('units')->onDelete('cascade');
             $table->uuid('remittance_id_foreign')->nullable();
-            $table->foreign('remittance_id_foreign')->references('remittance_id')->on('remittances')->onDelete('cascade');
+            $table->foreign('remittance_id_foreign')->references('remittance_id')->on('remittances')->onDelete('cascade')->onUpdate('cascade');
             $table->double('expense_amt', 8, 2);
-            $table->string('expense_particular');
+            $table->string('expense_particular')->nullable();
             $table->timestamps();
         });
     }

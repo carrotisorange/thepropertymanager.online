@@ -12,4 +12,10 @@ class Remittance extends Model
 
     public $incrementing = false;
 
+    public function expenses()
+    {
+        return $this->hasMany('App\Expense', 'remittance_id_foreign');
+    }
+
+
 }

@@ -26,6 +26,7 @@ class PersonnelController extends Controller
                ->select('*', 'properties.name as property')
                ->where('lower_access_user_id', Auth::user()->id)
                ->orWhere('id', Auth::user()->id)  
+               ->orderBy('users.created_at', 'desc')
                ->get();
 
        $personnels = Property::findOrFail(Session::get('property_id'))->personnels;

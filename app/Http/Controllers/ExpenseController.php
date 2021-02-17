@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Expense;
 use Illuminate\Http\Request;
+use Session;
+use App\Remittance;
+use Auth;
+use App\Notification;
+use App\Property;
 
 class ExpenseController extends Controller
 {
@@ -12,9 +17,25 @@ class ExpenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($property_id, $remittance_id)
     {
-        //
+        Session::put('current-page', 'remittances');
+
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'expenses';
+        
+        $notification->message = Auth::user()->name.' opens expenses page.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        $expenses = Remittance::findOrFail($remittance_id)->expenses;
+
+        $remittance = Remittance::findOrFail($remittance_id);
+
+        return view('webapp.expenses.index', compact('expenses','remittance'));
     }
 
     /**

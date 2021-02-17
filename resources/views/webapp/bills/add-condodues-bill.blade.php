@@ -24,14 +24,18 @@
    <thead>
     <tr>
       <th>#</th>
+      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
       <th>Occupant</th>
+      @else
+      <th>Tenant</th>
+      @endif
       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
       <th>Unit</th>
       @else
       <th>Room</th>
       @endif
       <th colspan="2">Period Covered</th>     
-      <th>Amount</th>
+      <th>Amount <small class="text-danger">(Size*Dues)</small></th>
   </tr>
    </thead>
    <?php
@@ -81,15 +85,15 @@
       
           <input class="" type="hidden" form="add_billings" name="particular{{ $desc_ctr++ }}" value="Condo Dues" required readonly>
       <td>
-       @if(Session::get('property_id') === '85bb4890-1e63-11eb-a2eb-abe972caa65d')
+       {{-- @if(Session::get('property_id') === '85bb4890-1e63-11eb-a2eb-abe972caa65d')
         @if($item->building === 'Harvard' || $item->building === 'Princeton')
         <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="525" oninput="this.value = Math.abs(this.value)">
         @else
         <input  class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="950" oninput="this.value = Math.abs(this.value)">
         @endif
-       @else
-        <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="" oninput="this.value = Math.abs(this.value)">
-       @endif
+       @else --}}
+        <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->condodues * $item->size }}" oninput="this.value = Math.abs(this.value)">
+       {{-- @endif --}}
       </td>
    </tr>
    @endforeach
@@ -125,7 +129,28 @@
         <input class="form-control" form="periodCoveredForm" type="date" name="end" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
       </div>
       </div>
-    
+      <br>
+      <div class="row">
+        <div class="col">
+        <label for="">Condo Dues/Building/SQM</label>
+        <table class="table">
+          <?php 
+            $building=1;
+            $condodues=1;
+           ?>
+          @foreach($buildings as $item)
+          <tr>
+            <th>{{ $item->building }}</th>
+            <td>
+              <input class="form-control" form="periodCoveredForm" type="hidden" name="building{{ $building++}}" value="{{ $item->building }}" required>
+              <input class="form-control" form="periodCoveredForm" type="number" step="0.001" name="condodues{{ $condodues++}}" value="{{ $item->condodues }}" required>
+            </td>
+          </tr>
+          @endforeach
+          
+        </table>
+      </div>
+      </div>
 
     </div>
     <div class="modal-footer">

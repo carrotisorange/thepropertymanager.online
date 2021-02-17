@@ -55,7 +55,7 @@
           
               @endif
             </li>
-            @elseif(Auth::user()->user_type === 'ap')
+            {{-- @elseif(Auth::user()->user_type === 'ap')
             <li class="nav-item">
               @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                 @if(Session::get('current-page') === 'units')
@@ -83,7 +83,7 @@
                 @endif 
           
               @endif
-            </li>
+            </li> --}}
             @endif
             {{-- Tenants/Occupants --}}
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')

@@ -19,16 +19,17 @@
 
 @else
 
-<div class="table-responsive text-nowrap">
+<div class="table">
     <table class="table">
         <thead>
             <?php $ctr=1;?>
             <tr>
                 <th>#</th>
-                <th>Date Remitted</th>
-             
+                <th>Date Prepared</th>
                 <th>Period Covered</th>
                 <th>Particular</th>
+                <th>CV</th>
+                <th>Check #</th>
                 <th>Owner</th>
                 <th>Room</th>
                 <th>Status</th>
@@ -40,20 +41,22 @@
             @foreach ($remittances as $item)
             <tr>
                 <th>{{ $ctr++ }}</th>     
-                <td>{{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
                 
-                <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
                 <td>{{ $item->particular }}</td>
+                <td>{{ $item->cv_number }}</td>
+                <td>{{ $item->check_number }}</td>
                 <td>{{ $item->name }}</td>
                 <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
                <td>
-                @if($item->isRemitted === 'pending')
-                <span class="badge badge-danger">{{ $item->isRemitted }}</span>
+                @if($item->remitted_at === NULL)
+                <span class="badge badge-danger">pending</span>
                 @else
-                <span class="badge badge-success">{{ $item->isRemitted }}</span>
+                <span class="badge badge-success">remitted</span>
                 @endif
                </td>
-                <td>{{ number_format($item->amt_remitted,2) }}</td>
+                <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
             </tr>   
             @endforeach
         </tbody>

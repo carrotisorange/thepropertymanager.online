@@ -9,19 +9,19 @@
   </div>
   <div class="col text-right">
     <div class=" row">
-      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      {{-- @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex') --}}
       <form id="billingCondoDuesForm" action="/property/{{Session::get('property_id')}}/bills/condodues/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingCondoDuesForm" name="billing_option" value="rent">
           <button class="btn btn-primary"  type="submit" form="billingCondoDuesForm"><i class="fas fa-plus"></i> Condo Dues</button>
-      @else
+      {{-- @else --}}
       <form id="billingRentForm" action="/property/{{Session::get('property_id')}}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingRentForm" name="billing_option" value="rent">
           <button class="btn btn-primary"  type="submit" form="billingRentForm"><i class="fas fa-plus"></i> Rent</button>
-      @endif
+      {{-- @endif --}}
         <form id="billingElectricForm" action=" /property/{{Session::get('property_id')}}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
