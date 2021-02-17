@@ -451,6 +451,15 @@ Route::get('/register', function(Request $request){
     return view('auth.register');
 });
 
+Route::get('/free', function(Request $request){
+    \Session::put('plan', $request->plan);
+    if(\Session::get('plan') == null){
+        return redirect('/#pricing');
+    }
+
+    return view('auth.register');
+});
+
 //routes for responses
 Route::post('concern/{concern_id}/response', 'ResponseController@store')->middleware(['auth', 'verified']);
 
