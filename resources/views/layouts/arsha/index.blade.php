@@ -617,7 +617,7 @@
     </section><!-- End About Us Section -->
 
      <!-- Modal HTML -->
- <div id="myModal" class="modal fade">
+ <div id="myModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
