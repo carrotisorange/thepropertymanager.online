@@ -59,7 +59,7 @@
     <table class="table table-borderless">
       <tr>
         <th>CV No</th>
-        <td><input form="remittanceForm" type="text" name="cv_no" value=""/></td>
+        <td><input form="remittanceForm" type="text" name="cv_number" value=""/></td>
        
     </tr>
       <tr>
@@ -71,7 +71,7 @@
  
       <tr>
         <th>Check No</th>
-        <td><input form="remittanceForm" type="text" name="check_no" value=""/></td>
+        <td><input form="remittanceForm" type="text" name="check_number" value=""/></td>
          
       </tr>
       <tr>

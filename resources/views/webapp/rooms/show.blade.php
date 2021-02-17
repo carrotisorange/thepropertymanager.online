@@ -123,43 +123,37 @@
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <table class="table">
-              <?php $exp_ctr=1; ?>
               <thead>
-                <tr>
-                  <th>#</th>
-              
-                  <th>Remittance ID</th>
-  
-             
-            
-                <th>Particular</th>
-              
-    
-              
-                <th class="text-right">Amount</th>
-                
-                </tr>
-            </thead>
-            <tbody>
-              @foreach ($expenses as $item)
-                <tr>
-                  <th>{{ $exp_ctr++ }}</th>
-                  
-         
-                  <td>{{ $item->remittance_id_foreign }}</td>
-               
-                  <td>{{ $item->expense_particular }}</td>
-              
-                  <td class="text-right">{{ number_format($item->expense_amt,2) }}</td>
-                </tr>    
-              @endforeach
-              <tr>
-                <th>TOTAL</th>
-                <th colspan="5" class="text-right">{{  number_format($expenses->sum('expense_amt'),2) }}</th>
-              </tr>
-            </tbody>
-            </table>
-        
+                  <?php $ctr=1;?>
+                  <tr>
+                      <th>#</th>
+                      <th>Date</th>
+                   
+                      <th>Particular</th>
+                      <th>Amount</th>
+                     
+          
+                  </tr>    
+              </thead>
+              <tbody>
+                  @foreach ($expenses as $item)
+                  <tr>
+                      <th>{{ $ctr++ }}</th>     
+                      <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                      <td>{{ $item->expense_particular }}</td>
+                      <th>{{ number_format($item->expense_amt,2) }}</th>
+                     
+                  </tr>   
+                  @endforeach
+                  <tr>
+                      <th></th>
+                      <td></td>
+                      <td></td>
+                      <th>{{ number_format($expenses->sum('expense_amt'), 2) }}</th>
+      
+                  </tr>
+              </tbody>
+          </table>
             </div>
         </div>
         </div>
@@ -169,57 +163,44 @@
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <table class="table">
-              <?php $rem_ctr=1; ?>
               <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Remittance ID</th>
-                  <th>Date Remitted</th>
-                  <th>Status</th>
-                <th>Period Covered</th>
-                <th>Particular</th>
-              
-    
-              
-                <th class="text-right">Amount</th>
-                
-                </tr>
-            </thead>
-            <tbody>
-              @foreach ($remittances as $item)
-                <tr>
-                  <th>{{ $rem_ctr++ }}</th>
-                  <td>{{ $item->remittance_id }}</td>
-                  <td>
-                    @if($item->isRemitted === 'pending')
-                    NA
-                    @else
-                    {{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}
-                    @endif
-                  </td>
-                  <td>
-                    @if($item->isRemitted === 'pending')
-                    <span class="badge badge-danger">{{ $item->isRemitted }}</span>
-                    @else
-                    <span class="badge badge-success">{{ $item->isRemitted }}</span>
-                    @endif
+                  <?php $ctr=1;?>
+                  <tr>
+                      <th>#</th>
+                      <th>Date Prepared</th>
+                      <th>Period Covered</th>
+                      <th>Particular</th>
+                      <th>CV</th>
+                      <th>Check #</th>
                    
-                  </td>
-                 
-                  <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
-                  <td>{{ $item->particular }}</td>
- 
-              
-                  <th class="text-right"><a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/remittance/{{ $item->remittance_id }}">{{ number_format($item->amt_remitted,2) }}</a></th>
-                </tr>    
-              @endforeach
-              <tr>
-                <th>TOTAL</th>
-                <th colspan="6" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
-              </tr>
-            </tbody>
-            </table>
-        
+                      <th>Status</th>
+                      <th>Amount</th>
+          
+                  </tr>    
+              </thead>
+              <tbody>
+                  @foreach ($remittances as $item)
+                  <tr>
+                      <th>{{ $ctr++ }}</th>     
+                      <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                      
+                      <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
+                      <td>{{ $item->particular }}</td>
+                      <td>{{ $item->cv_number }}</td>
+                      <td>{{ $item->check_number }}</td>
+                      
+                     <td>
+                      @if($item->remitted_at === NULL)
+                      <span class="badge badge-danger">pending</span>
+                      @else
+                      <span class="badge badge-success">remitted</span>
+                      @endif
+                     </td>
+                      <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                  </tr>   
+                  @endforeach
+              </tbody>
+          </table>
            
             </div>
         </div>

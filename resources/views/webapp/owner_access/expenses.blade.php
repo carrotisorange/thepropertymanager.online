@@ -30,7 +30,7 @@
               <span class="nav-link-text">Rooms</span>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/bills">
               <i class="fas fa-file-invoice-dollar text-pink"></i>
               <span class="nav-link-text">Bills</span>
@@ -41,7 +41,7 @@
               <i class="fas fa-coins text-yellow"></i>
               <span class="nav-link-text">Payments</span>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a class="nav-link active" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittances">
               <i class="fas fa-hand-holding-usd text-teal"></i>
@@ -65,7 +65,7 @@
 
 @section('upper-content')
 <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Expenses</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Expenses for {{ Carbon\Carbon::parse($remittance->created_at)->format('M d, Y') }}</h6>
     
   </div>
   {{-- <div class="col-md-6 text-right">
@@ -78,30 +78,38 @@
 <p class="text-danger text-center">No expenses found!</p>
 @else
 <div class="table-responsive text-nowrap">
-    <table class="table">
-        <thead>
-            <?php $ctr=1;?>
-            <tr>
-                <th>#</th>
-                <th>Particular</th>
-                <th class="text-right">Amount</th>
-    
-            </tr>    
-        </thead>
-        <tbody>
-            @foreach ($expenses as $item)
-            <tr>
-                <th>{{ $ctr++ }}</th>     
-                <td>{{ $item->expense_particular }}</td>
-                <td class="text-right">{{ number_format($item->expense_amt, 2) }}</td>
-            </tr>   
-            @endforeach
-            <tr>
-              <th>TOTAL</th>
-              <th colspan="4" class="text-right">{{  number_format($expenses->sum('expense_amt'),2) }}</th>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table">
+    <thead>
+        <?php $ctr=1;?>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+         
+            <th>Particular</th>
+            <th>Amount</th>
+           
+
+        </tr>    
+    </thead>
+    <tbody>
+        @foreach ($expenses as $item)
+        <tr>
+            <th>{{ $ctr++ }}</th>     
+            <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+            <td>{{ $item->expense_particular }}</td>
+            <th>{{ number_format($item->expense_amt,2) }}</th>
+           
+        </tr>   
+        @endforeach
+        <tr>
+            <th></th>
+            <td></td>
+            <td></td>
+            <th>{{ number_format($expenses->sum('expense_amt'), 2) }}</th>
+
+        </tr>
+    </tbody>
+</table>
    
   </div>
 @endif

@@ -41,4 +41,15 @@ class Unit extends Model
         return $this->hasMany('App\Certificate', 'unit_id_foreign');
     }
 
+    public function remittances()
+    {
+        return $this->hasMany('App\Remittance', 'unit_id_foreign');
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany('App\Expense', 'unit_id_foreign');
+    }
+
+
 }

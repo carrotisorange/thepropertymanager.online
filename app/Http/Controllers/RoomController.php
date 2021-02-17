@@ -288,24 +288,28 @@ class RoomController extends Controller
            ->havingRaw('balance > 0')
            ->get();
 
-           $remittances = DB::table('units')
-           ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
-           ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
+        //    $remittances = DB::table('units')
+        //    ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+        //    ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
          
-           ->select('*', 'remittances.created_at as dateRemitted')
-           ->where('remittances.unit_id_foreign',$unit_id)
-           ->orderBy('remittances.created_at')
-           ->get();
+        //    ->select('*', 'remittances.created_at as dateRemitted')
+        //    ->where('remittances.unit_id_foreign',$unit_id)
+        //    ->orderBy('remittances.created_at')
+        //    ->get();
 
-            $expenses = DB::table('units')
-           ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
+           $remittances = Unit::findOrFail($unit_id)->remittances;
+
+           $expenses = Unit::findOrFail($unit_id)->expenses;
+
+        //     $expenses = DB::table('units')
+        //    ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
            
-           ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
+        //    ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
       
-           ->select('*', 'expenses.created_at as dateCreated')
-           ->where('expenses.unit_id_foreign',$unit_id)
-           ->orderBy('expenses.created_at')
-           ->get();
+        //    ->select('*', 'expenses.created_at as dateCreated')
+        //    ->where('expenses.unit_id_foreign',$unit_id)
+        //    ->orderBy('expenses.created_at')
+        //    ->get();
 
 
            $concerns = DB::table('contracts')

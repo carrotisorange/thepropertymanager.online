@@ -30,7 +30,7 @@
               <span class="nav-link-text">Rooms</span>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/bills">
               <i class="fas fa-file-invoice-dollar text-pink"></i>
               <span class="nav-link-text">Bills</span>
@@ -41,7 +41,7 @@
               <i class="fas fa-coins text-yellow"></i>
               <span class="nav-link-text">Payments</span>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a class="nav-link active" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittances">
               <i class="fas fa-hand-holding-usd text-teal"></i>
@@ -75,52 +75,57 @@
 
 @section('main-content')
 <div class="table-responsive text-nowrap">
-    <table class="table">
-        <thead>
-            <?php $ctr=1;?>
-            <tr>
-                <th>#</th>
-                <th>Date Remitted</th>
-                <th>Room</th>
-                <th>Period Covered</th>
-                <th>Particular</th>
-                <th>Status</th>
-           
-              
-                <th class="text-right">Amount</th>
+  <table class="table">
+    <thead>
+        <?php $ctr=1;?>
+        <tr>
+            <th>#</th>
+            <th>Date Prepared</th>
+            <th>Period Covered</th>
+            <th>Particular</th>
+            <th>CV</th>
+            <th>Check #</th>
+         
+            <th>Status</th>
+            <th>Amount</th>
+
+        </tr>    
+    </thead>
+    <tbody>
+        @foreach ($remittances as $item)
+        <tr>
+            <th>{{ $ctr++ }}</th>     
+            <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+            
+            <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
+            <td>{{ $item->particular }}</td>
+            <td>{{ $item->cv_number }}</td>
+            <td>{{ $item->check_number }}</td>
+            
+           <td>
+            @if($item->remitted_at === NULL)
+            <span class="badge badge-danger">pending</span>
+            @else
+            <span class="badge badge-success">remitted</span>
+            @endif
+           </td>
+            <th><a href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+        </tr>   
+        @endforeach
+       
+        <tr>
+          <th>TOTAL</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>{{ number_format($remittances->sum('amt_remitted'),2) }}</th>
+        </tr>
     
-            </tr>    
-        </thead>
-        <tbody>
-            @foreach ($remittances as $item)
-            <tr>
-                <th>{{ $ctr++ }}</th>     
-                <td>
-                  @if($item->isRemitted === 'pending')
-                  NA
-                  @else
-                  {{ Carbon\Carbon::parse($item->dateRemitted)->format('M d, Y') }}
-                  @endif
-                <td>{{ $item->unit_no }}</td>
-                <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
-                <td>{{ $item->particular }}</td>
-                <td>
-                  @if($item->isRemitted === 'pending')
-                  <span class="badge badge-danger">{{ $item->isRemitted }}</span>
-                  @else
-                  <span class="badge badge-success">{{ $item->isRemitted }}</span>
-                  @endif
-                 </td>
-                <th class="text-right"><a href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
-            </tr>   
-            @endforeach
-            <tr>
-              <th>TOTAL</th>
-              <th colspan="6" class="text-right">{{  number_format($remittances->sum('amt_remitted'),2) }}</th>
-            </tr>
-        </tbody>
-    </table>
-   
+    </tbody>
+</table>
   </div>
        
 

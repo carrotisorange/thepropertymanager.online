@@ -31,7 +31,7 @@
               <span class="nav-link-text">Rooms</span>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/bills">
               <i class="fas fa-file-invoice-dollar text-pink"></i>
               <span class="nav-link-text">Bills</span>
@@ -42,7 +42,7 @@
               <i class="fas fa-coins text-yellow"></i>
               <span class="nav-link-text">Payments</span>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittances">
               <i class="fas fa-hand-holding-usd text-teal"></i>

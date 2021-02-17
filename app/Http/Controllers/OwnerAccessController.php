@@ -14,6 +14,7 @@ use App\Unit;
 use App\User;
 use Carbon\Carbon;
 use Hash;
+use App\Remittance;
 
 class OwnerAccessController extends Controller
 {
@@ -205,6 +206,8 @@ public function expense($user_id, $owner_id, $remittance_id){
     ->orderBy('expenses.created_at')
     ->get();
 
+     $remittance = Remittance::findOrFail($remittance_id);
+
     $owner = Owner::findOrFail($owner_id);
 
    $notification = new Notification();
@@ -218,7 +221,7 @@ public function expense($user_id, $owner_id, $remittance_id){
 
    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
-  return view('webapp.owner_access.expenses', compact('expenses', 'owner'));
+  return view('webapp.owner_access.expenses', compact('expenses', 'owner', 'remittance'));
 }
 
   public function bill($user_id, $owner_id){
