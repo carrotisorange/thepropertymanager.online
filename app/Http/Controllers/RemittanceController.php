@@ -133,6 +133,18 @@ class RemittanceController extends Controller
         ]);
         }
 
+        //real_property_tax_amt
+        if($request->real_property_tax_amt>0){
+        DB::table('expenses')->insert([
+            'expense_id' => Uuid::generate()->string,
+            'remittance_id_foreign' => $remittance_id,
+            'unit_id_foreign' => $unit_id,
+            'expense_particular' => 'Real Property Tax - '.$request->real_property_tax_desc,
+            'expense_amt' => $request->real_property_tax_amt,
+            'created_at' => $request->date,
+        ]);
+        }
+
          //bladder_tank
          if($request->bladder_tank_amt>0){
          DB::table('expenses')->insert([

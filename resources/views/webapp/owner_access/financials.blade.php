@@ -39,7 +39,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Amount Collected</th>
+                        <th>Amount Collected <a href="#" title="Rent of your unit per month."><i class="fas fa-info-circle"></i></a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                 <tbody>
                    @foreach ($expenses as $item)
                    <tr>
-                        <td>{{ number_format($item->total_expenses, 2) }}</td>
+                        <td><a href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id_foreign }}/expenses">{{ number_format($item->total_expenses, 2) }}</a></td>
                     </tr>
                    @endforeach
                   
