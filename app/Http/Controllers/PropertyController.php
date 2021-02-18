@@ -101,7 +101,7 @@ class PropertyController extends Controller
                 $signup_rate_1 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
             
               
                 ->count();
@@ -110,7 +110,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
     
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
         
                 ->count();
             
@@ -118,7 +118,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
     
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
        
                 ->count();
             
@@ -127,7 +127,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
             
         
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
             
                 
                 ->count();
@@ -137,7 +137,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
             
             
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
             
      
                 ->count();
@@ -147,7 +147,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
             
            
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
             
              
                 ->count();
@@ -157,7 +157,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
     
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
             
               
                 ->whereNotNull('email_verified_at')
@@ -168,7 +168,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
     
             
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
          
                 ->whereNotNull('email_verified_at')
                 ->count();
@@ -177,7 +177,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
             
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
       
                 ->whereNotNull('email_verified_at')
                 ->count();
@@ -187,7 +187,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
             
        
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
     
                 ->whereNotNull('email_verified_at')
                 ->count();
@@ -197,7 +197,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
     
             
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
                
                 ->whereNotNull('email_verified_at')
                 ->count();
@@ -207,7 +207,7 @@ class PropertyController extends Controller
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
     
             
-                ->where('user_type', 'manager')
+                // ->where('user_type', 'manager')
             
                 ->whereNotNull('email_verified_at')
                 ->count();
