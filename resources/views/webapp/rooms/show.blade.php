@@ -105,6 +105,12 @@
                       <td>{{ number_format($home->rent,2) }}/month</td>
                   </tr>
                    </thead>
+                   <thead>
+                    <tr>
+                      <th>Enrollment Date</th> 
+                      <td>{{ Carbon\Carbon::parse($home->created_at)->format('M d, Y') }} </td>
+                  </tr>
+                   </thead>
                 
                </table>
               </div>
@@ -564,6 +570,10 @@
                 <label>Rent <small>(/month)</small></label>
                 <input form="editUnitForm"  oninput="this.value = Math.abs(this.value)" step="0.01" type="number" value="{{ $home->rent? $home->rent: 0 }}" name="rent" class="form-control">
                 </div>
+            <div class="form-group">
+                <label>Enrollment Date</label>
+                <input form="editUnitForm" type="date" value="{{ Carbon\Carbon::parse($home->created_at)->format('Y-m-d') }}" name="created_at" class="form-control">
+            </div>
       
         </div>
         <div class="modal-footer">

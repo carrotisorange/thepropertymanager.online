@@ -411,6 +411,7 @@ Route::get('/user/{user_id}', 'UserController@upgrade')->middleware(['auth', 've
 Route::post('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/rooms', 'OwnerAccessController@room')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/room/{room_id}/contracts', 'OwnerAccessController@contracts')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/bills', 'OwnerAccessController@bill')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/payments', 'OwnerAccessController@payment')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@concern')->middleware(['auth', 'verified']);

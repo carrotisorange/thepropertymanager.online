@@ -472,6 +472,8 @@ class RoomController extends Controller
                 'type' => $request->type,
                 'rent' => $request->rent,
                 'size' => $request->size,
+                'created_at' => $request->created_at,
+                'updated_at' => Carbon::now(),
             ]);
 
  

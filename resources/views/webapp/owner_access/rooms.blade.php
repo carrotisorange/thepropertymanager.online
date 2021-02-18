@@ -1,6 +1,6 @@
 @extends('webapp.owner_access.template')
 
-@section('title', 'Contracts')
+@section('title', 'Rooms')
 
 
 @section('sidebar')
@@ -66,7 +66,7 @@
 
 @section('upper-content')
 <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Contracts in <b>{{ $room->building.' '.$room->unit_no }}</b></h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Rooms</h6>
     
   </div>
 @endsection
@@ -79,24 +79,27 @@
        <thead>
         <tr>
           <th>#</th>
-          <th>Contract ID</th>
-          <th>Started on</th>
-            <th>Ended on</th>
+          <th>Enrollment Date</th>
+          <th>Building</th>
+            <th>Room</th>
+            {{-- <th>Movein </th>
+            <th>Moveout at</th> --}}
             <th>Status</th>
-            <th>Rent</th>
-            <th>Moveout</th>
+            <th>Rent(/month)</th>
+            
         </tr>
        </thead>
        <tbody>
-           @foreach ($contracts as $item)
+           @foreach ($rooms as $item)
                <tr>
                  <th>{{ $ctr++ }}</th>
-                 <td>{{ $item->contract_id }}</td>
-                 <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
-                 <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
-                <td>{{ $item->status }}</td>
-                <td>{{ number_format($item->rent,2) }}</td>
-                <td>{{ $item->moveout_reason? $item->moveout_reason: 'NA' }}</td>
+                 <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                 <td>{{ $item->building }}</td>
+                   <th><a href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/room/{{ $item->unit_id }}/contracts">{{ $item->unit_no }}</a></th>
+                   {{-- <td>{{ $item->movein_at }}</td>
+                   <td>{{ $item->moveout_at }}</td> --}}
+                   <td>{{ $item->status }}</td>
+                   <td>{{ number_format($item->rent,2) }}</td>
                </tr>
            @endforeach
        </tbody>

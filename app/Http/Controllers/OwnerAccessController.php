@@ -159,15 +159,15 @@ class OwnerAccessController extends Controller
        $notification = new Notification();
        $notification->user_id_foreign = Auth::user()->id;
        $notification->property_id_foreign = Session::get('property_id');
-       $notification->type = 'concern';
+       $notification->type = 'room';
        
-       $notification->message = Auth::user()->name. ' checks his contracts.';
+       $notification->message = Auth::user()->name. ' checks his rooms.';
        $notification->save();
 
 
        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
-      return view('webapp.owner_access.contracts', compact('rooms', 'owner'));
+      return view('webapp.owner_access.rooms', compact('rooms', 'owner'));
   }
 
   public function remittance($user_id, $owner_id){
@@ -196,6 +196,26 @@ class OwnerAccessController extends Controller
   return view('webapp.owner_access.remittances', compact('remittances', 'owner'));
 }
 
+public function contracts($user_id, $owner_id, $room_id){
+
+   $contracts = Unit::findOrFail($room_id)->contracts;
+
+   $room = Unit::findOrFail($room_id);
+
+   $owner = Owner::findOrFail($owner_id);
+
+  $notification = new Notification();
+  $notification->user_id_foreign = Auth::user()->id;
+  $notification->property_id_foreign = Session::get('property_id');
+  $notification->type = 'contract';
+  
+  $notification->message = Auth::user()->name. ' checks his contracts in room'. $room->unit_no;
+  $notification->save();
+
+  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+
+ return view('webapp.owner_access.contracts', compact('owner', 'contracts', 'room'));
+}
 
 public function expense($user_id, $owner_id, $remittance_id){
      $expenses = DB::table('units')

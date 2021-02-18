@@ -184,6 +184,7 @@
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>Enrollment Date</th>
                   <th>Building</th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                   <th>Unit</th>
@@ -201,6 +202,7 @@
              <tbody>
               <tr>
                 <th>{{ $ctr++ }}</th>
+                <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
                 <td>{{ $item->building }}</td>
                 <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')

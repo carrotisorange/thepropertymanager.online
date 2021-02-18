@@ -75,6 +75,9 @@
 
 @section('main-content')
 <div class="table-responsive text-nowrap">
+  @if($concerns->count() <=0 )
+  <p class="text-danger text-center">No concerns found!</p>
+  @else
     <table class="table">
       <?php $ctr = 1; ?>
       <thead>
@@ -131,7 +134,7 @@
         @endforeach
       </tbody>
     </table>
-   
+   @endif
   </div>
        
 

@@ -75,6 +75,9 @@
 
 @section('main-content')
 <div class="table-responsive text-nowrap">
+  @if($remittances->count() <=0 )
+  <p class="text-danger text-center">No remittances found!</p>
+  @else
   <table class="table">
     <thead>
         <?php $ctr=1;?>
@@ -126,7 +129,8 @@
     
     </tbody>
 </table>
-  </div>
+  @endif
+</div>
        
 
 @endsection
