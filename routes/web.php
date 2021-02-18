@@ -413,6 +413,7 @@ Route::get('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@
 Route::get('/user/{user_id}/owner/{owner_id}/rooms', 'OwnerAccessController@room')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/room/{room_id}/contracts', 'OwnerAccessController@contracts')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/bills', 'OwnerAccessController@bill')->middleware(['auth', 'verified']);
+Route::get('/user/{user_id}/owner/{owner_id}/financials', 'OwnerAccessController@financial')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/payments', 'OwnerAccessController@payment')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@concern')->middleware(['auth', 'verified']);
 Route::post('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@store_concern')->middleware(['auth', 'verified']);

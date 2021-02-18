@@ -51,6 +51,19 @@
                 @endif
             </li>
             <li class="nav-item">
+                @if(Session::get('current-page') === 'financials')
+                <a class="nav-link active" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/financials">
+                    <i class="fas fa-coins text-yellow"></i>
+                    <span class="nav-link-text">Financial Reports</span>
+                  </a>
+                @else
+                <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/financials">
+                    <i class="fas fa-coins text-yellow"></i>
+                    <span class="nav-link-text">Financial Reports</span>
+                  </a>
+                @endif
+            </li>
+            <li class="nav-item">
                 @if(Session::get('current-page') === 'concerns')
                 <a class="nav-link active" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/concerns">
                     <i class="fas fa-tools text-cyan"></i>

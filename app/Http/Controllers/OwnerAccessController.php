@@ -202,6 +202,53 @@ class OwnerAccessController extends Controller
   return view('webapp.owner_access.remittances', compact('remittances', 'owner'));
 }
 
+public function financial($user_id, $owner_id){
+
+    Session::put('current-page', 'financials');
+
+    $owner = Owner::findOrFail($owner_id);
+
+     $remittances = DB::table('units')
+        ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+        ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->where('owner_id',$owner_id)
+        ->groupBy('remittance_id')
+        ->get();
+
+      $bills = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        ->leftJoin('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+        ->leftJoin('certificates', 'contracts.unit_id_foreign', 'certificates.unit_id_foreign')
+        ->leftJoin('units', 'contracts.unit_id_foreign', 'unit_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('owner_id_foreign', $owner_id)
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        //->havingRaw('balance > 0')
+        ->get();
+
+      $expenses = DB::table('units')
+        ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
+        ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->selectRaw('*, IFNULL(sum(expense_amt),0) as total_expenses')
+        ->where('owner_id',$owner_id)
+        ->groupBy('remittance_id_foreign')
+        ->get();
+
+   $notification = new Notification();
+   $notification->user_id_foreign = Auth::user()->id;
+   $notification->property_id_foreign = Session::get('property_id');
+   $notification->type = 'financial';
+   
+   $notification->message = Auth::user()->name. ' checks his financials.';
+   $notification->save();
+
+   Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
+
+  return view('webapp.owner_access.financials', compact('owner', 'bills', 'expenses', 'remittances'));
+}
+
 public function contracts($user_id, $owner_id, $room_id){
 
     Session::put('current-page', 'rooms');
