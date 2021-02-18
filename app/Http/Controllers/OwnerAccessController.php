@@ -25,6 +25,8 @@ class OwnerAccessController extends Controller
      */
     public function dashboard(Request $request, $user_id, $owner_id){
 
+        Session::put('current-page', 'dashboard');
+
         if($request->property_id === null){
             Session::put('property_id', Session::get('property_id'));
             Session::put('mobile', Session::get('mobile'));
@@ -147,6 +149,8 @@ class OwnerAccessController extends Controller
     
     public function room($user_id, $owner_id){
 
+        Session::put('current-page', 'rooms');
+
         $rooms = DB::table('certificates')
         ->join('units', 'certificates.unit_id_foreign', 'unit_id')
     
@@ -171,6 +175,8 @@ class OwnerAccessController extends Controller
   }
 
   public function remittance($user_id, $owner_id){
+
+    Session::put('current-page', 'remittances');
 
     $remittances = DB::table('units')
     ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
@@ -198,6 +204,8 @@ class OwnerAccessController extends Controller
 
 public function contracts($user_id, $owner_id, $room_id){
 
+    Session::put('current-page', 'rooms');
+
    $contracts = Unit::findOrFail($room_id)->contracts;
 
    $room = Unit::findOrFail($room_id);
@@ -218,6 +226,9 @@ public function contracts($user_id, $owner_id, $room_id){
 }
 
 public function expense($user_id, $owner_id, $remittance_id){
+
+    Session::put('current-page', 'remittances');
+
      $expenses = DB::table('units')
     ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
     ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
@@ -345,6 +356,8 @@ public function payment($user_id, $owner_id){
 }
 
 public function concern($user_id, $owner_id){
+
+    Session::put('current-page', 'concerns');
 
     if(($user_id == Auth::user()->id)){
 

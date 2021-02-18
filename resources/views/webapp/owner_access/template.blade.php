@@ -37,7 +37,7 @@
       </head>
 <body>
   <!-- Sidenav -->
-@yield('sidebar')
+@include('webapp.owner_access.sidebar')
 @show
   <!-- Main content -->
   <div class="main-content" id="panel">
