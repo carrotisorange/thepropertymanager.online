@@ -1109,6 +1109,35 @@ $reason_for_moving_out_chart->dataset('', 'pie',
                     ]
                 );
 
+ $working = Tenant::where('type_of_tenant', 'working')->count();
+
+ $studying = Tenant::where('type_of_tenant', 'studying')->count();
+ 
+ $status = new DashboardChart;
+ $status->displaylegend(true);
+ $status->labels
+                             (
+                                 [ 
+                                     'Working'.' ('.$working.')',
+                                     'Studying'.' ('.$studying.')', 
+                                     'Total'.' ('.$tenants->count(). ')'
+                                 ]
+                             );
+ $status->dataset
+                             ('', 'pie',
+                                 [   
+                                     number_format(( $working/$tenants->count()) * 100,1),
+                                     number_format(( $studying/$tenants->count()) * 100,1),                                 
+                                 ]
+                             )
+ ->backgroundColor
+                     (
+                         [
+                             '#008000',
+                             '#211939', 
+                         ]
+                     );
+
 
 
 if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
@@ -1158,7 +1187,9 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
                 'collections_for_the_day','concerns','contracts',
-                'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns'
+                'current_occupancy_rate', 'property','collection_rate_1',
+                'renewal_rate','increase_from_last_month','increase_in_room_acquired',
+                'top_agents','point_of_contact','pending_concerns', 'status'
             )
     );
 }

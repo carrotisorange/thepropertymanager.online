@@ -184,7 +184,7 @@
 <div class="row">
 
   <!-- Financial Line Chart -->
-  <div class="col-xl-6 col-lg-6">
+  <div class="col-xl-4 col-lg-4">
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -203,17 +203,17 @@
          <thead>
           <tr>
         
-            <th>Name</th>
-            <th>Role</th>
-            <th>Referrals</th>
+            <th>User</th>
+            {{-- <th>Role</th> --}}
+            <th># Referrals</th>
           </tr>
          </thead>
          <tbody>
            @foreach ($top_agents as $item)
            <tr>
-          
-             <td>{{ $item->name }}</td>
-             <td>{{ $item->user_type }}</td>
+            <?php $explode = explode(" ", $item->name);?>
+             <td>{{ $explode[0] }}</td>
+             {{-- <td>{{ $item->user_type }}</td> --}}
              <td>{{ number_format($item->referrals) }}</td>
           </tr>
            @endforeach
@@ -224,7 +224,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6 mb-4">
+  <div class="col-lg-4 mb-4">
     <!-- Illustrations -->
     <div class="card shadow mb-4">
 
@@ -239,6 +239,26 @@
       <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
       @else
       {!! $point_of_contact->container() !!}
+      @endif
+      </div>
+    </div>
+
+  </div>
+  <div class="col-lg-4 mb-4">
+    <!-- Illustrations -->
+    <div class="card shadow mb-4">
+
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">TYPE</h6>
+          <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small>
+        </div>
+
+  
+      <div class="card-body">
+      @if($contracts <= 0)
+      <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+      @else
+      {!! $status->container() !!}
       @endif
       </div>
     </div>
@@ -616,7 +636,7 @@ You have <b>{{ $pending_concerns->count() }}</b> pending concern/s that need to 
 {!! $moveout_rate->script() !!}
 {!! $expenses_rate->script() !!}
 {!! $reason_for_moving_out_chart->script() !!}
-
+{!! $status->script() !!}
 
 <script>
   $(document).ready(function(){
