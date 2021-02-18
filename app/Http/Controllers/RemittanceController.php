@@ -105,7 +105,7 @@ class RemittanceController extends Controller
             'end_at' => $bill_info->end,
             'created_at' => $request->date,
             'cv_number' => $request->cv_number,
-            'check_number' => $request->check_number
+            'check_number' => $request->check_number.'-'.$request->bank
         ]);
 
         //mgmt fee

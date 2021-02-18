@@ -76,7 +76,7 @@
       </tr>
       <tr>
         <th>Bank</th>
-        <td>{{ $owner_info->bank_name? $owner_info->bank_name: 'NA' }}</td>
+        <td><input form="remittanceForm" type="text" name="bank" value="{{ $owner_info->bank_name }}"/></td>
     </tr>
     
     </table>
