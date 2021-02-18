@@ -43,11 +43,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($expenses as $item)
                    @foreach ($bills as $item)
                    <tr>
                        
                         <td>{{ number_format($item->rent, 2) }}</td>
                     </tr>
+                   @endforeach
                    @endforeach
                 </tbody>
             </table>
@@ -65,10 +67,10 @@
                 <tbody>
                    @foreach ($expenses as $item)
                    <tr>
-                       
                         <td>{{ number_format($item->total_expenses, 2) }}</td>
                     </tr>
                    @endforeach
+                  
                 </tbody>
             </table>
         </div>
