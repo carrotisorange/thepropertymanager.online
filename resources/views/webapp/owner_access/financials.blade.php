@@ -14,25 +14,54 @@
 
 @section('main-content')
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="table-responsive text-nowrap">
-            <p>Amount Collected</p>
+           
             <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                    </tr>
+                </thead>
                 <tbody>
-                   @foreach ($bills as $item)
+                   @foreach ($remittances as $item)
                    <tr>
-                        <td>{{ Carbon\Carbon::parse($item->date_posted )->format('M d, Y')}}</td>
-                        <td>{{ number_format($item->amt_paid, 2) }}</td>
+                        <td>{{ Carbon\Carbon::parse($item->created_at )->format('M d, Y')}}</td>
+                        
                     </tr>
                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="table-responsive text-nowrap">
-            <p>Expense</p>
             <table class="table">
+                <thead>
+                    <tr>
+                        <th>Amount Collected</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach ($bills as $item)
+                   <tr>
+                       
+                        <td>{{ number_format($item->rent, 2) }}</td>
+                    </tr>
+                   @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="table-responsive text-nowrap">
+           
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Expenses</th>
+                    </tr>
+                </thead>
                 <tbody>
                    @foreach ($expenses as $item)
                    <tr>
@@ -44,10 +73,15 @@
             </table>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="table-responsive text-nowrap">
-            <p>Amount Remitted</p>
+    
             <table class="table">
+                <thead>
+                    <tr>
+                        <th>Amount Remitted</th>
+                    </tr>
+                </thead>
                 <tbody>
                    @foreach ($remittances as $item)
                    <tr>
