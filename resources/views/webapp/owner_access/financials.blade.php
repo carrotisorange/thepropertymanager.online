@@ -51,6 +51,12 @@
                     </tr>
                    @endforeach
                    @endforeach
+                   @foreach ($bills as $item)
+                   <tr>
+                    <th>{{ number_format($item->rent*$expenses->count(), 2) }}</th>
+                    </tr>
+                   @endforeach
+                  
                 </tbody>
             </table>
         </div>
@@ -70,7 +76,9 @@
                         <td><a href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id_foreign }}/expenses">{{ number_format($item->total_expenses, 2) }}</a></td>
                     </tr>
                    @endforeach
-                  
+                   <tr>
+                    <th>{{ number_format($expenses->sum('total_expenses'), 2) }}</th>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -91,6 +99,9 @@
                         <th>{{ number_format($item->amt_remitted, 2) }}</th>
                     </tr>
                    @endforeach
+                   <tr>
+                       <th>{{ number_format($remittances->sum('amt_remitted'), 2) }}</th>
+                   </tr>
                 </tbody>
             </table>
         </div>
