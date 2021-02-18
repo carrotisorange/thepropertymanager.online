@@ -114,6 +114,7 @@ Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/request', 
 Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/approve', 'TenantController@approve')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}/upload/img','TenantController@upload_img')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenants/pending','TenantController@pending')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/tenants/filter', 'TenantController@index')->middleware(['auth', 'verified']);
 
 //routes for contracts
 Route::post('/property/{property_id}/tenant/{tenant_id}/contract/create', 'ContractController@create')->middleware(['auth', 'verified']);
