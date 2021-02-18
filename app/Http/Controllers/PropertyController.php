@@ -100,115 +100,79 @@ class PropertyController extends Controller
             
                 $signup_rate_1 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
-                ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
-                // ->where('user_type', 'manager')
-            
-              
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->count();
             
                 $signup_rate_2 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
-    
-                // ->where('user_type', 'manager')
-        
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->count();
             
                 $signup_rate_3 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
-    
-                // ->where('user_type', 'manager')
-       
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->count();
             
                 $signup_rate_4 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-            
-        
-                // ->where('user_type', 'manager')
-            
-                
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->count();
             
                 $signup_rate_5 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
-            
-            
-                // ->where('user_type', 'manager')
-            
-     
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->count();
             
                 $signup_rate_6 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
-            
-           
-                // ->where('user_type', 'manager')
-            
-             
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->count();
             
             
                 $verified_users_1 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
-    
-                // ->where('user_type', 'manager')
-            
-              
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_2 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
-    
-            
-                // ->where('user_type', 'manager')
-         
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_3 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-            
-                // ->where('user_type', 'manager')
-      
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_4 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-            
-       
-                // ->where('user_type', 'manager')
-    
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_5 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
-    
-            
-                // ->where('user_type', 'manager')
-               
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_6 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
-    
-            
-                // ->where('user_type', 'manager')
-            
+                ->whereNotIn('user_type', ['owner','tenant','dev' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
