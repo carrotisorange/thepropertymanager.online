@@ -686,7 +686,6 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
      */
     public function destroy($property_id, $tenant_id, $contract_id)
     {
-
         $tenant =Tenant::findOrFail($tenant_id);
         
         $notification = new Notification();

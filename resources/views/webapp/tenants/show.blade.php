@@ -416,11 +416,9 @@
                   <th>Building</th>
                   <th>Room</th>
                   <th>Status</th>
-                  <th>Movein</th>
-                  <th>Moveout</th>
-                  <th>Term</th>
+                  <th>Contract</th>
                   <th>Rent</th>
-      
+                  <th colspan="5">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -442,12 +440,35 @@
         
                   @endif
                 </td>
-                <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
-                <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
-                <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}">{{ $item->contract_term }}</a></th>
+                <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }} - {{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }} ({{ $item->contract_term }})</td>
+           
                 <td>{{ number_format($item->rent, 2) }}</td>
-              
-         
+                <th>
+                  <a title="delete this contract" class="btn btn-danger btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/delete"><i class="fas fa-trash"></i></a>
+                  <a title="edit contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/edit"><i class="fas fa-edit"></i></a>
+                  @if(!$item->terminated_at)
+                    @if($pending_balance->count() > 0)
+                    <a title="terminate this contract" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#pendingBalance"><i class="fas fa-sign-out-alt"></i> </a>
+                    @else
+                    <a title="terminate this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/preterminate"><i class="fas fa-sign-out-alt"></i> </a>
+                    @endif
+                 
+                @endif
+                @if($item->terminated_at)
+                @if($pending_balance->count()>0)
+                <a title="proceed to moveout" href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-sm btn-primary text-white"><i class="fas fa-sign-out-alt"></i></a>
+                @else
+                  @if($contract->status != 'inactive')
+                  <a tilt="proceed to moveout" lass="btn btn-success btn-sm text-white" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/moveout"><i class="fas fa-sign-out-alt"></i>  Moveout</a>
+                  @endif
+                @endif
+              @endif
+                  
+                  <a title="extend this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> </a>
+                  <a title="view this contract"class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><i class="fas fa-book-open"></i> </a>
+            
+                </th>
+                
               </tr>
                @endforeach
               </tbody>
@@ -884,6 +905,70 @@
   </div>
   
   </div>
+
+  
+<div class="modal fade" id="pendingBalance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Balance</h5>
+      
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+       <p class="text-danger">Tenant needs to pay the balance to moveout.</p>
+        <div class="row">
+          <div class="col">
+           
+            <div class="table-responsive text-nowrap">
+             
+              <table class="table">
+                <thead>
+                <tr>
+              
+                  <th>Bill No</th>
+                 
+                  <th>Particular</th>
+                  <th>Period Covered</th>
+                  <th class="text-right" colspan="3">Amount</th>
+                  
+                </tr>
+              </thead>
+                @foreach ($balance as $item)
+                <tr>
+                
+                    <td>{{ $item->bill_no }}</td>
+            
+                    <td>{{ $item->particular }}</td>
+                    <td>
+                      {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                      {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+                    </td>
+                    <td class="text-right" colspan="3">{{ number_format($item->balance,2) }}</td>
+                           </tr>
+                @endforeach
+          
+            </table>
+            <table class="table">
+              <tr>
+               <th>TOTAL</th>
+               <th class="text-right">{{ number_format($balance->sum('balance'),2) }} </th>
+              </tr>    
+            </table>
+          </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-primary"> Dismiss</a>
+      </div>
+      
+  </div>
+  </div>
+</div>
 @endsection
 
 
