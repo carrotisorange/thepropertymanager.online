@@ -66,6 +66,7 @@ class TenantController extends Controller
         if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' ){
             
             if($search === null){
+               if(Session::get('status')){
                 $tenants = DB::table('contracts')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -81,6 +82,23 @@ class TenantController extends Controller
                  ->where('property_id_foreign', Session::get('property_id'))
                  ->where('contracts.status', Session::get('status'))
                 ->count();
+               }else{
+                $tenants = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->select('*', 'contracts.status as contract_status')
+                 ->where('property_id_foreign', Session::get('property_id'))
+                
+                ->orderBy('tenant_id', 'desc')
+                ->get();
+
+                $count_tenants = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                 ->where('property_id_foreign', Session::get('property_id'))
+                
+                ->count();
+               }
 
                 // $tenants = DB::table('users_properties_relations')
                 // ->join('properties', 'property_id_foreign', 'property_id')
@@ -97,23 +115,48 @@ class TenantController extends Controller
                 // ->count();
             }else{
 
-                $tenants = DB::table('contracts')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->select('*', 'contracts.status as contract_status')
-                 ->where('property_id_foreign', Session::get('property_id'))
-                 ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
-                 ->where('contracts.status', Session::get('status'))
-                 ->orderBy('tenant_id', 'desc')
-                ->get();
+                if(Session::get('status')){
+                    $tenants = DB::table('contracts')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->select('*', 'contracts.status as contract_status')
+                     ->where('property_id_foreign', Session::get('property_id'))
+                     ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
+                     ->where('contracts.status', Session::get('status'))
+                     ->orderBy('tenant_id', 'desc')
+                    ->get();
 
-                $count_tenants = DB::table('contracts')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                 ->where('property_id_foreign', Session::get('property_id'))
-                 ->where('contracts.status', Session::get('status'))
-                 
-                ->count();
+                        
+                    $count_tenants = DB::table('contracts')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->where('property_id_foreign', Session::get('property_id'))
+                    ->where('contracts.status', Session::get('status'))
+                    
+                    ->count();
+    
+                   }else{
+                    $tenants = DB::table('contracts')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->select('*', 'contracts.status as contract_status')
+                     ->where('property_id_foreign', Session::get('property_id'))
+                     ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
+                    
+                     ->orderBy('tenant_id', 'desc')
+                    ->get();
+
+                        
+                    $count_tenants = DB::table('contracts')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->where('property_id_foreign', Session::get('property_id'))
+                   
+                    
+                    ->count();
+                   }
+
+             
             //     $tenants = DB::table('users_properties_relations')
             //     ->join('properties', 'property_id_foreign', 'property_id')
             //     ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')

@@ -82,7 +82,7 @@ Route::post('/property/', 'PropertyController@store')->middleware(['auth', 'veri
 Route::post('/property/select', 'PropertyController@select')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/edit', 'PropertyController@edit')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/', 'PropertyController@update')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/update', 'PropertyController@update')->middleware(['auth', 'verified']);
 Route::get('/property/{date}/portforlio', 'PropertyController@portforlio')->middleware(['auth', 'verified']);
 
 

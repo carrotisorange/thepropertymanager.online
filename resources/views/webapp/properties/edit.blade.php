@@ -11,11 +11,9 @@
 
 </div>
 
-  <form id="editPropertyForm" action="/property/{{Session::get('property_id')}}/" method="POST">
+  <form id="editPropertyForm" action="/property/{{ $property->property_id }}/update" method="POST">
     @method('put')
     @csrf
-
-
 <div class="row">
     <div class="col">
         <label>Name</label>

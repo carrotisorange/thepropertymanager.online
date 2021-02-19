@@ -77,8 +77,6 @@ class PropertyController extends Controller
 
                 Session::put('notifications', Notification::orderBy('created_at','desc')->limit(5)->get());
 
-               
-
                 $issues = DB::table('issues')
                 ->join('users', 'user_id_foreign', 'id')
                 ->where('issues.status', 'active')
@@ -1205,6 +1203,8 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
      */
     public function edit($property_id)
     {
+        Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
+
         $property = Property::findOrFail($property_id);
 
         return view('webapp.properties.edit', compact('property'));
@@ -1217,13 +1217,9 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, $property_id)
     {
-        if(Auth::user()->user_type === 'dev'){
-            $property = Property::findOrFail($request->property_id);
-        }else{
-            $property = Property::findOrFail(Session::get('property_id'));
-        }
+        $property = Property::findOrFail($property_id);
 
         $property->name = $request->name;
         $property->type = $request->type;
@@ -1234,22 +1230,17 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
         $property->zip = $request->zip;
         $property->save();
 
-        Session::put('property_id', $request->property_id);
+        Session::put('property_id', $property_id);
        
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
+        Session::put('property_type', Property::findOrFail($property_id)->type);
 
-        Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
+        Session::put('property_name', Property::findOrFail($property_id)->name);
 
-        Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
+        Session::put('property_ownership', Property::findOrFail($property_id)->ownership);
 
-        if(Auth::user()->user_type === 'dev'){
-            return redirect('/dev/properties/')->with('success','Changes saved.');
-        }else{
-          
-            return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#property')->with('success','Changes saved.');
-        }
+        return redirect('/property/all')->with('success','Changes saved.');
      
     }
 
