@@ -94,18 +94,18 @@
               
               <div class="col">
                 <small>Date Purchased</small>
-                <input form="editInvestorForm" class="form-control" type="date" name="date_purchased" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                <input form="editInvestorForm" class="form-control" type="date" name="date_purchased" value="{{ Carbon\Carbon::parse($owner->date_purchased)->format('Y-m-d') }}" required >
             </div>  
             
              <div class="col">
                 <small>Purchase Amount</small>
-                <input form="editInvestorForm" class="form-control" type="number" min="1" step="0.01" name="price"  >
+                <input form="editInvestorForm" class="form-control" type="number" value="{{ $owner->price }}" min="1" step="0.01" name="price"  >
             </div>  
 
             <div class="col">
               <small>Payment type</small>
               <select name="payment_type" id=""  form="editInvestorForm" class="form-control" >
-                  <option value="">Please select one</option>
+                  <option value="{{ $owner->payment_type }}? $owner->payment_type: ''">{{ $owner->payment_type? $owner->payment_type: 'Please select one' }}</option>
                   <option value="Full Cash">Full Cash</option>
                   <option value="Full Downpayment">Full Downpayment</option>
                   <option value="Installment">Installment</option>
