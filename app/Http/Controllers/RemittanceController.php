@@ -120,15 +120,62 @@ class RemittanceController extends Controller
             ]);
         }
        
+         //purchased_amt
+         if($request->purchased_amt>0){
+            DB::table('expenses')->insert([
+                'expense_id' => Uuid::generate()->string,
+                'remittance_id_foreign' => $remittance_id,
+                'unit_id_foreign' => $unit_id,
+                'expense_particular' => 'Purchases - '.$request->purchased_desc,
+                'expense_amt' => $request->purchased_amt,
+                'created_at' => $request->date,
+            ]);
+            }
 
-        //purchased_amt
+         //contractor_and_transformer_desc
+         if($request->contractor_and_transformer_amt>0){
+            DB::table('expenses')->insert([
+                'expense_id' => Uuid::generate()->string,
+                'remittance_id_foreign' => $remittance_id,
+                'unit_id_foreign' => $unit_id,
+                'expense_particular' => 'Contractor/Transformer - '.$request->contractor_and_transformer_desc,
+                'expense_amt' => $request->contractor_and_transformer_amt,
+                'created_at' => $request->date,
+            ]);
+            }
+
+         //cable_amt
+         if($request->cable_amt>0){
+            DB::table('expenses')->insert([
+                'expense_id' => Uuid::generate()->string,
+                'remittance_id_foreign' => $remittance_id,
+                'unit_id_foreign' => $unit_id,
+                'expense_particular' => 'Cable - '.$request->cable_desc,
+                'expense_amt' => $request->cable_amt,
+                'created_at' => $request->date,
+            ]);
+            }
+    
+             //general_cleaning_amt
+        if($request->general_cleaning_amt>0){
+            DB::table('expenses')->insert([
+                'expense_id' => Uuid::generate()->string,
+                'remittance_id_foreign' => $remittance_id,
+                'unit_id_foreign' => $unit_id,
+                'expense_particular' => 'General Cleaning - '.$request->general_cleaning_desc,
+                'expense_amt' => $request->general_cleaning_amt,
+                'created_at' => $request->date,
+            ]);
+            }
+
+        //laundry_amt
         if($request->purchased_amt>0){
         DB::table('expenses')->insert([
             'expense_id' => Uuid::generate()->string,
             'remittance_id_foreign' => $remittance_id,
             'unit_id_foreign' => $unit_id,
-            'expense_particular' => 'Purchases - '.$request->purchased_desc,
-            'expense_amt' => $request->purchased_amt,
+            'expense_particular' => 'Laundry - '.$request->laundry_desc,
+            'expense_amt' => $request->laundry_amt,
             'created_at' => $request->date,
         ]);
         }
@@ -240,7 +287,7 @@ class RemittanceController extends Controller
             'created_at' => $request->date,
         ]);
         }
-        return back()->with('success', 'Remittance processed successfully.');
+        return back()->with('success', 'Remittance prepared successfully.');
         
 
      }

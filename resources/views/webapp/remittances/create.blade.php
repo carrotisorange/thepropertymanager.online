@@ -126,6 +126,11 @@
           <td><input form="remittanceForm" type="number" step="0.001" name="building_insurance_amt" oninput="computeTotalDeductions()" id="building_insurance_amt" value="0.00"/></td>
         </tr>
         <tr>
+          <td>Cable</td>
+          <td><input form="remittanceForm" type="text" name="cable_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+          <td><input form="remittanceForm" type="number" step="0.001" name="cable_amt" id="cable_amt" oninput="computeTotalDeductions()" value="0.00"/></td>
+        </tr>
+        <tr>
           <td>Condo Dues</td>
           <td><input form="remittanceForm" type="text" name="condo_dues_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
           <td><input form="remittanceForm" type="number" step="0.001" name="condo_dues_amt" id="condo_dues_amt" oninput="computeTotalDeductions()" value="{{ number_format($room_info->size*$room_info->condodues, 2) }}"/></td>
@@ -133,12 +138,22 @@
         <tr>
           <td>Contractor & Transformer</td>
           <td><input form="remittanceForm" type="text" name="contractor_and_transformer_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
-          <td><input form="remittanceForm" type="number" step="0.001" name="condo_dues_amt" id="condo_dues_amt" oninput="computeTotalDeductions()" value="{{ number_format($room_info->size*$room_info->condodues, 2) }}"/></td>
+          <td><input form="remittanceForm" type="number" step="0.001" name="contractor_and_transformer_amt" id="contractor_and_transformer_amt" oninput="computeTotalDeductions()" value="0.00"/></td>
         </tr>
         <tr>
           <td>Electric</td>
           <td><input form="remittanceForm" type="text" name="electric_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
           <td><input form="remittanceForm" type="number" step="0.001" name="electric_amt" oninput="computeTotalDeductions()" id="electric_amt" value="0.00"/></td>
+        </tr>
+        <tr>
+          <td>General Cleaning</td>
+          <td><input form="remittanceForm" type="text" name="general_cleaning_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+          <td><input form="remittanceForm" type="number" step="0.001" name="general_cleaning_amt" id="general_cleaning_amt" oninput="computeTotalDeductions()" value="0.00"/></td>
+        </tr>
+        <tr>
+          <td>Laundry</td>
+          <td><input form="remittanceForm" type="text" name="laundry_desc" value="{{ Carbon\Carbon::parse($bill_info->start)->format('M Y') }}"/></td>
+          <td><input form="remittanceForm" type="number" step="0.001" name="laundry_amt" id="laundry_amt" oninput="computeTotalDeductions()" value="0.00"/></td>
         </tr>
             <tr>
               <td>Management Fee</td>
@@ -248,9 +263,12 @@
     var condo_dues_amt = document.getElementById('condo_dues_amt').value;
     var unpaid_balances_amt = document.getElementById('unpaid_balances_amt').value;
     var real_property_tax_amt = document.getElementById('real_property_tax_amt').value;
-    
+    var contractor_and_transformer_amt = document.getElementById('contractor_and_transformer_amt').value;
+    var cable_amt = document.getElementById('cable_amt').value;
+    var general_cleaning_amt = document.getElementById('general_cleaning_amt').value;
+    var laundry_amt = document.getElementById('laundry_amt').value;
 
-    var total_deductions = eval(mgmt_fee_amt) + eval(purchased_amt) + eval(bladder_tank_amt) + eval(pest_control_amt) + eval(water_amt) + eval(electric_amt) + eval(surcharge_amt) + eval(building_insurance_amt) + eval(condo_dues_amt) + eval(unpaid_balances_amt) + eval(real_property_tax_amt);
+    var total_deductions = eval(laundry_amt) + eval(general_cleaning_amt) + eval(cable_amt) + eval(contractor_and_transformer_amt) + eval(mgmt_fee_amt) + eval(purchased_amt) + eval(bladder_tank_amt) + eval(pest_control_amt) + eval(water_amt) + eval(electric_amt) + eval(surcharge_amt) + eval(building_insurance_amt) + eval(condo_dues_amt) + eval(unpaid_balances_amt) + eval(real_property_tax_amt);
 
     document.getElementById('total_deductions').value = parseFloat(total_deductions, 2);
 
