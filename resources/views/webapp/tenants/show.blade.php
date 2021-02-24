@@ -455,14 +455,14 @@
                  
                 @endif
                 @if($item->terminated_at)
-                @if($pending_balance->count()>0)
-                <a title="proceed to moveout" href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-sm btn-primary text-white"><i class="fas fa-sign-out-alt"></i></a>
-                @else
-                  @if($item->status != 'inactive')
-                  <a tilt="proceed to moveout" lass="btn btn-success btn-sm text-white" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/moveout"><i class="fas fa-sign-out-alt"></i>  Moveout</a>
+                  @if($pending_balance->count()>0)
+                  <a title="proceed to moveout" href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-sm btn-primary text-white"><i class="fas fa-sign-out-alt"></i></a>
+                  @else
+                    @if($item->status != 'inactive')
+                    <a tilt="proceed to moveout" lass="btn btn-success btn-sm text-white" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/moveout"><i class="fas fa-sign-out-alt"></i>  Moveout</a>
+                    @endif
                   @endif
                 @endif
-              @endif
                   
                   <a title="extend this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> </a>
                   <a title="view this contract"class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><i class="fas fa-book-open"></i> </a>

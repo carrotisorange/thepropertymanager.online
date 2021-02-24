@@ -682,13 +682,13 @@ class TenantController extends Controller
            
            $tenant = Tenant::findOrFail($tenant_id);
 
-           $units = Property::findOrFail($property_id)
+           $units = Property::findOrFail(Session::get('property_id'))
            ->units()->whereIn('status',['vacant'])
            ->get()->groupBy(function($item) {
                 return $item->floor;
             });;
     
-            $buildings = Property::findOrFail($property_id)
+            $buildings = Property::findOrFail(Session::get('property_id'))
             ->units()
             ->whereIn('status',['vacant'])
             ->select('building', 'status', DB::raw('count(*) as count'))
@@ -708,11 +708,11 @@ class TenantController extends Controller
 
             $users = DB::table('users_properties_relations')
              ->join('users','user_id_foreign','id')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->where('user_type','<>' ,'tenant')
             ->get();
     
-            $property = Property::findOrFail($property_id);
+            $property = Property::findOrFail(Session::get('property_id'));
 
             $concerns = DB::table('concerns')
             ->join('tenants', 'concern_tenant_id', 'tenant_id')
@@ -778,8 +778,6 @@ class TenantController extends Controller
             ->get();
 
               $deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
-
-
 
 
                $access = DB::table('users')
