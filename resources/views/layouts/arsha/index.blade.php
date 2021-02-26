@@ -3,23 +3,21 @@
 @section('title', 'The Property Manager')
 
 @section('nav-bar')
-    <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
-            <h1 class="logo mr-auto">
-			<a href="/"><img src="{{asset('arsha/assets/img/logo3.png')}}" alt=""></a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            {{-- <a href="index.html" class="logo mr-auto"><img src="{{ asset('/arsha/assets/img/logo.png') }}" alt="" class="img-fluid"></a> --}}
-            <nav class="nav-menu d-none d-lg-block">
-                <ul>
-                  <li class="active"><a href="#hero">Home</a></li>
-                  <li><a target="_blank" href="http://bedspace.online/blog">Blogs</a></li>
-                  <li><a target="_blank" href="http://bedspace.online">Listings</a></li>
-                </ul>
-            </nav>
-            <!-- .nav-menu -->
-            <a href="{{url('login')}}" class="get-started-btn scrollto">Login</a>
-        </div>
-    </header>
+<header id="header" class="fixed-top">
+  <div class="container d-flex align-items-center">
+    <h1 class="logo mr-auto"><a href="/">
+      <img src="{{asset('arsha/assets/img/logo3.png')}}" alt=""> </a></h1>
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="#hero">Home</a></li>
+          <li><a target="_blank" href="{{url("blogs")}}">Blogs</a></li>
+          <li><a target="_blank" href="http://bedspace.online">Listings</a></li>
+        </ul>
+      </nav>
+      <!-- .nav-menu -->
+      <a href="{{url('login')}}"   class="get-started-btn scrollto">Login</a>
+    </div>
+</header>
 @endsection
 @section('front-screen')
 <section id="hero" class="d-flex align-items-center">
