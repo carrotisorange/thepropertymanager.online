@@ -44,7 +44,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
 <p class="text-center"> <span class=""> <small> You searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
 @endif
 @if(Session::get('status'))
-<p class="text-center"> <span class=""> <small> You filtered tenants to</small></span> <span class="text-danger">"{{ Session::get('status') }}"</span> only.</p>
+<p class="text-center"> <span class=""> <small> Showing all </small></span> <span class="text-danger">"{{ Session::get('status') }}"</span> tenants.</p>
 @endif
 
 
