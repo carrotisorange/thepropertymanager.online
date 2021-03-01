@@ -45,6 +45,14 @@ class CollectionController extends Controller
 
     public function index(Request $request, $property_id)
     {
+        // $existence =  Carbon::now()->year - Auth::user()->created_at->year;
+
+        //  $days = Payment::whereBetween('payment_created', [now()->subYears( $existence),now()])
+        // ->orderBy('payment_created')
+        // ->get()
+        // ->groupBy(function ($val) {
+        //     return Carbon::parse($val->payment_created)->format('d');
+        // });
 
         Session::put('current-page', 'daily-collection-report');
 
@@ -71,7 +79,7 @@ class CollectionController extends Controller
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                 ->groupBy('payment_id')
-                ->orderBy('ar_no', 'desc')
+                ->orderBy('payment_created', 'desc')
                ->get()
                 ->groupBy(function($item) {
                     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
@@ -85,7 +93,7 @@ class CollectionController extends Controller
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
                 ->groupBy('payment_id')
-                ->orderBy('ar_no', 'desc')
+                ->orderBy('payment_created', 'desc')
                ->get()
                 ->groupBy(function($item) {
                     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
@@ -102,7 +110,7 @@ class CollectionController extends Controller
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                 ->groupBy('payment_id')
-                ->orderBy('ar_no', 'desc')
+                ->orderBy('payment_created', 'desc')
                ->get()
                 ->groupBy(function($item) {
                     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
@@ -116,7 +124,7 @@ class CollectionController extends Controller
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
                 ->groupBy('payment_id')
-                ->orderBy('ar_no', 'desc')
+                ->orderBy('payment_created', 'desc')
                ->get()
                 ->groupBy(function($item) {
                     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
@@ -126,11 +134,7 @@ class CollectionController extends Controller
             }
         }
 
-
-
-        $property = Property::findOrFail($property_id);
-
-       return view('webapp.collections.index', compact('collections', 'property'));
+       return view('webapp.collections.index', compact('collections'));
     }
 
     /**

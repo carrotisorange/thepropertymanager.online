@@ -130,55 +130,40 @@
   </div>
   
   <div class="col-md-9">
-    @if($units->count() <=0 )
+    <div class="row">
+      @if($units->count() <=0 )
     <p class="">No rooms found!</p>
     @else
     <p class="">Showing  <b>{{ $units->count() }} {{ Session::get('status') }}  {{ Session::get('type') }}  {{ Session::get('building') }}  {{ Session::get('rent') }}  {{ Session::get('occupancy') }}  {{ Session::get('floor') }} </b>rooms...
    
     </p>
+    </div>
+    <div class="row">
+      @foreach ($units as $item)
     
-        @foreach ($units as $item)
-     
-        <div class="card card-body">
-     
-        <div class="row">  
-          <div class="col-md-7">
-            <h2>{{ $item->building.' '.$item->unit_no }}</h2>
-           <h4>
-              Floor &#9671 {{ $numberFormatter->format($item->floor) }} <br>
-              Status &#9671 {{ $item->status }} <br>
-              Rent &#9671 ₱{{ number_format($item->rent,2) }}<br>
-              Type &#9671 {{ $item->type }}
+      <div class="col-md-2">
+        <div class="row">
+         <div class="card">
+            <div class="card-body text-center">
+              <small>{{ $item->building }}</small>
               <br>
-              Room created on &#9671 {{ $item->created_at? Carbon\Carbon::parse($item->created_at)->format('M d, Y'): 'NOT AVAILABLE' }}
-              <br>
-              Last contract ended on &#9671 {{ $item->updated_at? Carbon\Carbon::parse($item->updated_at)->format('M d, Y'): 'NOT AVAILABLE' }}
-            </h4>
-              
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" type="button" class="btn btn-primary">View Room</a>
-            @if($item->status === 'vacant')
-            <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/tenant" type="button" class="btn btn-primary">Add Tenant</a>
-            @else
+             {{ $item->unit_no }}
+            </div>
+       <p class="text-center">
+        <a title="view room" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-home"></i></a>
+        @if($item->status === 'vacant')
+        <a title="add tenant" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/tenant" type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i></a>
 
-            @endif
-         
-          </div>
-          <div class="col-md-5">
-            <img  src="{{ asset('/arsha/assets/img/not-available.png') }}" width = "70%" alt="image of the room" class="img-thumbnail">
-          </div>
+        @endif
+       </p>
          </div>
-
-          </div>
-
-{{--        
-        <a title="{{ $item->type }}" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-primary ">
-          <i class="fas fa-home"></i>
-        
-           {{ $item->unit_no }}
-         </a>  --}}
+        </div>
        
-          @endforeach
-
+     </div>
+    
+     
+      @endforeach
+    </div>
     @endif
 
     </div>

@@ -1,11 +1,11 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Bills')
+@section('title', 'Bulk billing')
 
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-4">
-    <h6 class="h2 text-dark d-inline-block mb-0">Bills</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Bulk Billing</h6>
   </div>
   <div class="col text-right">
     <div class=" row">
@@ -45,15 +45,18 @@
 
 @else
 <div class="table">
-  <table class="table">
+  <table class="table table-bordered table-hover">
     @foreach ($bills as $day => $bill)
 <thead>
+  <tr>
+    <th colspan="8"></th>
+  </tr>
   <tr>
     <th colspan="12">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $bill->count() }}) </th>
 </tr>
 <tr>
   <?php $ctr=1;?>
-  <th>#</th>
+  {{-- <th>#</th> --}}
   <th>Bill No</th>
   
   
@@ -78,13 +81,11 @@
 </thead>
       @foreach ($bill as $item)
       <tr>
-        <th>{{ $ctr++ }}</th>
+        {{-- <th>{{ $ctr++ }}</th> --}}
         <td>
-        @if($item->bill_status === 'deleted')
-        <strike> {{ $item->bill_no }}</strike>
-        @else
+      
         {{ $item->bill_no }}
-        @endif
+      
         </th>  
         {{-- <td>  {{ Carbon\Carbon::parse($item->date_posted)->format('M d Y') }}</td> --}}
        
@@ -135,9 +136,21 @@
         </td>
         </tr>
       @endforeach
-          
+      <tr>
+        <th>TOTAL</th>
+        <th></th>
+        <th></th>
+        <th></th>
+     
+        <th colspan="2"></th>
+       
+    
+        <th>{{ number_format($bill->sum('amount'),2) }}</th>
+        <th></th>
+      </tr>
         
     @endforeach
+  
   </table>
   </div>
 @endif

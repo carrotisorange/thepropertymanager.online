@@ -10,7 +10,7 @@
   </div>
   
   <div class="col-lg-6 col-5 text-right">
-    <form  action="/property/{{  $property->property_id }}/payments/search" method="GET" >
+    <form  action="/property/{{ Session::get('property_id') }}/payments/search" method="GET" >
       @csrf
       <div class="input-group">
         <input type="date" class="form-control" name="search" required>
@@ -39,7 +39,7 @@
 @else
 <div class="table">
   
-  <table class="table">
+  <table class="table table-bordered table-hover">
       @foreach ($collections as $day => $collection_list)
       <?php $ctr=1;?>
       <thead>
@@ -49,7 +49,7 @@
     
    
         <tr>
-          <th>#</th>
+          {{-- <th>#</th> --}}
           <th>AR No</th>
           <th>Bill No</th>
           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
@@ -65,14 +65,15 @@
           <th>Particular</th>
           <th>Period Covered</th>
           {{-- <th>Form</th> --}}
-          <th class="text-right">Amount</th>
+          <th>Amount</th>
+          <th></th>
       
       </tr>
 
       </thead>
         @foreach ($collection_list as $item)
         <tr>
-                <th>{{ $ctr++ }}</th>
+                {{-- <th>{{ $ctr++ }}</th> --}}
                 <td> 
                   @if($item->payment_status === 'deleted')
                   <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
@@ -108,7 +109,7 @@
                 </td>
                 {{-- <td>{{ $item->form }}</td> --}}
                 
-                <th class="text-right">
+                <th>
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
                  <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
                   @else
@@ -127,7 +128,7 @@
                   @if($item->payment_status === 'deleted')
                 
                   @else
-                  <form action="/property/{{$property->property_id}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
+                  <form action="/property/{{ Session::get('property_id') }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
                     @csrf
                     @method('delete')
                     <button title="archive this payment" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
@@ -139,7 +140,13 @@
         @endforeach
             <tr>
               <th>TOTAL</th>
-              <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
+              <th></th>
             </tr>
           
       @endforeach

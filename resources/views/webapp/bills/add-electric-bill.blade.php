@@ -19,7 +19,7 @@
     <form id="add_billings" action="/property/{{Session::get('property_id')}}/bills/create/" method="POST">
    @csrf
     </form>
-    <table class="table">
+    <table class="table table-bordered table-hover">
   <thead>
     <tr>
       

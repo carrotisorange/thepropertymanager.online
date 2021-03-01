@@ -48,7 +48,7 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('bill_id', 'desc')
+            ->orderBy('date_posted', 'desc')
             ->groupBy('bill_id')
             ->get()
             ->groupBy(function($item) {
@@ -62,7 +62,7 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('bill_id', 'desc')
+            ->orderBy('date_posted', 'desc')
             ->groupBy('bill_id')
             ->get()
             ->groupBy(function($item) {

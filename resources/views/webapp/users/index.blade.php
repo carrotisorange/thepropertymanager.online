@@ -9,11 +9,11 @@
   </div>
 </div>
 <div class="table-responsive text-nowrap">
-  <table class="table">
+  <table class="table table-bordered table-hover">
     <?php $ctr = 1; ?>
     <thead>
     <tr>
-      <th>#</th>  
+      {{-- <th>#</th>   --}}
       <th>Name</th>
       <th>Role</th>
 
@@ -27,7 +27,7 @@
     <tbody>
     @foreach ($sessions as $item)
       <tr>
-       <th>{{ $ctr++ }}</th>
+       {{-- <th>{{ $ctr++ }}</th> --}}
        <td>{{ $item->user_name }}</td>
        <td>{{ $item->user_type }}</td>
        
