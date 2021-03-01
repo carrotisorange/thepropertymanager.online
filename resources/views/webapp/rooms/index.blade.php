@@ -141,13 +141,13 @@
     <div class="row">
       @foreach ($units as $item)
     
-      <div class="col-md-2">
+      <div class="col-md-2" title="asdasdad">
         <div class="row">
          <div class="card">
             <div class="card-body text-center">
               <small>{{ $item->building }}</small>
               <br>
-             {{ $item->unit_no }}
+            <small> {{ $item->unit_no }}</small>
             </div>
        <p class="text-center">
         <a title="view room" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-home"></i></a>
