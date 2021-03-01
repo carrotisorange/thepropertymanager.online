@@ -44,7 +44,7 @@
       <?php $ctr=1;?>
       <thead>
         <tr>
-            <th colspan="9">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}}({{ $collection_list->count() }})</th>
+            <th colspan="9">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}}({{ $collection_list->count() }})</th>  
         </tr>
     
    
@@ -66,6 +66,7 @@
           <th>Period Covered</th>
           {{-- <th>Form</th> --}}
           <th>Amount</th>
+          <th></th>
           <th></th>
       
       </tr>
@@ -117,12 +118,11 @@
                   @endif
                 </th>
                
-                {{-- <td class="text-center">
-                  <a title="export pdf" target="_blank" href="/units/{{ $item->unit_tenant_id }}/tenants/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                <td>
+                  <a title="export pdf" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
                  
-                  <a target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
-                  
-                </td>--}}
+    
+                </td>
                <td>
                 @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury')
                   @if($item->payment_status === 'deleted')
@@ -136,6 +136,7 @@
                   @endif
                @endif
                </td>
+             
             </tr>
         @endforeach
             <tr>
@@ -146,6 +147,7 @@
               <th></th>
               <th></th>
               <th>{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
+              <th></th>
               <th></th>
             </tr>
           

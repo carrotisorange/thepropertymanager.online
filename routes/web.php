@@ -517,7 +517,7 @@ Route::get('/property/{property_id}/payments/search', 'CollectionController@inde
 Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}', 'CollectionController@destroy')->middleware(['auth', 'verified']);
 
 //export payments
-Route::get('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/unit/{unit_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);
 
 
 

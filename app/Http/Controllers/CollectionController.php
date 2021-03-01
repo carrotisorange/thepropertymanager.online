@@ -342,36 +342,34 @@ class CollectionController extends Controller
    
     }
 
-    public function export($property_id, $tenant_id, $payment_id, $payment_created){
+    public function export($property_id, $room_id, $tenant_id, $payment_id, $payment_created){
 
         $tenant = Tenant::findOrFail($tenant_id);
 
-        $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
-
-        $current_room = Unit::findOrFail($room_id)->unit_no;
-
-       $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-      ->where('bill_tenant_id', $tenant_id)
-      ->where('payment_created', $payment_created)
-      ->groupBy('payment_id')
-      ->orderBy('ar_no', 'desc')
-     ->get();
-
-
-
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('bill_tenant_id', $tenant_id)
-            ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
-            ->get();
+        $room = Unit::findOrFail($room_id);
 
         $payment = Payment::findOrFail($payment_id);
+
+         $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        ->where('bill_tenant_id', $tenant_id)
+        ->where('payment_created', $payment_created)
+        ->groupBy('payment_id')
+        ->orderBy('payment_created', 'desc')
+        ->get();
+
+        $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+        ->where('bill_tenant_id', $tenant_id)
+        
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+
         
         $data = [
                     'tenant' => $tenant->first_name.' '.$tenant->last_name ,
-                    'current_room' => $current_room,
+                    'current_room' => $room->building.' '.$room->unit_no,
                     'collections' => $collections,
                     'balance' => $balance,
                     'payment_date' => $payment->payment_created,
