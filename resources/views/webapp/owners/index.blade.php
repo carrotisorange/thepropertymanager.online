@@ -33,11 +33,11 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
 @endif 
 <div class="table">
 
-    <table class="table">
+    <table class="table table-bordered table-hover">
         <thead>
           <?php $ctr=1; ?>
             <tr>
-              <th>#</th>
+              {{-- <th>#</th> --}}
                <th>Name</th>
                <th>Email</th>
                <th>Mobile</th>
@@ -48,7 +48,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
            <tbody>
            @foreach ($owners as $item)
           <tr>
-            <th>{{ $ctr++ }}</th>
+            {{-- <th>{{ $ctr++ }}</th> --}}
             <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></th>
             <td>{{ $item->email}}</td>
             <td>{{ $item->mobile }}</td>

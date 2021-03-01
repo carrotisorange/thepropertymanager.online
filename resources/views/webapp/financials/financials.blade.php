@@ -12,7 +12,7 @@
 </div>
 </div>
 <div class="table-responsive text-nowrap">
-  <table class="table">
+  <table class="table table-bordered table-hover">
     
         <?php $ctr=1;?>
         <thead>

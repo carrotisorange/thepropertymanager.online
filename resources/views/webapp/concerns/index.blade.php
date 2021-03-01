@@ -14,9 +14,9 @@
 <p class="text-danger text-center">No concerns found!</p>
 
 @else
-<div class="table-responsive text-nowrap">
+<div class="table-responsive">
      
-  <table class="table" >
+  <table class="table table-bordered table-hover" >
     <thead>
       <?php $ctr=1; ?>
       <tr>

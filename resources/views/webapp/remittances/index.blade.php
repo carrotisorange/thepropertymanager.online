@@ -24,7 +24,7 @@
         <thead>
             <?php $ctr=1;?>
             <tr>
-                <th>#</th>
+                {{-- <th>#</th> --}}
                 <th>Date Prepared</th>
                 <th>Period Covered</th>
                 <th>Particular</th>
@@ -40,7 +40,7 @@
         <tbody>
             @foreach ($remittances as $item)
             <tr>
-                <th>{{ $ctr++ }}</th>     
+                {{-- <th>{{ $ctr++ }}</th>      --}}
                 <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
                 
                 <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>

@@ -49,11 +49,11 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
 
 
 <div class="table">
-    <table class="table">
+    <table class="table table-bordered table-hover">
       <?php $ctr=1;?>
       <thead>
         <tr>
-          <th>#</th>
+          {{-- <th>#</th> --}}
           <th>Profile</th>
           {{-- <th>Tenant ID</th> --}}
         
@@ -74,7 +74,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
       <tbody>
         @foreach ($tenants as $item)
         <tr>
-            <th>{{ $ctr++ }}</th>
+            {{-- <th>{{ $ctr++ }}</th> --}}
             <td>  <span class="avatar avatar-sm rounded-circle">
               <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
               </span>
