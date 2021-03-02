@@ -141,21 +141,23 @@
     <div class="row">
       @foreach ($units as $item)
     
-      <div class="col-md-2" title="asdasdad">
+      <div class="col-md-2">
         <div class="row">
-         <div class="card">
+         <div class="card" style="width: 115px;" title="₱ {{ number_format ($item->rent, 2)}}/mo">
             <div class="card-body text-center">
-              <small>{{ $item->building }}</small>
-              <br>
+              {{-- <small>{{ $item->building }}</small>
+              <br> --}}
             <small> {{ $item->unit_no }}</small>
+            <br>
+            <small class="text-right">
+              <a title="view room" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" type="button" class="btn-sm"><i class="fas fa-home"></i></a>
+              @if($item->status === 'vacant')
+              <a title="add tenant" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/tenant" type="button" class="btn-sm"><i class="fas fa-user-plus"></i></a>
+      
+              @endif
+             </small>
             </div>
-       <p class="text-center">
-        <a title="view room" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-home"></i></a>
-        @if($item->status === 'vacant')
-        <a title="add tenant" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/tenant" type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i></a>
-
-        @endif
-       </p>
+      
          </div>
         </div>
        
