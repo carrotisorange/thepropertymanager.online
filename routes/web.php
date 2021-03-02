@@ -516,33 +516,13 @@ Route::get('/payments/all', 'CollectionController@index')->name('show-all-paymen
 Route::get('/property/{property_id}/payments/search', 'CollectionController@index')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}', 'CollectionController@destroy')->middleware(['auth', 'verified']);
 
-//export payments
+//export payments per tenant
 Route::get('/property/{property_id}/unit/{unit_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);
+//export payments per day
+Route::get('/property/{property_id}/payments/dates/{payment_created}/export/', 'CollectionController@export_collection_per_day')->middleware(['auth', 'verified']);
 
-
-
-Route::get('/property/{property}/export', function(Request $request){
-    $collections = DB::table('units')
-    ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
-    ->leftJoin('payments', 'tenant_id', 'payment_tenant_id')
-    ->leftJoin('bills', 'payment_bill_no', 'bill_no')
-    ->where('unit_property', Auth::user()->property)
-    ->whereDate('payment_created', Carbon::now())
-    ->orderBy('payment_created', 'desc')
-    ->orderBy('ar_no', 'desc')
-    ->groupBy('payment_id')
-    ->get();
-
-    $data = [
-        'collections' => $collections,
-    ];
-
-$pdf = \PDF::loadView('webapp.collections.export-collections-for-today', $data)->setPaper('a5', 'portrait');
-
-return $pdf->download(Carbon::now().'-'.Auth::user()->property.'-ar'.'.pdf');
-
-
-})->middleware(['auth', 'verified']);
+//export collections per month
+Route::get('/property/{property_id}/collections/month/{month}/year/{year}/export/', 'CollectionController@export_collection_per_month')->middleware(['auth', 'verified']);
 
 
 //print gate pass

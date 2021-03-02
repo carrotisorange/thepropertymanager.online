@@ -17,11 +17,11 @@
   <body>
     <div class="container-fluid">    
       
-      <p class="font-italic"> Daily Collections</p> 
+      <p class="font-italic"> Collection Report</p> 
           <br>
           <b>Property:</b> {{ Session::get('property_name') }}
           <br>
-          <b>Date:</b> {{ Carbon\Carbon::parse($date)->format('M d, Y') }}
+          <b>Date:</b> {{ $date }}
            <br>
            <b># collections:</b> {{ $collections->count() }}
           <br>
@@ -33,9 +33,8 @@
         <tr>
           {{-- <th>#</th> --}}
             <th>AR No</th>
-            <th>Bill No </th>
-            <th>Tenant</th>
-            <th>Room</th>
+            
+           
             <th>Particular</th>
             <th colspan="2">Period Covered</th>
             <th>Form</th>
@@ -48,9 +47,8 @@
             <tr>
                 {{-- <th>{{ $ctr++ }}</th> --}}
                 <td>{{ $item->ar_no }}</td>
-              <td>{{ $item->payment_bill_no }}</td>
-              <td>{{ $item->first_name.' '.$item->last_name }}</td>
-              <td>{{ $item->unit_no }}</td>
+          
+              
               <td>{{ $item->particular }}</td>
               <td colspan="2">
                 {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
@@ -58,7 +56,7 @@
               </td>
         
               <td>{{ $item->form }}</td>
-              <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
+              <td class="text-right"> {{ number_format($item->amt_paid,2) }}</td>
              
             </tr>
             @endforeach

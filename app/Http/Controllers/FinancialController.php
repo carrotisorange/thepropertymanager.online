@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use Carbon\Carbon;
 use App\Notification;
+use App\Bill;
 
 class FinancialController extends Controller
 {
@@ -29,144 +30,51 @@ class FinancialController extends Controller
         $notification->message = Auth::user()->name.' opens financials page.';
         $notification->save();
                     
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);  
+       
 
+        $collections = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
+        ->select('*',DB::raw('sum(amt_paid) as `total_collections`'),DB::raw('YEAR(payment_created) year'),DB::raw('MONTH(payment_created) month'))
+        ->where('property_id_foreign', Session::get('property_id'))
+        
+       ->groupBy(DB::raw('YEAR(payment_created)'), DB::raw('MONTH(payment_created)'))
+        
+        ->orderBy('year', 'desc')
+        ->orderBy('month', 'desc')
+       ->get();
 
-        $collection_rate_1 = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-->where('payment_created', '>=', Carbon::now()->firstOfMonth())
-->where('payment_created', '<=', Carbon::now()->endOfMonth())
-->where('property_id_foreign', Session::get('property_id'))
-->sum('amt_paid');
+       
+       $expenses = DB::table('payable_request')
+        ->join('payable_entry', 'entry_id', 'payable_entry.id')
+        ->select('*',DB::raw('sum(amt) as `total_expenses`'),DB::raw('YEAR(released_at) year'),DB::raw('MONTH(released_at) month'))
+        ->where('payable_request.status', 'released')
+        ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+         
+       ->groupBy(DB::raw('YEAR(released_at)'), DB::raw('MONTH(released_at)'))
+        
+       ->orderBy('year', 'desc')
+       ->orderBy('month', 'desc')
+      ->get();
 
-
-$collection_rate_2 = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
-->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
- ->where('property_id_foreign',Session::get('property_id'))
-->sum('amt_paid');
-
-
-
-$collection_rate_3 = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-->where('payment_created', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
-->where('payment_created', '<=', Carbon::now()->subMonths(2)->endOfMonth())
- ->where('property_id_foreign', Session::get('property_id'))
-
-->sum('amt_paid');
-
-$collection_rate_4 = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-->where('payment_created', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
-->where('payment_created', '<=', Carbon::now()->subMonths(3)->endOfMonth())
- ->where('property_id_foreign', Session::get('property_id'))
-
-->sum('amt_paid');
-
-$collection_rate_5 = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-->where('payment_created', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
-->where('payment_created', '<=', Carbon::now()->subMonths(4)->endOfMonth())
- ->where('property_id_foreign', Session::get('property_id'))
-
-->sum('amt_paid');
-
- $collection_rate_6 = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-->where('payment_created', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
-->where('payment_created', '<=', Carbon::now()->subMonths(5)->endOfMonth())
- ->where('property_id_foreign', Session::get('property_id'))
-
-->sum('amt_paid');
-
-
-
-$expenses_1 = DB::table('payable_request')
- ->join('users', 'requester_id', 'users.id')
- ->join('payable_entry', 'entry_id', 'payable_entry.id')
- ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-->where('payable_request.status', 'released')
-->where('payable_entry.property_id_foreign', Session::get('property_id'))
-->where('released_at', '>=', Carbon::now()->firstOfMonth())
-->where('released_at', '<=', Carbon::now()->endOfMonth())
-->sum('amt');
-
-$expenses_2 = DB::table('payable_request')
-->join('users', 'requester_id', 'users.id')
-->join('payable_entry', 'entry_id', 'payable_entry.id')
-->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-->where('payable_request.status', 'released')
-->where('payable_entry.property_id_foreign', Session::get('property_id'))
-->where('released_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
-->where('released_at', '<=', Carbon::now()->subMonth()->endOfMonth())
-->sum('amt');
-
-$expenses_3 = DB::table('payable_request')
-->join('users', 'requester_id', 'users.id')
-->join('payable_entry', 'entry_id', 'payable_entry.id')
-->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-->where('payable_request.status', 'released')
-->where('payable_entry.property_id_foreign', Session::get('property_id'))
-->where('released_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
-->where('released_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
-->sum('amt');
-
-$expenses_4 = DB::table('payable_request')
-->join('users', 'requester_id', 'users.id')
-->join('payable_entry', 'entry_id', 'payable_entry.id')
-->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-->where('payable_request.status', 'released')
-->where('payable_entry.property_id_foreign', Session::get('property_id'))
-->where('released_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
-->where('released_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-->sum('amt');
-
-$expenses_5 = DB::table('payable_request')
-->join('users', 'requester_id', 'users.id')
-->join('payable_entry', 'entry_id', 'payable_entry.id')
-->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-->where('payable_request.status', 'released')
-->where('payable_entry.property_id_foreign', Session::get('property_id'))
-->where('released_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
-->where('released_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
-->sum('amt');
-
-$expenses_6 = DB::table('payable_request')
-->join('users', 'requester_id', 'users.id')
-->join('payable_entry', 'entry_id', 'payable_entry.id')
-->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-->where('payable_request.status', 'released')
-->where('payable_entry.property_id_foreign', Session::get('property_id'))
-->where('released_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
-->where('released_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
-->sum('amt');
-
-
-
-        $property = Property::findOrFail($property_id);
+    //   $incomes = DB::table('contracts')
+    //   ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+    //   ->leftJoin('payments', 'tenant_id_foreign', 'payment_tenant_id')
+    //   ->leftJoin('payable_entry', 'units.property_id_foreign', 'payable_entry.property_id_foreign')
+    //   ->leftJoin('payable_request', 'payable_entry.id', 'payable_request.entry_id')
+    //   ->select('*',DB::raw('sum(payments.amt_paid) as `total_collections`'),DB::raw('sum(payable_request.amt) as `total_expenses`'),DB::raw('YEAR(payment_created) year'),DB::raw('MONTH(payment_created) month'))
+    //   ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+    //   ->whereNotNull('released_at')
+    //  ->groupBy(DB::raw('YEAR(payment_created)'), DB::raw('MONTH(payment_created)'))
+      
+    //   ->orderBy('year', 'desc')
+    //   ->orderBy('month', 'desc')
+    //  ->get();
     
-        return view('webapp.financials.financials', compact(
-            'property',
-            'collection_rate_6',
-            'collection_rate_5',
-            'collection_rate_4',
-            'collection_rate_3',
-            'collection_rate_2',
-            'collection_rate_1',
-             'expenses_6',
-            'expenses_5',
-            'expenses_4',
-            'expenses_3',
-            'expenses_2',
-            'expenses_1',
+        return view('webapp.financials.index', compact(
+            'expenses',
+            'collections',   
         ));
     }
 

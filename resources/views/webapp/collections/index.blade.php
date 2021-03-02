@@ -44,7 +44,17 @@
       <?php $ctr=1;?>
       <thead>
         <tr>
-            <th colspan="9">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}}({{ $collection_list->count() }})</th>  
+           <th>{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}}({{ $collection_list->count() }})</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th> <a title="export pdf" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
+              <th></th>
+              
+           
         </tr>
     
    
