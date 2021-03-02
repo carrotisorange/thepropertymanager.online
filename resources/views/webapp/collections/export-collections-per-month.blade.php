@@ -18,7 +18,7 @@
     <div class="container-fluid">    
       
       <p class="font-italic"> Collection Report</p> 
-          <br>
+          
           <b>Property:</b> {{ Session::get('property_name') }}
           <br>
           <b>Date:</b> {{ $date }}
