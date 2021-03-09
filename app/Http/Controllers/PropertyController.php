@@ -530,6 +530,12 @@ $units_reserved =  Property::findOrFail(Session::get('property_id'))->units->whe
 ->where('contracts.status', 'active')
 ->get();
 
+ $all_tenants = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->join('tenants', 'tenant_id_foreign', 'tenant_id')
+->where('property_id_foreign', Session::get('property_id'))
+->count();
+
 $inactive_tenants = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -846,7 +852,6 @@ $expenses_rate->dataset
   $contracts = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
- ->whereIn('form_of_interaction',['Facebook','Flyers','In house','Instagram','Website','Walk in','Word of mouth'])
 ->count();
 
  $facebook = DB::table('contracts')
@@ -974,12 +979,6 @@ $morethan_eight_years = DB::table('contracts')
 ->count();
 
 
-$all_contracts = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
- ->where('property_id_foreign', Session::get('property_id'))
-->count();
-
-
 $length_of_stay = new DashboardChart;
 $length_of_stay->displaylegend(true);
 $length_of_stay->labels
@@ -988,10 +987,10 @@ $length_of_stay->labels
                                     '<1 year'.' ('.$less_than_a_year.')',
                                     '1-2 years'.' ('.$one_two_years.')', 
                                     '3-4 years'.' ('.$three_four_years.')', 
-                                    '5-6'.' ('.$five_six_years.')', 
-                                    '7-8'.' ('.$seven_eight_years.')',
+                                    '5-6 years'.' ('.$five_six_years.')', 
+                                    '7-8 years'.' ('.$seven_eight_years.')',
                                     '>8 years'.' ('.$morethan_eight_years.')', 
-                                    'Total'.' ('.$all_contracts.')', 
+                                    'Total'.' ('.$contracts.')', 
                                 ]
                             );
 $length_of_stay->dataset
@@ -1197,9 +1196,19 @@ $reason_for_moving_out_chart->dataset('', 'pie',
                     ]
                 );
 
- $working = Tenant::where('type_of_tenant', 'working')->count();
+$working = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+               -> where('type_of_tenant', 'working')
+                ->count();
 
- $studying = Tenant::where('type_of_tenant', 'studying')->count();
+$studying = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+               -> where('type_of_tenant', 'studying')
+                ->count();
  
  $status = new DashboardChart;
  $status->displaylegend(true);
@@ -1208,7 +1217,7 @@ $reason_for_moving_out_chart->dataset('', 'pie',
                                  [ 
                                      'Working'.' ('.$working.')',
                                      'Studying'.' ('.$studying.')', 
-                                     'Total'.' ('.$tenants->count(). ')'
+                                     'Total'.' ('.$all_tenants. ')'
                                  ]
                              );
  $status->dataset

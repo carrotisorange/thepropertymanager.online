@@ -274,7 +274,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">LENGHT OF STAY</h6>
+          <h6 class="m-0 font-weight-bold text-primary">LENGHT OF STAY </h6>
           {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small> --}}
         </div>
 
