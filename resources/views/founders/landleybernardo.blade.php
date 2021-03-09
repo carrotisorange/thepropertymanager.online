@@ -167,10 +167,10 @@ Licence URI: https://www.os-templates.com/template-terms
     <ul class="nospace group ref-img">
       <li class="full"><a class="imgover" href=""><img src="{{ asset('yeinydd/images/demo/portforlio/pos.png') }}" alt=""></a></li>
       <p>POS System</p>
-      <br>
+      
       <li class="full"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/portforlio/clinic.jpg') }}" alt=""></a></li>
       <p>Clinic Management System</p>
-      <br>
+      
       <li class="full"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/portforlio/pms.jpg') }}" alt=""></a></li>
       <p>Property Management System</p>
       {{-- <li class="one_third"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/348x261.png') }}" alt=""></a></li> --}}
