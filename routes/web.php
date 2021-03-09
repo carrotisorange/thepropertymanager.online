@@ -810,3 +810,7 @@ Route::get('/login/google/callback', 'Auth\LoginController@handleProviderCallbac
 
 
 Route::get('listing', ['as' => 'listing', 'uses'=>'AdsController@listing']);
+
+Route::get('/carpiotech', function(){
+    return view('founders.landleybernardo');
+});
