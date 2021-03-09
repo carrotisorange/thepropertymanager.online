@@ -41,7 +41,7 @@
             @foreach ($remittances as $item)
             <tr>
                 {{-- <th>{{ $ctr++ }}</th>      --}}
-                <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
                 
                 <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
                 <td>{{ $item->particular }}</td>
