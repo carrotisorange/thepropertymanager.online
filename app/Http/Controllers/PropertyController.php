@@ -843,9 +843,10 @@ $expenses_rate->dataset
 // ->havingRaw('balance > 0')
 // ->get();
 
- $contracts = DB::table('contracts')
+  $contracts = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
+ ->whereIn('form_of_interaction',['Facebook','Flyers','In house','Instagram','Website','Walk in','Word of mouth'])
 ->count();
 
  $facebook = DB::table('contracts')
@@ -854,7 +855,7 @@ $expenses_rate->dataset
 ->where('form_of_interaction','Facebook')
 ->count();
 
-$flyers = DB::table('contracts')
+ $flyers = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
  ->where('property_id_foreign', Session::get('property_id'))
 ->where('form_of_interaction','Flyers')
@@ -884,7 +885,7 @@ $walkin = DB::table('contracts')
 ->where('form_of_interaction','Walk in')
 ->count();
 
-$wordofmouth = DB::table('contracts')
+ $wordofmouth = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
 ->where('property_id_foreign', Session::get('property_id'))
 ->where('form_of_interaction','Word of mouth')
@@ -929,6 +930,95 @@ $point_of_contact->dataset
                             '#FF0000',
                         ]
                     );
+                    
+ $less_than_a_year = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->where('property_id_foreign', Session::get('property_id'))
+->selectRaw('*, datediff(moveout_at, movein_at) as lenght_of_stay')
+->whereRaw('datediff(moveout_at, movein_at) < 365')
+->count();
+
+  $one_two_years = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->where('property_id_foreign', Session::get('property_id'))
+->selectRaw('*, datediff(moveout_at, movein_at) as lenght_of_stay')
+->whereRaw('datediff(moveout_at, movein_at) >= 365 AND datediff(moveout_at, movein_at) <= 730')
+->count();
+
+$three_four_years = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->where('property_id_foreign', Session::get('property_id'))
+->selectRaw('*, datediff(moveout_at, movein_at) as lenght_of_stay')
+->whereRaw('datediff(moveout_at, movein_at) >= 1095 AND datediff(moveout_at, movein_at) <= 1460')
+->count();
+
+$five_six_years = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->where('property_id_foreign', Session::get('property_id'))
+->selectRaw('*, datediff(moveout_at, movein_at) as lenght_of_stay')
+->whereRaw('datediff(moveout_at, movein_at) >= 1825 AND datediff(moveout_at, movein_at) <= 2190')
+->count();
+
+$seven_eight_years = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->where('property_id_foreign', Session::get('property_id'))
+->selectRaw('*, datediff(moveout_at, movein_at) as lenght_of_stay')
+->whereRaw('datediff(moveout_at, movein_at) >= 2555 AND datediff(moveout_at, movein_at) <= 2920')
+->count();
+
+$morethan_eight_years = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+->where('property_id_foreign', Session::get('property_id'))
+->selectRaw('*, datediff(moveout_at, movein_at) as lenght_of_stay')
+->whereRaw('datediff(moveout_at, movein_at) > 2920')
+->count();
+
+
+$all_contracts = DB::table('contracts')
+->join('units', 'unit_id_foreign', 'unit_id')
+ ->where('property_id_foreign', Session::get('property_id'))
+->count();
+
+
+$length_of_stay = new DashboardChart;
+$length_of_stay->displaylegend(true);
+$length_of_stay->labels
+                            (
+                                [ 
+                                    '<1 year'.' ('.$less_than_a_year.')',
+                                    '1-2 years'.' ('.$one_two_years.')', 
+                                    '3-4 years'.' ('.$three_four_years.')', 
+                                    '5-6'.' ('.$five_six_years.')', 
+                                    '7-8'.' ('.$seven_eight_years.')',
+                                    '>8 years'.' ('.$morethan_eight_years.')', 
+                                    'Total'.' ('.$all_contracts.')', 
+                                ]
+                            );
+$length_of_stay->dataset
+                            ('', 'pie',
+                                [   
+                                    $less_than_a_year,
+                                    $one_two_years,
+                                    $three_four_years,
+                                    $five_six_years,
+                                    $seven_eight_years,
+                                    $morethan_eight_years,
+
+                                   
+                                ]
+                            )
+->backgroundColor
+                    (
+                        [
+                            '#3b5998',
+                            '#211939', 
+                            '#008000',
+                            '#C13584',
+                            '#DE7835',
+                            '#211979',
+                        ]
+                    );
+
                     
  $tenants_to_watch_out = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
@@ -1174,7 +1264,8 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
                 'collections_for_the_day','contracts',
-                'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns'
+                'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns',
+                'length_of_stay'
             )
     );
 }else{
@@ -1187,7 +1278,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'collections_for_the_day','concerns','contracts',
                 'current_occupancy_rate', 'property','collection_rate_1',
                 'renewal_rate','increase_from_last_month','increase_in_room_acquired',
-                'top_agents','point_of_contact','pending_concerns', 'status'
+                'top_agents','point_of_contact','pending_concerns', 'status','length_of_stay'
             )
     );
 }

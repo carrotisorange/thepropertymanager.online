@@ -184,7 +184,7 @@
 <div class="row">
 
   <!-- Financial Line Chart -->
-  <div class="col-xl-4 col-lg-4">
+  <div class="col-md-5">
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -204,7 +204,7 @@
           <tr>
         
             <th>User</th>
-            {{-- <th>Role</th> --}}
+            <th>Role</th>
             <th># Referrals</th>
           </tr>
          </thead>
@@ -213,7 +213,7 @@
            <tr>
             <?php $explode = explode(" ", $item->name);?>
              <td>{{ $explode[0] }}</td>
-             {{-- <td>{{ $item->user_type }}</td> --}}
+             <td>{{ $item->user_type }}</td>
              <td>{{ number_format($item->referrals) }}</td>
           </tr>
            @endforeach
@@ -224,7 +224,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4 mb-4">
+  <div class="col-md-7 mb-4">
     <!-- Illustrations -->
     <div class="card shadow mb-4">
 
@@ -244,12 +244,16 @@
     </div>
 
   </div>
-  <div class="col-lg-4 mb-4">
+</div>
+  <br>
+  <div class="row">
+
+  <div class="col-md-6 mb-4">
     <!-- Illustrations -->
     <div class="card shadow mb-4">
 
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">TYPE</h6>
+          <h6 class="m-0 font-weight-bold text-primary">TYPE OF TENANT</h6>
           {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small> --}}
         </div>
 
@@ -259,6 +263,27 @@
       <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
       @else
       {!! $status->container() !!}
+      @endif
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <!-- Illustrations -->
+    <div class="card shadow mb-4">
+
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">LENGHT OF STAY</h6>
+          {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small> --}}
+        </div>
+
+  
+      <div class="card-body">
+      @if($contracts <= 0)
+      <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
+      @else
+      {!! $length_of_stay->container() !!}
       @endif
       </div>
     </div>
@@ -637,6 +662,7 @@ You have <b>{{ $pending_concerns->count() }}</b> pending concern/s that need to 
 {!! $expenses_rate->script() !!}
 {!! $reason_for_moving_out_chart->script() !!}
 {!! $status->script() !!}
+{!! $length_of_stay->script() !!}
 
 <script>
   $(document).ready(function(){
