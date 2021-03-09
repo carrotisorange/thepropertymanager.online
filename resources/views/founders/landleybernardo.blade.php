@@ -14,6 +14,8 @@ Licence URI: https://www.os-templates.com/template-terms
  <link href="{{ asset('/yeinydd/images/demo/favicon.ico') }}" rel="icon">
  <link href="{{ asset('/arsha/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
 <head>
 <title>Carpio Tech</title>
 <meta charset="utf-8">
@@ -62,6 +64,7 @@ Licence URI: https://www.os-templates.com/template-terms
           </li> --}}
           <li><a href="#introblocks">About</a></li>
           <li><a href="#references">Portforlio</a></li>
+          <li><a href="#blog">Blog</a></li>
           <li><a href="#ctdetails">Contacts</a></li>
           {{-- 
           <li><a href="#">Link Text</a></li>
@@ -105,35 +108,35 @@ Licence URI: https://www.os-templates.com/template-terms
     <section id="introblocks">
       <div class="sectiontitle">
         <h6 class="heading">About</h6>
-        {{-- <p>Urna sed augue class aptent taciti sociosqu ad litora torquent</p> --}}
+        <p>This is a tutorial page where you can learn different technologies such as...</p>
       </div>
       <ul class="nospace group">
         <li class="one_quarter first">
-          <article><a href="#"><i class="fas fa-golf-ball"></i></a>
-            <h6 class="heading">Suspendisse</h6>
-            <p>Per conubia nostra per mauris aliquet massa nulla facilisi porta ligula non elementum</p>
-            <footer><a class="btn" href="#">More Details</a></footer>
+          <article><a href="#"><i class="fas fa-code"></i></a>
+            <h6 class="heading">Web Dev/Design</h6>
+            <p>HTML, Bootstrap, Web Framework</p>
+            {{-- <footer><a class="btn" href="#">More Details</a></footer> --}}
           </article>
         </li>
         <li class="one_quarter">
-          <article><a href="#"><i class="fas fa-ribbon"></i></a>
-            <h6 class="heading">Inceptos</h6>
-            <p>Ultricies justo urna egestas metus ut ornare leo augue pharetra risus morbi tincidunt massa</p>
-            <footer><a class="btn" href="#">More Details</a></footer>
+          <article><a href="#"><i class="fas fa-mobile-alt"></i></a>
+            <h6 class="heading">App Dev/Design</h6>
+            <p>Python, Kivy</p>
+            {{-- <footer><a class="btn" href="#">More Details</a></footer> --}}
           </article>
         </li>
         <li class="one_quarter">
-          <article><a href="#"><i class="fas fa-tablets"></i></a>
-            <h6 class="heading">Himenaeos</h6>
-            <p>Ac vestibulum rutrum orci augue iaculis nibh quis porta nunc nisi suscipit leo nam ac lacus</p>
-            <footer><a class="btn" href="#">More Details</a></footer>
+          <article><a href="#"><i class="fas fa-code"></i></a>
+            <h6 class="heading">Machine Learning</h6>
+            <p>Pandas, Sckitlearn, </p>
+            {{-- <footer><a class="btn" href="#">More Details</a></footer> --}}
           </article>
         </li>
         <li class="one_quarter">
-          <article><a href="#"><i class="fas fa-wine-glass"></i></a>
-            <h6 class="heading">Facilisis</h6>
-            <p>Cras tempor ultricies urna aliquam massa sapien posuere in iaculis adipiscing vulputate</p>
-            <footer><a class="btn" href="#">More Details</a></footer>
+          <article><a href="#"><i class="fas fa-database"></i></a>
+            <h6 class="heading">Databases</h6>
+            <p>SQL, NoSQL</p>
+            {{-- <footer><a class="btn" href="#">More Details</a></footer> --}}
           </article>
         </li>
       </ul>
@@ -150,7 +153,7 @@ Licence URI: https://www.os-templates.com/template-terms
   <section id="references" class="hoc container clear"> 
     <!-- ################################################################################################ -->
     <div class="sectiontitle">
-      <h6 class="heading">Portorlio</h6>
+      <h6 class="heading">Portforlio</h6>
       {{-- <p>Eget magna eget sem imperdiet tincidunt vestibulum fringilla nulla</p> --}}
     </div>
     {{-- <nav class="ref-sort">
@@ -162,16 +165,23 @@ Licence URI: https://www.os-templates.com/template-terms
       </ul>
     </nav> --}}
     <ul class="nospace group ref-img">
-      <li class="one_third"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/348x261.png') }}" alt=""></a></li>
-      <li class="one_third"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/348x261.png') }}" alt=""></a></li>
-      <li class="one_third"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/348x261.png') }}" alt=""></a></li>
+      <li class="full"><a class="imgover" href=""><img src="{{ asset('yeinydd/images/demo/portforlio/pos.png') }}" alt=""></a></li>
+      <p>POS System</p>
+      <br>
+      <li class="full"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/portforlio/clinic.jpg') }}" alt=""></a></li>
+      <p>Clinic Management System</p>
+      <br>
+      <li class="full"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/portforlio/pms.jpg') }}" alt=""></a></li>
+      <p>Property Management System</p>
+      {{-- <li class="one_third"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/348x261.png') }}" alt=""></a></li> --}}
+      {{-- <li class="one_third"><a class="imgover" href="#"><img src="{{ asset('yeinydd/images/demo/348x261.png') }}" alt=""></a></li> --}}
       {{-- <li class="one_third"><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a></li>
       <li class="one_third"><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a></li>
       <li class="one_third"><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a></li>
       <li class="one_third"><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a></li>
       <li class="one_third"><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a></li> --}}
     </ul>
-    <footer class="block center"><a class="btn" href="#">View more here</a></footer>
+    {{-- <footer class="block center"><a class="btn" href="#">View more here</a></footer> --}}
     <!-- ################################################################################################ -->
   </section>
 </div>
@@ -179,11 +189,11 @@ Licence URI: https://www.os-templates.com/template-terms
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <div class="wrapper row3">
-  <section class="hoc container clear"> 
+  <section class="hoc container clear" id="blog"> 
     <!-- ################################################################################################ -->
     <div class="sectiontitle">
-      <h6 class="heading">Pellentesque consectetuer</h6>
-      <p>Felis vitae sapien gravida interdum curabitur eu quam nec est</p>
+      <h6 class="heading">Blog</h6>
+      {{-- <p>Felis vitae sapien gravida interdum curabitur eu quam nec est</p> --}}
     </div>
     <div id="latest" class="group">
       <article class="one_third first"><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a>
@@ -229,7 +239,7 @@ Licence URI: https://www.os-templates.com/template-terms
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
-<div class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/01.png');">
+{{-- <div class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/01.png');">
   <section id="testimonials" class="hoc container clear"> 
     <!-- ################################################################################################ -->
     <div class="sectiontitle">
@@ -248,18 +258,18 @@ Licence URI: https://www.os-templates.com/template-terms
     </div>
     <!-- ################################################################################################ -->
   </section>
-</div>
+</div> --}}
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
-<div class="wrapper row3">
+{{-- <div class="wrapper row3">
   <article class="hoc cta clear"> 
     <!-- ################################################################################################ -->
     <h6 class="three_quarter first">Sed ullamcorper arcu eu ante ut sollicitudin sem sit amet</h6>
     <footer class="one_quarter"><a class="btn" href="#">Ipsum fusce non pede</a></footer>
     <!-- ################################################################################################ -->
   </article>
-</div>
+</div> --}}
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -314,7 +324,7 @@ Licence URI: https://www.os-templates.com/template-terms
           <div class="block clear"><a href="#"><i class="fas fa-envelope"></i></a> <span><strong>Send me an mail:</strong> itscarpio@gmail.com</span></div>
         </li>
         <li class="one_quarter">
-          <div class="block clear"><a href="#"><i class="fas fa-clock"></i></a> <span><strong> Monday - Saturday:</strong> 08.00am - 18.00pm</span></div>
+          <div class="block clear"><a href="#"><i class="fas fa-clock"></i></a> <span><strong> Everyday:</strong> 07.00am - 10.00pm</span></div>
         </li>
         <li class="one_quarter">
           <div class="block clear"><a href="#"><i class="fas fa-map-marker-alt"></i></a> <span><strong>Work from home</strong> Philippines</span></div>
