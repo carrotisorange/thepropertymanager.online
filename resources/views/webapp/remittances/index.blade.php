@@ -47,7 +47,7 @@
                 <td>{{ $item->particular }}</td>
                 <td>{{ $item->cv_number }}</td>
                 <td>{{ $item->check_number }}</td>
-                <td>{{ $item->name }}</td>
+                <td><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></td>
                 <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
                <td>
                 @if($item->remitted_at === NULL)
