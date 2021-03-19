@@ -533,7 +533,7 @@
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
         <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
-        @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
+        @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
           @endif
           @if($balance->count() > 0)
@@ -675,7 +675,7 @@
       </div>
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
-        @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+        @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
         <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
         @endif 
         <br><br>
@@ -732,7 +732,7 @@
                          
                          
                          <td class="text-left">
-                         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+                         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                          @if($item->payment_status === 'deleted')
                          
                         @else

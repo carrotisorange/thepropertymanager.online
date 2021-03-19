@@ -30,7 +30,7 @@ class PropertyController extends Controller
     {
         Session::put('current-page', 'dashboard');
 
-            if(Auth::user()->user_type == 'manager'){
+            if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin'){
                $properties = User::findOrFail(Auth::user()->id)->properties;
             
                $users = DB::table('users_properties_relations')

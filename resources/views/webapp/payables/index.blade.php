@@ -88,7 +88,7 @@
                   <th>Requested</th>
                   <th>Requester</th>
                   <th>Note</th>
-                  @if(Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                   <th colspan="2" class="text-center"></th>
                   @endif
                 
@@ -108,7 +108,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
                    
-                    @if(Auth::user()->user_type === 'manager')
+                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                     <td class="text-right"> 
                       
                       <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/decline" method="POST">
@@ -152,7 +152,7 @@
                   <th>Note</th>
                   <th>Aprroved</th>
                   
-                  @if(Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                   <th colspan="2" class="text-center"></th>
                   @endif
                 </tr>
@@ -170,7 +170,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
                     <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
-                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
+                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap'|| Auth::user()->user_type === 'admin')
                     <td class="text-center"> 
                       <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/release" method="POST">
                       @csrf

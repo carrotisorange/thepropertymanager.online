@@ -176,7 +176,7 @@
             </li>
             @endif
             {{-- Bulk billing --}}
-            @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
+            @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
             <li class="nav-item">
               @if(Session::get('current-page') === 'bulk-billing')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
@@ -192,7 +192,7 @@
             </li>
             @endif
             {{-- Daily Collection Report --}}
-            @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap')
+            @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
               <li class="nav-item">
                 @if(Session::get('current-page') === 'daily-collection-report')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/collections">
@@ -208,7 +208,7 @@
             </li>
             @endif
             {{-- Remittances --}}
-            @if(Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'manager')
+            @if(Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin') 
               @if(Session::get('property_type') === 'Apartment Rentals')
               <li class="nav-item">
                 @if(Session::get('current-page') === 'remittances')
@@ -226,7 +226,7 @@
               @endif
             @endif
             {{-- Financial reports --}}
-            @if(Auth::user()->user_type === 'manager')
+            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
             <li class="nav-item">
               @if(Session::get('current-page') === 'financial-reports')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/financials">

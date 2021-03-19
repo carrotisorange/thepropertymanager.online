@@ -25,11 +25,11 @@
     <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Tenant</a>
     @endif
     
-    @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager')
+    @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
     <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings/edit" class="btn btn-primary"><i class="fas fa-edit fa-sm text-gray-50"></i> Edit</a>
     @endif
     
-      @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing')
+      @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'admin')
 
       @if($balance->count() > 0)
       <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download fa-sm text-white-50"></i> Export </span></a>
@@ -110,7 +110,7 @@
   </div>
   <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
     
-    @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+    @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
     <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
     @endif 
     <div class="row">

@@ -817,7 +817,7 @@ class TenantController extends Controller
 
     public function show_billings($unit_id, $tenant_id){
 
-        if(Auth::user()->user_type === 'billing' ||Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' ){
+        if(Auth::user()->user_type === 'billing' ||Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' ){
             
             //get the tenant information
             $tenant = Tenant::findOrFail($tenant_id);
