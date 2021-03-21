@@ -459,7 +459,7 @@
                   <a title="proceed to moveout" href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-sm btn-primary text-white"><i class="fas fa-sign-out-alt"></i></a>
                   @else
                     @if($item->status != 'inactive')
-                    <a tilt="proceed to moveout" lass="btn btn-success btn-sm text-white" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/moveout"><i class="fas fa-sign-out-alt"></i>  Moveout</a>
+                    <a title="proceed to moveout" class="btn btn-success btn-sm text-white" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/moveout"><i class="fas fa-sign-out-alt"></i> </a>
                     @endif
                   @endif
                 @endif
