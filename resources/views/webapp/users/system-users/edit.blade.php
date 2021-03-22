@@ -142,13 +142,13 @@
 
         <div class="col">
 
-            <button form="editUserForm" type="submit" class="btn btn-success btn-user btn-block"> Assign </button>
+            <button form="editUserForm" type="submit" class="btn btn-success btn-user btn-block"> Assign new user to the property</button>
         
           </div>
         @else
         <div class="col">
         
-            <a href="/property/all/" class="btn btn-primary btn-user btn-block"> Home </a>
+            <a href="/property/all/" class="btn btn-primary btn-user btn-block"><i class="fas fa-home"></i> Home </a>
         
         </div>
         {{-- <div class="col">

@@ -128,13 +128,14 @@
         <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
+            <p>Total expenses deducted to remittance: {{ number_format($expenses->sum('expense_amt'), 2) }}</p>
             <table class="table">
               <thead>
                   <?php $ctr=1;?>
                   <tr>
                       <th>#</th>
                       <th>Date</th>
-                   
+                      <th>Remittance ID</th>
                       <th>Particular</th>
                       <th>Amount</th>
                      
@@ -146,18 +147,13 @@
                   <tr>
                       <th>{{ $ctr++ }}</th>     
                       <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                      <td>{{ $item->remittance_id_foreign }}</td>
                       <td>{{ $item->expense_particular }}</td>
                       <th>{{ number_format($item->expense_amt,2) }}</th>
                      
                   </tr>   
                   @endforeach
-                  <tr>
-                      <th></th>
-                      <td></td>
-                      <td></td>
-                      <th>{{ number_format($expenses->sum('expense_amt'), 2) }}</th>
-      
-                  </tr>
+                
               </tbody>
           </table>
             </div>
@@ -168,6 +164,7 @@
         <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
+            <p>Total remittances remitted: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
             <table class="table">
               <thead>
                   <?php $ctr=1;?>
