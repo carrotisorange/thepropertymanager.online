@@ -313,7 +313,7 @@ class ConcernController extends Controller
         ->leftJoin('users', 'concern_user_id', 'id')
         ->select('*', 'concerns.status as concern_status')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->where('concerns.status', 'pending')
+        ->whereIn('concerns.status', ['pending', 'active'])
         ->orderBy('reported_at', 'desc')
         ->orderBy('urgency', 'desc')
         ->orderBy('concerns.status', 'desc')

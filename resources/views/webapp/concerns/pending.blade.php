@@ -5,7 +5,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Watchout for pending concerns ({{ $pending_concerns->count() }})</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">List of pending/active concern/s ({{ $pending_concerns->count() }})</h6>
     
   </div>
   
@@ -22,6 +22,7 @@
                     <th>Date reported</th>
                     <th>Tenant</th>
                     <th>Room</th>
+                    <th>Status</th>
                     <th>Title</th>
                     <th>Assigned to</th>
                 </tr>
@@ -42,6 +43,15 @@
                       @else
                       {{ $item->unit_no }}
                       @endif
+                    </th>
+                    <th>
+                      @if($item->concern_status === 'pending')
+                    <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
+                    @elseif($item->concern_status === 'active')
+                    <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
+                    @else
+                    <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
+                    @endif
                     </th>
                     <th>
                       <a href="/property/{{ Session::get('property_id') }}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
