@@ -7,6 +7,8 @@ use DB;
 use App\Owner, App\Unit, App\Bill;
 use Illuminate\Support\Facades\Auth;
 use App\Property;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OwnerCredentialsMail;
 use App\Certificate;
 use Uuid;
 use Carbon\Carbon;
@@ -261,13 +263,25 @@ class OwnerController extends Controller
                                   (
                                       [
                                           'user_id_foreign' => $user_id,
-                                        
                                           'property_id_foreign' => $property_id,
                                       ]
-                                  );      
+                                  );
+
+         $data = array(
+            'email' => $request->email,
+            'password' => $request->password,
+            'name' => $request->name,
+            'property' => Session::get('property_name'),
+        );
+
+        
+                Mail::send('webapp.owners.email-credentials-to-owner', $data, function($message) use ($data){
+                $message->to($request->email);
+                $message->subject('Online Access to Owner Portal');
+            });      
                                   
 
-    return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#user')->with('success', 'Credentials are created successfully!');
+    return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#user')->with('success', 'Access to the system is sent to the owner!');
     }
 
     /**
