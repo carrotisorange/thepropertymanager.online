@@ -347,11 +347,11 @@ Route::get('/property/{property_id}/unit/{home_id}/bills/edit', 'BillController@
 
 //export bills
 Route::get('/property/{property_id}/tenant/{tenant_id}/bills/export', 'BillController@export')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/home/{unit_id}/bills/export', 'BillController@export_occupant_bills')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/unit/{unit_id}/bills/export', 'BillController@export_occupant_bills')->middleware(['auth', 'verified']);
 
 
 Route::put('/property/{property_id}/tenant/{tenant_id}/bills/update', 'BillController@post_edited_bills')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/home/{unit_id}/bills/update', 'BillController@update_occupant_bills')->middleware(['auth', 'verified']);
+Route::put('/property/{property_id}/unit/{unit_id}/bills/update', 'BillController@update_occupant_bills')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/rent/{date}', 'BillController@post_bills_rent')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/condodues/{date}', 'BillController@post_bills_condodues')->middleware(['auth', 'verified']);
 

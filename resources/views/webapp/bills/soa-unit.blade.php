@@ -27,8 +27,8 @@
             <br>
             {{-- <span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span>
             <br> --}}
-            <b>To:</b> {{ $occupant }}
-            <br>
+            {{-- <b>To:</b> {{ $occupant }}
+            <br> --}}
              <b>Unit:</b> {{ $unit }}
           
        

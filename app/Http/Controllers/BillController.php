@@ -918,28 +918,36 @@ $request->session()->now('success', 'Changes saved.');
     public function export_occupant_bills($property_id,$unit_id)
     {
         
-         $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-        ->join('units', 'bill_unit_id', 'unit_id')
-        ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-        ->where('unit_id', $unit_id)
+         $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_unit_id', $unit_id)
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
 
+        //  return $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
+        // ->join('units', 'bill_unit_id', 'unit_id')
+        // ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
+        // ->where('unit_id', $unit_id)
+        // ->groupBy('bill_id')
+        // ->orderBy('bill_no', 'desc')
+        // ->havingRaw('balance > 0')
+        // ->get();
+
         $unit_no = Unit::findOrFail($unit_id)->unit_no;
 
-        $tenant_id = Unit::findOrFail($unit_id)->contracts()->first()->tenant_id_foreign;
+        #$tenant_id = Unit::findOrFail($unit_id)->contracts()->first()->tenant_id_foreign;
 
-        $occupant = Tenant::findOrFail($tenant_id);
+        #$occupant = Tenant::findOrFail($tenant_id);
 
         $data = [
-            'occupant' => $occupant->first_name.' '.$occupant->last_name,
+            #'occupant' => $occupant->first_name.' '.$occupant->last_name,
             'bills' => $bills,
             'unit' => $unit_no,
         ];
 
-        $tenant = Tenant::findOrFail($tenant_id);
+        #$tenant = Tenant::findOrFail($tenant_id);
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
