@@ -28,6 +28,6 @@ class OwnerCredentialsMail extends Mailable
      */
     public function build()
     {
-        return $this->subject( Auth::user()->property )->markdown('webapp.owners.email-credentials-to-owner');
+        return $this->markdown('webapp.owners.email-credentials-to-owner');
     }
 }

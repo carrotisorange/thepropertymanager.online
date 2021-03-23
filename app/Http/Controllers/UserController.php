@@ -197,11 +197,17 @@ class UserController extends Controller
             'trial_ends_at' => Auth::user()->trial_ends_at,
         ]);
 
-        // DB::table('users_properties_relations')
-        // ->insert([
-        //     'property_id_foreign' => $request->property_id,
-        //     'user_id_foreign' => $user_id,
-        // ]);
+        $data = array(
+            'email' => $request->email,
+            'password' => $request->password,
+            'name' => $request->name,
+            'property' => Session::get('property_name'),
+        );
+
+                Mail::send('webapp.users.welcome-generated-mail', $data, function($message) use ($data){
+                $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+                $message->subject('Welcome New User');
+            });      
 
         return redirect('/user/'.$user_id.'/edit')->with('success', 'New user has been saved!');
     }

@@ -28,6 +28,6 @@ class TenantRegisteredMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('The Property Manager')->markdown('webapp.users.welcome-generated-mail');
+        return $this->markdown('webapp.users.welcome-generated-mail');
     }
 }

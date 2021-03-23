@@ -71,9 +71,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-            Mail::to($data['email'])
-            ->bcc(['landleybernardo@thepropertymanager.online'])
-            ->send(new TenantRegisteredMail());
+           
+        $data = array(
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'name' => $data['name'],
+            'property' => Session::get('property_name'),
+        );
+
+                Mail::send('webapp.users.welcome-generated-mail', $data, function($message) use ($data){
+                $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+                $message->subject('Welcome New User');
+            });  
 
          return User::create([
             'name' => $data['name'],
