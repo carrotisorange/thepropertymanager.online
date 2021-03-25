@@ -91,12 +91,12 @@
               
                       <tr>
                           <th> {{ $ctr++ }}</th>
-                          <td><input class="form-control" form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
+                          <td><input form="editUnitsForm" type="text" name="building{{ $building++  }}" id="" value="{{ $item->building }}"></td>
                           <td>
                             <input form="editUnitsForm" type="text" name="unit_no{{ $unit_no++  }}" id="" value="{{ $item->unit_no }}">
                             <input form="editUnitsForm" type="hidden" name="unit_id{{ $unit_id++  }}" id="" value="{{ $item->unit_id }}">
                           </td>
-                          <td><input class="form-control" form="editUnitsForm" type="text" name="size{{ $size++  }}" id="" value="{{ $item->size }}"></td>
+                          <td><input form="editUnitsForm" type="text" name="size{{ $size++  }}" id="" value="{{ $item->size }}"></td>
                           <td>
                             <select form="editUnitsForm" type="number" name="floor{{ $floor++ }}">
                               <option value="{{ $item->floor }}" readonly selected class="bg-primary">{{ $item->floor }}</option>
