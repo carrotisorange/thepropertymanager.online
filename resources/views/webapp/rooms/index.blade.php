@@ -138,7 +138,7 @@
     </p>
     </div>
     <br>
-    <div class="row"  style="overflow-y:scroll;overflow-x:scroll;height:500px;" >
+    <div class="row"  style="overflow-y:scroll;overflow-x:scroll;" >
       @foreach ($units as $item)
     
       <div class="col-md-1">
