@@ -172,7 +172,7 @@ font-family: FontAwesome;
 @endif
 <br>
 <p class="text-right"><a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addResponse" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add Response</a></p>
-<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
@@ -201,7 +201,7 @@ font-family: FontAwesome;
 
 
 
-<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
@@ -230,7 +230,7 @@ font-family: FontAwesome;
 
 
 
-<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="markAsCompleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">

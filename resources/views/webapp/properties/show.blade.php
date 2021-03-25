@@ -625,7 +625,7 @@
 
 
 
-<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">>
 <div class="modal-dialog modal-md" role="modal">
 <div class="modal-content">
 <div class="modal-header">

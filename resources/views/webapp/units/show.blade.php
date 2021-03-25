@@ -262,7 +262,7 @@
   
         <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
 
-          @if($owners->count() <= 0 && Session::get('property_ownership') === 'Multiple Owners')
+          @if($owners->count() <= 0 && (Session::get('property_ownership') === 'Multiple Owners' || Session::get('property_ownership') === 'Single Owner'))
               <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>
           @else
               <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>   
@@ -423,7 +423,7 @@
     </div>
   </div>
   
-  <div class="modal fade" id="editUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -501,7 +501,7 @@
   </div>
 
                      {{-- Modal for renewing tenant --}}
-                     <div class="modal fade" id="addConcern" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal fade" id="addConcern" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                       <div class="modal-dialog modal-md" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
@@ -609,7 +609,7 @@
   @include('webapp.tenants.show_includes.rooms.warning-exceeds-limit')
   @include('webapp.tenants.show_includes.owners.create')
 
-  <div class="modal fade" id="addOccupant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="addOccupant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -634,7 +634,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalToAddOwner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalToAddOwner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">
@@ -660,7 +660,7 @@
 </div>
 
 
-<div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-xl" role="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -722,7 +722,7 @@
   </div>
 
   
-<div class="modal fade" id="acceptPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="acceptPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-xl" role="document">
   <div class="modal-content">
       <div class="modal-header">
