@@ -23,7 +23,7 @@
       <form  action="/property/{{Session::get('property_id')}}/tenants/search" method="GET" >
         @csrf
         <div class="input-group">
-            <input type="text" class="form-control" name="tenant_search" placeholder="Enter name..." value="{{ Session::get('tenant_search') }}">
+            <input type="text" class="form-control" name="tenant_search" placeholder="enter name..." value="{{ Session::get('tenant_search') }}">
             <div class="input-group-append">
               <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search fa-sm"></i>
@@ -49,7 +49,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
 
 
 <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-    <table class="table table-hover">
+    <table class="table table-condensed table-bordered table-hover">
       <?php $ctr=1;?>
       <thead>
         <tr>

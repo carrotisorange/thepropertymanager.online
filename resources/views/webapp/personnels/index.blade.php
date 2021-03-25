@@ -22,11 +22,11 @@
   
 <div class="table-responsive text-nowrap">
      
-  <table class="table table-bordered table-hover">
+  <table class="table table-condensed table-bordered table-hover">
     <thead>
       <?php $ctr=1;?>
       <tr>
-          {{-- <th>#</th> --}}
+          <th>#</th>
           <th>Name</th>
           <th>Role</th>
           <th>Email</th>
@@ -37,7 +37,7 @@
     <tbody>
     @foreach ($employees as $item)
     <tr>
-      {{-- <th>{{ $ctr++ }}</th> --}}
+      <th>{{ $ctr++ }}</th>
         <td>{{ $item->name }}</td>
         <td>{{ $item->user_type }}</td>
         <td>{{ $item->email }}</td>

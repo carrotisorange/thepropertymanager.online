@@ -14,13 +14,13 @@
   </div>
 </div>
 
-<div class="table">
+<div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 
   <form id="add_billings" action="/property/{{Session::get('property_id')}}/bills/create/" method="POST">
       @csrf
   </form>
     
-    <table class="table table-bordered table-hover">
+    <table class="table table-condensed table-bordered table-hover">
    <thead>
     <tr>
       <th>#</th>
@@ -75,10 +75,10 @@
     
       <td>
        
-        <input class="form-control" form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
+        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('Y-m-d') }}" required>
       </td>
       <td> 
-        <input class="form-control" form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
+        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('Y-m-d') }}" required>
        
     </td>
           <input class="" type="hidden" form="add_billings" name="tenant_id{{ $tenant_id++ }}" value="{{ $item->tenant_id }}" required readonly>
@@ -92,7 +92,7 @@
         <input  class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="950" oninput="this.value = Math.abs(this.value)">
         @endif
        @else --}}
-        <input class="form-control" form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->condodues * $item->size }}" oninput="this.value = Math.abs(this.value)">
+        <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->condodues * $item->size }}" oninput="this.value = Math.abs(this.value)">
        {{-- @endif --}}
       </td>
    </tr>

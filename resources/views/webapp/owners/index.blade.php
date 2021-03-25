@@ -4,15 +4,17 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
+  <div class="col-lg-12">
     <h6 class="h2 text-dark d-inline-block mb-0">Owners</h6>
     
   </div>
-  <div class="col-lg-6 col-5 text-right">
+</div>
+<div class="row">
+  <div class="col-md-12">
     <form  action="/property/{{Session::get('property_id')}}/owners/search" method="GET" >
       @csrf
       <div class="input-group">
-          <input type="text" class="form-control" name="owner_search" placeholder="Enter name..." value="{{ Session::get('owner_search') }}">
+          <input type="text" class="form-control" name="owner_search" placeholder="enter name..." value="{{ Session::get('owner_search') }}">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
               <i class="fas fa-search fa-sm"></i>
@@ -23,6 +25,7 @@
   </div>
 
 </div>
+<br>
 @if($owners->count() <=0 )
 <p class="text-danger text-center">No owners found!</p>
 
@@ -33,11 +36,11 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
 @endif 
 <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 
-    <table class="table table-hover">
+    <table class="table table-condensed table-bordered table-hover">
         <thead>
           <?php $ctr=1; ?>
             <tr>
-              {{-- <th>#</th> --}}
+              <th>#</th>
                <th>Name</th>
                <th>Email</th>
                <th>Mobile</th>
@@ -48,7 +51,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
            <tbody>
            @foreach ($owners as $item)
           <tr>
-            {{-- <th>{{ $ctr++ }}</th> --}}
+            <th>{{ $ctr++ }}</th>
             <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></th>
             <td>{{ $item->email}}</td>
             <td>{{ $item->mobile }}</td>

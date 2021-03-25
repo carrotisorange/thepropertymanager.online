@@ -23,10 +23,11 @@
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent" >
+  <br>
   <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover" >
+      <table class="table table-hover table-condensed table-bordered" >
         <thead>
           <?php $ctr=1; ?>
           <tr>
@@ -115,7 +116,7 @@
   <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover" >
+      <table class="table table-hover table-condensed table-bordered" >
         <thead>
           <?php $ctr=1; ?>
           <tr>
@@ -196,7 +197,7 @@
   <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover" >
+      <table class="table table-hover table-condensed table-bordered " >
         <thead>
           <?php $ctr=1; ?>
           <tr>
@@ -277,7 +278,7 @@
   <div class="tab-pane fade" id="nav-closed" role="tabpanel" aria-labelledby="nav-closed-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover" >
+      <table class="table table-condensed table-bordered table-hover">
         <thead>
           <?php $ctr=1; ?>
           <tr>

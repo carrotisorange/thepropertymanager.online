@@ -32,11 +32,11 @@
                 <br>
                 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-condensed table-bordered">
                             <thead>
                                 <?php $ctr=1;?>
                                 <tr>
-                                    {{-- <th>#</th> --}}
+                                    <th>#</th>
                                     <th>Date Prepared</th>
                                     <th>Period Covered</th>
                                     {{-- <th>Particular</th> --}}
@@ -52,7 +52,7 @@
                             <tbody>
                                 @foreach ($all_remittances as $item)
                                 <tr>
-                                    {{-- <th>{{ $ctr++ }}</th>      --}}
+                                    <th>{{ $ctr++ }}</th>     
                                     <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
                                     
                                     <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
@@ -81,11 +81,11 @@
                 <br>
                 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-condensed table-bordered">
                             <thead>
                                 <?php $ctr=1;?>
                                 <tr>
-                                    {{-- <th>#</th> --}}
+                                    <th>#</th>
                                     <th>Date Prepared</th>
                                     <th>Period Covered</th>
                                     {{-- <th>Particular</th> --}}
@@ -101,7 +101,7 @@
                             <tbody>
                                 @foreach ($pending_remittances as $item)
                                 <tr>
-                                    {{-- <th>{{ $ctr++ }}</th>      --}}
+                                    <th>{{ $ctr++ }}</th>     
                                     <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
                                     
                                     <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
@@ -129,11 +129,11 @@
                 <br>
                 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-condensed table-bordered">
                             <thead>
                                 <?php $ctr=1;?>
                                 <tr>
-                                    {{-- <th>#</th> --}}
+                                    <th>#</th>
                                     <th>Date Prepared</th>
                                     <th>Period Covered</th>
                                     {{-- <th>Particular</th> --}}
@@ -149,7 +149,7 @@
                             <tbody>
                                 @foreach ($deposited_remittances as $item)
                                 <tr>
-                                    {{-- <th>{{ $ctr++ }}</th>      --}}
+                                    <th>{{ $ctr++ }}</th>     
                                     <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
                                     
                                     <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>

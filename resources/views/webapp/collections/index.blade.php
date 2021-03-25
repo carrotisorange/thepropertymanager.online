@@ -39,7 +39,7 @@
 @else
 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
   
-  <table class="table table-hover">
+  <table class="table table-hover table-condensed table-bordered">
       @foreach ($collections as $day => $collection_list)
       <?php $ctr=1;?>
       <thead>
