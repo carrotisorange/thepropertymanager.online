@@ -447,7 +447,7 @@
                   <a title="delete this contract" class="btn btn-danger btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/delete"><i class="fas fa-trash"></i></a>
                   <a title="edit contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/edit"><i class="fas fa-edit"></i></a>
                   @if(!$item->terminated_at)
-                    @if($pending_balance->count() > 0)
+                    @if($balance->count() > 0)
                     <a title="terminate this contract" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#pendingBalance"><i class="fas fa-sign-out-alt"></i> </a>
                     @else
                     <a title="terminate this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/preterminate"><i class="fas fa-sign-out-alt"></i> </a>
@@ -455,7 +455,7 @@
                  
                 @endif
                 @if($item->terminated_at)
-                  @if($pending_balance->count()>0)
+                  @if($balance->count()>0)
                   <a title="proceed to moveout" href="#" data-toggle="modal" data-target="#pendingBalance" class="btn btn-sm btn-primary text-white"><i class="fas fa-sign-out-alt"></i></a>
                   @else
                     @if($item->status != 'inactive')
@@ -573,8 +573,8 @@
                          {{-- <th></th> --}}
                        </tr>
                   </thead>
-                    @foreach ($bills as $item)
-                    @if($item->bill_status === 'deleted')
+                    @foreach ($balance as $item)
+                    {{-- @if($item->bill_status === 'deleted')
                     <tr class="bg-success">
                       <th class="text-center">{{ $ctr++ }}</th>
                          <td>
@@ -605,7 +605,7 @@
                              @endif
                            
                                   </tr>
-                    @else
+                    @else --}}
                     <tr>
                       <th class="text-center">{{ $ctr++ }}</th>
                          <td>
@@ -636,7 +636,7 @@
                            </td>
                           
                                   </tr>
-                    @endif
+                    {{-- @endif --}}
                     
                                
                     @endforeach
@@ -645,12 +645,10 @@
                       
                       <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
                       <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
-                      <th class="text-right text-danger" colspan="">
-                        @if(($bills->sum('balance')-$deleted_bills) > 0)
-                        <span >{{ number_format($bills->sum('balance')-$deleted_bills,2) }}</span>
-                        @else
-                        <span >{{ number_format($bills->sum('balance')-$deleted_bills,2) }}</span>
-                        @endif
+                      <th class="text-right text-danger">
+                       
+                        <span >{{ number_format($balance->sum('balance'),2) }}</span>
+                       
                    
                        </th>
                      </tr>
@@ -663,7 +661,7 @@
                 </div>
 
             @endif
-      <br>
+      {{-- <br>
       <div class="row">
         <div class="col-md-11 mx-auto">
           <div class="">
@@ -672,7 +670,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')

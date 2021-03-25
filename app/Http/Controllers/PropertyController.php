@@ -471,6 +471,10 @@ class PropertyController extends Controller
 
         Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
 
+        Session::put('property_address', Property::findOrFail(Session::get('property_id'))->address);
+
+        Session::put('property_mobile', Property::findOrFail(Session::get('property_id'))->mobile);
+
         Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
         
 

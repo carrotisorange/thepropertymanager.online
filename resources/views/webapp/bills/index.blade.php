@@ -52,7 +52,7 @@
     <th colspan="8"></th>
   </tr>
   <tr>
-    <th colspan="12">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $bill->count() }}) </th>
+    <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $bill->count() }}) </th>
 </tr>
 <tr>
   <?php $ctr=1;?>
@@ -74,8 +74,8 @@
  
   <th colspan="2">Period Covered</th>
   <th>Amount</th>
-
-  <td></td>
+{{-- 
+  <td></td> --}}
     
 </tr>
 </thead>
@@ -115,7 +115,7 @@
         </td>
         <td>{{ number_format($item->amount,2) }}</td>
      
-        <td class="text-center">
+        {{-- <td class="text-center">
           @if($item->bill_status === 'deleted')
           <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
             @csrf
@@ -133,7 +133,7 @@
           @endif
           @endif
        
-        </td>
+        </td> --}}
         </tr>
       @endforeach
       <tr>

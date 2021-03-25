@@ -652,24 +652,28 @@ $request->session()->now('success', 'Changes saved.');
             ->where('property_id_foreign', Session::get('property_id'))
             ->max('bill_no') + 1;
 
-             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->join('tenants', 'bill_tenant_id', 'tenant_id')
-            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
-            ->join('units', 'unit_id_foreign', 'unit_id')
+            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+            ->where('bill_tenant_id', $tenant_id)
+            
+            ->groupBy('bill_id')
+            ->orderBy('bill_no', 'desc')
+            ->havingRaw('balance > 0')
+            ->get();
+
+
+            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
             ->where('bill_tenant_id', $tenant_id)
-            // ->where('bill_status', '<>', 'deleted')
-            ->groupBy('bill_no')
+            ->groupBy('bill_id')
             ->orderBy('bill_no', 'desc')
             // ->havingRaw('balance > 0')
             ->get();
 
-            $deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
-
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
-                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property','deleted_bills'));  
+                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property', 'bills'));  
             }
 
         }else{
@@ -873,15 +877,46 @@ $request->session()->now('success', 'Changes saved.');
 
         $tenant = Tenant::findOrFail($tenant_id);
 
-        $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+          $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
+        ->whereYear('date_posted', Carbon::now()->year)
+        ->whereMonth('date_posted', Carbon::now()->month)
+        ->where('particular', 'Rent')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
 
-        $deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
+        $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_tenant_id', $tenant_id)
+        ->where('date_posted', '<=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('particular', 'Rent')
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+        
+        
+        $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_tenant_id', $tenant_id)
+        ->where('date_posted', '<=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('particular', 'Surcharge')
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+
+        $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_tenant_id', $tenant_id)
+        ->groupBy('bill_id')
+        ->where('particular','!=', ['Rent','Surcharge'])
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
 
         $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
 
@@ -889,8 +924,10 @@ $request->session()->now('success', 'Changes saved.');
 
         $data = [
             'tenant' => $tenant->first_name.' '.$tenant->last_name ,
-            'bills' => $bills,
-            'deleted_bills' => $deleted_bills,
+            'current_bills' => $current_bills,
+            'previous_bills' => $previous_bills,
+            'previous_surcharges'=>$previous_surcharges,
+            'other_bills'=>$other_bills,
             'current_room' => $current_room,
         ];
 

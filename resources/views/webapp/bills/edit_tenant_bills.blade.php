@@ -58,7 +58,7 @@
         ?>
         <tbody>
         @foreach ($balance as $item)
-        @if($item->bill_status === 'deleted')
+        {{-- @if($item->bill_status === 'deleted')
         <tr>
           <th class="text-center">{{ $ctr++ }}</th>
           <th>
@@ -107,7 +107,7 @@
             @endif
           </td>   
         </tr>
-        @else
+        @else --}}
         <tr>
           <th class="text-center">{{ $ctr++ }}</th>
           <th>
@@ -135,7 +135,7 @@
             <input form="editBillsForm"  class="form-control" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
           </td>
           <td><input form="editBillsForm" class="form-control" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
-          <td>
+          {{-- <td>
             @if(Auth::user()->user_type === 'manager')
               @if($item->bill_status === 'deleted')
               <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
@@ -151,9 +151,9 @@
               </form>
               @endif    
             @endif
-          </td>   
+          </td>    --}}
         </tr>
-        @endif
+        {{-- @endif --}}
       
         @endforeach
 
@@ -164,7 +164,7 @@
           <th></th>
           <th></th>
           <th></th>
-          <th><input class="form-control" type="" step="0.01" value="{{ number_format($balance->sum('balance')-$deleted_bills,2) }}" readonly> </th>
+          <th><input class="form-control" type="" step="0.01" value="{{ number_format($balance->sum('balance'),2) }}" readonly> </th>
          </tr>  
          <tbody>  
     </table>
