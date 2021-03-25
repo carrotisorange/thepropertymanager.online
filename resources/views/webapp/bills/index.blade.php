@@ -45,7 +45,7 @@
 
 @else
 <div class="table">
-  <table class="table table-bordered table-hover">
+  <table class="table table-hover">
     @foreach ($bills as $day => $bill)
 <thead>
   <tr>
