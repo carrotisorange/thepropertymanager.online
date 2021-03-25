@@ -143,26 +143,26 @@
     
       <div class="col-md-1">
         @if($item->status === 'occupied')
-        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-success">
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-success">
           <i class="fas fa-home fa-2x"></i>
           <br>
           {{ $item->unit_no }}
       </a>
         @elseif($item->status === 'vacant')
-        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-danger">
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-danger">
           <i class="fas fa-home fa-2x"></i>
           <br>
           {{ $item->unit_no }}
       </a>
       @elseif($item->status === 'dirty')
-      <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-dark">
+      <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-dark">
         <i class="fas fa-home fa-2x"></i>
         <br>
         {{ $item->unit_no }}
     </a>
     @else
     
-    <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-warning">
+    <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-warning">
       <i class="fas fa-home fa-2x"></i>
       <br>
       {{ $item->unit_no }}
