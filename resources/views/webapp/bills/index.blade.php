@@ -47,7 +47,7 @@
 <div class="table" >
   <table class="table table-condensed table-bordered table-hover">
     @foreach ($bills as $day => $bill)
-<thead >
+<thead>
   <tr>
     <th colspan="8"></th>
   </tr>

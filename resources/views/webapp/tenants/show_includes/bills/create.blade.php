@@ -1,6 +1,6 @@
 
       <div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"  data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-xl" role="modal">
+        <div class="modal-dialog modal-lg" role="modal">
         <div class="modal-content">
           <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Bill Information</h5>
@@ -19,13 +19,13 @@
             <div class="col-md-3">
 
                 {{-- <input type="date" class='form-control' form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
-                <input type="date" class='form-control' form="addBillForm" class="" name="date_posted" required >
+                <input type="date" form="addBillForm" class="" name="date_posted" required >
               
             </div>
             <div class="col">
               <p class="text-right">
-                <span id='delete_bill' class="btn btn-danger"> Remove</span>
-              <span id="add_bill" class="btn btn-primary"> Add</span>     
+                <span id='delete_bill' class="btn btn-danger btn-sm"> Remove</span>
+              <span id="add_bill" class="btn btn-primary btn-sm"> Add</span>     
               </p>
             </div>
           </div>
@@ -35,7 +35,7 @@
             <div class="col">
         
                 <div class="table-responsive text-nowrap">
-                <table class = "table" id="table_bill">
+                <table class = "table table-condensed table-bordered" id="table_bill">
                    <thead>
                     <tr>
                       <th>#</th>
@@ -55,7 +55,7 @@
         </div>
         <div class="modal-footer">
 
-         <button form="addBillForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Post Bills</button>
+         <button form="addBillForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Post Bills</button>
         </div> 
         </div>
         </div>

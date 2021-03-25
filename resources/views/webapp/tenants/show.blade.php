@@ -86,21 +86,21 @@
         
 <div class="row">
   <div class="col-md-8">
-    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back to tenants</a>
 
     {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
+    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit tenant</a>  
     @endif
 
      <br><br>
      @if($tenant->email_address === null || $tenant->contact_no === null)
     <p class="text-danger">Email address or mobile is missing!</p>
      @endif
-      <div class="table-responsive text-nowrap">
-        <table class="table" >
+      <div>
+        <table class="table  table-condensed table-bordered table-hover" >
               <tr>
                 <thead>
                 <th>Tenant ID</th>
@@ -165,12 +165,12 @@
             </table>
             @if($tenant->type_of_tenant === 'studying')
             <p>
-              <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">View Educational Background</a>
+              <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-eye"></i>  View tenant's educational background</a>
              
             </p>
             @else
             <p>
-              <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">View Employment Information</a>
+              <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-eye"></i>   View tenant's employment information</a>
              
             </p>
             @endif
@@ -179,7 +179,7 @@
               <div class="col">
                 <div class="collapse multi-collapse" id="multiCollapseExample1">
                  
-                    <table class="table">     
+                    <table class="table  table-condensed table-bordered table-hover">     
                       <thead>    
                         <tr>
                           <th>High School</th>
@@ -206,7 +206,7 @@
               @else
               <div class="col">
                 <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <table class="table">
+                  <table class="table  table-condensed table-bordered table-hover">
                     <thead>
                     <tr>
                       <th>Employer</th>
@@ -266,7 +266,7 @@
   @enderror
     <br>
    
-    <button class="btn btn-primary shadow-sm btn-user btn-block" form="uploadImageForm"><i class="fas fa-upload fa-sm text-white-50"></i> Upload Image </button>
+    <button class="btn btn-primary btn-sm shadow-sm btn-user btn-block" form="uploadImageForm"><i class="fas fa-upload fa-sm text-white-50"></i> Upload tenant image </button>
 
   </div>
 
@@ -274,7 +274,7 @@
       </div>
 
       <div class="tab-pane fade" id="guardians" role="tabpanel" aria-labelledby="nav-guardians-tab">
-        <a  href="#" class="btn btn-primary " data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>  
+        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> Add tenant's guardian</a>  
         <br><br>
         
         @if($guardians->count() < 1)
@@ -283,7 +283,7 @@
         <div class="row" >
           <div class="col-md-12 mx-auto" >
         <div class="table-responsive text-nowrap">
-         <table class="table">
+         <table class="table  table-condensed table-bordered table-hover">
            <thead>
             <?php $ctr = 1; ?>
              <tr>
@@ -322,8 +322,8 @@
         @else
         <div class="row" >
           <div class="col-md-12" >
-        <div class="table-responsive text-nowrap">
-         <table class="table">
+        <div class="">
+         <table class="table  table-condensed table-bordered table-hover">
            <?php $ctr = 1; ?>
            <thead>
              <tr>
@@ -390,7 +390,7 @@
       </div>
       <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
 
-       <p class="text-left"> <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  </p>
+       <p class="text-left"> <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add new contract</a>  </p>
       
       <div style="display:none" id="showSelectedContract" class="col-md-6 p-0 m-0 mx-auto text-center">
       <div class="alert alert-success alert-dismissable custom-success-box">
@@ -404,7 +404,7 @@
             @method('put')
           </form>
           <div class="col-md-12 mx-auto">
-            <table class="table">
+            <table class="table  table-condensed table-bordered table-hover">
               <thead>
                 <?php $ctr = 1; ?>
                 <tr>
@@ -480,7 +480,7 @@
 
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</button>
+        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add access to the system</button>
         <br><br>
         @endif
      
@@ -494,7 +494,7 @@
              @else
              @foreach ($access as $item)
        
-             <table class="table">
+             <table class="table  table-condensed table-bordered table-hover">
                
                 
                <thead>
@@ -532,12 +532,12 @@
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
+        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Bills</a> 
         @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit Bills</a>
           @endif
           @if($balance->count() > 0)
-          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
+          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export bills</span></a>
           {{-- @if($tenant->email_address !== null)
           <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
           @endif --}}
@@ -554,7 +554,7 @@
             <div class="col-md-12 mx-auto">
               <div class="table-responsive">
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
+                  <table class="table  table-condensed table-bordered table-hover">
                     <?php $ctr=1; ?>
                   <thead>
                     <tr>
@@ -674,7 +674,7 @@
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-        <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+        <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Record payments</a>
         @endif 
         <br><br>
         @if($payments->count() <= 0)
@@ -682,7 +682,7 @@
         @else
         <div class="col-md-12">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table  table-condensed table-bordered table-hover">
               @foreach ($payments as $day => $collection_list)
                <thead>
                   <tr>
@@ -1007,7 +1007,7 @@
     });
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select class='form-control' name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Advance Rent'>Advance Rent</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input  class='form-control' form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' value='{{ $tenant->movein_date }}' required></td> <td><input  class='form-control'  form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input  class='form-control'  form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Advance Rent'>Advance Rent</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' value='{{ $tenant->movein_date }}' required></td> <td><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      
