@@ -32,8 +32,8 @@ class ConcernController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-       if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
-            $concerns = DB::table('contracts')
+       if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager'){
+            $all_concerns = DB::table('contracts')
             ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
             ->leftJoin('units', 'unit_id_foreign', 'unit_id')
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
@@ -44,8 +44,47 @@ class ConcernController extends Controller
             ->orderBy('urgency', 'desc')
             ->orderBy('concerns.status', 'desc')
             ->get();
-       else{
-            $concerns = DB::table('contracts')
+
+            $pending_concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concerns.status', 'pending')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+
+            $active_concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concerns.status', 'active')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+
+            $closed_concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concerns.status', 'closed')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+       }else{
+            $all_concerns = DB::table('contracts')
             ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
             ->leftJoin('units', 'unit_id_foreign', 'unit_id')
             ->join('concerns', 'tenant_id', 'concern_tenant_id')
@@ -57,12 +96,52 @@ class ConcernController extends Controller
             ->orderBy('urgency', 'desc')
             ->orderBy('concerns.status', 'desc')
             ->get();
-       }
-       
 
-        $property = Property::findOrFail($property_id);
+            $pending_concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concern_user_id', Auth::user()->id)
+            ->where('concerns.status', 'pending')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
 
-        return view('webapp.concerns.index', compact('concerns', 'property'));
+            $active_concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concern_user_id', Auth::user()->id)
+            ->where('concerns.status', 'active')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+
+            $closed_concerns = DB::table('contracts')
+            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('concern_user_id', Auth::user()->id)
+            ->where('concerns.status', 'closed')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+
+       }       
+
+        return view('webapp.concerns.index', compact('all_concerns', 'pending_concerns', 'active_concerns', 'closed_concerns'));
     }
 
     /**

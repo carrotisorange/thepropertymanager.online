@@ -43,15 +43,36 @@ class RemittanceController extends Controller
 
         $rooms = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
 
-         $remittances = DB::table('units')
+         $all_remittances = DB::table('units')
         ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
         ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->select('*', 'remittances.created_at as prepared_at')
         ->where('property_id_foreign',Session::get('property_id'))
+        ->orderBy('remittances.created_at')
         ->get();
 
-        return view('webapp.remittances.index', compact('rooms', 'remittances'));
+         $pending_remittances = DB::table('units')
+        ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+        ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->select('*', 'remittances.created_at as prepared_at')
+        ->where('property_id_foreign',Session::get('property_id'))
+        ->whereNull('remitted_at')
+        ->orderBy('remittances.created_at')
+        ->get();
+
+         $deposited_remittances = DB::table('units')
+        ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
+        ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->select('*', 'remittances.created_at as prepared_at')
+        ->where('property_id_foreign',Session::get('property_id'))
+        ->whereNotNull('remitted_at')
+        ->orderBy('remittances.created_at')
+        ->get();
+
+        return view('webapp.remittances.index', compact('rooms', 'all_remittances', 'pending_remittances', 'deposited_remittances'));
     }
 
     /**

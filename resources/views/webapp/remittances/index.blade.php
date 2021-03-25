@@ -14,54 +14,169 @@
 
 </div>
 
-@if($remittances->count() <=0 )
+@if($all_remittances->count() <=0 )
 <p class="text-danger text-center">No remittances found!</p>
 
 @else
-
-<div class="table">
-    <table class="table table-bordered table-hover">
-        <thead>
-            <?php $ctr=1;?>
-            <tr>
-                {{-- <th>#</th> --}}
-                <th>Date Prepared</th>
-                <th>Period Covered</th>
-                <th>Particular</th>
-                <th>CV</th>
-                <th>Check #</th>
-                <th>Owner</th>
-                <th>Room</th>
-                <th>Status</th>
-                <th>Amount</th>
-    
-            </tr>    
-        </thead>
-        <tbody>
-            @foreach ($remittances as $item)
-            <tr>
-                {{-- <th>{{ $ctr++ }}</th>      --}}
-                <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
-                
-                <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
-                <td>{{ $item->particular }}</td>
-                <td>{{ $item->cv_number }}</td>
-                <td>{{ $item->check_number }}</td>
-                <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
-                <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
-               <td>
-                @if($item->remitted_at === NULL)
-                <span class="badge badge-danger">pending</span>
-                @else
-                <span class="badge badge-success">remitted</span>
-                @endif
-               </td>
-                <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
-            </tr>   
-            @endforeach
-        </tbody>
-    </table>
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true"> <i class="fas fa-hand-holding-usd text-teal"></i> All ({{ $all_remittances->count() }})</a>
+              <a class="nav-item nav-link" id="nav-pending-tab" data-toggle="tab" href="#nav-pending" role="tab" aria-controls="nav-pending" aria-selected="false"><i class="fas fa-clock text-warning"></i> Pending ({{ $pending_remittances->count() }})</a>
+              <a class="nav-item nav-link" id="nav-deposited-tab" data-toggle="tab" href="#nav-remitted" role="tab" aria-controls="nav-remitted" aria-selected="false"><i class="fas fa-check text-green"></i> Remitted ({{ $deposited_remittances->count() }})</a>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                <br>
+                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <?php $ctr=1;?>
+                                <tr>
+                                    {{-- <th>#</th> --}}
+                                    <th>Date Prepared</th>
+                                    <th>Period Covered</th>
+                                    {{-- <th>Particular</th> --}}
+                                    <th>CV</th>
+                                    <th>Check #</th>
+                                    <th>Owner</th>
+                                    <th>Room</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                        
+                                </tr>    
+                            </thead>
+                            <tbody>
+                                @foreach ($all_remittances as $item)
+                                <tr>
+                                    {{-- <th>{{ $ctr++ }}</th>      --}}
+                                    <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
+                                    
+                                    <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
+                                    {{-- <td>{{ $item->particular }}</td> --}}
+                                    <td>{{ $item->cv_number }}</td>
+                                    <td>{{ $item->check_number }}</td>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
+                                   <td>
+                                    @if($item->remitted_at === NULL)
+                                    <span class="badge badge-danger">pending</span>
+                                    @else
+                                    <span class="badge badge-success">remitted</span>
+                                    @endif
+                                   </td>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                                </tr>   
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
+                <br>
+                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <?php $ctr=1;?>
+                                <tr>
+                                    {{-- <th>#</th> --}}
+                                    <th>Date Prepared</th>
+                                    <th>Period Covered</th>
+                                    {{-- <th>Particular</th> --}}
+                                    <th>CV</th>
+                                    <th>Check #</th>
+                                    <th>Owner</th>
+                                    <th>Room</th>
+                                    {{-- <th>Status</th> --}}
+                                    <th>Amount</th>
+                        
+                                </tr>    
+                            </thead>
+                            <tbody>
+                                @foreach ($pending_remittances as $item)
+                                <tr>
+                                    {{-- <th>{{ $ctr++ }}</th>      --}}
+                                    <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
+                                    
+                                    <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
+                                    {{-- <td>{{ $item->particular }}</td> --}}
+                                    <td>{{ $item->cv_number }}</td>
+                                    <td>{{ $item->check_number }}</td>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
+                                   {{-- <td>
+                                    @if($item->remitted_at === NULL)
+                                    <span class="badge badge-danger">pending</span>
+                                    @else
+                                    <span class="badge badge-success">remitted</span>
+                                    @endif
+                                   </td> --}}
+                                    <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                                </tr>   
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-remitted" role="tabpanel" aria-labelledby="nav-remitted-tab">
+                <br>
+                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height: 500px;">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <?php $ctr=1;?>
+                                <tr>
+                                    {{-- <th>#</th> --}}
+                                    <th>Date Prepared</th>
+                                    <th>Period Covered</th>
+                                    {{-- <th>Particular</th> --}}
+                                    <th>CV</th>
+                                    <th>Check #</th>
+                                    <th>Owner</th>
+                                    <th>Room</th>
+                                    {{-- <th>Status</th> --}}
+                                    <th>Amount</th>
+                        
+                                </tr>    
+                            </thead>
+                            <tbody>
+                                @foreach ($deposited_remittances as $item)
+                                <tr>
+                                    {{-- <th>{{ $ctr++ }}</th>      --}}
+                                    <td>{{ Carbon\Carbon::parse($item->prepared_at)->format('M d, Y') }}</td>
+                                    
+                                    <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td>
+                                    {{-- <td>{{ $item->particular }}</td> --}}
+                                    <td>{{ $item->cv_number }}</td>
+                                    <td>{{ $item->check_number }}</td>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
+                                   {{-- <td>
+                                    @if($item->remitted_at === NULL)
+                                    <span class="badge badge-danger">pending</span>
+                                    @else
+                                    <span class="badge badge-success">remitted</span>
+                                    @endif
+                                   </td> --}}
+                                    <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                                </tr>   
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
 </div>
+
+
 
 <div class="modal fade" id="addRemittance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-md" role="document">

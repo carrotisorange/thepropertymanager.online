@@ -37,24 +37,15 @@
 <p class="text-danger text-center">No collections found!</p>
 
 @else
-<div class="table">
+<div class="row" style="overflow-y:scroll;height:400px;overflow-x:scroll;height:400px;">
   
-  <table class="table table-bordered table-hover">
+  <table class="table table-hover">
       @foreach ($collections as $day => $collection_list)
       <?php $ctr=1;?>
       <thead>
         <tr>
-           <th>{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}}({{ $collection_list->count() }})</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th> <a title="export pdf" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
-              <th></th>
-              
-           
+           <th colspan="7">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}} ({{ $collection_list->count() }})</th>
+           <th> <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
         </tr>
     
    
@@ -86,11 +77,11 @@
         <tr>
                 {{-- <th>{{ $ctr++ }}</th> --}}
                 <td> 
-                  @if($item->payment_status === 'deleted')
+                  {{-- @if($item->payment_status === 'deleted')
                   <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
-                  @else
-                  {{ $item->ar_no }}
-                  @endif
+                  @else --}}
+                  {{ $item->ar_no }}   
+                  {{-- @endif --}}
                 </td>
                 <td>{{ $item->payment_bill_no }}</td>
                 {{-- <td><a href="units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td> --}}
@@ -129,11 +120,11 @@
                 </th>
                
                 <td>
-                  <a title="export pdf" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
-                 
+               
+                  <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
     
                 </td>
-               <td>
+               {{-- <td>
                 @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury')
                   @if($item->payment_status === 'deleted')
                 
@@ -146,7 +137,7 @@
                   @endif
                @endif
                </td>
-             
+              --}}
             </tr>
         @endforeach
             <tr>
