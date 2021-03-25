@@ -25,6 +25,7 @@
   <div class="col-md-12">
 
     <form id="editBillsForm" action="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}/bills/update" method="POST">
+      
       @csrf
       @method('PUT')
     </form>

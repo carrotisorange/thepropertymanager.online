@@ -661,7 +661,7 @@
 
 
 <div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="modal">
+  <div class="modal-dialog modal-xl" role="modal">
   <div class="modal-content">
     <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Add Bill</h5>
@@ -802,7 +802,7 @@
     $(document).ready(function(){
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Condo Dues'>Condo Dues</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required></td> <td><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select class='form-control' name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Condo Dues'>Condo Dues</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required></td> <td><input class='form-control' form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input class='form-control'   form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      

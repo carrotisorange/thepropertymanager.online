@@ -954,48 +954,69 @@ $request->session()->now('success', 'Changes saved.');
 
     public function export_occupant_bills($property_id,$unit_id)
     {
-        
-         $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-        ->where('bill_unit_id', $unit_id)
-        ->groupBy('bill_id')
-        ->orderBy('bill_no', 'desc')
-        ->havingRaw('balance > 0')
-        ->get();
 
-        //  return $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-        // ->join('units', 'bill_unit_id', 'unit_id')
-        // ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-        // ->where('unit_id', $unit_id)
-        // ->groupBy('bill_id')
-        // ->orderBy('bill_no', 'desc')
-        // ->havingRaw('balance > 0')
-        // ->get();
+        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+      ->where('bill_unit_id', $unit_id)
+      ->whereYear('date_posted', Carbon::now()->year)
+      ->whereMonth('date_posted', Carbon::now()->month)
+      ->where('particular', 'Rent')
+      ->groupBy('bill_id')
+      ->orderBy('bill_no', 'desc')
+      ->havingRaw('balance > 0')
+      ->get();
 
-        $unit_no = Unit::findOrFail($unit_id)->unit_no;
+      $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+      ->where('bill_unit_id', $unit_id)
+      ->where('date_posted', '<=', Carbon::now()->subMonth()->firstOfMonth())
+      ->where('particular', 'Rent')
+      ->groupBy('bill_id')
+      ->orderBy('bill_no', 'desc')
+      ->havingRaw('balance > 0')
+      ->get();
+      
+      
+      $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+      ->where('bill_unit_id', $unit_id)
+      ->where('date_posted', '<=', Carbon::now()->subMonth()->firstOfMonth())
+      ->where('particular', 'Surcharge')
+      ->groupBy('bill_id')
+      ->orderBy('bill_no', 'desc')
+      ->havingRaw('balance > 0')
+      ->get();
 
-        #$tenant_id = Unit::findOrFail($unit_id)->contracts()->first()->tenant_id_foreign;
+      $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+      ->where('bill_unit_id', $unit_id)
+      ->groupBy('bill_id')
+      ->where('particular','!=', ['Rent','Surcharge'])
+      ->orderBy('bill_no', 'desc')
+      ->havingRaw('balance > 0')
+      ->get();
 
-        #$occupant = Tenant::findOrFail($tenant_id);
+      $unit_no = Unit::findOrFail($unit_id)->unit_no;
 
-        $data = [
-            #'occupant' => $occupant->first_name.' '.$occupant->last_name,
-            'bills' => $bills,
-            'unit' => $unit_no,
-        ];
+      $data = [
+          'current_bills' => $current_bills,
+          'previous_bills' => $previous_bills,
+          'previous_surcharges'=>$previous_surcharges,
+          'other_bills'=>$other_bills,
+          'current_room' => $unit_no,
+      ];
 
-        #$tenant = Tenant::findOrFail($tenant_id);
+      $notification = new Notification();
+      $notification->user_id_foreign = Auth::user()->id;
+      $notification->property_id_foreign = Session::get('property_id');
+      $notification->type = 'bill';
+      $notification->message = Auth::user()->name.' updates '.$unit_no.' bills.';
+      $notification->save();
 
-        $notification = new Notification();
-        $notification->user_id_foreign = Auth::user()->id;
-        $notification->property_id_foreign = Session::get('property_id');
-        $notification->type = 'bill';
-        $notification->message = Auth::user()->name.' updates '.$unit_no.' bills.';
-        $notification->save();
+       Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-
-        $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)->setPaper('a5', 'portrait');
-        return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
+      $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)->setPaper('a5', 'portrait');
+      return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
     
     public function restore_bill($property_id, $tenant_id, $billing_id)

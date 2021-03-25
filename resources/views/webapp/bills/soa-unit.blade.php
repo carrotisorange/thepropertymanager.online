@@ -12,6 +12,10 @@
       .table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
       padding: 3px;
       }
+      .table>tbody>tr>td,
+.table>tbody>tr>th {
+  border-top: none;
+}
     </style>
 
 </head>
@@ -20,61 +24,200 @@
 
     <!-- End of Topbar -->
     <div class="container-fluid">
-          {{-- <h5 class="text-black-50">{{ Auth::user()->property }}</h5> --}}
-        {{-- <p class="font-italic"> Produced by {{ Auth::user()->name }} on {{ Carbon\Carbon::now() }} - {{ Auth::user()->property.' '.Auth::user()->property_type }}</p>  --}}
+        <div class="row text-center">
+          <div class="col-md-12">
+            <table class="table table-condensed table-borderless">
+              <tr>
+                <th></th>
+                <th>{{ Session::get('property_name') }}</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>ACCOUNTING DEPARTMENT</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>{{ Session::get('property_address') }}</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>Email Address: {{ Auth::user()->email }}, CP No: {{ Session::get('property_mobile') }}</th>
+                <th></th>
+              </tr>
+            </table>
+     
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-condensed table-borderless">
+              <tr>
+                <th></th>
+                <th></th>
+                <th class="text-right">Date:{{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }} </th>
+              </tr>
+              <tr>
+                <th> <b>Room:</b> {{ $current_room }}</th>
+                <th></th>
+                <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th>
+              </tr>
+              <tr>
+                <th> </th>
+                <th  class="text-center"><u>STATEMENT OF ACCOUNTS</u></th>
+                <th></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-condensed table-bordered">
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Amount</th>
+              </tr>
+             @if($previous_bills->count() <= 0)
+             <tr>
+              <th>Previous Monthly Rent:</th>
+              <th></th>
+              <th></th>
+            </tr>
+            @else
+            <tr>
+              <th>Previous Monthly Rent:</th>
+              <th></th>
+              <th></th>
+            </tr>
+            @foreach ($previous_bills as $item)
+            <tr>
+              <th></th>
+              <th>{{  $item->particular }} {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</th>
+              <th>{{ number_format($item->balance,2) }}</th>
+            </tr>
+            @endforeach
+             @endif
+             @if($previous_surcharges->count() <= 0)
+             
+             <tr>
+              <th>Previous Surcharges:</th>
+              <th></th>
+              <th></th>
+            </tr>
+            
+             @else
+             <tr>
+              <th>Previous Surcharges:</th>
+              <th></th>
+              <th></th>
+            </tr>
+             @foreach ($previous_surcharges as $item)
+             <tr>
+               <th></th>
+               <th>{{  $item->particular }} {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</th>
+               <th>{{ number_format($item->balance,2) }}</th>
+             </tr>
+             @endforeach
+              @endif
+             
+  
+              @if($current_bills->count() <= 0)
+              <tr>
+               <th>Monthly Rent:</th>
+               <th></th>
+               <th></th>
+             </tr>
+             @else
+             <tr>
+              <th>Monthly Rent:</th>
+              <th></th>
+              <th></th>
+            </tr>
+             @foreach ($current_bills as $item)
+             <tr>
+               <th>:</th>
+               <th>{{  $item->particular }} {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</th>
+               <th>{{ number_format($item->balance,2) }}</th>
+             </tr>
+             @endforeach
+              @endif
+             
+              @if($other_bills->count() <= 0)
+              <tr>
+               <th>Other Charges:</th>
+               <th></th>
+               <th></th>
+             </tr>
+             @else
+             <tr>
+              <th>Other Charges:</th>
+              <th></th>
+              <th></th>
+            </tr>
+             @foreach ($other_bills as $item)
+             <tr>
+               <th></th>
+               <th>{{  $item->particular }} {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</th>
+               <th>{{ number_format($item->balance,2) }}</th>
+             </tr>
+             @endforeach
+              @endif
           
-            <b>Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }}
-            <br>
-            {{-- <span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span>
-            <br> --}}
-            {{-- <b>To:</b> {{ $occupant }}
-            <br> --}}
-             <b>Unit:</b> {{ $unit }}
-          
+              <tr>
+                <th colspan="2">Advance Payments</th>
+                
+                <th></th>
+              </tr>
+              <tr>
+                <th colspan="2">TOTAL AMOUNT PAYABLE(If paid before due date)</th>
+                <?php $total = $current_bills->sum('balance')+$previous_bills->sum('balance')+$previous_surcharges->sum('balance')+$other_bills->sum('balance'); ?>  
+                <?php $surcharge = $total*.1; ?>
+                <th>{{ number_format($total,2) }}</th>
+              </tr>
+              <tr>
+                <th colspan="2">ADD 10% surcharge ON RENT if not paid on due date</th>
+                
+                <th>{{ number_format($surcharge,2) }}</th>
+              </tr>
+              <tr>
+                <th class="text-danger" colspan="2">TOTAL AMOUNT PAYABLE AFTER DUE DATE</th>
+                
+                <th class="text-danger" >{{ number_format($total+$surcharge,2) }}</th>
+              </tr>
        
-          <p class="text-right">Statement of Accounts</p>
-          <?php $ctr=1;?>
+           </table>
+           <table class="table table-condensed table-bordered">
+            <tr>
+              <th> {!! Auth::user()->note !!}</th>
+            </tr>
+            </table>
             <table class="table table-condensed">
-             <thead>
               <tr>
-              
-                <th>#</th>
-
-                <th>Bill No</th>
-                <th>Particular</th>
-           
-                <th colspan="2">Period Covered</th>
-                <th class="text-right">Amount</th>
-              </tr>
-             </thead>
-              @foreach ($bills as $item)
-              <tr>
-                <th>{{ $ctr++ }}</th>
+               <th> Prepared by: {{ Auth::user()->name }}
+               <br>{{ Auth::user()->user_type }}</th>
+               <th></th>
+               <th> Noted by: 
+                 <br>Accounting Head</th>
+             </tr>
+              </table>
+          </div>
+        </div>
+     <div class="row">
+       <div class="col-md-12">
+       
+       </div>
       
-                  <td>{{ $item->bill_no }}</th>
-                  <td>{{ $item->particular }}</td>
-                 
-                  <td colspan="2">
-                    {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                      {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                  </td>
-                  <td class="text-right" >{{ number_format($item->balance,2) }}</td>
-              </tr>
-              @endforeach
-              <tr>
-                <th>Total</th>
-                <th class="text-right" colspan="6">{{ number_format($bills->sum('balance'),2) }} </th>
-               </tr>
-        
-          </table>
-  
-        
-            <p>
-              {!! Auth::user()->note !!}
-            </p>
-  
-          
-
+     </div>
+     <div class="row">
+      <div class="col-md-12">
+      
+      </div>
+     
+    </div>
+     </div>
 </body>
 
 </html>
