@@ -95,6 +95,7 @@
                                     <th>Room</th>
                                     {{-- <th>Status</th> --}}
                                     <th>Amount</th>
+                                    <th></th>
                         
                                 </tr>    
                             </thead>
@@ -118,6 +119,7 @@
                                     @endif
                                    </td> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                                    <th><a title="deposit this remittance" class="btn btn-success btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-check"></i></a></th>
                                 </tr>   
                                 @endforeach
                             </tbody>
