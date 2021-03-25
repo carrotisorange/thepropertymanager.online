@@ -46,8 +46,8 @@
       <div class="tab-pane fade show active" id="owner" role="tabpanel" aria-labelledby="nav-owner-tab">
         <div class="row">
           <div class="col-md-8">
-            <a href="/property/{{ Session::get('property_id') }}/owners"  class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-dark-50"></i> Back</a>
-            <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit Owner</a>
+            <a href="/property/{{ Session::get('property_id') }}/owners"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left fa-sm text-dark-50"></i> Back to owners</a>
+            <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit owner</a>
             {{-- @if(Auth::user()->user_type === 'manager')
             <form action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/delete" method="POST">
               @csrf
@@ -58,7 +58,7 @@
             <br><br>
   
                <div class="table-responsive text-nowrap">
-                 <table class="table" >
+                 <table class="table table-condensed table-bordered table-hover" >
                    <thead>
                     <tr>
                       <th>Name</th>
@@ -121,7 +121,7 @@
 
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add Credentials</button>
+        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add owner's access to the system</button>
         <br><br>
         @endif
      
@@ -135,7 +135,7 @@
              @else
              @foreach ($access as $item)
        
-             <table class="table">
+             <table class="table table-condensed table-bordered table-hover">
                <thead>
                 <tr>
                   <th>Email</th>
@@ -173,14 +173,14 @@
       </div>
       
       <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="nav-certificates-tab">
-        <a href="#/"  data-toggle="modal" data-target="#addCertificateModal" data-whatever="@mdo" type="button" class="btn btn-primary">
-          <i class="fas fa-plus fa-sm text-white-50"></i> Add 
+        <a href="#/"  data-toggle="modal" data-target="#addCertificateModal" data-whatever="@mdo" type="button" class="btn btn-primary btn-sm">
+          <i class="fas fa-plus fa-sm text-white-50"></i> Add another room
         </a>
         <br><br>
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <?php $ctr = 1; ?>
-            <table class="table">
+            <table class="table table-condensed table-bordered table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -231,7 +231,7 @@
       <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="nav-bank-tab">
       
         <div class="table-responsive text-nowrap">
-          <table class="table" >
+          <table class="table table-condensed table-bordered table-hover" >
         <thead>
           <tr>
             <th>Bank</th>

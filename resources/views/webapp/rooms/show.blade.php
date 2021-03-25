@@ -37,20 +37,20 @@
         <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
     
           <p class="text-left">
-            <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit Room</button> 
-            <button type="button" title="edit room" class="btn btn-primary" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> 
+            <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit room</button> 
+            {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
           </p>
           <div class="row">
           <div class="col-md-6">
             <div class="card">
-              <div class="card-header">
+              {{-- <div class="card-header">
                 Room Information
-              </div>
+              </div> --}}
               <div class="card-body">
                 
                 <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
                 <div class="table-responsive text-left">
-              <table class="table">
+              <table class="table  table-condensed table-bordered table-hover">
                  <thead>
                   <tr>
                     <th>Room</th>
@@ -129,13 +129,13 @@
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <p>Total expenses deducted to remittance: {{ number_format($expenses->sum('expense_amt'), 2) }}</p>
-            <table class="table">
+            <table class="table table-condensed table-bordered table-hover">
               <thead>
                   <?php $ctr=1;?>
                   <tr>
                       <th>#</th>
-                      <th>Date</th>
-                      <th>Remittance ID</th>
+                      <th>Date deducted</th>
+                      {{-- <th>Period Covered</th> --}}
                       <th>Particular</th>
                       <th>Amount</th>
                      
@@ -147,7 +147,7 @@
                   <tr>
                       <th>{{ $ctr++ }}</th>     
                       <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
-                      <td>{{ $item->remittance_id_foreign }}</td>
+                      {{-- <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}</td> --}}
                       <td>{{ $item->expense_particular }}</td>
                       <th>{{ number_format($item->expense_amt,2) }}</th>
                      
@@ -165,7 +165,7 @@
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <p>Total remittances remitted: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
-            <table class="table">
+            <table class="table  table-condensed table-bordered table-hover">
               <thead>
                   <?php $ctr=1;?>
                   <tr>
@@ -213,11 +213,11 @@
   
         <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
           @if ($tenant_active->count() < $home->occupancy)
-          <a href="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/tenant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary">
+          <a href="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/tenant" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." type="button" class="btn  btn-primary btm-sm">
               <i class="fas fa-user-plus"></i> Add Tenant</a>
     
           @else
-          <a href="#/" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn  btn-primary">
+          <a href="#/" title="{{ $home->occupancy - $tenant_active->count() }} remaining tenant/s to be fully occupied." data-toggle="modal" data-target="#warningTenant" data-whatever="@mdo" type="button" class="btn  btn-primary btn-sm">
               <i class="fas fa-user-plus"></i> Add Tenant
             </a>
           @endif
@@ -238,7 +238,7 @@
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="nav-home-tab">
               <div class="table-responsive text-nowrap">
-              <table class="table">
+              <table class="table  table-condensed table-bordered table-hover">
                 @if($tenant_active->count() <= 0)
                 <tr>
                     <br><br><br>
@@ -275,7 +275,7 @@
             </div>
             <div class="tab-pane fade" id="reserved" role="tabpanel" aria-labelledby="nav-tenant-tab">
               <div class="table-responsive text-nowrap">
-              <table class="table">
+              <table class="table  table-condensed table-bordered table-hover">
                 @if($tenant_reserved->count() <= 0)
                 <tr>
                     <br><br><br>
@@ -315,7 +315,7 @@
             </div>
             <div class="tab-pane fade" id="movingout" role="tabpanel" aria-labelledby="nav-tenant-tab">
               <div class="table-responsive text-nowrap">
-              <table class="table">
+              <table class="table  table-condensed table-bordered table-hover">
                 @if($tenant_movingout->count() <= 0)
                 <tr>
                     <br><br><br>
@@ -346,7 +346,7 @@
             </div>
             <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="nav-contact-tab">
               <div class="table-responsive text-nowrap">
-              <table class="table">
+              <table class="table  table-condensed table-bordered table-hover">
                 @if($tenant_inactive->count() <= 0)
                 <tr>
                     <br><br><br>
@@ -389,7 +389,7 @@
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
   
-            <table class="table" >
+            <table class="table  table-condensed table-bordered table-hover" >
             <thead>
             <tr>
               <?php $ctr=1; ?>
@@ -458,7 +458,7 @@
         <div class="col-md-12 mx-auto">
 
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table  table-condensed table-bordered table-hover">
               <?php $ctr=1;?>
               <thead>
             <tr>

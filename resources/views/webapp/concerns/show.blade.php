@@ -75,21 +75,21 @@ font-family: FontAwesome;
   <div class="col-md-7">
     @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
     @if($concern->status != 'closed')
-    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary"><i class="fas fa-edit text-dark-50"></i> Edit Concern</a> 
+    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary btn-sm"><i class="fas fa-edit text-dark-50"></i> Edit concern</a> 
     @endif 
     @if($concern->concern_user_id)
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary"><i class="fas fas fa-arrow-right text-dark-50"></i> Reforward Concern</a>
+    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Reforward a concern</a>
     @else
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward Concern</a>
+    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward a concern</a>
     @endif
-    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> File Job order</a>
+    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> File a job order</a>
    @endif
   <br><br>
     <div class="table-responsive">
       @foreach ($concern_details as $concern)
           
    
-      <table class="table">
+      <table class="table table-condensed table-bordered table-hover">
         <thead>
         <tr>
           <th>Date Reported</th>
@@ -185,7 +185,7 @@ font-family: FontAwesome;
     <div class="row">
       <div class="col">
      
-        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary"><i class="fas fa-plus text-dark-50"></i> Add Response</a> 
+        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> Add response</a> 
         
        </div>
      </div>
@@ -439,7 +439,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
 
-          <button form="forwardConcernForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Forward Concern</button>
+          <button form="forwardConcernForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"> Forward Concern</button>
       </div>
   </div>
   </div>
@@ -451,7 +451,7 @@ font-family: FontAwesome;
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Response Information</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Type your response to the tenant</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
@@ -466,7 +466,7 @@ font-family: FontAwesome;
     
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Response </button>
+        <button type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"> Submit response </button>
       </form>
       </div>
   </div>
