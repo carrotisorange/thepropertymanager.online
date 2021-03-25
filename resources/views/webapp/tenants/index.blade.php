@@ -48,8 +48,8 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
 @endif
 
 
-<div class="table">
-    <table class="table table-bordered table-hover">
+<div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+    <table class="table table-hover">
       <?php $ctr=1;?>
       <thead>
         <tr>

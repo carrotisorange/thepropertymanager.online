@@ -480,6 +480,7 @@ Route::get('property/{property_id}/room/{unit_id}/contract/{contract_id}/tenant/
 Route::post('property/{property_id}/room/{unit_id}/contract/{contract_id}/tenant/{tenant_id}/bill/{bill_id}/payment/{payment_id}/remittance/store', 'RemittanceController@store')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/room/{unit_id}/remittance/{remittance_id}', 'RemittanceController@show')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/remittance/{remittance_id}/expenses', 'ExpenseController@index')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/room/{room_id}/remittance/{remittance_id}/edit', 'RemittanceController@edit')->middleware(['auth', 'verified']);
 Route::put('property/{property_id}/remittance/{remittance_id}/update', 'RemittanceController@update')->middleware(['auth', 'verified']);
 
 //routes for the the layouts.arsha

@@ -380,9 +380,13 @@ class RemittanceController extends Controller
      * @param  \App\Remittance  $remittance
      * @return \Illuminate\Http\Response
      */
-    public function edit(Remittance $remittance)
+    public function edit(Remittance $remittance, $property_id, $room_id,$remittance_id)
     {
-        //
+        $remittance = Remittance::findOrFail($remittance_id);
+
+        $room = Unit::findOrFail($room_id);
+
+        return view('webapp.remittances.edit', compact('remittance', 'room'));
     }
 
     /**
@@ -394,10 +398,13 @@ class RemittanceController extends Controller
      */
     public function update(Request $request, $property_id, $remittance_id)
     {
-        $remittance = Remittance::findOrFail($remittance_id);
-        $remittance->dateRemitted = $request->dateRemitted;
-        $remittance->isRemitted = 'remitted';
-        $remittance->save();
+        DB::table('remittances')
+        ->where('remittance_id', $remittance_id)
+        ->update(
+            [
+                'remitted_at' => $request->remitted_at,
+            ]
+        );
 
         return back()->with('success', 'Remittance is updated successfully!');
     }

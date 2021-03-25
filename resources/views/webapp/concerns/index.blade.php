@@ -22,9 +22,9 @@
     <a class="nav-item nav-link" id="nav-closed-tab" data-toggle="tab" href="#nav-closed" role="tab" aria-controls="nav-closed" aria-selected="false"><i class="fas fa-check text-green"></i> Closed ({{ $closed_concerns->count() }})</a>
   </div>
 </nav>
-<div class="tab-content" id="nav-tabContent">
+<div class="tab-content" id="nav-tabContent" >
   <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-    <div class="table-responsive">
+    <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
       <table class="table table-hover" >
         <thead>
@@ -113,7 +113,7 @@
     </div>
   </div>
   <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
-    <div class="table-responsive">
+    <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
       <table class="table table-hover" >
         <thead>
@@ -194,7 +194,7 @@
     </div>
   </div>
   <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
-    <div class="table-responsive">
+    <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
       <table class="table table-hover" >
         <thead>
@@ -275,7 +275,7 @@
     </div>
   </div>
   <div class="tab-pane fade" id="nav-closed" role="tabpanel" aria-labelledby="nav-closed-tab">
-    <div class="table-responsive">
+    <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
       <table class="table table-hover" >
         <thead>

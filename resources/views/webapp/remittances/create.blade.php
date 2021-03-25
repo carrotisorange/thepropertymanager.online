@@ -20,10 +20,11 @@
 <form id="remittanceForm" action="/property/{{ Session::get('property_id') }}/room/{{ $room_info->unit_id }}/contract/{{ $contract_info->contract_id }}/tenant/{{ $tenant_info->tenant_id }}/bill/{{ $bill_info->bill_id }}/payment/{{ $payment_info->payment_id }}/remittance/store" method="POST">
   @csrf
 </form>
-<div class="container card card-body">
-  <div class="card-title text-center">
-    Check Voucher
-  </div>
+<div class="card-title text-center">
+  Check Voucher
+</div>
+<div class="container card card-body" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+
 <div class="row">
   <div class="col-md-6">
     <table class="table table-borderless">

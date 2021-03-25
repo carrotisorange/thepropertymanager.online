@@ -30,7 +30,7 @@
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
                 <br>
-                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <thead>
@@ -46,7 +46,7 @@
                                     <th>Room</th>
                                     <th>Status</th>
                                     <th>Amount</th>
-                        
+                                    <th>Actions</th>
                                 </tr>    
                             </thead>
                             <tbody>
@@ -69,6 +69,7 @@
                                     @endif
                                    </td>
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                                   <th><a title="deposit this remittance" class="btn btn-success btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-check"></i></a></th>
                                 </tr>   
                                 @endforeach
                             </tbody>
@@ -78,7 +79,7 @@
             </div>
             <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
                 <br>
-                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <thead>
@@ -126,7 +127,7 @@
             </div>
             <div class="tab-pane fade" id="nav-remitted" role="tabpanel" aria-labelledby="nav-remitted-tab">
                 <br>
-                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height: 500px;">
+                <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <thead>

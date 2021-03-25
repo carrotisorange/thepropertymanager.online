@@ -31,9 +31,9 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
  @if(Session::get('owner_search'))
 <p class="text-center"> <span class=""> <small> you searched for </small></span> <span class="text-danger">"{{ Session::get('owner_search') }}"<span></p>
 @endif 
-<div class="table">
+<div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-hover">
         <thead>
           <?php $ctr=1; ?>
             <tr>

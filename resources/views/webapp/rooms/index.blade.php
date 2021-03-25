@@ -54,11 +54,10 @@
 <div class="row">
   
   <form id="filter" action="/property/{{ Session::get('property_id') }}/rooms/filter"></form>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <div class="col-left">
      <label for=""><b>Status</b></label>
 
-     <br>
     </div>
    
     @foreach ($statuses as $status)
@@ -129,37 +128,47 @@
 
   </div>
   
-  <div class="col-md-9">
-    <div class="row">
+  <div class="col-md-10">
+    <div class="row" >
       @if($units->count() <=0 )
     <p class="">No rooms found!</p>
     @else
-    <p class="">Showing  <b>{{ $units->count() }} {{ Session::get('status') }}  {{ Session::get('type') }}  {{ Session::get('building') }}  {{ Session::get('rent') }}  {{ Session::get('occupancy') }}  {{ Session::get('floor') }} </b>rooms...
+    <p class="">Showing <b>{{ $units->count() }} {{ Session::get('status') }}  {{ Session::get('type') }}  {{ Session::get('building') }}  {{ Session::get('rent') }}  {{ Session::get('occupancy') }}  {{ Session::get('floor') }} </b>rooms...
    
     </p>
     </div>
-    <div class="row">
+    <br>
+    <div class="row"  style="overflow-y:scroll;overflow-x:scroll;height:500px;" >
       @foreach ($units as $item)
     
-      <div class="col-md-2">
-        <div class="row">
-         <div class="card" style="width: 115px;" title="₱ {{ number_format ($item->rent, 2)}}/mo">
-            <div class="card-body text-center">
-              {{-- <small>{{ $item->building }}</small>
-              <br> --}}
-            <small> {{ $item->unit_no }}</small>
-            <br>
-            <small class="text-right">
-              <a title="view room" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" type="button" class="btn-sm"><i class="fas fa-home"></i></a>
-              @if($item->status === 'vacant')
-              <a title="add tenant" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/tenant" type="button" class="btn-sm"><i class="fas fa-user-plus"></i></a>
-      
-              @endif
-             </small>
-            </div>
-      
-         </div>
-        </div>
+      <div class="col-md-1">
+        @if($item->status === 'occupied')
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-success">
+          <i class="fas fa-home fa-2x"></i>
+          <br>
+          {{ $item->unit_no }}
+      </a>
+        @elseif($item->status === 'vacant')
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-danger">
+          <i class="fas fa-home fa-2x"></i>
+          <br>
+          {{ $item->unit_no }}
+      </a>
+      @elseif($item->status === 'dirty')
+      <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-dark">
+        <i class="fas fa-home fa-2x"></i>
+        <br>
+        {{ $item->unit_no }}
+    </a>
+    @else
+    
+    <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}" class="btn btn-sm btn-warning">
+      <i class="fas fa-home fa-2x"></i>
+      <br>
+      {{ $item->unit_no }}
+  </a>
+        @endif
+            
        
      </div>
     

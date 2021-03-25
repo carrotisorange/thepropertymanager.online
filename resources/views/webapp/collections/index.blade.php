@@ -37,7 +37,7 @@
 <p class="text-danger text-center">No collections found!</p>
 
 @else
-<div class="row" style="overflow-y:scroll;height:400px;overflow-x:scroll;height:400px;">
+<div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
   
   <table class="table table-hover">
       @foreach ($collections as $day => $collection_list)
