@@ -34,16 +34,23 @@ class PayableController extends Controller
 
         
         if( auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'ap'){
-
             $entry = DB::table('payable_entry')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->get();
+
+            $all = DB::table('payable_request')
+            ->join('users', 'requester_id', 'users.id')
+            ->join('payable_entry', 'entry_id', 'payable_entry.id')
+            ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
+           ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+           ->orderBy('requested_at', 'desc')
+           ->get();
      
             $pending = DB::table('payable_request')
              ->join('users', 'requester_id', 'users.id')
              ->join('payable_entry', 'entry_id', 'payable_entry.id')
-             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
+             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
             ->where('payable_request.status', 'pending')
             ->where('payable_entry.property_id_foreign', Session::get('property_id'))
             ->orderBy('requested_at', 'desc')
@@ -76,14 +83,22 @@ class PayableController extends Controller
          ->where('payable_entry.property_id_foreign', Session::get('property_id'))
          ->orderBy('declined_at', 'desc')
          ->get();
-
-            $property = Property::findOrFail(Session::get('property_id'));
      
-             return view('webapp.payables.index', compact('entry','pending','approved','declined','released', 'property'));
+             return view('webapp.payables.index', compact('entry','pending','approved','declined','released', 'all'));
          }else{
              return view('layouts.arsha.unregistered');
     }
 
+}
+
+public function entries($property_id){
+
+    $entries = DB::table('payable_entry')
+    ->where('property_id_foreign', Session::get('property_id'))
+    ->orderBy('created_at', 'desc')
+    ->get();
+
+    return view('webapp.payables.entries', compact('entries'));
 }
 
     /**
@@ -127,7 +142,7 @@ class PayableController extends Controller
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
     
-        return back()->with('success', 'entries have been saved!');
+        return back()->with('success', 'Entries are saved successfully.');
     }
 
     public function request(Request $request){

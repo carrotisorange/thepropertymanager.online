@@ -9,15 +9,14 @@
   </div>
 
 </div>
-<div class="row">
-    <div class="table-responsive text-nowrap">
+    <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
        <div class="col-md-12">
         <p><span class="font-weight-bold">{{ $all_tenants->count() }}</span> matched for tenants...</p>
         @if($all_tenants->count() >= 1  )
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover table-condensed">
            <thead>
             <tr>
-              {{-- <th>#</th> --}}
+              <th>#</th>
               <th>Name</th>
       
               <th>Email</th>
@@ -30,7 +29,7 @@
             <?php $tenant_ctr=1;?>
             @foreach ($all_tenants as $tenant)
             <tr>
-                {{-- <th>{{ $tenant_ctr++ }}</th> --}}
+                <th>{{ $tenant_ctr++ }}</th>
                 <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></th>
                 
               
@@ -48,10 +47,10 @@
 
          <p><span class="font-weight-bold">{{ $units->count() }}</span> matched for rooms...</p>
          @if($units->count() >= 1  )
-        <table class="table table-bordered table-hover">
+         <table class="table table-bordered table-hover table-condensed">
            <thead>
             <tr>
-              {{-- <th>#</th> --}}
+              <th>#</th>
               <th>Building</th>
               <th>Room</th>
               <th>Floor</th>
@@ -65,7 +64,7 @@
             <?php $unit_ctr=1;?>
             @foreach ($units as $unit)
             <tr>
-                {{-- <th>{{ $unit_ctr++ }}</th> --}}
+                <th>{{ $unit_ctr++ }}</th>
                 <td>{{ $unit->building }}</td>
                 <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
@@ -87,10 +86,10 @@
 
          <p><span class="font-weight-bold">{{ $all_owners->count() }}</span> matched for owners...</p>
          @if($all_owners->count() >= 1  )
-        <table class="table table-bordered table-hover">
+         <table class="table table-bordered table-hover table-condensed">
            <thead>
             <tr>
-              {{-- <th>#</th> --}}
+              <th>#</th>
               <th>Name</th>
               
               <th>Email</th>
@@ -103,7 +102,7 @@
             <?php $owner_ctr=1;?>
             @foreach ($all_owners as $owner)
             <tr>
-                {{-- <th>{{ $owner_ctr++ }}</th> --}}
+                <th>{{ $owner_ctr++ }}</th>
                 <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></th>
               
                <td>{{ $owner->email}}</td>
@@ -120,7 +119,7 @@
          @endif
        </div>
         
-    </div>
+ 
 </div>
 
 @endsection

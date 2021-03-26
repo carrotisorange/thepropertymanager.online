@@ -11,72 +11,125 @@
 
   <div class="col text-right">
     @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager' )
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addEntry" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Entry</a>
+    <a href="/property/{{ Session::get('property_id') }}/payables/entries" class="btn btn-primary shadow-sm btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add new entry</a>
     @endif
-    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Request</a>
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add new payable request</a>
   
   </div>
 
 </div>
-<div class="row">
-  <div class="col">
-    <h3>Entries</h3>
 
-    <div class="table-responsive text-nowrap">
-      <table class="table table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Particular</th>
-            <th>Created</th>
-           
-          </tr>
-        </thead>
-        <tbody>
-          <?php $ctr = 1; ?>
-          @foreach ($entry as $item)
-             <tr>
-              <th>{{ $ctr++ }}</th>
-              <td>{{ $item->entry }}</td>
-              <td>{{ $item->description }}</td>
-              <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-               {{-- <td class="text-right"> 
-                @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager')
-               <form action="/account-payable/{{ $item->id }}/" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button title="remove this entry" type="submit" class="btn btn-sm btn-danger"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                </form> 
-                @endif
-               </td>--}}
-         
-             </tr>
-          @endforeach
-        </tbody>
-      </table>
-      {{ $entry->links() }}
-    </div>
-  </div>
-</div>
-<hr>
 <div class="row">
   <div class="col">
-    <h3>Requests</h3>
     
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="nav-pending" aria-selected="true"><i class="fas fa-clock fa-sm text-primary-50"></i> Pending <span class="badge badge-primary badge-counter">{{ $pending->count() }}</span></a>
-          <a class="nav-item nav-link" id="nav-approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="nav-approved" aria-selected="false"><i class="fas fa-check-circle fa-sm text-primary-50"></i> Approved</a>
-          <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#released" role="tab" aria-controls="nav-released" aria-selected="false"><i class="fas fa-clipboard-check fa-sm text-primary-50"></i> Released</a>
-          <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="nav-declined" aria-selected="false"><i class="fas fa-times-circle fa-sm text-primary-50"></i> Declined</a>
+          <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="nav-all" aria-selected="true">  <i class="fas fa-file-export text-indigo"></i> All <span class="badge badge-primary badge-counter">{{ $all->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="nav-pending" aria-selected="false"><i class="fas fa-clock text-warning"></i> Pending <span class="badge badge-primary badge-counter">{{ $pending->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="nav-approved" aria-selected="false"><i class="fas fa-check text-success"></i> Approved <span class="badge badge-primary badge-counter">{{ $approved->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#released" role="tab" aria-controls="nav-released" aria-selected="false"><i class="fas fa-clipboard-check text-success"></i> Released <span class="badge badge-primary badge-counter">{{ $released->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="nav-declined" aria-selected="false"><i class="fas fa-times text-danger"></i> Declined <span class="badge badge-primary badge-counter">{{ $declined->count() }}</span></a>
         </div>
       </nav>
       <br>
       <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
+        <div class="tab-pane fade  show active" id="all" role="tabpanel" aria-labelledby="nav-all-tab">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-condensed table-bordered table-hover">
+              <?php $ctr=1;?>
+              <thead>
+              
+                <tr>
+                  <th class="text-center">#</th>
+             
+                  <th>Entry</th>
+                  <th>Amount</th>
+                  <th>Requested</th>
+                  <th>Requester</th>
+                  <th>Note</th>
+                  <td>Status</td>
+                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                  <th colspan="2" class="text-center">Actions</th>
+                  @endif
+                
+                  {{-- <th colspan="2" class="text-center">Action</th> --}}
+                  
+                </tr>
+              </thead>
+              <tbody>
+               
+                @foreach ($all as $item)
+                   <tr>
+                     <th class="text-center">{{ $ctr++ }}</th>
+                   
+                    <td>{{ $item->entry }}</td>
+                    <td>{{ number_format($item->amt, 2) }}</td>
+                    <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
+                   <td>
+                    @if($item->payable_status == 'pending')
+                    <a title="waiting to be processed" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-clock"></i></a>
+                    @elseif($item->payable_status == 'approved')
+                    <a title="request approved" class="btn btn-success btn-sm" href="#/"><i class="fas fa-check"></i></a>
+                    
+                    @elseif($item->payable_status == 'released')
+
+                    <a title="request released" class="btn btn-success btn-sm" href="#/"><i class="fas fa-clipboard-check"></i></a>
+                    @elseif($item->payable_status == 'declined')
+
+                    <a title="request declined" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-times"></i></a>
+                    @endif
+                   </td>
+                   @if($item->payable_status == 'pending')
+                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                      
+                      <td class="text-right"> 
+                        
+                        <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/decline" method="POST">
+                        @csrf
+                        <button title="decline this payable request" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-times"></i></button>
+                      </form>
+                    
+
+                    </td> 
+                    <td class="text-left">
+                      <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/approve" method="POST">
+                        @csrf
+              
+                        <button title="approve this payable request" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i></button>
+                      </form>
+                    </td> 
+                      
+                    
+                    @endif 
+                   @elseif($item->payable_status == 'approved')
+                 
+                   <td class="text-right"> 
+                        
+                    <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/release" method="POST">
+                    @csrf
+                    <button title="release approved funds" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-clipboard-check"></i></button>
+                  </form>
+                
+
+                </td> 
+           
+
+                   @endif
+                    <td></td>
+                   <td></td>
+                   
+                   </tr>
+                @endforeach
+              </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
+          <div class="table-responsive text-nowrap">
+            <table class="table table-condensed table-bordered table-hover">
               <?php $ctr=1;?>
               <thead>
               
@@ -89,7 +142,7 @@
                   <th>Requester</th>
                   <th>Note</th>
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                  <th colspan="2" class="text-center"></th>
+                  <th colspan="2" class="text-center">Actions</th>
                   @endif
                 
                   {{-- <th colspan="2" class="text-center">Action</th> --}}
@@ -108,27 +161,32 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
                    
+                    @if($item->payable_status == 'pending')
                     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                     <td class="text-right"> 
                       
                       <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/decline" method="POST">
                       @csrf
-                      <button title="decline" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Decline</button>
+                      <button title="decline this payable request" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-times"></i></button>
                     </form>
                  
-
+ 
                   </td> 
                   <td class="text-left">
                     <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/approve" method="POST">
                       @csrf
             
-                      <button title="approve" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Approve</button>
+                      <button title="approve this payable request" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i></button>
                     </form>
                   </td> 
                    
                   
-                  @endif
-                    
+                  @endif 
+                    @else
+                  <td></td>
+                  <td></td>
+ 
+                    @endif
                    
                    </tr>
                 @endforeach
@@ -139,7 +197,7 @@
        
         <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="nav-approved-tab">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-condensed table-bordered table-hover">
               <?php $ctr=1;?>
              <thead>
               <tr>
@@ -153,7 +211,7 @@
                   <th>Aprroved</th>
                   
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                  <th colspan="2" class="text-center"></th>
+                  <th>Action</th>
                   @endif
                 </tr>
              </thead>
@@ -174,7 +232,7 @@
                     <td class="text-center"> 
                       <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/release" method="POST">
                       @csrf
-                      <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;">Release</button>
+                      <button title="release the requested funds" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i></button>
                     </form>
                   @endif
                    
@@ -186,7 +244,7 @@
         </div>
         <div class="tab-pane fade" id="released" role="tabpanel" aria-labelledby="nav-released-tab">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-condensed table-bordered table-hover">
               <?php $ctr=1;?>
              <thead>
               <tr>
@@ -233,7 +291,7 @@
         </div>
         <div class="tab-pane fade" id="declined" role="tabpanel" aria-labelledby="nav-declined-tab">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-condensed table-bordered table-hover">
               <?php $ctr=1;?>
              <thead>
               <tr>

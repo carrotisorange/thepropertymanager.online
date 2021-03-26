@@ -50,7 +50,7 @@
         </div>
       </div> --}}
  
-      <div class="table">
+      <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
           <form id="editUnitsForm" action="/property/{{Session::get('property_id')}}/rooms/update" method="POST">
   
               @csrf
@@ -178,7 +178,7 @@
 
          @else
         <p class="text-right">
-                <button type="submit" form="editUnitsForm" class="btn btn-primary btn-sm"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Update rooms</button>
+                <button type="submit" form="editUnitsForm" class="btn btn-success btn-sm"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Update rooms</button>
             </p>
          @endif
   

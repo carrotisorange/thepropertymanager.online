@@ -18,34 +18,34 @@
   <div class="col-md-6 text-right">
     @if(Auth::user()->account_type === 'starter')
       @if($units->count()>20)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'basic' )
       @if($units->count()>30)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'large' )
       @if($units->count()>50)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'advanced' )
       @if($units->count()>75)
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
       @endif
     @elseif(Auth::user()->account_type === 'enterprise' )
-        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Create Rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
     @endif
 
-    <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit Rooms</a>
-    <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger" ><i class="fas fa-backspace fa-sm text-dark-50"></i> Clear Filters</a>
+    <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit all rooms</a>
+    <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger btn-sm" ><i class="fas fa-backspace fa-sm text-dark-50"></i> Clear search filters</a>
   </div>
 
  
@@ -137,8 +137,8 @@
    
     </p>
     </div>
-    <br>
-    <div class="row" >
+    
+    <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
       @foreach ($units as $item)
     
       <div class="col-md-1">
@@ -169,14 +169,14 @@
   </a>
         @endif
             
-       
+       <hr>
      </div>
-    
+     
      
       @endforeach
     </div>
-    @endif
 
+    @endif
     </div>
 </div>
 

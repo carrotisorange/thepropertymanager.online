@@ -27,7 +27,7 @@
       
       <div class="row">
           <div class="table-responsive text-nowrap">
-              <table class="table">
+              <table class="table table-condensed table-bordered">
                   <?php $ctr=1; ?>
                 <thead>
                   <tr>
@@ -61,16 +61,16 @@
               </table>
           </div>
       </div>
-      <hr>
+      <br>
       <div class="row">
         <div class="col">
-           <a href="/property/all/" class="btn btn-primary btn-user btn-block"><i class="fas fa-home"></i> Home</a>
+           <a href="/property/all/" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-home"></i> Go back to home</a>
        </div>
        <div class="col">
         @if($users->count() < 1)
-        <a href="#/" class="btn btn-primary btn-user btn-block"><i class="fas fa-user-plus"></i> Add </a
+        <a href="#/" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-user-plus"></i> Add new user </a
         @else
-        <a href="/user/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-user-plus"></i> Add </a>
+        <a href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-user-plus"></i> Add new user</a>
         @endif
      
     </div>

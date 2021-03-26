@@ -80,12 +80,12 @@
     
     <div class="col-md-4">
       @if($properties->count()>1)
-        <a href="/property/{{ Carbon\Carbon::now()->format('mdY') }}/portforlio" class="btn btn-primary btn-user btn-block"><i class="fas fa-columns"></i> Portforlio</a>
+        <a href="/property/{{ Carbon\Carbon::now()->format('mdY') }}/portforlio" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-columns"></i> See your portforlio</a>
       @else
        @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced')
-        <a href="/property/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-building"></i> Add property</a>
+        <a href="/property/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new property</a>
         @else
-        <a href="#" class="btn btn-primary btn-user btn-block" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-building"></i> Add property</a>
+        <a href="#" class="btn btn-primary btn-user btn-block btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> Add new property</a>
         @endif
       @endif
     </div>
@@ -93,20 +93,20 @@
     <div class="col-md-4">
       @if (Auth::user()->user_type === 'manager')
         @if($users > 1)
-        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block"><i class="fas fa-user"></i> Add user </a>
+        <a title="Upgrade to Pro to add more users." href="/user/all" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new user </a>
         @else
-        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block"><i class="fas fa-building"></i> Add user</a>
+        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new user</a>
         @endif
       @else
-      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block"><i class="fas fa-building"></i> Add user</a>
+      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new user</a>
       @endif
     </div>
 
     <div class="col-md-4">
       @if(Auth::user()->trial_ends_at > Carbon\Carbon::today())
-      <button id="manageButton" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Manage</button>
+      <button id="manageButton" type="submit" class="btn btn-primary btn-user btn-block btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Manage</button>
       @else
-      <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block"> Manage</a>
+      <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block btn-sm"> Manage</a>
       @endif
   
     </div> 
@@ -141,10 +141,10 @@
 <br><br>
 <div class="row">
   <div class="col">
-    <a href="https://youtu.be/BMIt10slYgs" target="_blank" class="btn btn-danger btn-user btn-block"> <i class="fab fa-youtube"></i> Watch </a>
+    <a href="https://youtu.be/BMIt10slYgs" target="_blank" class="btn btn-danger btn-user btn-block btn-sm"> <i class="fab fa-youtube"></i> Watch </a>
     </div>
     <div class="col">
-      <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-user btn-block"> <i class="fab fa-facebook-messenger"></i> Chat </a>
+      <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-user btn-block btn-sm"> <i class="fab fa-facebook-messenger"></i> Chat </a>
       </div>
 </div>
 

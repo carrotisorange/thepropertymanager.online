@@ -44,8 +44,9 @@
                                     <th>Check #</th>
                                     <th>Owner</th>
                                     <th>Room</th>
-                                    <th>Status</th>
+                              
                                     <th>Amount</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>    
                             </thead>
@@ -61,15 +62,23 @@
                                     <td>{{ $item->check_number }}</td>
                                     <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
                                     <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
-                                   <td>
-                                    @if($item->remitted_at === NULL)
-                                    <span class="badge badge-danger">pending</span>
-                                    @else
-                                    <span class="badge badge-success">remitted</span>
-                                    @endif
-                                   </td>
+                                   
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
-                                   <th><a title="deposit this remittance" class="btn btn-success btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-check"></i></a></th>
+                                    <td>
+                                        @if($item->remitted_at === NULL)
+                                        <a title="waiting to be remitted" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-clock"></i></a>
+                                        @else
+                                        <a title="remitted to be remitted" class="btn btn-success btn-sm" href="#/"><i class="fas fa-check"></i></a>
+                                        @endif
+                                       </td>
+                                   <th>
+                                       @if($item->remitted_at === NULL)
+                                       <a title="deposit this remittance" class="btn btn-danger btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-hand-holding-usd"></i></a>
+                                       @else
+                                       <a title="deposit this remittance" class="btn btn-primary btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-edit"></i></a>
+                                       @endif
+                                       
+                                    </th>
                                 </tr>   
                                 @endforeach
                             </tbody>
@@ -95,7 +104,7 @@
                                     <th>Room</th>
                                     {{-- <th>Status</th> --}}
                                     <th>Amount</th>
-                                    <th></th>
+                                    <th>Action</th>
                         
                                 </tr>    
                             </thead>
@@ -119,7 +128,13 @@
                                     @endif
                                    </td> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
-                                    <th><a title="deposit this remittance" class="btn btn-success btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-check"></i></a></th>
+                                    <th>
+                                        
+                                        <a title="deposit this remittance" class="btn btn-danger btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-hand-holding-usd"></i></a>
+                                     
+                                        
+                                     </th>
+                          
                                 </tr>   
                                 @endforeach
                             </tbody>
@@ -145,6 +160,7 @@
                                     <th>Room</th>
                                     {{-- <th>Status</th> --}}
                                     <th>Amount</th>
+                                    <th>Action</th>
                         
                                 </tr>    
                             </thead>
@@ -168,6 +184,8 @@
                                     @endif
                                    </td> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
+                                    <th><a title="edit this remittance" class="btn btn-primary btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-edit"></i></a></th>
+                                   
                                 </tr>   
                                 @endforeach
                             </tbody>
