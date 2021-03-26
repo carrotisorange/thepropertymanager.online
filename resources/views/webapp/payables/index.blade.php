@@ -330,60 +330,8 @@
 </div>
 
 
-
-
-<div class="modal fade" id="addEntry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" >Add entry</h5>
-
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-      </div>
-      <div class="modal-body">
-   
-        <form id="addPayableEntryForm" action="/property/{{Session::get('property_id')}}/payable" method="POST">
-          @csrf
-       </form>
- 
-        
-           <p class="text-right">
-             <a  href="#/" id='delete_entry' class="btn btn-danger"> Remove </a>
-           <a href="#/"  id="add_entry" class="btn btn-primary"> Add </a>     
-           </p>
-             <div class="table-responsive text-nowrap">
-             <table class = "table" id="tab_logic">
-               <thead>
-                 <tr>
-                   <th>#</th>
-                   <th>Entry</th>
-                   <th>Particular</th>
-                   <th>Date</th>
-                 </thead>
-               </tr>
-                   <input form="addPayableEntryForm" type="hidden" id="no_of_entry" name="no_of_entry" >
-
-                   <input form="addPayableEntryForm" type="hidden" id="" name="property_id"  value="{{Session::get('property_id')}}">
-               <tr id='addr1'></tr>
-             
-             </table>
-           </div>
-         
-
-      </div>
-      <div class="modal-footer">
-
-          <button form="addPayableEntryForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Add</button>
-          </div>
-  </div>
-  </div>
-</div>
-
-
 <div class="modal fade" id="requestPayable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl" role="document">
   <div class="modal-content">
       <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel" >Request payable</h5>
@@ -396,12 +344,14 @@
         <form id="requestFundsForm" action="/property/{{Session::get('property_id')}}/payable/request" method="POST">
           @csrf
        </form>
-            <p class="text-right">
-              <a href="#/" id='delete_request' class="btn btn-danger"> Remove </a>
-              <a href="#/" id="add_request" class="btn btn-primary"> Add </a>     
-            </p>
+           
+       <a href="#/" id='delete_request' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current row</a>
+              <a href="#/" id="add_request" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add new row</a>  
+      
+              <button form="requestFundsForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Request funds (<span id="current_no_of_entry"></span>)</button>   
+        <br><br>
               <div class="table-responsive text-nowrap">
-                <table class = "table" id="request_table">
+                <table class = "table table-condensed table-border" id="request_table">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -420,10 +370,7 @@
             </div>
 
       </div>
-      <div class="modal-footer">
-         
-          <button form="requestFundsForm" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Add</button>
-          </div>
+
   </div>
   </div>
 </div>
@@ -435,38 +382,18 @@
 @section('scripts')
 <script>
   $(document).ready(function(){
-         var i=1;
-         
-     $("#add_entry").click(function(){
-         $('#addr'+i).html("<th>"+ (i) +"</th><td><input form='addPayableEntryForm' name='entry"+i+"' type='text' required></td><td><input form='addPayableEntryForm' name='description"+i+"' type='text' required></td><td><input form='addPayableEntryForm' name='created_at"+i+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}' required></td>");
- 
- 
-      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-      i++;
-      
-      document.getElementById('no_of_entry').value = i;
- 
-     });
- 
-     $("#delete_entry").click(function(){
-         if(i>1){
-         $("#addr"+(i-1)).html('');
-         i--;
-         
-         document.getElementById('no_of_entry').value = i;
-         }
-     });
 
      var j=1;
          
          $("#add_request").click(function(){
-             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+i+"' type='text'></td>");
+             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' id='amt"+j+"' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+j+"' type='text'></td>");
      
      
           $('#request_table').append('<tr id="request'+(j+1)+'"></tr>');
           j++;
           
           document.getElementById('no_of_request').value = j;
+          document.getElementById("current_no_of_entry").innerHTML = (j-1);
      
          });
      
@@ -476,6 +403,7 @@
              j--;
              
              document.getElementById('no_of_request').value = j;
+             document.getElementById("current_no_of_entry").innerHTML = j-1;
              }
          });
    

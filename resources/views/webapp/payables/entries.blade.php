@@ -123,19 +123,9 @@
 <script>
     $(document).ready(function(){
            var i=1;
-
-           var j=1;
     
            
        $("#add_entry").click(function(){
-
-        if(j>0){
-        document.getElementById("delete_entry").style.visibility = "visible";
-        document.getElementById("savebutton").style.visibility = "visible";
-        }else if(i<1){
-            document.getElementById("delete_entry").style.visibility = "hidden";
-        document.getElementById("savebutton").style.visibility = "hidden";
-        }
 
            $('#addr'+i).html("<th>"+ (i) +"</th><td><input form='addPayableEntryForm' name='entry"+i+"' type='text' required></td><td><input form='addPayableEntryForm' name='description"+i+"' type='text' required></td><td><input form='addPayableEntryForm' name='created_at"+i+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}' required></td>");
    
