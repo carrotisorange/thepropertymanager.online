@@ -9,6 +9,7 @@ use App\Response;
 use Session;
 use App\Notification;
 use App\User;
+use App\Personnel;
 
 class ConcernController extends Controller
 {

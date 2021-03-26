@@ -82,7 +82,11 @@ font-family: FontAwesome;
     @else
     <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward a concern</a>
     @endif
+    @if($personnels->count()<=0)
+    <a href="#" data-toggle="modal" data-target="#addPersonnel" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> File a job order</a>
+    @else
     <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> File a job order</a>
+    @endif
    @endif
   <br><br>
     <div class="table-responsive">
@@ -332,6 +336,30 @@ font-family: FontAwesome;
 
 
 
+<div class="modal fade" id="addPersonnel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">No Personnels found</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">
+          Personnel such as maintenance and housekeeping are required to file a job order. 
+        </p>
+      </div>
+      <div class="modal-footer">
+        
+        <a href="/property/{{ Session::get('property_id') }}/personnels" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add your first personnel now </a>
+      
+      </div>
+  </div>
+  </div>
+
+</div>
+
 <div class="modal fade" id="addJobOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
@@ -359,7 +387,7 @@ font-family: FontAwesome;
               <select  class="form-control form-control-user @error('personnel_id_foreign') is-invalid @enderror" name="personnel_id_foreign" id="personnel_id_foreign" required>
                 <option value="">Please select one</option>
                 @foreach ($personnels as $item)
-                    <option value="{{ $item->personnel_id }}">{{ $item->personnel_name }}</option>
+                    <option value="{{ $item->personnel_id }}">{{ $item->personnel_name }} | {{ $item->personnel_type }}</option>
                 @endforeach
               </select>
 
@@ -386,7 +414,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
         
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Job Order </button>
+        <button type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
       </form>
       </div>
   </div>

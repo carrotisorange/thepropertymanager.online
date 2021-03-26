@@ -315,7 +315,7 @@
       </div>
 
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-        <a  href="#" class="btn btn-primary " data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>  
+        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> Add concern</a>  
         <br><br>
         @if($concerns->count() < 1)
         <p class="text-danger text-center">No concerns found!</p>

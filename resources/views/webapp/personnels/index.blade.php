@@ -9,7 +9,7 @@
     
   </div>
   <div class="col-lg-6 col-5 text-right">
-    <a href="#" data-toggle="modal" data-target="#addPersonnelModal" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add Personnel</a>
+    <a href="#" data-toggle="modal" data-target="#addPersonnelModal" class="btn btn-primary btn-sm"><i class="fas fa-plus "></i> Add personnel</a>
   </div>
 
 
@@ -124,7 +124,7 @@
     </div>
     <div class="modal-footer">
             
-      <p class="text-right"> <button type="submit" form="addPersonnelForm" class="btn btn-primary"> Add Personnel</button></p>
+      <p class="text-right"> <button type="submit" form="addPersonnelForm" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Submit</button></p>
    </div>
     </div>
 </div>

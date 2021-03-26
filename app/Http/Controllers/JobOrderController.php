@@ -43,11 +43,26 @@ class JobOrderController extends Controller
         ->orderBy('job_orders.created_at', 'desc')
         ->get();
 
-        $property = Property::findOrFail(Session::get('property_id'));
-
-        return view('webapp.joborders.index', compact('joborders', 'property'));
+        return view('webapp.joborders.index', compact('joborders'));
     }
 
+    public function inventory($property_id, $joborder_id){
+
+        $personnels = Property::findOrFail($property_id)->personnels;
+
+        $joborder = JobOrder::findOrFail($joborder_id);
+
+        $personnel = DB::table('job_orders')
+        ->join('personnels', 'personnel_id_foreign', 'personnel_id')
+        ->select('*', 'job_orders.created_at as created_at', 'job_orders.status as joborder_status')
+
+        ->where('property_id_foreign',  Session::get('property_id'))
+        ->orderBy('job_orders.created_at', 'desc')
+        ->get();
+
+        
+        return view('webapp.joborders.inventory', compact('joborder','personnel', 'personnels'));
+    }
     /**
      * Show the form for creating a new resource.
      *

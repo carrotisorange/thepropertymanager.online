@@ -332,6 +332,7 @@ Route::post('/property/{property_id}/concern/{concern_id}/joborder', 'JobOrderCo
 
 //routes for job orders
 Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/joborder/{joborder_id}/inventory', 'JobOrderController@inventory')->middleware(['auth', 'verified']);
 
 //routes for personnels
 Route::get('/property/{property_id}/personnels', 'PersonnelController@index')->middleware(['auth', 'verified']);
