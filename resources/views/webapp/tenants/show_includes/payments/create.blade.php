@@ -17,12 +17,12 @@
             <div class="row">
                 <div class="col-md-3">Date
            {{-- <input type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required> --}}
-                <input class='form-control' type="date" form="acceptPaymentForm" class="" name="payment_created" required >
+                <input type="date" form="acceptPaymentForm" class="" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="payment_created" required >
                 </div>
                 <div class="col">
                     <p class="text-right">
-                        <a href="#/" id='delete_payment' class="btn btn-danger"> Remove</a>
-                      <a href="#/" id="add_payment" class="btn btn-primary" > Add</a>     
+                        <a href="#/" id='delete_payment' class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Remove current row</a>
+                      <a href="#/" id="add_payment" class="btn btn-sm btn-primary" ><i class="fas fa-plus"></i> Add more payments</a>     
                       </p>
                 </div>
                 
@@ -33,7 +33,7 @@
             <div class="row">
               <div class="col">
                   <div class="table-responsive text-nowrap">
-                  <table class = "table" id="payment">
+                  <table class = "table table-condensed table-bordered table-hover" id="payment">
                      <thead>
                         <tr>
                             <th>#</th>
@@ -53,7 +53,7 @@
           
         </div>
         <div class="modal-footer">
-            <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Record Payments</button>
+            <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Submit</button>
         </div>
     
     </div>

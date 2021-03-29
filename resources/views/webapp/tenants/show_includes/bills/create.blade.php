@@ -17,15 +17,15 @@
           
           <div class="row">
             <div class="col-md-3">
-
+              
                 {{-- <input type="date" class='form-control' form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
-                <input type="date" form="addBillForm" class="" name="date_posted" required >
+                <input type="date" form="addBillForm" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="date_posted" required >
               
             </div>
             <div class="col">
               <p class="text-right">
-                <span id='delete_bill' class="btn btn-danger btn-sm"> Remove</span>
-              <span id="add_bill" class="btn btn-primary btn-sm"> Add</span>     
+                <span id='delete_bill' class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Remove current row</span>
+              <span id="add_bill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add more bills</span>     
               </p>
             </div>
           </div>
@@ -55,7 +55,7 @@
         </div>
         <div class="modal-footer">
 
-         <button form="addBillForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Post Bills</button>
+         <button form="addBillForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Post Bills</button>
         </div> 
         </div>
         </div>

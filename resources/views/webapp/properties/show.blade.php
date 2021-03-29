@@ -198,20 +198,22 @@
       <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
       @else
       <div class="table-responsive text-nowrap">
-        <table class="table">
+        <table class="table table-condensed table-bordered table-hover">
        
          <thead>
           <tr>
-        
+            {{-- <th>#</th> --}}
             <th>User</th>
             <th>Role</th>
             <th># Referrals</th>
           </tr>
          </thead>
+         <?php $agent_ctr = 1; ?>
          <tbody>
            @foreach ($top_agents as $item)
            <tr>
             <?php $explode = explode(" ", $item->name);?>
+            {{-- <th>{{ $agent_ctr++ }}</th> --}}
              <td>{{ $explode[0] }}</td>
              <td>{{ $item->user_type }}</td>
              <td>{{ number_format($item->referrals) }}</td>
@@ -348,11 +350,11 @@
       <p class="text-success text-center"><i class="fas fa-check-circle"></i> No expiring contracts.</p>
      @else
      <div class="table-responsive text-nowrap">
-      <table class="table" >
+      <table class="table table-condensed table-bordered table-hover">
         <thead>
     
           <tr>
-     
+            {{-- <th>#</th> --}}
             <th>Tenant</th>
             <th>Room</th>
             <th>Moveout</th>
@@ -362,11 +364,12 @@
          
         </tr>
         </thead>
+        <?php $expiring_ctr =1; ?>
         <tbody>
           @foreach($tenants_to_watch_out as $item)
          
            <tr>
- 
+              {{-- <th>{{ $expiring_ctr++ }}</th> --}}
                <th>
                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
                  </th>
@@ -438,7 +441,7 @@
               <p class="text-success text-center"><i class="fas fa-check-circle"></i> No delinquent tenants.</p>
              @else
              <div class="table-responsive text-nowrap">
-              <table class="table">
+             <table class="table table-condensed table-bordered table-hover">
                 <thead>
                   
                   <tr>
@@ -498,7 +501,7 @@
               <p class="text-success text-center"><i class="fas fa-check-circle"></i> No pending concerns.</p>
              @else
              <div class="table-responsive text-nowrap">
-              <table class="table">
+              <table class="table table-condensed table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>Tenant</th>
@@ -560,7 +563,7 @@
   <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> No collections recorded for today!</p>
   @else
   <div class="table-responsive text-nowrap">
-    <table class="table" >
+    <table class="table table-condensed table-bordered table-hover">
       <thead>
 
        <tr>

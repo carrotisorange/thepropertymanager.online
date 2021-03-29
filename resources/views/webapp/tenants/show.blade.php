@@ -4,7 +4,8 @@
 
 @section('upper-content')
 <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($tenant->moveout_date), false)) ?>
-<div class="row align-items-center py-4">
+{{-- <div class="row align-items-center py-4">
+  
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">
       {{ $tenant->first_name.' '.$tenant->last_name }}
@@ -19,7 +20,8 @@
     </h6>
   </div>
 
-</div>
+</div> --}}
+<br>
 <div class="row">
   <div class="col">
     @if ($errors->any())
@@ -40,39 +42,39 @@
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         @if($tenant->email_address === null || $tenant->contact_no === null)
-        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span></a>
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-green"></i> Profile <i class="fas fa-exclamation-triangle text-danger"></i></a>
         @else
-        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile</a>
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-green"></i> Profile</a>
         @endif
 
         @if($access->count() <=0  )
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>  </a>
+        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-circle text-dark"></i> Access <i class="fas fa-exclamation-triangle text-danger"></i> </a>
         @else
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access </a>
+        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-circle text-dark"></i> Access </a>
         @endif
        
         {{-- @if($contracts->count() <= 0)
         <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-file-signature"></i> Contracts <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span></a>
          @else --}}
-         <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-file-signature"></i> Contracts</a>
+         <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-file-signature text-indigo"></i> Contracts</a>
          {{-- @endif  --}}
 
          @if($guardians->count() <=0  )
-         <a class="nav-item nav-link" id="nav-guardians-tab" data-toggle="tab" href="#guardians" role="tab" aria-controls="nav-guardians" aria-selected="false"><i class="fas fa-user-friends"></i> Guardians <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span></a>
+         <a class="nav-item nav-link" id="nav-guardians-tab" data-toggle="tab" href="#guardians" role="tab" aria-controls="nav-guardians" aria-selected="false"><i class="fas fa-user-friends text-primary"></i> Guardians <i class="fas fa-exclamation-triangle text-danger"></i></a>
         @else
-        <a class="nav-item nav-link" id="nav-guardians-tab" data-toggle="tab" href="#guardians" role="tab" aria-controls="nav-guardians" aria-selected="false"><i class="fas fa-user-friends"></i> Guardians </a>
+        <a class="nav-item nav-link" id="nav-guardians-tab" data-toggle="tab" href="#guardians" role="tab" aria-controls="nav-guardians" aria-selected="false"><i class="fas fa-user-friends text-primary"></i> Guardians </a>
         @endif
          @if($balance->count() <= 0)
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills </a>
+         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills </a>
          @else
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> {{ $balance->count() }}</span></a>
+         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills <i class="fas fa-exclamation-triangle text-danger"></i> {{ $balance->count() }}</a>
          @endif
 
          
-         <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="true"><i class="fas fa-money-bill"></i> Payments </a>
+         <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Payments </a>
 
 
-        <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools"></i> Concerns</a>
+        <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a>
       </div>
     </nav>
     
@@ -101,25 +103,25 @@
      @endif
       <div>
         <table class="table  table-condensed table-bordered table-hover" >
-              <tr>
-                <thead>
+          <thead>    
+          <tr> 
                 <th>Tenant ID</th>
                 <td>{{ $tenant->tenant_unique_id }}</td>
               </tr>
             </thead>
-              {{-- <tr>
+            <thead>    
+              <tr>
                   <th>Name</th>
-                  <td>{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }} 
-                   
-                    @if($tenant->type_of_tenant === 'studying')
-                    
-                    (<span class="text-primary"><i class="fas fa-user-circle"></i> {{ $tenant->type_of_tenant }}</span>)
-                    @else
-                    (<span class="text-warning"><i class="fas fa-user-tie"></i> {{ $tenant->type_of_tenant }}</span>)
-                    @endif
-                   
-                  </td>
-              </tr> --}}
+                  <td>{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }} </td>
+              </tr>
+            </thead>
+            <thead>
+                <tr>
+              <th>Type of tenant</th>
+              <td>  
+                {{ $tenant->type_of_tenant }}
+            </tr>
+          </thead>
               <thead>
               <tr>
                 <th>Mobile</th>
@@ -480,7 +482,7 @@
 
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add access to the system</button>
+        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Create access to the system</button>
         <br><br>
         @endif
      
@@ -532,9 +534,9 @@
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Bills</a> 
+        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add bills</a> 
         @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit Bills</a>
+          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit bills</a>
           @endif
           @if($balance->count() > 0)
           <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export bills</span></a>
@@ -674,11 +676,13 @@
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-        <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Record payments</a>
+          @if($bills->count() > 1)
+          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add payments</a>
+          @endif
         @endif 
         <br><br>
         @if($payments->count() <= 0)
-        <p class="text-danger text-center">No collections found!</p>
+        <p class="text-danger text-center">No payments found!</p>
         @else
         <div class="col-md-12">
           <div class="table-responsive text-nowrap">
@@ -1040,7 +1044,7 @@
     $(document).ready(function(){
     var j=1;
     $("#add_payment").click(function(){
-        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option class='form-control' value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
   
   
      $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');

@@ -44,6 +44,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
                <th>Name</th>
                <th>Email</th>
                <th>Mobile</th>
+               <th>Address</th>
                <th>Representative</th>
                {{-- <th></th> --}}
            </tr>
@@ -55,6 +56,7 @@ Showing <b>{{ $owners->count() }} </b> of {{  $count_owners }}  owners
             <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}">{{ $item->name }} </a></th>
             <td>{{ $item->email}}</td>
             <td>{{ $item->mobile }}</td>
+            <td>{{ $item->address }}</td>
             <td>{{ $item->representative }}</td>
             {{-- <td>
               @if(Auth::user()->user_type === 'manager')

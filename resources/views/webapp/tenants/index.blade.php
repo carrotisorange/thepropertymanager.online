@@ -39,13 +39,13 @@
 <p class="text-danger text-center">No tenants found!</p>
 
 @else
-Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
+
 @if(Session::get('tenant_search'))
 <p class="text-center"> <span class=""> <small> You searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
 @endif
-@if(Session::get('status'))
-<p class="text-center"> <span class=""> <small> Showing all </small></span> <span class="text-danger">"{{ Session::get('status') }}"</span> tenants.</p>
-@endif
+
+<p class="text-center"> <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} ({{ Session::get('status') }}) tenants...</span></small></p>
+
 
 
 <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
@@ -65,9 +65,9 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
           <th>Mobile</th>
          
           <th>Email</th>
-          {{-- <th>Type</th>
+           <th>Type</th>
           <th>Gender</th>
-          <th>Civil status</th> --}}
+          <th>Civil status</th>
           {{-- <th>Movein </th> --}}
        </tr>
       </thead>
@@ -87,9 +87,9 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...
             <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
             <td>{{ $item->contact_no }}</td>
             <td>{{ $item->email_address }}</td>
-            {{-- <td>{{ $item->type_of_tenant }}</td>
+             <td>{{ $item->type_of_tenant }}</td>
             <td>{{ $item->gender }}</td>
-            <td>{{ $item->civil_status }}</td> --}}
+            <td>{{ $item->civil_status }}</td> 
            
         </tr>
         @endforeach
