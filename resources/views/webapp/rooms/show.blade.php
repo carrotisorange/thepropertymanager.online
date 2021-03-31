@@ -3,7 +3,7 @@
 @section('title', $home->building.' '.$home->unit_no)
 
 @section('upper-content')
-<div class="row align-items-center py-4">
+{{-- <div class="row align-items-center py-4">
   <div class="col-auto text-right">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -14,17 +14,42 @@
     
     
   </div>
-</div>
+</div> --}}
+<br>
   <div class="row">
     <div class="col-md-12">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="nav-room" aria-selected="true"><i class="fas fa-home text-indigo"></i> Room</a>
-          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <span class="badge badge-success badge-counter">{{ $tenants->count() }}</a>
-          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie text-teal"></i> Owners <span class="badge badge-success badge-counter">{{ $owners->count() }}</a>
-          <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd text-teal"></i> Remittances <span class="badge badge-danger badge-counter">{{ $remittances->count() }}</span></a>
-          <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export text-danger"></i> Expenses <span class="badge badge-danger badge-counter">{{ $expenses->count() }}</span></a>
-          <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <span class="badge badge-danger badge-counter">{{ $concerns->count() }}</span></a>
+          @if($tenants->count()<=0)
+          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <i class="fas fa-exclamation-triangle text-danger"></i></a>
+          @else
+          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <span class="badge badge-success badge-counter">{{ $tenants->count() }}</span></a>
+          @endif
+         
+          @if($owners->count()<=0)
+          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie text-teal"></i> Owners <i class="fas fa-exclamation-triangle text-danger"></i></a>
+          @else
+          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie text-teal"></i> Owners <span class="badge badge-success badge-counter">{{ $owners->count() }}</span></a>
+          @endif
+
+          @if($remittances->count()<=0)
+          <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd text-teal"></i> Remittances <i class="fas fa-exclamation-triangle text-danger"></i></a>
+          @else
+          <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd text-teal"></i> Remittances <span class="badge badge-success badge-counter">{{ $remittances->count() }}</span></a>
+          @endif
+
+          @if($expenses->count()<=0)
+          <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export text-danger"></i> Expenses <i class="fas fa-exclamation-triangle text-danger"></i></a>
+          @else
+          <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export text-danger"></i> Expenses <span class="badge badge-success badge-counter">{{ $expenses->count() }}</span></a>
+          @endif
+
+          @if($concerns->count()<=0)
+          <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <i class="fas fa-exclamation-triangle text-danger"></i></a>
+          @else
+          <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <span class="badge badge-success badge-counter">{{ $concerns->count() }}</span></a>
+          @endif
         </div>
       </nav>
     </div>
@@ -463,8 +488,8 @@
         
         <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="nav-owners-tab">
         
-     <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary text-white">
-      <i class="fas fa-user-plus text-white-50"></i> Add Owner
+     <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary text-white btn-sm">
+      <i class="fas fa-user-plus text-white"></i> Add Owner
     </a>   
   <br>
      <br>

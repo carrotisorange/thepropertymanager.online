@@ -3,14 +3,14 @@
 @section('title', $owner->name)
 
 @section('upper-content')
-<div class="row align-items-center py-4">
+{{-- <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">{{ $owner->name }}</h6>
     
   </div>
 
-</div>
-
+</div> --}}
+<br>
 <div class="row">
   <div class="col-md-12">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -18,7 +18,7 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-owner-tab" data-toggle="tab" href="#owner" role="tab" aria-controls="nav-owner" aria-selected="true"> <i class="fas fa-user-tie text-teal"></i> Profile</a>
           @if($access->count() <=0  )
-          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-user-circle text-green"></i> Access <i class="fas fa-exclamation-triangle"></i></a>
+          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-user-circle text-green"></i> Access <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-user-circle text-green"></i> Access </a>
           @endif
