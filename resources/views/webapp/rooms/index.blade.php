@@ -51,6 +51,7 @@
  
 </div>
 
+<small>
 <div class="row">
   
   <form id="filter" action="/property/{{ Session::get('property_id') }}/rooms/filter"></form>
@@ -66,7 +67,7 @@
       <label class="form-check-label" for="exampleCheck1">{{ $status->status }} ({{ $status->count }})</label>
     </div>
     @endforeach
-    <hr>
+    <br>
     <label for=""><b>Building</b></label>
    <br>
     @foreach ($buildings as $building)
@@ -76,7 +77,7 @@
     </div>
     @endforeach
 
-    <hr>
+    <br>
     <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
     <label for=""><b>Floor</b></label>
     @foreach ($floors as $floor)
@@ -85,7 +86,7 @@
       <label class="form-check-label" for="exampleCheck1">{{ $numberFormatter->format($floor->floor) }} floor ({{ $floor->count }})</label>
     </div>
     @endforeach
-    <hr>
+    <br>
    
     <label for=""><b>Type</b></label>
     @foreach ($types as $type)
@@ -95,7 +96,7 @@
     </div>
     @endforeach
 
-    <hr>
+    <br>
    
     <label for=""><b>Size</b></label>
     @foreach ($sizes as $size)
@@ -105,7 +106,7 @@
     </div>
     @endforeach
 
-    <hr>
+    <br>
 
     <label for=""><b>Occupancy</b></label>
     @foreach ($occupancies as $occupancy)
@@ -115,7 +116,7 @@
     </div>
     @endforeach
 
-    <hr>
+    <br>
    
     <label for=""><b>Rent</b></label>
     @foreach ($rents as $rent)
@@ -138,34 +139,34 @@
     </p>
     </div>
     
-    <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+    <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
       @foreach ($units as $item)
     
-      <div class="col-md-1">
+      <div class="col-md-2.5">
         @if($item->status === 'occupied')
-        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-success">
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
           <i class="fas fa-home fa-2x"></i>
           <br>
-          {{ $item->unit_no }}
+        <small>  {{ $item->unit_no }}</small>
       </a>
         @elseif($item->status === 'vacant')
-        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-danger">
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
           <i class="fas fa-home fa-2x"></i>
           <br>
-          {{ $item->unit_no }}
+            <small>  {{ $item->unit_no }}</small>
       </a>
       @elseif($item->status === 'dirty')
-      <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-dark">
+      <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
         <i class="fas fa-home fa-2x"></i>
         <br>
-        {{ $item->unit_no }}
+        <small>  {{ $item->unit_no }}</small>
     </a>
     @else
     
-    <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-warning">
+    <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
       <i class="fas fa-home fa-2x"></i>
       <br>
-      {{ $item->unit_no }}
+      <small>  {{ $item->unit_no }}</small>
   </a>
         @endif
             
@@ -179,6 +180,7 @@
     @endif
     </div>
 </div>
+</small>
 
 
 <div class="modal fade" id="upgradeToPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
