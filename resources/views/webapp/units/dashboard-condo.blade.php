@@ -294,7 +294,7 @@
                        @endif
                   </td>
                   <td>
-                    @if($item->email_address === null)
+                    {{-- @if($item->email_address === null)
                     <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/edit#email_address" class="badge badge-warning">Please add an email</a>
                     @else
                     <form action="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/alert/contract">
@@ -305,7 +305,7 @@
                       <button class="btn btn-primary btn btn-primary" title="for manager and admin access only" type="submit" onclick="this.form.submit(); this.disabled = true;" disabled><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send Email</button>
                       @endif
                     </form>
-                    @endif
+                    @endif --}}
                   </td>
                   <td><span class="badge badge-success">{{ $item->tenants_note }}</span></td>
              </tr>

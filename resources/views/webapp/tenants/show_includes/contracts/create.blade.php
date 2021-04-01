@@ -71,7 +71,7 @@
           </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" form="contractForm" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Proceed to selected room</button>
+            <button type="submit" form="contractForm" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Continue</button>
         </div>
     </div>
     </div>

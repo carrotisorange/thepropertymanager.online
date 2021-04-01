@@ -54,7 +54,7 @@
            
                      @endif
                    </td>
-                   <td>
+                   {{-- <td>
                      @if($item->email_address === null)
                      <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
                      @else
@@ -67,7 +67,7 @@
                        @endif
                      </form>
                      @endif
-                   </td>
+                   </td> --}}
                  
               </tr>
               @endforeach

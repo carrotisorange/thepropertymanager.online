@@ -208,10 +208,10 @@ class RoomController extends Controller
 
         if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury'){
          
-            $users = DB::table('users_properties_relations')
+             $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
            ->where('property_id_foreign', $property_id)
-           ->where('user_type','<>' ,'tenant')
+           ->whereNotIn('user_type' ,['tenant', 'owner', 'dev'])
            ->get();
 
             $home = Unit::findOrFail($unit_id);

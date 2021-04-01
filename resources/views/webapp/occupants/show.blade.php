@@ -35,7 +35,7 @@
   <div class="col-md-12">
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        @if($tenant->email_address === null || $tenant->contact_no === null)
+        @if($tenant->contact_no === null)
         <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span></a>
         @else
         <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile</a>
@@ -78,7 +78,7 @@
     @endif
 
      <br><br>
-     @if($tenant->email_address === null || $tenant->contact_no === null)
+     @if($tenant->contact_no === null)
     <p class="text-danger">Email address or mobile is missing!</p>
      @endif
       <div class="table-responsive text-nowrap">
@@ -94,10 +94,10 @@
                   <th>Mobile</th>
                   <td>{{ $tenant->contact_no }}</td>
               </tr>
-              <tr>
+              {{-- <tr>
                   <th>Email</th>
                   <td>{{ $tenant->email_address }}</td>
-              </tr>
+              </tr> --}}
              
               <tr>
                   <th>Gender</th>

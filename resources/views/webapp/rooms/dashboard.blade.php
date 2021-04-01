@@ -332,7 +332,7 @@
                       <span class="badge badge-warning">contract expires in {{ $diffInDays }} days </span>
                        @endif
                   </td>
-                  <td>
+                  {{-- <td>
                     @if($item->email_address === null)
                     <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/edit#email_address" class="badge badge-warning">Please add an email</a>
                     @else
@@ -345,7 +345,7 @@
                       @endif
                     </form>
                     @endif
-                  </td>
+                  </td> --}}
                   <td><span class="badge badge-success">{{ $item->tenants_note }}</span></td>
              </tr>
              @endforeach

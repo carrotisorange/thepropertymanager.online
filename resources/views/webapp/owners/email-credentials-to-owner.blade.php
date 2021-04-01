@@ -4,7 +4,7 @@
     
     <br>
     
-    To keep track of your unit's contracts, concners, and remimttances, go to your owner portal through this link <a href="/thepropertymanager.online/login">here</a> and use the credentials below:
+    To keep track of your unit's contracts, concerns, and remittances, go to your owner portal through this link <a href="/thepropertymanager.online/login">here</a> and use the credentials below:
     <br>
     <br>
     Email: {{ $email }}

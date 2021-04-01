@@ -220,6 +220,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -236,11 +237,9 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
             'account_type' => Auth::user()->account_type,
-            'email_verified_at' => Carbon::now()
         ]);
 
  
-
         return redirect('/users')->with('success', 'New user has been saved!');
 
     }

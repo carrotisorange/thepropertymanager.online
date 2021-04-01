@@ -240,7 +240,7 @@ class CollectionController extends Controller
 
             //assign the value of tenant and unit information to variable data
             $data = array(
-                'email' => $tenant->email_address,
+                // 'email' => $tenant->email_address,
                 'name' => $tenant->first_name,
                 'property' => Session::get('property_name'),
                 'mobile' => $tenant->contact_no,
@@ -249,15 +249,15 @@ class CollectionController extends Controller
                 'moveout_at' => ' ', 
             );
 
-            if($tenant->email_address !== null){
-                //send welcome email to the tenant
+            // if($tenant->email_address !== null){
+            //     //send welcome email to the tenant
 
-                Mail::send('webapp.tenants.user-generated-mail', $data, function($message) use ($data){
-                $message->to($data['email']);
-                $message->bcc('customercare@thepropertymanager.online');
-                $message->subject('Welcome Tenant');
-            });
-            }
+            //     Mail::send('webapp.tenants.user-generated-mail', $data, function($message) use ($data){
+            //     $message->to($data['email']);
+            //     $message->bcc('customercare@thepropertymanager.online');
+            //     $message->subject('Welcome Tenant');
+            // });
+            // }
 
             $notification = new Notification();
             $notification->user_id_foreign = Auth::user()->id;

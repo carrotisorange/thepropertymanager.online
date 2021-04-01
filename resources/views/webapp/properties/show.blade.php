@@ -391,7 +391,7 @@
        
                  @endif
                </td>
-               <td>
+               {{-- <td>
                  @if($item->email_address === null)
                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address" class="badge badge-danger">Please add an email</a>
                  @else
@@ -404,7 +404,7 @@
                    @endif
                  </form>
                  @endif
-               </td>
+               </td> --}}
              
           </tr>
           @endforeach
@@ -642,8 +642,8 @@
 You have <b>{{ $pending_concerns->count() }}</b> pending/active concern/s that need to be addressed.
 </div>
 <div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss </button>
-<a href="/property/{{  Session::get('property_id') }}/pending-concerns" class="btn btn-primary" >Proceed</a>
+<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i> Dismiss </button>
+<a href="/property/{{  Session::get('property_id') }}/pending-concerns" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Proceed</a>
 </form>
 </div> 
 </div>

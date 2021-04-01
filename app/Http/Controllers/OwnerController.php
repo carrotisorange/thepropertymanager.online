@@ -160,7 +160,7 @@ class OwnerController extends Controller
         (
             [
                 'name' => $request->name.' '.$last_name,
-                'email' => $request->email,
+                'email' => $request->owner_email,
                 'mobile' => $request->mobile,
             ]
             );

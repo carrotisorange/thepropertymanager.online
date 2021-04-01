@@ -48,13 +48,13 @@
                   <label for="">Mobile</label>
                   <input form="editTenantForm" class="form-control" type="text" name="contact_no" value="{{ $tenant->contact_no }}">
               </div>
-              <div class="col" id="email_address">
+              {{-- <div class="col" id="email_address">
                   <label for="">Email</label>
                   <input form="editTenantForm" class="form-control" type="text" name="email_address" value="{{ $tenant->email_address }}">
                 @if($tenant->email_address === null)
                 <small class="text-danger">Please add an email</small>
                 @endif
-              </div>
+              </div> --}}
               <div class="col">
                 <label for="">Type</label>
                 <select form="editTenantForm" name="type_of_tenant" id="type_of_tenant" class="form-control" onchange ="openForm()" required>

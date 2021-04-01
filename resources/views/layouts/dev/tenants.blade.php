@@ -332,7 +332,7 @@
           
               <th>Mobile</th>
              
-              <th>Email</th>
+              {{-- <th>Email</th> --}}
               <th>Type</th>
               <th>Gender</th>
               <th>Civil status</th>
@@ -350,7 +350,7 @@
                 <td>{{ $item->tenant_unique_id }}</td>
                 <td><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td>
                 <td>{{ $item->contact_no }}</td>
-                <td>{{ $item->email_address }}</td>
+                {{-- <td>{{ $item->email_address }}</td> --}}
                 <td>{{ $item->type_of_tenant }}</td>
                 <td>{{ $item->gender }}</td>
                 <td>{{ $item->civil_status }}</td>

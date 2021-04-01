@@ -46,7 +46,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
           <th>Tenant</th>
           {{-- <th>User ID</th> --}}
           <th>Mobile</th>
-          <th>Email</th>
+          {{-- <th>Email</th> --}}
           <th>Resided</th>
        </tr>
       </thead>
@@ -68,7 +68,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
           </th>
           {{-- <td>{{ $item->user_id_foreign }} </td> --}}
             <td>{{ $item->contact_no }}</td>
-            <td>{{ $item->email_address }}</td>
+            {{-- <td>{{ $item->email_address }}</td> --}}
             <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
         </tr>
         @endforeach

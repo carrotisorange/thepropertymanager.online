@@ -41,7 +41,7 @@
   <div class="col-md-12">
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        @if($tenant->email_address === null || $tenant->contact_no === null)
+        @if($tenant->contact_no === null)
         <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-green"></i> Profile <i class="fas fa-exclamation-triangle text-danger"></i></a>
         @else
         <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-green"></i> Profile</a>
@@ -98,8 +98,8 @@
     @endif
 
      <br><br>
-     @if($tenant->email_address === null || $tenant->contact_no === null)
-    <p class="text-danger">Email address or mobile is missing!</p>
+     @if($tenant->contact_no === null)
+    <small class="text-danger">Email address or mobile is missing!</small>
      @endif
       <div>
         <table class="table  table-condensed table-bordered table-hover" >
@@ -128,12 +128,12 @@
                 <td>{{ $tenant->contact_no }}</td>
             </tr>
           </thead>
-            <thead>
+            {{-- <thead>
             <tr>
                 <th>Email</th>
                 <td>{{ $tenant->email_address }}</td>
             </tr>
-          </thead>
+          </thead> --}}
             <thead>
               <tr>
                   <th>Gender</th>
@@ -254,7 +254,7 @@
   
     <img  src="{{ $tenant->tenant_img? asset('storage/img/tenants/'.$tenant->tenant_img): asset('/arsha/assets/img/no-image.png') }}" alt="image of the tenant" class="img-thumbnail">
    
-    <form id="uploadImageForm" action="/property/{{ $property->property_id}}/tenant/{{ $tenant->tenant_id }}/upload/img" method="POST" enctype="multipart/form-data">
+    <form id="uploadImageForm" action="/property/{{ Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/upload/img" method="POST" enctype="multipart/form-data">
       @method('put')
       @csrf
     </form>
@@ -496,7 +496,7 @@
              @else
              @foreach ($access as $item)
        
-             <table class="table  table-condensed table-bordered table-hover">
+             <table class="table table-condensed table-bordered table-hover">
                
                 
                <thead>
@@ -508,7 +508,7 @@
                  <thead>
                  <tr>
                   <th>Password</th>
-                  <td>{{ $item->contact_no }} or <b>12345678</b></td>
+                  <td>{{ $item->tenant_unique_id }}</td>
                 </tr>
               </thead>
                 <thead>
@@ -738,7 +738,7 @@
                          @if($item->payment_status === 'deleted')
                          
                         @else
-                        <form action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
+                        <form action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
                           @csrf
                           @method('delete')
                           <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
@@ -856,53 +856,40 @@
    <div class="modal-body">
     
       
-     <form id="userForm" action="/property/{{$property->property_id}}/tenant/{{ $tenant->tenant_id }}/user/create" method="POST">
+     <form id="userForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/user/create" method="POST">
     @csrf
     </form>
-     <table class="table table-borderless">
-      <tr>
-        <th>Name</th>
-        <td><input type="text" name="name" form="userForm" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $tenant->first_name.' '.$tenant->last_name }}" required>
-        <br>
-        @error('name')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-      @enderror
-      </td>
-      
-      </tr>
-       <tr>
-         <th>Email</th>
-         <td><input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $tenant->tenant_unique_id.'@thepropertymanager.online' }}" required>
-        <br>
-        @error('email')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-      @enderror
-    </td>
-       
-       </tr>
-       <tr>
-         <th>Password</th>
-         <td><input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="{{ $tenant->password }}" required>
-        <br>
-        @error('password')
+    <div class="form-group">
+      <small for="">Name</small>
+      <input type="text" name="name" form="userForm" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $tenant->first_name.' '.$tenant->last_name }}" required>
+      @error('name')
+      <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+      </span>
+  @enderror
+    </div>
+    <div class="form-group">
+      <small for="">Email</small>
+      <input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $tenant->tenant_unique_id.'@thepropertymanager.online' }}" required>
+      @error('email')
+      <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+      </span>
+    @enderror
+    </div>
+    <div class="form-group">
+      <small for="">Password</small>
+      <input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="{{ $tenant->password }}" required>
+      @error('password')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
     @enderror
-      </td>
-         
-       </tr>
+    </div>
+    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Submit</button> </p>
     
-     </table>
    </div>
-  <div class="modal-footer">
 
-    <button type="submit" form="userForm" class="btn btn-primary"> Add</button> 
-  </div> 
   </div>
   </div>
   

@@ -395,7 +395,7 @@ $request->session()->now('success', 'Changes saved.');
             $property = Property::findOrFail($property_id);
 
             $data = array(
-                'email' =>$tenant->email_address,
+                // 'email' =>$tenant->email_address,
                 'name' => $tenant->first_name,
                 'property' => $property->name,
                 'amt' => $request->input('amount'.$i),

@@ -64,7 +64,7 @@
           <th>Moveout Date</th>
           <th>Mobile</th>
          
-          <th>Email</th>
+          {{-- <th>Email</th> --}}
            <th>Type</th>
           <th>Gender</th>
           <th>Civil status</th>
@@ -86,7 +86,7 @@
             <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
             <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
             <td>{{ $item->contact_no }}</td>
-            <td>{{ $item->email_address }}</td>
+            {{-- <td>{{ $item->email_address }}</td> --}}
              <td>{{ $item->type_of_tenant }}</td>
             <td>{{ $item->gender }}</td>
             <td>{{ $item->civil_status }}</td> 

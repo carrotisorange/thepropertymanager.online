@@ -19,7 +19,7 @@
               <th>#</th>
               <th>Name</th>
       
-              <th>Email</th>
+              
               <th>Mobile</th>
   
               <th>Movein on</th>
@@ -33,7 +33,7 @@
                 <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></th>
                 
               
-                <td>{{ $tenant->email_address }}</td>
+              
                 <td>{{ $tenant->contact_no }}</td>
         
                 <td>{{ Carbon\Carbon::parse($tenant->created_at)->format('M d, Y') }}</td>

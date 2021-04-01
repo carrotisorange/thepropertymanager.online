@@ -42,11 +42,9 @@ class ContractController extends Controller
             'unit_id' => 'required'
         ]);
 
-        $unit = Unit::findOrFail($request->unit_id);
+         $unit = Unit::findOrFail($request->unit_id);
 
         $tenant = Tenant::findOrFail($tenant_id);
-
-        $property = Property::findOrFail($property_id);
 
         $users = DB::table('users_properties_relations')
         ->join('properties', 'property_id_foreign', 'property_id')
@@ -76,7 +74,7 @@ class ContractController extends Controller
             ->max('bill_no') + 1;
         }     
 
-        return view('webapp.contracts.create', compact('tenant','unit', 'property', 'current_bill_no', 'users', 'units'));
+        return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users', 'units'));
     }
 
     /**
@@ -611,7 +609,8 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
      $diffInDays =  number_format(Carbon::now()->DiffInDays(Carbon::parse($contract->moveout_at), false));
 
     $data = array(
-        'email' => $tenant->email_address,
+        '
+        ' => $tenant->email_address,
         'name' => $tenant->first_name,
         'property' => $property->name,
         'unit' => $unit->unit_no,

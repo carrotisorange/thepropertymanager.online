@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input form="addInvestorForm" type="email" class="form-control" name="email" id="email" required>
+                <input form="addInvestorForm" type="email" class="form-control" name="owner_email" id="owner_email" required>
             </div>
             <div class="form-group">
                 <label>Mobile</label>

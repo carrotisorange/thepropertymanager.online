@@ -32,10 +32,10 @@
       @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'admin')
 
       @if($balance->count() > 0)
-      <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download fa-sm text-white-50"></i> Export </span></a>
+      {{-- <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download fa-sm text-white-50"></i> Export </span></a>
       @if($tenant->email_address !== null)
       <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane  fa-sm text-white-50"></i> Send </span></a>
-      @endif
+      @endif --}}
       @endif
     
     

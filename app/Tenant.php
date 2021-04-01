@@ -21,7 +21,7 @@ class Tenant extends Model
                                 'province',
                                 'city',
                                 'barangay',
-                                'email_address',
+                               
                                 'contact_no',
                                  
                                 'year_level', 

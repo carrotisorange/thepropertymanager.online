@@ -344,8 +344,7 @@ class PropertyController extends Controller
          ->join('properties', 'property_id_foreign', 'property_id')
          ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
          ->where('property_id', $property_id)
-         ->whereRaw("email_address like '%$search_key%' ")
-        ->orWhereRaw("contact_no like '%$search_key%' ")
+        ->whereRaw("contact_no like '%$search_key%' ")
          ->get();
 
         $all_tenants = $tenants->merge($emails)->unique();

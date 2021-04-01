@@ -101,7 +101,7 @@
         </span>
         @enderror
       </div>
-      <div class="col">
+      {{-- <div class="col">
           <small class="">Email <span class="text-danger">*</span></small>
         <input form="addTenantForm1" type="email" class="form-control form-control-user @error('email_address') is-invalid @enderror" name="email_address" id="email_address" value="{{ $current_owner->email }}">
   
@@ -110,7 +110,7 @@
             <strong>{{ $message }}</strong>
         </span>
         @enderror
-      </div>
+      </div> --}}
   </div>
   <hr>
     
