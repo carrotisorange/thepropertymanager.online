@@ -1310,6 +1310,10 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         $property = Property::findOrFail($property_id);
 
+        Session::put('property_name', Property::findOrFail($property_id)->name);
+
+        Session::put('property_id', Property::findOrFail($property_id)->property_id);
+
         return view('webapp.properties.edit', compact('property'));
     }
 

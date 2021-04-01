@@ -4,13 +4,36 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $property->name }}</h6>
-    
+    <div class="col-auto text-left">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/rooms/">{{ $property->name }}</a></li>
+       
+          <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+      </nav>
+      
+      
+    </div>
+   {{-- <div class="col">
+    <div class="alert alert-danger alert-dismissable custom-danger-box">
+                    
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  
+     
+          <strong><i class="fas fa-info-circle"></i> Scroll the bar from left to right to see the delete/restore button. </strong>
+        
+      
+  </div>
+   </div> --}}
   </div>
 
-</div>
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    
   <form id="editPropertyForm" action="/property/{{ $property->property_id }}/update" method="POST">
     @method('put')
     @csrf
@@ -85,16 +108,17 @@
          <div class="col">
           <p class="text-right">   
            
-            <button type="submit" form="editPropertyForm" class="btn btn-primary" > Update</button>
+            <button type="submit" form="editPropertyForm" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Update</button>
         </p>   
          </div>
         </div>  
-  
 
 
-
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 @endsection
 
 @section('main-content')
