@@ -681,7 +681,7 @@
           @endif
         @endif 
         <br><br>
-        @if($payments->sum('amt_paid') <= 0)
+        @if($payments->count() < 1)
         <p class="text-danger text-center">No payments found!</p>
         @else
         <div class="col-md-12">
