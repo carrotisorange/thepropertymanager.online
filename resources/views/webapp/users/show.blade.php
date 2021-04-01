@@ -15,11 +15,11 @@
   <div class="col-md-12">
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user fa-sm text-primary-50"></i> Profile</a>
-        <a class="nav-item nav-link" id="nav-referrals-tab" data-toggle="tab" href="#referrals" role="tab" aria-controls="nav-referrals" aria-selected="false"><i class="fas fa-swimmer fa-sm text-primary-50"></i> Referrals</a>
-        <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns</a>
-        <a class="nav-item nav-link" id="nav-session-tab" data-toggle="tab" href="#session" role="tab" aria-controls="nav-session" aria-selected="false"><i class="fas fa-sign-in-alt fa-sm text-primary-50"></i> Sessions</a>
-        <a class="nav-item nav-link" id="nav-session-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="nav-settings" aria-selected="false"><i class="fas fa-user-cog fa-sm text-primary-50"></i> Settings</a>
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-primary"></i> Profile</a>
+        <a class="nav-item nav-link" id="nav-referrals-tab" data-toggle="tab" href="#referrals" role="tab" aria-controls="nav-referrals" aria-selected="false"><i class="fas fa-swimmer text-success"></i> Referrals</a>
+        <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a>
+        <a class="nav-item nav-link" id="nav-session-tab" data-toggle="tab" href="#session" role="tab" aria-controls="nav-session" aria-selected="false"><i class="fas fa-sign-in-alt text-teal"></i> Sessions</a>
+        <a class="nav-item nav-link" id="nav-session-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="nav-settings" aria-selected="false"><i class="fas fa-user-cog text-danger"></i> Settings</a>
       </div>
     </nav>
   </div>
@@ -34,7 +34,7 @@
       <br>
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-condensed">
              <thead>
               <tr>
                 <th>Name</th>
@@ -45,6 +45,12 @@
                 <tr>
                   <th>Email</th>
                   <td>{{ $user->email }}</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr>
+                  <th>Mobile</th>
+                  <td>{{ $user->mobile }}</td>
                 </tr>
               </thead>
               <thead>
@@ -86,7 +92,7 @@
             
       <div class="col-md-12 mx-auto">
         <div class="table-responsive text-nowrap">
-          <table class="table">
+          <table class="table table-condensed">
             <?php $ctr = 1; ?>
             <thead>
             <tr>
@@ -130,7 +136,7 @@
 
       <div class="col-md-12 mx-auto">
         <div class="table-responsive text-nowrap">
-          <table class="table">
+          <table class="table table-condensed">
             <?php $ctr = 1; ?>
             <thead>
             <tr>
@@ -189,7 +195,7 @@
    
          <div class="col-md-12 mx-auto">
            <div class="table-responsive text-nowrap">
-             <table class="table">
+             <table class="table table-condensed">
                <?php $ctr = 1; ?>
                <thead>
                <tr>
@@ -243,6 +249,15 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
+
+          <br>
+          <label>Mobile</label>
+          <input form="editUserForm" id="mobile" type="number" class="form-control form-control-user @error('mobile') is-invalid @enderror" name="mobile" value="{{ $user->mobile }}" required autocomplete="mobile">
+                @error('mobile')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
           <br>
           <label>New Password</label>
           <input form="editUserForm" id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" autocomplete="password">
@@ -253,7 +268,7 @@
                     </span>
                 @enderror
           <p class="text-right">
-            <button form="editUserForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"> Update</button>
+            <button form="editUserForm" type="submit" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-check"></i> Update</button>
           </p>
 
           <br>

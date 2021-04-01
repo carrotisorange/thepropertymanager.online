@@ -326,6 +326,7 @@ class UserController extends Controller
                     [
                         'name' => $request->name,
                         'email' => $request->email,
+                        'mobile' => $request->mobile,
                         'updated_at' => Carbon::now(),
                         'email_verified_at' => Carbon::now()
                       
@@ -340,6 +341,7 @@ class UserController extends Controller
                 [
                     'name' => $request->name,
                     'email' => $request->email,
+                    'mobile' => $request->mobile,
                     'password' => Hash::make($request->password),
                     'updated_at' => Carbon::now(),
                 ]
@@ -347,9 +349,9 @@ class UserController extends Controller
             
                 if(Auth::user()->user_type != 'manager'){
                     Auth::logout();
-                    return redirect('/login')->with('success', 'New password has been saved!');
+                    return redirect('/login')->with('success', 'Changes saved.');
                 }else{
-                    return back()->with('success', 'New password has been saved!');
+                    return back()->with('success', 'Changes saved!');
                 }
             
           
