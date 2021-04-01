@@ -16,7 +16,7 @@
     
   </div>
   <div class="col-md-3 text-right">
-    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update Bills And Message</button> </p>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
   </div>
 </div>
 
@@ -34,14 +34,14 @@
     @else
 
     <div class="table-responsive text-nowrap">
-      <table class="table">
+      <table class="table table-condensed">
         <?php $ctr=1; ?>
         <thead>
           <tr>
             <th class="text-center">#</th>
           
             <th>Bill No</th>
-             <th>Room</th>
+             {{-- <th>Room</th> --}}
             <th>Particular</th>
             <th colspan="2">Period Covered</th>
             <th>Amount</th>
@@ -115,9 +115,9 @@
          {{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}">
        
           </th>
-          <td>{{$item->unit_no}}</td>
+          {{-- <td>{{$item->unit_no}}</td> --}}
           <td>
-            <select class="form-control" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
+            <select class="" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
               <option value='{{ $item->particular }}' selected>{{ $item->particular }}</option>
               <option value='Advance Rent'>Advance Rent</option>
               <option value='Electric'>Electric</option>
@@ -128,13 +128,12 @@
               <option value='Water'>Water</option>
             </select>
           </td>
-          <td>
-            <input form="editBillsForm" class="form-control" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
+          <td colspan="2">
+            <input form="editBillsForm" class="" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
+          
+            <input form="editBillsForm"  class="" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
           </td>
-          <td>
-            <input form="editBillsForm"  class="form-control" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
-          </td>
-          <td><input form="editBillsForm" class="form-control" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
+          <td><input form="editBillsForm" class="" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
           {{-- <td>
             @if(Auth::user()->user_type === 'manager')
               @if($item->bill_status === 'deleted')
@@ -160,11 +159,11 @@
         <tr>
           <th>TOTAL</th>
           <th></th>
+          {{-- <th></th> --}}
           <th></th>
           <th></th>
           <th></th>
-          <th></th>
-          <th><input class="form-control" type="" step="0.01" value="{{ number_format($balance->sum('balance'),2) }}" readonly> </th>
+          <th><input class="" type="" step="0.01" value="{{ number_format($balance->sum('balance'),2) }}" readonly> </th>
          </tr>  
          <tbody>  
     </table>

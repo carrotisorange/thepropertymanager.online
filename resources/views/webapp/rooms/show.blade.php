@@ -280,9 +280,9 @@
                       </form>
                       <table class="table table-condensed">
                         <tr>
-                      <th colspan="2"></th>
-                          <th>Unit No: {{ $home->building.' '.$home->unit_no }}</th>
-                          <th>Beds: {{ $home->occupancy? $home->occupancy: 0 }} <b>pax</b> </th>
+                      <th style="text-align: center;" colspan="2"></th>
+                          <th style="text-align: center;">Unit No: {{ $home->building.' '.$home->unit_no }}</th>
+                          <th style="text-align: center;">Beds: {{ $home->occupancy? $home->occupancy: 0 }} <b>pax</b> </th>
                           
                         </tr>
             
@@ -291,7 +291,7 @@
                     <table class="table table-condensed">
         
                       <tr>
-                        <th>
+                        <th style="text-align: left;">
                           Last name:
                           <input form="addTenantForm1" type="text" class="@error('last_name') is-invalid @enderror" name="last_name" id="last_name"  value="{{ old('last_name') }}" required>
                           @error('last_name')
@@ -300,7 +300,7 @@
                           </span>
                           @enderror
                         </th>
-                        <th> First name:
+                        <th style="text-align: left;"> First name:
                           <input form="addTenantForm1" type="text" class="@error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}" required>
                              @error('first_name')
                           <span class="invalid-feedback" role="alert">
@@ -308,7 +308,7 @@
                           </span>
                           @enderror
                         </th>
-                        <th>
+                        <th style="text-align: left;">
                          Middle name:
                             <input form="addTenantForm1" type="text" class="@error('middle_name') is-invalid @enderror" name="middle_name" id="middle_name"  value="{{ old('middle_name') }}">
                             @error('middle_name')
@@ -319,7 +319,7 @@
                       </th>
                       </tr>
                       <tr>
-                        <th>
+                        <th style="text-align: left;">
                           Birthdate:
                           <input form="addTenantForm1" type="date" class="@error('birthdate') is-invalid @enderror" name="birthdate" id="birthdate" value="{{ old('birthdate') }}" required>
     
@@ -334,7 +334,7 @@
                           <input form="addTenantForm1" type="number" name="age" id="age" value="" readonly>
     
                         </th> --}}
-                        <th>
+                        <th style="text-align: left;">
                           Gender:
                           <select form="addTenantForm1"  id="gender" name="gender" required>        
                             <option value="{{ old('gender')? old('gender'): '' }}" selected>{{ old('gender')? old('gender'): 'Please select one' }} </option>
@@ -348,7 +348,7 @@
                         </span>
                         @enderror
                         </th>
-                        <th>
+                        <th style="text-align: left;">
                           Civil status:
                           <select form="addTenantForm1"  id="civil_status" name="civil_status" required>
                             <option value="{{ old('civil_status')? old('civil_status'): '' }}" selected>{{ old('civil_status')? old('civil_status'): 'Please select one' }} </option>
@@ -364,7 +364,7 @@
                         </th>
                       </tr>
                       <tr>
-                       <th>
+                       <th style="text-align: left;">
                         Nationality:
                         <input form="addTenantForm1" type="text" class="@error('nationality') is-invalid @enderror" name="nationality" id="nationality"  value="{{ old('nationality') }}" required>
                         @error('nationality')
@@ -373,7 +373,7 @@
                         </span>
                       @enderror
                        </th>
-                       <th>
+                       <th style="text-align: left;">
                         Ethnicity:
                         <input form="addTenantForm1" type="text" class="@error('ethnicity') is-invalid @enderror" name="ethnicity" id="ethnicity"  value="{{ old('ethnicity') }}">
                         @error('ethnicity')
@@ -382,7 +382,7 @@
                         </span>
                       @enderror
                        </th>
-                     <th>
+                     <th style="text-align: left;">
                       ID presented/ID number:
                       <input form="addTenantForm1" type="text" class="@error('id_number') is-invalid @enderror" name="id_number" id="id_number" value="{{ old('id_number') }}" required>
 
@@ -394,7 +394,7 @@
                      </th>
                       </tr>
                       <tr>
-                        <th colspan="4">
+                        <th colspan="4" style="text-align: left;">
                           Provincial address:
                           <input form="addTenantForm1" type="text" class="@error('provincial_address') is-invalid @enderror" name="provincial_address" id="provincial_address" value="{{ old('provincial_address') }}" style="width: 800px;" required>
     
@@ -406,7 +406,7 @@
                          </th>
                       </tr>
                       <tr>
-                        <th colspan="2">
+                        <th style="text-align: left;" colspan="2">
                           Contact number:
                           <input form="addTenantForm1" type="number" class="@error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ old('contact_no') }}">
                     
@@ -416,7 +416,7 @@
                           </span>
                           @enderror
                         </th>
-                        <th>
+                        <th style="text-align: left;">
                           Email address:
                           <input form="addTenantForm1" type="email" class="@error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
                           <br>
@@ -455,39 +455,39 @@
                     <br>
                     <table class="table table-condensed">
                       <tr>
-                        <th>Studying <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="studying" id="exampleCheck1"></th>
-                        <th>Working <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="working" id="exampleCheck1"></th>
+                        <th style="text-align: left;">Studying <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="studying" id="exampleCheck1"></th>
+                        <th style="text-align: left;">Working <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="working" id="exampleCheck1"></th>
                       </tr>
                       <tr>
-                        <th>High school: <input form="addTenantForm1" type="text" class="@error('high_school') is-invalid @enderror" name="high_school" id="high_school"  value="{{ old('high_school') }}"></th>
-                        <th>Employer's name/business: <input form="addTenantForm1" type="text" class="@error('employer') is-invalid @enderror" name="employer" id="employer"  value="{{ old('employer') }}"></th>
+                        <th style="text-align: left;">High school: <input form="addTenantForm1" type="text" class="@error('high_school') is-invalid @enderror" name="high_school" id="high_school"  value="{{ old('high_school') }}"></th>
+                        <th style="text-align: left;">Employer's name/business: <input form="addTenantForm1" type="text" class="@error('employer') is-invalid @enderror" name="employer" id="employer"  value="{{ old('employer') }}"></th>
                       </tr>
                       <tr>
-                        <th>High school address: <input form="addTenantForm1" type="text" class="@error('high_school_address') is-invalid @enderror" name="high_school_address" id="high_school_address"  value="{{ old('high_school_address') }}"></th>
-                        <th>Employer address: <input form="addTenantForm1" type="text" class="@error('employer_address') is-invalid @enderror" name="employer_address" id="employer_address"  value="{{ old('employer_address') }}"></th>
+                        <th style="text-align: left;">High school address: <input form="addTenantForm1" type="text" class="@error('high_school_address') is-invalid @enderror" name="high_school_address" id="high_school_address"  value="{{ old('high_school_address') }}"></th>
+                        <th style="text-align: left;">Employer address: <input form="addTenantForm1" type="text" class="@error('employer_address') is-invalid @enderror" name="employer_address" id="employer_address"  value="{{ old('employer_address') }}"></th>
                       </tr>
                       <tr>
-                        <th>College/Universtity: <input form="addTenantForm1" type="text" class="@error('college_school') is-invalid @enderror" name="college_school" id="college_school"  value="{{ old('college_school') }}"></th>
-                        <th>Position: <input form="addTenantForm1" type="text" class="@error('job') is-invalid @enderror" name="job" id="job"  value="{{ old('job') }}"></th>
+                        <th style="text-align: left;">College/Universtity: <input form="addTenantForm1" type="text" class="@error('college_school') is-invalid @enderror" name="college_school" id="college_school"  value="{{ old('college_school') }}"></th>
+                        <th style="text-align: left;">Position: <input form="addTenantForm1" type="text" class="@error('job') is-invalid @enderror" name="job" id="job"  value="{{ old('job') }}"></th>
                       </tr>
                       <tr>
-                        <th>School address: <input form="addTenantForm1" type="text" class="@error('college_school_address') is-invalid @enderror" name="college_school_address" id="college_school_address"  value="{{ old('college_school_address') }}"></th>
-                        <th>Years of employment: <input form="addTenantForm1" type="text" class="@error('years_of_employment') is-invalid @enderror" name="years_of_employment" id="years_of_employment"  value="{{ old('years_of_employment') }}"></th>
+                        <th style="text-align: left;">School address: <input form="addTenantForm1" type="text" class="@error('college_school_address') is-invalid @enderror" name="college_school_address" id="college_school_address"  value="{{ old('college_school_address') }}"></th>
+                        <th style="text-align: left;">Years of employment: <input form="addTenantForm1" type="text" class="@error('years_of_employment') is-invalid @enderror" name="years_of_employment" id="years_of_employment"  value="{{ old('years_of_employment') }}"></th>
                       </tr>
                       <tr>
-                        <th>Course: <input form="addTenantForm1" type="text" class="@error('course') is-invalid @enderror" name="course" id="course"  value="{{ old('course') }}"></th>
-                        <th>Contact number: <input form="addTenantForm1" type="text" class="@error('employer_contact_no') is-invalid @enderror" name="employer_contact_no" id="employer_contact_no"  value="{{ old('employer_contact_no`') }}"></th>
+                        <th style="text-align: left;">Course: <input form="addTenantForm1" type="text" class="@error('course') is-invalid @enderror" name="course" id="course"  value="{{ old('course') }}"></th>
+                        <th style="text-align: left;">Contact number: <input form="addTenantForm1" type="text" class="@error('employer_contact_no') is-invalid @enderror" name="employer_contact_no" id="employer_contact_no"  value="{{ old('employer_contact_no`') }}"></th>
                       </tr>
                       <tr>
-                        <th>Year level: <input form="addTenantForm1" type="text" class="@error('year_level') is-invalid @enderror" name="year_level" id="year_level"  value="{{ old('year_level') }}"></th>
-                        <th>Telephone: <input form="addTenantForm1" type="text" class="@error('business_telephone') is-invalid @enderror" name="business_telephone" id="business_telephone"  value="{{ old('business_telephone`') }}"></th>
+                        <th style="text-align: left;">Year level: <input form="addTenantForm1" type="text" class="@error('year_level') is-invalid @enderror" name="year_level" id="year_level"  value="{{ old('year_level') }}"></th>
+                        <th style="text-align: left;">Telephone: <input form="addTenantForm1" type="text" class="@error('business_telephone') is-invalid @enderror" name="business_telephone" id="business_telephone"  value="{{ old('business_telephone`') }}"></th>
                       </tr>
                     </table>
                     <br>
                     <small>Source of awareness</small>
                     <table class="table table-condensed">
                       <tr>
-                        <th>Referrer:
+                        <th style="text-align: left;">Referrer:
                           <select form="addTenantForm1" name="referrer_id" id="referrer_id">
                             <option value="">Please select one</option>
                             @foreach ($users as $item)
@@ -495,7 +495,7 @@
                             @endforeach
                            </select>
                         </th>
-                        <th>Source:
+                        <th style="text-align: left;">Source:
                           <select form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" required>
                             <option value="{{ old('form_of_interaction')? old('form_of_interaction'): '' }}" selected>{{ old('form_of_interaction')? old('form_of_interaction'): 'Please select one' }} </option>
                              <option value="Facebook">Facebook</option>
@@ -742,7 +742,9 @@
   <br>
      <br>
         <div class="col-md-12 mx-auto">
-
+          @if($owners->count()<=-0)
+          <p class="text-center text-danger">No owners found!</p>
+          @else
           <div class="table-responsive text-nowrap">
             <table class="table  table-condensed table-bordered table-hover">
               <?php $ctr=1;?>
@@ -772,6 +774,8 @@
     
            
           </div>
+          @endif
+         
         </div>
         </div>
       </div>

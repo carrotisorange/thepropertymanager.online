@@ -676,12 +676,12 @@
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          @if($bills->count() > 1)
+          @if($bills->count() > 0)
           <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add payments</a>
           @endif
         @endif 
         <br><br>
-        @if($payments->count() <= 0)
+        @if($payments->sum('amt_paid') <= 0)
         <p class="text-danger text-center">No payments found!</p>
         @else
         <div class="col-md-12">

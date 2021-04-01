@@ -76,15 +76,15 @@
             @csrf
             </form>
             
-            <table class="table table-condensed table-borderless">
+            <table class="table table-condensed">
               <tr>
-                <th>
+                <th style="text-align: left;">
                   Last Name  <span class="text-danger">*</span>
                   <input form="addTenantForm1" type="text" class="" name="last_name" id="last_name" value="{{ $tenant->last_name }}" required readonly>
                 </th>
-                <th> First Name <span class="text-danger">*</span>
+                <th style="text-align: left;"> First Name <span class="text-danger">*</span>
                   <input form="addTenantForm1" type="text" class="" name="first_name" name="first_name" id="first_name" value="{{ $tenant->first_name }}" required readonly></th>
-                  <th>
+                  <th style="text-align: left;">
                     Middle Name
                     <input form="addTenantForm1" type="text" class="" name="middle_name" id="middle_name" value="{{ $tenant->middle_name }}" required readonly>
                   </th>
@@ -95,9 +95,9 @@
             
             <input type="hidden" form="addTenantForm1" value="{{Session::get('property_id')}}" name="property_id">
           
-            <table class="table table-condensed table-borderless">
+            <table class="table table-condensed">
               <tr>
-                <th>
+                <th style="text-align: left;">
                   Movein <span class="text-danger">*</span>
                 
                 <input form="addTenantForm1" type="date" class="@error('movein_at') is-invalid @enderror" name="movein_at" id="movein_at" onchange='autoFill()' value="{{ old('movein_at') }}" required>
@@ -108,7 +108,7 @@
                 </span>
                 @enderror
                 </th>
-                <th>
+                <th style="text-align: left;">
                   Moveout <span class="text-danger">*</span>
                 <input form="addTenantForm1" type="date" class="@error('moveout_at') is-invalid @enderror" name="moveout_at" id="moveout_at" onchange='autoFill()' value="{{ old('moveout_at') }}" required>
               
@@ -118,7 +118,7 @@
                 </span>
                 @enderror
                 </th>
-                <th>
+                <th style="text-align: left;">
                   Length of stay <span class="text-danger">*</span>
                   <input form="addTenantForm1" type="text" class="@error('number_of_months') is-invalid @enderror" name="number_of_months" id="number_of_months" value="{{ old('number_of_months') }}" required readonly>
                   
@@ -132,11 +132,9 @@
                 </span>
                 </th>
               </tr>
-            </table>
             
-            <table class="table table-condensed table-borderless">
               <tr>
-                <th>
+                <th style="text-align: left;">
                 Term <span class="text-danger">*</span>
                   <input form="addTenantForm1" type="text" class="@error('term') is-invalid @enderror" name="term" id="term" value="{{ old('term') }}" required readonly>
               
