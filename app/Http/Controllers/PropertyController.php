@@ -1199,6 +1199,7 @@ $reason_for_moving_out_chart->dataset('', 'pie',
                     ]
                 );
 
+
 $working = DB::table('contracts')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -1212,7 +1213,19 @@ $studying = DB::table('contracts')
                 ->where('property_id_foreign', Session::get('property_id'))
                -> where('type_of_tenant', 'studying')
                 ->count();
- 
+
+if($tenants->count() != 0){
+    $working_tenants = number_format(( $working/$tenants->count()) * 100,1);
+    $studying_tenants = number_format(( $studying/$tenants->count()) * 100,1);
+}else{
+    $working_tenants = 0;
+    $studying_tenants = 0;  
+}
+
+
+
+
+   
  $status = new DashboardChart;
  $status->displaylegend(true);
  $status->labels
@@ -1226,8 +1239,8 @@ $studying = DB::table('contracts')
  $status->dataset
                              ('', 'pie',
                                  [   
-                                     number_format(( $working/$tenants->count()) * 100,1),
-                                     number_format(( $studying/$tenants->count()) * 100,1),                                 
+                                    $working_tenants,
+                                    $studying_tenants,                                 
                                  ]
                              )
  ->backgroundColor

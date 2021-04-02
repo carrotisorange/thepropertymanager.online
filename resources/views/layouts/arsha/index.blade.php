@@ -9,7 +9,7 @@
       <img src="{{asset('arsha/assets/img/logo3.png')}}" alt=""> </a></h1>
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="#hero">Home</a></li>
+          <li class="active"><a href="#hero"> Home</a></li>
           <li><a target="_blank" href="{{url("blogs")}}">Blogs</a></li>
           <li><a target="_blank" href="http://bedspace.online">Listings</a></li>
         </ul>
@@ -22,20 +22,24 @@
 @section('front-screen')
 <section id="hero" class="d-flex align-items-center">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-        <h1>Simplifying Property Management</h1>
-        <h2></h2>
-        <div class="d-lg-flex">
-          <a href="/#pricing" class="btn-get-started scrollto">Get Started For Free</a>
-    
-          <a href="#myModal"  style="display:none" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a>
-        </div>
-      </div>
+    <div class="row text-center">
+      
       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
         <img src="{{ asset('/arsha/assets/img/hero-img.png') }}" class="img-fluid animated" alt="">
       </div>
+
+      <div class="col-md-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+        <h1>Simplifying Property Management</h1>
+        
+        <div class="">
+          <a href="/#pricing" class="btn-get-started scrollto">Get Started For Free</a>
+          {{-- <a href="/#pricing" class="btn-get-started scrollto">Watch the Demo</a> --}}
+    
+          {{-- <a href="#myModal"  style="display:none" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a> --}}
+        </div>
+      </div>
     </div>
+    
   </div>
 
 </section><!-- End Hero -->
@@ -615,7 +619,7 @@
     </section><!-- End About Us Section -->
 
      <!-- Modal HTML -->
- <div id="myModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
+ {{-- <div id="myModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
@@ -630,7 +634,7 @@
           </div>
       </div>
   </div>
-</div>
+</div> --}}
 @endsection
 
 @section('scripts')
