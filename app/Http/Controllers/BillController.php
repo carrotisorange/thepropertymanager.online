@@ -685,7 +685,7 @@ $request->session()->now('success', 'Changes saved.');
     public function edit_occupant_bills($property_id, $unit_id)
     {
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
+        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
       
             $unit = Unit::findOrFail($unit_id);
 
