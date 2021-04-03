@@ -44,7 +44,7 @@
               </tr>
               <tr>
                 <th></th>
-                <th>Email Address: {{ Auth::user()->email }}, CP No: {{ Session::get('property_mobile') }}</th>
+                <th>Email Address: {{ Auth::user()->email }}, CP No: {{ Auth::user()->mobile }}</th>
                 <th></th>
               </tr>
             </table>
@@ -55,14 +55,16 @@
           <div class="col-md-12">
             <table class="table table-condensed table-borderless">
               <tr>
-                <th></th>
+                @foreach ($tenant as $item)
+                <th>Name: {{ $item->first_name.' '.$item->last_name }}</th>
+                @endforeach
                 <th></th>
                 <th class="text-right">Date:{{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }} </th>
               </tr>
               <tr>
                 <th> <b>Room:</b> {{ $current_room }}</th>
                 <th></th>
-                <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th>
+                <th  class="text-right"><span class="text-danger"></th>
               </tr>
               <tr>
                 <th> </th>
@@ -172,12 +174,12 @@
                 <th></th>
               </tr>
               <tr>
-                <th colspan="2">TOTAL AMOUNT PAYABLE(If paid before due date)</th>
+                <th colspan="2">TOTAL AMOUNT PAYABLE</th>
                 <?php $total = $current_bills->sum('balance')+$previous_bills->sum('balance')+$previous_surcharges->sum('balance')+$other_bills->sum('balance'); ?>  
                 <?php $surcharge = $total*.1; ?>
                 <th>{{ number_format($total,2) }}</th>
               </tr>
-              <tr>
+              {{-- <tr>
                 <th colspan="2">ADD 10% surcharge ON RENT if not paid on due date</th>
                 
                 <th>{{ number_format($surcharge,2) }}</th>
@@ -186,7 +188,7 @@
                 <th class="text-danger" colspan="2">TOTAL AMOUNT PAYABLE AFTER DUE DATE</th>
                 
                 <th class="text-danger" >{{ number_format($total+$surcharge,2) }}</th>
-              </tr>
+              </tr> --}}
        
            </table>
            <table class="table table-condensed table-bordered">
