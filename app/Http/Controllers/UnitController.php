@@ -67,7 +67,7 @@ class UnitController extends Controller
                $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('status', Session::get('status'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
           
                 ->get();
             }
@@ -75,48 +75,48 @@ class UnitController extends Controller
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('type', Session::get('type'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
             elseif(Session::has('building')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('building', Session::get('building'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
             elseif(Session::has('floor')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('floor', Session::get('floor'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
             elseif(Session::has('occupancy')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('occupancy', Session::get('occupancy'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
             elseif(Session::has('rent')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('rent', Session::get('rent'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
             elseif(Session::has('size')){
                 $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
                 ->where('size', Session::get('size'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
             else{
                  $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
-                ->orderBy('unit_no', 'desc')
+                ->orderBy('unit_no', 'asc')
                 ->get();
             }
 
