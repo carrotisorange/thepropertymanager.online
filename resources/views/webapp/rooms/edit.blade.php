@@ -15,17 +15,6 @@
     
     
   </div>
- {{-- <div class="col">
-  <div class="alert alert-danger alert-dismissable custom-danger-box">
-                  
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-   
-        <strong><i class="fas fa-info-circle"></i> Scroll the bar from left to right to see the delete/restore button. </strong>
-      
-    
-</div>
- </div> --}}
 </div>
 
 <div class="row">

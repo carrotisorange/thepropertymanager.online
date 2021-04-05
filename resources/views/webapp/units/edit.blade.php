@@ -4,10 +4,28 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0"><a href="/property/{{Session::get('property_id') }}/units"> Edit Units</a></h6>
+  <div class="col-auto text-left">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/rooms/">{{ Session::get('property_name')}}</a></li>
+     
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+      </ol>
+    </nav>
+    
+    
   </div>
+ {{-- <div class="col">
+  <div class="alert alert-danger alert-dismissable custom-danger-box">
+                  
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
+   
+        <strong><i class="fas fa-info-circle"></i> Scroll the bar from left to right to see the delete/restore button. </strong>
+      
+    
+</div>
+ </div> --}}
 </div>
 <div class="row">
 
@@ -38,7 +56,7 @@
               @method('PUT')
 
           </form>
-          <table class="table">
+          <table class="table table-condensed table-hover table-bordered">
               <thead>
                   <tr>
                       <th>#</th>
@@ -127,7 +145,7 @@
 
          @else
         <p class="text-right">
-                <button type="submit" form="editUnitsForm" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Update</button>
+                <button type="submit" form="editUnitsForm" class="btn btn-primary btn-sm"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
             </p>
          @endif
   

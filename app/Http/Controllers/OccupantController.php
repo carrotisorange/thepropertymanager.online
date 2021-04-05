@@ -114,6 +114,18 @@ class OccupantController extends Controller
         return view('webapp.occupants.create', compact('property', 'unit'));
     }
 
+    public function add_occupant($property_id, $unit_id)
+    {   
+
+        Session::put('current-page', 'units');
+
+        $unit = Unit::findOrFail($unit_id);
+
+        $property = Property::findOrFail($property_id);
+
+        return view('webapp.occupants.create', compact('property', 'unit'));
+    }
+
     public function create_prefilled($property_id, $unit_id)
     {   
         Session::put('current-page', 'units');
@@ -169,7 +181,7 @@ class OccupantController extends Controller
                 'id_number' => $request->id_number,
                 //contact number
                 'contact_no' => $request->contact_no,
-                'email_address' => $request->email_address,
+                
                 'created_at' => Carbon::now()
             ]
             );
@@ -380,7 +392,7 @@ class OccupantController extends Controller
         $occupant->civil_status = $request->civil_status;
         $occupant->id_number = $request->id_number;
         $occupant->contact_no = $request->contact_no;
-        $occupant->email_address = $request->email_address;
+    
         $occupant->barangay = $request->barangay;
         $occupant->city = $request->city;
         $occupant->id_number = $request->id_number;

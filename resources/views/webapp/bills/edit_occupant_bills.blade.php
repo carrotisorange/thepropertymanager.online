@@ -4,21 +4,21 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
-  <div class="col-lg-6 col-7">
-    {{-- <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6> --}}
+  <div class="col-md-9 text-left">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/unit/{{ $unit->unit_id }}/#bills">{{ $unit->building.' '.$unit->unit_no }}</a></li>
+     
+        <li class="breadcrumb-item active" aria-current="page">Statement of Accounts</li>
+      </ol>
+    </nav>
+    
     
   </div>
-
+  <div class="col-md-3 text-right">
+    <p class="text-right"><button form="editBillsForm" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
+  </div>
 </div>
-{{-- 
-@if(Auth::user()->user_type === 'manager') --}}
-{{-- <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}#bills" class="btn btn-primary"><i class="fas fa-user fa-sm text-white-50"></i> {{ $tenant->first_name.' '.$tenant->last_name }}</a> --}}
-
-<h6 class="h2 text-dark d-inline-block mb-0">{{ $unit->unit_no }}</h6>
-{{-- @else
-<a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Bills</a>
-@endif
- --}}
 
 
 <div class="row">
@@ -36,7 +36,7 @@
   @else
  
   <div class="table-responsive text-nowrap">
-    <table class="table">
+    <table class="table table-condensed table-hover table-bordered">
       <?php $ctr=1; ?>
      <thead>
       <tr>
@@ -61,14 +61,13 @@
           <td>{{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}"></td>
         
           <td>{{ $item->particular }}</td>
-          <td>
+          <td colspan="2">
             <input form="editBillsForm" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
-          </td>
-          <td>
+         
             <input form="editBillsForm"  type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
           </td>
           <td><input form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
-          <td>
+          {{-- <td>
             @if(Auth::user()->user_type === 'manager')
 
             <form action="/property/{{Session::get('property_id')}}/bill/{{ $item->bill_id }}" method="POST">
@@ -77,7 +76,7 @@
               <button title="archive this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
             </form>
             @endif
-          </td>   
+          </td>    --}}
         </tr>
       @endforeach
       
@@ -87,10 +86,10 @@
   @endif
   <p>Message footer</p>
   <textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">
-    {{ Auth::user()->note }}
+    {{ Session::get('footer_message') }}
     </textarea> 
-    <br>
-    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update</button> </p>
+    {{-- <br>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update</button> </p> --}}
   </div>
   <br>
 </div>

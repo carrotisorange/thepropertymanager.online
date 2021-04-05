@@ -199,7 +199,7 @@ $request->session()->now('success', 'Changes saved.');
     
     $updated_start = $request->start;
     $updated_end = $request->end;
-    $electric_rate_kwh = $request->electric_rate_kwh;
+    Session::put('electric_rate_kwh', $request->electric_rate_kwh);
 
     $active_tenants = DB::table('contracts')
     ->join('units', 'unit_id_foreign', 'unit_id')
@@ -225,15 +225,15 @@ $request->session()->now('success', 'Changes saved.');
     ->max('bill_no') + 1;
 }     
 
-   DB::table('users')
-   ->where('id', Auth::user()->id)
-   ->update([
-        'electric_rate_kwh' => $request->electric_rate_kwh
-   ]);
+DB::table('properties')
+->where('property_id', Session::get('property_id'))
+->update([
+     'electric_rate_kwh' => Session::get('electric_rate_kwh')
+]);
 
 //    $request->session()->now('success', 'Changes saved.');
 
-    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'electric_rate_kwh'));
+    return view('webapp.bills.add-electric-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end'));
 
 
        
@@ -244,7 +244,7 @@ $request->session()->now('success', 'Changes saved.');
 
         $updated_start = $request->start;
         $updated_end = $request->end;
-        $water_rate_cum = $request->water_rate_cum;
+        Session::put('water_rate_cum', $request->water_rate_cum);
     
         $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
@@ -270,16 +270,16 @@ $request->session()->now('success', 'Changes saved.');
         ->max('bill_no') + 1;
     }     
 
-       DB::table('users')
-       ->where('id', Auth::user()->id)
+       DB::table('properties')
+       ->where('property_id', Session::get('property_id'))
        ->update([
-            'water_rate_cum' => $request->water_rate_cum
+            'water_rate_cum' => Session::get('water_rate_cum')
        ]);
 
        
     //    $request->session()->now('success', 'Changes saved.');
     
-        return view('webapp.bills.add-water-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end', 'water_rate_cum'));
+        return view('webapp.bills.add-water-bill', compact('active_tenants','current_bill_no', 'updated_start', 'updated_end'));
     
 
       
@@ -764,14 +764,15 @@ $request->session()->now('success', 'Changes saved.');
                  $bill->save();
                }
 
-               DB::table('users')
-               ->where('id', Auth::user()->id)
-               ->orWhere('lower_access_user_id',Auth::user()->id )
+               DB::table('properties')
+               ->where('property_id', Session::get('property_id'))
                ->update(
                        [
-                           'note' => $request->note,
+                           'footer_message' => $request->note,
                        ]
                    );
+
+                   Session::put('footer_message', $request->note);
 
                    $tenant = Tenant::findOrFail($tenant_id);
 
@@ -816,14 +817,15 @@ $request->session()->now('success', 'Changes saved.');
                  $bill->save();
                }
 
-               DB::table('users')
-               ->where('id', Auth::user()->id)
-               ->orWhere('lower_access_user_id',Auth::user()->id )
+               DB::table('properties')
+               ->where('property_id', Session::get('property_id'))
                ->update(
                        [
-                           'note' => $request->note,
+                           'footer_message' => $request->note,
                        ]
                    );
+
+                   Session::put('footer_message', $request->note);
 
             $unit = Unit::findOrFail($unit_id);
                    
@@ -837,7 +839,9 @@ $request->session()->now('success', 'Changes saved.');
                         
              Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
           
-                    return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#bills')->with('success','Changes saved.');
+             
+             return back()->with('success','Changes saved.');
+                    // return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#bills')->with('success','Changes saved.');
            
            
         }else{

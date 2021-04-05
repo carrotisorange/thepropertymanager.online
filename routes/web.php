@@ -99,7 +99,7 @@ Route::post('/property/{property_id}/unit/{unit_id}/occupant', 'OccupantControll
 Route::get('/property/{property_id}/unit/{unit_id}/occupant/prefilled', 'OccupantController@create_prefilled')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/unit/{unit_id}/occupant/prefilled', 'OccupantController@store_prefilled')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/occupants/search', 'OccupantController@index')->middleware(['auth', 'verified']);
-
+Route::get('/property/{property_id}/unit/{unit_id}/occupant/add', 'OccupantController@add_occupant')->middleware(['auth', 'verified']);
 //routes for tenants
 Route::get('/property/{property_id}/tenants', 'TenantController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->middleware(['auth', 'verified']);
@@ -780,6 +780,7 @@ Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all
 Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/unit/store', 'UnitController@store')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/unit/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/units/clear', 'UnitController@clear_units_filters')->middleware(['auth', 'verified']);
 
 
 

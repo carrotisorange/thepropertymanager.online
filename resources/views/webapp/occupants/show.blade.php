@@ -4,7 +4,7 @@
 
 @section('upper-content')
 <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($tenant->moveout_date), false)) ?>
-<div class="row align-items-center py-4">
+{{-- <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">{{ $tenant->first_name.' '.$tenant->last_name }}</h6>
     {{-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
@@ -12,10 +12,11 @@
         <li class="breadcrumb-item"><a href="#"><i class="fas fa-user"></i></a></li>
         <li class="breadcrumb-item active" aria-current="page"></li>
       </ol>
-    </nav> --}}
+    </nav> 
   </div>
 
-</div>
+</div> --}}
+<br>
 <div class="row">
   <div class="col">
     @if ($errors->any())
@@ -36,26 +37,26 @@
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         @if($tenant->contact_no === null)
-        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span></a>
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-green"></i> Profile <i class="fas fa-exclamation-triangle text-danger"></i></a>
         @else
-        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile</a>
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user text-green"></i> Profile</a>
         @endif
 
         @if($access->count() <=0  )
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>  </a>
+        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"><i class="fas fa-user-circle text-dark"></i> Access <i class="fas fa-exclamation-triangle"></i></a>
         @else
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-lock"></i> Access </a>
+        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"><i class="fas fa-user-circle text-dark"></i> Access </a>
         @endif
 
-        <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-file-signature"></i> 
+        <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-home text-indigo"></i> 
           @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-        Unit
+        Units
         @else
-        Room
+        Rooms
         @endif
         </a>
     
-        <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools"></i> Concerns</a>
+        <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a>
       </div>
     </nav>
     
@@ -74,15 +75,15 @@
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
+    <a href="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit occupant</a>  
     @endif
 
-     <br><br>
+ <br>
      @if($tenant->contact_no === null)
-    <p class="text-danger">Email address or mobile is missing!</p>
+    <small class="text-danger">Email address or mobile is missing!</small>
      @endif
       <div class="table-responsive text-nowrap">
-        <table class="table" >
+        <table class="table table-condensed table-bordered table-hover" >
             
               <tr>
                   <th>Name</th>
@@ -157,7 +158,7 @@
         <div class="row" >
           <div class="col-md-12 mx-auto" >
         <div class="table-responsive text-nowrap">
-         <table class="table">
+          <table class="table table-condensed table-hover table-bordered">
            <?php $ctr = 1; ?>
            <thead>
              <tr>
@@ -237,7 +238,7 @@
              @method('put')
            </form>
            <div class="col-md-12 mx-auto">
-             <table class="table">
+            <table class="table table-condensed table-hover table-bordered">
                <thead>
                  <?php $ctr = 1; ?>
                  <tr>
@@ -291,7 +292,7 @@
       
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</button>
+        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Create access to the system</button>
         <br><br>
         @endif
      
@@ -304,20 +305,8 @@
 
              @else
              @foreach ($access as $item)
-             <div class="row">
-              <div class="col">
-               
-                <div class="alert alert-success alert-dismissable custom-success-box">
-                  
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong><i class="fas fa-check"></i>  By default, the password would be the mobile number of the occupant. If the password is not letting you in, try using 12345678 as the password instead. <br> Please ask the occupant to immediately change the password.</strong>
-                      
-                    
-                </div>
-            
-              </div>
-            </div>
-             <table class="table">
+        
+             <table class="table table-condensed table-hover table-bordered">
                
                  <tr>  
                    <th>Name</th>

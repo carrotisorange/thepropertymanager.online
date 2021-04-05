@@ -169,7 +169,7 @@ class RoomController extends Controller
                
     
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return view('webapp.units.condo',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property', 'units_dirty', 'st_contract'));
+            return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
            }else{
             return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
            }

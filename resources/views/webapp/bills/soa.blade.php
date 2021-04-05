@@ -192,7 +192,7 @@
            </table>
            <table class="table table-condensed table-bordered">
             <tr>
-              <th> {!! Auth::user()->note !!}</th>
+              <th> {!! Session::get('footer_message') !!}</th>
             </tr>
             </table>
             <table class="table table-condensed">

@@ -117,19 +117,21 @@
                 </li>
             @endif
           {{-- Owners --}}
-            <li class="nav-item">
-              @if(Session::get('current-page') === 'owners')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/owners">
-                <i class="fas fa-user-tie text-teal"></i>
-                <span class="nav-link-text">Owners</span>
-              </a>
-              @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/owners">
-                <i class="fas fa-user-tie text-teal"></i>
-                <span class="nav-link-text">Owners</span>
-              </a>
-              @endif
-            </li>
+                @if(Session::get('property_ownership') === 'Multiple Owners')
+                <li class="nav-item">
+                  @if(Session::get('current-page') === 'owners')
+                  <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/owners">
+                    <i class="fas fa-user-tie text-teal"></i>
+                    <span class="nav-link-text">Owners</span>
+                  </a>
+                  @else
+                  <a class="nav-link" href="/property/{{ Session::get('property_id') }}/owners">
+                    <i class="fas fa-user-tie text-teal"></i>
+                    <span class="nav-link-text">Owners</span>
+                  </a>
+                  @endif
+                </li>
+                @endif
             @endif
             {{-- Concerns --}}
             <li class="nav-item">

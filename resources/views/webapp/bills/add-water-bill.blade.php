@@ -165,7 +165,7 @@
     <div class="row">
       <div class="col">
       <label for="">Water rate (/cum)</label>
-      <input class="form-control" form="periodCoveredForm" type="number" name="water_rate_cum" id="water_rate_cum" step="0.001" value="{{ $water_rate_cum? $water_rate_cum : Auth::user()->water_rate_cum }}" required oninput="autoCompute()">
+      <input class="form-control" form="periodCoveredForm" type="number" name="water_rate_cum" id="water_rate_cum" step="0.001" value="{{ Session::get('water_rate_cum') }}" required oninput="autoCompute()">
     </div>
     </div>
   

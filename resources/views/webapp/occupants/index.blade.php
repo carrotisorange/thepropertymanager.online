@@ -35,7 +35,7 @@ Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} occupants
 
 
 <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-    <table class="table">
+    <table class="table table-condensed table-bordered table-hover">
       <thead>
         <?php $ctr=1;?>
         <tr>

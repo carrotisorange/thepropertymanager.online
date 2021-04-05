@@ -168,7 +168,7 @@
     <div class="row">
       <div class="col">
       <label for="">Electric rate (/kwh)</label>
-      <input class="form-control" form="periodCoveredForm" type="number" name="electric_rate_kwh" id="electric_rate_kwh" step="0.001" value="{{ $electric_rate_kwh? $electric_rate_kwh : Auth::user()->electric_rate_kwh }}" required oninput="autoCompute()">
+      <input class="form-control" form="periodCoveredForm" type="number" name="electric_rate_kwh" id="electric_rate_kwh" step="0.001" value="{{ Session::get('electric_rate_kwh') }}" required oninput="autoCompute()">
     </div>
     </div>
   

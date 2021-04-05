@@ -6,7 +6,7 @@
 <div class="row align-items-center py-4">
   <div class="col-lg-4">
     {{-- <a class="btn btn-primary" href="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a> --}}
-    <h6 class="h2 text-dark d-inline-block mb-0">Occupant registration form</h6> 
+    <p class="h2 text-dark d-inline-block mb-0 text-center">Occupant registration form</p> 
     
   </div>
 </div>
@@ -18,7 +18,7 @@
 
       <div class="col">
           <small class="">First Name <span class="text-danger">*</span></small>
-          <input form="addTenantForm1" type="text" class="form-control form-control-user @error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}">
+          <input form="addTenantForm1" type="text" class="form-control form-control-user @error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}" required>
              @error('first_name')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
       </div>
       <div class="col">
           <small class="">Last Name  <span class="text-danger">*</span></small>
-          <input form="addTenantForm1" type="text" class="form-control form-control-user @error('last_name') is-invalid @enderror" name="last_name" id="last_name"  value="{{ old('last_name') }}">
+          <input form="addTenantForm1" type="text" class="form-control form-control-user @error('last_name') is-invalid @enderror" name="last_name" id="last_name"  value="{{ old('last_name') }}" required>
   
           @error('last_name')
           <span class="invalid-feedback" role="alert">
@@ -121,10 +121,10 @@
         @enderror
       </div> --}}
   </div>
-  <hr>
+  <br>
     
       {{-- <a href="/property/{{Session::get('property_id')}}/home/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
-      <button type="submit" form="addTenantForm1" class="btn btn-success btn-user btn-block"> Submit</button>
+      <p class="text-right"><button type="submit" form="addTenantForm1" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Submit</button></p>
 
   
 

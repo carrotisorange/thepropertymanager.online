@@ -3,28 +3,29 @@
 @section('title', $home->building.' '.$home->unit_no)
 
 @section('upper-content')
-<div class="row align-items-center py-4">
+{{-- <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">{{  $home->building.' '.$home->unit_no }}</h6>
     
   </div>
-</div>
+</div> --}}
+<br>
   <div class="row">
     <div class="col-md-12">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-unit-tab" data-toggle="tab" href="#unit" role="tab" aria-controls="nav-unit" aria-selected="true"><i class="fas fa-home fa-sm text-primary-50"></i> Unit</a>
-          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#occupants" role="tab" aria-controls="nav-occupants" aria-selected="false"><i class="fas fa-users fa-sm text-primary-50"></i> Occupants</a>
-          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie fa-sm text-primary-50"></i> Owners</a>
+          <a class="nav-item nav-link active" id="nav-unit-tab" data-toggle="tab" href="#unit" role="tab" aria-controls="nav-unit" aria-selected="true"><i class="fas fa-home text-indigo"></i>  Unit</a>
+          <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#occupants" role="tab" aria-controls="nav-occupants" aria-selected="false"><i class="fas fa-users text-green"></i> Occupants</a>
+          <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie text-teal"></i> Owners</a>
           @if($bills->count() <= 0)
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills </a>
+         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills </a>
          @else
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="true"><i class="fas fa-file-invoice-dollar"></i> Bills <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> {{ $bills->count() }}</span></a>
+         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> {{ $bills->count() }}</span></a>
          @endif
 
-         <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="true"><i class="fas fa-money-bill"></i> Payments </a>
+         <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Payments </a>
 
-          <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-primary-50"></i> Concerns <span class="badge badge-primary badge-counter">{{ $concerns->count() }}</span></a>
+          <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns </a>
         </div>
       </nav>
     </div>
@@ -36,14 +37,14 @@
      
         <div class="tab-pane fade show active" id="unit" role="tabpanel" aria-labelledby="nav-unit-tab">
     
-          <button type="button" title="edit unit" class="btn btn-primary" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
+          <button type="button" title="edit unit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit unit</button> 
     
           <div class="col-md-12 mx-auto">
            
           <br>
             <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             <div class="table-responsive text-nowrap">
-          <table class="table">
+          <table class="table table-table-bordered table-hover table-condensed">
            <tr>
                     <th>Building</th>
                     <td>{{ $home->building }}</td>
@@ -92,12 +93,12 @@
         </div>
   
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-          <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a> 
+          <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add bills</a> 
           @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-            <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit bills</a>
             @endif
             @if($bills->count() > 0)
-            <a  target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
+            <a  target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export bills</span></a>
             {{-- @if($tenant->email_address !== null)
             <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
             @endif --}}
@@ -110,7 +111,7 @@
       <div class="col-md-12 mx-auto">
       <div class="table-responsive">
         <div class="table-responsive text-nowrap">
-          <table class="table">
+          <table class="table table-table-bordered table-hover table-condensed">  
             <?php $ctr=1; ?>
           <thead>
             <tr>
@@ -190,12 +191,12 @@
         </div>
         <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
           @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add payments</a>
           @endif 
           <br><br>
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-table-bordered table-hover table-condensed">
               @foreach ($payments as $day => $collection_list)
                <thead>
                   <tr>
@@ -262,17 +263,23 @@
   
         <div class="tab-pane fade" id="occupants" role="tabpanel" aria-labelledby="nav-occupants-tab">
 
-          @if($owners->count() <= 0 && (Session::get('property_ownership') === 'Multiple Owners' || Session::get('property_ownership') === 'Single Owner'))
-              <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>
+          @if(Session::get('property_ownership') === 'Multiple Owners'))
+            @if($owners->count() <= 0)
+            <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary btn-sm"> <i class="fas fa-user-plus"></i> Add occupant </a>
+            @else
+            <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary btn-sm"> <i class="fas fa-user-plus"></i> Add occupant</a>   
+            @endif
           @else
-              <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary"> <i class="fas fa-user-plus"></i> Add </a>   
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant/add"  type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Add occupant</a>   
           @endif
+
+
           
  
           <br><br>
           <div class="col-md-12 mx-auto">
              <div class="table-responsive">
-               <table class="table">
+              <table class="table table-table-bordered table-hover table-condensed">
                 <?php $occupanct_ctr=1;?>
                  <thead>
                    <tr>
@@ -305,12 +312,12 @@
         </div>
         </div>
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-          <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  
+          <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add concern</a>  
           <br><br>
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
   
-            <table class="table" >
+            <table class="table table-table-bordered table-hover table-condensed">
             <thead>
               <?php $concern_ctr = 1; ?>
             <tr>
@@ -380,15 +387,15 @@
         
         <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="nav-owners-tab">
         
-     <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary text-white">
-      <i class="fas fa-user-plus text-white-50"></i> Add
+     <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary btn-sm text-white">
+      <i class="fas fa-user-plus text-white-50"></i> Add owner
     </a>   
   <br>
      <br>
         <div class="col-md-12 mx-auto">
 
           <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-table-bordered table-hover table-condensed">
               <?php $ctr=1;?>
               <thead>
             <tr>
@@ -613,7 +620,7 @@
     <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add occupant </h5>
+        <h5 class="modal-title" id="exampleModalLabel">Select your option</h5>
         
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -626,8 +633,8 @@
            </p>
         </div>
          <div class="modal-footer">
-          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant"  type="button" class="btn btn-secondary">  No</a>
-          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant/prefilled"  type="button" class="btn btn-primary"> Yes</a>
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant"  type="button" class="btn btn-secondary btn-sm"><i class="fas fa-times"></i>  No</a>
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant/prefilled"  type="button" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Yes</a>
           </div>
         
     </div>
@@ -661,7 +668,7 @@
 
 
 <div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-xl" role="modal">
+  <div class="modal-dialog modal-lg" role="modal">
   <div class="modal-content">
     <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Add Bill</h5>
@@ -678,14 +685,14 @@
     
     <div class="row">
       <div class="col">
-          <label>Date</label>
+          {{-- <label>Date</label> --}}
           {{-- <input type="date" form="addBillForm" class="form-control" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
           <input type="date" form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
       </div>
       <div class="col">
         <p class="text-right">
-          <span id='delete_bill' class="btn btn-danger"> Remove</span>
-        <span id="add_bill" class="btn btn-primary"> Add</span>     
+          <span id='delete_bill' class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Remove current bill</span>
+        <span id="add_bill" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Add more bills</span>     
         </p>
       </div>
     </div>
@@ -695,7 +702,7 @@
       <div class="col">
   
           <div class="table-responsive text-nowrap">
-          <table class = "table" id="table_bill">
+          <table class = "table table-bordered table-condensed table-hover" id="table_bill">
              <thead>
               <tr>
                 <th>#</th>
@@ -714,7 +721,7 @@
    
   </div>
   <div class="modal-footer">
-   <button form="addBillForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Submit</button>
+   <button form="addBillForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Submit</button>
   </div> 
   </div>
   </div>
@@ -802,7 +809,7 @@
     $(document).ready(function(){
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select class='form-control' name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Condo Dues'>Condo Dues</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td><input class='form-control' form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required></td> <td><input class='form-control' form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input class='form-control'   form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Condo Dues'>Condo Dues</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td colspan='2'><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      

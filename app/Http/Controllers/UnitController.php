@@ -19,7 +19,7 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($property_id)
+    public function index(Request $request, $property_id)
     {
         Session::put('current-page', 'units');
 
@@ -35,36 +35,154 @@ class UnitController extends Controller
 
         if(auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
 
-            $units_count = Property::findOrFail($property_id)
-            ->units->where('status','<>','deleted')
-            ->count();
-    
-        
-            $units_occupied = Property::findOrFail(Session::get('property_id'))->units->where('status', 'occupied')->count();
-    
-            $units_vacant = Property::findOrFail(Session::get('property_id'))->units->where('status', 'vacant')->count();
-    
-    
-           $units = Property::findOrFail($property_id)
-           ->units()->where('status','<>','deleted')
-           ->get()->groupBy(function($item) {
-                return $item->floor;
-            });;
-    
+            Session::put('status', $request->status);
+            Session::put('size', $request->size);
+            Session::put('type', $request->type);
+            Session::put('building', $request->building);
+            Session::put('occupancy', $request->occupancy);
+            Session::put('rent', $request->rent);
+            Session::put('floor', $request->floor);
+
+            // $units = DB::table('units')
+            // ->where('property_id_foreign', Session::get('property_id'))
+            // ->orWhere(function($query) {
+            //     $query->where('status', Session::get('status'))
+            //     ->where('type', Session::get('type'))
+            //     ->where('building', Session::get('building'))
+            //     ->where('occupancy', Session::get('occupancy'))
+            //     ->where('rent', Session::get('rent'))
+            //     ->where('floor', Session::get('floor'));
+            // })
+                
+            // ->get();
+
+        //    $units = Property::findOrFail($property_id)
+        //    ->units()->where('status','<>','deleted')
+      
+        //    ->get()->groupBy(function($item) {
+        //         return $item->floor;
+        //     });
+
+            if(Session::has('status')){
+               $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('status', Session::get('status'))
+                ->orderBy('unit_no', 'desc')
+          
+                ->get();
+            }
+            elseif(Session::has('type')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('type', Session::get('type'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+            elseif(Session::has('building')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('building', Session::get('building'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+            elseif(Session::has('floor')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('floor', Session::get('floor'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+            elseif(Session::has('occupancy')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('occupancy', Session::get('occupancy'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+            elseif(Session::has('rent')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('rent', Session::get('rent'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+            elseif(Session::has('size')){
+                $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('size', Session::get('size'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+            else{
+                 $units = DB::table('units')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->orderBy('unit_no', 'desc')
+                ->get();
+            }
+
             $buildings = Property::findOrFail($property_id)
             ->units()
             ->where('status','<>','deleted')
             ->select('building', 'status', DB::raw('count(*) as count'))
             ->groupBy('building')
             ->get('building', 'status','count');
-               
-            $property = Property::findOrFail($property_id);
 
-            return view('webapp.units.index',compact('units_occupied','units_vacant','units','buildings', 'units_count', 'property'));
-          
+            $statuses = Property::findOrFail($property_id)
+            ->units()
+            ->select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->get('status','count');
+
+            $floors = Property::findOrFail($property_id)
+            ->units()
+            ->select('floor', DB::raw('count(*) as count'))
+            ->groupBy('floor')
+            ->get('floor','count');
+
+            $types = Property::findOrFail($property_id)
+            ->units()
+            ->select('type', DB::raw('count(*) as count'))
+            ->groupBy('type')
+            ->get('type','count');
+
+            $occupancies = Property::findOrFail($property_id)
+            ->units()
+            ->select('occupancy', DB::raw('count(*) as count'))
+            ->groupBy('occupancy')
+            ->get('occupancy','count');
+
+            
+            $sizes = Property::findOrFail($property_id)
+            ->units()
+            ->select('size', DB::raw('count(*) as count'))
+            ->groupBy('size')
+            ->get('size','count');
+
+            $rents = Property::findOrFail($property_id)
+            ->units()
+            
+            ->select('rent', DB::raw('count(*) as count'))
+            ->orderBy('rent', 'asc')
+            ->groupBy('rent')
+
+            ->get('rent','count');
+               
+    
+           if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
+           }else{
+            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
+           }
         }else{
             return view('layouts.arsha.unregistered');
         }
+    }
+
+    public function clear_units_filters($property_id)
+    {
+        // Session::forget(['status', 'type', 'building', 'occupancy', 'rent', 'floor']);
+
+        return redirect('/property/'.$property_id.'/units');
     }
 
     /**
@@ -210,7 +328,7 @@ class UnitController extends Controller
         ->orderBy('unit_no', 'asc')
         ->get();
 
-        return view('webapp.units.edit-all', compact('units'));
+        return view('webapp.units.edit', compact('units'));
  }
 
     

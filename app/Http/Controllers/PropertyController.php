@@ -1325,6 +1325,12 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         Session::put('property_name', Property::findOrFail($property_id)->name);
 
+        Session::put('property_footer_message', Property::findOrFail($property_id)->footer_message);
+
+        Session::put('electric_rate_kwh', Property::findOrFail($property_id)->electric_rate_kwh);
+
+        Session::put('water_rate_cum', Property::findOrFail($property_id)->water_rate_cum);
+
         Session::put('property_id', Property::findOrFail($property_id)->property_id);
 
         return view('webapp.properties.edit', compact('property'));
