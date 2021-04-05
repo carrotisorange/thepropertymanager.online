@@ -83,17 +83,15 @@
   </table>
 </div>
 <hr>
-  @endif
-  <p>Message footer</p>
-  <textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">
-    {{ Session::get('footer_message') }}
-    </textarea> 
-    {{-- <br>
-    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Update</button> </p> --}}
-  </div>
-  <br>
+@endif
+<br>
+<h6 class="h2 text-dark d-inline-block mb-0">This message will appear at the bottom of the Statement of Accounts.</h6>
+<br><br>
+<textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">
+  {{ Session::get('footer_message') }}
+  </textarea> 
 </div>
-
+</div>
 @endsection
 
 @section('main-content')
