@@ -140,7 +140,7 @@
             </tr>
              @foreach ($current_bills as $item)
              <tr>
-               <th>:</th>
+               <th></th>
                <th>{{  $item->particular }} {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</th>
                <th>{{ number_format($item->balance,2) }}</th>
              </tr>
