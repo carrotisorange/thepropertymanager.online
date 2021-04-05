@@ -1325,7 +1325,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         Session::put('property_name', Property::findOrFail($property_id)->name);
 
-        Session::put('property_footer_message', Property::findOrFail($property_id)->footer_message);
+        Session::put('footer_message', Property::findOrFail($property_id)->footer_message);
 
         Session::put('electric_rate_kwh', Property::findOrFail($property_id)->electric_rate_kwh);
 
