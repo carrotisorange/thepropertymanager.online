@@ -7,7 +7,7 @@ Should you need help with setting up your property or with using any of the feat
 feel free to send us a message through the messenger chatbot, located at the bottom left corner, available at any given time.
     <br>
     <br>
-    Go to your property through this link <a href="/thepropertymanager.online/login">here</a> and use the credentials below:
+    Go to your property through this link <a href="https://thepropertymanager.online/login">here</a> and use the credentials below:
     <br>
     <br>
     Email: {{ $email }}

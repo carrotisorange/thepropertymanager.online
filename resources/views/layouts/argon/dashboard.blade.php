@@ -23,14 +23,15 @@
         @yield('css')
       </head>
 
-<body class="bg-default">
+<body>
   @include('layouts.argon.chat-messenger')
 
   <!-- Navbar -->
-  <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
+  <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="#/">
-        <img src="{{ asset('/argon/assets/img/brand/logo.png') }}">
+        {{-- <img src="{{ asset('/argon/assets/img/brand/logo.png') }}"> --}}
+        <img src="{{asset('arsha/assets/img/logo3.png')}}" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -51,13 +52,13 @@
             </div>
           </div>
         </div>
-        <ul class="navbar-nav mr-auto">
+        {{-- <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a href="/" target="_blank" class="nav-link">
               <span class="nav-link-inner--text">The Property Manager</span>
             </a>
           </li>
-          {{-- <li class="nav-item">
+          <li class="nav-item">
             <a href="/" class="nav-link">
               <span class="nav-link-inner--text">Login</span>
             </a>
@@ -66,12 +67,12 @@
             <a href="/register" class="nav-link">
               <span class="nav-link-inner--text">Register</span>
             </a>
-          </li> --}}
-        </ul>
+          </li> 
+        </ul>--}}
         <hr class="d-lg-none" />
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
              <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://www.facebook.com/onlinepropertymanager" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
+              <a class="nav-link nav-link-icon text-primary" href="https://www.facebook.com/onlinepropertymanager" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
                 <i class="fab fa-facebook-square"></i>
                 <span class="nav-link-inner--text d-lg-none">Facebook</span>
               </a>
@@ -109,19 +110,19 @@
   <!-- Main content -->
   <div class="main-content">
     <!-- Header -->
-    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+    <div class="header py-7 py-lg-8 pt-lg-9">
 
-      <div class="separator separator-bottom separator-skew zindex-100">
+      {{-- <div class="separator separator-bottom separator-skew zindex-100">
         <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
         </svg>
-      </div>
+      </div> --}}
     </div>
     <!-- Page content -->
     <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-10">
-          <div class="card bg-secondary border-0 mb-0">
+        <div class="col-md-8">
+          <div class="card border-0 mb-0">
             @include('layouts.argon.notifications')
             {{-- <div class="card-header bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
@@ -144,7 +145,7 @@
               @yield('content')
             </div>
           </div>
-          <br><br><br>
+          {{-- <br><br><br> --}}
           {{-- <div class="row mt-3">
             <div class="col-6">
               <a href="#" class="text-light"><small>Forgot password?</small></a>
@@ -157,6 +158,7 @@
       </div>
     </div>
   </div>
+  <br><br><br>
   <!-- Footer -->
   <footer class="py-5" id="footer-main">
     <div class="container">

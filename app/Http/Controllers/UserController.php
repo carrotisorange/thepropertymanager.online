@@ -191,7 +191,6 @@ class UserController extends Controller
             'user_type' => $request->user_type,
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
-            'email_verified_at' =>Carbon::now(),
             'account_type' => Auth::user()->account_type,
             'lower_access_user_id' => Auth::user()->id,
             'trial_ends_at' => Auth::user()->trial_ends_at,
@@ -209,7 +208,9 @@ class UserController extends Controller
                 $message->subject('Welcome New User');
             });      
 
-        return redirect('/user/'.$user_id.'/edit')->with('success', 'New user has been saved!');
+            return redirect('/property/all')->with('success', 'New user has been added to the property!');
+
+        // return redirect('/user/'.$user_id.'/edit')->with('success', 'New user has been saved!');
     }
 
     /**

@@ -26,7 +26,8 @@
     @csrf
       
       <div class="row">
-          <div class="table-responsive text-nowrap">
+        
+          <div class="table-responsive">
               <table class="table table-condensed table-bordered">
                   <?php $ctr=1; ?>
                 <thead>
@@ -36,25 +37,25 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Property</th>
-                    <th>Status</th>
+                  
                 </tr>
                 </thead>
                   @foreach ($users as $item)
                       <tr>
                           <th>{{ $ctr++ }}</th>
-                          <td><a href="/user/{{ $item->id }}/edit">{{ $item->name }}</a></td>
-                          <td>{{ $item->email }}</td>
-                          <td>{{ $item->user_type }}</td>
-                          <td>{{ $item->property.' '.$item->type }}</td>
-                          <td class="text-center">
+                          <td><a href="/user/{{ $item->id }}/edit">{{ $item->name }}</a>
                             @if($item->email_verified_at == null)
-                            <strong title="unverified" class="text-danger"><i class="fas fa-exclamation-triangle"></i> </strong>
+                            <small title="unverified" class="text-danger"><i class="fas fa-exclamation-triangle"></i> </small>
 
                             @else
 
-                            <strong  title="verified" class="text-success"><i class="fas fa-check-circle fa-lg"></i> </strong>
+                            <small  title="verified" class="text-success"><i class="fas fa-check-circle fa-lg"></i> </small>
                             @endif
                           </td>
+                          <td>{{ $item->email }}</td>
+                          <td>{{ $item->user_type }}</td>
+                          <td>{{ $item->property.' '.$item->type }}</td>
+                         
                           
                       </tr>
                   @endforeach

@@ -1327,7 +1327,9 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     {
         Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-        Session::put('property_id', $request->property_id);
+        Session::put('property_id', $property_id);
+
+        $property = Property::findOrFail($property_id);
        
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
