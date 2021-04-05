@@ -158,7 +158,7 @@
         <div class="row" >
           <div class="col-md-12 mx-auto" >
         <div class="table-responsive text-nowrap">
-          <table class="table table-condensed table-hover table-bordered">
+            <table class="table table-condensed table-hover table-bordered">
            <?php $ctr = 1; ?>
            <thead>
              <tr>
