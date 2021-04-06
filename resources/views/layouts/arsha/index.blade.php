@@ -15,7 +15,7 @@
         </ul>
       </nav>
       <!-- .nav-menu -->
-      <a href="{{url('login')}}"   class="get-started-btn scrollto">Login</a>
+      <a href="{{url('login')}}" class="get-started-btn scrollto">Login</a>
     </div>
 </header>
 @endsection
@@ -34,8 +34,8 @@
         <div class="">
           <a href="/#pricing" class="btn-get-started scrollto">Get Started For Free</a>
           {{-- <a href="/#pricing" class="btn-get-started scrollto">Watch the Demo</a> --}}
-    
-          {{-- <a href="#myModal"  style="display:none" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a> --}}
+          <a href="#myModal" data-toggle="modal" class="btn-get-started scrollto">Watch Demo <i class="icofont-play-alt-2"></i></a>
+          {{-- <a href="#myModal" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a> --}}
         </div>
       </div>
     </div>
@@ -619,8 +619,8 @@
     </section><!-- End About Us Section -->
 
      <!-- Modal HTML -->
- {{-- <div id="myModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
+  <div id="myModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="modal">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Watch Demo</h5>
@@ -634,15 +634,12 @@
           </div>
       </div>
   </div>
-</div> --}}
+</div> 
 @endsection
 
 @section('scripts')
 <script>
-    $(window).on('load',function(){
-      $('#myModal').modal('show');
-  });
-
+ 
   $(document).ready(function(){
       /* Get iframe src attribute value i.e. YouTube video url
       and store it in a variable */

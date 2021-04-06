@@ -1,6 +1,6 @@
 @extends('layouts.argon.dashboard')
 
-@section('title', 'Users')
+@section('title', 'System users')
 
 @section('sidebar')
    
