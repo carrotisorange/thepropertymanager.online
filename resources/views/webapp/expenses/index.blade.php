@@ -22,7 +22,7 @@
 @else
 
 <div class="table-responsive text-nowrap">
-    <table class="table">
+    <table class="table table-bordered table-condensed table-hover">
         <thead>
             <?php $ctr=1;?>
             <tr>
