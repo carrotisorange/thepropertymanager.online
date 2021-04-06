@@ -629,7 +629,7 @@
           <div class="modal-body">
             <div class="embed-responsive embed-responsive-16by9">
              
-              <iframe id="openWatchDemo" class="embed-responsive-item" frameborder="0" height="100%" width="100%" src="//youtube.com/embed/BMIt10slYgs?autoplay=1&controls=1&showinfo=0&autohide=1" allowfullscreen allow="autoplay"></iframe>
+              <iframe id="openWatchDemo" class="embed-responsive-item" frameborder="0" height="100%" width="100%" src="//youtube.com/embed/BMIt10slYgs?autoplay=1&controls=1&showinfo=0&autohide=1" allowfullscreen"></iframe>
             </div>
           </div>
       </div>
