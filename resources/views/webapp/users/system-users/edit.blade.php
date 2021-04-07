@@ -113,11 +113,11 @@
                     </td>
                 </tr>
 
-                <tr>
+                {{-- <tr>
                     <th>Created on</th>
                     <td>{{ Carbon\Carbon::parse($user->created_at)->format('M d Y') }}</td>
-                </tr>
-                
+                </tr> --}}
+                {{--   
                     <tr>
                        
                       
@@ -132,10 +132,10 @@
                             {{ $user->email_verified_at? Carbon\Carbon::parse($user->email_verified_at)->format('M d Y'): ' ' }}
                             @endif
                         </td>
-{{--              
+           
                        
-                        <td>{{ $user->email_verified_at? Carbon\Carbon::parse($user->email_verified_at)->format('M d Y'): ' ' }}</td> --}}
-                    </tr>
+                        <td>{{ $user->email_verified_at? Carbon\Carbon::parse($user->email_verified_at)->format('M d Y'): ' ' }}</td> 
+                    </tr>--}}
                    
                
             </table>

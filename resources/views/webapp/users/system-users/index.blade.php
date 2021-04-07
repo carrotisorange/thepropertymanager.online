@@ -34,7 +34,7 @@
                   <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    {{-- <th>Email</th> --}}
                     <th>Role</th>
                     <th>Property</th>
                   
@@ -52,9 +52,9 @@
                             <small  title="verified" class="text-success"><i class="fas fa-check-circle fa-lg"></i> </small>
                             @endif
                           </td>
-                          <td>{{ $item->email }}</td>
+                          {{-- <td>{{ $item->email }}</td> --}}
                           <td>{{ $item->user_type }}</td>
-                          <td>{{ $item->property.' '.$item->type }}</td>
+                          <td>{{ $item->property }}</td>
                          
                           
                       </tr>
