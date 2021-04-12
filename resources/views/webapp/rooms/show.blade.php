@@ -491,7 +491,7 @@
                           <select form="addTenantForm1" name="referrer_id" id="referrer_id">
                             <option value="">Please select one</option>
                             @foreach ($users as $item)
-                              <option value="{{ $item->id }}">{{ $item->name }}</option>
+                              <option value="{{ $item->id }}">{{ $item->name }} | {{ $item->user_type }}</option>
                             @endforeach
                            </select>
                         </th>
@@ -511,7 +511,7 @@
                     </table>
                    <br>
                     <p class="text-right">
-                      <button type="submit" form="addTenantForm1" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+                      <button type="submit" form="addTenantForm1" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
                     </p>
 
            

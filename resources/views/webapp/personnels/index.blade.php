@@ -124,7 +124,7 @@
     </div>
     <div class="modal-footer">
             
-      <p class="text-right"> <button type="submit" form="addPersonnelForm" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Submit</button></p>
+      <p class="text-right"> <button type="submit" form="addPersonnelForm" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Submit</button></p>
    </div>
     </div>
 </div>

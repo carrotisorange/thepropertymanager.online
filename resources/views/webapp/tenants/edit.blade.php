@@ -441,7 +441,7 @@
 
 <p class="text-right">   
 
-    <button type="submit" form="editTenantForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Update</button>
+    <button type="submit" form="editTenantForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
 </p>
 @endsection
 

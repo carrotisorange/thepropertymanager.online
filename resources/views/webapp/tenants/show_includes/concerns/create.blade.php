@@ -86,7 +86,7 @@
                         </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" form="concernForm" class="btn btn-primary" > Add Concern</button>
+                            <button type="submit" form="concernForm" class="btn btn-primary btn-sm" ><i class="fas fa-check"></i> Submit</button>
                         </div>
                     </div>
                     </div>

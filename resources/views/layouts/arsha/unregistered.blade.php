@@ -1,4 +1,4 @@
-@extends('layouts.arsha.arsha-login')
+@extends('layouts.argon.dashboard')
 
 @section('title', 'Not found')
 
@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-  <h1>Not found!</h1>
+  <h1 class="text-center">Not found!</h1>
 @endsection
 
 @section('scripts')

@@ -805,6 +805,9 @@ Route::get('/acceptable-use-policy', function(){
     return view('layouts.arsha.acceptable-use-policy');
 });
 
+Route::get('/unregistered', function(){
+    return view('layouts.arsha.unregistered');
+});
 
 
 

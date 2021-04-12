@@ -14,29 +14,29 @@
         @csrf
       </form>
       <input type="hidden" form="billingCondoDuesForm" name="billing_option" value="rent">
-          <button class="btn btn-primary"  type="submit" form="billingCondoDuesForm"><i class="fas fa-plus"></i> Condo Dues</button>
+          <button class="btn btn-primary btn-sm"  type="submit" form="billingCondoDuesForm"><i class="fas fa-plus"></i> Condo Dues</button>
       {{-- @else --}}
       <form id="billingRentForm" action="/property/{{Session::get('property_id')}}/bills/rent/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
       </form>
       <input type="hidden" form="billingRentForm" name="billing_option" value="rent">
-          <button class="btn btn-primary"  type="submit" form="billingRentForm"><i class="fas fa-plus"></i> Rent</button>
+          <button class="btn btn-primary btn-sm"  type="submit" form="billingRentForm"><i class="fas fa-plus"></i> Rent</button>
       {{-- @endif --}}
         <form id="billingElectricForm" action=" /property/{{Session::get('property_id')}}/bills/electric/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
       <input type="hidden" form="billingElectricForm" name="billing_option" value="electric">
-        <button class="btn btn-primary"  type="submit" form="billingElectricForm" ><i class="fas fa-plus"></i> Electric</button>
+        <button class="btn btn-primary btn-sm"  type="submit" form="billingElectricForm" ><i class="fas fa-plus"></i> Electric</button>
       <form id="billingWaterForm" action="/property/{{Session::get('property_id')}}/bills/water/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
         @csrf
     </form>
     <input type="hidden" form="billingWaterForm" name="billing_option" value="water">
-        <button class="btn btn-primary" type="submit" form="billingWaterForm" ><i class="fas fa-plus"></i> Water</button>
+        <button class="btn btn-primary btn-sm" type="submit" form="billingWaterForm" ><i class="fas fa-plus"></i> Water</button>
         <form id="billingSurchargeForm" action="/property/{{Session::get('property_id')}}/bills/surcharge/{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}-{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" method="POST">
           @csrf
       </form>
       <input type="hidden" form="billingSurchargeForm" name="billing_option" value="surcharge">
-          <button class="btn btn-primary" type="submit" form="billingSurchargeForm" ><i class="fas fa-plus"></i> Surcharge</button>
+          <button class="btn btn-primary btn-sm " type="submit" form="billingSurchargeForm" ><i class="fas fa-plus"></i> Surcharge</button>
     </div>
   </div>
 </div>

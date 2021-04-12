@@ -61,7 +61,7 @@
 
         </div>
         <div class="modal-footer"> 
-            <button type="submit" form="guardianForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add Guardian</button>
+            <button type="submit" form="guardianForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
         </div>
     </div>
     </div>

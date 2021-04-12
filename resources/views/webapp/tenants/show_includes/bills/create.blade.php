@@ -16,8 +16,8 @@
   
           
           <div class="row">
-            <div class="col-md-3">
-              
+            <div class="col">
+              Date
                 {{-- <input type="date" class='form-control' form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
                 <input type="date" form="addBillForm" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="date_posted" required >
               

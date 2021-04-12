@@ -159,7 +159,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="table-responsive text-nowrap">
-                    <table class="table">
+                    <table class="table table-condensed table-bordered">
                       <thead>
                         <tr>
                           <th>Occupant</th>
@@ -206,7 +206,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="table-responsive text-nowrap">
-                    <table class="table">
+                    <table class="table table-condensed table-bordered">
                       <thead>
                         <tr>
                           <th>Tenant</th>
@@ -260,7 +260,7 @@
           </div>
           <div class="card-body">
           <div class="table-responsive text-nowrap">
-           <table class="table" >
+           <table class="table table-condensed table-bordered" >
              <thead>
           
               <tr>
@@ -321,8 +321,8 @@
   
   </div>
   <div class="modal-footer">
-   <button type="button" class="btn btn-secondary" data-dismiss="modal"> Dismiss </button>
-   <a href="/property/{{  Session::get('property_id') }}/issues" class="btn btn-primary" >Report now</a>
+   <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i> Dismiss </button>
+   <a href="/property/{{  Session::get('property_id') }}/issues" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Report now</a>
   </form>
   </div> 
   </div>

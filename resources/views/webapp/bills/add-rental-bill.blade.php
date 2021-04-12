@@ -5,12 +5,12 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-9 text-left">
-    <h6 class="h2 text-dark d-inline-block mb-0">You're about to post rental bills of tenants for {{ Carbon\Carbon::parse($updated_start)->startOfMonth()->format('M d, Y') }} - {{ Carbon\Carbon::parse($updated_end)->endOfMonth()->format('M d, Y') }}...</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Rental</h6>
   </div>
   
   <div class="col-md-3 text-right">
-    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back </a> 
-    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
+    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back </a> 
+    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Options</a> 
   </div>
 </div>
 
@@ -103,7 +103,7 @@
   </div>
   <br>
   <p class="text-right">
-  <button type="submit" form="add_billings" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Post bills</button>
+  <button type="submit" form="add_billings" class="btn btn-primary btn-sm"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Post bills</button>
   </p>
 
   

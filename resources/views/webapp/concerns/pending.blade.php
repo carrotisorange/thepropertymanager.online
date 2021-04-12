@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col">
         <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table table-bordered table-condensed">
                 <thead>
                     <?php $ctr=1; ?>
                   <tr>

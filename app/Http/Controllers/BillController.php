@@ -797,7 +797,7 @@ DB::table('properties')
     public function update_occupant_bills(Request $request, $property_id, $unit_id){
 
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
+        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
 
 
             $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')

@@ -37,61 +37,8 @@ font-family: FontAwesome;
 </style>
 @endsection
 
-@section('sidebar')
-
-<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-  <div class="scrollbar-inner">
-    <!-- Brand -->
-    <div class="sidenav-header  align-items-center">
-      <a class="navbar-brand" href="javascript:void(0)">
-        Tenant Portal
-      </a>
-    </div>
-    <div class="navbar-inner">
-      <!-- Collapse -->
-      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-        <!-- Nav items -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link " href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/dashboard">
-              <i class="fas fa-tachometer-alt text-orange"></i>
-              <span class="nav-link-text">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/rooms">
-              <i class="fas fa-file-signature text-indigo"></i>
-              <span class="nav-link-text">Contracts</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/bills">
-              <i class="fas fa-file-invoice-dollar text-pink"></i>
-              <span class="nav-link-text">Bills</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/payments">
-              <i class="fas fa-coins text-yellow"></i>
-              <span class="nav-link-text">Payments</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concerns">
-              <i class="fas fa-tools text-cyan"></i>
-              <span class="nav-link-text">Concerns</span>
-            </a>
-          </li>
-
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-@endsection
-
 @section('upper-content')
-<div class="col-lg-6">
+<div class="col-md-6">
   <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
     ( 
         @if($concern->status === 'pending')
@@ -115,11 +62,17 @@ font-family: FontAwesome;
     <span class="badge badge-primary">{{ $concern->urgency }}</span>
     @endif
 </h6>
-  @if($concern->status != 'closed')
-  <p class="text-right"><a href="#" title="You can close the concern once you're satisfied with the action made the person/s in charge." data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Did the employee address your concern?</a></p>
-  @else
-  {{-- <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p> --}}
-  @endif
+ 
+</div>
+<br><br>
+<div class="row">
+  <div class="col-md-12">
+    @if($concern->status != 'closed')
+    <p class="text-right"><a href="#" title="You can close the concern once you're satisfied with the action made the person/s in charge." data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary btn-sm"> Did the employee address your concern?</a></p>
+    @else
+    {{-- <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p> --}}
+    @endif
+  </div>
 </div>
 
 @endsection
@@ -171,7 +124,7 @@ font-family: FontAwesome;
 
 @endif
 <br>
-<p class="text-right"><a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addResponse" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add Response</a></p>
+<p class="text-right"><a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addResponse" data-whatever="@mdo"><i class="fas fa-plus"></i> Response</a></p>
 <div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content  text-center">

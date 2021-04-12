@@ -406,6 +406,7 @@ class UserController extends Controller
     }
 
     public function show_bill_tenant($user_id, $tenant_id){
+        Session::put('current-page', 'bill');
 
         if(($user_id == Auth::user()->id)){
 
@@ -440,6 +441,8 @@ class UserController extends Controller
     }
 
     public function show_payment_tenant($user_id, $tenant_id){
+
+        Session::put('current-page', 'payment');
 
         if(($user_id == Auth::user()->id)){
 
@@ -478,13 +481,42 @@ class UserController extends Controller
 
     public function show_concern_tenant($user_id, $tenant_id){
 
+        Session::put('current-page', 'concern');
+
         if(($user_id == Auth::user()->id)){
 
-             $concerns = DB::table('concerns')
+             $all_concerns = DB::table('concerns')
             ->join('tenants', 'concern_tenant_id', 'tenant_id')
             ->leftJoin('users', 'concern_user_id', 'id')
             ->select('*', 'concerns.status as concern_status')
             ->where('tenant_id', $tenant_id)
+            ->orderBy('concern_id', 'desc')
+            ->get();
+
+             $pending_concerns = DB::table('concerns')
+            ->join('tenants', 'concern_tenant_id', 'tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('tenant_id', $tenant_id)
+            ->where('concerns.status', 'pending')
+            ->orderBy('concern_id', 'desc')
+            ->get();
+
+            $active_concerns = DB::table('concerns')
+            ->join('tenants', 'concern_tenant_id', 'tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('tenant_id', $tenant_id)
+            ->where('concerns.status', 'active')
+            ->orderBy('concern_id', 'desc')
+            ->get();
+
+            $closed_concerns = DB::table('concerns')
+            ->join('tenants', 'concern_tenant_id', 'tenant_id')
+            ->leftJoin('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('tenant_id', $tenant_id)
+            ->where('concerns.status', 'closed')
             ->orderBy('concern_id', 'desc')
             ->get();
 
@@ -507,7 +539,7 @@ class UserController extends Controller
 
            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
-            return view('webapp.tenant_access.concerns', compact('concerns','tenant','users'));
+            return view('webapp.tenant_access.concerns', compact('all_concerns','pending_concerns','active_concerns','closed_concerns','tenant','users'));
          }else{
              return view('layouts.arsha.unregistered');
          }
@@ -517,6 +549,8 @@ class UserController extends Controller
     }
 
     public function show_concern_responses($user_id, $tenant_id, $concern_id){
+
+        Session::put('current-page', 'concern');
 
         if(($user_id == Auth::user()->id)){
 
@@ -591,7 +625,6 @@ class UserController extends Controller
             $user = User::findOrFail($user_id);
 
             $tenant = Tenant::findOrFail($tenant_id);
-
             
            $notification = new Notification();
            $notification->user_id_foreign = Auth::user()->id;
@@ -699,6 +732,8 @@ class UserController extends Controller
     }
 
     public function show_room_tenant($user_id, $tenant_id){
+
+        Session::put('current-page', 'contract');
 
           $rooms = DB::table('contracts')
          ->join('units', 'unit_id_foreign', 'unit_id')

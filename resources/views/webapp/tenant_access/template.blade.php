@@ -1,18 +1,3 @@
-<!--
-=========================================================
-* Argon Dashboard - v1.2.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-
-
-* Copyright  Creative Tim (http://www.creative-tim.com)
-* Coded by www.creative-tim.com
-
-
-
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html>
 
@@ -37,13 +22,14 @@
       </head>
 <body>
   <!-- Sidenav -->
-@yield('sidebar')
+@include('webapp.tenant_access.sidebar')
 @show
   <!-- Main content -->
   <div class="main-content" id="panel">
     <!-- Topnav -->
     <!-- Topnav -->
 @include('webapp.tenant_access.header')
+
 @include('layouts.argon.notifications')
     <!-- Header -->
     <!-- Header -->
@@ -81,15 +67,6 @@
               <li class="nav-item">
                 <a href="#/" class="nav-link">The Property Manager</a>
               </li>
-              {{-- <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-              </li> --}}
             </ul>
           </div>
         </div>
