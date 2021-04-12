@@ -360,7 +360,8 @@
             <th>Moveout</th>
            
             <th>Status</th>
-            <th>Action</th>
+            <th>Mobile</th>
+            {{-- <th>Action</th> --}}
          
         </tr>
         </thead>
@@ -405,6 +406,7 @@
                  </form>
                  @endif
                </td> --}}
+               <td>{{ $item->contact_no }}</td>
              
           </tr>
           @endforeach
