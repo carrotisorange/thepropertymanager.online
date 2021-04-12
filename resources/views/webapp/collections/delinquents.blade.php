@@ -14,15 +14,17 @@
 <div class="row">
     <div class="col">
         <div class="table-responsive text-nowrap">
-            <table class="table">
+          <table class="table table-bordered table-condensed" >
                 <thead>
                   <?php $ctr=1; ?>
                   <tr>
                       <th>#</th>
                     <th>Tenant</th>
                     <th>Room</th>
-                    <th>Balance</th>
+                  
                     <th>Status</th>
+                    <th>Mobile</th>
+                    <th>Balance</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,14 +36,12 @@
                     </td>
                     <td>
                       @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
-                      <a href="/property/{{ Session::get('property_id') }}/home/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                      <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id   }}">{{$item->building.' '.$item->unit_no }}</a>
                       @else
                      {{ $item->unit_no }}
                       @endif
                     </td>
-                    <td>
-                      <a>{{ number_format($item->balance,2) }}
-                    </td>
+                    
                     <td>
                       @if($item->contract_status === 'active')
                      <span class="text-success"><i class="fas fa-check-circle"></i> {{ $item->contract_status }}</span>
@@ -49,6 +49,10 @@
                       <span class="text-warning"><i class="fas fa-clock"></i> {{ $item->contract_status }}</span>
             
                       @endif
+                    </td>
+                    <td>{{ $item->contact_no }}</td>
+                    <td>
+                      <a>{{ number_format($item->balance,2) }}
                     </td>
                   </tr>
                   @endforeach

@@ -18,7 +18,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0"> total rooms</h5>
+            <h5 class="card-title text-uppercase text-muted mb-0">rooms</h5>
             <span class="h2 font-weight-bold mb-0">{{ number_format($units->count(),0) }}</span>
           </div>
           <div class="col-auto">
@@ -44,7 +44,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0">total Owners</h5>
+            <h5 class="card-title text-uppercase text-muted mb-0">Owners</h5>
             <span class="h2 font-weight-bold mb-0">{{ number_format($owners->count(),0) }}</span>
           </div>
           <div class="col-auto">
@@ -77,8 +77,11 @@
         </div>
        <a class="text-dark" href="/property/{{ Session::get('property_id') }}/tenants/pending">
         <p class="mt-3 mb-0 text-sm">
+          @if($pending_tenants->count()>0)
           <span class="text-warning mr-2"><i class="fa fa-user-clock"></i> {{ $pending_tenants->count() }} </span>
           <span class="text-nowrap">Marked as pending</span>
+          @endif
+         
         </p>
       </a>
       </div>
@@ -231,7 +234,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">SOURCES</h6>
+          <h6 class="m-0 font-weight-bold text-primary">SOURCES OF TENANTS</h6>
           {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small> --}}
         </div>
 
@@ -255,7 +258,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">TYPE OF TENANT</h6>
+          <h6 class="m-0 font-weight-bold text-primary">TYPE OF TENANTS</h6>
           {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small> --}}
         </div>
 
@@ -276,7 +279,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">LENGHT OF STAY </h6>
+          <h6 class="m-0 font-weight-bold text-primary">LENGHT OF CONTRACTS </h6>
           {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View all</a></small> --}}
         </div>
 
