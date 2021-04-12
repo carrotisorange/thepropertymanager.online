@@ -50,12 +50,12 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-5">
-                <h6 class="h2 text-dark d-inline-block mb-0">Moveout charges <small>(Optional)</small></h6>
+                <h6 class="h2 text-dark d-inline-block mb-0">Moveout charges <small class="text-danger">(Optional)</small></h6>
             </div>
             <div class="col-md-7">
                 <p class="text-right">
-                    <span id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</span>
-                  <span id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add </span>     
+                    <span id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove the current row</span>
+                  <span id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add more charges </span>     
                   </p>
             </div>
         </div>
@@ -84,7 +84,7 @@
        <p class="text-right">
         
         
-        <button type="submit" form="preterminateContractForm" class="btn btn-danger btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Terminate</button>
+        <button type="submit" form="preterminateContractForm" class="btn btn-primary btn-user btn-block btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Terminate</button>
        </p>
       </div>
   </div>

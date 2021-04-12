@@ -135,7 +135,7 @@
     <div class="col">
         <p class="text-right">
          
-            <button form="editContractForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?');"> Update</button>
+            <button form="editContractForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-check"></i> Update</button>
         </p>
     </div>
 </div>

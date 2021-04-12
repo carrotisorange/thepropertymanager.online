@@ -420,7 +420,7 @@
                   <th>Status</th>
                   <th>Contract</th>
                   <th>Rent</th>
-                  <th colspan="5">Actions</th>
+                  <th colspan="4">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -446,13 +446,13 @@
            
                 <td>{{ number_format($item->rent, 2) }}</td>
                 <th>
-                  <a title="delete this contract" class="btn btn-danger btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/delete"><i class="fas fa-trash"></i></a>
+                  <a title="delete this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/delete"><i class="fas fa-trash"></i></a>
                   <a title="edit contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/edit"><i class="fas fa-edit"></i></a>
                   @if(!$item->terminated_at)
                     @if($balance->count() > 0)
-                    <a title="terminate this contract" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#pendingBalance"><i class="fas fa-sign-out-alt"></i> </a>
+                    <a title="terminate this contract" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#pendingBalance"><i class="fas fa-times"></i> </a>
                     @else
-                    <a title="terminate this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/preterminate"><i class="fas fa-sign-out-alt"></i> </a>
+                    <a title="terminate this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/preterminate"><i class="fas fa-times"></i> </a>
                     @endif
                  
                 @endif
@@ -467,7 +467,7 @@
                 @endif
                   
                   <a title="extend this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> </a>
-                  <a title="view this contract"class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><i class="fas fa-book-open"></i> </a>
+                  {{-- <a title="view this contract"class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><i class="fas fa-book-open"></i> </a> --}}
             
                 </th>
                 
