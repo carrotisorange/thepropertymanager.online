@@ -170,11 +170,30 @@ class UserController extends Controller
         'user_id_foreign' => $user_id,
         'property_id_foreign' => $request->property_id
       ]);
-
-       $user = User::findOrFail($user_id);
         
-        return redirect('/user/'.$user_id.'/edit')->with('success','New user has been added!');
+        return redirect('/user/'.$user_id.'/edit')->with('success','New user is added successfully!');
     }
+
+    public function update_system_user_info(Request $request, $user_id){
+
+        DB::table('users')
+        ->where('id', $user_id)
+        ->update([
+          'name' => $request->name,
+          'email' => $request->email,
+          'user_type' => $request->user_type,
+        ]);
+
+        DB::table('users_properties_relations')
+        ->where('user_id_foreign', $user_id)
+        ->update([
+          'property_id_foreign' => $request->property_id
+        ]);
+          
+          return redirect('/user/'.$user_id.'/edit')->with('success','User is updated successfully!');
+      }
+
+
 
     public function store_system_user(Request $request){
 

@@ -10,7 +10,7 @@
 
 @section('content')
 
-<form id="editUserForm" action="/user/{{ $user->id }}" method="POST">
+<form id="editUserForm" action="/user/{{ $user->id }}/update" method="POST">
     @csrf
     @method('PUT')
 </form>
@@ -75,25 +75,25 @@
             <table class="table table-bordered table-condensed">
                 <tr>  
                     <th>Name</th>
-                    <td><input type="text" value="{{ $user->name }}" class="col-md-8"></td>
+                    <td><input form="editUserForm" type="text" name="name" value="{{ $user->name }}" class="col-md-8"></td>
                  
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><input type="text" value="{{ $user->email }}" class="col-md-8"></td>
+                    <td><input form="editUserForm" type="text" name="email" value="{{ $user->email }}" class="col-md-8"></td>
                 </tr>
                 </tr>
                 <tr>
                     <th>Role</th>
                     <td>
-                        <select name="" id="" class="col-md-8">
+                        <select form="editUserForm" name="user_type" id="" class="col-md-8">
                             <option value="{{ $user->user_type }}" selected>{{ $user->user_type }} (selected)</option>
                             <option value="admin">admin</option>
                             <option value="ap">ap</option>
                             <option value="billing">billing</option>
                             <option value="manager">manager</option>
                             <option value="treasury">treasury</option>
-                            <option value=""></option>
+                           
                         </select>
                     </td>
                 </tr>
@@ -161,6 +161,11 @@
         <div class="col">
             <a href="/user/{{ $user->id }}" class="btn btn-primary btn-user btn-block btn-sm"> <i class="fas fa-eye"></i> Go back to users</a>
 
+        </div>
+        <div class="col">
+        
+            <button form="editUserForm" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-check"></i> Update user</button>
+        
         </div>
         @endif
       

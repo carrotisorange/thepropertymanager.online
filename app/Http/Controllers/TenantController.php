@@ -266,7 +266,7 @@ class TenantController extends Controller
 
     DB::table('tenants')
     ->where('tenant_id', $tenant_id)
-    ->update([
+    ->F([
         'user_id_foreign' => $user_id,
     ]);
 

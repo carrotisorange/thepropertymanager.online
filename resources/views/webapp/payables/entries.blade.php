@@ -18,11 +18,11 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <a href="#/"  id="add_entry" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add new entry </a>   
-        <a  style="visibility:hidden;" href="#/" id='delete_entry' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current entry </a>
+        <a  href="#/" id='delete_entry' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current entry </a>
        
-        <button id="savebutton" style="visibility:hidden;" form="addPayableEntryForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>Save new entries (<span id="current_no_of_entry"></span>)</button>
+        <button id="savebutton" form="addPayableEntryForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>Save new entries (<span id="current_no_of_entry"></span>)</button>
            
         <div class="modal-body">
    
@@ -132,7 +132,7 @@
    
         $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
         i++;
-        j++;
+
         
         document.getElementById('no_of_entry').value = i;
         document.getElementById("current_no_of_entry").innerHTML = (i-1);
@@ -143,7 +143,7 @@
            if(i>1){
            $("#addr"+(i-1)).html('');
            i--;
-           j--;
+    
            
            document.getElementById('no_of_entry').value = i;
            document.getElementById("current_no_of_entry").innerHTML = i-1;

@@ -72,6 +72,7 @@ Route::get('/user/create', 'UserController@create_system_user')->middleware(['au
 Route::get('/user/{user_id}', 'UserController@show_system_user')->middleware(['auth', 'verified']);
 Route::get('/user/{user_id}/edit', 'UserController@edit_system_user')->middleware(['auth', 'verified']);
 Route::put('/user/{user_id}', 'UserController@update_system_user')->middleware(['auth', 'verified']);
+Route::put('/user/{user_id}/update', 'UserController@update_system_user_info')->middleware(['auth', 'verified']);
 Route::post('/user/store', 'UserController@store_system_user')->middleware(['auth', 'verified']);
 
 //routes for properties 

@@ -637,7 +637,7 @@ DB::table('properties')
     public function edit_tenant_bills($property_id, $tenant_id)
     {
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
+        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin'){
             
             //get the tenant information
               $tenant = Tenant::findOrFail($tenant_id);
@@ -738,7 +738,7 @@ DB::table('properties')
 
     public function post_edited_bills(Request $request, $property_id, $tenant_id){
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
+        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin'){
 
 
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')

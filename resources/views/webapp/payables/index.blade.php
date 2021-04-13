@@ -351,7 +351,7 @@
        <a href="#/" id='delete_request' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current row</a>
               <a href="#/" id="add_request" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add new row</a>  
       
-              <button form="requestFundsForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Request funds (<span id="current_no_of_entry"></span>)</button>   
+              <button form="requestFundsForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Requested funds (<span id="current_no_of_entry"></span>)</button>   
         <br><br>
               <div class="table-responsive text-nowrap">
                 <table class = "table table-condensed table-border" id="request_table">

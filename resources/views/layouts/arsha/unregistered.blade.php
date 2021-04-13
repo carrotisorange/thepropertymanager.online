@@ -11,7 +11,13 @@
 @endsection
 
 @section('content')
-  <h1 class="text-center">Not found!</h1>
+<soan class="text-center">
+  <h1>Sorry page isn't available.</h1>
+  
+  <p>This link you followed probably broken, or the page has been removed.</p>
+  
+  <p>Return to the <a href="/property/{{ Session::get('property_id') }}/dashboard"> Dashboard</a></p>
+</span>
 @endsection
 
 @section('scripts')
