@@ -78,7 +78,7 @@
         </p>
         </div> --}}
         
-        <div class="row  text-center">
+        <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
           @foreach ($units as $item)
         
           <div class="col-md-2.5">
@@ -121,7 +121,7 @@
       @foreach ($buildings as $item)
       <div class="tab-pane fade" id="nav-{{ $item->building }}" role="tabpanel" aria-labelledby="nav-{{ $item->building }}-tab">
         <br>
-        <div class="row  text-center">
+        <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
           @foreach ($units as $unit)
         
           @if($unit->building === $item->building)
