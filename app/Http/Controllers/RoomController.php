@@ -122,7 +122,9 @@ class RoomController extends Controller
 
             $units = DB::table('units')
             ->where('property_id_foreign', Session::get('property_id'))
+            ->orderBy('floor', 'desc')
             ->orderBy('unit_no', 'desc')
+            
             ->get();
             
             $buildings = Property::findOrFail($property_id)
