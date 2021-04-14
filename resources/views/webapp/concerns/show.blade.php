@@ -402,7 +402,7 @@ font-family: FontAwesome;
       <div class="row">
         <div class="col">
             <label>Summary</label>
-            <textarea  class="form-control form-control-user @error('summary') is-invalid @enderror" name="summary" id="" cols="30" rows="3" placeholder="enter the summary of the job order..."></textarea required>
+            <textarea  class="form-control form-control-user @error('summary') is-invalid @enderror" name="summary" id="" cols="30" rows="3" placeholder="What the job order is all about?"></textarea required>
               @error('summary')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -414,7 +414,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
         
-        <button type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+        <button type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
       </form>
       </div>
   </div>
@@ -494,7 +494,7 @@ font-family: FontAwesome;
     
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"> Submit response </button>
+        <button type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
       </form>
       </div>
   </div>
