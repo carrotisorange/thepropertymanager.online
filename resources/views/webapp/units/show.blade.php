@@ -208,12 +208,12 @@
                       <th class="text-center">#</th>
                       <th>AR No</th>
                       <th>Bill No</th>
-                      {{-- <th>Room</th>   --}}
+                      <th>Occupant</th>  
                       <th>Particular</th>
                       <th colspan="2">Period Covered</th>
                       <th>Form</th>
                       <th class="text-right">Amount</th>
-                     
+                     <th></th>
                      {{-- <th colspan="2">Action</th> --}}
                        {{-- <th></th> --}}
                       </tr>
@@ -225,7 +225,7 @@
                       <th class="text-center">{{ $ctr++ }}</th>
                         <td>{{ $item->ar_no }}</td>
                         <td>{{ $item->payment_bill_no }}</td>
-                          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
+                          <td>{{ $item->first_name.' '.$item->last_name }}</td> 
                          <td>{{ $item->particular }}</td> 
                          <td colspan="2">
                           {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
@@ -244,9 +244,12 @@
                          </td>   
                          <td class="text-center">
                            <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/home/{{ $item->bill_unit_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
-   
+  
          
        </td>    --}}
+       <td>
+        <a title="export" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export_unit_bills" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+       </td>
                        
                     </tr>
                 @endforeach
@@ -752,8 +755,8 @@
               </div>
               <div class="col">
                   <p class="text-right">
-                      <a href="#/" id='delete_payment' class="btn btn-danger"> Remove</a>
-                    <a href="#/" id="add_payment" class="btn btn-primary" > Add</a>     
+                      <a href="#/" id='delete_payment' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current row</a>
+                    <a href="#/" id="add_payment" class="btn btn-primary btn-sm" ><i class="fas fa-plus"></i>  Add more payments</a>     
                     </p>
               </div>
               
@@ -784,7 +787,7 @@
         
       </div>
       <div class="modal-footer">
-          <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Submit</button>
+          <button form="acceptPaymentForm" id ="addPaymentButton" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Submit</button>
       </div>
   
   </div>

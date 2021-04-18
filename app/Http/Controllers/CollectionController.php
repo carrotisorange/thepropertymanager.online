@@ -393,6 +393,59 @@ class CollectionController extends Controller
    return $pdf->download(Carbon::now().'-'.Auth::user()->property.'-ar'.'.pdf');
    }
 
+
+   public function export_unit_bills($property_id, $unit_id, $tenant_id, $payment_id, $payment_created){
+
+    $tenant = Tenant::findOrFail($tenant_id);
+
+    $room = Unit::findOrFail($unit_id);
+
+    $payment = Payment::findOrFail($payment_id);
+
+     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+    ->where('bill_unit_id', $unit_id)
+    ->where('payment_created', $payment_created)
+    ->groupBy('payment_id')
+    ->orderBy('payment_created', 'desc')
+    ->get();
+
+    $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+    ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+    ->where('bill_unit_id', $unit_id)
+    
+    ->groupBy('bill_id')
+    ->orderBy('bill_no', 'desc')
+    ->havingRaw('balance > 0')
+    ->get();
+
+    
+    $data = [
+                'tenant' => $tenant->first_name.' '.$tenant->last_name ,
+                'current_room' => $room->building.' '.$room->unit_no,
+                'collections' => $collections,
+                'balance' => $balance,
+                'payment_date' => $payment->payment_created,
+                'payment_ar' => $payment->ar_no
+            ];
+
+        
+    $notification = new Notification();
+    $notification->user_id_foreign = Auth::user()->id;
+    $notification->property_id_foreign = Session::get('property_id');
+    $notification->type = 'payment';
+    
+    $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' payments.';
+    $notification->save();
+
+     Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+    $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
+
+    return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
+}
+
+
+
     public function export($property_id, $room_id, $tenant_id, $payment_id, $payment_created){
 
         $tenant = Tenant::findOrFail($tenant_id);

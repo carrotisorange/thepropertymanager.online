@@ -252,13 +252,25 @@ class UnitController extends Controller
             ->get();
 
            $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-           ->where('bill_unit_id', $unit_id)
-           ->groupBy('payment_id')
-           ->orderBy('ar_no', 'desc')
-          ->get()
-           ->groupBy(function($item) {
-               return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-           });
+            ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->where('bill_unit_id', $unit_id)
+            ->groupBy('payment_id')
+            ->orderBy('payment_created', 'desc')
+           ->get()
+            ->groupBy(function($item) {
+                return \Carbon\Carbon::parse($item->payment_created)->timestamp;
+            });
+
+        //    $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        //    ->where('bill_unit_id', $unit_id)
+        //    ->groupBy('payment_id')
+        //    ->orderBy('ar_no', 'desc')
+        //   ->get()
+        //    ->groupBy(function($item) {
+        //        return \Carbon\Carbon::parse($item->payment_created)->timestamp;
+        //    });
 
             $tenant_inactive =DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')

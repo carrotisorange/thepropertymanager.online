@@ -650,15 +650,26 @@ class TenantController extends Controller
 
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
-
         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        ->join('contracts', 'bill_tenant_id', 'unit_id_foreign')
+        
+        ->join('units', 'unit_id_foreign', 'unit_id')
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('payment_id')
-        ->orderBy('ar_no', 'desc')
+        ->orderBy('payment_created', 'desc')
        ->get()
         ->groupBy(function($item) {
             return \Carbon\Carbon::parse($item->payment_created)->timestamp;
         });
+
+    //     $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+    //     ->where('bill_tenant_id', $tenant_id)
+    //     ->groupBy('payment_id')
+    //     ->orderBy('ar_no', 'desc')
+    //    ->get()
+    //     ->groupBy(function($item) {
+    //         return \Carbon\Carbon::parse($item->payment_created)->timestamp;
+    //     });
 
               //get the number of last added bills
        
