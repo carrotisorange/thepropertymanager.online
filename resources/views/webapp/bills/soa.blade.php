@@ -57,12 +57,14 @@
               <tr>
                 <th>To: {{ $tenant }}</th>
                 <th></th>
-                <th class="text-right">Date:{{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }} </th>
+                {{-- <th class="text-right">Date:{{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }} </th> --}}
+                <th class="text-right">Date: {{ Carbon\Carbon::now()->format('M d Y') }} </th>
               </tr>
               <tr>
                 <th> <b>Room:</b> {{ $current_room }}</th>
                 <th></th>
-                <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th>
+                {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th> --}}
+                <th  class="text-right"><span class="text-danger"><b>Due Date:</b> </span></th>
               </tr>
               <tr>
                 <th> </th>
@@ -138,7 +140,7 @@
             </tr>
              @foreach ($current_bills as $item)
              <tr>
-               <th>:</th>
+               <th></th>
                <th>{{  $item->particular }} {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</th>
                <th>{{ number_format($item->balance,2) }}</th>
              </tr>

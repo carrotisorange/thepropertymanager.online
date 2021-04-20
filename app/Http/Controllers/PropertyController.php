@@ -17,7 +17,12 @@ use App\UserProperty;
 use App\Notification;
 use Session;
 use App\OccupancyRate;
-
+use App\PropertyType;
+use App\Country;
+use App\PropertyBill;
+use App\Particular;
+use App\Role;
+use Illuminate\Support\Facades\Hash;
 
 class PropertyController extends Controller
 {
@@ -28,6 +33,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
+
         Session::put('current-page', 'dashboard');
 
             if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin'){
@@ -314,9 +320,14 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_property()
     {
-        return view('webapp.properties.create');
+
+        $property_types = PropertyType::all();
+
+        $countries = Country::all();
+
+        return view('webapp.properties.property.create', compact('property_types','countries'));
     }
 
     public function portforlio(){
@@ -398,29 +409,32 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_property(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
-            'type' => 'required',
-          
-            'ownership' => 'required',
+            'property_type_id' => 'required',
+            'country_id_foreign' => 'required',
+            // 'ownership' => 'required',
             'address' => 'required',
             'mobile' => 'required',
-            'country' => 'required',
+        
             'zip' => 'required',
         ]);
 
       $property_id =  Uuid::generate()->string;
+
+      Session::put('property_id',$property_id);
         
        $property = new Property;
        $property->property_id =  $property_id;
        $property->name = $request->name;
-       $property->type = $request->type;
-       $property->ownership = $request->ownership;
+       $property->property_type_id_foreign = $request->property_type_id_foreign;
+    //    $property->ownership = $request->ownership;
        $property->address = $request->address;
+       $property->country_id_foreign = $request->country_id_foreign;
        $property->mobile = $request->mobile;
-       $property->country = $request->country;
+    //    $property->country = $request->country;
        $property->zip = $request->zip;
        $property->user_id_property = Auth::user()->id;
        $property->save();
@@ -451,7 +465,7 @@ class PropertyController extends Controller
             $occupancy->save();
          
 
-        return redirect('property/all')->with('success', 'Your property has been added!');
+        return redirect('property/'.$property_id.'/rooms/create')->with('success', 'Property is successfully created.');
 
     
 
@@ -1290,8 +1304,6 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->get();
 }
 
-$property = Property::findOrFail(Session::get('property_id'));
-
 if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
     return view('webapp.properties.show-unit-properties',
     compact(
@@ -1300,7 +1312,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
                 'collections_for_the_day','contracts',
-                'current_occupancy_rate', 'property','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns',
+                'current_occupancy_rate','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns',
                 'length_of_stay'
             )
     );
@@ -1312,21 +1324,182 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
                 'delinquent_accounts','tenants_to_watch_out',
                 'collections_for_the_day','concerns','contracts',
-                'current_occupancy_rate', 'property','collection_rate_1',
+                'current_occupancy_rate','collection_rate_1',
                 'renewal_rate','increase_from_last_month','increase_in_room_acquired',
                 'top_agents','point_of_contact','pending_concerns', 'status','length_of_stay'
             )
     );
 }
 
-   
     }
+
+    public function create_bill(){
+
+        $particulars = Particular::all();
+
+        return view('webapp.properties.bills.create', compact('particulars'));
+    }
+
+    public function store_bill(Request $request){
+       
+        $particulars = $request->get('particulars');
+
+        $data=array();
+             foreach($particulars as $particular)
+             {
+                 $data[] =[
+                            'particular_id_foreign' => $particular,
+                            'property_id_foreign' => Session::get('property_id'),
+                            'created_at' => Carbon::now(),
+                         ];                 
+             }
+    
+        PropertyBill::insert($data);
+
+        return redirect('property/'.Session::get('property_id').'/duedates/create')->with('success', 'Bills are successfully created.');
+    }
+
+    public function create_duedate(){
+
+        $bills = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->get();
+
+        return view('webapp.properties.duedates.create', compact('bills'));
+    }
+
+    public function store_duedate(Request $request){
+
+        // $bills_count = DB::table('particulars')
+        // ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        // ->where('property_id_foreign', Session::get('property_id'))
+        // ->count();
+
+        $bills_count = PropertyBill::all() ->max('property_bill_id');
+       
+        for ($i=1; $i <= $bills_count; $i++) { 
+                DB::table('property_bills')
+                ->where('property_bill_id', $request->input('bill'.$i))
+                ->update
+                        (
+                            [
+                                'penalty' => $request->input('penalty'.$i),
+                                'due_date' => $request->input('duedate'.$i),
+                                'rate' => $request->input('rate'.$i),
+                                'created_at' => Carbon::now()
+                            ]
+                        );
+                      
+          }
+
+        return redirect('property/'.Session::get('property_id').'/users/create')->with('success', 'Bills are successfully set.');
+    }
+
+    public function create_user(){
+
+        $roles = Role::all();
+
+        return view('webapp.properties.users.create', compact('roles'));
+    }
+
+    
+    public function store_user(Request $request){
+
+       $no_of_entry = (int) $request->no_of_entry;
+
+       for($i = 1; $i<$no_of_entry; $i++){  
+           
+       if($request->input('role'.$i)==='4'){
+        $user_id =  DB::table('users')
+        ->insertGetId
+                (
+                    [
+                        'name' => $request->input('name'.$i),
+                        'email' => $request->input('email'.$i),
+                        'password' => Hash::make(Carbon::now()->timestamp),
+                        'role_id_foreign' => $request->input('role'.$i),
+                        'created_at' => Carbon::now(),
+                        'account_type' => Session::get('plan'),
+                        'trial_ends_at' => Carbon::now()->addDays(14),
+                
+                    ]
+                );
+        }
+       else{
+        $user_id =  DB::table('users')
+        ->insertGetId
+                (
+                    [
+                        'name' => $request->input('name'.$i),
+                        'email' => $request->input('email'.$i),
+                        'password' => Hash::make(Carbon::now()->timestamp),
+                        'role_id_foreign' => $request->input('role'.$i),
+                        'created_at' => Carbon::now(),
+                        'account_type' => Session::get('plan'),
+                        'trial_ends_at' => Carbon::now()->addDays(14),
+                        'lower_access_user_id' => Auth::user()->id
+                    ]
+                );
+        }
+       
+
+        DB::table('users_properties_relations')
+        ->insert
+                (
+                    [
+                        'user_id_foreign' => $user_id,
+                        'property_id_foreign' => Session::get('property_id'),
+                    ]
+                );
+            }       
+
+       return redirect('property/all')->with('success', 'Users are added successfully. Please provide them with the password '.Carbon::now()->timestamp);
+   }
+
+   
+   public function create_room(){
+
+    return view('webapp.properties.rooms.create');
+}
+
+
+    public function store_room(Request $request){
+
+        // return $request->all();
+
+        $no_of_entry = (int) $request->no_of_entry;
+       
+        for ($i=1; $i <= $no_of_entry; $i++) { 
+            for ($j=1; $j <= $request->input('no_of_room'.$i); $j++) { 
+                $firstCharacter = $request->input('building'.$i); 
+
+                $unit = new Unit();
+                $unit->unit_no = $firstCharacter[0].'-'.$j;
+                $unit->floor = 1;
+                $unit->size = $request->input('size'.$i);
+                $unit->building = $request->input('building'.$i);
+                $unit->status = 'vacant';
+                $unit->rent = 0;
+                $unit->type = 'residential';
+                $unit->occupancy = 1;
+                $unit->property_id_foreign = Session::get('property_id');
+                $unit->save();
+
+            }
+          }
+
+
+        return redirect('property/'.Session::get('property_id').'/bills/create')->with('success', 'Room are successfully created.');
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Property  $property
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response    
      */
     public function edit($property_id)
     {

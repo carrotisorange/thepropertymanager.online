@@ -8,28 +8,24 @@
     <div class="row">
          
       <div class="col-lg-12 col-md-12">
-       
+        <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addPropertyType" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add property type</a>
         <div class="card">
        
           <div class="card-body table-responsive">
             <table class="table table-hover">
               <thead class="text-primary">
-                
-                <th>Name</th>
-                <th>Type</th>
-                <th>Ownership</th>
-                <th>Mobile</th>
-                <th>Address</th>
-         
+                <th>Property ID</th>
+                <th>Property type</th>
+              <th>Description</th>
+                <th></th>
               </thead>
               <tbody>
-                @foreach ($properties as $item)
+                @foreach ($property_types as $item)
                 <tr>
-                  <td><a href="/property/{{ $item->property_id }}/edit"> {{ $item->name }}</a></td>
-                  <td>{{ $item->type }}</td>
-                  <td>{{ $item->ownership }}</td>
-                  <td>{{ $item->mobile }}</td>
-                  <td>{{ $item->address.', '.$item->country.', '.$item->zip }}</td>
+                    <th>{{ $item->property_type_id }}</th>
+                  <td>{{ $item->property_type }}</td>
+                  <td>{{ $item->description }}</td>
+                 <td><a href="/property/type/{{ $item->property_type_id }}/edit"><i class="fas fa-edit"></i></a></td>
                   </tr>
                 @endforeach
               </tbody>

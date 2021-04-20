@@ -77,14 +77,43 @@ Route::post('/user/store', 'UserController@store_system_user')->middleware(['aut
 
 //routes for properties 
 Route::get('/property/all', 'PropertyController@index')->middleware(['auth', 'verified']);
-Route::get('/property/create', 'PropertyController@create')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}', 'PropertyController@show')->middleware(['auth', 'verified']);
-Route::post('/property/', 'PropertyController@store')->middleware(['auth', 'verified']);
+
 Route::post('/property/select', 'PropertyController@select')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/edit', 'PropertyController@edit')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/update', 'PropertyController@update')->middleware(['auth', 'verified']);
 Route::get('/property/{date}/portforlio', 'PropertyController@portforlio')->middleware(['auth', 'verified']);
+
+// step 1 of 5 create property
+Route::get('/property/{date}/create/', 'PropertyController@create_property')->middleware(['auth', 'verified']);
+
+// step 1 of 5 post new property
+Route::post('/property/', 'PropertyController@store_property')->middleware(['auth', 'verified']);
+
+// step 2 of 5 create room
+Route::get('/property/{property_id}/rooms/create', 'PropertyController@create_room')->middleware(['auth', 'verified']);
+
+// step 2 of 5 post new bills
+Route::post('/property/{property_id}/rooms/store', 'PropertyController@store_room')->middleware(['auth', 'verified']);
+
+// step 3 of 5 create bill
+Route::get('/property/{property_id}/bills/create', 'PropertyController@create_bill')->middleware(['auth', 'verified']);
+
+// step 3 of 5 post new bills
+Route::post('/property/{property_id}/bills/store', 'PropertyController@store_bill')->middleware(['auth', 'verified']);
+
+// step 4 of 5 create bill
+Route::get('/property/{property_id}/duedates/create', 'PropertyController@create_duedate')->middleware(['auth', 'verified']);
+
+// step 4 of 5 post new bills
+Route::post('/property/{property_id}/duedates/store', 'PropertyController@store_duedate')->middleware(['auth', 'verified']);
+
+// step 5 of 5 create bill
+Route::get('/property/{property_id}/users/create', 'PropertyController@create_user')->middleware(['auth', 'verified']);
+
+// step 5 of 5 post new bills
+Route::post('/property/{property_id}/users/store', 'PropertyController@store_user')->middleware(['auth', 'verified']);
 
 
 //routes for dashboard
@@ -432,6 +461,7 @@ Route::put('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@up
 //routes for dev
 Route::get('/dev/activities/', 'DevController@activities')->middleware(['auth', 'verified']);
 Route::get('/dev/properties/', 'DevController@properties')->middleware(['auth', 'verified']);
+Route::get('/dev/property/types/', 'DevController@property_types')->middleware(['auth', 'verified']);
 Route::get('/dev/users/', 'DevController@users')->middleware(['auth', 'verified']);
 Route::get('/dev/starter/', 'DevController@starter')->middleware(['auth', 'verified']);
 Route::get('/dev/announcements/', 'DevController@announcements')->middleware(['auth', 'verified']);
@@ -447,6 +477,7 @@ Route::get('/dev/tenants', 'DevController@tenants')->middleware(['auth', 'verifi
 Route::post('/plan', 'DevController@post_plan')->middleware(['auth', 'verified']);
 Route::get('/dev/user/{user_id}/plans', 'DevController@user_plans')->middleware(['auth', 'verified']);
 Route::post('/dev/updates/store', 'UpdateController@store')->middleware(['auth', 'verified']);
+Route::post('/propertytype/store', 'PropertyTypeController@store')->middleware(['auth', 'verified']);
 
 Route::get('/register', function(Request $request){
     \Session::put('plan', $request->plan);
@@ -509,7 +540,6 @@ Route::get('/listings', function(){
 
     return view('layouts.arsha.listings', compact('properties'));
 });
-
 
 
 

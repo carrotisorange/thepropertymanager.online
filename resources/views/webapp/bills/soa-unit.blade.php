@@ -55,11 +55,13 @@
           <div class="col-md-12">
             <table class="table table-condensed table-borderless">
               <tr>
+                <th>Name:
                 @foreach ($tenant as $item)
-                <th>Name: {{ $item->first_name.' '.$item->last_name }}</th>
+                {{ $item->first_name.' '.$item->last_name }}
                 @endforeach
+              </th>
                 <th></th>
-                <th class="text-right">Date:{{ Carbon\Carbon::now()->firstOfMonth()->format('M d Y') }} </th>
+                <th class="text-right">Date: {{ Carbon\Carbon::now()->format('M d Y') }} </th>
               </tr>
               <tr>
                 <th> <b>Room:</b> {{ $current_room }}</th>

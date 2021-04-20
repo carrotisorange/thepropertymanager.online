@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
          'note',
          'trial_ends_at',
          'mobile',
+         'role_id_foreign'
     ];
 
     /**

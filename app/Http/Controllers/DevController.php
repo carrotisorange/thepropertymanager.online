@@ -16,6 +16,7 @@ use App\Tenant;
 use Illuminate\Support\Facades\Hash;
 use App\Issue;
 use App\Update;
+use App\PropertyType;
 
 class DevController extends Controller
 {
@@ -59,6 +60,15 @@ class DevController extends Controller
          $properties = Property::all();
 
         return view('layouts.dev.properties', compact('properties'));
+    }
+
+    public function property_types()
+    {
+        Session::put('current-page', 'property_types');
+
+         $property_types = PropertyType::all();
+
+        return view('layouts.dev.property_types', compact('property_types'));
     }
 
     public function edit_user($user_id)

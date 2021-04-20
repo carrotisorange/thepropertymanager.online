@@ -111,50 +111,29 @@
   <!-- Main content -->
   <div class="main-content">
     <!-- Header -->
-    <div class="header py-7 py-lg-8 pt-lg-9">
+    <div class="header py-lg-8">
 
-      {{-- <div class="separator separator-bottom separator-skew zindex-100">
+      <div class="separator separator-bottom separator-skew zindex-100">
         <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
         </svg>
-      </div> --}}
+      </div>
     </div>
     <!-- Page content -->
-    <div class="container mt--8 pb-5">
+    <div class="container mt--8 pb-2">
       <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div class="card border-0 mb-0">
+        <div class="col-md-12">
+         @yield('title-page')
+          <div class="card">
             @include('layouts.argon.notifications')
-            {{-- <div class="card-header bg-transparent pb-5">
-              <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
-              <div class="btn-wrapper text-center">
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="../assets/img/icons/common/github.svg"></span>
-                  <span class="btn-inner--text">Github</span>
-                </a>
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
-              </div>
-            </div> --}}
-            <div class="card-body px-lg-5 py-lg-5">
-           
-              {{-- <div class="text-center text-muted mb-4">
-                <small>Or sign in with credentials</small>
-              </div> --}}
+            
+            <div class="card-body">
+              
+             
               @yield('content')
             </div>
           </div>
-          {{-- <br><br><br> --}}
-          {{-- <div class="row mt-3">
-            <div class="col-6">
-              <a href="#" class="text-light"><small>Forgot password?</small></a>
-            </div>
-            <div class="col-6 text-right">
-              <a href="#" class="text-light"><small>Create new account</small></a>
-            </div>
-          </div> --}}
+       
         </div>
       </div>
     </div>

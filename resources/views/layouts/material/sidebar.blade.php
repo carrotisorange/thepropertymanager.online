@@ -80,6 +80,23 @@
           </a>
         </li>
          @endif
+       
+         {{-- Property types --}}
+         @if(Session::get('current-page') === 'property_types')
+         <li class="nav-item active">
+          <a class="nav-link" href="/dev/property/types">
+            <i class="fas fa-building"></i>
+            <p>Property types</p>
+          </a>
+        </li>
+         @else
+         <li class="nav-item ">
+          <a class="nav-link" href="/dev/property/types">
+            <i class="fas fa-building"></i>
+            <p>Property types</p>
+          </a>
+        </li>
+         @endif
      {{-- System updates --}}
      @if(Session::get('current-page') === 'system-updates')
      <li class="nav-item active">

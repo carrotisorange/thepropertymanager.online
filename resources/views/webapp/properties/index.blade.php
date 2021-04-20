@@ -74,7 +74,7 @@
   
     @if ($properties->count() <= 0)
     <div class="col">
-    <a href="/property/create" class="btn btn-primary btn-user btn-block"> Add your first property</a>
+    <a href="/property/{{ Carbon\Carbon::now()->timestamp }}/create" class="btn btn-primary btn-user btn-block"> Add your first property</a>
     </div>
     @else
     
@@ -83,7 +83,7 @@
         <a href="/property/{{ Carbon\Carbon::now()->format('mdY') }}/portforlio" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-columns"></i> See your portforlio</a>
       @else
        @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced')
-        <a href="/property/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new property</a>
+       <a href="/property/{{ Carbon\Carbon::now()->timestamp }}/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new property</a>
         @else
         <a href="#" class="btn btn-primary btn-user btn-block btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> Add new property</a>
         @endif

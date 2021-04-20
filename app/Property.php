@@ -18,6 +18,7 @@ class Property extends Model
 
     protected $fillable = [
         'name',
+        'property_type_id_foreign',
         'type',
         'ownership',
         'status',
