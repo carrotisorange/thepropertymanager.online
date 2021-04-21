@@ -74,7 +74,7 @@
   
     @if ($properties->count() <= 0)
     <div class="col">
-    <a href="/property/{{ Carbon\Carbon::now()->timestamp }}/create" class="btn btn-primary btn-user btn-block"> Add your first property</a>
+    <a href="/property/{{ Carbon\Carbon::now()->timestamp }}/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Create your first property</a>
     </div>
     @else
     
