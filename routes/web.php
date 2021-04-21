@@ -521,9 +521,9 @@ Route::put('property/{property_id}/remittance/{remittance_id}/update', 'Remittan
 Route::get('/', function(){
     $users = User::where('user_type','manager')->count();
 
-    $properties = Property::whereNotIn('property_id',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->count();
+    $properties = Property::all()->count();
 
-    $rooms = Unit::whereNotIn('property_id_foreign',['2b5e65e0-1701-11eb-bf70-a74337c91b16'])->whereNotIn('status',['deleted'])->count();
+    $rooms = Unit::whereNotIn('status',['deleted'])->count();
 
     $tenants = DB::table('users_properties_relations')
      ->join('properties', 'property_id_foreign', 'property_id')
