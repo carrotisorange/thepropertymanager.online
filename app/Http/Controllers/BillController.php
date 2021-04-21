@@ -805,7 +805,7 @@ DB::table('properties')
             ->where('bill_unit_id', $unit_id)
             ->groupBy('bill_id')
             ->orderBy('bill_no', 'desc')
-            // ->havingRaw('balance > 0')
+            ->havingRaw('balance > 0')
             ->get();
              
 
