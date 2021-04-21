@@ -16,7 +16,7 @@
     
   </div>
   <div class="col-md-3 text-right">
-    <p class="text-right"><button form="editBillsForm" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
   </div>
 </div>
 
@@ -29,7 +29,7 @@
       @csrf
       @method('PUT')
     </form>
-    <p class="text-right">Statement of Accounts </p>
+
   @if($balance->count() <= 0)
     <p class="text-center text-danger">No bills found!</p>
     <hr>
@@ -87,16 +87,14 @@
 <br>
 <h6 class="h2 text-dark d-inline-block mb-0">This message will appear at the bottom of the Statement of Accounts.</h6>
 <br><br>
-<textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="10">
+<textarea form="editBillsForm" class="form-control" name="note" id="" cols="20" rows="100">
   {{ Session::get('footer_message') }}
   </textarea> 
 </div>
 </div>
 @endsection
 
-@section('main-content')
 
-@endsection
 
 @section('scripts')
 <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
