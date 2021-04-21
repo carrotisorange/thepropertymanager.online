@@ -58,6 +58,7 @@
       <div class="col">
         <p class="text-right">
          <button id="savebutton" form="addPayableEntryForm" type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Save</button>
+         <a href="/property/all">Skip for now</a>
         </p>
          {{-- <button id="savebutton" type="submit" class="btn btn-primary btn-user btn-block"><i class="fas fa-arrow-right" onclick="this.form.submit(); this.disabled = true;"></i> Save users (<span id="current_no_of_entry">0</span>)</button> --}}
       </div>
