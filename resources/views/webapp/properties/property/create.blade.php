@@ -125,8 +125,8 @@
                         <select name="country_id_foreign" id="country_id_foreign" class="form-control form-control-user @error('country_id_foreign') is-invalid @enderror" required autocomplete="country_id_foreign" autofocus>
                           <option value="31" selected>Philippines</option>
                           @foreach ($countries as $item)
-                              
-                              <option value="{{ $item->country_id }}">
+                           
+                              <option value="{{ $item->country_id }}">{{ $item->country }}</option> 
                           @endforeach
                         </select>
                         @error('country_id_foreign')
