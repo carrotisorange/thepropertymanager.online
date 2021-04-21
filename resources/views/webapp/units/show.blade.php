@@ -695,7 +695,7 @@
       <div class="col">
         <p class="text-right">
           <span id='delete_bill' class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Remove current bill</span>
-        <span id="add_bill" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Add more bills</span>     
+        <span id="add_bill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add more bills</span>     
         </p>
       </div>
     </div>
