@@ -1468,17 +1468,20 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
 
         // return $request->all();
 
+
+
         $no_of_entry = (int) $request->no_of_entry;
        
         for ($i=1; $i <= $no_of_entry; $i++) { 
             for ($j=1; $j <= $request->input('no_of_room'.$i); $j++) { 
                 $firstCharacter = $request->input('building'.$i); 
+                $building =  str_replace(' ', '-',$request->input('building'.$i));
 
                 $unit = new Unit();
                 $unit->unit_no = $firstCharacter[0].'-'.$j;
                 $unit->floor = 1;
                 $unit->size = $request->input('size'.$i);
-                $unit->building = $request->input('building'.$i);
+                $unit->building = $building; 
                 $unit->status = 'vacant';
                 $unit->rent = 0;
                 $unit->type = 'residential';
