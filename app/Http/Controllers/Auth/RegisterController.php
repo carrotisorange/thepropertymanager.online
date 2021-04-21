@@ -90,6 +90,7 @@ class RegisterController extends Controller
             'user_type' => 'manager',
             'status' => 'registered',
             'password' => Hash::make($data['password']),
+            'role_id_foreign' => 4,
             'created_at' => Carbon::now(),
             // 'email_verified_at' => Carbon::now(),
             'account_type' => Session::get('plan'),
