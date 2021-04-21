@@ -48,7 +48,7 @@
                  
                           @foreach ($property_types as $item)
                           <div class="form-check">
-                            <input class="form-check-input form-control-user @error('property_type_id') is-invalid @enderror" type="radio" name="property_type_id" id="exampleRadios1" value="{{ $item->property_type_id }}">
+                            <input class="form-check-input form-control-user @error('property_type_id') is-invalid @enderror" type="radio" name="property_type_id_foreign" id="exampleRadios1" value="{{ $item->property_type_id }}">
                             <label class="form-check-label" for="exampleRadios1">
                               <b>{{ $item->property_type }}</b> - {{ $item->description }}
                             </label>
