@@ -78,24 +78,24 @@
                 <span class="nav-link-inner--text d-lg-none">Facebook</span>
               </a>
             </li>
-           {{-- <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
+            <li class="nav-item">
+              <a class="nav-link nav-link-icon text-indigo" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
                 <i class="fab fa-instagram"></i>
                 <span class="nav-link-inner--text d-lg-none">Instagram</span>
               </a>
             </li>
-            <li class="nav-item">
+           <li class="nav-item">
               <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Twitter">
-                <i class="fab fa-twitter-square"></i>
+                <i class="fab fa-twitter-square text-teal"></i>
                 <span class="nav-link-inner--text d-lg-none">Twitter</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Star us on Github">
-                <i class="fab fa-github"></i>
+              <a class="nav-link nav-link-icon" href="https://www.youtube.com/channel/UCDseNyiNc7G343EqKvEF7LA" target="_blank" data-toggle="tooltip" data-original-title="Subscribe on Youtube Channel">
+                <i class="fab fa-youtube text-danger"></i>
                 <span class="nav-link-inner--text d-lg-none">Github</span>
               </a>
-            </li> --}}
+            </li>
           <li class="nav-item d-none d-lg-block ml-lg-4">
             <a href="/user/upgrade" target="_blank" class="btn btn-neutral btn-icon">
               <span class="btn-inner--icon">
@@ -111,7 +111,7 @@
   <!-- Main content -->
   <div class="main-content">
     <!-- Header -->
-    <div class="header py-lg-8">
+    <div class="header py-7 py-lg-8 pt-lg-9">
 
       <div class="separator separator-bottom separator-skew zindex-100">
         <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -120,16 +120,15 @@
       </div>
     </div>
     <!-- Page content -->
-    <div class="container mt--8 pb-2">
+    <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
         <div class="col-md-12">
          @yield('title-page')
-          <div class="card">
+          <div class="card border-0 mb-0">
             @include('layouts.argon.notifications')
             
-            <div class="card-body">
+            <div class="card-body px-lg-5 py-lg-5">
               
-             
               @yield('content')
             </div>
           </div>
@@ -138,7 +137,7 @@
       </div>
     </div>
   </div>
-  <br><br><br>
+ 
   <!-- Footer -->
   <footer class="py-5" id="footer-main">
     <div class="container">
@@ -167,6 +166,7 @@
         </div>
       </div>
     </div>
+    <br><br><br>
   </footer>
   <!-- Argon Scripts -->
   <!-- Core -->

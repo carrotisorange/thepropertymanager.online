@@ -47,7 +47,7 @@
         
         <p class="mt-3 mb-0 text-sm">
           {{-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> --}}
-          <small class="text-nowrap">Added on {{ Carbon\Carbon::parse( $item->created_at)->format('M d Y') }}</small>
+          <small class="text-nowrap">Created on <b>{{ Carbon\Carbon::parse( $item->created_at)->format('M, d Y') }}</b></small>
           
         </p>
       </div>

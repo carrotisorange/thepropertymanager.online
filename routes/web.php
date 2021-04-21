@@ -538,7 +538,6 @@ Route::get('/listings', function(){
 });
 
 
-
 //routes for payments
 Route::get('units/{unit_id}/tenants/{tenant_id}/payments/{payment_id}', 'CollectionController@show')->name('show-payment')->middleware(['auth', 'verified']);
 Route::post('/payments', 'CollectionController@store')->middleware(['auth', 'verified']);
