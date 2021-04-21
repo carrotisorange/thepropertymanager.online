@@ -52,11 +52,11 @@
         </td>
         <td></td>
         <td>
-         @if($item->particular_id == '3')
+         @if($item->particular_id == '2')
          <input type="number" step="0.01" min="0.00" name="rate{{ $item->property_bill_id}}" value="0.00" required/> /cubic meter
-         @elseif($item->particular_id == '4')
+         @elseif($item->particular_id == '3')
          <input type="number" step="0.01" min="0.00" name="rate{{ $item->property_bill_id}}" value="0.00" required/> /kilowatt hour
-         @elseif($item->particular_id == '2')
+         @elseif($item->particular_id == '4')
          <input type="number" step="0.01" min="0.00" name="rate{{ $item->property_bill_id}}" value="0.00" required/> /square meter
          @elseif($item->particular_id == '1')
          <input type="number" step="0.01" min="0.00" name="rate{{ $item->property_bill_id}}"  value="0.00" required/> /month 
