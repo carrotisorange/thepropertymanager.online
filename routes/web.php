@@ -519,18 +519,14 @@ Route::put('property/{property_id}/remittance/{remittance_id}/update', 'Remittan
 
 //routes for the the layouts.arsha
 Route::get('/', function(){
-    $users = User::where('user_type','manager')->count();
+    $users = User::whereNotIn('role_id_foreign',['6','7','8'])->count();
 
     $properties = Property::all()->count();
 
     $rooms = Unit::whereNotIn('status',['deleted'])->count();
 
-    $tenants = DB::table('users_properties_relations')
-     ->join('properties', 'property_id_foreign', 'property_id')
-     ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-     ->where('property_id','<>' ,'2b5e65e0-1701-11eb-bf70-a74337c91b16')
-     ->count();
-
+    $tenants = Tenant::all()->count();
+    
     return view('layouts.arsha.index', compact('users','properties', 'rooms', 'tenants'));
 });
 
