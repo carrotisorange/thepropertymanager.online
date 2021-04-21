@@ -85,13 +85,13 @@
               </a>
             </li>
            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Twitter">
+              <a class="nav-link nav-link-icon" href="https://twitter.com/ThePropertyMan3" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Twitter">
                 <i class="fab fa-twitter-square text-teal"></i>
                 <span class="nav-link-inner--text d-lg-none">Twitter</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://www.youtube.com/channel/UCDseNyiNc7G343EqKvEF7LA" target="_blank" data-toggle="tooltip" data-original-title="Subscribe on Youtube Channel">
+              <a class="nav-link nav-link-icon" href="https://www.youtube.com/channel/UCZkxSsob3vWJu3tJztyZIVg" target="_blank" data-toggle="tooltip" data-original-title="Subscribe on Youtube Channel">
                 <i class="fab fa-youtube text-danger"></i>
                 <span class="nav-link-inner--text d-lg-none">Github</span>
               </a>
