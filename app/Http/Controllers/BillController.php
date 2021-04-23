@@ -959,7 +959,7 @@ DB::table('properties')
         // $width = $canvas->get_width();
         $canvas->set_opacity(.1,"Multiply");
         $canvas->page_text(150, 150, Session::get('property_name'), null,
-         50, array(0,0,0),2,2,0);
+         28, array(0,0,0),2,2,0);
         return $pdf->stream();
 
         //return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
@@ -1045,7 +1045,7 @@ DB::table('properties')
              // $width = $canvas->get_width();
              $canvas->set_opacity(.1,"Multiply");
              $canvas->page_text(150, 150, Session::get('property_name'), null,
-              50, array(0,0,0),2,2,0);
+              30, array(0,0,0),2,2,0);
              return $pdf->stream();
       return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
