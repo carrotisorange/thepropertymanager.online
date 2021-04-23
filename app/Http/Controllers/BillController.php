@@ -955,10 +955,10 @@ DB::table('properties')
        // $pdf->setPaper('L');
         $pdf->output();
         $canvas = $pdf->getDomPDF()->getCanvas();
-        // $height = $canvas->get_height();
-        // $width = $canvas->get_width();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
         $canvas->set_opacity(.1,"Multiply");
-        $canvas->page_text(150, 150, Session::get('property_name'), null,
+        $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
          28, array(0,0,0),2,2,0);
         return $pdf->stream();
 
@@ -1041,10 +1041,10 @@ DB::table('properties')
              // $pdf->setPaper('L');
              $pdf->output();
              $canvas = $pdf->getDomPDF()->getCanvas();
-             // $height = $canvas->get_height();
-             // $width = $canvas->get_width();
+             $height = $canvas->get_height();
+             $width = $canvas->get_width();
              $canvas->set_opacity(.1,"Multiply");
-             $canvas->page_text(150, 150, Session::get('property_name'), null,
+             $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
               30, array(0,0,0),2,2,0);
              return $pdf->stream();
       return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
