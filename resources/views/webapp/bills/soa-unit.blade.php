@@ -26,11 +26,11 @@
         <div class="row text-center">
           <div class="col-md-11">
             <table class="table table-condensed table-borderless">
-              <tr>
+              {{-- <tr>
                 <th></th>
                 <th>{{ Session::get('property_name') }}</th>
                 <th></th>
-              </tr>
+              </tr> --}}
               <tr>
                 <th></th>
                 <td>ACCOUNTING DEPARTMENT</td>

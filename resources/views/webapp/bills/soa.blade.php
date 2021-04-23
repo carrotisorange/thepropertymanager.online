@@ -17,6 +17,7 @@
   border-top: none;
 }
     </style>
+    
 
 </head>
 
@@ -27,11 +28,11 @@
         <div class="row text-center">
           <div class="col-md-11">
             <table class="table table-condensed table-borderless">
-              <tr>
+              {{-- <tr>
                 <th></th>
                 <th>{{ Session::get('property_name') }}</th>
                 <th></th>
-              </tr>
+              </tr> --}}
               <tr>
                 <th></th>
                 <td>ACCOUNTING DEPARTMENT</td>
@@ -64,7 +65,7 @@
                 <td>Room: {{ $current_room }}</td>
                 <th></th>
                 {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th> --}}
-                <td  class="text-right"><span class="text-danger"><b>Due Date:</b> </span></td>
+                <td  class="text-right"><span class="text-danger"><b> </span></td>
               </tr>
               <tr>
                 <th> </th>

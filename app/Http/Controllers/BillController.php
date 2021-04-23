@@ -28,6 +28,12 @@ class BillController extends Controller
     {
         Session::put('current-page', 'bulk-billing');
 
+        
+       $property_bills = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->get();
+
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
@@ -70,10 +76,8 @@ class BillController extends Controller
                 return \Carbon\Carbon::parse($item->start)->timestamp;
             });
         }
-
-            $property = Property::findOrFail(Session::get('property_id'));
     
-            return view('webapp.bills.index', compact('bills', 'property'));
+            return view('webapp.bills.index', compact('bills', 'property_bills'));
         }else{
             return view('layouts.arsha.unregistered');
         }
@@ -943,12 +947,22 @@ DB::table('properties')
         $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' bills.';
         $notification->save();
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
+        $pdf = \PDF::loadView('webapp.bills.soa', $data)
+        ->setPaper('a5', 'landscape');
 
-        $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'landscape');
+       // $pdf->setPaper('L');
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        // $height = $canvas->get_height();
+        // $width = $canvas->get_width();
+        $canvas->set_opacity(.1,"Multiply");
+        $canvas->page_text(150, 150, Session::get('property_name'), null,
+         30, array(0,0,0),2,2,0);
+        return $pdf->stream();
 
-        return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
+        //return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
     }
 
     public function export_occupant_bills($property_id,$unit_id)
@@ -1020,8 +1034,19 @@ DB::table('properties')
       $notification->save();
 
        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+       
+      $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)
+      ->setPaper('a5', 'landscape');
 
-      $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)->setPaper('a5', 'landscape');
+             // $pdf->setPaper('L');
+             $pdf->output();
+             $canvas = $pdf->getDomPDF()->getCanvas();
+             // $height = $canvas->get_height();
+             // $width = $canvas->get_width();
+             $canvas->set_opacity(.1,"Multiply");
+             $canvas->page_text(150, 150, Session::get('property_name'), null,
+              30, array(0,0,0),2,2,0);
+             return $pdf->stream();
       return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
     
