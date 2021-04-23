@@ -16,7 +16,7 @@
     
   </div>
   <div class="col-md-3 text-right">
-    <p class="text-right"><button form="editBillsForm" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
   </div>
 </div>
 

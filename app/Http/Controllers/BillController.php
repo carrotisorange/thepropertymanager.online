@@ -946,11 +946,8 @@ DB::table('properties')
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
 
-        $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'portrait');
+        $pdf = \PDF::loadView('webapp.bills.soa', $data)->setPaper('a5', 'landscape');
 
-    
-                    
-      
         return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
     }
 
@@ -1024,7 +1021,7 @@ DB::table('properties')
 
        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-      $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)->setPaper('a5', 'portrait');
+      $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)->setPaper('a5', 'landscape');
       return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
     }
     

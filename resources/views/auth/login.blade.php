@@ -46,6 +46,7 @@
                 @enderror
 
               </div>
+              <br>
               <div class="form-group last mb-4">
                 <label for="password">Password</label>
                 <input form="loginForm" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">

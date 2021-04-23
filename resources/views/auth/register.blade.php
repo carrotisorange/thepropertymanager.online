@@ -49,6 +49,7 @@
                 @enderror
   
                 </div>
+                <br>
                 <div class="form-group">
                   <label for="email">Email</label>
                   <input form="registrationForm"  id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
@@ -60,6 +61,7 @@
                  @enderror
                  
                 </div>
+                <br>
                 <div class="form-group">
                   <label for="password">Password</label>
                   <input form="registrationForm" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
@@ -72,6 +74,7 @@
                   
                   
                 </div>
+                <br>
                 <div class="form-group last mb-4">
                   <label for="re-password">Re-type Password</label>
                   <input form="registrationForm" id="password-confirm" type="password" class="form-control" name="password_confirmation">
