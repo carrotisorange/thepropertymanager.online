@@ -34,6 +34,7 @@ class BillController extends Controller
        $property_bills = DB::table('particulars')
         ->join('property_bills', 'particular_id', 'particular_id_foreign')
         ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
         ->get();
 
         $notification = new Notification();
