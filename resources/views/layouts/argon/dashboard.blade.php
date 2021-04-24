@@ -109,7 +109,7 @@
     </div>
   </nav>
   <!-- Main content -->
-  <div class="main-content">
+  <div class="main-content" id="panel">
     <!-- Header -->
     <div class="header py-7 py-lg-8 pt-lg-9">
 

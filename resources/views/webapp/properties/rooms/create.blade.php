@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col">
        <p class="text-right">
-        <a href="#/"  id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> Add more building </a>   
+        <a href="#/"  id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> Add a building </a>   
         <a  href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus"></i> Remove current building </a>
       
        </p>
