@@ -21,7 +21,7 @@ thead tr:nth-child(1) th {
     <select class="form-control" name="particular" id="">
       <option value="">All posted bills</option>
       @foreach ($property_bills as $item)
-          <option value="{{ $item->property_bill_id }}">{{ $item->particular }} bills only</option>
+          <option value="{{ $item->particular_id }}">{{ $item->particular }} bills only</option>
       @endforeach
     </select>
    
