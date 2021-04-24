@@ -85,7 +85,7 @@
               $prorated_rent =  Carbon\Carbon::parse($item->movein_at)->DiffInDays(Carbon\Carbon::now()->endOfMonth());
               $prorated_monthly_rent =  ($item->contract_rent/30) * $prorated_rent;
         ?>
-          @if($item->tenants_note === 'new' )
+          @if($item->movein_at === 'new' )
             <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $prorated_monthly_rent }}" oninput="this.value = Math.abs(this.value)" required>
           @else
             <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.01"  value="{{ $item->contract_rent }}" oninput="this.value = Math.abs(this.value)" required>

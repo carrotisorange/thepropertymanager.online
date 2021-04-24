@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Contract;
 use App\Owner;
 use App\Notification;
+use App\Particular; 
+use App\PropertyBill;
 
 class BillController extends Controller
 {
@@ -48,19 +50,44 @@ class BillController extends Controller
 
           
             
+        // if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        //     $bills = DB::table('contracts')
+        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        //     ->join('units', 'unit_id_foreign', 'unit_id')
+        //     ->join('bills', 'unit_id', 'bill_unit_id')
+        //     ->where('property_id_foreign', Session::get('property_id'))
+        //     ->orderBy('bill_no', 'desc')
+        //     ->groupBy('bill_id')
+        //     ->get()
+        //     ->groupBy(function($item) {
+        //         return \Carbon\Carbon::parse($item->start)->timestamp;
+        //     });
+            
+       
+        // }else{
+        //     $bills = DB::table('contracts')
+        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        //     ->join('units', 'unit_id_foreign', 'unit_id')
+        //     ->join('bills', 'tenant_id', 'bill_tenant_id')
+        //     ->where('property_id_foreign', Session::get('property_id'))
+        //     ->orderBy('bill_no', 'desc')
+        //     ->groupBy('bill_id')
+        //     ->get()
+            
+        //     ->groupBy(function($item) {
+        //         return \Carbon\Carbon::parse($item->start)->timestamp;
+        //     });
+        // }
+
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $bills = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('bill_no', 'desc')
+            ->orderBy('date_posted', 'desc')
             ->groupBy('bill_id')
-            ->get()
-            ->groupBy(function($item) {
-                return \Carbon\Carbon::parse($item->start)->timestamp;
-            });
-            
+            ->get();
        
         }else{
             $bills = DB::table('contracts')
@@ -68,13 +95,9 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('bill_no', 'desc')
+            ->orderBy('date_posted', 'desc')
             ->groupBy('bill_id')
-            ->get()
-            
-            ->groupBy(function($item) {
-                return \Carbon\Carbon::parse($item->start)->timestamp;
-            });
+            ->get();
         }
     
             return view('webapp.bills.index', compact('bills', 'property_bills'));
@@ -93,20 +116,187 @@ class BillController extends Controller
         //
     }
 
+    public function filter(Request $request){
+        Session::put('current-page', 'bulk-billing');
+
+        $property_bills = DB::table('particulars')
+         ->join('property_bills', 'particular_id', 'particular_id_foreign')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->get();
+ 
+         $notification = new Notification();
+         $notification->user_id_foreign = Auth::user()->id;
+         $notification->property_id_foreign = Session::get('property_id');
+         $notification->type = 'bill';
+         
+         $notification->message = Auth::user()->name.' opens bills page.';
+         $notification->save();
+                     
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+ 
+         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
+
+ 
+         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+             $bills = DB::table('contracts')
+             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+             ->join('units', 'unit_id_foreign', 'unit_id')
+             ->join('bills', 'unit_id', 'bill_unit_id')
+             ->where('property_id_foreign', Session::get('property_id'))
+             ->where('particular_id_foreign', $request->particular)
+             ->orderBy('date_posted', 'desc')
+             ->groupBy('bill_id')
+             ->get();
+        
+         }else{
+             $bills = DB::table('contracts')
+             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+             ->join('units', 'unit_id_foreign', 'unit_id')
+             ->join('bills', 'tenant_id', 'bill_tenant_id')
+             ->where('property_id_foreign', Session::get('property_id'))
+             ->where('particular_id_foreign', $request->particular)
+             ->orderBy('date_posted', 'desc')
+             ->groupBy('bill_id')
+             ->get();
+         }
+     
+             return view('webapp.bills.index', compact('bills', 'property_bills'));
+         }else{
+             return view('layouts.arsha.unregistered');
+         }
+    }
+
+    public function create_bulk_bills(Request $request){
+
+        $selected_particular = explode("-", $request->particular_id);
+
+        $particular_id = $selected_particular[0];
+        $property_bill_id =  $selected_particular[1];
+    
+        $particular = Particular::findOrFail($particular_id);
+
+        $property_bill = PropertyBill::findOrFail($property_bill_id);
+
+        $active_tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->select('*', 'contracts.rent as contract_rent')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('contracts.status', 'active')
+        ->orderBy('movein_at', 'desc')
+        ->get();
+
+        
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            $current_bill_no = DB::table('units')
+            ->join('bills', 'unit_id', 'bill_unit_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+
+        }else{
+            $current_bill_no = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+        }
+
+        return view('webapp.bills.create.create-bulk', compact('active_tenants','current_bill_no','particular','property_bill'));
+
+
+    }
+
+    public function store_bulk_bills(Request $request){
+        
+        $active_tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->select('*', 'contracts.rent as contract_rent')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('contracts.status', 'active')
+        ->count();
+        
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            $current_bill_no = DB::table('units')
+            ->join('bills', 'unit_id', 'bill_unit_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+    
+        }else{
+            $current_bill_no = DB::table('contracts')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('bills', 'tenant_id', 'bill_tenant_id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+        }     
+
+        
+        $particular = Particular::findOrFail($request->particular_id)->particular;
+     
+        
+          $no_of_billed = 1;
+            for($i = 1; $i<=$active_tenants; $i++){
+               if($request->input('amount'.$i) > 0){
+                $no_of_billed++;
+                DB::table('bills')->insert(
+                    [
+                        'bill_no' => $current_bill_no++,
+                        'bill_tenant_id' => $request->input('bill_tenant_id'.$i),
+                        'bill_unit_id' => $request->input('bill_unit_id'.$i),
+                        'date_posted' => Carbon::now(),
+                        'start' => $request->input('start'.$i),
+                        'end' => $request->input('end'.$i),
+                        'particular' => $particular,
+                        'particular_id_foreign' => $request->particular_id,
+                        'amount' =>  $request->input('amount'.$i)
+                    ]);
+                    
+                    if($request->input('particular'.$i) == '3'){
+                        $contract =  Contract::find($request->input('contract_id'.$i));
+                        $contract->initial_electric =  $request->input('current_reading'.$i);
+                        $contract->save();
+                    }
+
+                    if($request->input('particular'.$i) == '2'){
+                        $contract =  Contract::find($request->input('contract_id'.$i));
+                        $contract->initial_water =  $request->input('current_reading'.$i);
+                        $contract->save();
+                    }
+
+         
+               }
+            }
+
+            
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        
+        $notification->message = Auth::user()->name. 'posts '.($no_of_billed-1).' '.$request->particular1.'.';
+        $notification->save();
+                    
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        return redirect('/property/'.$request->property_id.'/bills')->with('success', ($no_of_billed-1).' '.$particular.' bills have been posted!');
+
+    }
+    
     public function post_bills_rent(Request $request, $property_id)
     {
 
-    $updated_start = $request->start;
-    $updated_end = $request->end;
+        $updated_start = $request->start;
+        $updated_end = $request->end;
 
-
-  $active_tenants = DB::table('contracts')
-  ->join('units', 'unit_id_foreign', 'unit_id')
-  ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-  ->select('*', 'contracts.rent as contract_rent')
-  ->where('property_id_foreign', Session::get('property_id'))
-  ->where('contracts.status', 'active')
-  ->get();
+        $active_tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->select('*', 'contracts.rent as contract_rent')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('contracts.status', 'active')
+        ->get();
 
 
    //get the number of last added bills

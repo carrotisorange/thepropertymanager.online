@@ -371,6 +371,9 @@ Route::delete('/property/{property_id}/personnel/{personnel_id}/', 'PersonnelCon
 
 //routes for bills
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/bills/filter', 'BillController@filter')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/bill/{particular_id}', 'BillController@create_bulk_bills')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/bill/{particular_id}/store', 'BillController@store_bulk_bills')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit_tenant_bills')->middleware(['auth', 'verified']);
 
 
@@ -385,6 +388,8 @@ Route::put('/property/{property_id}/tenant/{tenant_id}/bills/update', 'BillContr
 Route::put('/property/{property_id}/unit/{unit_id}/bills/update', 'BillController@update_occupant_bills')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/rent/{date}', 'BillController@post_bills_rent')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/condodues/{date}', 'BillController@post_bills_condodues')->middleware(['auth', 'verified']);
+
+
 
 Route::post('property/{property_id}/bills/create', 'BillController@store')->middleware(['auth', 'verified']);
 

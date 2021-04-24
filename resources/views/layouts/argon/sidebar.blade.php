@@ -1,7 +1,7 @@
-<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+<nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
       <!-- Brand -->
-      <div class="sidenav-header  align-items-center">
+      <div class="sidenav-header align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
         {{Session::get('property_name')}}
         </a>
@@ -183,12 +183,12 @@
               @if(Session::get('current-page') === 'bulk-billing')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
-                <span class="nav-link-text">Bulk Billing</span>
+                <span class="nav-link-text">Bills</span>
               </a>
               @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
-                <span class="nav-link-text">Bulk Billing</span>
+                <span class="nav-link-text">Bills</span>
               </a>
               @endif
             </li>
