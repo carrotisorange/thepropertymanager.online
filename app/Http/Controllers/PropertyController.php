@@ -411,9 +411,10 @@ class PropertyController extends Controller
      */
     public function store_property(Request $request)
     {
+
         $request->validate([
             'name' => 'required|max:255',
-            'property_type_id' => 'required',
+            'property_type_id_foreign' => 'required',
             'country_id_foreign' => 'required',
             // 'ownership' => 'required',
             'address' => 'required',
