@@ -624,13 +624,16 @@
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Watch Demo</h5>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
           </div>
           <div class="modal-body">
             <div class="embed-responsive embed-responsive-16by9">
              
-              <iframe id="openWatchDemo" class="embed-responsive-item" frameborder="0" height="100%" width="100%" src="//https://youtu.be/tGdDzY-dkLg?autoplay=1&controls=1&showinfo=0&autohide=1" allowfullscreen"></iframe>
+              <iframe id="openWatchDemo" class="embed-responsive-item" frameborder="0" height="100%" width="100%" src="https://www.youtube.com/embed/tGdDzY-dkLg?autoplay=0&controls=1&showinfo=0&autohide=1" allowfullscreen"></iframe>
             </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
           </div>
       </div>
   </div>
