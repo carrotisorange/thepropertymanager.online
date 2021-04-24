@@ -214,6 +214,9 @@ thead tr:nth-child(1) th {
       <th><input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required readonly></th>
     @endif
        
+    @if($particular->particular_id != 1 && $particular->particular_id != 2 && $particular->particular_id != 3)
+    <th><input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required></th>
+    @endif
    </tr>
    @endforeach
   </table>
