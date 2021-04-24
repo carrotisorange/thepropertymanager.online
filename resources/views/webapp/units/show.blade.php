@@ -812,7 +812,7 @@
     $(document).ready(function(){
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option><option value='Condo Dues'>Condo Dues</option><option value='Electric'>Electric</option><option value='Rent'>Rent</option><option value='Security Deposit'>Security Deposit</option><option value='Surcharge'>Surcharge</option><option value='Water'>Water</option></select> <td colspan='2'><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option>@foreach($property_bills as $item)<option value='{{$item->particular_id}}'>{{ $item->particular }}</option>@endforeach</select> <td colspan='2'><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      

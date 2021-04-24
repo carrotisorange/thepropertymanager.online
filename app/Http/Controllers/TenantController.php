@@ -605,6 +605,13 @@ class TenantController extends Controller
     {
 
         if(Auth::user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'treasury'){
+
+            $property_bills = DB::table('particulars')
+            ->join('property_bills', 'particular_id', 'particular_id_foreign')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->orderBy('particular', 'asc')
+            ->get();
+
            
            $tenant = Tenant::findOrFail($tenant_id);
 
@@ -721,7 +728,7 @@ class TenantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments'));  
+                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
         }else{
                 return view('layouts.arsha.unregistered');
         }

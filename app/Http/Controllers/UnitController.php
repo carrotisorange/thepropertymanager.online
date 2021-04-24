@@ -214,6 +214,13 @@ class UnitController extends Controller
 
         Session::put('current-page', 'units');
 
+        
+        $property_bills = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
 
         if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury'){
          
@@ -305,10 +312,8 @@ class UnitController extends Controller
             ->orderBy('urgency', 'desc')
             ->orderBy('concerns.status', 'desc')
             ->get();
-            
-            $property = Property::findOrFail(Session::get('property_id'));
 
-                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'payments'));
+                return view('webapp.units.show',compact('occupants','bills','reported_by','users','property_bills','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'concerns', 'payments'));
            
              
           

@@ -123,6 +123,7 @@ class BillController extends Controller
         $property_bills = DB::table('particulars')
          ->join('property_bills', 'particular_id', 'particular_id_foreign')
          ->where('property_id_foreign', Session::get('property_id'))
+         ->orderBy('particular', 'asc')
          ->get();
  
          $notification = new Notification();
@@ -572,13 +573,16 @@ DB::table('properties')
             ->max('bill_no') + 1;
         }     
 
-
         for($i = 1; $i<$request->no_of_bills; $i++){
+
+            $particular = Particular::findOrFail($request->input('particular'.$i));
+
             $bill = new Bill();
             $bill->bill_tenant_id = $tenant_id;
             $bill->bill_no = $current_bill_no++;
             $bill->date_posted = $request->date_posted;
-            $bill->particular = $request->input('particular'.$i);
+            $bill->particular_id_foreign = $particular->particular_id_foreign;
+            $bill->particular = $particular->particular;
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
             $bill->amount = $request->input('amount'.$i);
@@ -646,11 +650,15 @@ DB::table('properties')
 
 
         for($i = 1; $i<$request->no_of_bills; $i++){
+
+            $particular = Particular::findOrFail($request->input('particular'.$i));
+
             $bill = new Bill();
             $bill->bill_unit_id = $unit_id;
             $bill->bill_no = $current_bill_no++;
             $bill->date_posted = $request->date_posted;
-            $bill->particular = $request->input('particular'.$i);
+            $bill->particular_id_foreign = $particular->particular_id_foreign;
+            $bill->particular = $particular->particular;
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
             $bill->amount = $request->input('amount'.$i);
