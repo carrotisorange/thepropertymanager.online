@@ -92,8 +92,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role_id_foreign' => 4,
             'created_at' => Carbon::now(),
-            // 'email_verified_at' => Carbon::now(),
-            'account_type' => Session::get('plan'),
+            'plan_id_foreign' => 1,
             'trial_ends_at' => Carbon::now()->addDays(14),
         ]);
 

@@ -32,7 +32,7 @@
         <h1>Simplifying Property Management</h1>
         
         <div class="">
-          <a href="/#pricing" class="btn-get-started scrollto">Get Started For Free</a>
+          <a href="/register" class="btn-get-started scrollto">Get Started For Free</a>
           {{-- <a href="/#pricing" class="btn-get-started scrollto">Watch the Demo</a> --}}
           <a href="#myModal" data-toggle="modal" class="btn-get-started scrollto">Watch Demo <i class="icofont-play-alt-2"></i></a>
           {{-- <a href="#myModal" data-toggle="modal"> Watch Demo <i class="icofont-play-alt-2"></i></a> --}}

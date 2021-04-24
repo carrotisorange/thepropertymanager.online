@@ -30,8 +30,8 @@
             <div class="row justify-content-center">
               <div class="col-md-8">
                 <div class="mb-4">
-                <h3>Sign Up</h3>
-                <p class="mb-4">You've selected the <b>{{ Session::get('plan') }}</b> plan.</p>
+                <h3>Free sign up</h3>
+                {{-- <p class="mb-4">You've selected the <b>{{ Session::get('plan') }}</b> plan.</p> --}}
               </div>
               <form class="user" id="registrationForm" method="POST" action="/register">
                 @csrf

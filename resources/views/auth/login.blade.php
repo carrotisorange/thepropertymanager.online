@@ -72,7 +72,7 @@
               
               <input form="loginForm" type="submit" value="Log In" class="btn btn-block btn-primary" onclick="this.form.submit(); this.disabled = true;">
 
-             <a style="text-decoration:none" href="/#pricing"><span class="d-block text-left my-4 text-muted">&mdash; Doesn't have an account yet? &mdash;</span></a>
+             <a style="text-decoration:none" href="/register"><span class="d-block text-left my-4 text-muted">&mdash; Doesn't have an account yet? &mdash;</span></a>
               
               <div class="social-login">
                 {{-- <a href="#" class="facebook">
