@@ -22,9 +22,8 @@
 
 <body>
      <!-- Load Facebook SDK for JavaScript -->
-     @include('layouts.argon.chat-messenger')
+  @include('layouts.argon.chat-messenger')
   @include('layouts.argon.sidebar')
-  @show
   <!-- Main content -->
   <div class="main-content" id="panel">
     @include('layouts.argon.header')
@@ -56,8 +55,7 @@
   <script src="{{ asset('/argon/assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
   <script src="{{ asset('/argon/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <!-- Argon JS -->
-  <script src="{{ asset('/argon/assets/js/argon.js?v=1.2.0') }}"></script>
-
+  <script src="{{ asset('/argon/assets/js/argon.js') }}"></script>
   <script>
     $(document).ready(() => {
     var url = window.location.href;
