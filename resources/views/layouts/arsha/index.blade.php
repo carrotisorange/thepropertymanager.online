@@ -437,7 +437,7 @@
           <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
             <div class="box">
               <h3>Starter</h3>
-              <h4><sup>$</sup>600<span>per month</span></h4>
+              <h4><sup>$</sup>12<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 1 property</li>
                 <li><i class="bx bx-check"></i> <20 rooms</li>
@@ -467,7 +467,7 @@
           <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="100">
             <div class="box featured">
               <h3>Basic</h3>
-              <h4><sup>$</sup>950<span>per month</span></h4>
+              <h4><sup>$</sup>19<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 1 property</li>
                 <li><i class="bx bx-check"></i> 20-30 rooms</li>
@@ -494,7 +494,7 @@
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="box">
               <h3>Large</h3>
-              <h4><sup>$</sup>1400<span>per month</span></h4>
+              <h4><sup>$</sup>28<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 1 property</li>
                 <li><i class="bx bx-check"></i> 31-50 rooms</li>
@@ -529,7 +529,7 @@
           <div class="col-lg-4 mt-4 mt-lg-0 mx-auto" data-aos="fade-up" data-aos-delay="400">
             <div class="box">
               <h3>Advanced</h3>
-              <h4><sup>$</sup>2400<span>per month</span></h4>
+              <h4><sup>$</sup>48<span>per month</span></h4>
               <ul>
                 <li><i class="bx bx-check"></i> 2 properties</li>
                 <li><i class="bx bx-check"></i> 51-75 rooms</li>
