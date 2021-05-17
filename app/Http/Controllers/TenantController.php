@@ -657,7 +657,7 @@ class TenantController extends Controller
 
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
-        $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->join('contracts', 'bill_tenant_id', 'unit_id_foreign')
         
         ->join('units', 'unit_id_foreign', 'unit_id')
@@ -701,7 +701,7 @@ class TenantController extends Controller
             
             ->groupBy('bill_id')
             ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
+            
             ->get();
 
 

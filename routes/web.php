@@ -55,6 +55,7 @@ Route::get('property/{property_id}/announcements', function($property_id){
 });
 
 
+
 //route for issues
 Route::get('/property/{property_id}/issues', 'IssueController@index');
 Route::get('/property/{property_id}/issue/{issue_id}', 'IssueController@show');
@@ -863,4 +864,8 @@ Route::get('listing', ['as' => 'listing', 'uses'=>'AdsController@listing']);
 
 Route::get('/carpiotech', function(){
     return view('founders.landleybernardo');
+});
+
+Route::get('/letter/april-2021', function(){
+    return view('founders.april-2021');
 });

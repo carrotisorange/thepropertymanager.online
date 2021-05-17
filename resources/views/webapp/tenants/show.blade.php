@@ -576,38 +576,7 @@
                        </tr>
                   </thead>
                     @foreach ($balance as $item)
-                    {{-- @if($item->bill_status === 'deleted')
-                    <tr class="bg-success">
-                      <th class="text-center">{{ $ctr++ }}</th>
-                         <td>
-                           {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
-                         </td>   
-                          
-             
-                           <td>
-                           
-                             {{ $item->bill_no }}
-                            
-     
-                           </td>
-                   
-                           <td>{{ $item->particular }}</td>
-                         
-                           <td>
-                             {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                             {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                           </td>
-                           <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
-                           <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
-                           <td class="text-right" >
-                             @if($item->balance > 0 && $item->bill_status != 'deleted')
-                             <span class="text-danger">{{ number_format($item->balance,2) }}</span>
-                             @else
-                             <span >{{ number_format($item->balance,2) }}</span>
-                             @endif
-                           
-                                  </tr>
-                    @else --}}
+                  
                     <tr>
                       <th class="text-center">{{ $ctr++ }}</th>
                          <td>

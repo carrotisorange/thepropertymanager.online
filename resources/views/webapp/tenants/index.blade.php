@@ -53,7 +53,7 @@
       <?php $ctr=1;?>
       <thead>
         <tr>
-          {{-- <th>#</th> --}}
+        {{-- <th>#</th> --}}
           <th>Profile</th>
           {{-- <th>Tenant ID</th> --}}
         
