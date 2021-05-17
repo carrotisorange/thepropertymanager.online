@@ -166,12 +166,15 @@ class UnitController extends Controller
             ->groupBy('rent')
 
             ->get('rent','count');
-               
+            
+            $room_types = DB::table('unit_types')->get();
+
+            $room_floors = DB::table('unit_floors')->get();
     
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
+            return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
            }else{
-            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
+            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
            }
         }else{
             return view('layouts.arsha.unregistered');

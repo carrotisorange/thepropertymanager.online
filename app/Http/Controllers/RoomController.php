@@ -155,12 +155,13 @@ class RoomController extends Controller
             ->get('rent','count');
 
           $room_types = DB::table('unit_types')->get();
-               
+
+          $room_floors = DB::table('unit_floors')->get();
     
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
+            return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
            }else{
-            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types'));
+            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
            }
         }else{
             return view('layouts.arsha.unregistered');
@@ -329,6 +330,8 @@ class RoomController extends Controller
             $unit->floor = $request->floor;
             $unit->size = $request->size;
             $unit->building = $building;
+            $unit->unit_type_id_foreign = $request->room_type;
+            $unit->unit_floor_id_foreign = $request->floor;
             $unit->status = 'vacant';
             $unit->rent = $request->rent;
             $unit->type = 'residential';
@@ -356,7 +359,7 @@ class RoomController extends Controller
 
         $property = Property::findOrFail(Session::get('property_id'));
  
-            return back()->with('success', $request->no_of_rooms.' room is created sucessfully!');
+            return back()->with('success', $request->no_of_rooms.' new room/s are created sucessfully!');
         
      }
 

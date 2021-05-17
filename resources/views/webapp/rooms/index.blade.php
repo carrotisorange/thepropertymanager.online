@@ -18,37 +18,37 @@
   <div class="col-md-6 text-right">
     @if(Auth::user()->account_type === 'starter')
       @if($units->count()>20)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @endif
     @elseif(Auth::user()->account_type === 'basic' )
       @if($units->count()>30)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @endif
     @elseif(Auth::user()->account_type === 'large' )
       @if($units->count()>50)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @endif
     @elseif(Auth::user()->account_type === 'advanced' )
       @if($units->count()>75)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @endif
     @elseif(Auth::user()->account_type === 'enterprise' )
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> Add new rooms</a>
+        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
     @endif
     @if($units->count() >1 )
  
 
    
   @endif
-  <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit all rooms</a>
+  <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit</a>
   {{-- <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger btn-sm" ><i class="fas fa-backspace fa-sm text-dark-50"></i> Clear search filters</a> --}}
   </div>
 
@@ -128,26 +128,50 @@
           <div class="col-md-2.5">
             @if($unit->status === 'occupied')
             <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+              @if($unit->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
+              @elseif($unit->unit_type_id_foreign == '2')
+              <i class="fas fa-dumpster fa-2x"></i>
+              @else
+              <i class="fas fa-car fa-2x"></i>
+              @endif
               <br>
             <small>  {{ $unit->unit_no }}</small>
           </a>
             @elseif($unit->status === 'vacant')
             <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
+              @if($unit->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
+              @elseif($unit->unit_type_id_foreign == '2')
+              <i class="fas fa-dumpster fa-2x"></i>
+              @else
+              <i class="fas fa-car fa-2x"></i>
+              @endif
               <br>
                 <small>  {{ $unit->unit_no }}</small>
           </a>
           @elseif($unit->status === 'dirty')
           <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
+            @if($unit->unit_type_id_foreign == '1')
             <i class="fas fa-home fa-2x"></i>
+            @elseif($unit->unit_type_id_foreign == '2')
+            <i class="fas fa-dumpster fa-2x"></i>
+            @else
+            <i class="fas fa-car fa-2x"></i>
+            @endif
             <br>
             <small>  {{ $unit->unit_no }}</small>
         </a>
         @else
         
         <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
+          @if($unit->unit_type_id_foreign == '1')
           <i class="fas fa-home fa-2x"></i>
+          @elseif($unit->unit_type_id_foreign == '2')
+          <i class="fas fa-dumpster fa-2x"></i>
+          @else
+          <i class="fas fa-car fa-2x"></i>
+          @endif
           <br>
           <small>  {{ $unit->unit_no }}</small>
       </a>
@@ -197,7 +221,7 @@
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" >Create Room</h5>
+      <h5 class="modal-title" id="exampleModalLabel" >New Room</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -211,56 +235,59 @@
           <div class="form-group">
             <label>Select a room type</label>
             <select class="form-control" form="addUMultipleUnitForm" name="room_type" id="room_type" required>
-                <option value="" selected>Select one</option>
+                <option value="" selected>Please select one</option>
                 @foreach ($room_types as $item)
                   <option value="{{ $item->unit_type_id }}">{{ $item->unit_type }}</option>
                 @endforeach
             </select>
         </div>
 
-          <div class="form-group" style="display:none">
+          <div class="form-group residential" style="display:none">
             <label>Number of rooms</label>
             <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
         </div>
 
-          <div class="form-group" style="display:none">
+        <div class="form-group residential" style="display:none">
+          <label>Number of rooms</label>
+          <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
+      </div>
+
+      <div class="form-group residential" style="display:none">
+        <label>Number of rooms</label>
+        <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
+    </div>
+
+          <div class="form-group residential" style="display:none">
               <label >Building <small>(Optional)</small></label>
               <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="Building 2">
               
           </div>
 
-          <div class="form-group" style="display:none">
+          <div class="form-group residential" style="display:none">
             <label >Size <small>(sqm)</small></label>
-            <input form="addUMultipleUnitForm" type="number" step="0.001" class="form-control" name="size" placeholder="20">
+            <input form="addUMultipleUnitForm" type="number" step="0.001" class="form-control" name="size" placeholder="20" required>
             
         </div>
-
-          <div class="form-group" style="display:none">
+      
+          <div class="form-group residential" style="display:none">
+            <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
               <label>Floor</label>
               <select class="form-control" form="addUMultipleUnitForm" name="floor" id="floor" onchange ="autoFillInitialName()" required>
-                                  <option value="" selected>Please select one</option>
-                                  <option value="-5">5th basement</option>
-                                  <option value="-4">4th basement</option>
-                                  <option value="-3">3rd basement</option>
-                                  <option value="-2">2nd basement</option>
-                                  <option value="-1">1st basement</option>
-                                   
-                                    <option value="1">1st floor</option>
-                                    <option value="2">2nd floor</option>
-                                    <option value="3">3rd floor</option>
-                                    <option value="4">4th floor</option>
-                                    <option value="5">5th floor</option>
-                                    <option value="6">6th floor</option>
-                                    <option value="7">7th floor</option>
-                                    <option value="8">8th floor</option>
-                                    <option value="9">9th floor</option>
+                  <option value="" selected>Please select one</option>
+                  @foreach ($room_floors as $item)
+                    @if($item->unit_floor>=0)
+                      <option value="{{ $item->unit_floor_id }}">{{ $numberFormatter->format($item->unit_floor) }} floor</option>
+                    @else
+                      <option value="{{ $item->unit_floor_id }}">{{ $numberFormatter->format(intval($item->unit_floor)*-1) }} basement</option>
+                    @endif
+                  @endforeach            
               </select>
           </div>
 
         
           
-              <div class="form-group" style="display:none">
-                <label>Occupancy <small class="text-danger">(Number of tenants allowed)</small></label>
+              <div class="form-group residential" style="display:none">
+                <label>Occupancy</label>
                 <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
             </div>
 
@@ -268,8 +295,8 @@
               <input form="addUMultipleUnitForm" type="hidden" class="form-control" name="unit_no" id="unit_no" required>
     
          
-            <div class="form-group" style="display:none">
-                <label>Rent <small>(/month)</small></label>
+            <div class="form-group residential" style="display:none">
+                <label>Monthly rent</label>
                 <input form="addUMultipleUnitForm" type="number" value="0" step="0.01" min="0" class="form-control" name="rent" id="rent">
             </div>
           
@@ -277,7 +304,7 @@
       </div>
       <div class="modal-footer">
         
-          <button style="display:none" form="addUMultipleUnitForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+          <button style="display:none" id="submitButton" form="addUMultipleUnitForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
           </div>
   </div>
   </div>
@@ -289,6 +316,33 @@
 
 @section('scripts')
   <script>
+      $('#room_type').on('change',function(){
+      if($(this).val()=="1"){
+        $(".commercial").hide()
+        $(".residential").show()
+        $("#submitButton").show()
+        $(".parking").hide()
+      }
+        else if($(this).val()=="2"){
+        $(".commercial").show()
+        $(".residential").show()
+        $("#submitButton").show()
+        $(".parking").hide()
+      }
+      else if($(this).val()=="3"){
+        $(".commercial").hide()
+        $(".residential").show()
+        $("#submitButton").show()
+        $(".parking").show()
+      }
+      else{
+        $(".commercial").hide()
+        $(".residential").hide()
+        $("#submitButton").hide()
+        $(".parking").hide()
+      }
+  });
+
     function autoFillInitialName(){
       $floor = document.getElementById('floor').value;
       $unit_name = document.getElementById('unit_no');
