@@ -197,7 +197,7 @@
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" >Room Information</h5>
+      <h5 class="modal-title" id="exampleModalLabel" >Create Room</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -209,23 +209,33 @@
           </form>
 
           <div class="form-group">
+            <label>Select a room type</label>
+            <select class="form-control" form="addUMultipleUnitForm" name="room_type" id="room_type" required>
+                <option value="" selected>Select one</option>
+                @foreach ($room_types as $item)
+                  <option value="{{ $item->unit_type_id }}">{{ $item->unit_type }}</option>
+                @endforeach
+            </select>
+        </div>
+
+          <div class="form-group" style="display:none">
             <label>Number of rooms</label>
             <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
         </div>
 
-          <div class="form-group">
+          <div class="form-group" style="display:none">
               <label >Building <small>(Optional)</small></label>
               <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="Building 2">
               
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="display:none">
             <label >Size <small>(sqm)</small></label>
             <input form="addUMultipleUnitForm" type="number" step="0.001" class="form-control" name="size" placeholder="20">
             
         </div>
 
-          <div class="form-group">
+          <div class="form-group" style="display:none">
               <label>Floor</label>
               <select class="form-control" form="addUMultipleUnitForm" name="floor" id="floor" onchange ="autoFillInitialName()" required>
                                   <option value="" selected>Please select one</option>
@@ -247,17 +257,9 @@
               </select>
           </div>
 
-           {{-- <div class="form-group">
-              <label>Type</label>
-              <select form="addUMultipleUnitForm" class="form-control" name="type" required>
-                  <option value="" selected>Please select one</option>
-                  <option value="commercial">commercial</option>
-                  <option value="residential">residential</option>         
-              </select>
-          </div>  --}}
-            {{-- <input form="addUMultipleUnitForm" type="hidden" value="{{Session::get('property_id')}}" name="property_id"> --}}
+        
           
-              <div class="form-group">
+              <div class="form-group" style="display:none">
                 <label>Occupancy <small class="text-danger">(Number of tenants allowed)</small></label>
                 <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
             </div>
@@ -266,7 +268,7 @@
               <input form="addUMultipleUnitForm" type="hidden" class="form-control" name="unit_no" id="unit_no" required>
     
          
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label>Rent <small>(/month)</small></label>
                 <input form="addUMultipleUnitForm" type="number" value="0" step="0.01" min="0" class="form-control" name="rent" id="rent">
             </div>
@@ -275,7 +277,7 @@
       </div>
       <div class="modal-footer">
         
-          <button form="addUMultipleUnitForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-chec"></i> Create rooms</button>
+          <button style="display:none" form="addUMultipleUnitForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
           </div>
   </div>
   </div>

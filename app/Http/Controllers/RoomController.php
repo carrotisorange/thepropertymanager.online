@@ -43,26 +43,6 @@ class RoomController extends Controller
             Session::put('rent', $request->rent);
             Session::put('floor', $request->floor);
 
-            // $units = DB::table('units')
-            // ->where('property_id_foreign', Session::get('property_id'))
-            // ->orWhere(function($query) {
-            //     $query->where('status', Session::get('status'))
-            //     ->where('type', Session::get('type'))
-            //     ->where('building', Session::get('building'))
-            //     ->where('occupancy', Session::get('occupancy'))
-            //     ->where('rent', Session::get('rent'))
-            //     ->where('floor', Session::get('floor'));
-            // })
-                
-            // ->get();
-
-        //    $units = Property::findOrFail($property_id)
-        //    ->units()->where('status','<>','deleted')
-      
-        //    ->get()->groupBy(function($item) {
-        //         return $item->floor;
-        //     });
-
             if(Session::has('status')){
                $units = DB::table('units')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -173,12 +153,14 @@ class RoomController extends Controller
             ->groupBy('rent')
 
             ->get('rent','count');
+
+          $room_types = DB::table('unit_types')->get();
                
     
            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
            }else{
-            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes'));
+            return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types'));
            }
         }else{
             return view('layouts.arsha.unregistered');
