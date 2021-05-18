@@ -71,6 +71,12 @@ class ContractController extends Controller
     {
         Session::put('current-page', 'rooms');
 
+        $property_bills = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
         $request->validate([
             'unit_id' => 'required'
         ]);
@@ -107,7 +113,7 @@ class ContractController extends Controller
             ->max('bill_no') + 1;
         }     
 
-        return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users', 'units'));
+        return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users', 'units','property_bills'));
     }
 
     /**
@@ -207,7 +213,7 @@ class ContractController extends Controller
                         $bill->bill_tenant_id = $tenant_id;
                         $bill->bill_no = $current_bill_no++;
                         $bill->date_posted = $request->movein_at;
-                        $bill->particular = $request->input('particular'.$i);
+                        $bill->particular_id_foreign = $request->input('particular'.$i);
                         $bill->start = $request->movein_at;
                         $bill->end = $request->moveout_at;
                         $bill->amount = $request->input('amount'.$i);

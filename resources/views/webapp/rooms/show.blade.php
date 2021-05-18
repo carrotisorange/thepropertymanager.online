@@ -2,6 +2,18 @@
 
 @section('title', $home->building.' '.$home->unit_no)
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 {{-- <div class="row align-items-center py-4">
   <div class="col-auto text-right">
@@ -62,7 +74,7 @@
         <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
     
           <p class="text-left">
-            <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit room</button> 
+            <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
             {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
           </p>
           <div class="row">
@@ -75,7 +87,7 @@
                 
                 <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
                 <div class="table-responsive text-left">
-              <table class="table  table-condensed table-bordered table-hover">
+              <table class="table table-hover">
                  <thead>
                   <tr>
                     <th>Room</th>
@@ -150,13 +162,13 @@
         </div>
         <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
             @if($expenses->count() <=0)
             <br>
             <p class="text-danger text-center">No expenses found!</p>
             @else
             <p>Total expenses deducted to remittance: {{ number_format($expenses->sum('expense_amt'), 2) }}</p>
-            <table class="table table-condensed table-bordered table-hover">
+            <table class="table table-hover">
               <thead>
                   <?php $ctr=1;?>
                   <tr>
@@ -187,13 +199,13 @@
         </div>
         <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
             @if($remittances->count() <=0)
             <br>
             <p class="text-danger text-center">No remittances found!</p>
             @else
-            <p>Total remittances remitted: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
-            <table class="table  table-condensed table-bordered table-hover">
+            <p>Total remitted amount: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
+            <table class="table table-hover">
               <thead>
                   <?php $ctr=1;?>
                   <tr>
@@ -418,7 +430,7 @@
                         </th>
                         <th style="text-align: left;">
                           Email address:
-                          <input form="addTenantForm1" type="email" class="@error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
+                          <input form="addTenantForm1" type="email" class="@error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" required>
                           <br>
                           @error('email')
                           
@@ -520,8 +532,8 @@
              </div>
             </div>
             <div class="tab-pane fade" id="active" role="tabpanel" aria-labelledby="nav-home-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table  table-condensed table-bordered table-hover">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <table class="table table-hover">
                 @if($tenant_active->count() <= 0)
                 <tr>
                     <br><br>
@@ -557,8 +569,8 @@
               </div>
             </div>
             <div class="tab-pane fade" id="reserved" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table  table-condensed table-bordered table-hover">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <table class="table table-hover">
                 @if($tenant_reserved->count() <= 0)
                 <tr>
                     <br><br>
@@ -597,8 +609,8 @@
               </div>
             </div>
             <div class="tab-pane fade" id="movingout" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table  table-condensed table-bordered table-hover">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <table class="table table-hover">
                 @if($tenant_movingout->count() <= 0)
                 <tr>
                     <br><br>
@@ -628,8 +640,8 @@
               </div>
             </div>
             <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="nav-contact-tab">
-              <div class="table-responsive text-nowrap">
-              <table class="table  table-condensed table-bordered table-hover">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <table class="table table-hover">
                 @if($tenant_inactive->count() <= 0)
                 <tr>
                     <br><br>
@@ -667,15 +679,15 @@
         </div>
   
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-          <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> Add Concern</a>  
+          <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
           <br><br>
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
             @if($concerns->count() <=0)
             <br>
             <p class="text-danger text-center">No concerns found!</p>
             @else
-            <table class="table  table-condensed table-bordered table-hover" >
+            <table class="table table-hover" >
             <thead>
             <tr>
               <?php $ctr=1; ?>
@@ -737,7 +749,7 @@
         <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="nav-owners-tab">
         
      <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary text-white btn-sm">
-      <i class="fas fa-user-plus text-white"></i> Add Owner
+      <i class="fas fa-user-plus text-white"></i> New
     </a>   
   <br>
      <br>
@@ -745,8 +757,8 @@
           @if($owners->count()<=-0)
           <p class="text-center text-danger">No owners found!</p>
           @else
-          <div class="table-responsive text-nowrap">
-            <table class="table  table-condensed table-bordered table-hover">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover">
               <?php $ctr=1;?>
               <thead>
             <tr>
@@ -972,7 +984,7 @@
                           </div>
                           <div class="modal-footer">
                             
-                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add Concern</button>
+                              <button type="submit" form="concernForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> New</button>
                           </div>
                       </div>
                       </div>

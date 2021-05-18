@@ -114,7 +114,7 @@ thead tr:nth-child(1) th {
     <small class="text-danger">Email address or mobile is missing!</small>
      @endif
       <div>
-        <table class="table  table-condensed table-bordered table-hover" >
+        <table class="table table-hover" >
           <thead>    
           <tr> 
                 <th>Tenant ID</th>
@@ -193,7 +193,7 @@ thead tr:nth-child(1) th {
               <div class="col">
                 <div class="collapse multi-collapse" id="multiCollapseExample1">
                  
-                    <table class="table  table-condensed table-bordered table-hover">     
+                    <table class="table table-hover">     
                       <thead>    
                         <tr>
                           <th>High School</th>
@@ -523,7 +523,7 @@ thead tr:nth-child(1) th {
              @else
              @foreach ($access as $item)
        
-             <table class="table table-condensed table-bordered table-hover">
+             <table class="table table-hover">
                
                 
                <thead>

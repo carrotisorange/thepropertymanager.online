@@ -413,7 +413,7 @@ class TenantController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id )
     {
-    
+
         //validate inputs
         $request->validate([
             // 'first_name' => ['required', 'string', 'max:255'],
@@ -500,32 +500,34 @@ class TenantController extends Controller
                 $occupancy->property_id_foreign =  Session::get('property_id');
                 $occupancy->save();
             }
+
+            $user_id =  DB::table('users')->insertGetId([
+                'name' => $request->first_name.' '.$request->last_name,
+                'email' => $request->email,
+                'user_type' => 'tenant',
+                'password' => Hash::make($request->contact_no),
+                'created_at' => $request->movein_at,
+                'account_type' => '',
+                'email_verified_at' => $request->movein_at,
+                'trial_ends_at' => '',
+            ]);
+   
+            DB::table('tenants')
+            ->where('tenant_id', $new_tenant_id)
+            ->update([
+                'user_id_foreign' => $user_id,
+            ]);
+   
+            DB::table('users_properties_relations')
+            ->insert([
+                'property_id_foreign' => $property_id,
+                'user_id_foreign' => $user_id,
+            ]);
            
             return redirect('/property/'.$request->property_id.'/tenant/'.$new_tenant_id)->with('success', 'Tenant is added successfully.');
                  
 
-        // $user_id =  DB::table('users')->insertGetId([
-        //     'name' => $request->first_name.' '.$request->last_name,
-        //     'email' => $request->email_address,
-        //     'user_type' => 'tenant',
-        //     'password' => Hash::make($request->contact_no),
-        //     'created_at' => $request->movein_at,
-        //     'account_type' => '',
-        //     'email_verified_at' => $request->movein_at,
-        //     'trial_ends_at' => '',
-        // ]);
 
-        // DB::table('tenants')
-        // ->where('tenant_id', $tenant_id)
-        // ->update([
-        //     'user_id_foreign' => $user_id,
-        // ]);
-
-        // DB::table('users_properties_relations')
-        // ->insert([
-        //     'property_id_foreign' => $property_id,
-        //     'user_id_foreign' => $user_id,
-        // ]);
 
         // $tenant = Tenant::findOrFail($tenant_id);
         // $unit = Unit::findOrFail($unit_id);
@@ -719,15 +721,26 @@ class TenantController extends Controller
 
         //    $payments = Tenant::findOrFail($tenant_id)->payments;
 
-         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-        ->join('contracts', 'bill_tenant_id', 'unit_id_foreign')
+    //      $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+    //     ->join('contracts', 'bill_tenant_id', 'unit_id_foreign')
         
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('particulars','particular_id_foreign', 'particular_id')
-        ->where('bill_tenant_id', $tenant_id)
-        ->groupBy('payment_id')
-        ->orderBy('payment_created', 'desc')
-       ->get();
+    //     ->join('units', 'unit_id_foreign', 'unit_id')
+    //     ->join('particulars','particular_id_foreign', 'particular_id')
+    //     ->where('bill_tenant_id', $tenant_id)
+    //     ->groupBy('payment_id')
+    //     ->orderBy('payment_created', 'desc')
+    //    ->get();
+
+        $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+       ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+       
+       ->join('units', 'unit_id_foreign', 'unit_id')
+       ->join('particulars','particular_id_foreign', 'particular_id')
+       ->where('bill_tenant_id', $tenant_id)
+       ->groupBy('payment_id')
+       ->orderBy('payment_created', 'desc')
+      ->get();
+      
 
     //     $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
     //     ->where('bill_tenant_id', $tenant_id)
@@ -764,14 +777,14 @@ class TenantController extends Controller
           // ->havingRaw('balance > 0')
           ->get();
 
-            //  $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            // ->join('particulars','particular_id_foreign', 'particular_id')
-            // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            // ->where('bill_tenant_id', $tenant_id)
-            // ->groupBy('bill_id')
-            // ->orderBy('bill_no', 'desc')
-            // // ->havingRaw('balance > 0')
-            // ->get();
+              $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+             ->join('particulars','particular_id_foreign', 'particular_id')
+             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+             ->where('bill_tenant_id', $tenant_id)
+             ->groupBy('bill_id')
+             ->orderBy('bill_no', 'desc')
+             ->havingRaw('balance > 0')
+             ->get();
 
             // $pending_balance = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
             // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
@@ -788,7 +801,7 @@ class TenantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-                return view('webapp.tenants.show', compact('buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
+                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
         }else{
                 return view('layouts.arsha.unregistered');
         }

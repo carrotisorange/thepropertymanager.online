@@ -171,8 +171,8 @@
             <br>
             <small>Bills and movein charges</small>
             <p class="text-right">
-              <a href="#/" id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove current bill</a>
-              <a href="#/" id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add more bills</a>    
+              <a href="#/" id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
+              <a href="#/" id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>    
             </p>
               <table class = " table table-condensed table-borderlesstable" id="tab_logic">
                 <thead>
@@ -191,7 +191,7 @@
             <p class="text-right">   
                
                 {{-- <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/tenant" class="btn btn-danger">Reset</a> --}}
-                <button type="submit" form="addTenantForm1" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+                <button type="submit" form="addTenantForm1" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
             </p>
             
         </div>
@@ -215,7 +215,7 @@
     $(document).ready(function(){
         var i=1;
     $("#add_row").click(function(){
-        $('#addr'+i).html("<th>"+ i +"</th><td><select class='' name='particular"+i+"' form='addTenantForm1' id='particular"+i+"'><option value='Security Deposit (Rent)'>Security Deposit (Rent)</option><option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option><option value='Advance Rent'>Advance Rent</option><option value='Rent'>Rent</option><option value='Electric'>Electric</option><option value='Water'>Water</option></select> <td><input class='' form='addTenantForm1' name='amount"+i+"' id='amount"+i+"' type='number' min='1' step='0.01' value='{{ $unit->monthly_rent }}'' required></td>");
+        $('#addr'+i).html("<th>"+ i +"</th><td><select class='' name='particular"+i+"' form='addTenantForm1' id='particular"+i+"'><option>Please select one</option>@foreach($property_bills as $particular)<option value='{{ $particular->particular_id }}'>{{ $particular->particular }}</option>@endforeach</select> <td><input class='' form='addTenantForm1' name='amount"+i+"' id='amount"+i+"' type='number' min='1' step='0.01' value='{{ $unit->monthly_rent }}'' required></td>");
 
 
      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');

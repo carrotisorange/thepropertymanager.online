@@ -21,7 +21,7 @@ thead tr:nth-child(1) th {
     
   </div>
   <div class="col-md-3 text-right">
-    {{-- <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#addRemittance" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a> --}}
+     <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addRemittance" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>
   </div>
 
 </div>
@@ -269,7 +269,7 @@ thead tr:nth-child(1) th {
     <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" >Add</h5>
+        <h5 class="modal-title" id="exampleModalLabel" >New remittance</h5>
   
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -322,7 +322,7 @@ thead tr:nth-child(1) th {
             </div>
         </div>
         <div class="modal-footer">
-            <button form="addRemittanceForm" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Add</button>
+            <button form="addRemittanceForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
             </div>
     </div>
     </div>

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Payment Information</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New Payment</h5>
         
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -21,8 +21,8 @@
                 </div>
                 <div class="col">
                     <p class="text-right">
-                        <a href="#/" id='delete_payment' class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Remove current row</a>
-                      <a href="#/" id="add_payment" class="btn btn-sm btn-primary" ><i class="fas fa-plus"></i> Add more payments</a>     
+                        <a href="#/" id='delete_payment' class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Remove</a>
+                      <a href="#/" id="add_payment" class="btn btn-sm btn-primary" ><i class="fas fa-plus"></i> New</a>     
                       </p>
                 </div>
                 

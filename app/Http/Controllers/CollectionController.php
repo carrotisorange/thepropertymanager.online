@@ -193,6 +193,7 @@ class CollectionController extends Controller
                     'created_at' => Carbon::now(),
                 ]
            );
+           
         }
 
         //do the action below if the tenant status is pending.
@@ -287,7 +288,7 @@ class CollectionController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
-        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment is recorded. Please use the HAND WITH DOLLAR BUTTON to add remittance for the owner.');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ($i-1).' payment is recorded successfully!');
  
 
             
@@ -473,12 +474,16 @@ class CollectionController extends Controller
 
         $payment = Payment::findOrFail($payment_id);
 
-         $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+       
+        $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+        
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('bill_tenant_id', $tenant_id)
-        ->where('payment_created', $payment_created)
         ->groupBy('payment_id')
         ->orderBy('payment_created', 'desc')
-        ->get();
+       ->get();
 
         $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
@@ -510,9 +515,22 @@ class CollectionController extends Controller
 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
+         $pdf = \PDF::loadView('webapp.collections.export', $data)
+         ->setPaper('a5', 'portrait');
+ 
+        // $pdf->setPaper('L');
+         $pdf->output();
+         $canvas = $pdf->getDomPDF()->getCanvas();
+         $height = $canvas->get_height();
+         $width = $canvas->get_width();
+         $canvas->set_opacity(.1,"Multiply");
+         $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
+          28, array(0,0,0),2,2,0);
+         return $pdf->stream();
+
+        // $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
   
-        return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
+        // return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
 }
 
     /**
