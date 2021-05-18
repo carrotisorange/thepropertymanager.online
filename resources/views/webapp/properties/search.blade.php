@@ -2,6 +2,19 @@
 
 @section('title', 'Results for ' .'"'.$search_key.'"')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -11,9 +24,9 @@
 </div>
     <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
        <div class="col-md-12">
-        <p><span class="font-weight-bold">{{ $all_tenants->count() }}</span> matched for tenants...</p>
-        @if($all_tenants->count() >= 1  )
-        <table class="table table-bordered table-hover table-condensed">
+        <p><span class="font-weight-bold">{{ $tenants->count() }}</span> matched for tenants...</p>
+        @if($tenants->count() >= 1  )
+        <table class="table table-hover">
            <thead>
             <tr>
               <th>#</th>
@@ -27,7 +40,7 @@
           </tr>
            </thead>
             <?php $tenant_ctr=1;?>
-            @foreach ($all_tenants as $tenant)
+            @foreach ($tenants as $tenant)
             <tr>
                 <th>{{ $tenant_ctr++ }}</th>
                 <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></th>
@@ -47,11 +60,11 @@
 
          <p><span class="font-weight-bold">{{ $units->count() }}</span> matched for rooms...</p>
          @if($units->count() >= 1  )
-         <table class="table table-bordered table-hover table-condensed">
+         <table class="table table-hover">
            <thead>
             <tr>
               <th>#</th>
-              <th>Building</th>
+         
               <th>Room</th>
               <th>Floor</th>
               <th>Type</th>
@@ -62,18 +75,24 @@
           </tr>
            </thead>
             <?php $unit_ctr=1;?>
+            <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             @foreach ($units as $unit)
             <tr>
                 <th>{{ $unit_ctr++ }}</th>
-                <td>{{ $unit->building }}</td>
                 <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                    <a href="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
+                    <a href="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}">{{ $unit->building.' '.$unit->unit_no }}</a>
                @else
-               <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}">{{ $unit->unit_no }}</a>
+               <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}">{{ $unit->building.' '.$unit->unit_no }}</a>
                  @endif
                 </th>
-                <td>{{ $unit->floor }}</td>
+                <td>
+                  @if($unit->unit_floor_id_foreign>=0)
+                  <option value="{{ $unit->unit_floor_id_foreign }}">{{ $numberFormatter->format($unit->unit_floor_id_foreign) }} floor</option>
+                @else
+                  <option value="{{ $unit->unit_floor_id_foreign }}">{{ $numberFormatter->format(intval($unit->unit_floor_id_foreign)*-1) }} basement</option>
+                @endif
+                </td>
                 <td>{{ $unit->type }}</td>
                 <td>{{ $unit->status }}</td>
                 <td>{{ $unit->occupancy }} <b>pax</b></td>
@@ -84,9 +103,9 @@
           @endif
          <br>
 
-         <p><span class="font-weight-bold">{{ $all_owners->count() }}</span> matched for owners...</p>
-         @if($all_owners->count() >= 1  )
-         <table class="table table-bordered table-hover table-condensed">
+         <p><span class="font-weight-bold">{{ $owners->count() }}</span> matched for owners...</p>
+         @if($owners->count() >= 1  )
+         <table class="table table-hover">
            <thead>
             <tr>
               <th>#</th>
@@ -100,7 +119,7 @@
           </tr>
            </thead>
             <?php $owner_ctr=1;?>
-            @foreach ($all_owners as $owner)
+            @foreach ($owners as $owner)
             <tr>
                 <th>{{ $owner_ctr++ }}</th>
                 <th><a href="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}">{{ $owner->name }} </a></th>

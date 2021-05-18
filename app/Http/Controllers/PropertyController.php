@@ -353,17 +353,8 @@ class PropertyController extends Controller
          ->join('properties', 'property_id_foreign', 'property_id')
          ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
          ->where('property_id', $property_id)
-         ->whereRaw("concat(first_name, ' ', last_name) like '%$search_key%' ")
+         ->whereRaw("concat(first_name, last_name, contact_no) like '%$search_key%' ")
          ->get();
-
-         $emails = DB::table('users_properties_relations')
-         ->join('properties', 'property_id_foreign', 'property_id')
-         ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-         ->where('property_id', $property_id)
-        ->whereRaw("contact_no like '%$search_key%' ")
-         ->get();
-
-        $all_tenants = $tenants->merge($emails)->unique();
 
         $units = DB::table('units')
         ->where('property_id_foreign', $property_id)
@@ -375,22 +366,10 @@ class PropertyController extends Controller
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
-        ->whereRaw("name like '%$search_key%' ")
+        ->whereRaw("concat(name, mobile) like '%$search_key%' ")
         ->get();
-
-        $mobiles = DB::table('certificates')
-        ->join('owners', 'owner_id_foreign', 'owner_id')
-        ->join('units', 'certificates.unit_id_foreign', 'unit_id')
-        ->where('property_id_foreign', $property_id)
-        ->whereRaw("name like '%$search_key%' ")
-        ->get();
-
-        $all_owners = $owners->merge($mobiles)->unique();
-
-        $property = Property::findOrFail($property_id);
     
-
-        return view('webapp.properties.search', compact('property','search_key', 'all_tenants', 'units', 'all_owners'));
+        return view('webapp.properties.search', compact('search_key', 'tenants', 'units', 'owners'));
     }
 
         /**

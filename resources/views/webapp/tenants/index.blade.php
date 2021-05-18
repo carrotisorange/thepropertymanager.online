@@ -81,7 +81,7 @@ thead tr:nth-child(1) th {
 <p class="text-center"> <span class=""> <small> You searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
 @endif --}}
 
-<p class="text-center"> <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...</span></small></p>
+ <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...</span></small>
 
 
 
