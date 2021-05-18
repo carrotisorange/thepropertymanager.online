@@ -104,7 +104,7 @@ class RoomController extends Controller
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('floor', 'desc')
             ->orderBy('unit_no', 'asc')
-            
+            ->where('status','=!','deleted')
             ->get();
             
             $buildings = Property::findOrFail($property_id)
