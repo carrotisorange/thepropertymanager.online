@@ -14,7 +14,6 @@ thead tr:nth-child(1) th {
 </style>   
 @endsection
 
-
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-9">
