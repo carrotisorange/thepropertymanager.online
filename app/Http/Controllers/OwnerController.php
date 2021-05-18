@@ -95,12 +95,9 @@ class OwnerController extends Controller
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
-        ->whereRaw("name like '%$search%' ")
         ->count();
 
-         $property = Property::findOrFail($property_id);
-
-        return view('webapp.owners.index', compact('owners', 'count_owners', 'property'));
+        return view('webapp.owners.index', compact('owners', 'count_owners'));
 
     }
 

@@ -2,6 +2,18 @@
 
 @section('title', 'Concerns')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6">
@@ -27,7 +39,7 @@
   <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover table-condensed table-bordered" >
+      <table class="table table-hover">
         <thead>
           <?php $ctr=1; ?>
           <tr>
@@ -116,7 +128,7 @@
   <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover table-condensed table-bordered" >
+      <table class="table table-hover" >
         <thead>
           <?php $ctr=1; ?>
           <tr>
@@ -197,7 +209,7 @@
   <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-hover table-condensed table-bordered " >
+      <table class="table table-hover" >
         <thead>
           <?php $ctr=1; ?>
           <tr>
@@ -278,7 +290,7 @@
   <div class="tab-pane fade" id="nav-closed" role="tabpanel" aria-labelledby="nav-closed-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-      <table class="table table-condensed table-bordered table-hover">
+      <table class="table table-hover">
         <thead>
           <?php $ctr=1; ?>
           <tr>

@@ -90,7 +90,7 @@ thead tr:nth-child(1) th {
       <?php $ctr=1;?>
       <thead>
         <tr>
-        {{-- <th>#</th> --}}
+         <th>#</th>
           <th>Profile</th>
           {{-- <th>Tenant ID</th> --}}
         
@@ -111,7 +111,7 @@ thead tr:nth-child(1) th {
       <tbody>
         @foreach ($tenants as $item)
         <tr>
-            {{-- <th>{{ $ctr++ }}</th> --}}
+            <th>{{ $ctr++ }}</th>
             <td>  <span class="avatar avatar-sm rounded-circle">
               <img alt="Image placeholder"  src="{{ $item->tenant_img? asset('/storage/img/tenants/'.$item->tenant_img): asset('/arsha/assets/img/no-image.png') }}">
               </span>

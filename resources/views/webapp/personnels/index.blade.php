@@ -2,6 +2,18 @@
 
 @section('title', 'Employees and Personnels')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -20,9 +32,9 @@
 @else
 
   
-<div class="table-responsive text-nowrap">
+<div  style="overflow-y:scroll;overflow-x:scroll;height:450px;">
      
-  <table class="table table-condensed table-bordered table-hover">
+  <table class="table table-hover">
     <thead>
       <?php $ctr=1;?>
       <tr>

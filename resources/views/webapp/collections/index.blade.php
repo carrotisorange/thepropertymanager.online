@@ -2,6 +2,18 @@
 
 @section('title', 'Daily Collection Reports')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -39,40 +51,42 @@
 @else
 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
   
-  <table class="table table-hover table-condensed table-bordered">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      {{-- <th>#</th> --}}
+      <th>AR No</th>
+      <th>Bill No</th>
+      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      <th></th>
+      @else
+      <th>Tenant</th>
+      @endif
+      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      <th>Unit</th>
+      @else
+      <th>Room</th>
+      @endif
+      <th>Particular</th>
+      <th>Period Covered</th>
+      {{-- <th>Form</th> --}}
+      <th>Amount</th>
+      <th></th>
+      {{-- <th></th> --}}
+  
+  </tr>
+</thead>
       @foreach ($collections as $day => $collection_list)
       <?php $ctr=1;?>
-      <thead>
+      
         <tr>
-           <th colspan="7">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}} ({{ $collection_list->count() }})</th>
-           <th> <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
+           <th colspan="7" class="">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}} ({{ $collection_list->count() }} collections/s) {{ number_format($collection_list->sum('amt_paid'),2) }} <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
+           
         </tr>
     
    
-        <tr>
-          {{-- <th>#</th> --}}
-          <th>AR No</th>
-          <th>Bill No</th>
-          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-          <th></th>
-          @else
-          <th>Tenant</th>
-          @endif
-          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-          <th>Unit</th>
-          @else
-          <th>Room</th>
-          @endif
-          <th>Particular</th>
-          <th>Period Covered</th>
-          {{-- <th>Form</th> --}}
-          <th>Amount</th>
-          <th></th>
-          <th></th>
       
-      </tr>
 
-      </thead>
         @foreach ($collection_list as $item)
         <tr>
                 {{-- <th>{{ $ctr++ }}</th> --}}
@@ -119,11 +133,11 @@
                   @endif
                 </th>
                
-                <td>
+                {{-- <td>
                
                   <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
     
-                </td>
+                </td> --}}
                {{-- <td>
                 @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury')
                   @if($item->payment_status === 'deleted')
@@ -140,17 +154,7 @@
               --}}
             </tr>
         @endforeach
-            <tr>
-              <th>TOTAL</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th>{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
-              <th></th>
-              <th></th>
-            </tr>
+           
           
       @endforeach
   </table>

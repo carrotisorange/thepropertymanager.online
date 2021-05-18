@@ -361,8 +361,22 @@ class CollectionController extends Controller
             'collections' => $collections,
             'date' => $payment_created,
         ];
+
+        
+        $pdf = \PDF::loadView('webapp.collections.export-collections-for-today', $data)
+        ->setPaper('a5', 'landscape');
+
+       // $pdf->setPaper('L');
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.1,"Multiply");
+        $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
+         28, array(0,0,0),2,2,0);
+        return $pdf->stream();
     
-    $pdf = \PDF::loadView('webapp.collections.export-collections-for-today', $data)->setPaper('a5', 'portrait');
+   // $pdf = \PDF::loadView('webapp.collections.export-collections-for-today', $data)->setPaper('a5', 'portrait');
     
     return $pdf->download(Carbon::now().'-'.Auth::user()->property.'-ar'.'.pdf');
     }

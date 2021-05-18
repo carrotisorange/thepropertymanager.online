@@ -18,9 +18,9 @@
     <div class="container-fluid">    
       
       <p class="font-italic"> Daily Collections</p> 
-          <br>
-          <b>Property:</b> {{ Session::get('property_name') }}
-          <br>
+          {{-- <br>
+          <b>Property:</b> {{ Session::get('property_name') }} --}}
+          
           <b>Date:</b> {{ Carbon\Carbon::parse($date)->format('M d, Y') }}
            <br>
            <b># collections:</b> {{ $collections->count() }}
