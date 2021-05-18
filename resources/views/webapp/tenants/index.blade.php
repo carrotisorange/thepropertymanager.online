@@ -2,8 +2,46 @@
 
 @section('title', 'Tenants')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <div class="row align-items-center py-4">
+  <div class="col-md-3">
+   <form action="/property/{{ Session::get('property_id') }}/tenants/filter" method="GET" onchange="submit();">
+    <select class="form-control" name="tenant_status" id="">
+      <option value="">All tenants</option>
+      @foreach ($tenant_status as $item)
+          <option value="{{ $item->status }}">{{ $item->status }} tenants only</option>
+      @endforeach
+    </select>
+   
+   </form>
+  </div>
+  <div class="col text-right">
+    <form  action="/property/{{Session::get('property_id')}}/tenants/search" method="GET" >
+      @csrf
+      <div class="input-group">
+          <input type="text" class="form-control" name="tenant_search" placeholder="enter name..." value="{{ Session::get('tenant_search') }}">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+            </button>
+          </div>
+      </div>
+  </form>
+  </div>
+</div>
+{{-- <div class="row align-items-center py-4">
   <div class="col-md-2 text-left">
     <h6 class="h2 text-dark d-inline-block mb-0">Tenants</h6>
   </div>
@@ -17,8 +55,8 @@
 
   </div>
 @endforeach
-</div>
-<div class="row">
+</div> --}}
+{{-- <div class="row">
     <div class="col-lg-12 text-right">
       <form  action="/property/{{Session::get('property_id')}}/tenants/search" method="GET" >
         @csrf
@@ -33,23 +71,22 @@
     </form>
     </div>
   
-</div>
-<br>
+</div> --}}
 @if($tenants->count() <=0 )
 <p class="text-danger text-center">No tenants found!</p>
 
 @else
 
-@if(Session::get('tenant_search'))
+{{-- @if(Session::get('tenant_search'))
 <p class="text-center"> <span class=""> <small> You searched for </small></span> <span class="text-danger">{{ Session::get('tenant_search') }}"<span></p>
-@endif
+@endif --}}
 
-<p class="text-center"> <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} ({{ Session::get('status') }}) tenants...</span></small></p>
+<p class="text-center"> <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }} tenants...</span></small></p>
 
 
 
 <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-    <table class="table table-condensed table-bordered table-hover">
+    <table class="table table-hover">
       <?php $ctr=1;?>
       <thead>
         <tr>
