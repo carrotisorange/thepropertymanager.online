@@ -252,7 +252,7 @@
   </div>
   <div class="col-md-4">
   
-    <img  src="{{ $tenant->tenant_img? asset('storage/img/tenants/'.$tenant->tenant_img): asset('/arsha/assets/img/no-image.png') }}" alt="image of the tenant" class="img-thumbnail">
+    <img  src="{{ $tenant->tenant_img? asset('storage/img/tenants/'.$tenant->tenant_img): asset('/arsha/assets/img/tenants/no-image.png') }}" alt="image of the tenant" class="img-thumbnail">
    
     <form id="uploadImageForm" action="/property/{{ Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/upload/img" method="POST" enctype="multipart/form-data">
       @method('put')
