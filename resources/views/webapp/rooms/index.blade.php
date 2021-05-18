@@ -247,16 +247,6 @@
             <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
         </div>
 
-        <div class="form-group residential" style="display:none">
-          <label>Number of rooms</label>
-          <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
-      </div>
-
-      <div class="form-group residential" style="display:none">
-        <label>Number of rooms</label>
-        <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
-    </div>
-
           <div class="form-group residential" style="display:none">
               <label >Building <small>(Optional)</small></label>
               <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="Building 2">

@@ -256,7 +256,7 @@
    
     <form id="uploadImageForm" action="/property/{{ Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/upload/img" method="POST" enctype="multipart/form-data">
       @method('put')
-      @csrf
+      @csrf\
     </form>
   <br>
 
