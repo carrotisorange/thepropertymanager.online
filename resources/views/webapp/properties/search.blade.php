@@ -88,9 +88,9 @@ thead tr:nth-child(1) th {
                 </th>
                 <td>
                   @if($unit->unit_floor_id_foreign>=0)
-                  <option value="{{ $unit->unit_floor_id_foreign }}">{{ $numberFormatter->format($unit->unit_floor_id_foreign) }} floor</option>
+                {{ $numberFormatter->format($unit->unit_floor_id_foreign) }} floor
                 @else
-                  <option value="{{ $unit->unit_floor_id_foreign }}">{{ $numberFormatter->format(intval($unit->unit_floor_id_foreign)*-1) }} basement</option>
+                {{ $numberFormatter->format(intval($unit->unit_floor_id_foreign)*-1) }} basement</option>
                 @endif
                 </td>
                 <td>{{ $unit->type }}</td>
