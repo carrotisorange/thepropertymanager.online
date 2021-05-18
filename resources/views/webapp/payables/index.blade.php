@@ -2,6 +2,18 @@
 
 @section('title', 'Payables')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -34,8 +46,8 @@
       <br>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade  show active" id="all" role="tabpanel" aria-labelledby="nav-all-tab">
-          <div class="table-responsive text-nowrap">
-            <table class="table table-condensed table-bordered table-hover">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover">
               <?php $ctr=1;?>
               <thead>
               
@@ -72,16 +84,17 @@
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
                    <td>
                     @if($item->payable_status == 'pending')
-                    <a title="waiting to be processed" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-clock"></i></a>
+                    {{-- <a title="waiting to be processed" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-clock"></i></a> --}}
+                    <span>Pending <i class="fas fa-clock text-warning"></i></span>
                     @elseif($item->payable_status == 'approved')
-                    <a title="request approved" class="btn btn-success btn-sm" href="#/"><i class="fas fa-check"></i></a>
-                    
+                    {{-- <a title="request approved" class="btn btn-success btn-sm" href="#/"><i class="fas fa-check"></i></a> --}}
+                    <span>Approved <i class="fas fa-check text-success"></i></span>
                     @elseif($item->payable_status == 'released')
-
-                    <a title="request released" class="btn btn-success btn-sm" href="#/"><i class="fas fa-clipboard-check"></i></a>
+                    <span>Released <i class="fas fa-clipboard-check text-success"></i></span>
+                    {{-- <a title="request released" class="btn btn-success btn-sm" href="#/"><i class="fas fa-clipboard-check"></i></a> --}}
                     @elseif($item->payable_status == 'declined')
-
-                    <a title="request declined" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-times"></i></a>
+                    <span>Declied <i class="fas fa-times text-danger"></i></span>
+                    {{-- <a title="request declined" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-times"></i></a> --}}
                     @endif
                    </td>
                    @if($item->payable_status == 'pending')
@@ -131,8 +144,8 @@
         </div>
 
         <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
-          <div class="table-responsive text-nowrap">
-            <table class="table table-condensed table-bordered table-hover">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover">
               <?php $ctr=1;?>
               <thead>
               
@@ -199,8 +212,8 @@
         </div>
        
         <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="nav-approved-tab">
-          <div class="table-responsive text-nowrap">
-            <table class="table table-condensed table-bordered table-hover">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover">
               <?php $ctr=1;?>
              <thead>
               <tr>
@@ -246,8 +259,8 @@
             </div>
         </div>
         <div class="tab-pane fade" id="released" role="tabpanel" aria-labelledby="nav-released-tab">
-          <div class="table-responsive text-nowrap">
-            <table class="table table-condensed table-bordered table-hover">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover">
               <?php $ctr=1;?>
              <thead>
               <tr>
@@ -293,8 +306,8 @@
             </div>
         </div>
         <div class="tab-pane fade" id="declined" role="tabpanel" aria-labelledby="nav-declined-tab">
-          <div class="table-responsive text-nowrap">
-            <table class="table table-condensed table-bordered table-hover">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover">
               <?php $ctr=1;?>
              <thead>
               <tr>
