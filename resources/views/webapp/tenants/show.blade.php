@@ -220,7 +220,7 @@ thead tr:nth-child(1) th {
               @else
               <div class="col">
                 <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <table class="table  table-condensed table-bordered table-hover">
+                  <table class="table table-hover">
                     <thead>
                     <tr>
                       <th>Employer</th>
