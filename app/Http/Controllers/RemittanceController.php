@@ -49,7 +49,7 @@ class RemittanceController extends Controller
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->select('*', 'remittances.created_at as prepared_at')
         ->where('property_id_foreign',Session::get('property_id'))
-        ->orderBy('remittances.created_at')
+        ->orderBy('remittances.created_at', 'desc')
         ->get();
 
          $pending_remittances = DB::table('units')
@@ -59,7 +59,7 @@ class RemittanceController extends Controller
         ->select('*', 'remittances.created_at as prepared_at')
         ->where('property_id_foreign',Session::get('property_id'))
         ->whereNull('remitted_at')
-        ->orderBy('remittances.created_at')
+        ->orderBy('remittances.created_at', 'desc')
         ->get();
 
          $deposited_remittances = DB::table('units')
@@ -69,7 +69,7 @@ class RemittanceController extends Controller
         ->select('*', 'remittances.created_at as prepared_at')
         ->where('property_id_foreign',Session::get('property_id'))
         ->whereNotNull('remitted_at')
-        ->orderBy('remittances.created_at')
+        ->orderBy('remittances.created_at', 'desc')
         ->get();
 
         return view('webapp.remittances.index', compact('rooms', 'all_remittances', 'pending_remittances', 'deposited_remittances'));
@@ -110,6 +110,14 @@ class RemittanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     public function action(Request $request, $property_id, $room_id, $remittance_id){
+        if($request->contract_option == 'remit'){
+            return redirect('/property/'.$property_id.'/room/'.$room_id.'/remittance/'.$remittance_id.'/edit');
+        }else{
+            return redirect('/property/'.$property_id.'/room/'.$room_id.'/remittance/'.$remittance_id.'/edit');
+        }
+     }
 
      public function store(Request $request, $property_id,$unit_id, $contract_id, $tenant_id, $bill_id, $payment_id){
         

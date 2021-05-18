@@ -532,6 +532,7 @@ Route::get('property/{property_id}/room/{unit_id}/remittance/{remittance_id}', '
 Route::get('property/{property_id}/remittance/{remittance_id}/expenses', 'ExpenseController@index')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/room/{room_id}/remittance/{remittance_id}/edit', 'RemittanceController@edit')->middleware(['auth', 'verified']);
 Route::put('property/{property_id}/remittance/{remittance_id}/update', 'RemittanceController@update')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/room/{room_id}/remittance/{remittance_id}/action', 'RemittanceController@action')->middleware(['auth', 'verified']);
 
 //routes for the the layouts.arsha
 Route::get('/', function(){

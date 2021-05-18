@@ -2,6 +2,19 @@
 
 @section('title', 'Remittances')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-9">
@@ -32,7 +45,7 @@
                 <br>
                 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
-                        <table class="table table-hover table-condensed table-bordered">
+                        <table class="table table-hover">
                             <thead>
                                 <?php $ctr=1;?>
                                 <tr>
@@ -42,11 +55,11 @@
                                     {{-- <th>Particular</th> --}}
                                     <th>CV</th>
                                     <th>Check #</th>
-                                    <th>Owner</th>
+                                    {{-- <th>Owner</th> --}}
                                     <th>Room</th>
                               
                                     <th>Amount</th>
-                                    <th>Status</th>
+                                    {{-- <th>Status</th> --}}
                                     <th>Actions</th>
                                 </tr>    
                             </thead>
@@ -60,24 +73,39 @@
                                     {{-- <td>{{ $item->particular }}</td> --}}
                                     <td>{{ $item->cv_number }}</td>
                                     <td>{{ $item->check_number }}</td>
-                                    <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+                                    {{-- <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
                                    
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
-                                    <td>
+                                    {{-- <td>
                                         @if($item->remitted_at === NULL)
                                         <a title="waiting to be remitted" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-clock"></i></a>
                                         @else
                                         <a title="remitted to be remitted" class="btn btn-success btn-sm" href="#/"><i class="fas fa-check"></i></a>
                                         @endif
-                                       </td>
+                                       </td> --}}
                                    <th>
-                                       @if($item->remitted_at === NULL)
+                                    @if($item->remitted_at === NULL)
+                                    
+                                    <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id_foreign }}/remittance/{{ $item->remittance_id }}/action" method="GET" onchange="submit();">
+                                        <select class="" name="remittance_option" id="">
+                                          <option value="">Select one</option>
+                                          <option value="remit">Remit</option>
+                                        
+                                          {{-- <option value="edit">Edit</option> --}}
+                                        </select>
+                                      
+                                      </form>
+                                       {{-- @if($item->remitted_at === NULL)
                                        <a title="deposit this remittance" class="btn btn-danger btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-hand-holding-usd"></i></a>
                                        @else
                                        <a title="deposit this remittance" class="btn btn-primary btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-edit"></i></a>
-                                       @endif
-                                       
+                                       @endif --}}
+
+                                       @else
+                                        <span>Remitted <i class="fas fa-check-circle text-success"></i></span>
+
+                                      @endif 
                                     </th>
                                 </tr>   
                                 @endforeach
@@ -90,7 +118,7 @@
                 <br>
                 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
-                        <table class="table table-hover table-condensed table-bordered">
+                        <table class="table table-hover">
                             <thead>
                                 <?php $ctr=1;?>
                                 <tr>
@@ -100,7 +128,7 @@
                                     {{-- <th>Particular</th> --}}
                                     <th>CV</th>
                                     <th>Check #</th>
-                                    <th>Owner</th>
+                                    {{-- <th>Owner</th> --}}
                                     <th>Room</th>
                                     {{-- <th>Status</th> --}}
                                     <th>Amount</th>
@@ -118,7 +146,7 @@
                                     {{-- <td>{{ $item->particular }}</td> --}}
                                     <td>{{ $item->cv_number }}</td>
                                     <td>{{ $item->check_number }}</td>
-                                    <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+                                    {{-- <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
                                    {{-- <td>
                                     @if($item->remitted_at === NULL)
@@ -129,11 +157,28 @@
                                    </td> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
                                     <th>
+                                        @if($item->remitted_at === NULL)
                                         
-                                        <a title="deposit this remittance" class="btn btn-danger btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-hand-holding-usd"></i></a>
-                                     
-                                        
-                                     </th>
+                                        <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id_foreign }}/remittance/{{ $item->remittance_id }}/action" method="GET" onchange="submit();">
+                                            <select class="" name="remittance_option" id="">
+                                              <option value="">Select your option</option>
+                                              <option value="remit">Remit</option>
+                                            
+                                              {{-- <option value="edit">Edit</option> --}}
+                                            </select>
+                                          
+                                          </form>
+                                           {{-- @if($item->remitted_at === NULL)
+                                           <a title="deposit this remittance" class="btn btn-danger btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-hand-holding-usd"></i></a>
+                                           @else
+                                           <a title="deposit this remittance" class="btn btn-primary btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-edit"></i></a>
+                                           @endif --}}
+    
+                                           @else
+                                            <span>Remitted <i class="fas fa-check-circle text-success"></i></span>
+    
+                                          @endif 
+                                        </th>
                           
                                 </tr>   
                                 @endforeach
@@ -146,7 +191,7 @@
                 <br>
                 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
                     <div class="col-md-12">
-                        <table class="table table-hover table-condensed table-bordered">
+                        <table class="table table-hover">
                             <thead>
                                 <?php $ctr=1;?>
                                 <tr>
@@ -156,11 +201,11 @@
                                     {{-- <th>Particular</th> --}}
                                     <th>CV</th>
                                     <th>Check #</th>
-                                    <th>Owner</th>
+                                    {{-- <th>Owner</th> --}}
                                     <th>Room</th>
                                     {{-- <th>Status</th> --}}
                                     <th>Amount</th>
-                                    <th>Action</th>
+                                    <th>Status</th>
                         
                                 </tr>    
                             </thead>
@@ -174,7 +219,7 @@
                                     {{-- <td>{{ $item->particular }}</td> --}}
                                     <td>{{ $item->cv_number }}</td>
                                     <td>{{ $item->check_number }}</td>
-                                    <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th>
+                                    {{-- <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
                                    {{-- <td>
                                     @if($item->remitted_at === NULL)
@@ -184,7 +229,29 @@
                                     @endif
                                    </td> --}}
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
-                                    <th><a title="edit this remittance" class="btn btn-primary btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-edit"></i></a></th>
+                                    <th>
+                                        @if($item->remitted_at === NULL)
+                                        
+                                        <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id_foreign }}/remittance/{{ $item->remittance_id }}/action" method="GET" onchange="submit();">
+                                            <select class="" name="remittance_option" id="">
+                                              <option value="">Select one</option>
+                                              <option value="remit">Remit</option>
+                                            
+                                              {{-- <option value="edit">Edit</option> --}}
+                                            </select>
+                                          
+                                          </form>
+                                           {{-- @if($item->remitted_at === NULL)
+                                           <a title="deposit this remittance" class="btn btn-danger btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-hand-holding-usd"></i></a>
+                                           @else
+                                           <a title="deposit this remittance" class="btn btn-primary btn-sm" href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/remittance/{{ $item->remittance_id }}/edit"><i class="fas fa-edit"></i></a>
+                                           @endif --}}
+    
+                                           @else
+                                            <span>Remitted <i class="fas fa-check-circle text-success"></i></span>
+    
+                                          @endif 
+                                        </th>
                                    
                                 </tr>   
                                 @endforeach

@@ -7,8 +7,6 @@
 <div class="row align-items-center py-4">
   <div class="col-lg-12">
     <h6 class="h2 text-dark d-inline-block mb-0">Remittance # {{ $remittance->remittance_id }} </h6>
-    <br>
-    <small><a href="/property/{{ Session::get('property_id') }}/remittances">Return to Remittances</a> </small>
   </div>
 
 </div>
@@ -38,10 +36,18 @@
    </div>
 </div>
 <br>
+@if($remittance->remitted_at === NULL)
 <p class="text-right">
    <button type="submit" form="addRemittanceForm" class="btn btn-success btn-user btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;">  <i class="fas fa-check"></i> Mark as deposited</button>
 
 </p>
+@else
+<p class="text-right">
+   <a href="/property/{{ Session::get('property_id') }}/remittances" class="btn btn-primary btn-user btn-block text-white"><i class="fas fa-arrow-left"></i> Back</a>
+
+</p>
+
+@endif
 
 
 @endsection
