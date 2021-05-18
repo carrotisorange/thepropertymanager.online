@@ -29,6 +29,39 @@ class ContractController extends Controller
         //
     }
 
+    public function action(Request $request, $property_id, $room_id, $tenant_id, $contract_id, $balance)
+    {
+       $contract = Contract::findOrFail($contract_id);
+
+        if($request->contract_option == 'edit'){
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/edit');
+        }elseif($request->contract_option == 'terminate'){
+            if($contract->terminated_at == NULL){
+                if($balance>0){
+                    return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/#contracts/')->with('danger', 'Cannot terminate the contract due to the pending balance.');
+                }else{
+                    return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/preterminate');
+                }
+            }
+
+        }elseif($request->contract_option == 'moveout'){
+            if($contract->terminated_at == NULL){
+                if($balance>0){
+                    return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/#contracts/')->with('danger', 'Cannot moveout the contract due to the pending balance.');
+                }else{
+                    if($contract->status!='inactive'){
+                        return redirect('/property/'.$request->property_id.'/room/'.$room_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/moveout');
+                    }
+                }
+            }
+        }elseif($request->contract_option == 'delete'){
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/delete');
+        }
+
+        
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -234,20 +267,20 @@ class ContractController extends Controller
         return view('webapp.contracts.show', compact('contract', 'property', 'balance', 'tenant'));
     }
 
-    public function moveout_get(Request $request, $property_id, $tenant_id, $contract_id){
+    // public function moveout_get(Request $request, $property_id, $tenant_id, $contract_id){
 
-        Session::put('current-page', 'rooms');
+    //     Session::put('current-page', 'rooms');
 
-        $tenant = Tenant::findOrFail($tenant_id);
+    //     $tenant = Tenant::findOrFail($tenant_id);
 
-        $contract = Contract::findOrFail($contract_id);
+    //     $contract = Contract::findOrFail($contract_id);
 
-        $property = Property::findOrFail($property_id);
+    //     $property = Property::findOrFail($property_id);
 
-        return view('webapp.contracts.moveout', compact('tenant', 'property', 'contract'));
-    }
+    //     return view('webapp.contracts.moveout', compact('tenant', 'property', 'contract'));
+    // }
 
-    public function moveout_post(Request $request, $property_id, $unit_id, $tenant_id, $contract_id){      
+    public function moveout_get(Request $request, $property_id, $unit_id, $tenant_id, $contract_id){      
 
         $tenant = Tenant::findOrFail($tenant_id);
 
@@ -324,9 +357,22 @@ class ContractController extends Controller
                             
                  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            $pdf = \PDF::loadView('webapp.tenants.gatepass', $data)->setPaper('a4', 'portrait');
+                 $pdf = \PDF::loadView('webapp.tenants.gatepass', $data)
+                 ->setPaper('a5', 'portrait');
+         
+                // $pdf->setPaper('L');
+                 $pdf->output();
+                 $canvas = $pdf->getDomPDF()->getCanvas();
+                 $height = $canvas->get_height();
+                 $width = $canvas->get_width();
+                 $canvas->set_opacity(.1,"Multiply");
+                 $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
+                  28, array(0,0,0),2,2,0);
+                 return $pdf->stream();
+
+            // $pdf = \PDF::loadView('webapp.tenants.gatepass', $data)->setPaper('a4', 'portrait');
       
-             return $pdf->download($tenant->first_name.' '.$tenant->last_name.'.pdf');
+            //  return $pdf->download($tenant->first_name.' '.$tenant->last_name.'.pdf');
     
         //return redirect('/units/'.$request->unit_tenant_id.'/tenants/'.$request->tenant_id)->with('success','tenant has been moved out!');
     }

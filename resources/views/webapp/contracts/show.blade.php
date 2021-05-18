@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
-        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}#contracts">Contract ID: {{ $contract->contract_id }}</a></li>
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}#contracts">Contracts</a></li>
         <li class="breadcrumb-item active" aria-current="page">View</li>
       </ol>
     </nav>

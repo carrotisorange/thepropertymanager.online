@@ -149,6 +149,7 @@ Route::get('/property/{property_id}/tenants/filter', 'TenantController@filter')-
 
 //routes for contracts
 Route::post('/property/{property_id}/tenant/{tenant_id}/contract/create', 'ContractController@create')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/balance/{balance}/action', 'ContractController@action')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/contract/add', 'ContractController@store')->middleware(['auth', 'verified']);
 
 //upload img
@@ -353,7 +354,7 @@ Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/ed
 Route::put('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/update', 'ContractController@update')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/preterminate', 'ContractController@preterminate')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/preterminate_post', 'ContractController@preterminate_post')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/moveout', 'ContractController@moveout_get')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/moveout', 'ContractController@moveout_get')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/delete', 'ContractController@destroy')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/{contract_id}/moveout', 'ContractController@moveout_post')->middleware(['auth', 'verified']);
 

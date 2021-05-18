@@ -677,6 +677,7 @@ class TenantController extends Controller
            $tenant = Tenant::findOrFail($tenant_id);
 
            $units = Property::findOrFail(Session::get('property_id'))
+           
            ->units()->whereIn('status',['vacant'])
            ->get()->groupBy(function($item) {
                 return $item->floor;
@@ -722,13 +723,11 @@ class TenantController extends Controller
         ->join('contracts', 'bill_tenant_id', 'unit_id_foreign')
         
         ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('payment_id')
         ->orderBy('payment_created', 'desc')
-       ->get()
-        ->groupBy(function($item) {
-            return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-        });
+       ->get();
 
     //     $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
     //     ->where('bill_tenant_id', $tenant_id)
@@ -757,22 +756,22 @@ class TenantController extends Controller
             }     
 
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('bill_tenant_id', $tenant_id)
-            
-            ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            
-            ->get();
+            ->join('particulars','particular_id_foreign', 'particular_id')
+          ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+          ->where('bill_tenant_id', $tenant_id)
+          ->groupBy('bill_id')
+          ->orderBy('bill_no', 'desc')
+          // ->havingRaw('balance > 0')
+          ->get();
 
-
-            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('bill_tenant_id', $tenant_id)
-            ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            // ->havingRaw('balance > 0')
-            ->get();
+            //  $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+            // ->join('particulars','particular_id_foreign', 'particular_id')
+            // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+            // ->where('bill_tenant_id', $tenant_id)
+            // ->groupBy('bill_id')
+            // ->orderBy('bill_no', 'desc')
+            // // ->havingRaw('balance > 0')
+            // ->get();
 
             // $pending_balance = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
             // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
@@ -789,7 +788,7 @@ class TenantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
+                return view('webapp.tenants.show', compact('buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
         }else{
                 return view('layouts.arsha.unregistered');
         }
@@ -890,6 +889,7 @@ class TenantController extends Controller
     }
 
     public function edit_billings( $unit_id, $tenant_id){
+
 
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' ){
             

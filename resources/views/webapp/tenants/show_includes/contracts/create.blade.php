@@ -8,7 +8,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <div class="modal-body text-center">
+        <div class="modal-body text-center" >
           <form id="contractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id}}/contract/create" method="POST">
             @csrf
   
@@ -16,12 +16,12 @@
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               @foreach ($buildings as $building)
-              <a class="nav-item nav-link" id="{{ $building->building }}-tab" data-toggle="tab" href="#{{ $building->building }}" role="tab" aria-controls="{{ $building->building }}" aria-selected="false">{{ $building->building }} <span id="count_rooms" class="badge badge-primary text-dark">{{ $building->count }}</a>
+              <a class="nav-item nav-link" id="{{ $building->building }}-tab" data-toggle="tab" href="#{{ $building->building }}" role="tab" aria-controls="{{ $building->building }}" aria-selected="false"><i class="fas fa-building text-indigo"></i> {{ $building->building }} <span id="count_rooms" class="badge badge-primary text-dark">{{ $building->count }}</a>
               @endforeach
             </div>
           </nav>
   
-          <div class="tab-content" id="">
+          <div class="tab-content" id="" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
             <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             
              @foreach ($buildings as $building)
@@ -54,7 +54,7 @@
                
                       <a title="{{ $item->monthly_rent }}" href="#/" class="btn btn-primary">
                         
-                          <i class="fas fa-home fa-3x">
+                          <i class="fas fa-home fa-2x">
                            
                           </i>
                           <br>

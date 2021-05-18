@@ -2,6 +2,18 @@
 
 @section('title', $tenant->first_name.' '.$tenant->last_name)
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($tenant->moveout_date), false)) ?>
 {{-- <div class="row align-items-center py-4">
@@ -88,13 +100,13 @@
         
 <div class="row">
   <div class="col-md-8">
-    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back to tenants</a>
+    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
 
     {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit tenant</a>  
+    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
      <br><br>
@@ -256,7 +268,7 @@
    
     <form id="uploadImageForm" action="/property/{{ Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/upload/img" method="POST" enctype="multipart/form-data">
       @method('put')
-      @csrf\
+      @csrf
     </form>
   <br>
 
@@ -276,7 +288,7 @@
       </div>
 
       <div class="tab-pane fade" id="guardians" role="tabpanel" aria-labelledby="nav-guardians-tab">
-        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> Add tenant's guardian</a>  
+        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         
         @if($guardians->count() < 1)
@@ -285,7 +297,7 @@
         <div class="row" >
           <div class="col-md-12 mx-auto" >
         <div class="table-responsive text-nowrap">
-         <table class="table  table-condensed table-bordered table-hover">
+         <table class="table table-hover">
            <thead>
             <?php $ctr = 1; ?>
              <tr>
@@ -317,7 +329,7 @@
       </div>
 
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> Add concern</a>  
+        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         @if($concerns->count() < 1)
         <p class="text-danger text-center">No concerns found!</p>
@@ -325,7 +337,7 @@
         <div class="row" >
           <div class="col-md-12" >
         <div class="">
-         <table class="table  table-condensed table-bordered table-hover">
+         <table class="table table-hover">
            <?php $ctr = 1; ?>
            <thead>
              <tr>
@@ -392,7 +404,7 @@
       </div>
       <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
 
-       <p class="text-left"> <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add new contract</a>  </p>
+       <p class="text-left"> <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>  </p>
       
       <div style="display:none" id="showSelectedContract" class="col-md-6 p-0 m-0 mx-auto text-center">
       <div class="alert alert-success alert-dismissable custom-success-box">
@@ -406,7 +418,7 @@
             @method('put')
           </form>
           <div class="col-md-12 mx-auto">
-            <table class="table  table-condensed table-bordered table-hover">
+            <table class="table table-hover">
               <thead>
                 <?php $ctr = 1; ?>
                 <tr>
@@ -415,7 +427,7 @@
                   </div> --}}
                 </th>
                   <th>#</th>
-                  <th>Building</th>
+             
                   <th>Room</th>
                   <th>Status</th>
                   <th>Contract</th>
@@ -432,8 +444,8 @@
                   </div>
                 </th> --}}
                 <th>{{ $ctr++ }}</th>
-                <td>{{ $item->building }}</td>
-                <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id_foreign }}">{{ $item->unit_no }}</a></th>
+               
+                <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id_foreign }}">{{  $item->building.' '.$item->unit_no }}</a></th>
                 <td>
                   @if($item->contract_status === 'active')
                  <span class="text-success"><i class="fas fa-check-circle"></i> {{ $item->contract_status }}</span>
@@ -446,6 +458,21 @@
            
                 <td>{{ number_format($item->rent, 2) }}</td>
                 <th>
+                  <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id_foreign }}/tenant/{{ $tenant->tenant_id }}/contract/{{ $item->contract_id }}/balance/{{ $balance->count() }}/action" method="GET" onchange="submit();">
+                    <select class="" name="contract_option" id="">
+                      <option value="">Select your option</option>
+                      <option value="edit">Edit</option>
+                      @if(!$item->terminated_at)
+                      <option value="terminate">Terminate</option>
+                      @endif
+                      @if(!$item->terminated_at)
+                      <option value="moveout">Moveout</option>
+                      @endif
+                      <option value="delete">Delete</option>
+                    </select>
+                  
+                  </form>
+                  {{--
                   <a title="delete this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/delete"><i class="fas fa-trash"></i></a>
                   <a title="edit contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/edit"><i class="fas fa-edit"></i></a>
                   @if(!$item->terminated_at)
@@ -467,7 +494,7 @@
                 @endif
                   
                   <a title="extend this contract" class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}/extend"><i class="fas fa-external-link-alt"></i> </a>
-                  {{-- <a title="view this contract"class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><i class="fas fa-book-open"></i> </a> --}}
+                   <a title="view this contract"class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id_foreign }}/contract/{{ $item->contract_id }}"><i class="fas fa-book-open"></i> </a> --}}
             
                 </th>
                 
@@ -534,12 +561,12 @@
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add bills</a> 
+        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a> 
         @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit bills</a>
+          <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
           @endif
           @if($balance->count() > 0)
-          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export bills</span></a>
+          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export</span></a>
           {{-- @if($tenant->email_address !== null)
           <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
           @endif --}}
@@ -549,14 +576,13 @@
 
     <br>
     <br>
-    @if($bills->count() <= 0)
+    @if($balance->count() <= 0)
     <p class="text-danger text-center">No bills found!</p>
 
             @else
-            <div class="col-md-12 mx-auto">
-              <div class="table-responsive">
-                <div class="table-responsive text-nowrap">
-                  <table class="table  table-condensed table-bordered table-hover">
+            <div class="col-md-12">
+                <div class="table-responsive" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+                  <table class="table table-hover">
                     <?php $ctr=1; ?>
                   <thead>
                     <tr>
@@ -614,8 +640,8 @@
                     <tr>
                       <th>TOTAL</th>
                       
-                      <th class="text-right" colspan="5">{{ number_format($bills->sum('amount'),2) }} </th>
-                      <th class="text-right" colspan="">{{ number_format($bills->sum('amt_paid'),2) }} </th>
+                      <th class="text-right" colspan="5">{{ number_format($balance->sum('amount'),2) }} </th>
+                      <th class="text-right" colspan="">{{ number_format($balance->sum('amt_paid'),2) }} </th>
                       <th class="text-right text-danger">
                        
                         <span >{{ number_format($balance->sum('balance'),2) }}</span>
@@ -627,7 +653,7 @@
                 </table>
           
               </div>
-              </div>
+          
               
                 </div>
 
@@ -645,8 +671,8 @@
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          @if($bills->count() > 0)
-          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add payments</a>
+          @if($balance->count() > 0)
+          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
           @endif
         @endif 
         <br><br>
@@ -654,34 +680,33 @@
         <p class="text-danger text-center">No payments found!</p>
         @else
         <div class="col-md-12">
-          <div class="table-responsive text-nowrap">
-            <table class="table  table-condensed table-bordered table-hover">
-              @foreach ($payments as $day => $collection_list)
-               <thead>
-                  <tr>
-                      <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $collection_list->count() }})</th>
-                      
-                  </tr>
-                  <tr>
-                    <?php $ctr = 1; ?>
-                      <th class="text-center">#</th>
-                      <th>AR No</th>
-                      <th>Bill No</th>
-                      {{-- <th>Room</th>   --}}
-                      <th>Particular</th>
-                      <th colspan="2">Period Covered</th>
-                      <th>Form</th>
-                      <th class="text-right">Amount</th>
-                     
-                      <th colspan="3" class="text-center">Action</th> 
-                      
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <?php $ctr = 1; ?>
+                    {{-- <th class="text-center">#</th> --}}
+                    <th>Date</th>
+                    <th>AR No</th>
+                    <th>Bill No</th>
+                    {{-- <th>Room</th>   --}}
+                    <th>Particular</th>
+                    <th colspan="2">Period Covered</th>
+                    <th>Form</th>
+                    <th class="text-right">Amount</th>
+                   
+                    <th colspan="3" class="text-center">Action</th> 
                     
-                </tr>
-               </thead>
-                @foreach ($collection_list as $item)
+              </tr>
+              </thead>
+             
+                 
+            
+                @foreach ($payments as $item)
                
                 <tr>
-                      <th class="text-center">{{ $ctr++ }}</th>
+                      {{-- <th class="text-center">{{ $ctr++ }}</th> --}}
+                      <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
                         <td>
                           @if($item->payment_status === 'deleted')
                           <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
@@ -729,12 +754,8 @@
     
                     </tr>
                 @endforeach
-                    <tr>
-                      <th>TOTAL</th>
-                      <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
-                    </tr>
-                    
-              @endforeach
+                   
+            
           </table>
           </div>
         </div>

@@ -16,7 +16,7 @@
     
   </div>
   <div class="col-md-3 text-right">
-    <p class="text-right"><button form="editBillsForm" class="btn btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
+    <p class="text-right"><button form="editBillsForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Update bills</button> </p>
   </div>
 </div>
 
@@ -118,14 +118,10 @@
           {{-- <td>{{$item->unit_no}}</td> --}}
           <td>
             <select class="" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
-              <option value='{{ $item->particular }}' selected>{{ $item->particular }}</option>
-              <option value='Advance Rent'>Advance Rent</option>
-              <option value='Electric'>Electric</option>
-              <option value='Rent'>Rent</option>
-              <option value='Security Deposit (Rent)'>Security Deposit (Rent)</option>
-              <option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option>
-              <option value='Surcharge'>Surcharge</option>
-              <option value='Water'>Water</option>
+              <option value='{{ $item->particular_id_foreign }}' selected>{{ $item->particular }} (selected)</option>
+              @foreach ($property_bills as $particular)
+                <option value='{{ $particular->particular_id_foreign }}'>{{ $particular->particular }}</option>
+              @endforeach
             </select>
           </td>
           <td colspan="2">
@@ -133,7 +129,7 @@
           
             <input form="editBillsForm"  class="" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
           </td>
-          <td><input form="editBillsForm" class="" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
+          <td><input form="editBillsForm" class="" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->amount }}"></td>
           {{-- <td>
             @if(Auth::user()->user_type === 'manager')
               @if($item->bill_status === 'deleted')
@@ -156,15 +152,7 @@
       
         @endforeach
 
-        <tr>
-          <th>TOTAL</th>
-          <th></th>
-          {{-- <th></th> --}}
-          <th></th>
-          <th></th>
-          <th></th>
-          <th><input class="" type="" step="0.01" value="{{ number_format($balance->sum('balance'),2) }}" readonly> </th>
-         </tr>  
+       
          <tbody>  
     </table>
   </div>

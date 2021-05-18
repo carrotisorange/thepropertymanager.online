@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/#contracts"">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
-        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/">Contract ID: {{ $contract->contract_id }}</a></li>
+        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/">Contract</a></li>
         <li class="breadcrumb-item active" aria-current="page">Edit</li>
       </ol>
     </nav>
@@ -66,7 +66,7 @@
 </div>
   <div class="form-group row">
     <div class="col">
-        <label>Rent(/month)</label>
+        <label>Rent</label>
         <input form="editContractForm" type="number" step="0.001" name="rent" id="rent" class="form-control" value="{{ $contract->rent }}">
     </div>
    
@@ -100,13 +100,13 @@
 </div>
  
 </div>
-<div class="form-group row">
+{{-- <div class="form-group row">
   <div class="col">
     <label for="">Date terminated</label>
     <input form="editContractForm" type="date" class="form-control" name="terminated_at" id="terminated_at" value="{{ $contract->terminated_at? Carbon\Carbon::parse($contract->terminated_at)->format('Y-m-d'): 'NA' }}" >
   </div>
  
-</div>
+</div> --}}
 <div class="form-group row">
   <div class="col">
     <label for="">Reason for termination</label>

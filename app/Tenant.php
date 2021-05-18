@@ -44,6 +44,11 @@ class Tenant extends Model
         return $this->hasMany('App\Contract','tenant_id_foreign')->orderBy('contract_id', 'desc');
     }
 
+    public function bills()
+    {
+        return $this->hasMany('App\Bill','bill_tenant_id');
+    }
+
     public function guardians()
     {
         return $this->hasMany('App\Guardian','tenant_id_foreign');

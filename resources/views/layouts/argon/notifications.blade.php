@@ -4,7 +4,7 @@
     <div class="alert alert-{{ $key }} alert-dismissable custom-{{ $key }}-box">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         @if($key === 'danger')
-        <span> {{ Session::get($key) }} <i class="fas fa-times-circle"></i></span>
+        <span> {{ Session::get($key) }} <i class="fas fa-exclamation-triangle"></i></span>
         @elseif($key === 'success')
         <span>{{ Session::get($key) }} <i class="fas fa-check-circle"></i></span>
         @endif

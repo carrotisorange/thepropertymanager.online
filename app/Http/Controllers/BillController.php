@@ -85,6 +85,7 @@ class BillController extends Controller
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('bills', 'unit_id', 'bill_unit_id')
+            ->join('particulars','particular_id_foreign', 'particular_id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('date_posted', 'desc')
             ->groupBy('bill_id')
@@ -95,6 +96,7 @@ class BillController extends Controller
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
+            ->join('particulars','particular_id_foreign', 'particular_id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('date_posted', 'desc')
             ->groupBy('bill_id')
@@ -210,7 +212,8 @@ class BillController extends Controller
     }
 
     public function store_bulk_bills(Request $request){
-        
+    
+
         $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -557,7 +560,6 @@ DB::table('properties')
 
     public function post_tenant_bill(Request $request, $property_id, $tenant_id)
     {
-
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
@@ -581,8 +583,7 @@ DB::table('properties')
             $bill->bill_tenant_id = $tenant_id;
             $bill->bill_no = $current_bill_no++;
             $bill->date_posted = $request->date_posted;
-            $bill->particular_id_foreign = $particular->particular_id_foreign;
-            $bill->particular = $particular->particular;
+            $bill->particular_id_foreign = $request->input('particular'.$i);
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
             $bill->amount = $request->input('amount'.$i);
@@ -591,17 +592,15 @@ DB::table('properties')
             
             $tenant = Tenant::findOrFail($tenant_id);
 
-            $property = Property::findOrFail($property_id);
-
-            $data = array(
-                // 'email' =>$tenant->email_address,
-                'name' => $tenant->first_name,
-                'property' => $property->name,
-                'amt' => $request->input('amount'.$i),
-                'desc' => $request->input('particular'.$i),
-                'start' => $request->input('start'.$i),
-                'end' => $request->input('end'.$i),
-            );
+            // $data = array(
+            //     // 'email' =>$tenant->email_address,
+            //     'name' => $tenant->first_name,
+            //     'property' => $property->name,
+            //     'amt' => $request->input('amount'.$i),
+            //     'desc' => $request->input('particular'.$i),
+            //     'start' => $request->input('start'.$i),
+            //     'end' => $request->input('end'.$i),
+            // );
 
             $notification = new Notification();
             $notification->user_id_foreign = Auth::user()->id;
@@ -844,8 +843,6 @@ DB::table('properties')
             
             //get the tenant information
               $tenant = Tenant::findOrFail($tenant_id);
-
-            $property = Property::findOrFail($property_id);
     
             //get the number of last added bills
    
@@ -857,27 +854,24 @@ DB::table('properties')
             ->max('bill_no') + 1;
 
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
-            ->where('bill_tenant_id', $tenant_id)
-            
-            ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
-            ->get();
+            ->join('particulars','particular_id_foreign', 'particular_id')
+          ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+          ->where('bill_tenant_id', $tenant_id)
+          ->groupBy('bill_id')
+          ->orderBy('bill_no', 'desc')
+          // ->havingRaw('balance > 0')
+          ->get();
 
-
-            $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('bill_tenant_id', $tenant_id)
-            ->groupBy('bill_id')
-            ->orderBy('bill_no', 'desc')
-            // ->havingRaw('balance > 0')
-            ->get();
+          $property_bills = DB::table('particulars')
+          ->join('property_bills', 'particular_id', 'particular_id_foreign')
+          ->where('property_id_foreign', Session::get('property_id'))
+          ->orderBy('particular', 'asc')
+          ->get();
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
-                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance', 'property', 'bills'));  
+                return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance','property_bills'));  
             }
 
         }else{
@@ -942,27 +936,14 @@ DB::table('properties')
     public function post_edited_bills(Request $request, $property_id, $tenant_id){
 
         if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin'){
+           
+             $bills = Tenant::findOrFail($tenant_id)->bills->count();
 
-
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-            ->join('tenants', 'bill_tenant_id', 'tenant_id')
-            ->join('contracts', 'tenant_id', 'tenant_id_foreign')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            ->where('bill_tenant_id', $tenant_id)
-            // ->where('bill_status', '<>', 'deleted')
-            ->groupBy('bill_no')
-            ->orderBy('bill_no', 'desc')
-            ->havingRaw('balance > 0')
-            ->get();
-
-
-
-            for ($i=1; $i <= $balance->count(); $i++) { 
+            for ($i=1; $i <= $bills; $i++) { 
                  $bill = Bill::find( $request->input('billing_id_ctr'.$i));
                   $bill->start = $request->input('start_ctr'.$i);
                   $bill->end = $request->input('end_ctr'.$i);
-                  $bill->particular = $request->input('particular_ctr'.$i);
+                  $bill->particular_id_foreign = $request->input('particular_ctr'.$i);
                   $bill->amount = $request->input('amount_ctr'.$i);
                  $bill->save();
                }
@@ -1086,20 +1067,22 @@ DB::table('properties')
         $tenant = Tenant::findOrFail($tenant_id);
 
         $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
         ->where('start', '>', Carbon::now()->month())
-        ->where('particular', 'Rent')
+        ->where('particular_id_foreign', '1')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
 
         $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
         ->where('start', '<=', Carbon::now()->subMonth()->firstOfMonth())
-        ->where('particular', 'Rent')
+        ->where('particular_id_foreign', '1')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
@@ -1107,20 +1090,22 @@ DB::table('properties')
         
         
         $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
         ->where('start', '<=', Carbon::now()->subMonth()->firstOfMonth())
-        ->where('particular', 'Surcharge')
+        ->where('particular_id_foreign', '16')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
 
         $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
-        ->where('particular','!=', ['Rent','Surcharge'])
+        ->where('particular_id_foreign','!=', ['1','16'])
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
@@ -1149,7 +1134,7 @@ DB::table('properties')
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         $pdf = \PDF::loadView('webapp.bills.soa', $data)
-        ->setPaper('a5', 'landscape');
+        ->setPaper('a5', 'portrait');
 
        // $pdf->setPaper('L');
         $pdf->output();

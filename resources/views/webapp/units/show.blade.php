@@ -109,7 +109,6 @@
       <br>
       <br>
       <div class="col-md-12 mx-auto">
-      <div class="table-responsive">
         <div class="table-responsive text-nowrap">
           <table class="table table-table-bordered table-hover table-condensed">  
             <?php $ctr=1; ?>
@@ -184,7 +183,7 @@
           
         </table>
   
-      </div>
+      
       </div>
       
         </div>
