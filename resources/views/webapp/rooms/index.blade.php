@@ -84,26 +84,50 @@
           <div class="col-md-2.5">
             @if($item->status === 'occupied')
             <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+              @if($item->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
+              @elseif($item->unit_type_id_foreign == '2')
+              <i class="fas fa-dumpster fa-2x"></i>
+              @else
+              <i class="fas fa-car fa-2x"></i>
+              @endif
               <br>
             <small>  {{ $item->unit_no }}</small>
           </a>
             @elseif($item->status === 'vacant')
             <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
+              @if($item->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
+              @elseif($item->unit_type_id_foreign == '2')
+              <i class="fas fa-dumpster fa-2x"></i>
+              @else
+              <i class="fas fa-car fa-2x"></i>
+              @endif
               <br>
                 <small>  {{ $item->unit_no }}</small>
           </a>
           @elseif($item->status === 'dirty')
           <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
+            @if($item->unit_type_id_foreign == '1')
             <i class="fas fa-home fa-2x"></i>
+            @elseif($item->unit_type_id_foreign == '2')
+            <i class="fas fa-dumpster fa-2x"></i>
+            @else
+            <i class="fas fa-car fa-2x"></i>
+            @endif
             <br>
             <small>  {{ $item->unit_no }}</small>
         </a>
         @else
         
         <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
+          @if($item->unit_type_id_foreign == '1')
           <i class="fas fa-home fa-2x"></i>
+          @elseif($item->unit_type_id_foreign == '2')
+          <i class="fas fa-dumpster fa-2x"></i>
+          @else
+          <i class="fas fa-car fa-2x"></i>
+          @endif
           <br>
           <small>  {{ $item->unit_no }}</small>
       </a>
