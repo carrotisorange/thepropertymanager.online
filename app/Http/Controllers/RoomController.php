@@ -104,7 +104,7 @@ class RoomController extends Controller
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('floor', 'desc')
             ->orderBy('unit_no', 'asc')
-            ->where('status','=!','deleted')
+            ->where('units.status', '!=', 'deleted')
             ->get();
             
             $buildings = Property::findOrFail($property_id)
@@ -305,9 +305,13 @@ class RoomController extends Controller
             ->orderBy('urgency', 'desc')
             ->orderBy('concerns.status', 'desc')
             ->get();
+
+            $room_types = DB::table('unit_types')->get();
+
+            $room_floors = DB::table('unit_floors')->get();
           
            
-            return view('webapp.rooms.show',compact('tenants','occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'tenant_movingout','concerns', 'remittances', 'expenses'));
+            return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'tenant_movingout','concerns', 'remittances', 'expenses'));
            
         }else{
                 return view('layouts.arsha.unregistered');
@@ -453,7 +457,8 @@ class RoomController extends Controller
                 'occupancy' => $request->occupancy,
                 'status' => $request->status,
                 'building' => $request->building,
-                'type' => $request->type,
+                'unit_type_id_foreign' => $request->type,
+                'unit_floor_id_foreign' => $request->floor,
                 'rent' => $request->rent,
                 'size' => $request->size,
                 'created_at' => $request->created_at,

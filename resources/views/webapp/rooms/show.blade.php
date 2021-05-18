@@ -798,7 +798,7 @@ thead tr:nth-child(1) th {
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Room Information</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Room</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -816,26 +816,18 @@ thead tr:nth-child(1) th {
               <label>Size <small>(sqm)</small></label>
               <input form="editUnitForm" type="text" value="{{ $home->size }}" name="size" class="form-control" id="size" >
               </div>
-            
+              <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             <div class="form-group">
             <label>Floor</label>
             <select form="editUnitForm" id="floor" name="floor" class="form-control">
-                <option value="{{ $home->floor }}" readonly selected class="bg-primary">{{ $home->floor }}</option>
-                <option value="-5">5th basement</option>
-                <option value="-4">4th basement</option>
-                <option value="-3">3rd basement</option>
-                <option value="-2">2nd basement</option>
-                <option value="-1">1st basement</option>
-                
-                <option value="1">1st floor</option>
-                <option value="2">2nd floor</option>
-                <option value="3">3rd floor</option>
-                <option value="4">4th floor</option>
-                <option value="5">5th floor</option>
-                <option value="6">6th floor</option>
-                <option value="7">7th floor</option>
-                <option value="8">8th floor</option>
-                <option value="9">9th floor</option>
+              <option value="{{ $home->unit_floor_id_foreign }}">{{ $numberFormatter->format($home->unit_floor_id_foreign) }} floor</option>
+                @foreach ($room_floors as $item)
+                @if($item->unit_floor>=0)
+                  <option value="{{ $item->unit_floor_id }}">{{ $numberFormatter->format($item->unit_floor) }} floor</option>
+                @else
+                  <option value="{{ $item->unit_floor_id }}">{{ $numberFormatter->format(intval($item->unit_floor)*-1) }} basement</option>
+                @endif
+              @endforeach  
             </select>
             </div>
             <div class="form-group">
@@ -845,9 +837,10 @@ thead tr:nth-child(1) th {
             <div class="form-group">
             <label>Type</label>
             <select form="editUnitForm" id="type" name="type" class="form-control">
-                <option value="{{ $home->type }}" readonly selected class="bg-primary">{{ $home->type }}</option>
-                <option value="commercial">commercial</option>
-                <option value="residential">residential</option>
+                <option value="{{ $home->unit_type_id_foreign }}" readonly selected class="bg-primary">{{ $home->unit_type_id_foreign }}</option>
+                @foreach ($room_types as $item)
+                <option value="{{ $item->unit_type_id }}">{{ $item->unit_type }}</option>
+                  @endforeach
             </select>
             </div>
             <input  form="editUnitForm"  type="hidden" name="property_id" value="{{Session::get('property_id')}}">
@@ -876,7 +869,7 @@ thead tr:nth-child(1) th {
       
         </div>
         <div class="modal-footer">
-        <button type="submit" form="editUnitForm" class="btn btn-primary" this.disabled = true;> Update</button>  
+        <button type="submit" form="editUnitForm" class="btn btn-primary btn-sm" this.disabled = true;><i class="fas fa-check"></i> Update</button>  
         </div>
     </div>
     </div>
