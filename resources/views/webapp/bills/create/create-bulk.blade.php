@@ -178,10 +178,10 @@ thead tr:nth-child(1) th {
     <td>
       @if(Carbon\Carbon::parse($item->movein_at)->format('MY') > Carbon\Carbon::now()->format('MY'))
         {{-- amount field for old tenant --}}
-        ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  value="{{ $item->contract_rent }}" required>
+        ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  min="0" value="{{ $item->contract_rent }}" required>
       @else
         {{-- amount field for new tenant --}}
-        ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  value="{{ $prorated_monthly_rent }}"  required>
+        ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  min="0" value="{{ $prorated_monthly_rent }}"  required>
       @endif
     </td>
     @endif
@@ -189,15 +189,15 @@ thead tr:nth-child(1) th {
     {{-- fields for water bill only --}}
     @if($particular->particular_id == 2)
       {{-- water rate field --}}
-      <input form="add_billings" type="hidden" name="rate" step="0.01"  id="rate" value="{{ $property_bill->rate }}" required readonly>
+      <input form="add_billings" type="hidden" name="rate" step="0.01"  id="rate" min="0" value="{{ $property_bill->rate }}" required readonly>
       {{-- previous water consumption --}}
-      <th><input class="" type="number" form="add_billings" step="0.001" name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}" value={{ $item->initial_electric }}></th>
+      <th> <input class="" type="number" form="add_billings" step="0.001" min="0" name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}" value={{ $item->initial_water }}></th>
       {{-- current water consumption --}}
-      <th>        <input class="" type="number" form="add_billings"step="0.001"  name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}" oninput="autoCompute({{ $ctr_current_reading++ }})" ></th>
+      <th> <input class="" type="number" form="add_billings"step="0.001"  min="0" name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}" oninput="autoCompute({{ $ctr_current_reading++ }})" ></th>
        {{-- actual water consumption --}}
-    <th>  <input class="" type="number" form="add_billings" step="0.001" name="consumption{{ $consumption++ }}" id="id_consumption{{ $id_consumption++ }}"  value="0.00" required readonly></th>
+      <th> <input class="" type="number" form="add_billings" step="0.001" min="0"  name="consumption{{ $consumption++ }}" id="id_consumption{{ $id_consumption++ }}"  value="0.00" required readonly></th>
       {{-- amount field --}}
-      <th><input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required readonly></th>
+      <th>₱ <input form="add_billings" type="number" step="0.001" min="0"name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required readonly></th>
     @endif
 
     {{-- electric rate for electric  --}}
@@ -205,17 +205,17 @@ thead tr:nth-child(1) th {
       {{-- electric rate field --}}
      <input form="add_billings" type="hidden" name="rate" step="0.01"  id="rate" value="{{ $property_bill->rate }}" oninput="this.value = Math.abs(this.value)" required>
       {{-- previous electric consumption --}}
-      <th><input class="" type="number" form="add_billings" step="0.001" name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}" value={{ $item->initial_electric }}></th>
+      <th>  <input class="" type="number" form="add_billings" step="0.001" name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}" value={{ $item->initial_electric }}></th>
       {{-- current electric consumption --}}
-      <th>        <input class="" type="number" form="add_billings"step="0.001"  name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}" oninput="autoCompute({{ $ctr_current_reading++ }})" ></th>
+      <th>  <input class="" type="number" form="add_billings"step="0.001"  name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}" oninput="autoCompute({{ $ctr_current_reading++ }})" ></th>
          {{-- electric water consumption --}}
-    <th>  <input class="" type="number" form="add_billings" step="0.001" name="consumption{{ $consumption++ }}" id="id_consumption{{ $id_consumption++ }}"  value="0.00" required readonly></th>
+    <th> <input class="" type="number" form="add_billings" step="0.001" name="consumption{{ $consumption++ }}" id="id_consumption{{ $id_consumption++ }}"  value="0.00" required readonly></th>
       {{-- amount field --}}
-      <th><input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required readonly></th>
+      <th>₱ <input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required readonly></th>
     @endif
        
     @if($particular->particular_id != 1 && $particular->particular_id != 2 && $particular->particular_id != 3)
-    <th><input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required></th>
+    <th>₱ <input form="add_billings" type="number" step="0.001" name="amount{{ $amt_ctr++ }}" id="id_amt{{ $id_amt++ }}" oninput="this.value = Math.abs(this.value)" value="0.00" required></th>
     @endif
    </tr>
    @endforeach

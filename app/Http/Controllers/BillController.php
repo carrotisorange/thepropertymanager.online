@@ -288,13 +288,13 @@ class BillController extends Controller
                         'amount' =>  $request->input('amount'.$i)
                     ]);
                     
-                    if($request->input('particular'.$i) == '3'){
+                    if($request->particular_id == '3'){
                         $contract =  Contract::find($request->input('contract_id'.$i));
                         $contract->initial_electric =  $request->input('current_reading'.$i);
                         $contract->save();
                     }
 
-                    if($request->input('particular'.$i) == '2'){
+                    if($request->particular_id == '2'){
                         $contract =  Contract::find($request->input('contract_id'.$i));
                         $contract->initial_water =  $request->input('current_reading'.$i);
                         $contract->save();
