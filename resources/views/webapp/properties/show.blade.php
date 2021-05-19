@@ -2,6 +2,18 @@
 
 @section('title', 'Dashboard')
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -200,12 +212,12 @@
       @if($top_agents->count() <=0)
       <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
       @else
-      <div class="table-responsive text-nowrap">
-        <table class="table table-condensed table-bordered table-hover">
+      <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+        <table class="table table-hover">
        
          <thead>
           <tr>
-            {{-- <th>#</th> --}}
+             <th>#</th> 
             <th>User</th>
             <th>Role</th>
             <th># Referrals</th>
@@ -216,7 +228,7 @@
            @foreach ($top_agents as $item)
            <tr>
             <?php $explode = explode(" ", $item->name);?>
-            {{-- <th>{{ $agent_ctr++ }}</th> --}}
+            <th>{{ $agent_ctr++ }}</th> 
              <td>{{ $explode[0] }}</td>
              <td>{{ $item->user_type }}</td>
              <td>{{ number_format($item->referrals) }}</td>
@@ -352,12 +364,12 @@
       @if($tenants_to_watch_out->count() <=0)
       <p class="text-success text-center"><i class="fas fa-check-circle"></i> No expiring contracts.</p>
      @else
-     <div class="table-responsive text-nowrap">
-      <table class="table table-condensed table-bordered table-hover">
+     <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+      <table class="table table-hover">
         <thead>
     
           <tr>
-            {{-- <th>#</th> --}}
+            <th>#</th> 
             <th>Tenant</th>
             <th>Room</th>
             <th>Moveout</th>
@@ -373,7 +385,7 @@
           @foreach($tenants_to_watch_out as $item)
          
            <tr>
-              {{-- <th>{{ $expiring_ctr++ }}</th> --}}
+              <th>{{ $expiring_ctr++ }}</th>
                <th>
                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}  
                  </th>
@@ -389,9 +401,9 @@
                
                <td>
                  @if($item->contract_status === 'active')
-                <span class="text-success"><i class="fas fa-check-circle"></i> {{ $item->contract_status }}</span>
+                <span> {{ $item->contract_status }} <i class="fas fa-check-circle text-success"></i> </span>
                  @else
-                 <span class="text-warning"><i class="fas fa-clock"></i> {{ $item->contract_status }}</span>
+                 <span> {{ $item->contract_status }} <i class="fas fa-clock text-warning"></i> </span>
        
                  @endif
                </td>
@@ -445,19 +457,22 @@
               @if($delinquent_accounts->count() <=0)
               <p class="text-success text-center"><i class="fas fa-check-circle"></i> No delinquent tenants.</p>
              @else
-             <div class="table-responsive text-nowrap">
-             <table class="table table-condensed table-bordered table-hover">
+             <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+             <table class="table table-hover">
                 <thead>
                   
                   <tr>
+                    <th>#</th>
                     <th>Tenant</th>
                     <th>Room</th>
                     <th>Balance</th>
                 </tr>
                 </thead>
+                <?php $delinquent_ctr =1; ?>
                 <tbody>
                   @foreach($delinquent_accounts as $item)
                   <tr>
+                    <th>{{ $delinquent_ctr++ }}</th>
                     <th>
           
                       <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
@@ -505,18 +520,21 @@
              @if($pending_concerns->count() <=0)
               <p class="text-success text-center"><i class="fas fa-check-circle"></i> No pending concerns.</p>
              @else
-             <div class="table-responsive text-nowrap">
-              <table class="table table-condensed table-bordered table-hover">
+             <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+              <table class="table table-hover">
                 <thead>
                   <tr>
+                    <th>#</th>
                     <th>Tenant</th>
                     <th>Room</th>
                     <th>Concern</th>
                 </tr>
                 </thead>
+                <?php $pending_concern_ctr =1; ?>
                 <tbody>
                   @foreach($pending_concerns as $item)
                   <tr>
+                    <th>{{ $pending_concern_ctr++ }}</th>
                     <th>
           
                       <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
@@ -556,7 +574,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-<h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS</h6>
+<h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS as of {{ Carbon\Carbon::now()->format('M d, Y H:m:s') }}</h6>
 
 <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/collections">View all</a></small>
   {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
@@ -567,8 +585,8 @@
   @if($collections_for_the_day->count() <=0)
   <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> No collections recorded for today!</p>
   @else
-  <div class="table-responsive text-nowrap">
-    <table class="table table-condensed table-bordered table-hover">
+  <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+    <table class="table table-hover">
       <thead>
 
        <tr>

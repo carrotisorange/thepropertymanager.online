@@ -23,9 +23,9 @@ thead tr:nth-child(1) th {
 
   <div class="col text-right">
     @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager' )
-    <a href="/property/{{ Session::get('property_id') }}/payables/entries" class="btn btn-primary shadow-sm btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add new entry</a>
+    <a href="/property/{{ Session::get('property_id') }}/payables/entries" class="btn btn-primary shadow-sm btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> New entry</a>
     @endif
-    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add new payable request</a>
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New request</a>
   
   </div>
 
@@ -60,13 +60,11 @@ thead tr:nth-child(1) th {
                   
                   <th>Requester</th>
                   <th>Note</th>
-                  <td>Status</td>
+                  <th>Status</th>
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                  <th colspan="2" class="text-center">Actions</th>
+                  <th>Actions</th>
                   @endif
                 
-                  {{-- <th colspan="2" class="text-center">Action</th> --}}
-                  
                 </tr>
               </thead>
               <tbody>
@@ -93,11 +91,33 @@ thead tr:nth-child(1) th {
                     <span>Released <i class="fas fa-clipboard-check text-success"></i></span>
                     {{-- <a title="request released" class="btn btn-success btn-sm" href="#/"><i class="fas fa-clipboard-check"></i></a> --}}
                     @elseif($item->payable_status == 'declined')
-                    <span>Declied <i class="fas fa-times text-danger"></i></span>
+                    <span>Declined <i class="fas fa-times text-danger"></i></span>
                     {{-- <a title="request declined" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-times"></i></a> --}}
                     @endif
                    </td>
-                   @if($item->payable_status == 'pending')
+                   <td>
+                    @if($item->payable_status == 'released')
+
+                    @else
+                    <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action" method="GET" onchange="submit();">
+                      <select class="" name="payable_option" id="">
+                        <option value="">Select your option</option>
+                        @if($item->payable_status != 'approved'  && $item->payable_status != 'released')
+                        <option value="approve">Approve</option>
+                        @endif
+                        
+                        @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
+                        <option value="release">Release</option>
+                        @endif
+                        @if($item->payable_status != 'declined')
+                        <option value="decline">Declined</option>
+                        @endif
+                      </select>
+                    
+                    </form>
+                    @endif
+                   </td>
+                   {{-- @if($item->payable_status == 'pending')
                       @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                       
                       <td class="text-right"> 
@@ -129,12 +149,12 @@ thead tr:nth-child(1) th {
                   </form>
                 
 
-                </td> 
+                </td>  
            
 
-                   @endif
-                    <td></td>
-                   <td></td>
+                   @endif--}}
+                   
+             
                    
                    </tr>
                 @endforeach
@@ -158,7 +178,7 @@ thead tr:nth-child(1) th {
                   <th>Requester</th>
                   <th>Note</th>
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                  <th colspan="2" class="text-center">Actions</th>
+                  <th>Actions</th>
                   @endif
                 
                   {{-- <th colspan="2" class="text-center">Action</th> --}}
@@ -177,31 +197,26 @@ thead tr:nth-child(1) th {
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
                    
-                    @if($item->payable_status == 'pending')
-                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                    <td class="text-right"> 
-                      
-                      <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/decline" method="POST">
-                      @csrf
-                      <button title="decline this payable request" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-times"></i></button>
-                    </form>
-                 
- 
-                  </td> 
-                  <td class="text-left">
-                    <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/approve" method="POST">
-                      @csrf
-            
-                      <button title="approve this payable request" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i></button>
-                    </form>
-                  </td> 
                    
-                  
-                  @endif 
-                    @else
-                  <td></td>
-                  <td></td>
- 
+                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                    <td>
+                      <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action" method="GET" onchange="submit();">
+                        <select class="" name="payable_option" id="">
+                          <option value="">Select your option</option>
+                          @if($item->payable_status != 'approved'  && $item->payable_status != 'released')
+                          <option value="approve">Approve</option>
+                          @endif
+                          
+                          @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
+                          <option value="release">Release</option>
+                          @endif
+                          @if($item->payable_status != 'declined')
+                          <option value="decline">Declined</option>
+                          @endif
+                        </select>
+                      
+                      </form>
+                    </td>
                     @endif
                    
                    </tr>
@@ -245,12 +260,25 @@ thead tr:nth-child(1) th {
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
                     <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
                     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap'|| Auth::user()->user_type === 'admin')
-                    <td class="text-center"> 
-                      <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/release" method="POST">
-                      @csrf
-                      <button title="release the requested funds" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i></button>
-                    </form>
-                  @endif
+                    <td>
+                      <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action" method="GET" onchange="submit();">
+                        <select class="" name="payable_option" id="">
+                          <option value="">Select your option</option>
+                          @if($item->payable_status != 'approved'  && $item->payable_status != 'released')
+                          <option value="approve">Approve</option>
+                          @endif
+                          
+                          @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
+                          <option value="release">Release</option>
+                          @endif
+                          @if($item->payable_status != 'declined')
+                          <option value="decline">Declined</option>
+                          @endif
+                        </select>
+                      
+                      </form>
+                    </td>
+                    @endif
                    
                    </tr>
                 @endforeach
@@ -350,7 +378,7 @@ thead tr:nth-child(1) th {
   <div class="modal-dialog modal-xl" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" >Request payable</h5>
+      <h5 class="modal-title" id="exampleModalLabel" >New request</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -361,13 +389,13 @@ thead tr:nth-child(1) th {
           @csrf
        </form>
            
-       <a href="#/" id='delete_request' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current row</a>
-              <a href="#/" id="add_request" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add new row</a>  
+       <a href="#/" id='delete_request' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove</a>
+              <a href="#/" id="add_request" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>  
       
-              <button form="requestFundsForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Requested funds (<span id="current_no_of_entry"></span>)</button>   
+              <button form="requestFundsForm" type="submit" class="btn btn-success btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>Submit (<span id="current_no_of_entry"></span>)</button>   
         <br><br>
-              <div class="table-responsive text-nowrap">
-                <table class = "table table-condensed table-border" id="request_table">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+                <table class = "table table-hover" id="request_table">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -402,7 +430,7 @@ thead tr:nth-child(1) th {
      var j=1;
          
          $("#add_request").click(function(){
-             $('#request'+j).html("<th>"+ (j) +"</th><td><input form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input form='requestFundsForm' id='amt"+j+"' name='amt"+j+"' type='number' step='0.001' required></td><td><input form='requestFundsForm' name='note"+j+"' type='text'></td>");
+             $('#request'+j).html("<th>"+ (j) +"</th><td><input class='form-control' form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select class='form-control' form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input class='form-control' form='requestFundsForm' id='amt"+j+"' name='amt"+j+"' type='number' step='0.001' required></td><td><input class='form-control' form='requestFundsForm' name='note"+j+"' type='text'></td>");
      
      
           $('#request_table').append('<tr id="request'+(j+1)+'"></tr>');

@@ -51,7 +51,7 @@ thead tr:nth-child(1) th {
               @else
               <th>Room</th>
               @endif
-              <th>Title</th>
+              <th>Summary</th>
               <th>Urgency</th>
               <th>Status</th> 
               <th>Assigned to</th>
@@ -140,7 +140,7 @@ thead tr:nth-child(1) th {
               @else
               <th>Room</th>
               @endif
-              <th>Title</th>
+              <th>Summary</th>
               <th>Urgency</th>
              
               <th>Assigned to</th>
@@ -221,7 +221,7 @@ thead tr:nth-child(1) th {
               @else
               <th>Room</th>
               @endif
-              <th>Title</th>
+              <th>Summary</th>
               <th>Urgency</th>
             
               <th>Assigned to</th>
@@ -302,7 +302,7 @@ thead tr:nth-child(1) th {
               @else
               <th>Room</th>
               @endif
-              <th>Title</th>
+              <th>Summary</th>
               <th>Urgency</th>
               
               <th>Assigned to</th>

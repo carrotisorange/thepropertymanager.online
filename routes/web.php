@@ -419,9 +419,10 @@ Route::get('/property/{property_id}/payables', 'PayableController@index')->middl
 Route::get('/property/{property_id}/payables/entries', 'PayableController@entries')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/payable', 'PayableController@store')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/payable/request', 'PayableController@request')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/payable/{payable_id}/approve', 'PayableController@approve')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/payable/{payable_id}/decline', 'PayableController@decline')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/payable/{payable_id}/release', 'PayableController@release')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/payable/{payable_id}/approve', 'PayableController@approve')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/payable/{payable_id}/decline', 'PayableController@decline')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/payable/{payable_id}/release', 'PayableController@release')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/payable/{payable_id}/action', 'PayableController@action')->middleware(['auth', 'verified']);
 
 //routes for tenant users
 Route::get('/property/{property_id}/users', 'UserController@index')->middleware(['auth', 'verified']);

@@ -2,6 +2,17 @@
 
 @section('title',  $user->name )
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -34,7 +45,7 @@
       <br>
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
-            <table class="table table-condensed">
+            <table class="table table-hover">
              <thead>
               <tr>
                 <th>Name</th>
@@ -91,8 +102,8 @@
             </div>
             
       <div class="col-md-12 mx-auto">
-        <div class="table-responsive text-nowrap">
-          <table class="table table-condensed">
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+          <table class="table table-hover">
             <?php $ctr = 1; ?>
             <thead>
             <tr>
@@ -135,8 +146,8 @@
    <br>
 
       <div class="col-md-12 mx-auto">
-        <div class="table-responsive text-nowrap">
-          <table class="table table-condensed">
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+          <table class="table table-hover">
             <?php $ctr = 1; ?>
             <thead>
             <tr>
@@ -194,8 +205,8 @@
       <br>
    
          <div class="col-md-12 mx-auto">
-           <div class="table-responsive text-nowrap">
-             <table class="table table-condensed">
+           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+             <table class="table table-hover">
                <?php $ctr = 1; ?>
                <thead>
                <tr>

@@ -2,6 +2,19 @@
 
 @section('title',   $concern->details)
 
+
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('css')
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
@@ -37,9 +50,30 @@ font-family: FontAwesome;
 @endsection
 
 @section('upper-content')
+
+@if($responses->count() <= 0)
+<br>
+<div class="row">
+  <div class="col">
+   
+    <div class="alert alert-danger alert-dismissable custom-danger-box">
+      
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+       
+            <strong><i class="fas fa-exclamation-triangle"></i> The tenant is waiting for your response. Please provide them with an update.  </strong>
+          
+        
+    </div>
+
+  </div>
+</div>
+@endif
+
 <div class="row align-items-center py-4">
   <div class="col-lg-6">
-    <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
+    <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
+    {{-- <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
       ( 
           @if($concern->status === 'pending')
           <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
@@ -49,10 +83,22 @@ font-family: FontAwesome;
           <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
           @endif
       )
-  </h6>
+  </h6> --}}
   </div>
 
   <div class="col-md-6 text-right">
+    <h6 class="h2 text-dark d-inline-block mb-0">Status: 
+       
+          @if($concern->status === 'pending')
+          <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
+          @elseif($concern->status === 'active')
+          <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
+          @else
+          <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
+          @endif
+      ,
+  </h6>
+
       <h6 class="h2 text-dark d-inline-block mb-0">Urgency:
           @if($concern->urgency === 'urgent')
           <span class="badge badge-danger">{{ $concern->urgency }}</span>
@@ -62,30 +108,31 @@ font-family: FontAwesome;
           <span class="badge badge-primary">{{ $concern->urgency }}</span>
           @endif
       </h6>
+      
   </div>
 </div>
-<div class="row">
+{{-- <div class="row">
   <div class="col-md-12">
     <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
   </div>
-</div>
+</div> --}}
 
 <div class="row">
 
   <div class="col-md-7">
     @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
     @if($concern->status != 'closed')
-    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary btn-sm"><i class="fas fa-edit text-dark-50"></i> Edit concern</a> 
+    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary btn-sm"><i class="fas fa-edit text-dark-50"></i> Edit</a> 
     @endif 
     @if($concern->concern_user_id)
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Reforward a concern</a>
+    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Reforward</a>
     @else
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward a concern</a>
+    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward</a>
     @endif
     @if($personnels->count()<=0)
-    <a href="#" data-toggle="modal" data-target="#addPersonnel" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> File a job order</a>
+    <a href="#" data-toggle="modal" data-target="#addPersonnel" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New joborder</a>
     @else
-    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> File a job order</a>
+    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New joborder</a>
     @endif
    @endif
   <br><br>
@@ -93,7 +140,7 @@ font-family: FontAwesome;
       @foreach ($concern_details as $concern)
           
    
-      <table class="table table-condensed table-bordered table-hover">
+      <table class="table table-hover">
         <thead>
         <tr>
           <th>Date Reported</th>
@@ -103,7 +150,7 @@ font-family: FontAwesome;
         <thead>
            <tr>
                 <th>Reported by</th>
-                <th><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></th>
+                <td><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></td>
            </tr>  
            
           </tr>
@@ -116,9 +163,9 @@ font-family: FontAwesome;
             <th>Room</th>
             @endif
             @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-            <th><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></th>
+            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></td>
             @else
-            <th><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></th>
+            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></td>
             @endif
            
             
@@ -164,7 +211,7 @@ font-family: FontAwesome;
        <thead>
        <tr>
          <th>Assigned to</th>
-         <th><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></th>
+         <td><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></td>
        </tr>
       </thead>
        <thead>
@@ -189,7 +236,7 @@ font-family: FontAwesome;
     <div class="row">
       <div class="col">
      
-        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> Add response</a> 
+        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New response</a> 
         
        </div>
      </div>
@@ -242,7 +289,7 @@ font-family: FontAwesome;
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Edit Concern Information</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Edit Concern</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
@@ -327,7 +374,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
 
-          <button form="editConcernDetailsForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Update</button>
+          <button form="editConcernDetailsForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
       </div>
   </div>
   </div>
@@ -467,7 +514,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
 
-          <button form="forwardConcernForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"> Forward Concern</button>
+          <button form="forwardConcernForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
       </div>
   </div>
   </div>

@@ -501,7 +501,6 @@ class PropertyController extends Controller
         ->where('property_id_foreign', Session::get('property_id') )
         ->groupBy('id')
         ->orderBy('referrals', 'desc')
-        ->limit(5)
         ->get();
 
 $units = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
@@ -829,7 +828,7 @@ $expenses_rate->dataset
           ->groupBy('unit_id')
           ->orderBy('balance', 'desc')
           ->havingRaw('balance > 0')
-          ->simplePaginate(5);
+          ->get();
     }else{
         $delinquent_accounts = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
           ->leftJoin('payments', 'bill_id','payment_bill_id')
@@ -841,7 +840,7 @@ $expenses_rate->dataset
           ->groupBy('tenant_id')
           ->orderBy('balance', 'desc')
           ->havingRaw('balance > 0')
-          ->simplePaginate(5);
+          ->get();
     }
 
 
@@ -1035,7 +1034,7 @@ $length_of_stay->dataset
 ->where('contracts.status','<>', 'inactive')
 ->where('moveout_at', '<=', Carbon::now()->addMonth())
 ->orderBy('moveout_at', 'asc')
-->paginate(5);
+->get();
 
 $pending_concerns = DB::table('contracts')
 ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -1263,6 +1262,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->leftJoin('units', 'unit_id_foreign', 'unit_id')
     ->leftJoin('bills', 'unit_id', 'bill_unit_id')
     ->leftJoin('payments', 'payment_bill_id', 'bill_id')
+    ->join('particulars','particular_id_foreign', 'particular_id')
     ->where('property_id_foreign', Session::get('property_id'))
     ->whereDate('payment_created', Carbon::now())
     ->orderBy('payment_created', 'desc')
@@ -1276,6 +1276,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->leftJoin('units', 'unit_id_foreign', 'unit_id')
     ->leftJoin('bills', 'tenant_id', 'bill_tenant_id')
     ->leftJoin('payments', 'payment_bill_id', 'bill_id')
+    ->join('particulars','particular_id_foreign', 'particular_id')
     ->where('property_id_foreign', Session::get('property_id'))
     ->whereDate('payment_created', Carbon::now())
     ->orderBy('payment_created', 'desc')

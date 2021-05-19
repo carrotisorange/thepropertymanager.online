@@ -39,7 +39,7 @@ class PayableController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-            $all = DB::table('payable_request')
+             $all = DB::table('payable_request')
             ->join('users', 'requester_id', 'users.id')
             ->join('payable_entry', 'entry_id', 'payable_entry.id')
             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
@@ -57,13 +57,13 @@ class PayableController extends Controller
             ->get();
      
             $approved = DB::table('payable_request')
-            ->join('users', 'requester_id', 'users.id')
-            ->join('payable_entry', 'entry_id', 'payable_entry.id')
-            ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
-           ->where('payable_request.status', 'approved')
-           ->where('payable_entry.property_id_foreign', Session::get('property_id'))
-           ->orderBy('approved_at', 'desc')
-           ->get();
+             ->join('users', 'requester_id', 'users.id')
+             ->join('payable_entry', 'entry_id', 'payable_entry.id')
+             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
+            ->where('payable_request.status', 'approved')
+            ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+            ->orderBy('requested_at', 'desc')
+            ->get();
 
            $released = DB::table('payable_request')
            ->join('users', 'requester_id', 'users.id')
@@ -89,6 +89,16 @@ class PayableController extends Controller
              return view('layouts.arsha.unregistered');
     }
 
+}
+
+public function action(Request $request, $property_id, $payable_id){
+    if($request->payable_option == 'approve'){
+        return redirect('/property/'.$request->property_id.'/payable/'.$payable_id.'/approve/');
+    }elseif($request->payable_option == 'release'){
+        return redirect('/property/'.$request->property_id.'/payable/'.$payable_id.'/release/');
+    }elseif($request->payable_option == 'decline'){
+        return redirect('/property/'.$request->property_id.'/payable/'.$payable_id.'/decline/');
+    }
 }
 
 public function entries($property_id){
