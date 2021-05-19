@@ -22,7 +22,7 @@
   <body>
     <div class="container-fluid">
         <div class="row text-center">
-            <div class="col-md-11">
+            <div class="col-md-12">
               <table class="table table-condensed table-borderless">
                
                 <tr>
@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-12">
               <table class="table table-condensed table-borderless">
                 <tr>
                   <td>To: {{ $tenant }}</td>
@@ -73,7 +73,7 @@
           <table class="table table-condensed table-bordered">
             <tr>
              
-              <th>#</th>
+              {{-- <th>#</th> --}}
               <th>AR No</th>
               <th>Bill No </th>
            
@@ -86,7 +86,7 @@
             </tr>
             @foreach ($collections as $item)
             <tr>
-             <th>{{ $ctr++ }}</th>
+             {{-- <th>{{ $ctr++ }}</th> --}}
              <td>{{ $item->ar_no }}</td>
               <td>{{ $item->payment_bill_no }}</td>
             
@@ -106,7 +106,7 @@
             @endforeach
         </table>
         <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-12">
               <table class="table table-condensed table-borderless">
                 <tr>
                   <th>Total</th>
