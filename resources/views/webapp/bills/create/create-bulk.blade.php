@@ -56,7 +56,7 @@ thead tr:nth-child(1) th {
       @endif
 
       {{-- period covered  --}}
-      <th colspan="2">Period Covered</th>     
+      <th>Period Covered</th>     
 
       {{-- # of days for rent bill  --}}
       @if($particular->particular_id == 1)
@@ -66,9 +66,9 @@ thead tr:nth-child(1) th {
       @endif
     {{-- water rate for electric  --}}
       @if($particular->particular_id == 2)
-        <th>
+        {{-- <th>
           Water rate/cum
-        </th>
+        </th> --}}
         <th>
           Previous
         </th>
@@ -80,11 +80,11 @@ thead tr:nth-child(1) th {
 
     {{-- electric rate for electric  --}}
     @if($particular->particular_id == 3)
-      <th>
+      {{-- <th>
         Electric rate/kwh
-      </th>
+      </th> --}}
       <th>
-        Previou
+        Previous
       </th>
       <th>
         Current
@@ -152,13 +152,13 @@ thead tr:nth-child(1) th {
       {{-- period covered field --}}
       @if(Carbon\Carbon::parse($item->movein_at)->format('MY') > Carbon\Carbon::now()->format('MY'))
       {{-- period covered for old tenant --}}
-      <td colspan="2">
+      <td>
         <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::now()->startOfMonth()->format('Y-m-d') }}" required>
         <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
       </td>
       {{-- period covered for new tenant --}}
       @else
-      <td colspan="2">
+      <td>
         <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($item->movein_at)->format('Y-m-d') }}" required>
         <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
       </td>
@@ -189,7 +189,7 @@ thead tr:nth-child(1) th {
     {{-- fields for water bill only --}}
     @if($particular->particular_id == 2)
       {{-- water rate field --}}
-      <th><input form="add_billings" type="number" name="rate" step="0.01"  id="rate" value="{{ $property_bill->rate }}" required readonly></th>
+      <input form="add_billings" type="hidden" name="rate" step="0.01"  id="rate" value="{{ $property_bill->rate }}" required readonly>
       {{-- previous water consumption --}}
       <th><input class="" type="number" form="add_billings" step="0.001" name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}" value={{ $item->initial_electric }}></th>
       {{-- current water consumption --}}
@@ -203,7 +203,7 @@ thead tr:nth-child(1) th {
     {{-- electric rate for electric  --}}
     @if($particular->particular_id == 3)
       {{-- electric rate field --}}
-      <th><input form="add_billings" type="number" name="rate" step="0.01"  id="rate" value="{{ $property_bill->rate }}" oninput="this.value = Math.abs(this.value)" required></th>
+     <input form="add_billings" type="hidden" name="rate" step="0.01"  id="rate" value="{{ $property_bill->rate }}" oninput="this.value = Math.abs(this.value)" required>
       {{-- previous electric consumption --}}
       <th><input class="" type="number" form="add_billings" step="0.001" name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}" value={{ $item->initial_electric }}></th>
       {{-- current electric consumption --}}
@@ -237,6 +237,9 @@ thead tr:nth-child(1) th {
      <div class="modal-body">
       <form id="periodCoveredForm" action="/property/{{Session::get('property_id')}}/bill/{{ $particular->particular_id }}/update" method="POST">
         @csrf
+        @method('PUT')
+        <input type="hidden" form="periodCoveredForm" value="true" name="options">
+        <input type="hidden" form="periodCoveredForm" value="{{ $property_bill->property_bill_id }}" name="particular_id">
       <div class="row">
         <div class="col">
         <label for="">Start of the billing period</label>
@@ -250,6 +253,20 @@ thead tr:nth-child(1) th {
         <input class="form-control" form="periodCoveredForm" type="date" name="end" value="{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
       </div>
       </div>
+      <br>
+      {{-- Water --}}
+      @if($particular->particular_id == 2)
+      <div class="row">
+        <div class="col">
+        <label for="">Rate/CuM</label>
+        <input class="form-control" form="periodCoveredForm" type="number" name="water_rate" step="0.001" min="0" value="{{ $property_bill->rate }}" required>
+      </div>
+      </div>
+      {{-- Electric --}}
+      @elseif($particular->particular_id == 3)
+      <label for="">Rate/KW</label>
+      <input class="form-control" form="periodCoveredForm" type="number" name="electric_rate" step="0.001" min="0" value="{{ $property_bill->rate }}" required>
+      @endif
 
 
     </div>

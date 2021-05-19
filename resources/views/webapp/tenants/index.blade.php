@@ -19,7 +19,7 @@ thead tr:nth-child(1) th {
   <div class="col-md-3">
    <form action="/property/{{ Session::get('property_id') }}/tenants/filter" method="GET" onchange="submit();">
     <select class="form-control" name="tenant_status" id="">
-      <option value="">All tenants</option>
+      <option value="all">All tenants</option>
       @foreach ($tenant_status as $item)
           <option value="{{ $item->status }}">{{ $item->status }} tenants only</option>
       @endforeach

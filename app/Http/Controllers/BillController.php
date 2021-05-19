@@ -170,16 +170,46 @@ class BillController extends Controller
          }
     }
 
-    public function create_bulk_bills(Request $request){
-
-        $selected_particular = explode("-", $request->particular_id);
-
-        $particular_id = $selected_particular[0];
-        $property_bill_id =  $selected_particular[1];
+    public function create_bulk_bills(Request $request,$property_id, $bill_id){
     
-        $particular = Particular::findOrFail($particular_id);
 
-        $property_bill = PropertyBill::findOrFail($property_bill_id);
+        if($request->options == 'true'){
+            if($request->bill_id == '2'){
+                 DB::table('property_bills')
+                ->where('particular_id_foreign', $bill_id)
+                ->update(
+                    [
+                        'rate' => $request->water_rate
+                    ]
+                );
+            }else{
+                if($request->bill_id == '3'){
+                     DB::table('property_bills')
+                    ->where('particular_id_foreign', $bill_id)
+                    ->update(
+                        [
+                            'rate' => $request->electric_rate
+                        ]
+                    );
+            }
+        }
+
+        $particular = Particular::findOrFail($bill_id);
+
+         $property_bill = PropertyBill::findOrFail($request->particular_id);
+    
+        }else{
+       
+            $selected_particular = explode("-", $request->particular_id);
+
+             $particular_id = $selected_particular[0];
+            $property_bill_id =  $selected_particular[1];
+        
+             $particular = Particular::findOrFail($particular_id);
+
+            $property_bill = PropertyBill::findOrFail($property_bill_id);
+        }
+        
 
         $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')

@@ -3,7 +3,7 @@
                     <div class="modal-dialog modal-md" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Concern Information</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New Concern</h5>
                 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -23,7 +23,7 @@
                           <br>
                           <div class="row">
                             <div class="col">
-                                <label>Title</label>
+                                <label>Summary</label>
                               
                                 <input type="text" form="concernForm" class="form-control" name="title" placeholder="Uncessary charges to my account" required >
                             </div>
