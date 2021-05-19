@@ -126,7 +126,7 @@ thead tr:nth-child(1) th {
                 </td>
                 {{-- <td>{{ $item->form }}</td> --}}
                 
-                <th>
+                <th> ₱
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
                  <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
                   @else
