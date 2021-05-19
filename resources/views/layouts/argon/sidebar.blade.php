@@ -199,12 +199,12 @@
                 @if(Session::get('current-page') === 'daily-collection-report')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/collections">
                   <i class="fas fa-coins text-yellow"></i>
-                  <span class="nav-link-text">Daily Collections</span>
+                  <span class="nav-link-text">Collections</span>
                 </a>
                 @else
                 <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
                   <i class="fas fa-coins text-yellow"></i>
-                  <span class="nav-link-text">Daily Collections</span>
+                  <span class="nav-link-text">Collections</span>
                 </a>
                 @endif
             </li>

@@ -237,7 +237,7 @@
 <div class="row">
   <div class="col-md-12">
     <p class="text-right">
-      <button type="submit" form="remittanceForm" class="btn btn-primary">Process Remittance</button>
+      <button type="submit" form="remittanceForm" class="btn btn-primary btn-sm">Process Remittance</button>
     </p>
   </div>
 </div>

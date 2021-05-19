@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Daily Collection Reports')
+@section('title', 'Collections')
 
 @section('css')
  <style>
@@ -17,7 +17,7 @@ thead tr:nth-child(1) th {
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Daily Collection Reports</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Collections</h6>
     
   </div>
   
@@ -57,6 +57,7 @@ thead tr:nth-child(1) th {
       {{-- <th>#</th> --}}
       <th>AR No</th>
       <th>Bill No</th>
+      <th>Date</th>
       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
       <th></th>
       @else
@@ -79,10 +80,10 @@ thead tr:nth-child(1) th {
       @foreach ($collections as $day => $collection_list)
       <?php $ctr=1;?>
       
-        <tr>
+        {{-- <tr>
            <th colspan="7" class="">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}} ({{ $collection_list->count() }} collections/s) {{ number_format($collection_list->sum('amt_paid'),2) }} <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
            
-        </tr>
+        </tr> --}}
     
    
       
@@ -100,7 +101,7 @@ thead tr:nth-child(1) th {
                 <td>{{ $item->payment_bill_no }}</td>
                 {{-- <td><a href="units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td> --}}
 
-                
+                <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
                 <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                   <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
