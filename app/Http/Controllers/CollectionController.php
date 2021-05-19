@@ -347,6 +347,65 @@ class CollectionController extends Controller
    
     }
 
+    public function export_all($property_id, $tenant_id){
+        
+        $tenant = Tenant::findOrFail($tenant_id);
+
+         $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+        ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+        
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->where('bill_tenant_id', $tenant_id)
+        ->groupBy('payment_id')
+        ->orderBy('payment_created', 'desc')
+       ->get();
+
+        $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+        ->where('bill_tenant_id', $tenant_id)
+        
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+
+        $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
+
+        $current_room = Unit::findOrFail($room_id);
+        
+        $data = [
+                    'tenant' => $tenant->first_name.' '.$tenant->last_name ,
+                    'current_room' => $current_room->building.' '.$current_room->unit_no,
+                    'collections' => $collections,
+                    'balance' => $balance
+                ];
+
+            
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'payment';
+        
+        $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' payments.';
+        $notification->save();
+
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+         $pdf = \PDF::loadView('webapp.collections.export-all', $data)
+         ->setPaper('a5', 'portrait');
+ 
+        // $pdf->setPaper('L');
+         $pdf->output();
+         $canvas = $pdf->getDomPDF()->getCanvas();
+         $height = $canvas->get_height();
+         $width = $canvas->get_width();
+         $canvas->set_opacity(.1,"Multiply");
+         $canvas->page_text($width/5, $height/4 , Session::get('property_name'), null,
+          28, array(0,0,0),5,0,0);
+         return $pdf->stream();
+    }
+
     public function export_collection_per_day($property_id, $payment_created){
 
          $collections = DB::table('contracts')

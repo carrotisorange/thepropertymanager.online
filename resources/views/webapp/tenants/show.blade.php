@@ -675,8 +675,10 @@ thead tr:nth-child(1) th {
           <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
           @endif
         @endif 
+        <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/payments/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export</span></a>
         <br><br>
         @if($payments->count() < 1)
+        
         <p class="text-danger text-center">No payments found!</p>
         @else
         <div class="col-md-12">
@@ -746,7 +748,7 @@ thead tr:nth-child(1) th {
                           
                           @else
                           <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-success"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a> 
-                          <a title="export" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
+                        
                           @endif
                           
                         </td>   

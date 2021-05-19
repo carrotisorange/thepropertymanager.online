@@ -565,6 +565,7 @@ Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}',
 
 //export payments per tenant
 Route::get('/property/{property_id}/unit/{unit_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/tenant/{tenant_id}/payments/export', 'CollectionController@export_all')->middleware(['auth', 'verified']);
 
 //export payments per unit per tenant
 Route::get('/property/{property_id}/unit/{unit_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export_unit_bills', 'CollectionController@export_unit_bills')->middleware(['auth', 'verified']);

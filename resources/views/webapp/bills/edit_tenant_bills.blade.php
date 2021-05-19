@@ -2,6 +2,20 @@
 
 @section('title', $tenant->first_name.' '.$tenant->last_name)
 
+
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
+
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-9 text-left">
@@ -33,8 +47,8 @@
     <p class="text-danger text-center">No bills found!</p>
     @else
 
-    <div class="table-responsive text-nowrap">
-      <table class="table table-condensed">
+    <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+      <table class="table table-hover">
         <?php $ctr=1; ?>
         <thead>
           <tr>
@@ -58,56 +72,6 @@
         ?>
         <tbody>
         @foreach ($balance as $item)
-        {{-- @if($item->bill_status === 'deleted')
-        <tr>
-          <th class="text-center">{{ $ctr++ }}</th>
-          <th>
-     
-       <strike>
-        {{ $item->bill_no }} <input form="editBillsForm" type="hidden" name="billing_id_ctr{{ $billing_id_ctr++ }}" value="{{ $item->bill_id }}">
-       </strike>
-       
-      </th>
-          <td>{{$item->unit_no}}</td>
-          <td>
-            <select class="form-control" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
-              <option value='{{ $item->particular }}' selected>{{ $item->particular }}</option>
-              <option value='Advance Rent'>Advance Rent</option>
-              <option value='Electric'>Electric</option>
-              <option value='Rent'>Rent</option>
-              <option value='Security Deposit (Rent)'>Security Deposit (Rent)</option>
-              <option value='Security Deposit (Utilities)'>Security Deposit (Utilities)</option>
-              <option value='Surcharge'>Surcharge</option>
-              <option value='Water'>Water</option>
-            </select>
-          </td>
-          <td>
-            <input class="form-control" form="editBillsForm" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
-          </td>
-          <td>
-            <input class="form-control" form="editBillsForm"  type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
-          </td>
-          <td><input class="form-control" form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
-          <td>
-            @if(Auth::user()->user_type === 'manager')
-            @if($item->bill_status === 'deleted')
-            <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/restore" method="POST">
-              @csrf
-              @method('put')
-              <button title="restore this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash-restore fa-sm text-white-50"></i></button>
-            </form>
-            @else
-            <form action="/property/{{ $property->property_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/delete" method="POST">
-              @csrf
-              @method('delete')
-              <button title="archive this bill" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-            </form>
-            @endif
-            
-            @endif
-          </td>   
-        </tr>
-        @else --}}
         <tr>
           <th class="text-center">{{ $ctr++ }}</th>
           <th>
@@ -117,19 +81,20 @@
           </th>
           {{-- <td>{{$item->unit_no}}</td> --}}
           <td>
-            <select class="" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
+            <select class="form-control" form="editBillsForm" name="particular_ctr{{ $particular_ctr++ }}" required>
               <option value='{{ $item->particular_id_foreign }}' selected>{{ $item->particular }} (selected)</option>
               @foreach ($property_bills as $particular)
                 <option value='{{ $particular->particular_id_foreign }}'>{{ $particular->particular }}</option>
               @endforeach
             </select>
           </td>
-          <td colspan="2">
-            <input form="editBillsForm" class="" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
-          
-            <input form="editBillsForm"  class="" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
+          <td>
+            <input form="editBillsForm" class="form-control" type="date" name="start_ctr{{ $start_ctr++ }}" value="{{ $item->start? Carbon\Carbon::parse($item->start)->format('Y-m-d') : null}}"> 
           </td>
-          <td><input form="editBillsForm" class="" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->amount }}"></td>
+          <td>
+            <input form="editBillsForm"  class="form-control" type="date" name="end_ctr{{ $end_ctr++ }}" value="{{ $item->end? Carbon\Carbon::parse($item->end)->format('Y-m-d') : null }}">
+          </td>
+          <td><input form="editBillsForm" class="form-control" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->amount }}"></td>
           {{-- <td>
             @if(Auth::user()->user_type === 'manager')
               @if($item->bill_status === 'deleted')

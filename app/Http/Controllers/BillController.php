@@ -1176,8 +1176,8 @@ DB::table('properties')
         $height = $canvas->get_height();
         $width = $canvas->get_width();
         $canvas->set_opacity(.1,"Multiply");
-        $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
-         28, array(0,0,0),2,2,0);
+        $canvas->page_text($width/5, $height/4 , Session::get('property_name'), null,
+          28, array(0,0,0),5,0,0);
         return $pdf->stream();
 
         //return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');

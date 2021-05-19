@@ -28,11 +28,7 @@
         <div class="row text-center">
           <div class="col-md-11">
             <table class="table table-condensed table-borderless">
-              {{-- <tr>
-                <th></th>
-                <th>{{ Session::get('property_name') }}</th>
-                <th></th>
-              </tr> --}}
+
               <tr>
                 <th></th>
                 <td>ACCOUNTING DEPARTMENT</td>
@@ -40,7 +36,7 @@
               </tr>
               <tr>
                 <th></th>
-                <td>{{ Session::get('property_address') }}</td>
+                <td>{{ Session::get('property_name').', '.Session::get('property_address') }}</td>
                 <th></th>
               </tr>
               <tr>
@@ -203,7 +199,7 @@
                <td> Prepared by: {{ Auth::user()->name }}
                <br>{{ Auth::user()->user_type }}</td>
                <th></th>
-               <td> Noted by: 
+               <td  class="text-right"> Noted by: 
                  <br>Accounting Head</td>
              </tr>
               </table>
