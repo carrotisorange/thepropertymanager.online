@@ -695,7 +695,7 @@ thead tr:nth-child(1) th {
                     <th>Form</th>
                     <th class="text-right">Amount</th>
                    
-                    <th colspan="3" class="text-center">Action</th> 
+                    <th colspan="" class="text-center">Action</th> 
                     
               </tr>
               </thead>
@@ -727,7 +727,7 @@ thead tr:nth-child(1) th {
                         <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                          
                          
-                         <td class="text-left">
+                         {{-- <td class="text-left">
                          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
                          @if($item->payment_status === 'deleted')
                          
@@ -740,12 +740,12 @@ thead tr:nth-child(1) th {
                          @endif
                          
                           @endif
-                        </td>   
+                        </td>    --}}
                         <td class="text-right">
                           @if($item->payment_status === 'deleted')
                           
                           @else
-                          {{-- <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-success"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a> --}}
+                          <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-success"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a> 
                           <a title="export" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
                           @endif
                           
@@ -988,7 +988,7 @@ thead tr:nth-child(1) th {
     });
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option>@foreach($property_bills as $item)<option value='{{$item->particular_id}}'>{{ $item->particular }}</option>@endforeach</select> <td><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' value='{{ $tenant->movein_date }}' required></td> <td><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select class='form-control' name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option>@foreach($property_bills as $item)<option value='{{$item->particular_id}}'>{{ $item->particular }}</option>@endforeach</select> <td><input class='form-control' form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' value='{{ $tenant->movein_date }}' required></td> <td><input class='form-control' form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' value='{{ $tenant->moveout_date }}' required></td> <td><input class='form-control' form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      
@@ -1021,7 +1021,7 @@ thead tr:nth-child(1) th {
     $(document).ready(function(){
     var j=1;
     $("#add_payment").click(function(){
-        $('#payment'+j).html("<th>"+ (j) +"</th><td><select form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($balance as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select one</option> @foreach ($balance as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value=''>Please select one</option><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option><option value='Credit memo'>Credit memo - Reduce bill amount to x.</option></select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.001' min='0' required></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
   
   
      $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');

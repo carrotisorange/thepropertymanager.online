@@ -1,4 +1,5 @@
 
+
 <div class="modal fade" id="acceptPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
@@ -17,7 +18,7 @@
             <div class="row">
                 <div class="col-md-3">Date
            {{-- <input type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required> --}}
-                <input type="date" form="acceptPaymentForm" class="" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="payment_created" required >
+                <input type="date" class='form-control' form="acceptPaymentForm" class="" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="payment_created" required >
                 </div>
                 <div class="col">
                     <p class="text-right">
@@ -33,13 +34,13 @@
             <div class="row">
               <div class="col">
                   <div class="table-responsive text-nowrap">
-                  <table class = "table table-condensed table-bordered table-hover" id="payment">
+                  <table class = "table table-hover" id="payment">
                      <thead>
                         <tr>
                             <th>#</th>
                             <th>Bill</th>
+                            <th>Payment mode</th>
                             <th>Amount</th>
-                            <th>Form of Payment</th>
                             <th>Bank Name</th>
                             <th>Cheque No</th>
                         </tr>

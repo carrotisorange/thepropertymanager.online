@@ -120,6 +120,7 @@ class BillController extends Controller
     }
 
     public function filter(Request $request){
+
         Session::put('current-page', 'bulk-billing');
 
         $property_bills = DB::table('particulars')
@@ -140,29 +141,32 @@ class BillController extends Controller
  
          if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
 
- 
-         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-             $bills = DB::table('contracts')
-             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-             ->join('units', 'unit_id_foreign', 'unit_id')
-             ->join('bills', 'unit_id', 'bill_unit_id')
-             ->where('property_id_foreign', Session::get('property_id'))
-             ->where('particular_id_foreign', $request->particular)
-             ->orderBy('date_posted', 'desc')
-             ->groupBy('bill_id')
-             ->get();
-        
-         }else{
-             $bills = DB::table('contracts')
-             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-             ->join('units', 'unit_id_foreign', 'unit_id')
-             ->join('bills', 'tenant_id', 'bill_tenant_id')
-             ->where('property_id_foreign', Session::get('property_id'))
-             ->where('particular_id_foreign', $request->particular)
-             ->orderBy('date_posted', 'desc')
-             ->groupBy('bill_id')
-             ->get();
-         }
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+                $bills = DB::table('contracts')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('particular_id_foreign', $request->particular)
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->get();
+           
+            }else{
+                $bills = DB::table('contracts')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'tenant_id', 'bill_tenant_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('particular_id_foreign', $request->particular)
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->get();
+            }
+
+       
      
              return view('webapp.bills.index', compact('bills', 'property_bills'));
          }else{

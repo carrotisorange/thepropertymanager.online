@@ -1,9 +1,9 @@
 
       <div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"  data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="modal">
+        <div class="modal-dialog modal-xl" role="modal">
         <div class="modal-content">
           <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Bill Information</h5>
+          <h5 class="modal-title" id="exampleModalLabel">New Bill</h5>
         
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -16,10 +16,10 @@
   
           
           <div class="row">
-            <div class="col">
+            <div class="col-md-3">
               Date
                 {{-- <input type="date" class='form-control' form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
-                <input type="date" form="addBillForm" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="date_posted" required >
+                <input class='form-control' type="date" form="addBillForm" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="date_posted" required >
               
             </div>
             <div class="col">
@@ -35,7 +35,7 @@
             <div class="col">
         
                 <div class="table-responsive text-nowrap">
-                <table class = "table table-condensed table-bordered" id="table_bill">
+                <table class = "table table-hover" id="table_bill">
                    <thead>
                     <tr>
                       <th>#</th>
