@@ -125,7 +125,6 @@ class ContractController extends Controller
     public function store(Request $request, $property_id,$unit_id,$tenant_id)
     {
 
-        
         $no_of_bills = $request->no_of_items;
 
     
@@ -149,6 +148,8 @@ class ContractController extends Controller
                         'status' => $status,
                         'movein_at' => $request->movein_at,
                         'moveout_at' => $request->moveout_at,
+                        'initial_water' => $request->initial_water,
+                        'initial_electric' => $request->initial_electric,
                         'discount' => $request->discount,
                         'term' => $request->term,
                         'number_of_months' => $request->number_of_months,

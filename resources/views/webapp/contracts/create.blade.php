@@ -166,15 +166,29 @@
                   </span>
                   @enderror
                 </th>
+              </tr> 
+              <tr>
+                <th style="text-align: left;">
+                Water reading <span class="text-danger">*</span>
+                  <input form="addTenantForm1" type="number" name="initil_water" id="initial_water" value="" required>
+              
+                
+                </th>
+                <th style="text-align: left;">
+                   Electric reading <span class="text-danger">*</span>
+                    <input form="addTenantForm1" type="number" name="initial_electric" id="initial_electric" value="" required>
+                
+                  
+                  </th>
               </tr>
             </table>
             <br>
-            <small>Bills and movein charges</small>
+            <small>Movein charges</small>
             <p class="text-right">
               <a href="#/" id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
               <a href="#/" id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>    
             </p>
-              <table class = " table table-condensed table-borderlesstable" id="tab_logic">
+              <table class = " table table-hover" id="tab_logic">
                 <thead>
                  <tr>
                    <th>#</th>
