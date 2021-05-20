@@ -54,9 +54,13 @@ thead tr:nth-child(1) th {
       @else
       <th>Room</th>
       @endif
+      @if($particular->particular_id != 2 || $particular->particular_id != 3)
+
+      @else
 
       {{-- period covered  --}}
-      <th>Period Covered</th>     
+      <th>Period Covered</th>   
+      @endif  
 
       {{-- # of days for rent bill  --}}
       @if($particular->particular_id == 1)
@@ -120,12 +124,6 @@ thead tr:nth-child(1) th {
    ?>   
    
    @foreach($active_tenants as $item)
-
-   <?php 
-   $prorated_rent =  Carbon\Carbon::parse($item->movein_at)->DiffInDays(Carbon\Carbon::now()->endOfMonth());
-   $full_month = Carbon\Carbon::now()->month()->endOfMonth()->format('d');
-   $prorated_monthly_rent =  ($item->contract_rent/$full_month) * $prorated_rent;
-    ?>
   
    {{-- <input type="hidden" form="add_billings" name="ctr" value="{{ $ctr++ }}" required>      --}}
   
@@ -149,39 +147,53 @@ thead tr:nth-child(1) th {
       {{-- unit/room field --}}
       <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></th>
     
-      {{-- period covered field --}}
-      @if(Carbon\Carbon::parse($item->movein_at)->format('MY') > Carbon\Carbon::now()->format('MY'))
-      {{-- period covered for old tenant --}}
-      <td>
-        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::now()->startOfMonth()->format('Y-m-d') }}" required>
-        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
-      </td>
-      {{-- period covered for new tenant --}}
-      @else
-      <td>
-        <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ Carbon\Carbon::parse($item->movein_at)->format('Y-m-d') }}" required>
-        <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
-      </td>
-      @endif
+   @if($particular->particular_id != 2 || $particular->particular_id != 3)
+   
+    <input form="add_billings" type="hidden" name="start{{ $start++  }}" value="{{ $updated_start? $updated_start: Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
+    <input form="add_billings" type="hidden" name="end{{ $end++  }}" value="{{ $updated_end? $updated_end: Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
+  
+   @else
+   {{-- period covered field --}}
+   @if(Carbon\Carbon::parse($item->movein_at)->format('MY') == Carbon\Carbon::now()->format('MY'))
+   {{-- period covered for old tenant --}}
+   <td>
+     <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ $updated_start? $updated_start: Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
+     <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ $updated_end? $updated_end: Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
+   </td>
+   {{-- period covered for new tenant --}}
+   @else
+   <td>
+     <input form="add_billings" type="date" name="start{{ $start++  }}" value="{{ $updated_start? $updated_start: Carbon\Carbon::parse($item->movein_at)->format('Y-m-d') }}" required>
+     <input form="add_billings" type="date" name="end{{ $end++  }}" value="{{ $updated_end? $updated_end: Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
+   </td>
+   @endif
+   @endif
+
+      <?php 
+        $prorated_rent =  Carbon\Carbon::parse($item->movein_at)->DiffInDays(Carbon\Carbon::now()->endOfMonth());
+        $full_month = Carbon\Carbon::now()->month()->endOfMonth()->format('d');
+        $prorated_monthly_rent =  ($item->contract_rent/$full_month) * $prorated_rent;
+       ?>
 
     {{-- fields for rent bill only --}}
     @if($particular->particular_id == 1)
     <td>
-      @if(Carbon\Carbon::parse($item->movein_at)->format('MY') > Carbon\Carbon::now()->format('MY'))
+      @if(Carbon\Carbon::parse($item->movein_at)->format('MY') == Carbon\Carbon::now()->format('MY'))
+       {{-- # of dasys field for new tenant --}}
+       {{ $prorated_rent }} days (prorated)
+       
+      @else
         {{-- # of days field for old tenant --}}
         {{ $full_month }} days
-      @else
-        {{-- # of dasys field for new tenant --}}
-        {{ $prorated_rent }} days (prorated)
       @endif
     </td>
     <td>
-      @if(Carbon\Carbon::parse($item->movein_at)->format('MY') > Carbon\Carbon::now()->format('MY'))
-        {{-- amount field for old tenant --}}
-        ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  min="0" value="{{ $item->contract_rent }}" required>
+      @if(Carbon\Carbon::parse($item->movein_at)->format('MY') == Carbon\Carbon::now()->format('MY'))
+       {{-- amount field for new tenant --}}
+       ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  min="0" value="{{ $prorated_monthly_rent }}"  required>
       @else
-        {{-- amount field for new tenant --}}
-        ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  min="0" value="{{ $prorated_monthly_rent }}"  required>
+      {{-- amount field for old tenant --}}
+      ₱ <input form="add_billings" type="number" name="amount{{ $amt_ctr++ }}" step="0.001"  min="0" value="{{ $item->contract_rent }}" required>
       @endif
     </td>
     @endif
@@ -243,14 +255,14 @@ thead tr:nth-child(1) th {
       <div class="row">
         <div class="col">
         <label for="">Start of the billing period</label>
-        <input class="form-control" form="periodCoveredForm" type="date" name="start" value="{{ Carbon\Carbon::now()->startOfMonth()->format('Y-m-d') }}" required>
+        <input class="form-control" form="periodCoveredForm" type="date" name="start" value="{{ $updated_start? $updated_start: Carbon\Carbon::now()->startOfMonth()->format('Y-m-d') }}" required>
       </div>
       </div>
       <br>
       <div class="row">
         <div class="col">
         <label for="">End of the billing period</label>
-        <input class="form-control" form="periodCoveredForm" type="date" name="end" value="{{ Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
+        <input class="form-control" form="periodCoveredForm" type="date" name="end" value="{{ $updated_end? $updated_end: Carbon\Carbon::now()->endOfMonth()->format('Y-m-d') }}" required>
       </div>
       </div>
       <br>

@@ -176,6 +176,8 @@ class BillController extends Controller
 
     public function create_bulk_bills(Request $request,$property_id, $bill_id){
     
+        $updated_start = $request->start;
+        $updated_end = $request->end;
 
         if($request->options == 'true'){
             if($request->bill_id == '2'){
@@ -240,13 +242,12 @@ class BillController extends Controller
             ->max('bill_no') + 1;
         }
 
-        return view('webapp.bills.create.create-bulk', compact('active_tenants','current_bill_no','particular','property_bill'));
+        return view('webapp.bills.create.create-bulk', compact('active_tenants','current_bill_no','particular','property_bill','updated_start','updated_end'));
 
 
     }
 
     public function store_bulk_bills(Request $request){
-    
 
         $active_tenants = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
