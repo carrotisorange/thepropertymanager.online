@@ -38,7 +38,7 @@
                      <thead>
                         <tr>
                             <th>#</th>
-                            <th>Bill</th>
+                            <th>Bill info</th>
                             <th>Payment mode</th>
                             <th>Amount</th>
                             <th>Bank Name</th>

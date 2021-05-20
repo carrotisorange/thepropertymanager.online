@@ -697,7 +697,7 @@ thead tr:nth-child(1) th {
                     <th>Form</th>
                     <th class="text-right">Amount</th>
                    
-                    <th colspan="" class="text-center">Action</th> 
+                    <th>Action</th> 
                     
               </tr>
               </thead>
@@ -743,13 +743,20 @@ thead tr:nth-child(1) th {
                          
                           @endif
                         </td>    --}}
-                        <td class="text-right">
-                          @if($item->payment_status === 'deleted')
+                        <td>
+                          <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/action" method="GET" onchange="submit();">
+                            <select class="" name="collection_option" id="">
+                              <option value="">Select your option</option>
+                              <option value="export">Export</option>
+                              <option value="remit">Remit</option>
+                            </select>
+                          </form>
+                          {{-- @if($item->payment_status === 'deleted')
                           
                           @else
                           <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-success"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a> 
                         
-                          @endif
+                          @endif --}}
                           
                         </td>   
       
@@ -1023,7 +1030,7 @@ thead tr:nth-child(1) th {
     $(document).ready(function(){
     var j=1;
     $("#add_payment").click(function(){
-        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select one</option> @foreach ($balance as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value=''>Please select one</option><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option><option value='Credit memo'>Credit memo - Reduce bill amount to x.</option></select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.001' min='0' required></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select one</option> @foreach ($bills as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value=''>Please select one</option><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option><option value='Credit memo'>Credit memo - Reduce bill amount to x.</option></select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.001' min='0' required></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
   
   
      $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');
@@ -1109,6 +1116,12 @@ thead tr:nth-child(1) th {
     var checkboxes = $('input:checkbox:checked').length;
       document.getElementById('showNumberOfSelectedContract').innerHTML =  'You have selected ' + parseInt(checkboxes-1) + ' contracts';   
   }
+</script>
+
+<script>
+  $('#add_payment').on('click',function(){
+    $(".addPaymentButton").show()  
+});
 </script>
 
 @endsection

@@ -535,6 +535,8 @@ Route::get('property/{property_id}/room/{room_id}/remittance/{remittance_id}/edi
 Route::put('property/{property_id}/remittance/{remittance_id}/update', 'RemittanceController@update')->middleware(['auth', 'verified']);
 Route::get('property/{property_id}/room/{room_id}/remittance/{remittance_id}/action', 'RemittanceController@action')->middleware(['auth', 'verified']);
 
+
+
 //routes for the the layouts.arsha
 Route::get('/', function(){
     $users = User::whereNotIn('role_id_foreign',['6','7','8'])->count();
@@ -562,6 +564,7 @@ Route::post('/payments', 'CollectionController@store')->middleware(['auth', 'ver
 Route::get('/payments/all', 'CollectionController@index')->name('show-all-payments')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/payments/search', 'CollectionController@index')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}', 'CollectionController@destroy')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/room/{room_id}/contract/{contract_id}/tenant/{tenant_id}/bill/{bill_id}/payment/{payment_id}/action', 'CollectionController@action')->middleware(['auth', 'verified']);
 
 //export payments per tenant
 Route::get('/property/{property_id}/unit/{unit_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);

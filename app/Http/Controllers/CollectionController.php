@@ -151,6 +151,18 @@ class CollectionController extends Controller
         //
     }
 
+    public function action(Request $request, $property_id, $room_id, $contract_id, $tenant_id,$bill_id, $payment_id)
+    {
+
+        if($request->collection_option == 'remit'){
+            return redirect('/property/'.$request->property_id.'/room/'.$room_id.'/contract/'.$contract_id.'/tenant/'.$tenant_id.'/bill/'.$bill_id.'/payment/'.$payment_id.'/remittance/create');
+        }elseif($request->collection_option == 'export'){
+
+        }
+
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      *
