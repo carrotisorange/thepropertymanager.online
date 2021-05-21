@@ -268,10 +268,10 @@ class UnitController extends Controller
             ->where('bill_unit_id', $unit_id)
             ->groupBy('payment_id')
             ->orderBy('payment_created', 'desc')
-           ->get()
-            ->groupBy(function($item) {
-                return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-            });
+           ->get();
+            // ->groupBy(function($item) {
+            //     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
+            // });
 
         //    $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         //    ->where('bill_unit_id', $unit_id)

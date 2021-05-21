@@ -190,18 +190,18 @@
         </div>
         <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
           @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add payments</a>
+          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
           @endif 
           <br><br>
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
-            <table class="table table-table-bordered table-hover table-condensed">
-              @foreach ($payments as $day => $collection_list)
+            <table class="table table-hover">
+              {{-- @foreach ($payments as $day => $collection_list) --}}
                <thead>
-                  <tr>
+                  {{-- <tr>
                       <th colspan="10">{{ Carbon\Carbon::parse($day)->addDay()->format('M d Y') }} ({{ $collection_list->count() }})</th>
                       
-                  </tr>
+                  </tr> --}}
                   <tr>
                     <?php $ctr = 1; ?>
                       <th class="text-center">#</th>
@@ -218,7 +218,7 @@
                       </tr>
                 </tr>
                </thead>
-                @foreach ($collection_list as $item)
+                @foreach ($payments as $item)
                
                 <tr>
                       <th class="text-center">{{ $ctr++ }}</th>
@@ -250,12 +250,12 @@
         <a title="export" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export_unit_bills" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a>
        </td>
                        
-                    </tr>
+                    {{-- </tr>
                 @endforeach
                     <tr>
                       <th>TOTAL</th>
                       <th colspan="7" class="text-right">{{ number_format($collection_list->sum('amt_paid'),2) }}</th>
-                    </tr>
+                    </tr> --}}
                     
               @endforeach
           </table>
@@ -314,7 +314,7 @@
         </div>
         </div>
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-          <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add concern</a>  
+          <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>  
           <br><br>
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
@@ -686,7 +686,7 @@
 
     
     <div class="row">
-      <div class="col">
+      <div class="col-md-3">
          <label>Date</label> 
           {{-- <input type="date" form="addBillForm" class="form-control" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
           <input class="form-control" type="date" form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
