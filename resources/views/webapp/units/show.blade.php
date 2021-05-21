@@ -93,12 +93,12 @@
         </div>
   
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-          <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add bills</a> 
+          <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a> 
           @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-            <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit bills</a>
+            <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
             @endif
             @if($bills->count() > 0)
-            <a  target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export bills</span></a>
+            <a  target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export</span></a>
             {{-- @if($tenant->email_address !== null)
             <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
             @endif --}}
@@ -110,7 +110,7 @@
       <br>
       <div class="col-md-12 mx-auto">
         <div class="table-responsive text-nowrap">
-          <table class="table table-table-bordered table-hover table-condensed">  
+          <table class="table table-hover">  
             <?php $ctr=1; ?>
           <thead>
             <tr>
@@ -670,10 +670,10 @@
 
 
 <div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg" role="modal">
+  <div class="modal-dialog modal-xl" role="modal">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Add Bill</h5>
+    <h5 class="modal-title" id="exampleModalLabel">New Bill</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -687,14 +687,14 @@
     
     <div class="row">
       <div class="col">
-          {{-- <label>Date</label> --}}
+         <label>Date</label> 
           {{-- <input type="date" form="addBillForm" class="form-control" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required > --}}
-          <input type="date" form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+          <input class="form-control" type="date" form="addBillForm" class="" name="date_posted" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
       </div>
       <div class="col">
         <p class="text-right">
-          <span id='delete_bill' class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Remove current bill</span>
-        <span id="add_bill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add more bills</span>     
+          <span id='delete_bill' class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Remove</span>
+        <span id="add_bill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</span>     
         </p>
       </div>
     </div>
@@ -704,7 +704,7 @@
       <div class="col">
   
           <div class="table-responsive text-nowrap">
-          <table class = "table table-bordered table-condensed table-hover" id="table_bill">
+          <table class = "table table-hover" id="table_bill">
              <thead>
               <tr>
                 <th>#</th>
@@ -811,7 +811,7 @@
     $(document).ready(function(){
     var k=1;
     $("#add_bill").click(function(){
-      $('#bill'+k).html("<th>"+ (k) +"</th><td><select name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option>@foreach($property_bills as $item)<option value='{{$item->particular_id}}'>{{ $item->particular }}</option>@endforeach</select> <td colspan='2'><input form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required><input form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
+      $('#bill'+k).html("<th>"+ (k) +"</th><td><select class='form-control' name='particular"+k+"' form='addBillForm' id='particular"+k+"' required><option value='' selected>Please select one</option>@foreach($property_bills as $item)<option value='{{$item->particular_id}}'>{{ $item->particular }}</option>@endforeach</select> <td><input class='form-control' form='addBillForm' name='start"+k+"' id='start"+k+"' type='date' required></td><td><input class='form-control' form='addBillForm' name='end"+k+"' id='end"+k+"' type='date' required></td> <td><input class='form-control' form='addBillForm' name='amount"+k+"' id='amount"+k+"' type='number' min='1' step='0.01' required></td>");
      $('#table_bill').append('<tr id="bill'+(k+1)+'"></tr>');
      k++;
      

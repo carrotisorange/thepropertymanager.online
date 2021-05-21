@@ -430,7 +430,7 @@ thead tr:nth-child(1) th {
      var j=1;
          
          $("#add_request").click(function(){
-             $('#request'+j).html("<th>"+ (j) +"</th><td><input class='form-control' form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select class='form-control' form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry }}</option> @endforeach</select></td><td><input class='form-control' form='requestFundsForm' id='amt"+j+"' name='amt"+j+"' type='number' step='0.001' required></td><td><input class='form-control' form='requestFundsForm' name='note"+j+"' type='text'></td>");
+             $('#request'+j).html("<th>"+ (j) +"</th><td><input class='form-control' form='requestFundsForm' name='requested_at"+j+"' type='date' value='{{ Carbon\Carbon::now()->format('Y-m-d') }}'></td><td><select class='form-control' form='requestFundsForm' name='entry"+j+"' required><option>Please select entry</option>@foreach($entry as $item)<option value='{{ $item->id }}'>{{ $item->entry.' | '.$item->description }}</option> @endforeach</select></td><td><input class='form-control' form='requestFundsForm' id='amt"+j+"' name='amt"+j+"' type='number' step='0.001' required></td><td><input class='form-control' form='requestFundsForm' name='note"+j+"' type='text'></td>");
      
      
           $('#request_table').append('<tr id="request'+(j+1)+'"></tr>');

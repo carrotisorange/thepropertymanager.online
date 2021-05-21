@@ -218,7 +218,7 @@ class UnitController extends Controller
         Session::put('current-page', 'units');
 
         
-        $property_bills = DB::table('particulars')
+         $property_bills = DB::table('particulars')
         ->join('property_bills', 'particular_id', 'particular_id_foreign')
         ->where('property_id_foreign', Session::get('property_id'))
         ->orderBy('particular', 'asc')

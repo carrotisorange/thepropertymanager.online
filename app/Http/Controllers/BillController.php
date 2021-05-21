@@ -1255,18 +1255,17 @@ DB::table('properties')
        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
        
       $pdf = \PDF::loadView('webapp.bills.soa-unit', $data)
-      ->setPaper('a5', 'landscape');
+      ->setPaper('a5', 'portrait');
 
-             // $pdf->setPaper('L');
-             $pdf->output();
-             $canvas = $pdf->getDomPDF()->getCanvas();
-             $height = $canvas->get_height();
-             $width = $canvas->get_width();
-             $canvas->set_opacity(.1,"Multiply");
-             $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
-              30, array(0,0,0),2,2,0);
-             return $pdf->stream();
-      return $pdf->download(Carbon::now().'-'.$unit_no.'-soa'.'.pdf');
+      // $pdf->setPaper('L');
+       $pdf->output();
+       $canvas = $pdf->getDomPDF()->getCanvas();
+       $height = $canvas->get_height();
+       $width = $canvas->get_width();
+       $canvas->set_opacity(.1,"Multiply");
+       $canvas->page_text($width/5, $height/4 , Session::get('property_name'), null,
+         28, array(0,0,0),5,0,0);
+       return $pdf->stream();
     }
     
     public function restore_bill($property_id, $tenant_id, $billing_id)
