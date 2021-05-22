@@ -267,12 +267,12 @@
 
           @if(Session::get('property_ownership') === 'Multiple Owners'))
             @if($owners->count() <= 0)
-            <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary btn-sm"> <i class="fas fa-user-plus"></i> Add occupant </a>
+            <a href="#" data-toggle="modal" data-target="#modalToAddOwner" class="btn btn-primary btn-sm"> <i class="fas fa-user-plus"></i> New </a>
             @else
-            <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary btn-sm"> <i class="fas fa-user-plus"></i> Add occupant</a>   
+            <a href="#" data-toggle="modal" data-target="#addOccupant" class="btn btn-primary btn-sm"> <i class="fas fa-user-plus"></i> New</a>   
             @endif
           @else
-          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant/add"  type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Add occupant</a>   
+          <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/occupant/add"  type="button" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> New</a>   
           @endif
 
 
@@ -390,7 +390,7 @@
         <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="nav-owners-tab">
         
      <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary btn-sm text-white">
-      <i class="fas fa-user-plus text-white-50"></i> Add owner
+      <i class="fas fa-user-plus text-white-50"></i> New
     </a>   
   <br>
      <br>
@@ -436,7 +436,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Unit</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -735,7 +735,7 @@
   <div class="modal-dialog modal-xl" role="document">
   <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Add Payment</h5>
+      <h5 class="modal-title" id="exampleModalLabel">New Payment</h5>
       
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -747,15 +747,15 @@
           </form>
           
           <div class="row">
-              <div class="col">
+              <div class="col-md-3">
                   <label for="">Date</label>
               {{-- <input form="acceptPaymentForm" type="date" class="form-control" name="payment_created" value={{date('Y-m-d')}} required> --}}
-              <input type="date" form="acceptPaymentForm" class="" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+              <input type="date" form="acceptPaymentForm" class="form-control" name="payment_created" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
               </div>
               <div class="col">
                   <p class="text-right">
-                      <a href="#/" id='delete_payment' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove current row</a>
-                    <a href="#/" id="add_payment" class="btn btn-primary btn-sm" ><i class="fas fa-plus"></i>  Add more payments</a>     
+                      <a href="#/" id='delete_payment' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove</a>
+                    <a href="#/" id="add_payment" class="btn btn-primary btn-sm" ><i class="fas fa-plus"></i>  New</a>     
                     </p>
               </div>
               
@@ -766,13 +766,14 @@
           <div class="row">
             <div class="col">
                 <div class="table-responsive text-nowrap">
-                <table class = "table" id="payment">
+                <table class = "table table-hover" id="payment">
                    <thead>
                       <tr>
                           <th>#</th>
                           <th>Bill</th>
+                          
+                          <th>Mode of payment</th>
                           <th>Amount</th>
-                          <th>Form</th>
                           <th>Bank Name</th>
                           <th>Cheque No</th>
                       </tr>
@@ -833,7 +834,7 @@
     $(document).ready(function(){
     var j=1;
     $("#add_payment").click(function(){
-        $('#payment'+j).html("<th>"+ (j) +"</th><td><select form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($bills as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><input form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td><select form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td>  <input form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select bill</option> @foreach ($bills as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option><option value='Credit memo'>Credit memo</option></select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.01' required></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
   
   
      $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');
