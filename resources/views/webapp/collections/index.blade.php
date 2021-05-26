@@ -54,7 +54,7 @@ thead tr:nth-child(1) th {
   <table class="table table-hover">
     <thead>
     <tr>
-      {{-- <th>#</th> --}}
+      <th>#</th>
       <th>AR No</th>
       <th>Bill No</th>
       <th>Date</th>
@@ -90,7 +90,7 @@ thead tr:nth-child(1) th {
 
         @foreach ($collection_list as $item)
         <tr>
-                {{-- <th>{{ $ctr++ }}</th> --}}
+                <th>{{ $ctr++ }}</th>
                 <td> 
                   {{-- @if($item->payment_status === 'deleted')
                   <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
@@ -113,9 +113,9 @@ thead tr:nth-child(1) th {
                 
                 <th>
                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
                   @else
-                  <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->unit_no }}</a>
+                  <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
                   @endif
                   
                 </th>

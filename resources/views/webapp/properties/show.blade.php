@@ -549,7 +549,7 @@ thead tr:nth-child(1) th {
                      @endif
                       
                       @else
-                      {{ $item->unit_no }}
+                      {{ $item->building.' '.$item->unit_no }}
                       @endif
                     </th>
                     <th>

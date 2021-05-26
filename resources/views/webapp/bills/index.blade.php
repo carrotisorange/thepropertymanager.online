@@ -43,6 +43,7 @@ thead tr:nth-child(1) th {
 <thead>
 
 <tr>
+  <th>#</th>
   <th>Date</th>
   <th>Bill #</th>
   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
@@ -62,8 +63,10 @@ thead tr:nth-child(1) th {
 </tr>
 </thead>
 <tbody>
+  <?php $ctr=1;?>
   @foreach ($bills as $item)
   <tr>
+    <th>{{ $ctr++ }}</th>
     <th>{{ Carbon\Carbon::parse($item->date_posted)->format('d M, Y') }}</th>
     <th>{{ $item->bill_no }}</th>  
     <th>

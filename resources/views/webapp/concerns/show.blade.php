@@ -69,8 +69,8 @@ font-family: FontAwesome;
   </div>
 </div>
 @endif
-
-<div class="row align-items-center py-4">
+<br>
+<div class="row align-items-center">
   <div class="col-lg-6">
     <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
     {{-- <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
@@ -514,7 +514,7 @@ font-family: FontAwesome;
       </div>
       <div class="modal-footer">
 
-          <button form="forwardConcernForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+          <button form="forwardConcernForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
       </div>
   </div>
   </div>

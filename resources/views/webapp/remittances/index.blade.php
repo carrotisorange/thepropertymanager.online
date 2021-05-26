@@ -20,9 +20,9 @@ thead tr:nth-child(1) th {
     <h6 class="h2 text-dark d-inline-block mb-0">Remittances</h6>
     
   </div>
-  <div class="col-md-3 text-right">
+  {{-- <div class="col-md-3 text-right">
      <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addRemittance" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>
-  </div>
+  </div> --}}
 
 </div>
 
@@ -73,7 +73,7 @@ thead tr:nth-child(1) th {
                                     <td>{{ $item->cv_number }}</td>
                                     <td>{{ $item->check_number }}</td>
                                     {{-- <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th> --}}
-                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></th>
                                    
                                     <th><a href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a></th>
                                     {{-- <td>
@@ -146,7 +146,7 @@ thead tr:nth-child(1) th {
                                     <td>{{ $item->cv_number }}</td>
                                     <td>{{ $item->check_number }}</td>
                                     {{-- <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th> --}}
-                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></th>
                                    {{-- <td>
                                     @if($item->remitted_at === NULL)
                                     <span class="badge badge-danger">pending</span>
@@ -219,7 +219,7 @@ thead tr:nth-child(1) th {
                                     <td>{{ $item->cv_number }}</td>
                                     <td>{{ $item->check_number }}</td>
                                     {{-- <th><a href="/property/{{ Session::get('property_id') }}/owner/{{ $item->owner_id }}">{{ $item->name }}</a></th> --}}
-                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a></th>
+                                    <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></th>
                                    {{-- <td>
                                     @if($item->remitted_at === NULL)
                                     <span class="badge badge-danger">pending</span>

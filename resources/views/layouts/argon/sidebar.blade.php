@@ -147,6 +147,20 @@
               </a>
               @endif
             </li>
+            {{-- Violations --}}
+            <li class="nav-item">
+              @if(Session::get('current-page') === 'violations')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/violations">
+                <i class="fas fa-tools text-cyan"></i>
+                <span class="nav-link-text">Violations</span>
+              </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/violations">
+                <i class="fas fa-tools text-cyan"></i>
+                <span class="nav-link-text">Violations</span>
+              </a>
+              @endif
+            </li>
             {{-- Job Orders --}}
             @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
             <li class="nav-item">
@@ -191,6 +205,22 @@
                 <span class="nav-link-text">Bills</span>
               </a>
               @endif
+            </li>
+            @endif
+            {{-- Suppliers --}}
+            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+              <li class="nav-item">
+                @if(Session::get('current-page') === 'suppliers')
+                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/suppliers">
+                  <i class="fas fa-coins text-yellow"></i>
+                  <span class="nav-link-text">Suppliers</span>
+                </a>
+                @else
+                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/suppliers">
+                  <i class="fas fa-coins text-yellow"></i>
+                  <span class="nav-link-text">Suppliers</span>
+                </a>
+                @endif
             </li>
             @endif
             {{-- Daily Collection Report --}}

@@ -102,18 +102,16 @@ thead tr:nth-child(1) th {
                     <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action" method="GET" onchange="submit();">
                       <select class="" name="payable_option" id="">
                         <option value="">Select your option</option>
-                        @if($item->payable_status != 'approved'  && $item->payable_status != 'released')
+                        @if($item->payable_status != 'approved'  && $item->payable_status != 'released' && $item->payable_status != 'declined')
                         <option value="approve">Approve</option>
                         @endif
-                        
                         @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
                         <option value="release">Release</option>
                         @endif
                         @if($item->payable_status != 'declined')
-                        <option value="decline">Declined</option>
+                        <option value="decline">Decline</option>
                         @endif
                       </select>
-                    
                     </form>
                     @endif
                    </td>
