@@ -447,7 +447,7 @@ thead tr:nth-child(1) th {
           <div class="card shadow mb-3">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary">TOP DELINQUENTS </h6>
+              <h6 class="m-0 font-weight-bold text-primary">LIST OF DELINQUENT TENANTS </h6>
              
               <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/delinquents">View all</a></small>
               
@@ -481,9 +481,9 @@ thead tr:nth-child(1) th {
                     <th>
                       @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                      <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                      <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->building.' '.$item->unit_no }}</a>
                      @else
-                     <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{$item->unit_no }}</a>
+                     <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{$item->building.' '.$item->unit_no }}</a>
                      @endif
                      
                       @else
@@ -574,7 +574,7 @@ thead tr:nth-child(1) th {
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-<h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS as of {{ Carbon\Carbon::now()->format('M d, Y H:m:s') }}</h6>
+<h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS as of {{ Carbon\Carbon::now()->isoFormat('MMMM Do YYYY, h:mm:ss a') }}</h6>
 
 <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/collections">View all</a></small>
   {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
@@ -595,11 +595,10 @@ thead tr:nth-child(1) th {
            <th>Bill No</th>
            <th>Room</th>
            <th>Tenant</th>
-        
-          
            <th>Particular</th>
+          <th>Form</th>
            <th colspan="2">Period Covered</th>
-           <th class="text-right">Amount</th>
+           <th>Amount</th>
            
        </tr>
        
@@ -620,22 +619,23 @@ thead tr:nth-child(1) th {
            </th>
            <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a></th>
          
-           <td>
-             {{ $item->particular }}</td>
+           <td>{{ $item->particular }}</td>
+           <td>{{ $item->form }}</td>
            <td colspan="2">
            {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
            {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
            </td>
-           <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
-              {{-- <td class="text-center">
-          <a title="export" target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i></a> --}}
-             {{-- <a id="" target="_blank" href="#" title="print invoice" class="btn btn-primary"><i class="fas fa-print fa-sm text-white-50"></i></a> 
-       </tr> --}}
-           
+           <td>{{ number_format($item->amt_paid,2) }}</td>
        @endforeach
        <tr>
-         <th>TOTAL</th>
-         <th class="text-right" colspan="8">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
+        <th>TOTAL</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th colspan="2"></th>
+        <th>{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
         </tr>
       </tbody>
     </table>

@@ -79,7 +79,7 @@ thead tr:nth-child(1) th {
          @if($balance->count() <= 0)
          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills </a>
          @else
-         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills <i class="fas fa-exclamation-triangle text-danger"></i> {{ $balance->count() }}</a>
+         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills <i class="fas fa-exclamation-triangle text-danger"></i> {{ $bills->count() }}</a>
          @endif
 
          
@@ -432,7 +432,7 @@ thead tr:nth-child(1) th {
                   <th>Status</th>
                   <th>Contract</th>
                   <th>Rent</th>
-                  <th colspan="4">Actions</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -562,9 +562,9 @@ thead tr:nth-child(1) th {
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
         <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a> 
-        @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+        {{-- @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
-          @endif
+          @endif --}}
           @if($balance->count() > 0)
           <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export</span></a>
           {{-- @if($tenant->email_address !== null)
@@ -586,70 +586,64 @@ thead tr:nth-child(1) th {
                     <?php $ctr=1; ?>
                   <thead>
                     <tr>
-                      <th class="text-center">#</th>
+                      <th>#</th>
                        <th>Date posted</th>
-                 
                          <th>Bill no</th>
-                         
                          <th>Particular</th>
-                   
                          <th>Period covered</th>
-                         
-                         <th class="text-right" >Bill amount</th>
-                         <th class="text-right" >Amount paid</th>
-                         <th class="text-right" >Balance</th>
-                         {{-- <th></th> --}}
+                         <th>Bill amount</th>
+                         <th>Amount paid</th>
+                         <th>Balance</th>
+                         {{-- <th>Action</th> --}}
                        </tr>
                   </thead>
                     @foreach ($balance as $item)
-                  
                     <tr>
                       <th class="text-center">{{ $ctr++ }}</th>
-                         <td>
-                           {{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}
-                         </td>   
-                          
-             
-                           <td>
-                            
-                             {{ $item->bill_no }}
-                      
-                           </td>
-                   
+                         <td>{{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}</td>   
+                           <td>{{ $item->bill_no }}</td>
                            <td>{{ $item->particular }}</td>
-                         
                            <td>
                              {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                              {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                            </td>
-                           <td class="text-right"  >{{ number_format($item->amount,2) }}</td>
-                           <td class="text-right"  >{{ number_format($item->amt_paid,2) }}</td>
-                           <td class="text-right" >
-                             @if($item->balance > 0 && $item->bill_status != 'deleted')
-                             <span class="text-danger">{{ number_format($item->balance,2) }}</span>
-                             @else
-                             <span >{{ number_format($item->balance,2) }}</span>
-                             @endif
+                           <td>{{ number_format($item->amount,2) }}</td>
+                           <td>{{ number_format($item->amt_paid,2) }}</td>
+                           <td>
+                           @if($item->balance > 0)
+                           <span  class="text-danger">{{ number_format($item->balance,2) }}</span>
+                           @else
+                           <span>{{ number_format($item->balance,2) }}</span>
+                           @endif
                            </td>
-                          
-                                  </tr>
-                    {{-- @endif --}}
-                    
-                               
+                           <td>
+                            {{-- <form action="/property/{{ Session::get('property_id') }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->bill_id }}/action" method="GET" onchange="submit();">
+                              <select class="" name="bill_option" id="">
+                                <option value="">Select your option</option>
+                                <option value="Debit memo">Debit memo</option>
+                              </select>
+                            </form> --}}
+                           </td>
+                        </tr>                       
                     @endforeach
                     <tr>
                       <th>TOTAL</th>
-                      
-                      <th class="text-right" colspan="5">{{ number_format($balance->sum('amount'),2) }} </th>
-                      <th class="text-right" colspan="">{{ number_format($balance->sum('amt_paid'),2) }} </th>
-                      <th class="text-right text-danger">
-                       
-                        <span >{{ number_format($balance->sum('balance'),2) }}</span>
-                       
-                   
-                       </th>
-                     </tr>
-                  
+                       <th>Date posted</th>
+                         <th></th>
+                         <th></th>
+                         <th></th>
+                         <th>{{ number_format($balance->sum('amount'),2) }}</th>
+                         <th>{{ number_format($balance->sum('amt_paid'),2) }}</th>
+                         <th class="text-danger">
+                          @if($balance->sum('balance') > 0)
+                          <span class="text-danger">{{ number_format($balance->sum('balance'),2) }}</span>
+                          @else
+                          <span>{{ number_format($balance->sum('balance'),2) }}</span>
+                          @endif
+                         </th>
+                         {{-- <th>Action</th> --}}
+                       </tr>
+                     
                 </table>
           
               </div>
@@ -658,16 +652,7 @@ thead tr:nth-child(1) th {
                 </div>
 
             @endif
-      {{-- <br>
-      <div class="row">
-        <div class="col-md-11 mx-auto">
-          <div class="">
-            <div class="">
-              {!! Auth::user()->note !!}
-            </div>
-          </div>
-        </div>
-      </div> --}}
+
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
@@ -687,7 +672,7 @@ thead tr:nth-child(1) th {
               <thead>
                 <tr>
                   <?php $ctr = 1; ?>
-                    {{-- <th class="text-center">#</th> --}}
+                    <th class="text-center">#</th>
                     <th>Date</th>
                     <th>AR No</th>
                     <th>Bill No</th>
@@ -695,76 +680,40 @@ thead tr:nth-child(1) th {
                     <th>Particular</th>
                     <th colspan="2">Period Covered</th>
                     <th>Form</th>
-                    <th class="text-right">Amount</th>
-                   
+                    <th>Amount</th>
                     <th>Action</th> 
-                    
               </tr>
               </thead>
-             
-                 
-            
                 @foreach ($payments as $item)
-               
                 <tr>
-                      {{-- <th class="text-center">{{ $ctr++ }}</th> --}}
+                      <th class="text-center">{{ $ctr++ }}</th>
                       <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
-                        <td>
-                          @if($item->payment_status === 'deleted')
-                          <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
-                          @else
-                          {{ $item->ar_no }}
-                          @endif
-                        
-                        </td>
+                        <td> {{ $item->ar_no }}</td>
                         <td>{{ $item->payment_bill_no }}
                         </td>
-                          {{-- <td>{{ $item->building.' '.$item->unit_no }}</td>  --}}
                          <td>{{ $item->particular }}</td> 
                          <td colspan="2">
                           {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                           {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                         </td>
                         <td>{{ $item->form }}</td>
-                        <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
-                         
-                         
-                         {{-- <td class="text-left">
-                         @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-                         @if($item->payment_status === 'deleted')
-                         
-                        @else
-                        <form action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
-                          @csrf
-                          @method('delete')
-                          <button title="delete" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                        </form>
-                         @endif
-                         
-                          @endif
-                        </td>    --}}
+                        <td>{{ number_format($item->amt_paid,2) }}</td>
                         <td>
+                          @if($item->form=='Credit memo')
+
+                          @else
                           <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/action" method="GET" onchange="submit();">
                             <select class="" name="collection_option" id="">
                               <option value="">Select your option</option>
+                              <option value="Credit memo">Credit memo</option>
                               <option value="export">Export</option>
                               <option value="remit">Remit</option>
                             </select>
                           </form>
-                          {{-- @if($item->payment_status === 'deleted')
-                          
-                          @else
-                          <a title="add remittance"  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/payment/{{ $item->payment_id }}/remittance/create" class="btn btn-sm btn-success"><i class="fas fa-hand-holding-usd fa-sm text-white-50"></i></a> 
-                        
-                          @endif --}}
-                          
+                          @endif
                         </td>   
-      
-    
                     </tr>
                 @endforeach
-                   
-            
           </table>
           </div>
         </div>
@@ -1030,7 +979,7 @@ thead tr:nth-child(1) th {
     $(document).ready(function(){
     var j=1;
     $("#add_payment").click(function(){
-        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select one</option> @foreach ($bills as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value=''>Please select one</option><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option><option value='Credit memo'>Credit memo - Reduce bill amount to x.</option></select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.001' min='0' required></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
+        $('#payment'+j).html("<th>"+ (j) +"</th><td><select class='form-control' form='acceptPaymentForm' name='bill_no"+j+"' id='bill_no"+j+"' required><option >Please select one</option> @foreach ($bills as $item)<option value='{{ $item->bill_no.'-'.$item->bill_id }}'> Bill No {{ $item->bill_no }} | {{ $item->particular }} | {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }} | {{ number_format($item->balance,2) }} </option> @endforeach </select></td><td><select class='form-control' form='acceptPaymentForm' name='form"+j+"' required><option value=''>Please select one</option><option value='Cash'>Cash</option><option value='Bank Deposit'>Bank Deposit</option><option value='Cheque'>Cheque</option></select></td><td><input class='form-control' form='acceptPaymentForm' name='amt_paid"+j+"' id='amt_paid"+j+"' type='number' step='0.001' min='0' required></td><td>  <input class='form-control' form='acceptPaymentForm' type='text' name='bank_name"+j+"'></td><td><input class='form-control' form='acceptPaymentForm' type='text' name='cheque_no"+j+"'></td>");
   
   
      $('#payment').append('<tr id="payment'+(j+1)+'"></tr>');

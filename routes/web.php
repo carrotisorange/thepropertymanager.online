@@ -565,6 +565,7 @@ Route::get('/payments/all', 'CollectionController@index')->name('show-all-paymen
 Route::get('/property/{property_id}/payments/search', 'CollectionController@index')->middleware(['auth', 'verified']);
 Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}', 'CollectionController@destroy')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/room/{room_id}/contract/{contract_id}/tenant/{tenant_id}/bill/{bill_id}/payment/{payment_id}/action', 'CollectionController@action')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}/credit-memo', 'CollectionController@credit_memo')->middleware(['auth', 'verified']);
 
 //export payments per tenant
 Route::get('/property/{property_id}/unit/{unit_id}/tenant/{tenant_id}/payment/{payment_id}/dates/{payment_created}/export', 'CollectionController@export')->middleware(['auth', 'verified']);
@@ -710,6 +711,7 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@sh
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@edit_billings')->middleware(['auth', 'verified']);
 Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
 Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/delete', 'BillController@destroy')->middleware(['auth', 'verified']);
+Route::get('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/action', 'BillController@action')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/bill/{bill_id}/update/', 'BillController@create_bulk_bills')->middleware(['auth', 'verified']);
 
 // Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);

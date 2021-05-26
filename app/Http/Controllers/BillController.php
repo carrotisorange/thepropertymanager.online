@@ -1268,6 +1268,13 @@ DB::table('properties')
        return $pdf->stream();
     }
     
+    public function action(Request $request, $property_id, $tenant_id, $bill_id)
+    {
+        if($request->bill_option == 'Debit memo'){
+            return redirect('/property/'.$request->property_id.'/room/'.$room_id.'/contract/'.$contract_id.'/tenant/'.$tenant_id.'/bill/'.$bill_id.'/payment/'.$payment_id.'/remittance/create');
+        }
+    }
+
     public function restore_bill($property_id, $tenant_id, $billing_id)
     {
         $bill = Bill::findOrFail($billing_id);

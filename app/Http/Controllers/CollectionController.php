@@ -153,14 +153,42 @@ class CollectionController extends Controller
 
     public function action(Request $request, $property_id, $room_id, $contract_id, $tenant_id,$bill_id, $payment_id)
     {
-
         if($request->collection_option == 'remit'){
             return redirect('/property/'.$request->property_id.'/room/'.$room_id.'/contract/'.$contract_id.'/tenant/'.$tenant_id.'/bill/'.$bill_id.'/payment/'.$payment_id.'/remittance/create');
+        }elseif($request->collection_option == 'Credit memo'){
+            $payment = Payment::findOrFail($payment_id);
+            $tenant = Tenant::findOrFail($tenant_id);
+            return view('webapp.collections.credit-memo', compact('payment', 'tenant'));
         }elseif($request->collection_option == 'export'){
 
         }
+    }
 
-        
+    public function credit_memo(Request $request, $property_id, $tenant_id, $payment_id){
+        $payment_ctr = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
+        ->where('property_id_foreign',Session::get('property_id'))
+        ->max('ar_no') + 1;
+
+        $payment = Payment::findOrFail($payment_id);
+
+        DB::table('payments')->insert(
+            [
+                'payment_tenant_id' => $tenant_id, 
+                'payment_bill_no' => $payment->payment_bill_no, 
+                'payment_bill_id' => $payment->payment_bill_id,
+                'amt_paid' => $request->amt_paid,
+                'payment_created' => $request->payment_created,
+                'ar_no' => $payment_ctr,
+                'form' => 'Credit memo',
+                'created_at' => NULL
+            ]
+       );
+
+       return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', 'Credit memo is posted successfully!');
+
     }
 
     /**
