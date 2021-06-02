@@ -151,12 +151,12 @@
             <li class="nav-item">
               @if(Session::get('current-page') === 'violations')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/violations">
-                <i class="fas fa-tools text-cyan"></i>
+                <i class="fas fa-smoking-ban text-primary"></i>
                 <span class="nav-link-text">Violations</span>
               </a>
               @else
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/violations">
-                <i class="fas fa-tools text-cyan"></i>
+                <i class="fas fa-smoking-ban text-primary"></i>
                 <span class="nav-link-text">Violations</span>
               </a>
               @endif
@@ -212,12 +212,12 @@
               <li class="nav-item">
                 @if(Session::get('current-page') === 'suppliers')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/suppliers">
-                  <i class="fas fa-coins text-yellow"></i>
+                  <i class="fas fa-boxes text-dark"></i>
                   <span class="nav-link-text">Suppliers</span>
                 </a>
                 @else
                 <a class="nav-link" href="/property/{{ Session::get('property_id') }}/suppliers">
-                  <i class="fas fa-coins text-yellow"></i>
+                  <i class="fas fa-boxes text-dark"></i>
                   <span class="nav-link-text">Suppliers</span>
                 </a>
                 @endif

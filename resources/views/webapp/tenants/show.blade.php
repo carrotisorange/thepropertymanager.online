@@ -76,17 +76,14 @@ thead tr:nth-child(1) th {
         @else
         <a class="nav-item nav-link" id="nav-guardians-tab" data-toggle="tab" href="#guardians" role="tab" aria-controls="nav-guardians" aria-selected="false"><i class="fas fa-user-friends text-primary"></i> Guardians </a>
         @endif
-         @if($balance->count() <= 0)
+         @if($bills->count() <= 0)
          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills </a>
          @else
          <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills <i class="fas fa-exclamation-triangle text-danger"></i> {{ $bills->count() }}</a>
-         @endif
-
-         
+         @endif     
          <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Payments </a>
-
-
         <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a>
+        <a class="nav-item nav-link" id="nav-violations-tab" data-toggle="tab" href="#violations" role="tab" aria-controls="nav-violation" aria-selected="false"> <i class="fas fa-smoking-ban text-primary"></i> Violations</a>
       </div>
     </nav>
     
@@ -402,6 +399,84 @@ thead tr:nth-child(1) th {
       </div>
       @endif
       </div>
+
+      
+      <div class="tab-pane fade" id="violations" role="tabpanel" aria-labelledby="nav-violations-tab">
+        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
+        <br><br>
+        @if($concerns->count() < 1)
+        <p class="text-danger text-center">No violations found!</p>
+        @else
+        <div class="row" >
+          <div class="col-md-12" >
+        <div class="">
+         <table class="table table-hover">
+           <?php $ctr = 1; ?>
+           <thead>
+             <tr>
+               <th>#</th>
+               
+                 <th>Date Reported</th>
+                
+            
+                 <th>Type</th>
+                 <th>Title</th>
+                 <th>Urgency</th>
+                 <th>Status</th>
+                 <th>Assigned to</th>
+                 <th>Rating</th>
+                 <th>Feedback</th>
+            </tr>
+           </thead>
+           <tbody>
+             @foreach ($concerns as $item)
+             <tr>
+               <th>{{ $ctr++ }}</th>
+            
+               <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
+                 
+               
+                 <td>
+                   
+                     {{ $item->category }}
+                     
+                 </td>
+                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                 <td>
+                     @if($item->urgency === 'major and urgent')
+                     <span class="badge badge-danger">{{ $item->urgency }}</span>
+                     @elseif($item->urgency === 'major but nor urgent')
+                     <span class="badge badge-warning">{{ $item->urgency }}</span>
+                     @else
+                     <span class="badge badge-primary">{{ $item->urgency }}</span>
+                     @endif
+                 </td>
+                 <td>
+                  @if($item->concern_status === 'pending')
+                  <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
+                  @elseif($item->concern_status === 'active')
+                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+                  @else
+                  <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+                  @endif
+                 </td>
+                 <td>{{ $item->name? $item->name: 'NULL' }}</td>
+                 <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
+                 <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+             </tr>
+             @endforeach
+           </tbody>
+         </table>
+        
+       </div>
+                
+                
+          </div>
+      </div>
+      @endif
+      </div>
+
+
       <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
 
        <p class="text-left"> <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>  </p>

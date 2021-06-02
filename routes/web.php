@@ -706,6 +706,13 @@ Route::get('/maintenance', function(){
 })->middleware(['auth', 'verified']);
 
 
+//routes for violations
+Route::get('/property/{property_id}/violations', 'ViolationController@index')->middleware(['auth', 'verified']);
+
+
+//routes for suppliers
+Route::get('/property/{property_id}/suppliers', 'SupplierController@index')->middleware(['auth', 'verified']);
+
 //routes for bills
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@show_billings')->name('show-billings')->middleware(['auth', 'verified']);
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@edit_billings')->middleware(['auth', 'verified']);

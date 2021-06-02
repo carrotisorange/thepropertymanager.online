@@ -15,7 +15,7 @@ class AddUnitFloorIdInUnitsTable extends Migration
     {
         Schema::table('units', function (Blueprint $table) {
             $table->unsignedBigInteger('unit_floor_id_foreign')->nullable();
-            $table->foreign('unit_floor_id_foreign')->references('unit_floor_id')->on('unit_floors')->onDelete('cascade');;
+            $table->foreign('unit_floor_id_foreign')->references('unit_floor_id')->on('unit_floors')->onDelete('cascade');
         });
     }
 
