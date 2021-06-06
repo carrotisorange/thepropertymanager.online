@@ -23,7 +23,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
         "luigel/laravel-paymongo": "^1.2",
-    
+        "symfony/intl": "^5.3",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {

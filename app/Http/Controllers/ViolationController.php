@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Violation;
 use Illuminate\Http\Request;
+use Session;
 
 class ViolationController extends Controller
 {
@@ -16,7 +17,7 @@ class ViolationController extends Controller
     {
         Session::put('current-page', 'violations');
 
-        return 'violations';
+        return view('webapp.violations.index');
     }
 
     /**
@@ -26,7 +27,7 @@ class ViolationController extends Controller
      */
     public function create()
     {
-        //
+        return view('webapp.violations.create');
     }
 
     /**

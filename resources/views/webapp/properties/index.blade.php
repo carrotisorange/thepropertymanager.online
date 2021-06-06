@@ -78,31 +78,35 @@
     </div>
     @else
     
-    <div class="col-md-4">
-      @if($properties->count()>1)
-        <a href="/property/{{ Carbon\Carbon::now()->format('mdY') }}/portforlio" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-columns"></i> See your portforlio</a>
-      @else
+    <div class="col">
+  
        @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced')
-       <a href="/property/{{ Carbon\Carbon::now()->timestamp }}/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new property</a>
+       <a href="/property/{{ Carbon\Carbon::now()->timestamp }}/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> New property</a>
         @else
-        <a href="#" class="btn btn-primary btn-user btn-block btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> Add new property</a>
+        <a href="#" class="btn btn-primary btn-user btn-block btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> New user</a>
         @endif
-      @endif
+ 
     </div>
 
-    <div class="col-md-4">
+      @if($properties->count()>1)
+    <div class="col">
+        <a href="/property/{{ Carbon\Carbon::now()->format('mdY') }}/portforlio" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-columns"></i> View portforlio</a>
+    </div>
+    @endif
+
+    <div class="col">
       @if (Auth::user()->user_type === 'manager')
         @if($users > 1)
-        <a title="Upgrade to Pro to add more users." href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new user </a>
+        <a title="Upgrade to Pro to add more users." href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> New user </a>
         @else
-        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new user</a>
+        <a title="Limited to 2 users." href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> New user</a>
         @endif
       @else
-      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add new user</a>
+      <a title="Reserved for manager." href="#/" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> New user</a>
       @endif
     </div>
 
-    <div class="col-md-4">
+    <div class="col">
       @if(Auth::user()->trial_ends_at > Carbon\Carbon::today())
       <button id="manageButton" type="submit" class="btn btn-primary btn-user btn-block btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Manage</button>
       @else

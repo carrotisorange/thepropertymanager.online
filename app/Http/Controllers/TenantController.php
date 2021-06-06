@@ -675,7 +675,10 @@ class TenantController extends Controller
             ->orderBy('particular', 'asc')
             ->get();
 
-           
+            $violations = DB::table('violations')->where('tenant_id_foreign', $tenant_id);
+
+            $violations_type = DB::table('violation_types')->get();
+        
            $tenant = Tenant::findOrFail($tenant_id);
 
            $units = Property::findOrFail(Session::get('property_id'))
@@ -801,7 +804,7 @@ class TenantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-                return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
+                return view('webapp.tenants.show', compact('violations_type','violations','bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
         }else{
                 return view('layouts.arsha.unregistered');
         }

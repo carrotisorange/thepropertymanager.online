@@ -708,10 +708,12 @@ Route::get('/maintenance', function(){
 
 //routes for violations
 Route::get('/property/{property_id}/violations', 'ViolationController@index')->middleware(['auth', 'verified']);
-
+Route::get('/property/{property_id}/violationts/create', 'ViolationController@create')->middleware(['auth', 'verified']);
 
 //routes for suppliers
 Route::get('/property/{property_id}/suppliers', 'SupplierController@index')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/suppliers/create', 'SupplierController@create')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/suppliers/store', 'SupplierController@store')->middleware(['auth', 'verified']);
 
 //routes for bills
 Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@show_billings')->name('show-billings')->middleware(['auth', 'verified']);

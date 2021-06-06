@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Supplier;
 use Illuminate\Http\Request;
+use Session;
+use DB;
 
 class SupplierController extends Controller
 {
@@ -14,7 +16,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return 'suppliers';
+        Session::put('current-page', 'suppliers');
+
+        $suppliers = DB::table('suppliers')->get();
+
+        return view('webapp.suppliers.index', compact('suppliers'));
     }
 
     /**
@@ -24,7 +30,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('webapp.suppliers.create');
     }
 
     /**
@@ -35,7 +41,18 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('suppliers')->insert(
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+                'mobile' => $request->mobile,
+                'email' => $request->email,
+                'representative' => $request->representative,
+                'property_id_foreign' => Session::get('property_id')
+            ]
+        );
+
+        return redirect('/property/'.Session::get('property_id').'/suppliers')->with('success','Supplier is addedd successfully!');
     }
 
     /**

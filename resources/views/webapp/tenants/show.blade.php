@@ -402,7 +402,7 @@ thead tr:nth-child(1) th {
 
       
       <div class="tab-pane fade" id="violations" role="tabpanel" aria-labelledby="nav-violations-tab">
-        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
+        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addViolation" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         @if($concerns->count() < 1)
         <p class="text-danger text-center">No violations found!</p>
@@ -821,6 +821,8 @@ thead tr:nth-child(1) th {
 @include('webapp.tenants.show_includes.rooms.warning-exceeds-limit')
 
 @include('webapp.tenants.show_includes.concerns.create')
+
+@include('webapp.tenants.show_includes.violations.create')
 
 
 

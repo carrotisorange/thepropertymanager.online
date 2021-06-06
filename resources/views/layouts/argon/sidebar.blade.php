@@ -55,7 +55,8 @@
           
               @endif
             </li>
-            {{-- @elseif(Auth::user()->user_type === 'ap')
+            {{-- @elseif
+            (Auth::user()->user_type === 'ap')
             <li class="nav-item">
               @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
                 @if(Session::get('current-page') === 'units')
@@ -191,22 +192,7 @@
               @endif
             </li>
             @endif
-            {{-- Bulk billing --}}
-            @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-            <li class="nav-item">
-              @if(Session::get('current-page') === 'bulk-billing')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
-                <i class="fas fa-file-invoice-dollar text-pink"></i>
-                <span class="nav-link-text">Bills</span>
-              </a>
-              @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
-                <i class="fas fa-file-invoice-dollar text-pink"></i>
-                <span class="nav-link-text">Bills</span>
-              </a>
-              @endif
-            </li>
-            @endif
+           
             {{-- Suppliers --}}
             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
               <li class="nav-item">
@@ -221,6 +207,34 @@
                   <span class="nav-link-text">Suppliers</span>
                 </a>
                 @endif
+            </li>
+            @endif
+           
+          
+          </ul>
+          
+           <!-- Divider -->
+           <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Financials</span>
+          </h6>
+          <!-- Navigation -->
+          <ul class="navbar-nav mb-md-3">
+           {{-- Bulk billing --}}
+            @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+            <li class="nav-item">
+              @if(Session::get('current-page') === 'bulk-billing')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
+                <i class="fas fa-file-invoice-dollar text-pink"></i>
+                <span class="nav-link-text">Bills</span>
+              </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
+                <i class="fas fa-file-invoice-dollar text-pink"></i>
+                <span class="nav-link-text">Bills</span>
+              </a>
+              @endif
             </li>
             @endif
             {{-- Daily Collection Report --}}
@@ -257,23 +271,7 @@
               </li>
               @endif
             @endif
-            {{-- Financial reports --}}
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-            <li class="nav-item">
-              @if(Session::get('current-page') === 'financial-reports')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/financials">
-                <i class="fas fa-chart-line text-purple"></i>
-                <span class="nav-link-text">Financial Reports</span>
-              </a>
-              @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
-                <i class="fas fa-chart-line text-purple"></i>
-                <span class="nav-link-text">Financial Reports</span>
-              </a>
-              @endif
-              
-            </li>
-            @endif
+         
             {{-- Payables --}}
             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' )
             <li class="nav-item">
@@ -286,6 +284,32 @@
               <a class="nav-link" href="/property/{{ Session::get('property_id') }}/payables">
                 <i class="fas fa-file-export text-indigo"></i>
                 <span class="nav-link-text">Payables</span>
+              </a>
+              @endif
+              
+            </li>
+            @endif
+          </ul>
+           <!-- Divider -->
+           <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Reports</span>
+          </h6>
+          <!-- Navigation -->
+          <ul class="navbar-nav mb-md-3">
+          {{-- Financial reports --}}
+            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+            <li class="nav-item">
+              @if(Session::get('current-page') === 'financial-reports')
+              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/financials">
+                <i class="fas fa-chart-line text-purple"></i>
+                <span class="nav-link-text">Financial Reports</span>
+              </a>
+              @else
+              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
+                <i class="fas fa-chart-line text-purple"></i>
+                <span class="nav-link-text">Financial Reports</span>
               </a>
               @endif
               
