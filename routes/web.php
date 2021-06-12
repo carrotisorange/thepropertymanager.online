@@ -885,6 +885,6 @@ Route::get('/carpiotech', function(){
     return view('founders.landleybernardo');
 });
 
-Route::get('/carpiotech/monthsary', function(){
+Route::get('/carpiotech/23rd-monthsary', function(){
     return view('founders.index');
 });
