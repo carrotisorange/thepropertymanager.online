@@ -246,7 +246,7 @@
         </div> 
 
         <div class="carousel-item">
-          <iframe width="600" height="650" src="https://www.youtube.com/embed/p1tYI-b5Yt8?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="600" height="650" src="https://www.youtube.com/embed/p1tYI-b5Yt8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           {{-- <img class="d-md-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2809.jpg') }}" alt="Second slide"> --}}
           
         </div>
