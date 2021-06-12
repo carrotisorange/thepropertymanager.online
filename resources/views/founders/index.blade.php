@@ -32,21 +32,21 @@
         </div>
     
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/first.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/first.png') }}" alt="Third slide">
           <br>
           <h5>Kilig much...</h5>
           <p>Wala kang idea kung gaanon mo ako pinasaya dito &#128522;...</p>
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_1796.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_1796.png') }}" alt="Third slide">
           <br>
           <h5>Sharing such a sweet present...</h5>
           <p>Kinain namin agad. Inggit na inngit sila Osho saken nito...Thank you daw...</p>
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_1870.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_1870.png') }}" alt="Third slide">
           <br>
           <h5>Pasalubong from states...</h5>
           <p>Ang sweet sweet mo talaga. I dont know how to feel...Buti binigay nung guard saken to. HAHA</p>
@@ -78,7 +78,7 @@
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2032.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2032.png') }}" alt="Third slide">
           <br>
           <h5>Biglaang dinner...</h5>
           <p>TBH, medyo broke na ako dito...Kahit hindi ganon kasarap yung burger, ang saya ko kase kasama kita. . </p>
@@ -107,14 +107,14 @@
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2176.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2176.png') }}" alt="Third slide">
           <br>
           <h5>Heaven in Baguio...</h5>
           <p>Hindi ko alam na ganitong lugar pala sa Baguio. </p>
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2194.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2194.png') }}" alt="Third slide">
           <br>
           <h5>First time in dropout...</h5>
           <p>Grabe ang lakas ng ulan nito, nabasa pa ata yung paa mo.  </p>
@@ -169,7 +169,7 @@
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2810.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_2810.png') }}" alt="Third slide">
           <br>
           <h5>Surprise gift...</h5>
           <p>Plants from you before ako lumipat sa CY. Ang laki na nya ngayon. Pwede ng irepot.</p>
@@ -192,7 +192,7 @@
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_3608.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_3608.png') }}" alt="Third slide">
           <br>
           <h5>Sa wakas natuloy din sa Johh Hay...</h5>
           <p>Sarap maglakad dito, kaso ang lamig. Bad trip lang after kase biglang nagloko yung system pag-uwi natin. :( </p>
@@ -206,14 +206,14 @@
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/TKDF9252 (1).jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/TKDF9252 (1).png') }}" alt="Third slide">
           <br>
           <h5>Valentines Day</h5>
           <p>Miss ko na yung luto mo. Sarap ng malamig na wine. </p>
         </div>
 
         <div class="carousel-item">
-          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_3927.jpg') }}" alt="Third slide">
+          <img class="d-block w-50" src="{{ asset('yeinydd/images/demo/backgrounds/IMG_3927.png') }}" alt="Third slide">
           <br>
           <h5>Shopping shopping</h5>
           <p>Looking for dress para sa oathtaking mo. Ang saya mo dito kase nabili mo yung gusto mo na shirt. </p>
