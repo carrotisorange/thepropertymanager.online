@@ -4,7 +4,7 @@
  <link href="{{ asset('/arsha/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
 <head>
-<title>Happy 12th monthsarry</title>
+<title>Happy 23rd monthsarry</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ asset('/yeinydd/layout/styles/layout.css') }}" rel="stylesheet" type="text/css" media="all">
