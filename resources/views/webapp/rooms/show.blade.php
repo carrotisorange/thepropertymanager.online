@@ -304,7 +304,7 @@ thead tr:nth-child(1) th {
         
                       <tr>
                         <th style="text-align: left;">
-                          Last name:
+                          Last name<span class="text-danger">*</span>:
                           <input form="addTenantForm1" type="text" class="@error('last_name') is-invalid @enderror" name="last_name" id="last_name"  value="{{ old('last_name') }}" required>
                           @error('last_name')
                           <span class="invalid-feedback" role="alert">
@@ -312,7 +312,7 @@ thead tr:nth-child(1) th {
                           </span>
                           @enderror
                         </th>
-                        <th style="text-align: left;"> First name:
+                        <th style="text-align: left;"> First name<span class="text-danger">*</span>:
                           <input form="addTenantForm1" type="text" class="@error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}" required>
                              @error('first_name')
                           <span class="invalid-feedback" role="alert">
@@ -332,7 +332,7 @@ thead tr:nth-child(1) th {
                       </tr>
                       <tr>
                         <th style="text-align: left;">
-                          Birthdate:
+                          Birthdate<span class="text-danger">*</span>:
                           <input form="addTenantForm1" type="date" class="@error('birthdate') is-invalid @enderror" name="birthdate" id="birthdate" value="{{ old('birthdate') }}" required>
     
                           @error('birthdate')
@@ -347,7 +347,7 @@ thead tr:nth-child(1) th {
     
                         </th> --}}
                         <th style="text-align: left;">
-                          Gender:
+                          Gender <span class="text-danger">*</span>:
                           <select form="addTenantForm1"  id="gender" name="gender" required>        
                             <option value="{{ old('gender')? old('gender'): '' }}" selected>{{ old('gender')? old('gender'): 'Please select one' }} </option>
                             <option value="male">male</option>
@@ -361,7 +361,7 @@ thead tr:nth-child(1) th {
                         @enderror
                         </th>
                         <th style="text-align: left;">
-                          Civil status:
+                          Civil status<span class="text-danger">*</span>:
                           <select form="addTenantForm1"  id="civil_status" name="civil_status" required>
                             <option value="{{ old('civil_status')? old('civil_status'): '' }}" selected>{{ old('civil_status')? old('civil_status'): 'Please select one' }} </option>
                               <option value="single">single</option>
@@ -377,7 +377,7 @@ thead tr:nth-child(1) th {
                       </tr>
                       <tr>
                        <th style="text-align: left;">
-                        Nationality:
+                        Nationality<span class="text-danger">*</span>:
                         <input form="addTenantForm1" type="text" class="@error('nationality') is-invalid @enderror" name="nationality" id="nationality"  value="{{ old('nationality') }}" required>
                         @error('nationality')
                         <span class="invalid-feedback" role="alert">
@@ -395,7 +395,7 @@ thead tr:nth-child(1) th {
                       @enderror
                        </th>
                      <th style="text-align: left;">
-                      ID presented/ID number:
+                      ID presented/ID number<span class="text-danger">*</span>:
                       <input form="addTenantForm1" type="text" class="@error('id_number') is-invalid @enderror" name="id_number" id="id_number" value="{{ old('id_number') }}" required>
 
                       @error('id_number')
@@ -407,7 +407,7 @@ thead tr:nth-child(1) th {
                       </tr>
                       <tr>
                         <th colspan="4" style="text-align: left;">
-                          Provincial address:
+                          Provincial address<span class="text-danger">*</span>:
                           <input form="addTenantForm1" type="text" class="@error('provincial_address') is-invalid @enderror" name="provincial_address" id="provincial_address" value="{{ old('provincial_address') }}" style="width: 800px;" required>
     
                           @error('provincial_address')
@@ -429,7 +429,7 @@ thead tr:nth-child(1) th {
                           @enderror
                         </th>
                         <th style="text-align: left;">
-                          Email address:
+                          Email address<span class="text-danger">*</span>:
                           <input form="addTenantForm1" type="email" class="@error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" required>
                           <br>
                           @error('email')
@@ -507,7 +507,7 @@ thead tr:nth-child(1) th {
                             @endforeach
                            </select>
                         </th>
-                        <th style="text-align: left;">Source:
+                        <th style="text-align: left;">Source<span class="text-danger">*</span>:
                           <select form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" required>
                             <option value="{{ old('form_of_interaction')? old('form_of_interaction'): '' }}" selected>{{ old('form_of_interaction')? old('form_of_interaction'): 'Please select one' }} </option>
                              <option value="Facebook">Facebook</option>

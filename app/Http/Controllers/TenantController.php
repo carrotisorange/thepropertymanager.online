@@ -413,7 +413,6 @@ class TenantController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id )
     {
-
         //validate inputs
         $request->validate([
             // 'first_name' => ['required', 'string', 'max:255'],
@@ -524,7 +523,7 @@ class TenantController extends Controller
                 'user_id_foreign' => $user_id,
             ]);
            
-            return redirect('/property/'.$request->property_id.'/tenant/'.$new_tenant_id)->with('success', 'Tenant is added successfully.');
+            return redirect('/property/'.$request->property_id.'/tenant/'.$new_tenant_id.'/contract/create'.)->with('success', 'Tenant is added successfully.');
                  
 
 

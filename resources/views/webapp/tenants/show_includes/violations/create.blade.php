@@ -4,13 +4,12 @@
                     <div class="modal-content">
                         <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">New Violation</h5>
-                
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         </div>
                         <div class="modal-body">
-                            <form id="concernForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/concern" method="POST">
+                            <form id="concernForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/violation" method="POST">
                                 @csrf
                             </form>
   
@@ -59,9 +58,6 @@
                               </div>
                           </div>
                           <br>
-                         
-                        
-            
                          <div class="row">
                               <div class="col">
                                   <label>Details</label>
@@ -69,18 +65,18 @@
                                   <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
                               </div>
                           </div>
-                          <br>
+                          {{-- <br>
                           <div class="row">
                               <div class="col">
                                   <label>Sanction</label>
                                   
                                   <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
                               </div>
-                          </div>
+                          </div> --}}
                          
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" form="concernForm" class="btn btn-primary btn-sm" ><i class="fas fa-check"></i> Submit</button>
+                            <button form="concernForm" type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Submit</button>
                         </div>
                     </div>
                     </div>

@@ -32,7 +32,7 @@ File: Layout CSS
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */
-#pageintro{padding:180px 0;}
+#pageintro{padding:50px 0;text-align: center;}
 
 #pageintro article{display:block; max-width:60%; margin:0 auto; text-align:center;}
 #pageintro .heading{margin-bottom:20px; font-size:4rem;}
@@ -44,6 +44,11 @@ File: Layout CSS
 #pageintro footer button{position:absolute; top:1px; right:1px; width:42px; height:42px; font-size:16px; cursor:pointer;}
 #pageintro footer button em{display:none;}
 
+img
+{
+   margin: auto;
+   max-height: 90%;
+}
 
 /* Content Area
 --------------------------------------------------------------------------------------------------------------- */

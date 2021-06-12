@@ -708,7 +708,7 @@ Route::get('/maintenance', function(){
 
 //routes for violations
 Route::get('/property/{property_id}/violations', 'ViolationController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/violationts/create', 'ViolationController@create')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/tenant/{tenant_id}/violation', 'ViolationController@store')->middleware(['auth', 'verified']);
 
 //routes for suppliers
 Route::get('/property/{property_id}/suppliers', 'SupplierController@index')->middleware(['auth', 'verified']);
@@ -885,6 +885,6 @@ Route::get('/carpiotech', function(){
     return view('founders.landleybernardo');
 });
 
-Route::get('/letter/april-2021', function(){
-    return view('founders.april-2021');
+Route::get('/carpiotech/monthsary', function(){
+    return view('founders.index');
 });
