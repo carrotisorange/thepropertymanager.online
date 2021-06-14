@@ -79,7 +79,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-link-icon text-indigo" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
+              <a class="nav-link nav-link-icon text-indigo" href="https://www.instagram.com/onlinepropertymanager/" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
                 <i class="fab fa-instagram"></i>
                 <span class="nav-link-inner--text d-lg-none">Instagram</span>
               </a>
