@@ -65,7 +65,6 @@
      <div class="col">
       <p class="text-right">
         <button type="submit" form="addPayableEntryForm" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Next</button>
-        <a href="/property/all">Skip for now</a>
       </p>
      </div>
    </div>
