@@ -157,6 +157,7 @@
                      <div class="col">
                       <p class="text-right">
                         <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Next</button>
+                        <a href="/property/all">Skip for now</a>
                       </p>
                      </div>
                    </div>
