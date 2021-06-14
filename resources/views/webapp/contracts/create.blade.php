@@ -5,13 +5,13 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-2">
-    <a class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}"><i class="fas fa-home"></i> Home</a>
+    <a class="btn btn-primary btn-sm" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}"><i class="fas fa-arrow-left"></i> Back</a>
     {{-- <h6 class="h2 text-dark d-inline-block mb-0">iBack</h6> --}}
     
   </div>
   <div class="col-md-10">
     
-<table class="table table-condensed table-borderless">
+<table class="table table-borderless">
   <tr>
     <th>
      Room <span class="text-danger">*</span>
@@ -26,14 +26,14 @@
     Refferer <span class="text-danger">*</span>
       <select class="" form="addTenantForm1" name="referrer_id" id="referrer_id" required readonly>
        {{-- @foreach ($users as $item) --}}
-         <option value="{{ $tenant->user_id_foreign }}" selected>{{ $tenant->first_name.' '.$tenant->last_name }}</option>
+         <option value="{{ $tenant->user_id_foreign }}" selected>None</option>
        {{-- @endforeach
          <option value="1">None</option> --}}
       </select>
     </th>
   
     <th>
-      Source <span class="text-danger">*</span>
+       <span class="text-danger">*</span>
     <input class="" form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" value="Renewal"required readonly>
     </th>
     <th></th>
@@ -76,7 +76,7 @@
             @csrf
             </form>
             
-            <table class="table table-condensed">
+            <table class="table table-borderless">
               <tr>
                 <th style="text-align: left;">
                   Last Name  <span class="text-danger">*</span>
@@ -95,7 +95,7 @@
             
             <input type="hidden" form="addTenantForm1" value="{{Session::get('property_id')}}" name="property_id">
           
-            <table class="table table-condensed">
+            <table class="table table-borderless">
               <tr>
                 <th style="text-align: left;">
                   Movein <span class="text-danger">*</span>
@@ -188,7 +188,7 @@
               <a href="#/" id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove</a>
               <a href="#/" id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>    
             </p>
-              <table class = " table table-hover" id="tab_logic">
+              <table class = " table table-borderless" id="tab_logic">
                 <thead>
                  <tr>
                    <th>#</th>

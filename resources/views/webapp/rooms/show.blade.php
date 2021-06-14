@@ -162,7 +162,7 @@ thead tr:nth-child(1) th {
         </div>
         <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             @if($expenses->count() <=0)
             <br>
             <p class="text-danger text-center">No expenses found!</p>
@@ -199,7 +199,7 @@ thead tr:nth-child(1) th {
         </div>
         <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             @if($remittances->count() <=0)
             <br>
             <p class="text-danger text-center">No remittances found!</p>
@@ -290,7 +290,7 @@ thead tr:nth-child(1) th {
                     <form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/tenant/" method="POST">
                       {{ csrf_field() }}
                       </form>
-                      <table class="table table-condensed">
+                      <table class="table table-borderless">
                         <tr>
                       <th style="text-align: center;" colspan="2"></th>
                           <th style="text-align: center;">Unit No: {{ $home->building.' '.$home->unit_no }}</th>
@@ -300,7 +300,7 @@ thead tr:nth-child(1) th {
             
                       </table>
                       <br>
-                    <table class="table table-condensed">
+                    <table class="table table-borderless">
         
                       <tr>
                         <th style="text-align: left;">
@@ -465,7 +465,7 @@ thead tr:nth-child(1) th {
                       </tr>
                     </table> --}}
                     <br>
-                    <table class="table table-condensed">
+                    <table class="table table-borderless">
                       <tr>
                         <th style="text-align: left;">Studying <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="studying" id="exampleCheck1"></th>
                         <th style="text-align: left;">Working <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="working" id="exampleCheck1"></th>
@@ -497,7 +497,7 @@ thead tr:nth-child(1) th {
                     </table>
                     <br>
                     <small>Source of awareness</small>
-                    <table class="table table-condensed">
+                    <table class="table table-borderless">
                       <tr>
                         <th style="text-align: left;">Referrer:
                           <select form="addTenantForm1" name="referrer_id" id="referrer_id">
@@ -532,7 +532,7 @@ thead tr:nth-child(1) th {
              </div>
             </div>
             <div class="tab-pane fade" id="active" role="tabpanel" aria-labelledby="nav-home-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
               <table class="table table-hover">
                 @if($tenant_active->count() <= 0)
                 <tr>
@@ -569,7 +569,7 @@ thead tr:nth-child(1) th {
               </div>
             </div>
             <div class="tab-pane fade" id="reserved" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
               <table class="table table-hover">
                 @if($tenant_reserved->count() <= 0)
                 <tr>
@@ -609,7 +609,7 @@ thead tr:nth-child(1) th {
               </div>
             </div>
             <div class="tab-pane fade" id="movingout" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
               <table class="table table-hover">
                 @if($tenant_movingout->count() <= 0)
                 <tr>
@@ -640,7 +640,7 @@ thead tr:nth-child(1) th {
               </div>
             </div>
             <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="nav-contact-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
               <table class="table table-hover">
                 @if($tenant_inactive->count() <= 0)
                 <tr>
@@ -682,7 +682,7 @@ thead tr:nth-child(1) th {
           <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
           <br><br>
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             @if($concerns->count() <=0)
             <br>
             <p class="text-danger text-center">No concerns found!</p>
@@ -757,7 +757,7 @@ thead tr:nth-child(1) th {
           @if($owners->count()<=-0)
           <p class="text-center text-danger">No owners found!</p>
           @else
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             <table class="table table-hover">
               <?php $ctr=1;?>
               <thead>

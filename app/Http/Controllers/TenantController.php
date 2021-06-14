@@ -453,32 +453,6 @@ class TenantController extends Controller
         $room->status = 'reserved';
         $room->save();
 
-        // $tenant_id = DB::table('tenants')->insertGetId(
-        //     [
-        //         'tenant_unique_id' => $tenant_unique_id,
-        //         'first_name' => $request->first_name,
-        //         'middle_name' => $request->middle_name,
-        //         'last_name'=> $request->last_name,
-        //         'birthdate'=>$request->birthdate,
-        //         'gender' => $request->gender,
-        //         'type_of_tenant' => $request->type_of_tenant,
-        //         'civil_status'=> $request->civil_status,
-        //         'id_number' => $request->id_number,
-        //         //contact number
-        //         'contact_no' => $request->contact_no,
-        //         'email_address' => $request->email_address,
-        //         'created_at' => $request->movein_at
-        //     ]
-        //     );
-        
-            //get the count of all the non-deleted units
-            // $units = DB::table('units')
-            // ->where('property_id_foreign', $property_id)
-            // ->where('status','<>','deleted')
-            // ->count();
-
-        
-
             //get the count of all the non-deleted rooms
             $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
@@ -523,35 +497,43 @@ class TenantController extends Controller
                 'user_id_foreign' => $user_id,
             ]);
            
-            return redirect('/property/'.$request->property_id.'/tenant/'.$new_tenant_id.'/contract/create'.)->with('success', 'Tenant is added successfully.');
-                 
+            Session::put('current-page', 'rooms');
 
-
-
-        // $tenant = Tenant::findOrFail($tenant_id);
-        // $unit = Unit::findOrFail($unit_id);
-        // if($no_of_bills === null){  
-
-        // $notification = new Notification();
-        // $notification->user_id_foreign = Auth::user()->id;
-        // $notification->property_id_foreign = Session::get('property_id');
-        // $notification->type = 'tenant';
+            $property_bills = DB::table('particulars')
+            ->join('property_bills', 'particular_id', 'particular_id_foreign')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->orderBy('particular', 'asc')
+            ->get();
+    
+             $unit = Unit::findOrFail($unit_id);
+    
+            $tenant = Tenant::findOrFail($new_tenant_id);
+    
+            $users = DB::table('users_properties_relations')
+            ->join('properties', 'property_id_foreign', 'property_id')
+            ->join('users', 'user_id_foreign', 'id')
+            ->select('*', 'properties.name as property')
+            ->where('lower_access_user_id', Auth::user()->id)
+            ->orWhere('id', Auth::user()->id)  
+            ->orderBy('users.name')
+            ->get();
+    
+            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+                $current_bill_no = DB::table('units')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->max('bill_no') + 1;
         
-        // $notification->message = Auth::user()->name.' adds '.$tenant->first_name.' '.$tenant->last_name.' in '.Unit::findOrFail($unit_id)->unit_no.'.';
-        // $notification->save();
-        //   }else{  
-        // $notification = new Notification();
-        // $notification->user_id_foreign = Auth::user()->id;
-        // $notification->property_id_foreign = Session::get('property_id');
-        // $notification->type = 'tenant';
-        
-        // $notification->message = Auth::user()->name.' reserves '.Unit::findOrFail($unit_id)->unit_no.' for '.$tenant->first_name.' '.$tenant->last_name.'.';
-        // $notification->save();
-        //   }
-       
-        //  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
-
-       
+            }else{
+                $current_bill_no = DB::table('contracts')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('bills', 'tenant_id', 'bill_tenant_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->max('bill_no') + 1;
+            }     
+    
+            return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users','property_bills')->with('success', 'Tenant is added successfully!'));
     
     }
 
@@ -721,18 +703,6 @@ class TenantController extends Controller
             ->orderBy('concern_id', 'desc')
             ->get();
 
-        //    $payments = Tenant::findOrFail($tenant_id)->payments;
-
-    //      $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-    //     ->join('contracts', 'bill_tenant_id', 'unit_id_foreign')
-        
-    //     ->join('units', 'unit_id_foreign', 'unit_id')
-    //     ->join('particulars','particular_id_foreign', 'particular_id')
-    //     ->where('bill_tenant_id', $tenant_id)
-    //     ->groupBy('payment_id')
-    //     ->orderBy('payment_created', 'desc')
-    //    ->get();
-
         $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
        ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
        
@@ -742,18 +712,6 @@ class TenantController extends Controller
        ->groupBy('payment_id')
        ->orderBy('payment_created', 'desc')
       ->get();
-      
-
-    //     $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-    //     ->where('bill_tenant_id', $tenant_id)
-    //     ->groupBy('payment_id')
-    //     ->orderBy('ar_no', 'desc')
-    //    ->get()
-    //     ->groupBy(function($item) {
-    //         return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-    //     });
-
-              //get the number of last added bills
        
               if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
                 $current_bill_no = DB::table('units')
@@ -788,20 +746,12 @@ class TenantController extends Controller
              ->havingRaw('balance > 0')
              ->get();
 
-            // $pending_balance = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-            // ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-            // ->where('bill_tenant_id', $tenant_id)
-            // ->where('bill_status', NULL)
-            // ->havingRaw('balance > 0')
-            // ->get();
-
-              //$deleted_bills = DB::table('bills')->where('bill_tenant_id', $tenant_id)->where('bill_status','<>', NULL)->sum('amount');
-
-
                 $access = DB::table('users')
               ->join('tenants', 'id', 'user_id_foreign')
               ->where('tenant_id', $tenant_id)
               ->get();
+
+
             
                 return view('webapp.tenants.show', compact('violations_type','violations','bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
         }else{

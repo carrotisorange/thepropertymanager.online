@@ -94,10 +94,6 @@ class ContractController extends Controller
         ->orderBy('users.name')
         ->get();
 
-         $units = Property::findOrFail($property_id)
-        ->units
-        ->whereIn('status',['vacant', 'reserved']);
-
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
@@ -113,7 +109,7 @@ class ContractController extends Controller
             ->max('bill_no') + 1;
         }     
 
-        return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users', 'units','property_bills'));
+        return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users','property_bills'));
     }
 
     /**

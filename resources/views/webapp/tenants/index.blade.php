@@ -85,7 +85,7 @@ thead tr:nth-child(1) th {
 
 
 
-<div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+<div style="overflow-y:scroll;overflow-x:scroll;">
     <table class="table table-hover">
       <?php $ctr=1;?>
       <thead>
