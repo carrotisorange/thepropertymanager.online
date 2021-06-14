@@ -16,7 +16,7 @@
   </div>
 
   <div class="col-md-6 text-right">
-    @if(Auth::user()->account_type === '1')
+    {{-- @if(Auth::user()->account_type === '1')
       @if($units->count()>20)
         <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
       @else
@@ -42,7 +42,7 @@
       @endif
     @elseif(Auth::user()->account_type === '5' )
         <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-    @endif
+    @endif --}}
     @if($units->count() >1 )
  
 
