@@ -533,7 +533,7 @@ class TenantController extends Controller
                 ->max('bill_no') + 1;
             }     
     
-            return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users','property_bills')->with('success', 'Tenant is added successfully!'));
+            return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users','property_bills'))->with('success', 'Tenant is added successfully!');
     
     }
 
