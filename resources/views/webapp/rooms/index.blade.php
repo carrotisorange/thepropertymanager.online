@@ -43,6 +43,7 @@
     @elseif(Auth::user()->account_type === '5' )
         <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
     @endif --}}
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
     @if($units->count() >1 )
  
 
