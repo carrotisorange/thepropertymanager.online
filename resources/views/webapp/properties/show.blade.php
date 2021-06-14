@@ -212,7 +212,7 @@ thead tr:nth-child(1) th {
       @if($top_agents->count() <=0)
       <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough data to show statistics.</p>
       @else
-      <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+      <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
         <table class="table table-hover">
        
          <thead>
