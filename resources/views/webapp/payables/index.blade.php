@@ -162,7 +162,7 @@ thead tr:nth-child(1) th {
         </div>
 
         <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
             <table class="table table-hover">
               <?php $ctr=1;?>
               <thead>

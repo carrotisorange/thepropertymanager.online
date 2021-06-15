@@ -38,7 +38,7 @@ thead tr:nth-child(1) th {
 <p class="text-danger text-center">No bills found!</p>
 
 @else
-<div class="row" style="overflow-y:scroll;overflow-x:scroll;">
+<div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
   <table class="table table-hover">
 <thead>
 
