@@ -429,7 +429,7 @@ thead tr:nth-child(1) th {
                           @enderror
                         </th>
                         <th style="text-align: left;">
-                          Email address<span class="text-danger">*</span>:
+                          Email address:
                           <input form="addTenantForm1" type="email" class="@error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
                           <br>
                           @error('email')
