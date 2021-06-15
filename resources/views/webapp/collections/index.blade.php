@@ -49,7 +49,7 @@ thead tr:nth-child(1) th {
 <p class="text-danger text-center">No collections found!</p>
 
 @else
-<div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+<div class="row" style="overflow-y:scroll;overflow-x:scroll;">
   
   <table class="table table-hover">
     <thead>
