@@ -645,6 +645,7 @@ $renewed_chart->dataset('', 'doughnut', [number_format(($overall_contract_termin
 ->where('payment_created', '>=', Carbon::now()->firstOfMonth())
 ->where('payment_created', '<=', Carbon::now()->endOfMonth())
 ->where('property_id_foreign', Session::get('property_id'))
+->where('form','!=' ,'Credit memo')
 ->sum('amt_paid');
 
 
@@ -654,6 +655,7 @@ $collection_rate_2 = DB::table('contracts')
 ->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
 ->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
  ->where('property_id_foreign',Session::get('property_id'))
+ ->where('form','!=' ,'Credit memo')
 ->sum('amt_paid');
 
 
@@ -664,6 +666,7 @@ $collection_rate_3 = DB::table('contracts')
 ->where('payment_created', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
 ->where('payment_created', '<=', Carbon::now()->subMonths(2)->endOfMonth())
  ->where('property_id_foreign', Session::get('property_id'))
+ ->where('form','!=' ,'Credit memo')
 
 ->sum('amt_paid');
 
@@ -673,6 +676,7 @@ $collection_rate_4 = DB::table('contracts')
 ->where('payment_created', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
 ->where('payment_created', '<=', Carbon::now()->subMonths(3)->endOfMonth())
  ->where('property_id_foreign', Session::get('property_id'))
+ ->where('form','!=' ,'Credit memo')
 
 ->sum('amt_paid');
 
@@ -682,6 +686,7 @@ $collection_rate_5 = DB::table('contracts')
 ->where('payment_created', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
 ->where('payment_created', '<=', Carbon::now()->subMonths(4)->endOfMonth())
  ->where('property_id_foreign', Session::get('property_id'))
+ ->where('form','!=' ,'Credit memo')
 
 ->sum('amt_paid');
 
@@ -690,6 +695,7 @@ $collection_rate_5 = DB::table('contracts')
 ->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
 ->where('payment_created', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
 ->where('payment_created', '<=', Carbon::now()->subMonths(5)->endOfMonth())
+->where('form','!=' ,'Credit memo')
  ->where('property_id_foreign', Session::get('property_id'))
 
 ->sum('amt_paid');
@@ -1264,6 +1270,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->leftJoin('payments', 'payment_bill_id', 'bill_id')
     ->join('particulars','particular_id_foreign', 'particular_id')
     ->where('property_id_foreign', Session::get('property_id'))
+    ->where('form','!=' ,'Credit memo')
     ->whereDate('payment_created', Carbon::now())
     ->orderBy('payment_created', 'desc')
     ->orderBy('ar_no', 'desc')
@@ -1278,6 +1285,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->leftJoin('payments', 'payment_bill_id', 'bill_id')
     ->join('particulars','particular_id_foreign', 'particular_id')
     ->where('property_id_foreign', Session::get('property_id'))
+    ->where('form','!=' ,'Credit memo')
     ->whereDate('payment_created', Carbon::now())
     ->orderBy('payment_created', 'desc')
     ->orderBy('ar_no', 'desc')

@@ -393,10 +393,10 @@ class CollectionController extends Controller
 
          $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-        
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('bill_tenant_id', $tenant_id)
+        ->where('form','!=' ,'Credit memo')
         ->groupBy('payment_id')
         ->orderBy('payment_created', 'desc')
        ->get();

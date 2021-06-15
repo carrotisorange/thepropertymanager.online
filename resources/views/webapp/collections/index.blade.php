@@ -70,7 +70,7 @@ thead tr:nth-child(1) th {
       @endif
       <th>Particular</th>
       <th>Period Covered</th>
-      {{-- <th>Form</th> --}}
+      <th>Form</th>
       <th>Amount</th>
       <th></th>
       {{-- <th></th> --}}
@@ -124,7 +124,7 @@ thead tr:nth-child(1) th {
                   {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
                   {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
                 </td>
-                {{-- <td>{{ $item->form }}</td> --}}
+                <td>{{ $item->form }}</td>
                 
                 <th> ₱
                   @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
