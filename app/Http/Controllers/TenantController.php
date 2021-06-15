@@ -414,7 +414,7 @@ class TenantController extends Controller
     public function store(Request $request, $property_id, $unit_id )
     {
         //validate inputs
-        $request->validate([
+        //$request->validate([
             // 'first_name' => ['required', 'string', 'max:255'],
             // 'middle_name' => ['max:255'],
             // 'last_name' => ['required', 'string', 'max:255'],
@@ -422,10 +422,9 @@ class TenantController extends Controller
             // 'type_of_tenant' => ['required'],
             // 'gender' => ['required'],
             // 'civil_status' => ['required'],
-            'email' => ['unique:users'],
+            //'email' => ['unique:users'],
             // 'contact_no' => ['unique:tenants'],
-        ]);
-
+       // ]);
     
         //get the last tenant_id
         $latest_tenant_id = Tenant::all()->max('tenant_id')+1;
@@ -474,28 +473,28 @@ class TenantController extends Controller
                 $occupancy->save();
             }
 
-            $user_id =  DB::table('users')->insertGetId([
-                'name' => $request->first_name.' '.$request->last_name,
-                'email' => $request->email,
-                'user_type' => 'tenant',
-                'password' => Hash::make($request->contact_no),
-                'created_at' => $request->movein_at,
-                'account_type' => '',
-                'email_verified_at' => $request->movein_at,
-                'trial_ends_at' => '',
-            ]);
+            // $user_id =  DB::table('users')->insertGetId([
+            //     'name' => $request->first_name.' '.$request->last_name,
+            //     'email' => $request->email,
+            //     'user_type' => 'tenant',
+            //     'password' => Hash::make($request->contact_no),
+            //     'created_at' => $request->movein_at,
+            //     'account_type' => '',
+            //     'email_verified_at' => $request->movein_at,
+            //     'trial_ends_at' => '',
+            // ]);
    
-            DB::table('tenants')
-            ->where('tenant_id', $new_tenant_id)
-            ->update([
-                'user_id_foreign' => $user_id,
-            ]);
+            // DB::table('tenants')
+            // ->where('tenant_id', $new_tenant_id)
+            // ->update([
+            //     'user_id_foreign' => $user_id,
+            // ]);
    
-            DB::table('users_properties_relations')
-            ->insert([
-                'property_id_foreign' => $property_id,
-                'user_id_foreign' => $user_id,
-            ]);
+            // DB::table('users_properties_relations')
+            // ->insert([
+            //     'property_id_foreign' => $property_id,
+            //     'user_id_foreign' => $user_id,
+            // ]);
            
             Session::put('current-page', 'rooms');
 

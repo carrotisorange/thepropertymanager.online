@@ -895,7 +895,7 @@ thead tr:nth-child(1) th {
     </div>
     <div class="form-group">
       <small for="">Email</small>
-      <input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $tenant->tenant_unique_id.'@thepropertymanager.online' }}" required>
+      <input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $tenant->email }}" required>
       @error('email')
       <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -911,7 +911,7 @@ thead tr:nth-child(1) th {
         </span>
     @enderror
     </div>
-    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Submit</button> </p>
+    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Submit</button> </p>
     
    </div>
 
