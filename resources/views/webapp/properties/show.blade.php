@@ -364,7 +364,7 @@ thead tr:nth-child(1) th {
       @if($tenants_to_watch_out->count() <=0)
       <p class="text-success text-center"><i class="fas fa-check-circle"></i> No expiring contracts.</p>
      @else
-     <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+     <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
       <table class="table table-hover">
         <thead>
     
@@ -585,7 +585,7 @@ thead tr:nth-child(1) th {
   @if($collections_for_the_day->count() <=0)
   <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> No collections recorded for today!</p>
   @else
-  <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+  <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
     <table class="table table-hover">
       <thead>
 
