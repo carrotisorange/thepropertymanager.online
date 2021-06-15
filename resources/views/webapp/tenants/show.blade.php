@@ -137,12 +137,12 @@ thead tr:nth-child(1) th {
                 <td>{{ $tenant->contact_no }}</td>
             </tr>
           </thead>
-            {{-- <thead>
+            <thead>
             <tr>
                 <th>Email</th>
-                <td>{{ $tenant->email_address }}</td>
+                <td>{{ $tenant->email }}</td>
             </tr>
-          </thead> --}}
+          </thead>
             <thead>
               <tr>
                   <th>Gender</th>
