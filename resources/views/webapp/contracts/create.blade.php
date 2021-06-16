@@ -34,7 +34,7 @@
   
     <th>
        <span class="text-danger">*</span>
-    <input class="" form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" value="Renewal"required readonly>
+    <input class="" type="hidden" form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" value="Renewal"required readonly>
     </th>
     <th></th>
   </tr>
