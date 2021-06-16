@@ -15,8 +15,8 @@
     
     <div class="col">
         <p>These are the list of tenants who are not able to pay their movein charges yet.</p>
-        <div class="table-responsive text-nowrap">
-            <table class="table table-bordered table-condensed">
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+            <table class="table table-bordered">
                 <thead>
                     <?php $ctr=1; ?>
                   <tr>
