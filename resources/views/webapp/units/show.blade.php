@@ -2,6 +2,19 @@
 
 @section('title', $home->building.' '.$home->unit_no)
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
+
 @section('upper-content')
 {{-- <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -37,14 +50,14 @@
      
         <div class="tab-pane fade show active" id="unit" role="tabpanel" aria-labelledby="nav-unit-tab">
     
-          <button type="button" title="edit unit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit unit</button> 
+          <button type="button" title="edit unit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
     
           <div class="col-md-12 mx-auto">
            
           <br>
             <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
             <div class="table-responsive text-nowrap">
-          <table class="table table-table-bordered table-hover table-condensed">
+          <table class="table table-bordered table-hover">
            <tr>
                     <th>Building</th>
                     <td>{{ $home->building }}</td>
@@ -109,8 +122,8 @@
       <br>
       <br>
       <div class="col-md-12 mx-auto">
-        <div class="table-responsive text-nowrap">
-          <table class="table table-hover">  
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+          <table class="table table-hover table-bordered">  
             <?php $ctr=1; ?>
           <thead>
             <tr>
@@ -194,7 +207,7 @@
           @endif 
           <br><br>
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             <table class="table table-hover">
               {{-- @foreach ($payments as $day => $collection_list) --}}
                <thead>
@@ -280,8 +293,8 @@
  
           <br><br>
           <div class="col-md-12 mx-auto">
-             <div class="table-responsive">
-              <table class="table table-table-bordered table-hover table-condensed">
+             <div class="table-responsive" style="overflow-y:scroll;overflow-x:scroll;">
+              <table class="table table-table-bordered table-hover">
                 <?php $occupanct_ctr=1;?>
                  <thead>
                    <tr>
@@ -297,7 +310,7 @@
                
                   @foreach ($occupants as $item)
                   <tr>
-                  <th>{{ $ctr++ }}</th>
+                  <th>{{ $occupanct_ctr++ }}</th>
                   <th><a href="/property/{{ Session::get('property_id') }}/occupant/{{ $item->tenant_id }}/">{{ $item->first_name.' '.$item->middle_name.' '.$item->last_name }}</a></th>
                   <td>{{ $item->contact_no }}</td>
                   {{-- <td>{{ $item->email_address }}</td> --}}
@@ -317,9 +330,9 @@
           <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>  
           <br><br>
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
   
-            <table class="table table-table-bordered table-hover table-condensed">
+            <table class="table table-table-bordered table-hover">
             <thead>
               <?php $concern_ctr = 1; ?>
             <tr>
@@ -396,8 +409,8 @@
      <br>
         <div class="col-md-12 mx-auto">
 
-          <div class="table-responsive text-nowrap">
-            <table class="table table-table-bordered table-hover table-condensed">
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+            <table class="table table-table-bordered table-hover">
               <?php $ctr=1;?>
               <thead>
             <tr>

@@ -2,6 +2,18 @@
 
 @section('title', $tenant->first_name.' '.$tenant->last_name)
 
+@section('css')
+ <style>
+/*This will work on every browser*/
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>   
+@endsection
+
 @section('upper-content')
 <?php   $diffInDays =  number_format(Carbon\Carbon::now()->DiffInDays(Carbon\Carbon::parse($tenant->moveout_date), false)) ?>
 {{-- <div class="row align-items-center py-4">
@@ -43,7 +55,7 @@
         @endif
 
         @if($access->count() <=0  )
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"><i class="fas fa-user-circle text-dark"></i> Access <i class="fas fa-exclamation-triangle"></i></a>
+        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"><i class="fas fa-user-circle text-dan"></i> Access <i class="fas fa-exclamation-triangle text-danger"></i></a>
         @else
         <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"><i class="fas fa-user-circle text-dark"></i> Access </a>
         @endif
@@ -75,15 +87,15 @@
 
 
     @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
-    <a href="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit occupant</a>  
+    <a href="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
- <br>
+ <br><br>
      @if($tenant->contact_no === null)
     <small class="text-danger">Email address or mobile is missing!</small>
      @endif
       <div class="table-responsive text-nowrap">
-        <table class="table table-condensed table-bordered table-hover" >
+        <table class="table table-bordered table-hover" >
             
               <tr>
                   <th>Name</th>
@@ -156,9 +168,9 @@
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
         
         <div class="row" >
-          <div class="col-md-12 mx-auto" >
-        <div class="table-responsive text-nowrap">
-            <table class="table table-condensed table-hover table-bordered">
+          <div class="col-md-12" >
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover table-bordered">
            <?php $ctr = 1; ?>
            <thead>
              <tr>
@@ -237,8 +249,8 @@
              @csrf
              @method('put')
            </form>
-           <div class="col-md-12 mx-auto">
-            <table class="table table-condensed table-hover table-bordered">
+           <div class="col-md-12" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+            <table class="table table-hover table-bordered">
                <thead>
                  <?php $ctr = 1; ?>
                  <tr>
@@ -298,15 +310,15 @@
      
         
         <div class="col-md-12 mx-auto">
-          <div class="table-responsive">
-            <div class="table-responsive text-nowrap">
+
+            <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
              @if($access->count() <= 0)
               <p class="text-center text-danger">No credentials found!</p>
 
              @else
              @foreach ($access as $item)
         
-             <table class="table table-condensed table-hover table-bordered">
+             <table class="table table-hover table-bordered">
                
                  <tr>  
                    <th>Name</th>
@@ -324,7 +336,7 @@
 
              @endif
             </div>
-          </div>
+       
         </div>
       </div>
 
