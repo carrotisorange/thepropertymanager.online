@@ -158,8 +158,8 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="table-responsive text-nowrap">
-                    <table class="table table-condensed table-bordered">
+                  <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+                    <table class="table table-bordered">
                       <thead>
                         <tr>
                           <th>Occupant</th>
@@ -205,8 +205,8 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="table-responsive text-nowrap">
-                    <table class="table table-condensed table-bordered">
+                  <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+                    <table class="table table-bordered">
                       <thead>
                         <tr>
                           <th>Tenant</th>
@@ -259,8 +259,8 @@
           
           </div>
           <div class="card-body">
-          <div class="table-responsive text-nowrap">
-           <table class="table table-condensed table-bordered" >
+          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+           <table class="table table-bordered" >
              <thead>
           
               <tr>

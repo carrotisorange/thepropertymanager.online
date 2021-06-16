@@ -49,14 +49,14 @@
         </div>
       </div> --}}
  
-      <div class="table-responsive">
+      <div class="table-responsive" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
           <form id="editUnitsForm" action="/property/{{Session::get('property_id') }}/units/{{ Carbon\Carbon::now()->getTimestamp()}}/update" method="POST">
   
               @csrf
               @method('PUT')
 
           </form>
-          <table class="table table-condensed table-hover table-bordered">
+          <table class="table table-hover table-bordered">
               <thead>
                   <tr>
                       <th>#</th>
