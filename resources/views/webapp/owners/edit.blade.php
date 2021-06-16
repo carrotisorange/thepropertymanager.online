@@ -118,7 +118,7 @@
          <div class="col">
           <p class="text-right">   
            
-            <button type="submit" form="editInvestorForm" class="btn btn-primary" > Update</button>
+            <button type="submit" form="editInvestorForm" class="btn btn-primary btn-sm" ><i class="fas fa-check"></i> Update</button>
         </p>   
          </div>
         </div>  
