@@ -102,7 +102,7 @@ class CollectionController extends Controller
                 $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
                 ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-               
+                ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                
                 ->groupBy('payment_id')
