@@ -70,71 +70,65 @@ class CollectionController extends Controller
 
         Session::put(Auth::user()->id.'date', $search);
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Apartment Rentals'){
             if($search  === null){
-
-                $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-                
+              $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+                ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+                ->join('tenants', 'bill_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('property_id_foreign', $property_id)
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
-               ->get()
-                ->groupBy(function($item) {
-                    return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-                });
+               ->get();
+
+               
             }else{
-            
+
                 $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-              
+                ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+                ->join('tenants', 'bill_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
-               ->get()
-                ->groupBy(function($item) {
-                    return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-                });
-    
-           
+               ->get();
+            
             }
         }else{
             if($search  === null){
-
                 $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-                ->join('tenants', 'bill_tenant_id', 'tenant_id')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+               
                 ->where('property_id_foreign', $property_id)
+               
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
-               ->get()
-                ->groupBy(function($item) {
-                    return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-                });
+               ->get();
+
+            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            //     ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
+            //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            //     ->join('units', 'unit_id_foreign', 'unit_id')
+            //     ->join('particulars','particular_id_foreign', 'particular_id')
+            //     ->where('property_id_foreign', $property_id)
+            //     ->groupBy('payment_id')
+            //     ->orderBy('payment_created', 'desc')
+            //    ->get();
             }else{
             
                 $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-                ->join('tenants', 'bill_tenant_id', 'tenant_id')
+                ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
-               ->get()
-                ->groupBy(function($item) {
-                    return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-                });
-    
-           
+               ->get();
             }
         }
 

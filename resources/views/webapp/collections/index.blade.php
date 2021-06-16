@@ -50,7 +50,7 @@ thead tr:nth-child(1) th {
 
 @else
 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-  
+  <?php $ctr = 1;?>
   <table class="table table-hover">
     <thead>
     <tr>
@@ -77,87 +77,56 @@ thead tr:nth-child(1) th {
   
   </tr>
 </thead>
-      @foreach ($collections as $day => $collection_list)
-      <?php $ctr=1;?>
-      
-        {{-- <tr>
-           <th colspan="7" class="">{{ Carbon\Carbon::parse($day)->addDay()->format('M d, Y')}} ({{ $collection_list->count() }} collections/s) {{ number_format($collection_list->sum('amt_paid'),2) }} <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/payments/dates/{{Carbon\Carbon::parse($day)->addDay()->format('Y-m-d')}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a></th>
-           
-        </tr> --}}
-    
-   
-      
+<tbody>
+  @foreach ($collections as $item)
+  <tr>
+    <th>{{ $ctr++ }}</th>
+    <td> 
+     
+      {{ $item->ar_no }}   
+     
+    </td>
+    <td>{{ $item->payment_bill_no }}</td>
+ 
 
-        @foreach ($collection_list as $item)
-        <tr>
-                <th>{{ $ctr++ }}</th>
-                <td> 
-                  {{-- @if($item->payment_status === 'deleted')
-                  <span class="text-danger"> {{ $item->ar_no }} (deleted)</span>
-                  @else --}}
-                  {{ $item->ar_no }}   
-                  {{-- @endif --}}
-                </td>
-                <td>{{ $item->payment_bill_no }}</td>
-                {{-- <td><a href="units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></td> --}}
-
-                <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
-                <th>
-                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
-                  @else
-                  <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
-                  @endif
-                 
-                </th>
-                
-                <th>
-                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
-                  @else
-                  <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
-                  @endif
-                  
-                </th>
-                <td>{{ $item->particular }}</td>
-                <td>
-                  {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                  {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                </td>
-                <td>{{ $item->form }}</td>
-                
-                <th> ₱
-                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
-                 <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
-                  @else
-                  {{ number_format($item->amt_paid,2) }}
-                  @endif
-                </th>
-               
-                {{-- <td>
-               
-                  <a title="export collections" target="_blank" href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}/dates/{{$item->payment_created}}/export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i></a>
+    <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
+    <th>
+      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
+      @else
+      <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
+      @endif
+     
+    </th>
     
-                </td> --}}
-               {{-- <td>
-                @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury')
-                  @if($item->payment_status === 'deleted')
-                
-                  @else
-                  <form action="/property/{{ Session::get('property_id') }}/tenant/{{ $item->tenant_id }}/payment/{{ $item->payment_id }}" method="POST">
-                    @csrf
-                    @method('delete')
-                    <button title="archive this payment" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"  onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                  </form>
-                  @endif
-               @endif
-               </td>
-              --}}
-            </tr>
-        @endforeach
-           
-          
-      @endforeach
+    <th>
+      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
+      @else
+      <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
+      @endif
+      
+    </th>
+    <td>{{ $item->particular }}</td>
+    <td>
+      {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+      {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+    </td>
+    <td>{{ $item->form }}</td>
+    
+    <th> ₱
+      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
+     <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
+      @else
+      {{ number_format($item->amt_paid,2) }}
+      @endif
+    </th>
+  
+</tr>
+
+
+  @endforeach
+</tbody>
   </table>
    </div>
 @endif
