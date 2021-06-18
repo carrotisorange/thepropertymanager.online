@@ -693,9 +693,15 @@ DB::table('properties')
             $bill->date_posted = $request->date_posted;
             $bill->particular_id_foreign = $particular->particular_id_foreign;
             $bill->particular = $particular->particular;
+          
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
-            $bill->amount = $request->input('amount'.$i);
+            if($request->particular1 == '18'){
+                $bill->amount = $request->input('amount'.$i) * -1;
+            }else{
+                $bill->amount = $request->input('amount'.$i);
+            }
+
             $bill->save();
 
             
