@@ -612,6 +612,12 @@ DB::table('properties')
 
         for($i = 1; $i<$request->no_of_bills; $i++){
 
+            if($request->input('particular'.$i) == '18'){
+                $amount = $request->input('particular'.$i)*-1;
+            }else{
+                $amount = $request->input('particular'.$i);
+            }
+
             $particular = Particular::findOrFail($request->input('particular'.$i));
 
             $bill = new Bill();
@@ -621,7 +627,7 @@ DB::table('properties')
             $bill->particular_id_foreign = $request->input('particular'.$i);
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
-            $bill->amount = $request->input('amount'.$i);
+            $bill->amount = $amount;
             $bill->save();
 
             
@@ -1196,7 +1202,7 @@ DB::table('properties')
         $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
       ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
       ->where('bill_unit_id', $unit_id)
-      ->where('start', '>', Carbon::now()->month())
+      ->where('start', '=>', Carbon::now()->month())
       ->where('particular', 'Rent')
       ->groupBy('bill_id')
       ->orderBy('bill_no', 'desc')
