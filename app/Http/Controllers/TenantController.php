@@ -655,7 +655,10 @@ class TenantController extends Controller
             ->orderBy('particular', 'asc')
             ->get();
 
-            $violations = DB::table('violations')->where('tenant_id_foreign', $tenant_id);
+             $violations = DB::table('violations')
+            ->join('violation_types', 'violation_type_id_foreign', 'violation_type_id')
+            ->where('tenant_id_foreign', $tenant_id)
+            ->get();
 
             $violations_type = DB::table('violation_types')->get();
         

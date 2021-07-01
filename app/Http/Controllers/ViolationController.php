@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Violation;
 use Illuminate\Http\Request;
 use Session;
+use DB;
 
 class ViolationController extends Controller
 {
@@ -17,7 +18,17 @@ class ViolationController extends Controller
     {
         Session::put('current-page', 'violations');
 
-        return view('webapp.violations.index');
+        $violations = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('violations', 'tenants.tenant_id', 'violations.tenant_id_foreign')
+        ->join('violation_types','violation_type_id', 'violation_type_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('violations.created_at', 'desc')
+       
+        ->get();
+
+        return view('webapp.violations.index', compact('violations'));
     }
 
     /**
@@ -36,9 +47,20 @@ class ViolationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $property_id, $tenant_id)
     {
-        return $request->all();
+    
+        $violation = new Violation();
+        $violation->tenant_id_foreign = $tenant_id;
+        $violation->status = 'received';
+        $violation->violation_type_id_foreign = $request->category;
+        $violation->frequency = $request->frequency;
+        $violation->severity = $request->severity;
+        $violation->summary = $request->summary;
+        $violation->created_at = $request->created_at;
+        $violation->save();
+
+        return back()->with('success', 'Violation is added sucessfully.');
     }
 
     /**

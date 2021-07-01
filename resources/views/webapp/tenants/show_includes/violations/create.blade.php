@@ -9,14 +9,14 @@
                         </button>
                         </div>
                         <div class="modal-body">
-                            <form id="concernForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/violation" method="POST">
+                            <form id="violationForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/violation" method="POST">
                                 @csrf
                             </form>
   
                             <div class="row">
                               <div class="col">
                                   <label>Date committed</label>
-                                  <input type="date" form="concernForm" class="form-control" name="created_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
+                                  <input type="date" form="violationForm" class="form-control" name="created_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
                               </div>
                           </div>
                           <br>
@@ -24,7 +24,7 @@
                             <div class="row">
                                 <div class="col">
                                    <label>Violation</label>
-                                    <select class="form-control" form="concernForm" name="category" id="" required>
+                                    <select class="form-control" form="violationForm" name="category" id="" required>
                                       <option value="" selected>Please select one</option>
                                       @foreach($violations_type as $item)
                                       <option value="{{ $item->violation_type_id }}">{{ $item->title }} - {{ $item->description }}</option>      
@@ -36,7 +36,7 @@
                             <div class="row">
                               <div class="col">
                                  <label>Frequency</label>
-                                  <select class="form-control" form="concernForm" name="urgency" id="" required>
+                                  <select class="form-control" form="violationForm" name="frequency" id="" required>
                                     <option value="" selected>Please select one</option>
                                     <option value="warning">warning</option>
                                     <option value="1st offense">1st offence</option>
@@ -50,7 +50,7 @@
                             <div class="row">
                               <div class="col">
                                  <label>Severity</label>
-                                  <select class="form-control" form="concernForm" name="urgency" id="" required>
+                                  <select class="form-control" form="violationForm" name="severity" id="" required>
                                     <option value="" selected>Please select one</option>
                                     <option value="minor">minor</option>
                                     <option value="major">major</option>
@@ -61,8 +61,7 @@
                          <div class="row">
                               <div class="col">
                                   <label>Details</label>
-                                  
-                                  <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
+                                  <textarea form="violationForm" rows="7" class="form-control" name="summary" required></textarea>
                               </div>
                           </div>
                           {{-- <br>
@@ -76,7 +75,7 @@
                          
                         </div>
                         <div class="modal-footer">
-                            <button form="concernForm" type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Submit</button>
+                            <button form="violationForm" type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Submit</button>
                         </div>
                     </div>
                     </div>

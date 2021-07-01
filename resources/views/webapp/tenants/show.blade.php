@@ -83,7 +83,12 @@ thead tr:nth-child(1) th {
          @endif     
          <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="nav-payments" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Payments </a>
         <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a>
+        @if($violations->count() <= 0)
         <a class="nav-item nav-link" id="nav-violations-tab" data-toggle="tab" href="#violations" role="tab" aria-controls="nav-violation" aria-selected="false"> <i class="fas fa-smoking-ban text-primary"></i> Violations</a>
+         @else
+         <a class="nav-item nav-link" id="nav-violations-tab" data-toggle="tab" href="#violations" role="tab" aria-controls="nav-violation" aria-selected="false"> <i class="fas fa-smoking-ban text-primary"></i> Violations <i class="fas fa-exclamation-triangle text-danger"></i> {{ $violations->count() }}</a>
+         @endif    
+
       </div>
     </nav>
     
@@ -404,73 +409,46 @@ thead tr:nth-child(1) th {
       <div class="tab-pane fade" id="violations" role="tabpanel" aria-labelledby="nav-violations-tab">
         <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addViolation" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
         <br><br>
-        @if($concerns->count() < 1)
+        @if($violations->count() < 1)
         <p class="text-danger text-center">No violations found!</p>
         @else
         <div class="row" >
           <div class="col-md-12" >
-        <div class="">
          <table class="table table-hover">
-           <?php $ctr = 1; ?>
+           <?php $violation_ctr = 1; ?>
            <thead>
              <tr>
                <th>#</th>
-               
-                 <th>Date Reported</th>
-                
-            
-                 <th>Type</th>
-                 <th>Title</th>
-                 <th>Urgency</th>
+                 <th>Date committed</th>
+                 <th>Category</th>
+                 <th>Frequency</th>
+                 <th>Severity</th>
                  <th>Status</th>
-                 <th>Assigned to</th>
-                 <th>Rating</th>
-                 <th>Feedback</th>
+            
             </tr>
            </thead>
            <tbody>
-             @foreach ($concerns as $item)
+             @foreach ($violations as $item)
              <tr>
-               <th>{{ $ctr++ }}</th>
-            
-               <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-                 
-               
-                 <td>
-                   
-                     {{ $item->category }}
-                     
-                 </td>
-                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
-                 <td>
-                     @if($item->urgency === 'major and urgent')
-                     <span class="badge badge-danger">{{ $item->urgency }}</span>
-                     @elseif($item->urgency === 'major but nor urgent')
-                     <span class="badge badge-warning">{{ $item->urgency }}</span>
-                     @else
-                     <span class="badge badge-primary">{{ $item->urgency }}</span>
-                     @endif
-                 </td>
-                 <td>
-                  @if($item->concern_status === 'pending')
-                  <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
-                  @elseif($item->concern_status === 'active')
-                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+              <th>{{ $violation_ctr++ }}</th>
+              <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
+              <td>{{ $item->title }}</td>
+              <td>{{ $item->frequency }}</td>
+              <td>{{ $item->severity }}</td>
+              <td>
+                  @if($item->status === 'received')
+                  <i class="fas fa-clock text-warning"></i> {{ $item->status }}
+                  @elseif($item->status === 'pending')
+                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->status }}
                   @else
-                  <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+                  <i class="fas fa-check-circle text-success"></i> {{ $item->status }}
                   @endif
                  </td>
-                 <td>{{ $item->name? $item->name: 'NULL' }}</td>
-                 <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-                 <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+                
              </tr>
              @endforeach
            </tbody>
-         </table>
-        
-       </div>
-                
-                
+         </table>          
           </div>
       </div>
       @endif
