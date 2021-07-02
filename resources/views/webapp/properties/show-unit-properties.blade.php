@@ -159,22 +159,24 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+                    @if($delinquent_accounts->count()<=0)
+                    <p class="text-center text-success">No delinquents found <i class="fas fa-check-circle text-success"></i></p>
+                    @else
                     <table class="table table-bordered">
                       <thead>
                         <tr>
+                          <th>#</th>
                           <th>Occupant</th>
                           <th>Unit</th>
                           <th>Balance</th>
                       </tr>
                       </thead>
+                      <?php $del_ctr = 1;?>
                       <tbody>
                         @foreach($delinquent_accounts as $item)
                         <tr>
-                          <td>
-                
-                            <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
-                      
-                          </td>
+                          <th>{{ $del_ctr++ }}</th>
+                          <td><a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}</td>
                           <td>
                             @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
                             <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id}}#bills">{{ $item->unit_no }}</a>
@@ -182,14 +184,12 @@
                            {{ $item->unit_no }}
                             @endif
                           </td>
-                          <td>
-                            <a>{{ number_format($item->balance,2) }}
-                          </td>
+                          <td><a>{{ number_format($item->balance,2) }}</td>
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
-               
+                    @endif
                   </div>
                 </div>
               </div>
@@ -206,11 +206,15 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+                    
+                    @if($pending_concerns->count()<=0)
+                    <p class="text-center text-success">No pending concerns <i class="fas fa-check-circle text-success"></i></p>
+                    @else 
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th>Tenant</th>
-                          <th>Room</th>
+                          <th>Occupant</th>
+                          <th>Unit</th>
                           <th>Concern</th>
                       </tr>
                       </thead>
@@ -236,7 +240,8 @@
                         @endforeach
                       </tbody>
                     </table>
-               {{ $pending_concerns->links() }}
+                    @endif
+                  
                
                   </div>
                 </div>
@@ -260,7 +265,10 @@
           </div>
           <div class="card-body">
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-           <table class="table table-bordered" >
+            @if($collections_for_the_day->count()<=0)
+            <p class="text-center text-danger">No collections found! </p>
+            @else
+ <table class="table table-bordered" >
              <thead>
           
               <tr>
@@ -297,6 +305,7 @@
                </tr>
              </tbody>
            </table>
+            @endif
           </div>
           </div>
           </div>
