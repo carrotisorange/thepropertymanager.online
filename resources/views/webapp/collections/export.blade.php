@@ -30,7 +30,7 @@
            <b>Room:</b> {{ $current_room }}</b>
       <br>
          
-          <p class="text-right">Acknowledgment Receipt</p>
+          {{-- <p class="text-right">Acknowledgment Receipt</p> --}}
        
           <table class="table table-condensed">
             <tr>

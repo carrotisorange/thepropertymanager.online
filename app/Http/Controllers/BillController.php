@@ -303,7 +303,6 @@ class BillController extends Controller
     
     public function post_bills_rent(Request $request, $property_id)
     {
-
         $updated_start = $request->start;
         $updated_end = $request->end;
 
@@ -674,7 +673,7 @@ DB::table('properties')
             $bill->bill_unit_id = $unit_id;
             $bill->bill_no = $current_bill_no++;
             $bill->date_posted = $request->date_posted;
-            $bill->particular_id_foreign = $particular->particular_id_foreign;
+            $bill->particular_id_foreign = $particular->particular_id;
             $bill->particular = $particular->particular;
           
             $bill->start = $request->input('start'.$i);
@@ -781,28 +780,7 @@ DB::table('properties')
                         $contract->save();
                     }
 
-                    // $tenant = Tenant::findOrFail($request->input('tenant_id'.$i));
-
-                    // $property = Property::findOrFail($property_id);
-
-                    // $data = array(
-                    //     'email' =>$tenant->email_address,
-                    //     'name' => $tenant->first_name,
-                    //     'property' => $property->name,
-                    //     'amt' => $request->input('amount'.$i),
-                    //     'desc' => $request->input('particular'.$i),
-                    //     'start' => $request->input('start'.$i),
-                    //     'end' => $request->input('end'.$i),
-                    // );
-        
-            //     if($tenant->email_address !== null){
-            //         //send welcome email to the tenant
-            //         Mail::send('webapp.tenants.send-bill-alert', $data, function($message) use ($data){
-            //         $message->to($data['email']);
-            //         $message->subject('Bill Alert');
-            //     });
-
-            // }
+                 
 
                     if($request->particular1 === 'Water'){
                         DB::table('contracts')
@@ -1089,7 +1067,7 @@ DB::table('properties')
     {
         $tenant = Tenant::findOrFail($tenant_id);
 
-        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+         $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
@@ -1097,7 +1075,7 @@ DB::table('properties')
         ->where('particular_id_foreign', '1')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
-        ->havingRaw('balance != 0')
+  
         ->get();
 
         $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
@@ -1174,46 +1152,44 @@ DB::table('properties')
 
     public function export_occupant_bills($property_id,$unit_id)
     {
-
-        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-      ->where('bill_unit_id', $unit_id)
-      ->where('start', '>=', Carbon::now()->subMonth()->firstOfMonth())
-      ->where('particular_id_foreign', '1')
-      ->groupBy('bill_id')
-      ->orderBy('bill_no', 'desc')
-      ->havingRaw('balance != 0')
-      ->get();
+         $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_unit_id', $unit_id)
+        ->where('start', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('particular_id_foreign', '1')
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance != 0')
+        ->get();
 
         $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-      ->where('bill_unit_id', $unit_id)
-      ->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_unit_id', $unit_id)
+        ->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
         ->where('particular_id_foreign', '1')
-      ->groupBy('bill_id')
-      ->orderBy('bill_no', 'desc')
-      ->havingRaw('balance != 0')
-      ->get();
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance != 0')
+        ->get();
       
-      
-       $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-      ->where('bill_unit_id', $unit_id)
-      ->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
-      ->where('particular_id_foreign', '16')
-      ->groupBy('bill_id')
-      ->orderBy('bill_no', 'desc')
-      ->havingRaw('balance != 0')
-      ->get();
+        $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_unit_id', $unit_id)
+        ->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('particular_id_foreign', '16')
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance != 0')
+        ->get();
 
-      $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
-      ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-      ->where('bill_unit_id', $unit_id)
-      ->where('particular_id_foreign','!=', ['1','16'])
-      ->groupBy('bill_id')
-      ->orderBy('bill_no', 'desc')
-      ->havingRaw('balance != 0')
-      ->get();
+        $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+        ->where('bill_unit_id', $unit_id)
+        ->where('particular_id_foreign','!=', ['1','16'])
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance != 0')
+        ->get();
 
 
       $unit_no = Unit::findOrFail($unit_id)->unit_no;

@@ -214,16 +214,13 @@ class UnitController extends Controller
      */
     public function show($property_id, $unit_id)
     {
-
         Session::put('current-page', 'units');
 
-        
          $property_bills = DB::table('particulars')
         ->join('property_bills', 'particular_id', 'particular_id_foreign')
         ->where('property_id_foreign', Session::get('property_id'))
         ->orderBy('particular', 'asc')
         ->get();
-
 
         if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury'){
          
@@ -269,18 +266,6 @@ class UnitController extends Controller
             ->groupBy('payment_id')
             ->orderBy('payment_created', 'desc')
            ->get();
-            // ->groupBy(function($item) {
-            //     return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-            // });
-
-        //    $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-        //    ->where('bill_unit_id', $unit_id)
-        //    ->groupBy('payment_id')
-        //    ->orderBy('ar_no', 'desc')
-        //   ->get()
-        //    ->groupBy(function($item) {
-        //        return \Carbon\Carbon::parse($item->payment_created)->timestamp;
-        //    });
 
             $tenant_inactive =DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
