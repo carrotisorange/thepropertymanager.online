@@ -212,12 +212,17 @@ class CollectionController extends Controller
         //add all the payment to the database.
         for($i = 1; $i<$no_of_payments; $i++){
              $explode = explode("-", $request->input('bill_no'.$i));
+             if($particular = $request->input('form'.$i) === 'Credit memo'){
+                $amount =  $request->input('amt_paid'.$i)*-1;
+            }else{
+               $amount =  $request->input('amt_paid'.$i);
+            }
             DB::table('payments')->insert(
                 [
                     'payment_tenant_id' => $tenant_id, 
                     'payment_bill_no' => $explode[0], 
                     'payment_bill_id' => $explode[1],
-                    'amt_paid' => $request->input('amt_paid'.$i),
+                    'amt_paid' => $amount,
                     'payment_created' => $request->payment_created,
                     'ar_no' => $payment_ctr,
                     'bank_name' => $request->input('bank_name'.$i),
@@ -340,15 +345,24 @@ class CollectionController extends Controller
         ->where('property_id_foreign', Session::get('property_id'))
         ->max('ar_no') + 1;
 
+
+
         //add all the payment to the database.
         for($i = 1; $i<$no_of_payments; $i++){
              $explode = explode("-", $request->input('bill_no'.$i));
+             
+             if($particular = $request->input('form'.$i) === 'Credit memo'){
+                 $amount =  $request->input('amt_paid'.$i)*-1;
+             }else{
+                $amount =  $request->input('amt_paid'.$i);
+             }
+
             DB::table('payments')->insert(
                 [
                     'payment_unit_id' => $home_id, 
                     'payment_bill_no' => $explode[0], 
                     'payment_bill_id' => $explode[1],
-                    'amt_paid' => $request->input('amt_paid'.$i),
+                    'amt_paid' => $amount,
                     'payment_created' => $request->payment_created,
                     'ar_no' => $payment_ctr,
                     'bank_name' => $request->input('bank_name'.$i),
