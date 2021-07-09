@@ -1153,6 +1153,8 @@ DB::table('properties')
 
     public function export_occupant_bills($property_id,$unit_id)
     {
+       
+
          $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_unit_id', $unit_id)
@@ -1176,7 +1178,7 @@ DB::table('properties')
         $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_unit_id', $unit_id)
-        ->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
+        //->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
         ->where('particular_id_foreign', '16')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
