@@ -38,7 +38,7 @@ class PropertyController extends Controller
 
             if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin'){
                 if(Auth::user()->user_type === 'manager'){
-                     $properties = User::findOrFail(Auth::user()->id)->properties;
+                    $properties = User::findOrFail(Auth::user()->id)->properties;
                 }else{
                     $properties = User::findOrFail(Auth::user()->lower_access_user_id)->properties;
                 }
@@ -332,7 +332,9 @@ class PropertyController extends Controller
 
     public function portforlio(){
 
-        return view('webapp.properties.portforlio');
+        $properties = User::findOrFail(Auth::user()->id)->properties;
+
+        return view('webapp.properties.portforlio', compact('properties'));
     }
 
     public function search(Request $request, $property_id){

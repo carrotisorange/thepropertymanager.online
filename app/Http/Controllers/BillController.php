@@ -588,12 +588,6 @@ DB::table('properties')
 
         for($i = 1; $i<$request->no_of_bills; $i++){
 
-            if($request->input('particular'.$i) == '18'){
-                $amount = $request->input('amount'.$i)*-1;
-            }else{
-                $amount = $request->input('amount'.$i);
-            }
-
             $particular = Particular::findOrFail($request->input('particular'.$i));
 
             $bill = new Bill();
@@ -603,7 +597,11 @@ DB::table('properties')
             $bill->particular_id_foreign = $request->input('particular'.$i);
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
-            $bill->amount = $amount;
+            if($request->particular1 == '18'){
+                $bill->amount = $request->input('amount'.$i) * -1;
+            }else{
+                $bill->amount = $request->input('amount'.$i);
+            }
             $bill->save();
 
             

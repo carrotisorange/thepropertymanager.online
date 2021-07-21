@@ -71,7 +71,7 @@
       </tbody>
     </table>
   </div>
-  <br>
+  
    
   <div class="row">
     {{-- <div class="col">

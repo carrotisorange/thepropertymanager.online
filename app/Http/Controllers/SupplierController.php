@@ -41,6 +41,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
+
         DB::table('suppliers')->insert(
             [
                 'name' => $request->name,
