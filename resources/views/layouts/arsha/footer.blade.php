@@ -13,8 +13,8 @@
               <strong>Mobile:</strong> 09752826318/09167799750<br>
               <strong>Email:</strong> customercare@thepropertymanager.online<br>
             </p>
-            <a href='http://www.freevisitorcounters.com'>http://freevisitorcounters.com</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=7180e340c80ea54a9be84bd65503abde5a674705'></script>
-            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/747321/t/0"></script>
+            {{-- <a href='http://www.freevisitorcounters.com'>http://freevisitorcounters.com</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=7180e340c80ea54a9be84bd65503abde5a674705'></script>
+            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/747321/t/0"></script> --}}
           </div>
 
            <div class="col-lg-3 col-md-6 footer-links">
