@@ -150,9 +150,27 @@ class ConcernController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($property_id, $tenant_id)
     {
+        Session::put('current-page', 'concerns');
+
+        $contracts = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.status as contract_status', 'contracts.term as contract_term')
+        ->where('tenant_id', $tenant_id)
+        ->orderBy('contracts.created_at', 'desc')
+        ->get();
+
+        $users = DB::table('users_properties_relations')
+        ->join('users','user_id_foreign','id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->whereNotIn('user_type' ,['tenant', 'owner'])
+        ->get();
         
+        $tenant = Tenant::findOrFail($tenant_id);
+        
+        return view('webapp.concerns.create', compact('tenant', 'contracts', 'users'));
     }
 
     /**
@@ -201,13 +219,20 @@ class ConcernController extends Controller
     {
 
         $concern = new Concern();
-        $concern->concern_tenant_id = $tenant_id;
         $concern->reported_at = $request->reported_at;
-        $concern->category = $request->category;
+        $concern->category = $request->concern_department;
         $concern->urgency = $request->urgency;
-        $concern->title = $request->title;
+        $concern->is_warranty = $request->is_warranty;
+        $concern->concern_tenant_id = $request->concern_tenant_id;
+        $concern->concern_unit_id = $request->concern_unit_id;
+        $concern->contact_no = $request->contact_no;
         $concern->details = $request->details;
-        $concern->concern_user_id = $request->concern_user_id;
+        $concern->concern_user_id = $request->endorsed_to;
+        $concern->resolved_by = $request->resolved_by;
+        $concern->remarks = $request->remarks;
+        $concern->status = $request->status;
+        $concern->action_taken = $request->action_taken;
+        $concern->scheduled_at = $request->scheduled_at;
         $concern->save();
 
         $tenant = Tenant::findOrFail($tenant_id);

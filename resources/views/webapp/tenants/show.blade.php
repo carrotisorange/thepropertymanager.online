@@ -331,7 +331,8 @@ thead tr:nth-child(1) th {
       </div>
 
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
+        {{-- <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>   --}}
+        <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/create" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         @if($concerns->count() < 1)
         <p class="text-danger text-center">No concerns found!</p>
@@ -348,13 +349,14 @@ thead tr:nth-child(1) th {
                  <th>Date Reported</th>
                 
             
-                 <th>Type</th>
-                 <th>Title</th>
+                 {{-- <th>Type</th>
+                 <th>Title</th> --}}
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>
                  <th>Rating</th>
-                 <th>Feedback</th>
+                 <th>Actions</th>
+                 {{-- <th>Feedback</th> --}}
             </tr>
            </thead>
            <tbody>
@@ -365,12 +367,12 @@ thead tr:nth-child(1) th {
                <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
                  
                
-                 <td>
+                 {{-- <td>
                    
                      {{ $item->category }}
                      
                  </td>
-                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td>
+                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td> --}}
                  <td>
                      @if($item->urgency === 'major and urgent')
                      <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -391,7 +393,17 @@ thead tr:nth-child(1) th {
                  </td>
                  <td>{{ $item->name? $item->name: 'NULL' }}</td>
                  <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-                 <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+                 {{-- <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td> --}}
+                 <td>
+                  <form action="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/action" method="GET" onchange="submit();">
+                    <select class="" name="concern_action" id="">
+                      <option value="" selected>Select your action</option>
+                      <option value="view">View</option>
+                      <option value="edit">Edit</option>
+                      
+                    </select>
+                  </form>
+                 </td>
              </tr>
              @endforeach
            </tbody>
@@ -757,7 +769,7 @@ thead tr:nth-child(1) th {
                           @else
                           <form action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/action" method="GET" onchange="submit();">
                             <select class="" name="collection_option" id="">
-                              <option value="">Select your option</option>
+                              <option value="">Select your action</option>
                               <option value="Credit memo">Credit memo</option>
                               <option value="export">Export</option>
                               <option value="remit">Remit</option>

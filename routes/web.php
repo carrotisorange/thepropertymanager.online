@@ -349,6 +349,12 @@ Route::get('/property/{property_id}/concern/{concern_id}/assign/{user_id}', 'Con
 Route::put('/concern/{concern_id}/closed', 'ConcernController@closed')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/concern/{concern_id}/forward', 'ConcernController@forward')->middleware(['auth', 'verified']);
 
+//create new concern
+Route::get('/property/{property_id}/tenant/{tenant_id}/concern/create', 'ConcernController@create')->middleware(['auth', 'verified']);
+
+//store concern info
+Route::post('/property/{property_id}/tenant/{tenant_id}/concern/store', 'ConcernController@store')->middleware(['auth', 'verified']);
+
 //routes for contracts
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}', 'ContractController@show')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/edit', 'ContractController@edit')->middleware(['auth', 'verified']);
