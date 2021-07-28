@@ -41,7 +41,7 @@ thead tr:nth-child(1) th {
   <div class="col-md-12 text-center">
    {{-- <p class="text-left"> Showing <b>{{ $collections->count() }} </b> payments</p> --}}
     @if(Session::get(Auth::user()->id.'date'))
-    <p class="text-center"> <span class=""> <small> You searched for payments made on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
+    <p class="text-center"> <span class=""> <small> Showing {{ $collections->count() }} payments made on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
     @endif
   </div>
 </div>
@@ -49,15 +49,16 @@ thead tr:nth-child(1) th {
 <p class="text-danger text-center">No collections found!</p>
 
 @else
-<div class="row" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+<div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
   <?php $ctr = 1;?>
   <table class="table table-hover">
     <thead>
     <tr>
       <th>#</th>
+      <th>Date</th>
       <th>AR No</th>
       <th>Bill No</th>
-      <th>Date</th>
+
       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
       <th></th>
       @else
@@ -81,6 +82,7 @@ thead tr:nth-child(1) th {
   @foreach ($collections as $item)
   <tr>
     <th>{{ $ctr++ }}</th>
+    <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
     <td> 
      
       {{ $item->ar_no }}   
@@ -89,7 +91,7 @@ thead tr:nth-child(1) th {
     <td>{{ $item->payment_bill_no }}</td>
  
 
-    <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
+  
     <th>
       @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
       <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>

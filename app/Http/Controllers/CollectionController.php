@@ -109,15 +109,7 @@ class CollectionController extends Controller
                 ->orderBy('payment_created', 'desc')
                ->get();
 
-            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-            //     ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-            //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            //     ->join('units', 'unit_id_foreign', 'unit_id')
-            //     ->join('particulars','particular_id_foreign', 'particular_id')
-            //     ->where('property_id_foreign', $property_id)
-            //     ->groupBy('payment_id')
-            //     ->orderBy('payment_created', 'desc')
-            //    ->get();
+           
             }else{
             
                 $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')

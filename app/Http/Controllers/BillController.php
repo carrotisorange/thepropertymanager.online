@@ -26,12 +26,14 @@ class BillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
 
         Session::put('current-page', 'bulk-billing');
 
-        
+        Session::put(Auth::user()->id.'date', $search);
+
        $property_bills = DB::table('particulars')
         ->join('property_bills', 'particular_id', 'particular_id_foreign')
         ->where('property_id_foreign', Session::get('property_id'))
@@ -51,35 +53,64 @@ class BillController extends Controller
         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
 
         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-            $bills = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('bills', 'unit_id', 'bill_unit_id')
-            ->join('particulars','particular_id_foreign', 'particular_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('date_posted', 'desc')
-            ->groupBy('bill_id')
-            ->havingRaw('amount != 0')
-            ->get();
+            if($search  === null){
+                $bills = DB::table('contracts')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->havingRaw('amount != 0')
+                ->get();                 
+              }else{
+                 $bills = DB::table('contracts')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('date_posted', $search)
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->havingRaw('amount != 0')
+                ->get();
+            }
        
         }else{
-            $bills = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->join('particulars','particular_id_foreign', 'particular_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('date_posted', 'desc')
-            ->groupBy('bill_id')
-            ->havingRaw('amount != 0')
-            ->get();
+            if($search  === null){
+                 $bills = DB::table('contracts')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->havingRaw('amount != 0')
+                ->get();                 
+              }else{
+                $bills = DB::table('contracts')
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('date_posted', $search)
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->havingRaw('amount != 0')
+                ->get();
+            }
         }
-    
             return view('webapp.bills.index', compact('bills', 'property_bills'));
         }else{
             return view('layouts.arsha.unregistered');
         }
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -114,28 +145,60 @@ class BillController extends Controller
          if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
 
             if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
-                $bills = DB::table('contracts')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('bills', 'unit_id', 'bill_unit_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
-                ->where('particular_id_foreign', $request->particular)
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->orderBy('date_posted', 'desc')
-                ->groupBy('bill_id')
-                ->get();
+                if( Session::get(Auth::user()->id.'date') === null){
+                    $bills = DB::table('contracts')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('bills', 'unit_id', 'bill_unit_id')
+                    ->join('particulars','particular_id_foreign', 'particular_id')
+                    ->where('particular_id_foreign', $request->particular)
+                    ->where('property_id_foreign', Session::get('property_id'))
+             
+                    ->orderBy('date_posted', 'desc')
+                    ->groupBy('bill_id')
+                    ->get();
+                }else{
+                    $bills = DB::table('contracts')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('bills', 'unit_id', 'bill_unit_id')
+                    ->join('particulars','particular_id_foreign', 'particular_id')
+                    ->where('particular_id_foreign', $request->particular)
+                    ->where('property_id_foreign', Session::get('property_id'))
+                    ->where('date_posted', Session::get(Auth::user()->id.'date'))
+                    ->orderBy('date_posted', 'desc')
+                    ->groupBy('bill_id')
+                    ->get();
+                }
+               
            
             }else{
-                $bills = DB::table('contracts')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('bills', 'tenant_id', 'bill_tenant_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
-                ->where('particular_id_foreign', $request->particular)
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->orderBy('date_posted', 'desc')
-                ->groupBy('bill_id')
-                ->get();
+                
+                if(Session::get(Auth::user()->id.'date')  === null){
+                    $bills = DB::table('contracts')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('bills', 'unit_id', 'bill_unit_id')
+                    ->join('particulars','particular_id_foreign', 'particular_id')
+                    ->where('particular_id_foreign', $request->particular)
+                    ->where('property_id_foreign', Session::get('property_id'))
+                   
+                    ->orderBy('date_posted', 'desc')
+                    ->groupBy('bill_id')
+                    ->get();
+                }else{
+                    $bills = DB::table('contracts')
+                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                    ->join('units', 'unit_id_foreign', 'unit_id')
+                    ->join('bills', 'unit_id', 'bill_unit_id')
+                    ->join('particulars','particular_id_foreign', 'particular_id')
+                    ->where('particular_id_foreign', $request->particular)
+                    ->where('property_id_foreign', Session::get('property_id'))
+                    ->where('date_posted', Session::get(Auth::user()->id.'date'))
+                    ->orderBy('date_posted', 'desc')
+                    ->groupBy('bill_id')
+                    ->get();
+                }
             }
 
        
@@ -939,14 +1002,14 @@ DB::table('properties')
            
              $bills = Tenant::findOrFail($tenant_id)->bills->count();
 
-            for ($i=1; $i <= $bills; $i++) { 
-                 $bill = Bill::find( $request->input('billing_id_ctr'.$i));
-                  $bill->start = $request->input('start_ctr'.$i);
-                  $bill->end = $request->input('end_ctr'.$i);
-                  $bill->particular_id_foreign = $request->input('particular_ctr'.$i);
-                  $bill->amount = $request->input('amount_ctr'.$i);
-                 $bill->save();
-               }
+            // for ($i=1; $i <= $bills; $i++) { 
+            //      $bill = Bill::find( $request->input('billing_id_ctr'.$i));
+            //       $bill->start = $request->input('start_ctr'.$i);
+            //       $bill->end = $request->input('end_ctr'.$i);
+            //       $bill->particular_id_foreign = $request->input('particular_ctr'.$i);
+            //       $bill->amount = $request->input('amount_ctr'.$i);
+            //      $bill->save();
+            //    }
 
                DB::table('properties')
                ->where('property_id', Session::get('property_id'))
@@ -958,15 +1021,15 @@ DB::table('properties')
 
                    Session::put('footer_message', $request->note);
 
-                   $tenant = Tenant::findOrFail($tenant_id);
+                //    $tenant = Tenant::findOrFail($tenant_id);
 
-                    $notification = new Notification();
-                    $notification->user_id_foreign = Auth::user()->id;
-                    $notification->property_id_foreign = Session::get('property_id');
-                    $notification->type = 'bill';
+                //     $notification = new Notification();
+                //     $notification->user_id_foreign = Auth::user()->id;
+                //     $notification->property_id_foreign = Session::get('property_id');
+                //     $notification->type = 'bill';
                     
-                    $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' bills.';
-                    $notification->save();
+                //     $notification->message = Auth::user()->name.' updates '.$tenant->first_name.' '.$tenant->last_name.' bills.';
+                //     $notification->save();
 
                      Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
              

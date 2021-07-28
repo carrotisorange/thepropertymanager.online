@@ -730,6 +730,9 @@ Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/delete',
 Route::get('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/action', 'BillController@action')->middleware(['auth', 'verified']);
 Route::put('/property/{property_id}/bill/{bill_id}/update/', 'BillController@create_bulk_bills')->middleware(['auth', 'verified']);
 
+//routes for filtering bills based on dates
+Route::get('/property/{property_id}/bills/search', 'BillController@index')->middleware(['auth', 'verified']);
+
 // Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 Route::put('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
 
