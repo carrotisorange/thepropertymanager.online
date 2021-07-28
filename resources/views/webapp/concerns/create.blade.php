@@ -123,6 +123,40 @@
                         <textarea form="concernTenantForm" name="action_taken" placeholder="Course of action taken..." cols="40" rows="5" class="form-control" required></textarea>
               </div>
                     </div>
+<div class="row">
+  <div class="col">
+    <label for="">Materials used</label>
+    
+  </div>
+  <div class="col">
+    <p class="text-right">
+      <span id='remove_material' class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Remove</span>
+    <span id="add_material" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add</span>     
+    </p>
+  </div>
+</div>
+                    <div class="form-row">
+        
+                      <div class="form-group col-md-12">
+                      
+                        <div class="table-responsive text-nowrap">
+                          <table class = "table table-hover" id="table_materials">
+                             <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                
+                            </tr>
+                             </thead>
+                                  <input form="addBillForm" type="hidden" id="no_of_materials" name="no_of_materials" >
+                              <tr id='bill1'></tr>
+                          </table>
+                        </div>
+              </div>
+                    </div>
 
                     <div class="form-row">
                       
@@ -152,6 +186,8 @@
               </div>
                     </div>
 
+                   
+
                     <div class="form-row">
                       <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}#concerns" class="btn btn-secondary btn-sm"><i class="fas fa-times"></i> Cancel</a>
                       <button form="concernTenantForm" type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Submit</button>
@@ -168,7 +204,25 @@
 
 
 @section('scripts')
-
+<script type="text/javascript">
+  //adding moveout charges upon moveout
+    $(document).ready(function(){
+        var i=0;
+    $("#add_material").click(function(){
+        $('#addr'+i).html("<th id='value'>"+ (i) +"</th><td><input class='form-control' form='requestMoveoutForm' name='particular"+i+"' id='desc"+i+"' type='text' required></td><td><input class='form-control' form='requestMoveoutForm'    oninput='autoCompute("+i+")' name='price"+i+"' id='price"+i+"' type='number' min='1' required></td><td><input class='form-control' form='requestMoveoutForm'  oninput='autoCompute("+i+")' name='qty"+i+"' id='qty"+i+"' value='1' type='number' min='1' required></td><td><input class='form-control' form='requestMoveoutForm' name='amount"+i+"' id='amt"+i+"' type='number' min='1' required readonly value='0'></td>");
+     $('#table_materials').append('<tr id="addr'+(i+1)+'"></tr>');
+     i++;
+     document.getElementById('no_of_materials').value = i;
+    });
+    $("#remove_material").click(function(){
+        if(i>1){
+        $("#addr"+(i-1)).html('');
+        i--;
+        document.getElementById('no_of_materials').value = i;
+        }
+    });
+});
+</script>
 @endsection
 
 
