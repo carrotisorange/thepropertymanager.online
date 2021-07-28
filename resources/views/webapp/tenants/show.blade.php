@@ -419,7 +419,7 @@ thead tr:nth-child(1) th {
 
       
       <div class="tab-pane fade" id="violations" role="tabpanel" aria-labelledby="nav-violations-tab">
-        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addViolation" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
+        <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/violation/create" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         @if($violations->count() < 1)
         <p class="text-danger text-center">No violations found!</p>
@@ -432,7 +432,7 @@ thead tr:nth-child(1) th {
              <tr>
                <th>#</th>
                  <th>Date committed</th>
-                 <th>Category</th>
+                 <th>Violation</th>
                  <th>Frequency</th>
                  <th>Severity</th>
                  <th>Status</th>
@@ -444,7 +444,7 @@ thead tr:nth-child(1) th {
              <tr>
               <th>{{ $violation_ctr++ }}</th>
               <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-              <td>{{ $item->title }}</td>
+              <td>{{ $item->summary }}</td>
               <td>{{ $item->frequency }}</td>
               <td>{{ $item->severity }}</td>
               <td>

@@ -6,6 +6,7 @@ use App\Violation;
 use Illuminate\Http\Request;
 use Session;
 use DB;
+use App\Tenant;
 
 class ViolationController extends Controller
 {
@@ -36,9 +37,27 @@ class ViolationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($property_id, $tenant_id)
     {
-        return view('webapp.violations.create');
+        Session::put('current-page', 'violations');
+
+        $contracts = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.status as contract_status', 'contracts.term as contract_term')
+        ->where('tenant_id', $tenant_id)
+        ->orderBy('contracts.created_at', 'desc')
+        ->get();
+
+        $users = DB::table('users_properties_relations')
+        ->join('users','user_id_foreign','id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->whereNotIn('user_type' ,['tenant', 'owner'])
+        ->get();
+        
+        $tenant = Tenant::findOrFail($tenant_id);
+        
+        return view('webapp.violations.create', compact('tenant', 'contracts', 'users'));
     }
 
     /**
@@ -49,18 +68,18 @@ class ViolationController extends Controller
      */
     public function store(Request $request, $property_id, $tenant_id)
     {
-    
+        //return $request->all();
+
         $violation = new Violation();
-        $violation->tenant_id_foreign = $tenant_id;
-        $violation->status = 'received';
-        $violation->violation_type_id_foreign = $request->category;
+        $violation->tenant_id_foreign = $request->tenant_id;
+        $violation->status = $request->status;
         $violation->frequency = $request->frequency;
         $violation->severity = $request->severity;
         $violation->summary = $request->summary;
         $violation->created_at = $request->created_at;
         $violation->save();
 
-        return back()->with('success', 'Violation is added sucessfully.');
+        return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#violations')->with('success', 'Violation is added sucessfully.');
     }
 
     /**

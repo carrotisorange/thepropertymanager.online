@@ -14,7 +14,7 @@
 
 <section class="testimonial py-3" id="testimonial">
     <div class="container">
-        <h4 class="pb-2">Tenant concern form</h4>
+      <h2 class="pb-2 text-center">Tenant concern form</h2>
         <div class="row ">
             {{-- <div class="col-md-4 py-5 bg-primary text-white text-center ">
                 <div class=" ">

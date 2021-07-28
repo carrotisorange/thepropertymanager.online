@@ -717,6 +717,10 @@ Route::get('/maintenance', function(){
 Route::get('/property/{property_id}/violations', 'ViolationController@index')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/tenant/{tenant_id}/violation', 'ViolationController@store')->middleware(['auth', 'verified']);
 
+//routes for creating violation
+Route::get('/property/{property_id}/tenant/{tenant_id}/violation/create', 'ViolationController@create')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/tenant/{tenant_id}/violation/store', 'ViolationController@store')->middleware(['auth', 'verified']);
+
 //routes for suppliers
 Route::get('/property/{property_id}/suppliers', 'SupplierController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/suppliers/create', 'SupplierController@create')->middleware(['auth', 'verified']);

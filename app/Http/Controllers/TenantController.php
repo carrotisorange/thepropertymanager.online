@@ -656,7 +656,7 @@ class TenantController extends Controller
             ->get();
 
              $violations = DB::table('violations')
-            ->join('violation_types', 'violation_type_id_foreign', 'violation_type_id')
+            //->join('violation_types', 'violation_type_id_foreign', 'violation_type_id')
             ->where('tenant_id_foreign', $tenant_id)
             ->get();
 
