@@ -44,7 +44,8 @@ thead tr:nth-child(1) th {
     <p class="text-right">
       <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createBills" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a> 
       <a  href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/tenant/966/bills/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit"></i> Edit SOA</a> 
-      <a href="#" class="btn btn-white btn-sm"><i class="fas fa-lightbulb"></i> Page tips</a>
+      <a  href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/bills" class="btn btn-primary btn-sm" ><i class="fas fa-eraser"></i> Clear filters</a>  
+      {{-- <a href="#" class="btn btn-white btn-sm"><i class="fas fa-lightbulb"></i> Page tips</a> --}}
     </p>
   </div>
 </div>
