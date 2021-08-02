@@ -939,7 +939,7 @@ class TenantController extends Controller
                 'id_number' => $request->id_number,
 
                 'contact_no' => $request->contact_no,
-                'email_address' => $request->email_address,
+                //'email_address' => $request->email_address,
 
                 'barangay'=> $request->barangay,
                 'city' => $request->city,
