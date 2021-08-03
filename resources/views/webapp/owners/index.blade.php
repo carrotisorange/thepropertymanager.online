@@ -94,7 +94,7 @@ thead tr:nth-child(1) th {
             <td>{{ $item->address }}</td>
             <td>{{ $item->representative }}</td>
             {{-- <td>
-              @if(Auth::user()->user_type === 'manager')
+              @if(Auth::user()->role_id_foreign === 4)
               <form action="/property/{{Session::get('property_id')}}/owner/{{ $item->owner_id }}/delete" method="POST">
                 @csrf
                 @method('delete')

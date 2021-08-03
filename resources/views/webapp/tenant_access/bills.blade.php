@@ -57,7 +57,7 @@
               @endif
             </td>
             {{-- <td class="text-center">
-              @if(Auth::user()->user_type === 'manager')
+              @if(Auth::user()->role_id_foreign === 4)
               <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
                 @csrf
                 @method('delete')

@@ -114,7 +114,7 @@
                   <tr>
                    
                       <td>{{ $item->name }}</td>
-                      <td>{{ $item->user_type }}</td>
+                      <td>{{ $item->role_id_foreign }}</td>
                       <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->diffForHumans() }}</td>
                   </tr>
                   @endforeach
@@ -158,7 +158,7 @@
                 <tr>
                  
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->user_type }}</td>
+                    <td>{{ $item->role_id_foreign }}</td>
                     <td>{{ Carbon\Carbon::parse($item->session_last_login_at)->diffForHumans() }}</td>
                 </tr>
                 @endforeach

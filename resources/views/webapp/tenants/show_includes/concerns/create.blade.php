@@ -79,7 +79,7 @@
                                   <option value="" selected>Please select one</option>
                                   
                                   @foreach($users as $item)
-                                      <option value="{{ $item->user_id_foreign }}"> {{ $item->user_type }}</option>
+                                      <option value="{{ $item->user_id_foreign }}"> {{ $item->role_id_foreign }}</option>
                                   @endforeach
                                 </select>
                             </div>

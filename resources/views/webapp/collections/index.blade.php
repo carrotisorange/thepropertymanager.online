@@ -59,12 +59,12 @@ thead tr:nth-child(1) th {
       <th>AR No</th>
       <th>Bill No</th>
 
-      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <th></th>
       @else
       <th>Tenant</th>
       @endif
-      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <th>Unit</th>
       @else
       <th>Room</th>
@@ -93,7 +93,7 @@ thead tr:nth-child(1) th {
 
   
     <th>
-      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
       @else
       <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
@@ -102,7 +102,7 @@ thead tr:nth-child(1) th {
     </th>
     
     <th>
-      @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
       @else
       <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
@@ -117,7 +117,7 @@ thead tr:nth-child(1) th {
     <td>{{ $item->form }}</td>
     
     <th> ₱
-      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
+      @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2 || Auth::user()->role_id_foreign === 1)
      <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
       @else
       {{ number_format($item->amt_paid,2) }}

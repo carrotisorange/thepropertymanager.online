@@ -97,7 +97,7 @@
                 <span class="nav-link-inner--text">Welcome, {{ Auth::user()->name }}!</span>
               </a>
             </li> 
-            @if(Auth::user()->user_type === 'manager')
+            @if(Auth::user()->role_id_foreign === 4)
             <li class="nav-item d-none d-lg-block ml-lg-4">
               <a href="/user/upgrade" target="_blank" class="btn btn-neutral btn-icon">
                 <span class="btn-inner--icon">

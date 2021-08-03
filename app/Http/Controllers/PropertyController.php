@@ -36,8 +36,8 @@ class PropertyController extends Controller
 
         Session::put('current-page', 'dashboard');
 
-            if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin'){
-                if(Auth::user()->user_type === 'manager'){
+            if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1){
+                if(Auth::user()->role_id_foreign === 4){
                     $properties = User::findOrFail(Auth::user()->id)->properties;
                 }else{
                     $properties = User::findOrFail(Auth::user()->lower_access_user_id)->properties;
@@ -62,7 +62,7 @@ class PropertyController extends Controller
        
                 return view('webapp.properties.index', compact('properties', 'users')); 
 
-            }elseif(Auth::user()->user_type == 'tenant'){
+            }elseif(Auth::user()->role_id_foreign == 'tenant'){
                 $property_id = DB::table('users_properties_relations')
                ->join('users', 'user_id_foreign', 'id')
                ->where('user_id_foreign', Auth::user()->id)
@@ -74,7 +74,7 @@ class PropertyController extends Controller
                 return view('webapp.tenant_access.main', compact('property_id', 'tenant'));
 
            
-            }elseif(Auth::user()->user_type == 'owner'){
+            }elseif(Auth::user()->role_id_foreign == 'owner'){
                 $property_id = DB::table('users_properties_relations')
                 ->join('users', 'user_id_foreign', 'id')
                 ->where('user_id_foreign', Auth::user()->id)
@@ -84,7 +84,7 @@ class PropertyController extends Controller
                   $owner = User::findOrFail(Auth::user()->id)->owner_access;
                  
                  return view('webapp.owner_access.main', compact('property_id', 'owner'));
-            }elseif(Auth::user()->user_type == 'dev'){
+            }elseif(Auth::user()->role_id_foreign == 'dev'){
 
                 Session::put('notifications', Notification::orderBy('created_at','desc')->limit(5)->get());
 
@@ -97,7 +97,7 @@ class PropertyController extends Controller
         
                 $paying_users = DB::table('users')
                 ->whereNotNull('email_verified_at')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->get();
             
                 $unverified_users = DB::table('users')
@@ -227,7 +227,7 @@ class PropertyController extends Controller
 
             
                 $active_users = DB::table('users')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->whereNotNull('email_verified_at')
                 ->get();
 
@@ -236,44 +236,44 @@ class PropertyController extends Controller
                 ->join('properties', 'id', 'user_id_property')
                 ->select('*', 'properties.name as property_name', 'users.name as user_name')
                 ->where('session_last_login_at', '>=', Carbon::today())
-                ->where('user_type', 'manager')
+                ->where('user_type', 4)
                 ->paginate(5);
 
                  $all_active_users = DB::table('users')
                 ->join('sessions', 'id', 'session_user_id')
                 ->where('session_last_login_at', '>=', Carbon::today())
-                ->where('user_type', '<>', 'manager')
+                ->where('user_type', '<>', 4)
                 ->get();
 
 
                 $starter_plan = DB::table('users')
                 ->where('account_type','starter')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->whereNotNull('email_verified_at')
                 ->count();
 
                 $basic_plan = DB::table('users')
                 ->where('account_type','basic')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->whereNotNull('email_verified_at')
                 ->count();
 
                 $large_plan = DB::table('users')
                 ->where('account_type','large')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->whereNotNull('email_verified_at')
                 ->count();
 
                 $advanced_plan = DB::table('users')
                 ->where('account_type','advanced')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->whereNotNull('email_verified_at')
                 ->count();
 
 
                 $enterprise_plan = DB::table('users')
                 ->where('account_type','enterprise')
-                ->where('user_type','manager')
+                ->where('user_type',4)
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -827,7 +827,7 @@ $expenses_rate->dataset
     ->linetension(0.3);
 
 
-    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+    if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
         $delinquent_accounts = Unit::leftJoin('bills', 'unit_id','bill_unit_id')
         ->leftJoin('payments', 'bill_id','payment_bill_id')
         ->leftJoin('contracts', 'unit_id', 'unit_id_foreign')
@@ -1265,7 +1265,7 @@ if($tenants->count() != 0){
 
 
 
-if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
     $collections_for_the_day = DB::table('contracts')
     ->leftJoin('units', 'unit_id_foreign', 'unit_id')
     ->leftJoin('bills', 'unit_id', 'bill_unit_id')
@@ -1295,7 +1295,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
     ->get();
 }
 
-if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
     return view('webapp.properties.show-unit-properties',
     compact(
                 'units', 'units_occupied','units_vacant', 'units_reserved',
@@ -1505,7 +1505,7 @@ if(Session::get('property_type') === 'Condominium Corporation' || Session::get('
        
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
+        Session::put('property_type', Property::findOrFail(Session::get('property_type_id_foreign'))->type);
 
         Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
 

@@ -35,7 +35,7 @@
                       <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
                     </td>
                     <td>
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                      @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
                       <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id   }}">{{$item->building.' '.$item->unit_no }}</a>
                       @else
                      {{ $item->unit_no }}

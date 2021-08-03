@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <th>Role</th>
-                    <td>{{ $user->user_type }}</td>
+                    <td>{{ $user->role_id_foreign }}</td>
                 </tr>
                 </tr>
                 {{-- <tr>
@@ -87,7 +87,7 @@
                     <th>Role</th>
                     <td>
                         <select form="editUserForm" name="user_type" id="" class="col-md-8">
-                            <option value="{{ $user->user_type }}" selected>{{ $user->user_type }} (selected)</option>
+                            <option value="{{ $user->role_id_foreign }}" selected>{{ $user->role_id_foreign }} (selected)</option>
                             <option value="admin">admin</option>
                             <option value="ap">ap</option>
                             <option value="billing">billing</option>

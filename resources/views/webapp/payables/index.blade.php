@@ -22,7 +22,7 @@ thead tr:nth-child(1) th {
   </div>
 
   <div class="col text-right">
-    @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager' )
+    @if(auth()->user()->role_id_foreign === 2 || auth()->user()->role_id_foreign === 4 )
     <a href="/property/{{ Session::get('property_id') }}/payables/entries" class="btn btn-primary shadow-sm btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> New entry</a>
     @endif
     <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#requestPayable" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New request</a>
@@ -61,7 +61,7 @@ thead tr:nth-child(1) th {
                   <th>Requester</th>
                   <th>Note</th>
                   <th>Status</th>
-                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                  @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
                   <th>Actions</th>
                   @endif
                 
@@ -116,7 +116,7 @@ thead tr:nth-child(1) th {
                     @endif
                    </td>
                    {{-- @if($item->payable_status == 'pending')
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                      @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
                       
                       <td class="text-right"> 
                         
@@ -175,7 +175,7 @@ thead tr:nth-child(1) th {
               
                   <th>Requester</th>
                   <th>Note</th>
-                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                  @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
                   <th>Actions</th>
                   @endif
                 
@@ -196,7 +196,7 @@ thead tr:nth-child(1) th {
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>    
                    
                    
-                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
                     <td>
                       <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action" method="GET" onchange="submit();">
                         <select class="" name="payable_option" id="">
@@ -239,7 +239,7 @@ thead tr:nth-child(1) th {
                   <th>Note</th>
                   <th>Aprroved</th>
                   
-                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                  @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
                   <th>Action</th>
                   @endif
                 </tr>
@@ -257,7 +257,7 @@ thead tr:nth-child(1) th {
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
                     <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>     
-                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap'|| Auth::user()->user_type === 'admin')
+                    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2|| Auth::user()->role_id_foreign === 1)
                     <td>
                       <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action" method="GET" onchange="submit();">
                         <select class="" name="payable_option" id="">
@@ -299,7 +299,7 @@ thead tr:nth-child(1) th {
                   <th>Note</th>
                   <th>Released</th>
                   
-                  {{-- @if(Auth::user()->user_type === 'manager')
+                  {{-- @if(Auth::user()->role_id_foreign === 4)
                   <th colspan="2" class="text-center">Action</th>
                   @endif --}}
                 </tr>
@@ -317,7 +317,7 @@ thead tr:nth-child(1) th {
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>        
                     <td>{{ Carbon\Carbon::parse($item->released_at)->format('M d Y') }}</td>     
-                    {{-- @if(Auth::user()->user_type === 'manager')
+                    {{-- @if(Auth::user()->role_id_foreign === 4)
                     <td class="text-center"> 
                       <form action="/" method="POST">
                       @csrf

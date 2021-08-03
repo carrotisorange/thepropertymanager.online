@@ -616,7 +616,7 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/bills/send', function($unit_id,
 Route::delete('/tenants/{tenant_id}', 'TenantController@destroy')->middleware(['auth', 'verified']);
 
 Route::get('/owners', function(){
-    if( auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
+    if( auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4){
 
 
             $owners = DB::table('owners')
@@ -637,7 +637,7 @@ Route::get('/owners', function(){
 })->middleware(['auth', 'verified']);
 
 Route::get('/collections', function(){
-    if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'treasury'){
+    if(auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 5){
 
              $collections = DB::table('units')
              ->leftJoin('tenants', 'unit_id', 'unit_tenant_id')
@@ -660,7 +660,7 @@ Route::get('/collections', function(){
 })->middleware(['auth', 'verified']);
 
 Route::get('/bills', function(){
-    if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
+    if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
 
 
         $bills = DB::table('units')
@@ -683,7 +683,7 @@ Route::get('/bills', function(){
 
 
 Route::get('/housekeeping', function(){
-    if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
+    if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4){
 
         $housekeeping = DB::table('personnels')
         ->where('personnel_property', Auth::user()->property)
@@ -698,7 +698,7 @@ Route::get('/housekeeping', function(){
 })->middleware(['auth', 'verified']);
 
 Route::get('/maintenance', function(){
-    if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
+    if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4){
 
          $maintenance = DB::table('personnels')
         ->where('personnel_property', Auth::user()->property)

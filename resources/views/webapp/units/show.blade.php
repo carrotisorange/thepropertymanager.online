@@ -107,7 +107,7 @@ thead tr:nth-child(1) th {
   
         <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
           <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a> 
-          @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+          @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
             <a href="/property/{{Session::get('property_id')}}/unit/{{ $home->unit_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
             @endif
             @if($bills->count() > 0)
@@ -168,7 +168,7 @@ thead tr:nth-child(1) th {
                   @endif
                 </td>
                 {{-- <td class="text-center">
-                  @if(Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->role_id_foreign === 4)
                   <form action="/property/{{Session::get('property_id')}}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->billing_id }}" method="POST">
                     @csrf
                     @method('delete')
@@ -202,7 +202,7 @@ thead tr:nth-child(1) th {
         </div>
         </div>
         <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
-          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+          @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
           <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
           @endif 
           <br><br>
@@ -246,7 +246,7 @@ thead tr:nth-child(1) th {
                         <td>{{ $item->form }}</td>
                         <td class="text-right">{{ number_format($item->amt_paid,2) }}</td>
                         {{-- <td class="text-center">
-                          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+                          @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4)
                            <form action="/property/{{$property->property_id}}/home/{{ $item->unit_id }}/payment/{{ $item->payment_id }}" method="POST">
                              @csrf
                              @method('delete')
@@ -341,7 +341,7 @@ thead tr:nth-child(1) th {
                  <th>Date Reported</th>
                 
                       
-                 @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                 @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
                  <th>Unit</th>
                  @else
                  <th>Room</th>
@@ -615,7 +615,7 @@ thead tr:nth-child(1) th {
                                   <select class="form-control" form="concernForm" name="concern_user_id">
                                     <option value="" selected>Please select one</option>
                                     @foreach($users as $item)
-                                        <option value="{{ $item->id }}"> {{ $item->user_type }}</option>
+                                        <option value="{{ $item->id }}"> {{ $item->role_id_foreign }}</option>
                                     @endforeach   
                                   </select>
                               </div>

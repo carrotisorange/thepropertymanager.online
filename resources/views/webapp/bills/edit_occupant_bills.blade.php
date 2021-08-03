@@ -68,7 +68,7 @@
           </td>
           <td><input form="editBillsForm" type="number" name="amount_ctr{{ $amount++ }}" step="0.01" value="{{  $item->balance }}"></td>
           {{-- <td>
-            @if(Auth::user()->user_type === 'manager')
+            @if(Auth::user()->role_id_foreign === 4)
 
             <form action="/property/{{Session::get('property_id')}}/bill/{{ $item->bill_id }}" method="POST">
               @csrf

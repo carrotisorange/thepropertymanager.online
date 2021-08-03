@@ -29,7 +29,7 @@
                
                   <td><a href="/dev/user/{{ $item->id }}">{{ $item->name }}</a></td>
                   <td>{{ $item->email }}</td>
-                  <td>{{ $item->user_type }}</td>
+                  <td>{{ $item->role_id_foreign }}</td>
                   <td><a href="/dev/user/{{ $item->id }}/plans">{{ $item->account_type }}</a></td>
                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y').' '.Carbon\Carbon::parse($item->created_at)->toTimeString() }}</td>
                    <td>

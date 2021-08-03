@@ -33,7 +33,7 @@ class ConcernController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-       if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager'){
+       if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4){
             $all_concerns = DB::table('contracts')
             ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
             ->leftJoin('units', 'unit_id_foreign', 'unit_id')
@@ -205,7 +205,7 @@ class ConcernController extends Controller
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
 
-         if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
         }else{
             return redirect('/property/'.$property_id.'/room/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
@@ -248,7 +248,7 @@ class ConcernController extends Controller
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
 
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#concerns')->with('success', 'Concern is added sucessfully.');
             }else{
                 return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#concerns')->with('success', 'Concern is added sucessfully.');
@@ -313,7 +313,7 @@ class ConcernController extends Controller
         
         Session::put('current-page', 'concerns');
 
-        if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'treasury' || auth()->user()->user_type === 'billing'){
+        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 5 || auth()->user()->role_id_foreign === 3){
         
             // $tenant = Tenant::findOrFail($tenant_id);
 

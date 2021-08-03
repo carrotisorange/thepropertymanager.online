@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
 
 
-// if(Auth::user()->property_type === 'Apartment Rentals' || Auth::user()->property_type === 'Dormitory'){
+// if(Auth::user()->property_type === '7' || Auth::user()->property_type === 'Dormitory'){
    
     }
 

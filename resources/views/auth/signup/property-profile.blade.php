@@ -32,8 +32,8 @@
    <select form="" id="property_type" class="form-control @error('property_type') is-invalid @enderror" name="property_type" value="{{ old('property_type') }}" required>
      <option value="">Select property type</option>
      <option value="Dormitory">Dormitory</option>
-     <option value="Apartment Rentals">Apartment Rentals</option>
-     <option value="Commercial Complex">Commercial Complex</option>
+     <option value="7">7</option>
+     <option value="6">6</option>
      <option value="Condominium Associations">Condominium Associations</option>
    </select>
 

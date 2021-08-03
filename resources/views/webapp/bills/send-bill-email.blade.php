@@ -76,7 +76,7 @@
           
           <ul style="list-style-type: none">
             <li><b>Posted by:</b> {{ Auth::user()->name }}</li>
-            <li>{{ ucfirst(Auth::user()->user_type).' of '. Auth::user()->property }}</li>
+            <li>{{ ucfirst(Auth::user()->role_id_foreign).' of '. Auth::user()->property }}</li>
           </ul>
         
         </div>

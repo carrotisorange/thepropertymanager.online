@@ -50,9 +50,9 @@ class BillController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
+        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             if($search  === null){
                 $bills = DB::table('contracts')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -142,9 +142,9 @@ class BillController extends Controller
                      
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
  
-         if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing'){
+         if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
 
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 if( Session::get(Auth::user()->id.'date') === null){
                     $bills = DB::table('contracts')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -262,7 +262,7 @@ class BillController extends Controller
         ->get();
 
         
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -292,7 +292,7 @@ class BillController extends Controller
         ->where('contracts.status', 'active')
         ->count();
         
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -380,7 +380,7 @@ class BillController extends Controller
 
    //get the number of last added bills
 
-   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+   if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
     $current_bill_no = DB::table('units')
     ->join('bills', 'unit_id', 'bill_unit_id')
     ->where('property_id_foreign', Session::get('property_id'))
@@ -446,7 +446,7 @@ $request->session()->now('success', 'Changes saved.');
 
    //get the number of last added bills
 
-   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+   if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
     $current_bill_no = DB::table('units')
     ->join('bills', 'unit_id', 'bill_unit_id')
     ->where('property_id_foreign', Session::get('property_id'))
@@ -483,7 +483,7 @@ $request->session()->now('success', 'Changes saved.');
 
    //get the number of last added bills
 
-   if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+   if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
     $current_bill_no = DB::table('units')
     ->join('bills', 'unit_id', 'bill_unit_id')
     ->where('property_id_foreign', Session::get('property_id'))
@@ -528,7 +528,7 @@ DB::table('properties')
     
        //get the number of last added bills
 
-       if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+       if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
         $current_bill_no = DB::table('units')
         ->join('bills', 'unit_id', 'bill_unit_id')
         ->where('property_id_foreign', Session::get('property_id'))
@@ -572,7 +572,7 @@ DB::table('properties')
         ->get();
     
        //get the number of last added bills
-       if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+       if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
         $current_bill_no = DB::table('units')
         ->join('bills', 'unit_id', 'bill_unit_id')
         ->where('property_id_foreign', Session::get('property_id'))
@@ -606,7 +606,7 @@ DB::table('properties')
     {
 
         $no_of_bills = $request->no_of_bills;
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -623,7 +623,7 @@ DB::table('properties')
 
         
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
@@ -634,7 +634,7 @@ DB::table('properties')
 
     public function post_tenant_bill(Request $request, $property_id, $tenant_id)
     {
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -700,7 +700,7 @@ DB::table('properties')
     // }
         }
         
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#bills')->with('success', ($i-1).' bill created successfully.');
@@ -710,7 +710,7 @@ DB::table('properties')
     public function post_unit_bill(Request $request, $property_id, $unit_id)
     {
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -797,7 +797,7 @@ DB::table('properties')
         ->where('contracts.status', 'active')
         ->count();
         
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -902,7 +902,7 @@ DB::table('properties')
     public function edit_tenant_bills($property_id, $tenant_id)
     {
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin'){
+        if(auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 1){
             
             //get the tenant information
               $tenant = Tenant::findOrFail($tenant_id);
@@ -931,7 +931,7 @@ DB::table('properties')
           ->orderBy('particular', 'asc')
           ->get();
 
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 return view('webapp.bills.edit', compact('current_bill_no','tenant', 'balance', 'property'));  
             }else{
                 return view('webapp.bills.edit_tenant_bills', compact('current_bill_no','tenant', 'balance','property_bills'));  
@@ -945,7 +945,7 @@ DB::table('properties')
     public function edit_occupant_bills($property_id, $unit_id)
     {
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
+        if(auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 1 ){
       
             $unit = Unit::findOrFail($unit_id);
 
@@ -953,7 +953,7 @@ DB::table('properties')
     
             //get the number of last added bills
    
-            if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+            if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -998,7 +998,7 @@ DB::table('properties')
 
     public function post_edited_bills(Request $request, $property_id, $tenant_id){
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin'){
+        if(auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 1){
            
              $bills = Tenant::findOrFail($tenant_id)->bills->count();
 
@@ -1044,7 +1044,7 @@ DB::table('properties')
     public function update_occupant_bills(Request $request, $property_id, $unit_id){
 
 
-        if(auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
+        if(auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 1 ){
 
 
             $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')

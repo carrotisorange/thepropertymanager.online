@@ -50,7 +50,7 @@ thead tr:nth-child(1) th {
                 
                     </th>
                     <th>
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                      @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
                       <a href="/property/{{ Session::get('property_id') }}/home/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
                       @else
                       {{ $item->unit_no }}

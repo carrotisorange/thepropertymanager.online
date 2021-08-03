@@ -80,7 +80,7 @@ thead tr:nth-child(1) th {
             <tr>
                 <th>{{ $unit_ctr++ }}</th>
                 <th>
-                  @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+                  @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                     <a href="/property/{{Session::get('property_id')}}/unit/{{ $unit->unit_id }}">{{ $unit->building.' '.$unit->unit_no }}</a>
                @else
                <a href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}">{{ $unit->building.' '.$unit->unit_no }}</a>

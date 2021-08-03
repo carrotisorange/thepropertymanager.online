@@ -67,7 +67,7 @@ thead tr:nth-child(1) th {
               <thead>
                 <tr>
                   <th>Role</th>
-                  <td>{{ $user->user_type }}</td>
+                  <td>{{ $user->role_id_foreign }}</td>
                 </tr>
               </thead>
             <thead>
@@ -283,7 +283,7 @@ thead tr:nth-child(1) th {
           </p>
 
           <br>
-          {{-- @if(Auth::user()->user_type === 'manager')
+          {{-- @if(Auth::user()->role_id_foreign === 4)
           <small>Warning: Account deletion can't be undone. </small>
           <br>
           <form action="/users/{{ $user->id }}" method="POST">

@@ -46,7 +46,7 @@ thead tr:nth-child(1) th {
               <th>#</th>
               <th>Received On</th>
               <th>Reported By</th>
-              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
               <th>Unit</th>
               @else
               <th>Room</th>
@@ -66,7 +66,7 @@ thead tr:nth-child(1) th {
          
             <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
               <th>
-                @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                 <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
                 @else
                {{ $item->first_name.' '.$item->last_name }}
@@ -74,14 +74,14 @@ thead tr:nth-child(1) th {
              
               </th>
               <th>
-                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
                   @endif
                 @else
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
@@ -90,7 +90,7 @@ thead tr:nth-child(1) th {
                  
                
               </th>
-              @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
               @else
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}/assign/{{ Auth::user()->id }}">{{ $item->title }}</a></th>
@@ -135,7 +135,7 @@ thead tr:nth-child(1) th {
               <th>#</th>
               <th>Received On</th>
               <th>Reported By</th>
-              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
               <th>Unit</th>
               @else
               <th>Room</th>
@@ -155,7 +155,7 @@ thead tr:nth-child(1) th {
          
             <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
               <th>
-                @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                 <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
                 @else
                {{ $item->first_name.' '.$item->last_name }}
@@ -163,14 +163,14 @@ thead tr:nth-child(1) th {
              
               </th>
               <th>
-                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
                   @endif
                 @else
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
@@ -179,7 +179,7 @@ thead tr:nth-child(1) th {
                  
                
               </th>
-              @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
               @else
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}/assign/{{ Auth::user()->id }}">{{ $item->title }}</a></th>
@@ -216,7 +216,7 @@ thead tr:nth-child(1) th {
               <th>#</th>
               <th>Received On</th>
               <th>Reported By</th>
-              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
               <th>Unit</th>
               @else
               <th>Room</th>
@@ -236,7 +236,7 @@ thead tr:nth-child(1) th {
          
             <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
               <th>
-                @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                 <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
                 @else
                {{ $item->first_name.' '.$item->last_name }}
@@ -244,14 +244,14 @@ thead tr:nth-child(1) th {
              
               </th>
               <th>
-                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
                   @endif
                 @else
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
@@ -260,7 +260,7 @@ thead tr:nth-child(1) th {
                  
                
               </th>
-              @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
               @else
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}/assign/{{ Auth::user()->id }}">{{ $item->title }}</a></th>
@@ -297,7 +297,7 @@ thead tr:nth-child(1) th {
               <th>#</th>
               <th>Received On</th>
               <th>Reported By</th>
-              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
               <th>Unit</th>
               @else
               <th>Room</th>
@@ -317,7 +317,7 @@ thead tr:nth-child(1) th {
          
             <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
               <th>
-                @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                 <a href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
                 @else
                {{ $item->first_name.' '.$item->last_name }}
@@ -325,14 +325,14 @@ thead tr:nth-child(1) th {
              
               </th>
               <th>
-                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
                   @endif
                 @else
-                  @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+                  @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
                   <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{$item->unit_no }}</a>
                   @else
                   {{$item->unit_no }}
@@ -341,7 +341,7 @@ thead tr:nth-child(1) th {
                  
                
               </th>
-              @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
               @else
               <th ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}/assign/{{ Auth::user()->id }}">{{ $item->title }}</a></th>

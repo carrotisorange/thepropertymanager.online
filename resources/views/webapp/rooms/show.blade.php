@@ -503,7 +503,7 @@ thead tr:nth-child(1) th {
                           <select form="addTenantForm1" name="referrer_id" id="referrer_id">
                             <option value="">Please select one</option>
                             @foreach ($users as $item)
-                              <option value="{{ $item->id }}">{{ $item->name }} | {{ $item->user_type }}</option>
+                              <option value="{{ $item->id }}">{{ $item->name }} | {{ $item->role_id_foreign }}</option>
                             @endforeach
                            </select>
                         </th>
@@ -969,7 +969,7 @@ thead tr:nth-child(1) th {
                                   <select class="form-control" form="concernForm" name="concern_user_id" required>
                                     <option value="" selected>Please select one</option>
                                     @foreach($users as $item)
-                                        <option value="{{ $item->id }}"> {{ $item->user_type }}</option>
+                                        <option value="{{ $item->id }}"> {{ $item->role_id_foreign }}</option>
                                     @endforeach   
                                   </select>
                               </div>

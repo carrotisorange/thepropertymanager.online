@@ -40,7 +40,7 @@ thead tr:nth-child(1) th {
       <tr>
        <th>{{ $ctr++ }}</th>
        <td>{{ $item->user_name }}</td>
-       <td>{{ $item->user_type }}</td>
+       <td>{{ $item->role_id_foreign }}</td>
        
        
         <td>{{ $item->session_last_login_ip }}</td>

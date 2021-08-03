@@ -107,7 +107,7 @@ thead tr:nth-child(1) th {
     {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
-    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
     <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
@@ -627,7 +627,7 @@ thead tr:nth-child(1) th {
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
         <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a> 
-        {{-- @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+        {{-- @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
           @endif --}}
           @if($balance->count() > 0)
@@ -720,7 +720,7 @@ thead tr:nth-child(1) th {
 
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
-        @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+        @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
           @if($balance->count() > 0)
           <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
           @endif

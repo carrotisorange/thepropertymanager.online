@@ -81,7 +81,7 @@
                             <div class="row align-items-center">
                               <div class="col-auto">
                                 <!-- Avatar -->
-                              @if($item->user_type === 'dev')
+                              @if($item->role_id_foreign === 'dev')
                               <i class="fas fa-user-secret text-red"></i>
                               @else
                               <i class="fas fa-user-circle text-primary"></i>

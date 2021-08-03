@@ -19,17 +19,17 @@
   <div class="tab-pane fade show active" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
     <a href="/board" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Dashboard</a>
 
-    @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
+    @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5)
     <a href="/tenants/search" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Tenants</a>
     @else
     <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}" class="btn btn-primary"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Tenant</a>
     @endif
     
-    @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+    @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
     <a href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/billings/edit" class="btn btn-primary"><i class="fas fa-edit fa-sm text-gray-50"></i> Edit</a>
     @endif
     
-      @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'admin')
+      @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 1)
 
       @if($balance->count() > 0)
       {{-- <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/download" class="btn btn-primary"><i class="fas fa-download fa-sm text-white-50"></i> Export </span></a>
@@ -110,7 +110,7 @@
   </div>
   <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
     
-    @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+    @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
     <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>
     @endif 
     <div class="row">
@@ -156,7 +156,7 @@
                           --}}
                         </td>
                         <td>
-                          @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager') 
+                          @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4) 
                           <form action="/tenants/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}" method="POST">
                             @csrf
                             @method('delete')

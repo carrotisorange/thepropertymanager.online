@@ -70,7 +70,7 @@ class CollectionController extends Controller
 
         Session::put(Auth::user()->id.'date', $search);
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Apartment Rentals'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '7'){
             if($search  === null){
               $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
                 ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
@@ -706,7 +706,7 @@ class CollectionController extends Controller
         $bill->payment_status = 'deleted';
         $bill->save();
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
         }else{
             return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');

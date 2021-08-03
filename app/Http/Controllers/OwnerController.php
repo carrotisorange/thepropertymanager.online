@@ -38,7 +38,7 @@ class OwnerController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $owners = DB::table('users_properties_relations')
             ->join('properties', 'property_id_foreign', 'property_id')
             ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
@@ -192,7 +192,7 @@ class OwnerController extends Controller
     {
         Session::put('current-page', 'owners');
 
-        if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
+        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4){
 
             $owner = Owner::findOrFail($owner_id);
 

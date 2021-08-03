@@ -94,7 +94,7 @@ class ContractController extends Controller
         ->orderBy('users.name')
         ->get();
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))
@@ -190,7 +190,7 @@ class ContractController extends Controller
                     }
     
 
-                    if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+                    if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                         $current_bill_no = DB::table('units')
                         ->join('bills', 'unit_id', 'bill_unit_id')
                         ->where('property_id_foreign', Session::get('property_id'))
@@ -383,7 +383,7 @@ class ContractController extends Controller
 
     public function preterminate_post(Request $request, $property_id, $tenant_id, $contract_id){
 
-        if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
             ->where('property_id_foreign', Session::get('property_id'))

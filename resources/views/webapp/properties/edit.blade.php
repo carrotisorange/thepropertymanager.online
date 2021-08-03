@@ -50,8 +50,8 @@
         <label>Type</label>
         <select form="editPropertyForm" class="form-control" name="type" type="text" id="">
             <option value="{{ $property->type }}">{{ $property->type }}</option>
-            <option value="Apartment Rentals">Apartment Rentals</option>
-            <option value="Commercial Complex">Commercial Complex</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
             <option value="Condominium Associations">Condominium Associations</option>
             <option value="Dormitory">Dormitory</option>
             <option value="House">House</option>

@@ -181,7 +181,7 @@ class UserController extends Controller
         ->update([
           'name' => $request->name,
           'email' => $request->email,
-          'user_type' => $request->user_type,
+          'user_type' => $request->role_id_foreign,
         ]);
 
         DB::table('users_properties_relations')
@@ -207,7 +207,7 @@ class UserController extends Controller
       $user_id =  DB::table('users')->insertGetId([
             'name' => $request->name,
             'email' => $request->email,
-            'user_type' => $request->user_type,
+            'user_type' => $request->role_id_foreign,
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
             'account_type' => Auth::user()->account_type,
@@ -250,7 +250,7 @@ class UserController extends Controller
         DB::table('users')->insert([
             'name' => $request->name,
             'email' => $request->email,
-            'user_type' => $request->user_type,
+            'user_type' => $request->role_id_foreign,
             'property' => Auth::user()->property,
             'property_type' => Auth::user()->property_type,
             'property_ownership' => Auth::user()->property_ownership,
@@ -295,7 +295,7 @@ class UserController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-         if(($user->id === Auth::user()->id) || ($manager->user_type === 'manager' && $user->property === $manager->property) || Auth::user()->email === 'thepropertymanager2020@gmail.com'){
+         if(($user->id === Auth::user()->id) || ($manager->role_id_foreign === 4 && $user->property === $manager->property) || Auth::user()->email === 'thepropertymanager2020@gmail.com'){
             return view('webapp.users.show', compact('referrals','concerns','properties','property','user', 'sessions', 'blogs'));
          }else{
              return view('layouts.arsha.unregistered');
@@ -315,7 +315,7 @@ class UserController extends Controller
 
         $manager = User::findOrFail(Auth::user()->id);
 
-        if(($user->id === Auth::user()->id) || ($manager->user_type === 'manager' && $user->property === $manager->property)){
+        if(($user->id === Auth::user()->id) || ($manager->role_id_foreign === 4 && $user->property === $manager->property)){
 
             return view('webapp.users.edit-user', compact('user'));
         }
@@ -367,7 +367,7 @@ class UserController extends Controller
                 ]
                 );
             
-                if(Auth::user()->user_type != 'manager'){
+                if(Auth::user()->role_id_foreign != 4){
                     Auth::logout();
                     return redirect('/login')->with('success', 'Changes saved.');
                 }else{
@@ -731,7 +731,7 @@ class UserController extends Controller
   
            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
             
-                if(Auth::user()->user_type != 'manager'){
+                if(Auth::user()->role_id_foreign != 4){
                     Auth::logout();
                     return redirect('/login')->with('success', 'New password has been saved!');
                 }else{

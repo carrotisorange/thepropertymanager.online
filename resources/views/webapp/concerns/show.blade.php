@@ -120,7 +120,7 @@ font-family: FontAwesome;
 <div class="row">
 
   <div class="col-md-7">
-    @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager')
+    @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
     @if($concern->status != 'closed')
     <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary btn-sm"><i class="fas fa-edit text-dark-50"></i> Edit</a> 
     @endif 
@@ -157,12 +157,12 @@ font-family: FontAwesome;
         </thead>
           <thead>
           <tr>
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+            @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
             <th>Unit</th>
             @else
             <th>Room</th>
             @endif
-            @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+            @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
             <td><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></td>
             @else
             <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></td>

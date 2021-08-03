@@ -33,7 +33,7 @@ class UnitController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        if(auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'admin' ){
+        if(auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 1 ){
 
             Session::put('status', $request->status);
             Session::put('size', $request->size);
@@ -171,7 +171,7 @@ class UnitController extends Controller
 
             $room_floors = DB::table('unit_floors')->get();
     
-           if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+           if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             return view('webapp.units.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
            }else{
             return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
@@ -222,7 +222,7 @@ class UnitController extends Controller
         ->orderBy('particular', 'asc')
         ->get();
 
-        if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'treasury'){
+        if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 5){
          
             $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')

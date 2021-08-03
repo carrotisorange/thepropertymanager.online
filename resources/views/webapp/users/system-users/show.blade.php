@@ -43,7 +43,7 @@
             </tr>
             <tr>
               <th>Role</th>
-              <td>{{ $user->user_type }}</td>
+              <td>{{ $user->role_id_foreign }}</td>
           </tr>
             </tr>
             <tr>

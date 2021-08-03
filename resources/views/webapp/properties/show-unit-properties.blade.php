@@ -178,7 +178,7 @@
                           <th>{{ $del_ctr++ }}</th>
                           <td><a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}</td>
                           <td>
-                            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
                             <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id}}#bills">{{ $item->unit_no }}</a>
                             @else
                            {{ $item->unit_no }}
@@ -227,7 +227,7 @@
                       
                           </td>
                           <td>
-                            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
                             <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
                             @else
                             {{ $item->unit_no }}

@@ -160,7 +160,7 @@
                                   <option value="" selected>Please select one</option>
                                   
                                   @foreach($users as $item)
-                                      <option value="{{ $item->id }}" selected> {{ $item->user_type }}</option>
+                                      <option value="{{ $item->id }}" selected> {{ $item->role_id_foreign }}</option>
                                   @endforeach
                                  
                                 </select>

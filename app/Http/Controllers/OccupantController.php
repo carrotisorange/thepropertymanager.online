@@ -51,7 +51,7 @@ class OccupantController extends Controller
 
         Session::put('tenant_search', $search);
 
-        if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' ){
+        if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5 ){
             
             if($search === null){
                 $tenants = DB::table('contracts')
@@ -237,7 +237,7 @@ class OccupantController extends Controller
     {
         Session::put('current-page', 'occupants');
 
-        if(Auth::user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'billing' || auth()->user()->user_type === 'treasury'){
+        if(Auth::user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 5){
            
            $tenant = Tenant::findOrFail($tenant_id);
 
@@ -299,7 +299,7 @@ class OccupantController extends Controller
         });
 
               //get the number of last added bills
-              if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+              if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 $current_bill_no = DB::table('units')
                 ->join('bills', 'unit_id', 'bill_unit_id')
                 ->where('property_id_foreign', Session::get('property_id'))
@@ -336,7 +336,7 @@ class OccupantController extends Controller
               ->where('tenant_id', $tenant_id)
               ->get();
             
-               if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex'){
+               if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 return view('webapp.occupants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
                }else{
                 return view('webapp.tenants.show', compact('bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments', 'property'));  
@@ -364,7 +364,7 @@ class OccupantController extends Controller
 
         $property = Property::findOrFail($property_id);
 
-        if(auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager'){
+        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4){
             $tenant = Tenant::findOrFail($tenant_id);
             return view('webapp.occupants.edit', compact('tenant', 'property'));
         }else{

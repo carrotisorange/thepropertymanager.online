@@ -33,9 +33,9 @@
           <div class="col-auto">
 
             <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
-              @if($item->type=='Condominium Associations')
+              @if($item->type==1)
               <i class="fas fa-building fa-2x text-gray-300"></i>
-              @elseif($item->type=='Commercial Complex')
+              @elseif($item->type=='6')
               <i class="fas fa-store fa-2x text-gray-300"></i>
               @else
               <i class="fas fa-home fa-2x text-gray-300"></i>
@@ -95,7 +95,7 @@
     @endif
 
     <div class="col">
-      @if (Auth::user()->user_type === 'manager')
+      @if (Auth::user()->role_id_foreign === 4)
         @if($users > 1)
         <a title="Upgrade to Pro to add more users." href="/user/create" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> New user </a>
         @else
@@ -130,7 +130,7 @@
   </div> --}}
 
 {{-- <br>
-@if (Auth::user()->user_type === 'manager')
+@if (Auth::user()->role_id_foreign === 4)
   @if($users <= 0)
   <div class="row">
     <div class="col">

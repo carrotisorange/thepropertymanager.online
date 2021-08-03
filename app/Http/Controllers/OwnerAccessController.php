@@ -127,7 +127,7 @@ class OwnerAccessController extends Controller
   
            Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
             
-                if(Auth::user()->user_type != 'manager'){
+                if(Auth::user()->role_id_foreign != 4){
                     Auth::logout();
                     return redirect('/login')->with('success', 'New password has been saved!');
                 }else{

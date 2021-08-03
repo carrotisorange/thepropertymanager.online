@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             'email' => 'marthaleasing@yahoo.com',
             'password' => Hash::make('12345678'),
             'status' => 'registered',
-            'user_type' => 'admin',
+            'user_type' => 1,
             'property' => 'The Courtyards'
         ]);
 
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'email' => 'marthaoyonc@gmail.com',
             'password' => Hash::make('12345678'),
             'status' => 'registered',
-            'user_type' => 'admin',
+            'user_type' => 1,
             'property' => 'North Cambridge'
         ]);
 
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'email' => 'marthagoshenland@yahoo.com',
             'password' => Hash::make('12345678'),
             'status' => 'registered',
-            'user_type' => 'billing',
+            'user_type' => 3,
             'property' => 'The Courtyards'
         ]);
 
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'email' => 'aldrinqm12@gmail.com',
             'password' => Hash::make('12345678'),
             'status' => 'registered',
-            'user_type' => 'treasury',
+            'user_type' => 5,
             'property' => 'The Courtyards'
         ]);
 

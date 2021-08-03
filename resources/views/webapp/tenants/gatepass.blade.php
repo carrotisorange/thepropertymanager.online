@@ -33,7 +33,7 @@
           <p class="text-justfiy">
               <br>Guard on Duty: 
               <br>
-              <br>Pease allow Mr/Ms {{ $tenant }} for having no liabilities both for the condominium corporation and unit owner. With the vested capacity
+              <br>Pease allow Mr/Ms {{ $tenant }} for having no liabilities both for the 5 and unit owner. With the vested capacity
               of the undersigned mentioned tenant is hereby allowed to permanently move-out from the {{ $property }}
 
               

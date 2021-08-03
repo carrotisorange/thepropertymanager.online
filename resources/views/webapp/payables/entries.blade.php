@@ -90,7 +90,7 @@ thead tr:nth-child(1) th {
                 <td>{{ $item->description }}</td>
                 <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
                  {{-- <td class="text-right"> 
-                  @if(auth()->user()->user_type === 'ap' || auth()->user()->user_type === 'manager')
+                  @if(auth()->user()->role_id_foreign === 2 || auth()->user()->role_id_foreign === 4)
                  <form action="/account-payable/{{ $item->id }}/" method="POST">
                     @csrf
                     @method('delete')

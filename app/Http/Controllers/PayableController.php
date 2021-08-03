@@ -33,7 +33,7 @@ class PayableController extends Controller
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         
-        if( auth()->user()->user_type === 'admin' || auth()->user()->user_type === 'manager' || auth()->user()->user_type === 'ap'){
+        if( auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 2){
             $entry = DB::table('payable_entry')
             ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('created_at', 'desc')

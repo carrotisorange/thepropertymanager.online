@@ -53,7 +53,7 @@
                             @endif
                           </td>
                           {{-- <td>{{ $item->email }}</td> --}}
-                          <td>{{ $item->user_type }}</td>
+                          <td>{{ $item->role_id_foreign }}</td>
                           <td>{{ $item->property }}</td>
                          
                           

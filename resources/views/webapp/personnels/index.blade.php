@@ -51,12 +51,12 @@ thead tr:nth-child(1) th {
     <tr>
       <th>{{ $ctr++ }}</th>
         <td>{{ $item->name }}</td>
-        <td>{{ $item->user_type }}</td>
+        <td>{{ $item->role_id_foreign }}</td>
         <td>{{ $item->email }}</td>
      
         <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
         {{-- <td class="text-center">
-          @if(Auth::user()->user_type === 'manager')
+          @if(Auth::user()->role_id_foreign === 4)
           <form action="/property/{{Session::get('property_id')}}/personnel/{{ $item->personnel_id }}" method="POST">
             @csrf
             @method('delete')
@@ -75,7 +75,7 @@ thead tr:nth-child(1) th {
      
         <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
         {{-- <td class="text-center">
-          @if(Auth::user()->user_type === 'manager')
+          @if(Auth::user()->role_id_foreign === 4)
           <form action="/property/{{Session::get('property_id')}}/personnel/{{ $item->personnel_id }}" method="POST">
             @csrf
             @method('delete')

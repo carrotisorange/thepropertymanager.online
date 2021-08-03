@@ -35,7 +35,7 @@
   <div class="col">
       <label>Role</label>
       <select form="editPropertyForm" class="form-control" name="user_type" type="text" id="">
-          <option value="{{ $user->user_type }}">{{ $user->user_type }}</option>
+          <option value="{{ $user->role_id_foreign }}">{{ $user->role_id_foreign }}</option>
           <option value="admin">admin</option>
           <option value="ap">ap</option>
           <option value="billing">billing</option>

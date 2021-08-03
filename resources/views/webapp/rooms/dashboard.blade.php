@@ -312,14 +312,14 @@
               <tr>
                 <th>{{ $ctr++ }}</th>
                   <td>
-                    @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' )
+                    @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5 )
                     <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/billings">{{ $item->first_name.' '.$item->last_name }}
                     @else
                     <a href="{{ route('show',['unit_id' => $item->unit_id, 'tenant_id'=>$item->tenant_id]) }}">{{ $item->first_name.' '.$item->last_name }}</a>
                     @endif  
                   </td>
                   <td>
-                    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
                     <a href="/units/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
                     @else
                    {{ $item->building.' '.$item->unit_no }}
@@ -338,7 +338,7 @@
                     @else
                     <form action="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/alert/contract">
                       @csrf
-                      @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+                      @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
                       <button class="btn btn-primary btn btn-primary" type="submit" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send Notice</button>
                       @else
                       <button class="btn btn-primary btn btn-primary" title="for manager and admin access only" type="submit" onclick="this.form.submit(); this.disabled = true;" disabled><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send Email</button>
@@ -387,14 +387,14 @@
               {{-- @foreach($delinquent_accounts as $item)
               <tr>
                 <td title="{{ $item->tenants_note }}">
-                  @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury' )
+                  @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5 )
                   <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/billings">{{ $item->first_name.' '.$item->last_name }}
                   @else
                   <a href="{{ route('show',['unit_id' => $item->unit_id, 'tenant_id'=>$item->tenant_id]) }}">{{ $item->first_name.' '.$item->last_name }}</a>
                   @endif
                 </td>
                 <td>
-                  @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+                  @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
                   <a href="/units/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
                   @else
                  {{ $item->building.' '.$item->unit_no }}
@@ -511,14 +511,14 @@
       <td>{{ $ctr++ }}</td>
         <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
           <td>
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
             <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a>
             @else
             <a href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/billings">{{ $item->first_name.' '.$item->last_name }}</a>
             @endif
           </td>
           <td> 
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
             <a href="/units/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
             @else
            {{ $item->building.' '.$item->unit_no }}
@@ -529,7 +529,7 @@
               
           </td>
           <td >
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin' )
+            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
             <a title="{{ $item->details }}" href="/units/{{ $item->unit_id }}/tenants/{{ $item->tenant_id }}/concerns/{{ $item->concern_id }}">{{ $item->title }}</a></td>
             @else
             {{ $item->title }}

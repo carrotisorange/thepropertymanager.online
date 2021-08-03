@@ -200,7 +200,7 @@
             <table class="table table-condensed">
               <tr>
                <td> Prepared by: {{ Auth::user()->name }}
-               <br>{{ Auth::user()->user_type }}</td>
+               <br>{{ Auth::user()->role_id_foreign }}</td>
                <th></th>
                <td> Noted by: 
                  <br>Accounting Head</td>

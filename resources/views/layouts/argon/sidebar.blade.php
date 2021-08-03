@@ -1,3 +1,4 @@
+{{-- sidebar --}}
 <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
       <!-- Brand -->
@@ -26,9 +27,9 @@
               @endif
             </li>
             {{-- Units/Rooms --}}
-            @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
+            @if(Auth::user()->role_id_foreign === '1' || Auth::user()->role_id_foreign === 4 )
            <li class="nav-item">
-              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
                 @if(Session::get('current-page') === 'units')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units">
                   <i class="fas fa-home text-indigo"></i>
@@ -55,40 +56,10 @@
           
               @endif
             </li>
-            {{-- @elseif
-            (Auth::user()->user_type === 'ap')
-            <li class="nav-item">
-              @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
-                @if(Session::get('current-page') === 'units')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units/remittances">
-                  <i class="fas fa-home text-indigo"></i>
-                  <span class="nav-link-text">Units</span>
-                </a>
-                @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/units/remittances">
-                  <i class="fas fa-home text-indigo"></i>
-                  <span class="nav-link-text">Units</span>
-                </a>
-                @endif 
-              @else
-                @if(Session::get('current-page') === 'rooms')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms/remittances">
-                  <i class="fas fa-home text-indigo"></i>
-                  <span class="nav-link-text">Rooms</span>
-                </a>
-                @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms/remittances">
-                  <i class="fas fa-home text-indigo"></i>
-                  <span class="nav-link-text">Rooms</span>
-                </a>
-                @endif 
-          
-              @endif
-            </li> --}}
             @endif
             {{-- Tenants/Occupants --}}
-            @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'treasury')
-                @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+            @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5)
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
                 <li class="nav-item">
                   @if(Session::get('current-page') === 'occupants')
                   <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/occupants">
@@ -163,7 +134,7 @@
               @endif
             </li>
             {{-- Job Orders --}}
-            @if(Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'manager' )
+            @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 )
             <li class="nav-item">
               @if(Session::get('current-page') === 'job-orders')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/joborders">
@@ -194,7 +165,7 @@
             @endif
            
             {{-- Suppliers --}}
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
               <li class="nav-item">
                 @if(Session::get('current-page') === 'suppliers')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/suppliers">
@@ -222,7 +193,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
            {{-- Bulk billing --}}
-            @if(Auth::user()->user_type === 'billing' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+            @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
             <li class="nav-item">
               @if(Session::get('current-page') === 'bulk-billing')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
@@ -238,7 +209,7 @@
             </li>
             @endif
             {{-- Daily Collection Report --}}
-            @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'admin')
+            @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2 || Auth::user()->role_id_foreign === 1)
               <li class="nav-item">
                 @if(Session::get('current-page') === 'daily-collection-report')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/collections">
@@ -254,8 +225,8 @@
             </li>
             @endif
             {{-- Remittances --}}
-            @if(Auth::user()->user_type === 'ap' || Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin') 
-              @if(Session::get('property_type') === 'Apartment Rentals')
+            @if(Auth::user()->role_id_foreign === 2 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1) 
+              @if(Session::get('property_type') === '7')
               <li class="nav-item">
                 @if(Session::get('current-page') === 'remittances')
                 <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/remittances">
@@ -273,7 +244,7 @@
             @endif
          
             {{-- Payables --}}
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'ap' )
+            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2 )
             <li class="nav-item">
               @if(Session::get('current-page') === 'payables')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/payables">
@@ -299,7 +270,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
           {{-- Financial reports --}}
-            @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+            @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
             <li class="nav-item">
               @if(Session::get('current-page') === 'financial-reports')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/financials">
@@ -316,7 +287,7 @@
             </li>
             @endif
             {{-- Usage history --}}
-            @if(Auth::user()->user_type === 'manager')
+            @if(Auth::user()->role_id_foreign === 4)
             <li class="nav-item">
               @if(Session::get('current-page') === 'usage-history')
               <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/users">
@@ -382,7 +353,6 @@
                 <span class="nav-link-text">System Updates</span>
               </a>
               @endif
-              
             </li>
           <li class="nav-item">
             @if(Session::get('current-page') === 'announcements')
@@ -396,10 +366,7 @@
               <span class="nav-link-text">Announcements</span>
             </a>
             @endif
-            
             </li>
-
-            
           </ul>
         </div>
       </div>

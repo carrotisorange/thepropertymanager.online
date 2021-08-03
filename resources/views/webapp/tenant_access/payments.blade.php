@@ -53,7 +53,7 @@
                   
                   </td>  --}}
                   {{-- <td class="text-center">
-                    @if(Auth::user()->user_type === 'treasury' || Auth::user()->user_type === 'manager')
+                    @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4)
                     <form action="/tenants/{{ $item->tenant_id }}/payments/{{ $item->payment_id }}" method="POST">
                       @csrf
                       @method('delete')

@@ -61,7 +61,7 @@ thead tr:nth-child(1) th {
         @endif
 
         <a class="nav-item nav-link" id="nav-contracts-tab" data-toggle="tab" href="#contracts" role="tab" aria-controls="nav-contracts" aria-selected="false"><i class="fas fa-home text-indigo"></i> 
-          @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+          @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
         Units
         @else
         Rooms
@@ -86,7 +86,7 @@ thead tr:nth-child(1) th {
     {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
-    @if(Auth::user()->user_type === 'manager' || Auth::user()->user_type === 'admin')
+    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
     <a href="/property/{{Session::get('property_id')}}/occupant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
@@ -260,7 +260,7 @@ thead tr:nth-child(1) th {
                  </th>
                    <th>#</th>
                    <th>Building</th>
-                   @if(Session::get('property_type') === 'Condominium Corporation' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex' || Session::get('property_type') === 'Condominium Associations' || Session::get('property_type') === 'Commercial Complex')
+                   @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
                     <th>Unit</th>
                     @else
                     <th>Room</th>
