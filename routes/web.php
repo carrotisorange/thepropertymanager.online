@@ -28,6 +28,156 @@ use App\Update;
 
 Auth::routes(['verify'=> true]);
 
+//ROUTES FOR THE WEBSITE
+
+//routes to show the website page
+Route::get('/', function(){
+    $users = User::whereNotIn('role_id_foreign',['6','7','8'])->count();
+    $properties = Property::all()->count();
+    $rooms = Unit::whereNotIn('status',['deleted'])->count();
+    $tenants = Tenant::all()->count();
+    return view('layouts.arsha.index', compact('users','properties', 'rooms', 'tenants'));
+});
+
+//ROUTES FOR USERCONTROLLER
+
+//route to search a user
+Route::get('/users/search', 'UserController@search')->middleware(['auth', 'verified']);
+//route to show all users
+Route::get('/user/all', 'UserController@index_system_user')->middleware(['auth', 'verified']);
+//route to create a user
+Route::get('/user/create', 'UserController@create_system_user')->middleware(['auth', 'verified'])->name('create-user');
+//route to post a new user
+Route::post('/user/store', 'UserController@store_system_user')->middleware(['auth', 'verified']);
+//route to show a user
+Route::get('/user/{user_id}', 'UserController@show_system_user')->middleware(['auth', 'verified']);
+//route to edit a user
+Route::get('/user/{user_id}/edit', 'UserController@edit_system_user')->middleware(['auth', 'verified']);
+//route to edit a user
+Route::put('/user/{user_id}', 'UserController@update_system_user')->middleware(['auth', 'verified']);
+//route to update a user
+Route::put('/user/{user_id}/update', 'UserController@update_system_user_info')->middleware(['auth', 'verified']);
+//route to logout a user
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->middleware(['auth', 'verified']);
+
+//ROUTES FOR PROPERTYCONTROLLER
+
+//route to display all properties
+Route::get('/property/all', 'PropertyController@index')->middleware(['auth', 'verified']);
+//route to show the dashboard of a property
+Route::get('/property/{property_id}/dashboard', 'PropertyController@show')->middleware(['auth', 'verified']);
+//route to select a property
+Route::post('/property/select', 'PropertyController@select')->middleware(['auth', 'verified']);
+//route to search rooms, tenants, and etc in the main search bar
+Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
+//route to edit a property
+Route::get('/property/{property_id}/edit', 'PropertyController@edit')->middleware(['auth', 'verified']);
+//route to update a property
+Route::put('/property/{property_id}/update', 'PropertyController@update')->middleware(['auth', 'verified']);
+//route to view the portforlio
+Route::get('/property/portforlio', 'PropertyController@view_portforlio')->middleware(['auth', 'verified'])->name('view-portforlio');
+
+//ROUTES TO CREATE A PROPERTY
+
+// route to step 1 of 5 (create property)
+Route::get('/property/create/', 'PropertyController@create_property')->middleware(['auth', 'verified'])->name('create-property');
+// route to step 1 of 5 (post property)
+Route::post('/property/', 'PropertyController@store_property')->middleware(['auth', 'verified']);
+// route to step 2 of 5 (create rooms)
+Route::get('/property/{property_id}/rooms/create', 'PropertyController@create_room')->middleware(['auth', 'verified']);
+// route to  step 2 of 5 (post rooms)
+Route::post('/property/{property_id}/rooms/store', 'PropertyController@store_room')->middleware(['auth', 'verified']);
+// route to step 3 of 5 (create bills)
+Route::get('/property/{property_id}/bills/create', 'PropertyController@create_bill')->middleware(['auth', 'verified']);
+// route to step 3 of 5 (post bills)
+Route::post('/property/{property_id}/bills/store', 'PropertyController@store_bill')->middleware(['auth', 'verified']);
+// route to step 4 of 5 (create duedates)
+Route::get('/property/{property_id}/duedates/create', 'PropertyController@create_duedate')->middleware(['auth', 'verified']);
+// route to step 4 of 5 (post duedates)
+Route::post('/property/{property_id}/duedates/store', 'PropertyController@store_duedate')->middleware(['auth', 'verified']);
+// route to step 5 of 5 create users
+Route::get('/property/{property_id}/users/create', 'PropertyController@create_user')->middleware(['auth', 'verified']);
+// route to step 5 of 5 (post users)
+Route::post('/property/{property_id}/users/store', 'PropertyController@store_user')->middleware(['auth', 'verified']);
+
+//ROUTES FOR TENANTCONTROLLER
+
+//route to show all the tenants
+Route::get('/property/{property_id}/tenants', 'TenantController@index')->middleware(['auth', 'verified']);
+//route to show a particular tenant
+Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->middleware(['auth', 'verified']);
+//route to edit a tenant
+Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
+//route to update a tenant
+Route::put('/property/{property_id}/tenant/{tenant_id}', 'TenantController@update')->middleware(['auth', 'verified']);
+
+//ADDITIONAL ROUTES FOR ADDING A TENANT
+//route to add a tenant
+Route::get('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
+//route to post a new tenant
+Route::post('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
+//route to search a a tenant
+Route::get('/property/{property_id}/tenants/search', 'TenantController@index')->middleware(['auth', 'verified']);
+//route to filter tenant based on their status
+Route::get('/property/{property_id}/tenants/filter', 'TenantController@filter')->middleware(['auth', 'verified']);
+
+//ROUTES FOR CONTRACTCONTROLLER
+//route to extend tenant's contract
+Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend')->middleware(['auth', 'verified']);
+//route to post tenant's extended contract
+Route::post('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend_post')->middleware(['auth', 'verified']);
+//route to request tenant's moveout 
+Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/request', 'TenantController@request')->middleware(['auth', 'verified']);
+//route to approve tenant's moveout
+Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/approve', 'TenantController@approve')->middleware(['auth', 'verified']);
+//route to upload tenant's image
+Route::put('/property/{property_id}/tenant/{tenant_id}/upload/img','TenantController@upload_img')->middleware(['auth', 'verified']);
+//route to show all pending contracts
+Route::get('/property/{property_id}/tenants/pending','TenantController@pending')->middleware(['auth', 'verified']);
+
+//ROUTES FOR ROOMCONTROLLER
+
+//route to show all rooms
+Route::get('/property/{property_id}/rooms', 'RoomController@index')->middleware(['auth', 'verified']);
+//route to show a room
+Route::get('/property/{property_id}/room/{unit_id}', 'RoomController@show')->middleware(['auth', 'verified']);
+//route to edit a room
+Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all')->middleware(['auth', 'verified']);
+//route to update all rooms
+Route::put('/property/{property_id}/rooms/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
+//route to post a new room
+Route::post('/property/{property_id}/room/store', 'RoomController@store')->middleware(['auth', 'verified']);
+//route to delete a room
+Route::delete('/property/{property_id}/room/{unit_id}/delete', 'RoomController@destroy')->middleware(['auth', 'verified']);
+//route to restore a deleted room
+Route::put('/property/{property_id}/room/{unit_id}/restore', 'RoomController@restore')->middleware(['auth', 'verified']);
+//route to update a room
+Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
+//route to upload imagest to a room
+Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upload')->middleware(['auth', 'verified']);
+//route to filter rooms
+Route::get('/property/{property_id}/rooms/filter', 'RoomController@index')->middleware(['auth', 'verified']);
+//route to clear filters in rooms
+Route::get('/property/{property_id}/rooms/clear', 'RoomController@clear')->middleware(['auth', 'verified']);
+
+//ROUTES FOR UNITCONTROLLER
+
+//route to show all units
+Route::get('/property/{property_id}/units', 'UnitController@index')->middleware(['auth', 'verified']);
+//route to show a unit
+Route::get('/property/{property_id}/unit/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
+//route to edit all units 
+Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
+//route to update all units
+Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
+//route to post a unit
+Route::post('/property/{property_id}/unit/store', 'UnitController@store')->middleware(['auth', 'verified']);
+//route to update a unit
+Route::put('/property/{property_id}/unit/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
+//route to clear unit filters
+Route::get('/property/{property_id}/units/clear', 'UnitController@clear_units_filters')->middleware(['auth', 'verified']);
+
+
 Route::get('/blogs', 'BlogController@index');
 
 Route::post('ckeditor/image_upload', 'BlogController@upload')->name('upload');
@@ -67,58 +217,10 @@ Route::get('/property/{property_id}/blogs', 'BlogController@index');
 Route::post('/property/{property_id}/blog', 'BlogController@store')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/blog/{blog_id}', 'BlogController@show')->middleware(['auth', 'verified']);
 
-//routes for system-users
-Route::get('/user/all', 'UserController@index_system_user')->middleware(['auth', 'verified']);
-Route::get('/user/create', 'UserController@create_system_user')->middleware(['auth', 'verified']);
-Route::get('/user/{user_id}', 'UserController@show_system_user')->middleware(['auth', 'verified']);
-Route::get('/user/{user_id}/edit', 'UserController@edit_system_user')->middleware(['auth', 'verified']);
-Route::put('/user/{user_id}', 'UserController@update_system_user')->middleware(['auth', 'verified']);
-Route::put('/user/{user_id}/update', 'UserController@update_system_user_info')->middleware(['auth', 'verified']);
-Route::post('/user/store', 'UserController@store_system_user')->middleware(['auth', 'verified']);
-
-//routes for properties 
-Route::get('/property/all', 'PropertyController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}', 'PropertyController@show')->middleware(['auth', 'verified']);
-
-Route::post('/property/select', 'PropertyController@select')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/search', 'PropertyController@search')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/edit', 'PropertyController@edit')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/update', 'PropertyController@update')->middleware(['auth', 'verified']);
-Route::get('/property/{date}/portforlio', 'PropertyController@portforlio')->middleware(['auth', 'verified']);
-
-// step 1 of 5 create property
-Route::get('/property/{date}/create/', 'PropertyController@create_property')->middleware(['auth', 'verified']);
-
-// step 1 of 5 post new property
-Route::post('/property/', 'PropertyController@store_property')->middleware(['auth', 'verified']);
-
-// step 2 of 5 create room
-Route::get('/property/{property_id}/rooms/create', 'PropertyController@create_room')->middleware(['auth', 'verified']);
-
-// step 2 of 5 post new bills
-Route::post('/property/{property_id}/rooms/store', 'PropertyController@store_room')->middleware(['auth', 'verified']);
-
-// step 3 of 5 create bill
-Route::get('/property/{property_id}/bills/create', 'PropertyController@create_bill')->middleware(['auth', 'verified']);
-
-// step 3 of 5 post new bills
-Route::post('/property/{property_id}/bills/store', 'PropertyController@store_bill')->middleware(['auth', 'verified']);
-
-// step 4 of 5 create bill
-Route::get('/property/{property_id}/duedates/create', 'PropertyController@create_duedate')->middleware(['auth', 'verified']);
-
-// step 4 of 5 post new bills
-Route::post('/property/{property_id}/duedates/store', 'PropertyController@store_duedate')->middleware(['auth', 'verified']);
-
-// step 5 of 5 create bill
-Route::get('/property/{property_id}/users/create', 'PropertyController@create_user')->middleware(['auth', 'verified']);
-
-// step 5 of 5 post new bills
-Route::post('/property/{property_id}/users/store', 'PropertyController@store_user')->middleware(['auth', 'verified']);
 
 
-//routes for dashboard
-Route::get('/property/{property_id}/dashboard', 'PropertyController@show')->middleware(['auth', 'verified']);
+
+
 
 //routes for occupants
 Route::get('/property/{property_id}/occupants', 'OccupantController@index')->middleware(['auth', 'verified']);
@@ -131,21 +233,6 @@ Route::get('/property/{property_id}/unit/{unit_id}/occupant/prefilled', 'Occupan
 Route::post('/property/{property_id}/unit/{unit_id}/occupant/prefilled', 'OccupantController@store_prefilled')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/occupants/search', 'OccupantController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/unit/{unit_id}/occupant/add', 'OccupantController@add_occupant')->middleware(['auth', 'verified']);
-//routes for tenants
-Route::get('/property/{property_id}/tenants', 'TenantController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/tenant/{tenant_id}', 'TenantController@update')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenants/search', 'TenantController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend_post')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/request', 'TenantController@request')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/approve', 'TenantController@approve')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/tenant/{tenant_id}/upload/img','TenantController@upload_img')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenants/pending','TenantController@pending')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/tenants/filter', 'TenantController@filter')->middleware(['auth', 'verified']);
 
 //routes for contracts
 Route::post('/property/{property_id}/tenant/{tenant_id}/contract/create', 'ContractController@create')->middleware(['auth', 'verified']);
@@ -543,20 +630,6 @@ Route::put('property/{property_id}/remittance/{remittance_id}/update', 'Remittan
 Route::get('property/{property_id}/room/{room_id}/remittance/{remittance_id}/action', 'RemittanceController@action')->middleware(['auth', 'verified']);
 
 
-
-//routes for the the layouts.arsha
-Route::get('/', function(){
-    $users = User::whereNotIn('role_id_foreign',['6','7','8'])->count();
-
-    $properties = Property::all()->count();
-
-    $rooms = Unit::whereNotIn('status',['deleted'])->count();
-
-    $tenants = Tenant::all()->count();
-    
-    return view('layouts.arsha.index', compact('users','properties', 'rooms', 'tenants'));
-});
-
 Route::get('/listings', function(){
 
     $properties = Property::all()->count();
@@ -740,12 +813,6 @@ Route::get('/property/{property_id}/bills/search', 'BillController@index')->midd
 // Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 Route::put('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
 
-
-//route for users
-Route::get('/users/search', 'UserController@search')->middleware(['auth', 'verified']);
-
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->middleware(['auth', 'verified']);
-
 //concerns
 Route::post('/concerns', 'ConcernController@store')->middleware(['auth', 'verified']);
 
@@ -836,28 +903,6 @@ Route::post('/users/{user_id}/charge', function(Request $request){
 
 });
 
-//routes for rooms
-Route::get('/property/{property_id}/rooms', 'RoomController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/room/{unit_id}', 'RoomController@show')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/rooms/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/room/store', 'RoomController@store')->middleware(['auth', 'verified']);
-Route::delete('/property/{property_id}/room/{unit_id}/delete', 'RoomController@destroy')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/room/{unit_id}/restore', 'RoomController@restore')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upload')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/rooms/filter', 'RoomController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/rooms/clear', 'RoomController@clear')->middleware(['auth', 'verified']);
-
-
-//routes for units
-Route::get('/property/{property_id}/units', 'UnitController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/unit/{unit_id}', 'UnitController@show')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all')->middleware(['auth', 'verified']);
-Route::post('/property/{property_id}/unit/store', 'UnitController@store')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/unit/{unit_id}', 'UnitController@update')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/units/clear', 'UnitController@clear_units_filters')->middleware(['auth', 'verified']);
 
 
 

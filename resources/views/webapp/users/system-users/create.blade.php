@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+<div class="card-body px-lg-5 py-lg-5">
 
             <form class="user" method="POST" action="/user/store">
                 @csrf
@@ -73,7 +74,7 @@
                       </div>
 
                    <div class="row">
-                     <div class="col">
+                     {{-- <div class="col">
                       <a href="/property/all" class="btn btn-primary btn-user btn-block btn-sm" ><i class="fas fa-home"></i> Go back to home</a>
                      
                      </div>
@@ -82,12 +83,12 @@
                       <a href="/user/all/" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-eye"></i> See all users </a>
                   
                   </div>
-                     <div class="col">
-                      <button type="submit" class="btn btn-success btn-user btn-block btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
-                     </div>
+                     <div class="col"> --}}
+                      <button type="submit" class="btn btn-primary btn-user btn-block btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+                     {{-- </div> --}}
                    </div>
                   </form>  
-            
+</div>
 @endsection
 
 @section('scripts')

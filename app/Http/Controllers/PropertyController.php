@@ -330,7 +330,7 @@ class PropertyController extends Controller
         return view('webapp.properties.property.create', compact('property_types','countries'));
     }
 
-    public function portforlio(){
+    public function view_portforlio(){
 
         $properties = User::findOrFail(Auth::user()->id)->properties;
 
@@ -447,7 +447,7 @@ class PropertyController extends Controller
             $occupancy->save();
          
 
-        return redirect('property/'.$property_id.'/rooms/create')->with('success', 'Property is successfully created.');
+        return redirect('property/'.$property_id.'/bills/create')->with('success', 'Property is successfully created.');
 
     
 
@@ -1456,11 +1456,6 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
 
 
     public function store_room(Request $request){
-
-        // return $request->all();
-
-
-
         $no_of_entry = (int) $request->no_of_entry;
        
         for ($i=1; $i <= $no_of_entry; $i++) { 

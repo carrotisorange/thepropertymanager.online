@@ -1,26 +1,17 @@
 @extends('layouts.argon.dashboard')
 
 @section('title', 'Step 4 of 4 | The Property Manager')
-@section('title-page')
-<div class="row">
-  <div class="col-md-9">
-    <h2 class="text-left"><i class="fas fa-user"></i> People who can access your property</h2>
-  </div>
-  <div class="col">
-    <h3 class="text-right">Step 4 of 4</h3>
-  </div>
-</div>
-@endsection
 
 @section('content')
+<div class="card-body px-lg-5 py-lg-5">
 <form id="addPayableEntryForm" method="POST" action="/property/{{ Session::get('property_id') }}/users/store">
   @csrf
   <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
   <div class="row">
     <div class="col">
        <p class="text-right">
-        <a href="#/"  id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> Add more user </a>   
-        <a  href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus"></i> Remove current user </a>
+        <a href="#/"  id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> Add </a>   
+        <a  href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus"></i> Remove </a>
       
        </p>
            
@@ -52,19 +43,20 @@
           </div>
     </div>
 </div>
-  <br>
+  
     <div class="row">
                  
       <div class="col">
         <p class="text-right">
-         <button id="savebutton" form="addPayableEntryForm" type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Save</button>
-         <a href="/property/all">Skip for now</a>
+         <button id="savebutton" form="addPayableEntryForm" type="submit" class="btn btn-primary btn-block"><i class="fas fa-check"></i> Finish</button>
+         
+         <p class="text-center"><a href="/property/all">Skip for now</a></p>
         </p>
          {{-- <button id="savebutton" type="submit" class="btn btn-primary btn-user btn-block"><i class="fas fa-arrow-right" onclick="this.form.submit(); this.disabled = true;"></i> Save users (<span id="current_no_of_entry">0</span>)</button> --}}
       </div>
     </div>
- 
-            
+</form>      
+</div>
 @endsection
 
 @section('scripts')

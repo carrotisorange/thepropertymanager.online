@@ -2,18 +2,8 @@
 
 @section('title', 'Step 2 of 5 | The Property Manager')
 
-@section('title-page')
-<div class="row">
-  <div class="col-md-9">
-    <h2 class="text-left"><i class="fas fa-building"></i> Buildings and rooms</h2>
-  </div>
-  <div class="col">
-    <h3 class="text-right">Step 2 of 5</h3>
-  </div>
-</div>
-@endsection
-
 @section('content')
+<div class="card-body px-lg-5 py-lg-5">
 <form id="addPayableEntryForm" method="POST" action="/property/{{ Session::get('property_id') }}/rooms/store">
   @csrf
   <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
@@ -22,16 +12,10 @@
        <p class="text-right">
         <a href="#/"  id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> Add a building </a>   
         <a  href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus"></i> Remove current building </a>
-      
-       </p>
-           
+       </p>  
         <div class="modal-body">
-            <form class="user" form="addPayableEntryForm" method="POST" action="/property/{{ Session::get('property_id') }}/rooms/store">
-              @csrf
-           </form>
-     
         
-                 <div class="table-responsive">
+                 <div class="table">
                  <table class = "table table-hover" id="tab_logic">    
                    <thead>
                      <tr>
@@ -48,28 +32,17 @@
                  
                  </table>
                </div>
-             
-    
           </div>
     </div>
 </div>
-  <br>
-
   <div class="row">
-    {{-- <div class="col">
-      <p class="text-left">
-        <a href="/property/all" class="btn btn-primary"><i class="fas fa-home"></i> Home</a>
-      </p>
-     </div> --}}
-
      <div class="col">
-      <p class="text-right">
-        <button type="submit" form="addPayableEntryForm" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Next</button>
-      </p>
+        <button type="submit" form="addPayableEntryForm" class="btn btn-primary btn-block"><i class="fas fa-arrow-right"></i> Continue</button>
+        <br>
+        <p class="text-center">   <a href="/property/all">Skip for now</a></p>
      </div>
    </div>
- 
-            
+  </div>     
 @endsection
 
 @section('scripts')

@@ -1,24 +1,15 @@
 @extends('layouts.argon.dashboard')
 
 @section('title', 'Step 3 of 5 | The Property Manager')
-@section('title-page')
-<div class="row">
-  <div class="col">
-    <h2 class="text-left"><i class="fas fa-file-invoice-dollar"></i> Due dates, penalties, and rates</h2>
-  </div>
-  <div class="col">
-    <h3 class="text-right">Step 3 of 5</h3>
-  </div>
-</div>
-@endsection
 
 @section('content')
+<div class="card-body px-lg-5 py-lg-5">
 <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
 <?php $ctr=1;?>
 <form class="user" method="POST" action="/property/{{ Session::get('property_id') }}/duedates/store">
   @csrf
  
-  <div class="row table-responsive">
+  <div class="row table">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -27,12 +18,10 @@
           <th>Due date</th>
           <th>Penalty after due date(%)<th>
           <th>Rate</th>
-    
         </tr>
       </thead>
       <tbody>
        @foreach ($bills as $item)
-    
        <tr>
         <th>{{ $ctr++ }}</th>
         <td>{{ $item->particular }}</td>
@@ -72,24 +61,21 @@
     </table>
   </div>
   
-   
+   <br>
   <div class="row">
-    {{-- <div class="col">
-      <p class="text-left">
-        <a href="/property/all" class="btn btn-primary"><i class="fas fa-home"></i> Home</a>
-      </p>
-     </div> --}}
+   
 
      <div class="col">
-      <p class="text-right">
-        <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Next</button>
-      </p>
+      
+        <button type="submit" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Continue</button>
+      
      </div>
    </div>
 </form>  
-            
+</div>    
 @endsection
 
 @section('scripts')
+
 @endsection
 
