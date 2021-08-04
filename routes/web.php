@@ -297,6 +297,24 @@ Route::post('property/{property_id}/bills/electric/{date}', 'BillController@post
 Route::post('property/{property_id}/bills/water/{date}', 'BillController@post_bills_water')->middleware(['auth', 'verified']);
 Route::post('property/{property_id}/bills/surcharge/{date}', 'BillController@post_bills_surcharge')->middleware(['auth', 'verified']);
 
+//ROUTES FOR JOBORDERCONTROLLER
+//route to show all job orders
+Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->middleware(['auth', 'verified']);
+//route to show inventories
+Route::get('/property/{property_id}/joborder/{joborder_id}/inventory', 'JobOrderController@inventory')->middleware(['auth', 'verified']);
+
+//ROUTES FOR BILLCONTROLLER
+//routes to show tenant's bills
+// Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@show_billings')->name('show-billings')->middleware(['auth', 'verified']);
+// Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@edit_billings')->middleware(['auth', 'verified']);
+// Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
+// Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/delete', 'BillController@destroy')->middleware(['auth', 'verified']);
+// Route::get('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/action', 'BillController@action')->middleware(['auth', 'verified']);
+// Route::put('/property/{property_id}/bill/{bill_id}/update/', 'BillController@create_bulk_bills')->middleware(['auth', 'verified']);
+
+//routes for filtering bills based on dates
+Route::get('/property/{property_id}/bills/search', 'BillController@index')->middleware(['auth', 'verified']);
+
 Route::get('/blogs', 'BlogController@index');
 
 Route::post('ckeditor/image_upload', 'BlogController@upload')->name('upload');
@@ -342,10 +360,6 @@ Route::delete('/property/{property_id}/owner/{owner_id}/delete', 'OwnerControlle
 Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'CertificateController@store')->middleware(['auth', 'verified']);
 
 Route::post('/property/{property_id}/concern/{concern_id}/joborder', 'JobOrderController@store')->middleware(['auth', 'verified']);
-
-//routes for job orders
-Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->middleware(['auth', 'verified']);
-Route::get('/property/{property_id}/joborder/{joborder_id}/inventory', 'JobOrderController@inventory')->middleware(['auth', 'verified']);
 
 //routes for personnels
 Route::get('/property/{property_id}/personnels', 'PersonnelController@index')->middleware(['auth', 'verified']);
@@ -641,17 +655,6 @@ Route::get('/property/{property_id}/suppliers', 'SupplierController@index')->mid
 Route::get('/property/{property_id}/suppliers/create', 'SupplierController@create')->middleware(['auth', 'verified']);
 Route::post('/property/{property_id}/suppliers/store', 'SupplierController@store')->middleware(['auth', 'verified']);
 
-//routes for bills
-Route::get('/units/{unit_id}/tenants/{tenant_id}/billings', 'TenantController@show_billings')->name('show-billings')->middleware(['auth', 'verified']);
-Route::get('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@edit_billings')->middleware(['auth', 'verified']);
-Route::put('/units/{unit_id}/tenants/{tenant_id}/billings/edit', 'TenantController@post_edited_billings')->middleware(['auth', 'verified']);
-Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/delete', 'BillController@destroy')->middleware(['auth', 'verified']);
-Route::get('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/action', 'BillController@action')->middleware(['auth', 'verified']);
-Route::put('/property/{property_id}/bill/{bill_id}/update/', 'BillController@create_bulk_bills')->middleware(['auth', 'verified']);
-
-//routes for filtering bills based on dates
-Route::get('/property/{property_id}/bills/search', 'BillController@index')->middleware(['auth', 'verified']);
-
 // Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 Route::put('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
 
@@ -672,13 +675,11 @@ Route::get('sign-in/google', 'Auth\LoginController@google');
 Route::get('sign-in/google/redirect', 'Auth\LoginController@googleRedirect');
 
 Route::put('/users/{user_id}/property', function(Request $request){
-
     $request->validate([
         'property' => 'required|unique:users|max:255',
         'property_ownership' => 'required',
         'property_type' => 'required',
     ]);
-
     DB::table('users')
     ->where('id', Auth::user()->id)
     ->update([
@@ -697,20 +698,16 @@ Route::put('/users/{user_id}/plan', function(Request $request){
     ]);
 
     return back();
-
 });
-
 //routes for registration
 //post the desired plan
 Route::post('/users/{user_id}/charge', function(Request $request){
-
     if(Auth::user()->account_type === 'Free'){
          Mail::to(Auth::user()->email)->send(new TenantRegisteredMail());
 
          return back();
     }else{
         $charge = 0;
-
         if(Auth::user()->account_type === 'Medium'){
             $charge = 95000;
         }elseif(Auth::user()->account_type === 'Large'){
@@ -720,19 +717,14 @@ Route::post('/users/{user_id}/charge', function(Request $request){
         }elseif(Auth::user()->account_type === 'Corporate'){
             $charge = 480000;
         }
-
        try{
-       
-
         Mail::to(Auth::user()->email)->send(new TenantRegisteredMail());
 
         return back();
-
        }catch(\Exception $e){
            return back()->with('danger', $e->getMessage());
        }
     }
-
 });
 
 //routes for logging in using facebook

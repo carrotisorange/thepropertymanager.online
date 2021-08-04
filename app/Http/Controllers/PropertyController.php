@@ -34,11 +34,9 @@ class PropertyController extends Controller
     public function index()
     {
 
-        Session::put('current-page', 'dashboard');
-
             if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1){
                 if(Auth::user()->role_id_foreign === 4){
-                    $properties = User::findOrFail(Auth::user()->id)->properties;
+                     $properties = User::findOrFail(Auth::user()->id)->properties;
                 }else{
                     $properties = User::findOrFail(Auth::user()->lower_access_user_id)->properties;
                 }
