@@ -53,7 +53,7 @@ thead tr:nth-child(1) th {
   <div class="col-md-12 text-center">
    {{-- <p class="text-left"> Showing <b>{{ $collections->count() }} </b> payments</p> --}}
     {{-- @if(Session::get(Auth::user()->id.'date')) --}}
-    <p class="text-center"> <span class=""> <small> Showing {{ $bills->count() }} bills posted on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
+    <p class="text-center"> <span class=""> <small> Showing {{ number_format($bills->count(),0) }} bills posted on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
     {{-- @endif --}}
   </div>
 </div>
