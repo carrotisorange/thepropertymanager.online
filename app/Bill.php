@@ -12,6 +12,7 @@ class Bill extends Model
 
     protected $fillable = 
                         [
+                            'bill_id',
                             'bill_tenant_id',
                             'date_posted',
                             'start',
@@ -20,7 +21,7 @@ class Bill extends Model
                             'bill_no',
                             'particular_id_foreign',
                             'amount',
-
+                            'batch_no',
                         ];
 
  public function tenant()

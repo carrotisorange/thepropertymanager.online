@@ -36,6 +36,7 @@ class Tenant extends Model
                                 'years_of_employment',
                                 'employer_contact_no',
                                 'zip_code',
+                                'bill_batch_no',
                             ];
 
 

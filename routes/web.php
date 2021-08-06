@@ -282,9 +282,17 @@ Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(
 //route to filter bills
 Route::get('/property/{property_id}/bills/filter', 'BillController@filter')->middleware(['auth', 'verified']);
 //route to create bulk bills
-Route::post('/property/{property_id}/bill/{particular_id}', 'BillController@create_bulk_bills')->middleware(['auth', 'verified']);
-//route to post bulk bills
-Route::post('/property/{property_id}/bill/{particular_id}/store', 'BillController@store_bulk_bills')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/bill/{particular_id}', 'BillController@create_bulk')->middleware(['auth', 'verified']);
+//route to show pre-created bulk bills
+Route::get('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}', 'BillController@show_bulk')->middleware(['auth', 'verified']);
+//route to edit parameters for bulk bills
+Route::get('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}/options', 'BillController@options_bulk')->middleware(['auth', 'verified']);
+//route to edit parameters for bulk bills
+Route::put('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}/options', 'BillController@update_options_bulk')->middleware(['auth', 'verified']);
+//route to mass update tenants' bills
+Route::put('/property/{property_id}/bill/{particular_id}/update', 'BillController@update_bulk')->middleware(['auth', 'verified']);
+//route to store bulk bills
+Route::put('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}/store', 'BillController@store_bulk_bills')->middleware(['auth', 'verified']);
 //route to edit a tenant's bills
 Route::get('/property/{property_id}/tenant/{tenant_id}/bills/edit', 'BillController@edit_tenant_bills')->middleware(['auth', 'verified']);
 //route to edit a unit's bills

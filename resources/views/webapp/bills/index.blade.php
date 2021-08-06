@@ -52,9 +52,9 @@ thead tr:nth-child(1) th {
 <div class="row">
   <div class="col-md-12 text-center">
    {{-- <p class="text-left"> Showing <b>{{ $collections->count() }} </b> payments</p> --}}
-    @if(Session::get(Auth::user()->id.'date'))
+    {{-- @if(Session::get(Auth::user()->id.'date')) --}}
     <p class="text-center"> <span class=""> <small> Showing {{ $bills->count() }} bills posted on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
-    @endif
+    {{-- @endif --}}
   </div>
 </div>
 @if($bills->count() <=0 )
@@ -140,7 +140,7 @@ thead tr:nth-child(1) th {
           @csrf
         </form>
         <div class="form-check">
-          <input form ="particular" class="form-check-input" type="radio" name="particular_id" id="exampleRadios1" value="{{ $item->particular_id.'-'.$item->property_bill_id }}">
+          <input form ="particular" class="form-check-input" type="radio" name="particular_id" id="exampleRadios1" value="{{ $item->property_bill_id }}">
           <label class="form-check-label" for="exampleRadios1">
             {{ $item->particular }}
           </label>
@@ -150,7 +150,7 @@ thead tr:nth-child(1) th {
 
       </div>
       <div class="modal-footer">
-      <button type="submit" form="particular" class="btn btn-primary" this.disabled = true;><i class="fas fa-check"></i> Create</button>  
+      <button type="submit" form="particular"class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Create</button>  
       </div>
   </div>
   </div>
