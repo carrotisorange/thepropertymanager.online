@@ -192,6 +192,12 @@ class ContractController extends Controller
             'end' => $request->moveout_at
         ]);
 
+        
+        Unit::where('unit_id', $unit_id)
+        ->update([
+            'status' => 'reserved'
+        ]);
+
         $contract = Contract::findOrFail($contract_id);
         $tenant = Tenant::findOrFail($tenant_id);
         $unit = Unit::findOrFail($unit_id);
