@@ -26,7 +26,7 @@ thead tr:nth-child(1) th {
     <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back </a> 
     <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
    
-    <button type="submit" form="add_billings" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Post bills</button>
+    <button type="submit" form="add_billings" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
     
   </div>
 </div>
@@ -39,9 +39,10 @@ thead tr:nth-child(1) th {
     
   <table class="table table-hover">
    <thead>
+     <?php $ctr = 1;?>
     <tr>
       {{-- bill # --}}
-      <th>Bill #</th>
+      <th>#</th>
       @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <th>Occupant</th>
       @else
@@ -141,7 +142,7 @@ thead tr:nth-child(1) th {
   
     <tr>
       {{-- bill no field --}}
-      <th>{{ $current_bill_no++ }}</th>
+      <th>{{ $ctr++ }}</th>
       {{-- tenant field --}}
       <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></th>
       {{-- unit/room field --}}
