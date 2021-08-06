@@ -150,7 +150,7 @@ thead tr:nth-child(1) th {
 
       </div>
       <div class="modal-footer">
-      <button type="submit" form="particular"class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Create</button>  
+      <button type="submit" form="particular"class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Create</button>  
       </div>
   </div>
   </div>
