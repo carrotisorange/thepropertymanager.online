@@ -42,9 +42,9 @@ thead tr:nth-child(1) th {
 
   <div class="col text-right">
     <p class="text-right">
-      <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createBills" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a> 
-      <a  href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/tenant/966/bills/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit"></i> Edit SOA</a> 
-      <a  href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/bills" class="btn btn-primary btn-sm" ><i class="fas fa-eraser"></i> Clear filters</a>  
+      <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#createBills" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a> 
+      <a  href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/tenant/966/bills/edit" class="btn btn-primary" ><i class="fas fa-edit"></i> Edit SOA</a> 
+      <a  href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/bills" class="btn btn-primary" ><i class="fas fa-eraser"></i> Clear</a>  
       {{-- <a href="#" class="btn btn-white btn-sm"><i class="fas fa-lightbulb"></i> Page tips</a> --}}
     </p>
   </div>
@@ -150,7 +150,7 @@ thead tr:nth-child(1) th {
 
       </div>
       <div class="modal-footer">
-      <button type="submit" form="particular" class="btn btn-primary btn-sm" this.disabled = true;><i class="fas fa-check"></i> Create</button>  
+      <button type="submit" form="particular" class="btn btn-primary" this.disabled = true;><i class="fas fa-check"></i> Create</button>  
       </div>
   </div>
   </div>

@@ -102,13 +102,13 @@ thead tr:nth-child(1) th {
         
 <div class="row">
   <div class="col-md-8">
-    <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
+    {{-- <a href="/property/{{Session::get('property_id')}}/tenants"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back</a> --}}
 
     {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}"  class="btn btn-primary"><i class="fas fa-user"></i> Change property </a> --}}
 
 
     @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
-    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary btn-sm"><i class="fas fa-user-edit"></i> Edit</a>  
+    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/edit"  class="btn btn-primary"><i class="fas fa-user-edit"></i> Edit</a>  
     @endif
 
      <br><br>

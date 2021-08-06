@@ -23,10 +23,10 @@ thead tr:nth-child(1) th {
   </div>
   
   <div class="col text-right">
-    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back </a> 
-    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Options</a> 
+    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back </a> 
+    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
    
-    <button type="submit" form="add_billings" class="btn btn-primary btn-sm"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Post bills</button>
+    <button type="submit" form="add_billings" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Post bills</button>
     
   </div>
 </div>
@@ -283,8 +283,8 @@ thead tr:nth-child(1) th {
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i> Dismiss</button>
-     <button form="periodCoveredForm"  type="submit" id="addBillsButton" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Update</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Dismiss</button>
+     <button form="periodCoveredForm"  type="submit" id="addBillsButton" class="btn btn-primary"><i class="fas fa-check"></i> Update</button>
     </form>
     </div> 
     </div>

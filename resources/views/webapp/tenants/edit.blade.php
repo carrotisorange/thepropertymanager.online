@@ -8,19 +8,24 @@
 
 @section('upper-content')
 <div class="row align-items-center py-4">
+    <div class="col-lg-6 text-left"> 
+        <h6 class="h2 text-dark d-inline-block mb-0">Edit tenant</h6>
+    </div>
+</div>
+{{-- <div class="row align-items-center py-4">
   <div class="col-auto text-left">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/#profile">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
      
-        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Tenant</li>
       </ol>
     </nav>
     
     
   </div>
  
-</div>
+</div> --}}
 
 <form id="editTenantForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}" method="POST">
     @method('put')
@@ -440,8 +445,8 @@
 
 
 <p class="text-right">   
-
-    <button type="submit" form="editTenantForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
+    <button type="submit" form="editTenantForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Save</button>
+    {{-- <button type="submit" form="editTenantForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Update</button> --}}
 </p>
 @endsection
 
