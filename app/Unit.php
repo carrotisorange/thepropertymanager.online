@@ -18,6 +18,8 @@ class Unit extends Model
                             'type',
                             'discount',
                             'property_id_foreign',
+                            'unit_type_id_foreign',
+                            'unit_floor_id_foreign',
                             'building',
     ];
 

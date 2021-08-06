@@ -175,7 +175,11 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        $room_types = DB::table('unit_types')->get();
+
+        $room_floors = DB::table('unit_floors')->get();
+
+        return view('webapp.rooms.create', compact('room_types', 'room_floors'));
     }
 
     public function clear($property_id)
@@ -224,41 +228,41 @@ class RoomController extends Controller
             ->where('unit_id', $unit_id)
             ->get();
 
-            $tenant_active = DB::table('contracts')
+            $tenants = DB::table('contracts')
            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
            ->join('units', 'unit_id_foreign', 'unit_id')
-           ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term')
+           ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
            ->where('unit_id', $unit_id)
-           ->where('contracts.status', 'active')
            ->get();
 
-            $tenant_inactive =DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->where('unit_id', $unit_id)
-            ->where('contracts.status', 'inactive')
-            ->get();
+        //     $tenant_inactive =DB::table('contracts')
+        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        //     ->join('units', 'unit_id_foreign', 'unit_id')
+        //     ->where('unit_id', $unit_id)
+        //     ->where('contracts.status', 'inactive')
+        //     ->get();
 
-            $tenant_movingout =DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->where('unit_id', $unit_id)
-            ->where('contracts.status', 'preparing to moveout')
-            ->get();
+        //     $tenant_movingout =DB::table('contracts')
+        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        //     ->join('units', 'unit_id_foreign', 'unit_id')
+        //     ->where('unit_id', $unit_id)
+        //     ->where('contracts.status', 'preparing to moveout')
+        //     ->get();
 
-            $tenant_reserved = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->where('unit_id', $unit_id)
-            ->where('contracts.status', 'pending')
-            ->get();
+        //     $tenant_reserved = DB::table('contracts')
+        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        //     ->join('units', 'unit_id_foreign', 'unit_id')
+        //     ->where('unit_id', $unit_id)
+        //     ->where('contracts.status', 'pending')
+        //     ->get();
 
-            $tenants = DB::table('contracts')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->where('unit_id', $unit_id)
+
+            // $tenants = DB::table('contracts')
+            // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            // ->join('units', 'unit_id_foreign', 'unit_id')
+            // ->where('unit_id', $unit_id)
             
-            ->get();
+            // ->get();
 
        
             $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
@@ -311,7 +315,7 @@ class RoomController extends Controller
             $room_floors = DB::table('unit_floors')->get();
           
            
-            return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners', 'tenant_active', 'tenant_inactive', 'tenant_reserved', 'tenant_movingout','concerns', 'remittances', 'expenses'));
+            return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners','concerns', 'remittances', 'expenses'));
            
         }else{
                 return view('layouts.arsha.unregistered');
@@ -320,28 +324,48 @@ class RoomController extends Controller
     }
 
     public function store(Request $request){
+
+        $this->validate($request, [
+            'unit_type_id_foreign' => 'required',
+            'unit_floor_id_foreign' => 'required|integer',
+            'unit_no' => 'required',
+            'occupancy' => 'required|integer',
+            'rent' => 'required',  
+            'no_of_rooms' => 'required|integer',
+        ]);
+
         if(!$request->building){
             $building = 'Building-1';
         }else{
             $building =  str_replace(' ', '-',$request->building);
         }
 
-
         for($i = 1; $i<=$request->no_of_rooms; $i++ ) {
-        
-            $unit = new Unit();
-            $unit->unit_no = $request->unit_no.'-'.$i;
-            $unit->floor = $request->floor;
-            $unit->size = $request->size;
-            $unit->building = $building;
-            $unit->unit_type_id_foreign = $request->room_type;
-            $unit->unit_floor_id_foreign = $request->floor;
-            $unit->status = 'vacant';
-            $unit->rent = $request->rent;
-            $unit->type = 'residential';
-            $unit->occupancy = $request->occupancy;
-            $unit->property_id_foreign = Session::get('property_id');
-            $unit->save();
+            Unit::create([
+                'unit_no' => $request->unit_no.'-'.$i,
+                'unit_type_id_foreign' => $request->unit_type_id_foreign,
+                'building' => $building,
+                'size' => $request->size,
+                'unit_floor_id_foreign' => $request->unit_floor_id_foreign,
+                'occupancy' => $request->occupancy,
+                'rent'=>$request->occupancy,
+                'property_id_foreign' => Session::get('property_id'),
+                'status' => 'vacant', 
+            ]);
+
+            // $unit = new Unit();
+            // $unit->unit_no = $request->unit_no.'-'.$i;
+            // $unit->floor = $request->floor;
+            // $unit->size = $request->size;
+            // $unit->building = $building;
+            // $unit->unit_type_id_foreign = $request->room_type;
+            // $unit->unit_floor_id_foreign = $request->floor;
+            // $unit->status = 'vacant';
+            // $unit->rent = $request->rent;
+            // $unit->type = 'residential';
+            // $unit->occupancy = $request->occupancy;
+            // $unit->property_id_foreign = Session::get('property_id');
+            // $unit->save();
        
         }
 
@@ -363,27 +387,25 @@ class RoomController extends Controller
 
         $property = Property::findOrFail(Session::get('property_id'));
  
-            return back()->with('success', $request->no_of_rooms.' new room/s are created sucessfully!');
+            return redirect('/property/'.Session::get('property_id').'/rooms')->with('success', $request->no_of_rooms.' Rooms are created sucessfully!');
         
      }
 
-     public function edit_all($property_id){
-
+     public function edit_all(){
+    
         Session::put('current-page', 'rooms');
 
             $units = DB::table('units')
-            ->where('property_id_foreign', $property_id)
+            ->where('property_id_foreign', Session::get('property_id'))
             ->orderBy('building', 'asc')
             ->orderBy('floor', 'asc')
             ->orderBy('unit_no', 'asc')
             ->get();
 
-            $property = Property::findOrFail($property_id);
-
             if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-                return view('webapp.units.edit', compact('units', 'property'));
+                return view('webapp.units.edit-all', compact('units'));
             }else{
-                return view('webapp.rooms.edit', compact('units', 'property'));
+                return view('webapp.rooms.edit-all', compact('units'));
             }
     
 
@@ -435,9 +457,15 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($property_id, $room_id)
     {
-        //
+        $room = Unit::findOrFail($room_id);
+
+        $room_types = DB::table('unit_types')->get();
+
+        $room_floors = DB::table('unit_floors')->get();
+
+        return view('webapp.rooms.edit', compact('room', 'room_types', 'room_floors'));
     }
 
     /**
@@ -447,24 +475,22 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $property_id, $id)
+    public function update(Request $request, $property_id, $room_id)
     {
 
-            DB::table('units')->where('unit_id', $id)
+        Unit::where('unit_id', $room_id)
             ->update([
-                'unit_no' => $request->unit_no,
+                'unit_no'=>$request->unit_no,
                 'floor' => $request->floor,
                 'occupancy' => $request->occupancy,
                 'status' => $request->status,
                 'building' => $request->building,
-                'unit_type_id_foreign' => $request->type,
-                'unit_floor_id_foreign' => $request->floor,
+                'unit_type_id_foreign' => $request->unit_type_id_foreign,
+                'unit_floor_id_foreign' => $request->unit_floor_id_foreign,
                 'rent' => $request->rent,
                 'size' => $request->size,
-                'created_at' => $request->created_at,
                 'updated_at' => Carbon::now(),
             ]);
-
  
             $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
 
@@ -487,12 +513,12 @@ class RoomController extends Controller
             $notification->property_id_foreign = Session::get('property_id');
             $notification->type = 'room';
             
-            $notification->message = Auth::user()->name.' updates '.Unit::findOrFail($id)->unit_no.'.';
+            $notification->message = Auth::user()->name.' updates '.Unit::findOrFail($room_id)->unit_no.'.';
             $notification->save();
                         
             Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-            return back()->with('success', 'Changes saved.');
+            return redirect('/property/'.Session::get('property_id').'/room/'.$room_id)->with('success', 'Changes saved.');
        
     }
 

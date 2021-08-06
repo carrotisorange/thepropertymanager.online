@@ -126,9 +126,9 @@ Route::put('/property/{property_id}/tenant/{tenant_id}', 'TenantController@updat
 
 //ADDITIONAL ROUTES FOR ADDING A TENANT
 //route to add a tenant
-Route::get('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/room/{unit_id}/create/tenant', 'TenantController@create')->middleware(['auth', 'verified']);
 //route to post a new tenant
-Route::post('/property/{property_id}/room/{unit_id}/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{unit_id}/store/tenant', 'TenantController@store')->middleware(['auth', 'verified']);
 //route to search a a tenant
 Route::get('/property/{property_id}/tenants/search', 'TenantController@index')->middleware(['auth', 'verified']);
 //route to filter tenant based on their status
@@ -148,13 +148,13 @@ Route::put('/property/{property_id}/tenant/{tenant_id}/upload/img','TenantContro
 //route to show all pending contracts
 Route::get('/property/{property_id}/tenants/pending','TenantController@pending')->middleware(['auth', 'verified']);
 //route to create a new contract for a tenant
-Route::post('/property/{property_id}/tenant/{tenant_id}/contract/create', 'ContractController@create')->middleware(['auth', 'verified']);
+Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/create/contract', 'ContractController@create')->middleware(['auth', 'verified']);
 //route to create a new contract for a tenant
 Route::post('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/contract/create', 'ContractController@new_contract')->middleware(['auth', 'verified']);
 //route to select option for a tenant's contract
 Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/balance/{balance}/action', 'ContractController@action')->middleware(['auth', 'verified']);
 //route to post new tenant's contract
-Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/contract/add', 'ContractController@store')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/store/contract', 'ContractController@store')->middleware(['auth', 'verified']);
 //route to show tenant's contract
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}', 'ContractController@show')->middleware(['auth', 'verified']);
 //route to edit tenant's contract
@@ -201,23 +201,29 @@ Route::post('property/{property_id}/tenant/{tenant_id}/user/create', 'TenantCont
 Route::post('property/{property_id}/owner/{owner_id}/user/create', 'OwnerController@create_user_access')->middleware(['auth', 'verified']);
 
 //ROUTES FOR ROOMCONTROLLER
+//route to create rooms
+Route::get('/property/create/room', 'RoomController@create')->middleware(['auth', 'verified'])->name('create-room');
+//route to post a new room
+Route::post('/property/store/room', 'RoomController@store')->middleware(['auth', 'verified'])->name('store-room');
+//route to edit a room
+Route::get('/property/{property_id}/room/{unit_no}/edit', 'RoomController@edit')->middleware(['auth', 'verified']);
+//route to update a room
+Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
+//route to upload imagest to a room
 //route to show all rooms
 Route::get('/property/{property_id}/rooms', 'RoomController@index')->middleware(['auth', 'verified']);
 //route to show a room
 Route::get('/property/{property_id}/room/{unit_id}', 'RoomController@show')->middleware(['auth', 'verified']);
 //route to edit a room
-Route::get('/property/{property_id}/rooms/{date}/edit', 'RoomController@edit_all')->middleware(['auth', 'verified']);
+Route::get('/property/edit/room', 'RoomController@edit_all')->middleware(['auth', 'verified'])->name('edit-room');
 //route to update all rooms
 Route::put('/property/{property_id}/rooms/update', 'RoomController@update_all')->middleware(['auth', 'verified']);
-//route to post a new room
-Route::post('/property/{property_id}/room/store', 'RoomController@store')->middleware(['auth', 'verified']);
+
 //route to delete a room
 Route::delete('/property/{property_id}/room/{unit_id}/delete', 'RoomController@destroy')->middleware(['auth', 'verified']);
 //route to restore a deleted room
 Route::put('/property/{property_id}/room/{unit_id}/restore', 'RoomController@restore')->middleware(['auth', 'verified']);
-//route to update a room
-Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update')->middleware(['auth', 'verified']);
-//route to upload imagest to a room
+
 Route::post('/property/{property_id}/room/{room_id}/upload', 'RoomController@upload')->middleware(['auth', 'verified']);
 //route to filter rooms
 Route::get('/property/{property_id}/rooms/filter', 'RoomController@index')->middleware(['auth', 'verified']);
@@ -264,7 +270,13 @@ Route::get('/property/{property_id}/tenant/{tenant_id}/concern/create', 'Concern
 //route to store a new concern
 Route::post('/property/{property_id}/tenant/{tenant_id}/concern/store', 'ConcernController@store')->middleware(['auth', 'verified']);
 
-//ROUTES FOR BILLCONTROLLER
+//ROUTES FOR BillController
+//route to create bills for new tenant
+Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/create/bill', 'BillController@create')->middleware(['auth', 'verified']);
+//route to create bills for removing bills
+Route::get('/bill/{bill_id}/delete/bill', 'BillController@destroy')->middleware(['auth', 'verified']);
+//route to store new bill for new tenant
+Route::post('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/store/bill', 'BillController@store')->middleware(['auth', 'verified']);
 //route to show all bills
 Route::get('/property/{property_id}/bills', 'BillController@index')->middleware(['auth', 'verified']);
 //route to filter bills

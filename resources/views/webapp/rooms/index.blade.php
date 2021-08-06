@@ -43,13 +43,12 @@
     @elseif(Auth::user()->account_type === '5' )
         <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
     @endif --}}
-    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-    @if($units->count() >1 )
- 
+    {{-- <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a> --}}
+    <a href="{{ route('create-room') }}" class="btn btn-primary"><i class="fas fa-plus fa-sm"></i> New</a>
+    {{-- @if($units->count() >1 )
 
-   
-  @endif
-  <a href="/property/{{Session::get('property_id')}}/rooms/{{ Carbon\Carbon::now()->getTimestamp() }}/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit</a>
+  @endif --}}
+  <a href="{{ route('edit-room') }}" class="btn btn-primary" ><i class="fas fa-edit"></i> Edit</a>
   {{-- <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger btn-sm" ><i class="fas fa-backspace fa-sm text-dark-50"></i> Clear search filters</a> --}}
   </div>
 
@@ -79,7 +78,7 @@
         </p>
         </div> --}}
         
-        <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;">
+        <div class="row  text-center">
           @foreach ($units as $item)
         
           <div class="col-md-2.5">
@@ -146,7 +145,7 @@
       @foreach ($buildings as $item)
       <div class="tab-pane fade" id="nav-{{ $item->building }}" role="tabpanel" aria-labelledby="nav-{{ $item->building }}-tab">
         <br>
-        <div class="row  text-center" style="overflow-y:scroll;overflow-x:scroll;">
+        <div class="row text-center">
           @foreach ($units as $unit)
         
           @if($unit->building === $item->building)
@@ -241,93 +240,7 @@
   </div>
   </div>
 </div>
-
-<div class="modal fade" id="addMultipleUnits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-md" role="document">
-  <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" >New Room</h5>
-
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-      </div>
-      <div class="modal-body">
-          <form id="addUMultipleUnitForm" action="/property/{{ Session::get('property_id') }}/room/store" method="POST">
-              @csrf
-          </form>
-
-          <div class="form-group">
-            <label>Select a room type</label>
-            <select class="form-control" form="addUMultipleUnitForm" name="room_type" id="room_type" required>
-                <option value="" selected>Please select one</option>
-                @foreach ($room_types as $item)
-                  <option value="{{ $item->unit_type_id }}">{{ $item->unit_type }}</option>
-                @endforeach
-            </select>
-        </div>
-
-          <div class="form-group residential" style="display:none">
-            <label>Number of rooms</label>
-            <input form="addUMultipleUnitForm" type="number" value="1" min="1" class="form-control" name="no_of_rooms" required>
-        </div>
-
-          <div class="form-group residential" style="display:none">
-              <label >Building <small>(Optional)</small></label>
-              <input form="addUMultipleUnitForm" type="text" class="form-control" name="building" placeholder="Building 2">
-              
-          </div>
-
-          <div class="form-group residential" style="display:none">
-            <label >Size <small>(sqm)</small></label>
-            <input form="addUMultipleUnitForm" type="number" step="0.001" class="form-control" name="size" placeholder="20" required>
-            
-        </div>
-      
-          <div class="form-group residential" style="display:none">
-            <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
-              <label>Floor</label>
-              <select class="form-control" form="addUMultipleUnitForm" name="floor" id="floor" onchange ="autoFillInitialName()" required>
-                  <option value="" selected>Please select one</option>
-                  @foreach ($room_floors as $item)
-                    @if($item->unit_floor>=0)
-                      <option value="{{ $item->unit_floor_id }}">{{ $numberFormatter->format($item->unit_floor) }} floor</option>
-                    @else
-                      <option value="{{ $item->unit_floor_id }}">{{ $numberFormatter->format(intval($item->unit_floor)*-1) }} basement</option>
-                    @endif
-                  @endforeach            
-              </select>
-          </div>
-
-        
-          
-              <div class="form-group residential" style="display:none">
-                <label>Occupancy</label>
-                <input form="addUMultipleUnitForm" type="number" value="1" min="0"  class="form-control" name="occupancy">
-            </div>
-
-        
-              <input form="addUMultipleUnitForm" type="hidden" class="form-control" name="unit_no" id="unit_no" required>
-    
-         
-            <div class="form-group residential" style="display:none">
-                <label>Monthly rent</label>
-                <input form="addUMultipleUnitForm" type="number" value="0" step="0.01" min="0" class="form-control" name="rent" id="rent">
-            </div>
-          
-
-      </div>
-      <div class="modal-footer">
-        
-          <button style="display:none" id="submitButton" form="addUMultipleUnitForm" type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
-          </div>
-  </div>
-  </div>
-</div>
-
 @endsection
-
-
 
 @section('scripts')
   <script>
@@ -358,53 +271,6 @@
       }
   });
 
-    function autoFillInitialName(){
-      $floor = document.getElementById('floor').value;
-      $unit_name = document.getElementById('unit_no');
-      if($floor === '1'){
-        $unit_name.value = 'GF';
-      }
-      if($floor === '2'){
-        $unit_name.value = '2F';
-      }
-      if($floor === '3'){
-        $unit_name.value = '3F';
-      }
-      if($floor === '4'){
-        $unit_name.value = '4F';
-      }
-      if($floor === '5'){
-        $unit_name.value = '5F';
-      }
-      if($floor === '6'){
-        $unit_name.value = '6F';
-      }
-      if($floor === '7'){
-        $unit_name.value = '7F';
-      }
-      if($floor === '8'){
-        $unit_name.value = '8F';
-      }
-      if($floor === '9'){
-        $unit_name.value = '9F';
-      }
-
-      if($floor === '-1'){
-        $unit_name.value = '1B';
-      }
-      if($floor === '-2'){
-        $unit_name.value = '2B';
-      }
-      if($floor === '-3'){
-        $unit_name.value = '3B';
-      }
-      if($floor === '-4'){
-        $unit_name.value = '4B';
-      }
-      if($floorfed === '-5'){
-        $unit_name.value = '5B';
-      }
-    }
   </script>
 @endsection
 

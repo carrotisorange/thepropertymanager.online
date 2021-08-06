@@ -67,15 +67,15 @@
   
     @if ($properties->count() <= 0)
     <div class="col">
-    <a href="{{ route('create-property') }}" class="btn btn-primary btn-user btn-block btn-sm"><i class="fas fa-plus"></i> Add your property</a>
+    <a href="{{ route('create-property') }}" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus"></i> Add your property</a>
     </div>
     @else
     
     <div class="col">
       @if(Auth::user()->trial_ends_at > Carbon\Carbon::today())
-      <button id="manageButton" type="submit" class="btn btn-primary btn-user btn-block btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Manage</button>
+      <button id="manageButton" type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Manage</button>
       @else
-      <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block btn-sm"> Manage</a>
+      <a href="#" data-toggle="modal" data-target="#showWarning" class="btn btn-success btn-user btn-block"> Manage</a>
       @endif
   
     </div> 

@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="col-md-12 py-3 border">
+            <div class="col-md-12 py-3">
               <form id="concernTenantForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/concern/store" method="POST">
                 @csrf
               </form>

@@ -74,11 +74,11 @@ thead tr:nth-child(1) th {
         <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
     
           <p class="text-left">
-            <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUnit" data-whatever="@mdo"><i class="fas fa-edit"></i> Edit</button> 
+            <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a> 
             {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
           </p>
           <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 mx-auto">
             <div class="card">
               {{-- <div class="card-header">
                 Room Information
@@ -87,7 +87,7 @@ thead tr:nth-child(1) th {
                 
                 <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
                 <div class="table-responsive text-left">
-              <table class="table table-hover">
+              <table class="table table-hover table-borderless">
                  <thead>
                   <tr>
                     <th>Room</th>
@@ -139,13 +139,19 @@ thead tr:nth-child(1) th {
                    <thead>
                     <tr>
                       <th>Rent</th> 
-                      <td>{{ number_format($home->rent,2) }}/month</td>
+                      <td>{{ number_format($home->rent,2) }}/mo</td>
                   </tr>
                    </thead>
                    <thead>
                     <tr>
-                      <th>Enrollment Date</th> 
+                      <th>Created on</th> 
                       <td>{{ Carbon\Carbon::parse($home->created_at)->format('M d, Y') }} </td>
+                  </tr>
+                   </thead>
+                   <thead>
+                    <tr>
+                      <th>Last updated on</th> 
+                      <td>{{ Carbon\Carbon::parse($home->updated_at)->format('M d, Y') }} </td>
                   </tr>
                    </thead>
                 
@@ -154,9 +160,9 @@ thead tr:nth-child(1) th {
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          {{-- <div class="col-md-6">
 
-          </div>
+          </div> --}}
         </div>
        
         </div>
@@ -250,291 +256,14 @@ thead tr:nth-child(1) th {
         </div>
         </div>
         <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
-          <div class="col-md-12 mx-auto">
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" data-toggle="tab" href="#addtenant" role="tab" aria-controls="nav-add-tenant" aria-selected="true"><i class="fas fa-user-plus"></i> Add </a>
-             @if($tenant_active->count()<=0)
-             <a class="nav-item nav-link" data-toggle="tab" href="#active" role="tab" aria-controls="nav-home" aria-selected="false"><i class="fas fa-user-check text-primary"></i> Active</a>
-             @else
-             <a class="nav-item nav-link" data-toggle="tab" href="#active" role="tab" aria-controls="nav-home" aria-selected="false"><i class="fas fa-user-check text-primary"></i> Active  <span class="badge badge-success">{{ $tenant_active->count() }}</span></a>
-             @endif
-
-             @if ($tenant_reserved->count() <=0)
-             <a class="nav-item nav-link"  data-toggle="tab" href="#reserved" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-user-clock text-warning"></i> Reserved</a>   
-             @else
-             <a class="nav-item nav-link"  data-toggle="tab" href="#reserved" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-user-clock text-warning"></i> Reserved <span class="badge badge-success">{{ $tenant_reserved->count() }}</a>  
-             @endif
-             
-            @if ($tenant_movingout->count()<=0)
-            <a class="nav-item nav-link"  data-toggle="tab" href="#movingout" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-sign-out-alt text-success"></i> Moving Out</a>   
-            @else
-            <a class="nav-item nav-link"  data-toggle="tab" href="#movingout" role="tab" aria-controls="nav-tenant" aria-selected="false"><i class="fas fa-sign-out-alt text-success"></i> Moving Out <span class="badge badge-success">{{ $tenant_movingout->count() }}</a>
-            @endif
-            
-            @if ($tenant_inactive->count()<=0)
-            <a class="nav-item nav-link"  data-toggle="tab" href="#inactive" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-user-times text-danger"></i> Inactive</a>    
-            @else
-            <a class="nav-item nav-link"  data-toggle="tab" href="#inactive" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-user-times text-danger"></i> Inactive <span class="badge badge-success">{{ $tenant_inactive->count() }}</span></a>    
-            @endif
-              </div>
-          </nav>
-          <br>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="addtenant" role="tabpanel" aria-labelledby="nav-addtenant-tab">
-             <div class="row">
-              <div class="col-md-12">
-                <div class="card card-body">
-                
-                    <h1 class="text-center">Tenant Information Sheet</h1>
-                    <form id="addTenantForm1" action="/property/{{Session::get('property_id')}}/room/{{ $home->unit_id }}/tenant/" method="POST">
-                      {{ csrf_field() }}
-                      </form>
-                      <table class="table table-borderless">
-                        <tr>
-                      <th style="text-align: center;" colspan="2"></th>
-                          <th style="text-align: center;">Unit No: {{ $home->building.' '.$home->unit_no }}</th>
-                          <th style="text-align: center;">Beds: {{ $home->occupancy? $home->occupancy: 0 }} <b>pax</b> </th>
-                          
-                        </tr>
-            
-                      </table>
-                      <br>
-                    <table class="table table-borderless">
-        
-                      <tr>
-                        <th style="text-align: left;">
-                          Last name<span class="text-danger">*</span>:
-                          <input form="addTenantForm1" type="text" class="@error('last_name') is-invalid @enderror" name="last_name" id="last_name"  value="{{ old('last_name') }}" required>
-                          @error('last_name')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </th>
-                        <th style="text-align: left;"> First name<span class="text-danger">*</span>:
-                          <input form="addTenantForm1" type="text" class="@error('first_name') is-invalid @enderror" name="first_name" id="first_name"  value="{{ old('first_name') }}" required>
-                             @error('first_name')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </th>
-                        <th style="text-align: left;">
-                         Middle name:
-                            <input form="addTenantForm1" type="text" class="@error('middle_name') is-invalid @enderror" name="middle_name" id="middle_name"  value="{{ old('middle_name') }}">
-                            @error('middle_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
-                      </th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">
-                          Birthdate<span class="text-danger">*</span>:
-                          <input form="addTenantForm1" type="date" class="@error('birthdate') is-invalid @enderror" name="birthdate" id="birthdate" value="{{ old('birthdate') }}" required>
-    
-                          @error('birthdate')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </th>
-                        {{-- <th>
-                          Age:
-                          <input form="addTenantForm1" type="number" name="age" id="age" value="" readonly>
-    
-                        </th> --}}
-                        <th style="text-align: left;">
-                          Gender <span class="text-danger">*</span>:
-                          <select form="addTenantForm1"  id="gender" name="gender" required>        
-                            <option value="{{ old('gender')? old('gender'): '' }}" selected>{{ old('gender')? old('gender'): 'Please select one' }} </option>
-                            <option value="male">male</option>
-                            <option value="female">female</option>
-                        </select>
-                
-                        @error('gender')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                        </th>
-                        <th style="text-align: left;">
-                          Civil status<span class="text-danger">*</span>:
-                          <select form="addTenantForm1"  id="civil_status" name="civil_status" required>
-                            <option value="{{ old('civil_status')? old('civil_status'): '' }}" selected>{{ old('civil_status')? old('civil_status'): 'Please select one' }} </option>
-                              <option value="single">single</option>
-                              <option value="married">married</option>
-                          </select>
-                
-                          @error('civil_status')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </th>
-                      </tr>
-                      <tr>
-                       <th style="text-align: left;">
-                        Nationality<span class="text-danger">*</span>:
-                        <input form="addTenantForm1" type="text" class="@error('nationality') is-invalid @enderror" name="nationality" id="nationality"  value="{{ old('nationality') }}" required>
-                        @error('nationality')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
-                       </th>
-                       <th style="text-align: left;">
-                        Ethnicity:
-                        <input form="addTenantForm1" type="text" class="@error('ethnicity') is-invalid @enderror" name="ethnicity" id="ethnicity"  value="{{ old('ethnicity') }}">
-                        @error('ethnicity')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
-                       </th>
-                     <th style="text-align: left;">
-                      ID presented/ID number<span class="text-danger">*</span>:
-                      <input form="addTenantForm1" type="text" class="@error('id_number') is-invalid @enderror" name="id_number" id="id_number" value="{{ old('id_number') }}" required>
-
-                      @error('id_number')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                      @enderror
-                     </th>
-                      </tr>
-                      <tr>
-                        <th colspan="4" style="text-align: left;">
-                          Provincial address<span class="text-danger">*</span>:
-                          <input form="addTenantForm1" type="text" class="@error('provincial_address') is-invalid @enderror" name="provincial_address" id="provincial_address" value="{{ old('provincial_address') }}" style="width: 800px;" required>
-    
-                          @error('provincial_address')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                         </th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;" colspan="2">
-                          Contact number:
-                          <input form="addTenantForm1" type="number" class="@error('contact_no') is-invalid @enderror" name="contact_no" id="contact_no"  value="{{ old('contact_no') }}">
-                    
-                          @error('contact_no')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </th>
-                        <th style="text-align: left;">
-                          Email address:
-                          <input form="addTenantForm1" type="email" class="@error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
-                          <br>
-                          @error('email')
-                          
-                          <strong class="text-danger">{{ $message }}</strong>
-                    
-                         @enderror
-                        </th>
-                        <th>
-                          
-                        </th>
-                      </tr>
-                     
-                    </table>
-                    
-                    {{-- <br>
-                    <small>In case of emergency </small>
-                    <table class="table table-condensed">
-                      <tr>
-                        <th>Name: <input form="addTenantForm1" type="text" class="@error('guardian_name') is-invalid @enderror" name="guardian_name_1" id="guardian_name_1"  value="{{ old('guardian_name') }}" required></th>
-                        <th>Relationship: <input form="addTenantForm1" type="text" class="@error('guardian_relationship') is-invalid @enderror" name="guardian_relationship_1" id="guardian_relationship_1"  value="{{ old('guardian_relationship') }}" required></th>
-                        <th>Contact number:  <input form="addTenantForm1" type="text" class="@error('guardian_contact') is-invalid @enderror" name="guardian_contact_1" id="guardian_contact_1"  value="{{ old('guardian_contact') }}" required></th>
-                      </tr>
-                      <tr>
-                        <th>Name: <input form="addTenantForm1" type="text" class="@error('guardian_name') is-invalid @enderror" name="guardian_name_2" id="guardian_name_2"  value="{{ old('guardian_name') }}"></th>
-                        <th>Relationship: <input form="addTenantForm1" type="text" class="@error('guardian_relationship') is-invalid @enderror" name="guardian_relationship_2" id="guardian_relationship_2"  value="{{ old('guardian_relationship') }}"></th>
-                        <th>Contact number:  <input form="addTenantForm1" type="text" class="@error('guardian_contact') is-invalid @enderror" name="guardian_contact_2" id="guardian_contact_2"  value="{{ old('guardian_contact') }}"></th>
-                      </tr>
-                      <tr>
-                        <th>Name: <input form="addTenantForm1" type="text" class="@error('guardian_name') is-invalid @enderror" name="guardian_name_3" id="guardian_name_3"  value="{{ old('guardian_name') }}"></th>
-                        <th>Relationship: <input form="addTenantForm1" type="text" class="@error('guardian_relationship') is-invalid @enderror" name="guardian_relationship_3" id="guardian_relationship_3"  value="{{ old('guardian_relationship') }}"></th>
-                        <th>Contact number:  <input form="addTenantForm1" type="text" class="@error('guardian_contact') is-invalid @enderror" name="guardian_contact_3" id="guardian_contact_3"  value="{{ old('guardian_contact') }}"></th>
-                      </tr>
-                    </table> --}}
-                    <br>
-                    <table class="table table-borderless">
-                      <tr>
-                        <th style="text-align: left;">Studying <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="studying" id="exampleCheck1"></th>
-                        <th style="text-align: left;">Working <input form="addTenantForm1" form="filter" type="radio" name="type_of_tenant" value="working" id="exampleCheck1"></th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">High school: <input form="addTenantForm1" type="text" class="@error('high_school') is-invalid @enderror" name="high_school" id="high_school"  value="{{ old('high_school') }}"></th>
-                        <th style="text-align: left;">Employer's name/business: <input form="addTenantForm1" type="text" class="@error('employer') is-invalid @enderror" name="employer" id="employer"  value="{{ old('employer') }}"></th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">High school address: <input form="addTenantForm1" type="text" class="@error('high_school_address') is-invalid @enderror" name="high_school_address" id="high_school_address"  value="{{ old('high_school_address') }}"></th>
-                        <th style="text-align: left;">Employer address: <input form="addTenantForm1" type="text" class="@error('employer_address') is-invalid @enderror" name="employer_address" id="employer_address"  value="{{ old('employer_address') }}"></th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">College/Universtity: <input form="addTenantForm1" type="text" class="@error('college_school') is-invalid @enderror" name="college_school" id="college_school"  value="{{ old('college_school') }}"></th>
-                        <th style="text-align: left;">Position: <input form="addTenantForm1" type="text" class="@error('job') is-invalid @enderror" name="job" id="job"  value="{{ old('job') }}"></th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">School address: <input form="addTenantForm1" type="text" class="@error('college_school_address') is-invalid @enderror" name="college_school_address" id="college_school_address"  value="{{ old('college_school_address') }}"></th>
-                        <th style="text-align: left;">Years of employment: <input form="addTenantForm1" type="text" class="@error('years_of_employment') is-invalid @enderror" name="years_of_employment" id="years_of_employment"  value="{{ old('years_of_employment') }}"></th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">Course: <input form="addTenantForm1" type="text" class="@error('course') is-invalid @enderror" name="course" id="course"  value="{{ old('course') }}"></th>
-                        <th style="text-align: left;">Contact number: <input form="addTenantForm1" type="text" class="@error('employer_contact_no') is-invalid @enderror" name="employer_contact_no" id="employer_contact_no"  value="{{ old('employer_contact_no`') }}"></th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: left;">Year level: <input form="addTenantForm1" type="text" class="@error('year_level') is-invalid @enderror" name="year_level" id="year_level"  value="{{ old('year_level') }}"></th>
-                        <th style="text-align: left;">Telephone: <input form="addTenantForm1" type="text" class="@error('business_telephone') is-invalid @enderror" name="business_telephone" id="business_telephone"  value="{{ old('business_telephone`') }}"></th>
-                      </tr>
-                    </table>
-                    <br>
-                    <small>Source of awareness</small>
-                    <table class="table table-borderless">
-                      <tr>
-                        <th style="text-align: left;">Referrer:
-                          <select form="addTenantForm1" name="referrer_id" id="referrer_id">
-                            <option value="">Please select one</option>
-                            @foreach ($users as $item)
-                              <option value="{{ $item->id }}">{{ $item->name }} | {{ $item->role_id_foreign }}</option>
-                            @endforeach
-                           </select>
-                        </th>
-                        <th style="text-align: left;">Source<span class="text-danger">*</span>:
-                          <select form="addTenantForm1" name="form_of_interaction" id="form_of_interaction" required>
-                            <option value="{{ old('form_of_interaction')? old('form_of_interaction'): '' }}" selected>{{ old('form_of_interaction')? old('form_of_interaction'): 'Please select one' }} </option>
-                             <option value="Facebook">Facebook</option>
-                             <option value="Flyers">Flyers</option>
-                             <option value="In house">In house</option>
-                             <option value="Instagram">Instagram</option>
-                             <option value="Website">Website</option>
-                             <option value="Walk in">Walk in</option>
-                             <option value="Word of mouth">Word of mouth</option>
-                          </select>
-                        </th>
-                      </tr>
-                    </table>
-                   <br>
-                    <p class="text-right">
-                      <button type="submit" form="addTenantForm1" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
-                    </p>
-
-           
-                </div>
-              </div>
-             </div>
-            </div>
-            <div class="tab-pane fade" id="active" role="tabpanel" aria-labelledby="nav-home-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+         
+            <p class="text-left">
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
+              {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+            </p>
+            <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
               <table class="table table-hover">
-                @if($tenant_active->count() <= 0)
+                @if($tenants->count() <= 0)
                 <tr>
                     <br><br>
                     <p class="text-center text-danger">No tenants found!</p>
@@ -546,19 +275,23 @@ thead tr:nth-child(1) th {
                     <th>Name</th>
                     <th>Movein</th>   
                     <th>Moveout</th>
+                    <th>Room</th>
                     <th>Term</th>
+                    <th>Status</th>
                     <th>Rent</th>
                     <th>Source</th>
                 </tr>
               </thead>
                 <?php $ctr = 1; ?>   
-            @foreach ($tenant_active as $item)
+            @foreach ($tenants as $item)
                 <tr>
                     <th class="text-center">{{ $ctr++ }}</th>
                     <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
                     <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
                     <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
+                    <td>{{ $item->unit_no }}</td>
                     <td>{{ $item->contract_term }}</td>
+                    <td>{{ $item->contract_status }}</td>
                     {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }} days left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}</> --}}
                       <td>{{ number_format($item->contract_rent, 2) }}</td>
                       <td>{{ $item->form_of_interaction }}</td>
@@ -567,115 +300,7 @@ thead tr:nth-child(1) th {
                 @endif                        
             </table>
               </div>
-            </div>
-            <div class="tab-pane fade" id="reserved" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-              <table class="table table-hover">
-                @if($tenant_reserved->count() <= 0)
-                <tr>
-                    <br><br>
-                    <p class="text-center text-danger">No tenants found!</p>
-                </tr>
-                @else
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Name</th>
-                    <th>Reserved Via</th>
-                    <th>Source</th>
-                    <th>Reserved</th>
-                    <th>Days before for forfeiture</th>   
-                </tr>
-                </thead>
-                <?php
-                    $ctr = 1;
-                ?>   
-            @foreach ($tenant_reserved as $item)
-                <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
-                    @if($item->type_of_tenant === 'online')
-                    <td><a class="badge badge-success">{{ $item->type_of_tenant }}</td>
-                    @else
-                    <td><a class="badge badge-warning">{{ $item->type_of_tenant }}</td>
-                    @endif
-                    <td>{{ $item->form_of_interaction }}</td>
-                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</td>
-                    <td>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->created_at)->addDays(7), false) }}</td>
-                </tr>
-            @endforeach
-                @endif                        
-            </table>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="movingout" role="tabpanel" aria-labelledby="nav-tenant-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-              <table class="table table-hover">
-                @if($tenant_movingout->count() <= 0)
-                <tr>
-                    <br><br>
-                    <p class="text-center text-danger">No tenants found!</p>
-                </tr>
-                @else
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Name</th>
-                    <th>Moveout</th>
-                     
-                </tr>
-                </thead>
-                <?php
-                    $ctr = 1;
-                ?>   
-            @foreach ($tenant_movingout as $item)
-                <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
-                    <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}} <span class="text-danger">({{ Carbon\Carbon::parse($item->moveout_at)->diffForHumans() }})</span></td>
-                </tr>
-            @endforeach
-                @endif                        
-            </table>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="nav-contact-tab">
-              <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-              <table class="table table-hover">
-                @if($tenant_inactive->count() <= 0)
-                <tr>
-                    <br><br>
-                    <p class="text-center text-danger">No tenants found!</p>
-                </tr>
-                @else
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th>Name</th>
-                    
-                    <th>Inactive since</th>   
-                    <th>Reason for moving out</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <?php
-                    $ctr = 1;
-                ?>   
-            @foreach ($tenant_inactive as $item)
-                <tr>
-                    <th class="text-center">{{ $ctr++ }}</th>
-                    <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} </a></th>
-                    
-                    <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d Y') }}</td>
-                    <td>{{ $item->moveout_reason }}</td>
-                </tr>
-            @endforeach
-                @endif                        
-            </table>
-              </div>
-            </div>
-          </div>
-        </div>
+       
         </div>
   
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">

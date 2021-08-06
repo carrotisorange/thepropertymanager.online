@@ -67,49 +67,63 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $property_id, $tenant_id)
+    public function create($property_id, $unit_id, $tenant_id)
     {
-        Session::put('current-page', 'rooms');
+        Session::put('current-page', 'tenants');
 
-        $property_bills = DB::table('particulars')
-        ->join('property_bills', 'particular_id', 'particular_id_foreign')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->orderBy('particular', 'asc')
-        ->get();
-
-        $request->validate([
-            'unit_id' => 'required'
-        ]);
-
-         $unit = Unit::findOrFail($request->unit_id);
+        $room = Unit::findOrFail($unit_id);
 
         $tenant = Tenant::findOrFail($tenant_id);
 
         $users = DB::table('users_properties_relations')
         ->join('properties', 'property_id_foreign', 'property_id')
         ->join('users', 'user_id_foreign', 'id')
+        ->join('roles', 'role_id_foreign', 'role_id')
         ->select('*', 'properties.name as property')
         ->where('lower_access_user_id', Auth::user()->id)
         ->orWhere('id', Auth::user()->id)  
         ->orderBy('users.name')
         ->get();
 
-        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-            $current_bill_no = DB::table('units')
-            ->join('bills', 'unit_id', 'bill_unit_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->max('bill_no') + 1;
-    
-        }else{
-            $current_bill_no = DB::table('contracts')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->max('bill_no') + 1;
-        }     
+        return view('webapp.contracts.create', compact('tenant','room','users'));
 
-        return view('webapp.contracts.create', compact('tenant','unit', 'current_bill_no', 'users','property_bills'));
+        // $property_bills = DB::table('particulars')
+        // ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        // ->where('property_id_foreign', Session::get('property_id'))
+        // ->orderBy('particular', 'asc')
+        // ->get();
+
+        // $request->validate([
+        //     'unit_id' => 'required'
+        // ]);
+
+        //  $unit = Unit::findOrFail($request->unit_id);
+
+        // $tenant = Tenant::findOrFail($tenant_id);
+
+        // $users = DB::table('users_properties_relations')
+        // ->join('properties', 'property_id_foreign', 'property_id')
+        // ->join('users', 'user_id_foreign', 'id')
+        // ->select('*', 'properties.name as property')
+        // ->where('lower_access_user_id', Auth::user()->id)
+        // ->orWhere('id', Auth::user()->id)  
+        // ->orderBy('users.name')
+        // ->get();
+
+        // if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
+        //     $current_bill_no = DB::table('units')
+        //     ->join('bills', 'unit_id', 'bill_unit_id')
+        //     ->where('property_id_foreign', Session::get('property_id'))
+        //     ->max('bill_no') + 1;
+    
+        // }else{
+        //     $current_bill_no = DB::table('contracts')
+        //     ->join('units', 'unit_id_foreign', 'unit_id')
+        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        //     ->join('bills', 'tenant_id', 'bill_tenant_id')
+        //     ->where('property_id_foreign', Session::get('property_id'))
+        //     ->max('bill_no') + 1;
+        // }     
     }
 
     /**
@@ -118,121 +132,80 @@ class ContractController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $property_id,$unit_id,$tenant_id)
+    public function store(Request $request, $property_id, $unit_id, $tenant_id)
     {
+        $request->validate([
+            'form_of_interaction' => ['required'],
+            'movein_at' => ['required'],
+            'moveout_at' => ['required'],
+            'number_of_months' => ['required'],
+            'discount' => ['required'],
+            'term' => ['required'],
+            'rent' => ['required'],
+            'refferr_id_foreign' => []
+        ]);
 
-        $no_of_bills = $request->no_of_items;
+        $contract_id = Uuid::generate()->string;
 
-    
-        if($no_of_bills === null){
-          $status = 'active';
-        }else{
-          $status = 'pending';
-        }
+        DB::table('contracts')->insert([
+            'contract_id' => $contract_id,
+            'unit_id_foreign' => $unit_id,
+            'tenant_id_foreign' => $tenant_id,
+            'movein_at' => $request->movein_at,
+            'moveout_at' => $request->moveout_at,
+            'number_of_months' => $request->number_of_months,
+            'term' => $request->term,
+            'rent' => $request->rent,
+            'discount' => $request->discount,
+            'referrer_id_foreign' => $request->referrer_id_foreign,
+            'form_of_interaction' => $request->form_of_interaction,
+            'created_at' => Carbon::now(),
+        ]);
 
-        
-        $tenant_unique_id = Uuid::generate()->string;
+        //get the last added bill no of the property
+        $current_bill_no = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->max('bill_no') + 1;   
 
-            DB::table('contracts')->insert(
-                    [
-                        'contract_id' => Uuid::generate()->string,
-                        'unit_id_foreign' => $unit_id,
-                        'tenant_id_foreign' => $tenant_id,
-                        'referrer_id_foreign' => $request->referrer_id,
-                        'form_of_interaction' => $request->form_of_interaction,
-                        'rent' => $request->rent,
-                        'status' => $status,
-                        'movein_at' => $request->movein_at,
-                        'moveout_at' => $request->moveout_at,
-                        'initial_water' => $request->initial_water,
-                        'initial_electric' => $request->initial_electric,
-                        'discount' => $request->discount,
-                        'term' => $request->term,
-                        'number_of_months' => $request->number_of_months,
-                        'created_at' => $request->movein_at,
-                    ]
-                );
+        //post the rental bill
+        Bill::create([
+            'bill_no' => $current_bill_no,
+            'bill_tenant_id' => $tenant_id,
+            'date_posted' => $request->movein_at,
+            'particular_id_foreign' => '1',
+            'amount'=> $request->rent,
+            'start' => $request->movein_at, 
+            'end' => Carbon::parse($request->movein_at)->addMonth(1),
+        ]);
 
-          
-                $active_rooms = Property::findOrFail(Session::get('property_id'))->units->where('status','<>','deleted')->count();
+        //post the advanced rent
+        Bill::create([
+            'bill_no' => $current_bill_no+1,
+            'bill_tenant_id' => $tenant_id,
+            'date_posted' => $request->movein_at,
+            'particular_id_foreign' => '17',
+            'amount'=> $request->rent,
+            'start' => $request->movein_at, 
+            'end' => $request->moveout_at
+        ]);
 
-                $occupied_rooms = Property::findOrFail( Session::get('property_id'))->units->where('status', 'occupied')->count();
-        
-                $current_occupancy_rate = Property::findOrFail( Session::get('property_id'))->current_occupancy_rate()->orderBy('id', 'desc')->first()->occupancy_rate;
-        
-                $new_occupancy_rate = number_format(($occupied_rooms/$active_rooms) * 100,2);
-        
-                if($current_occupancy_rate !== $new_occupancy_rate){
-                    $occupancy = new OccupancyRate();
-                    $occupancy->occupancy_rate = $new_occupancy_rate;
-                    $occupancy->occupancy_date = Carbon::now();
-                    $occupancy->property_id_foreign =  Session::get('property_id');
-                    $occupancy->save();
-                }
+        $contract = Contract::findOrFail($contract_id);
+        $tenant = Tenant::findOrFail($tenant_id);
+        $unit = Unit::findOrFail($unit_id);
 
-
-                    if($no_of_bills === null){
-                        DB::table('units')
-                        ->where('unit_id', $unit_id)
-                        ->update(
-                            [
-                                'status' => 'occupied'
-                            ]
-                        );
-                    }else{
-                        DB::table('units')
-                        ->where('unit_id', $unit_id)
-                        ->update(
-                            [
-                                'status' => 'reserved'
-                            ]
-                        );
-                    }
-    
-
-                    if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-                        $current_bill_no = DB::table('units')
-                        ->join('bills', 'unit_id', 'bill_unit_id')
-                        ->where('property_id_foreign', Session::get('property_id'))
-                        ->max('bill_no') + 1;
-                
-                    }else{
-                        $current_bill_no = DB::table('contracts')
-                        ->join('units', 'unit_id_foreign', 'unit_id')
-                        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                        ->join('bills', 'tenant_id', 'bill_tenant_id')
-                        ->where('property_id_foreign', Session::get('property_id'))
-                        ->max('bill_no') + 1;
-                    }     
-            
-                    for ($i=1; $i < $no_of_bills; $i++) { 
-                        $bill = new Bill();
-                        $bill->bill_tenant_id = $tenant_id;
-                        $bill->bill_no = $current_bill_no++;
-                        $bill->date_posted = $request->movein_at;
-                        $bill->particular_id_foreign = $request->input('particular'.$i);
-                        $bill->start = $request->movein_at;
-                        $bill->end = $request->moveout_at;
-                        $bill->amount = $request->input('amount'.$i);
-                        $bill->save();
-                    }
-
-                    $tenant = Tenant::findOrFail($tenant_id);
-                    $unit = Unit::findOrFail($unit_id);
-
-                    $notification = new Notification();
-                    $notification->user_id_foreign = Auth::user()->id;
-                    $notification->property_id_foreign = Session::get('property_id');
-                    $notification->type = 'contract';
+        $notification = new Notification();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'contract';
+        $notification->message = Auth::user()->name. ' adds new contract for '.$tenant->first_name.' in '.$unit->unit_no.'.';
+        $notification->save();
                     
-                    $notification->message = Auth::user()->name. ' adds new contract for '.$tenant->first_name.' in '.$unit->unit_no.'.';
-                    $notification->save();
-                    
-                    Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
+        Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'#contracts')->with('success', 'Contract added successfully.');
-       
-
+        return redirect('/property/'.Session::get('property_id').'/room/'.$unit_id.'/tenant/'.$tenant_id.'/contract/'.$contract->contract_id.'/create/bill')->with('success', 'Contract is added successfully.');
     }
 
     /**

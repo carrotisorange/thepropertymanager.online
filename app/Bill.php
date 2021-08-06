@@ -14,11 +14,13 @@ class Bill extends Model
                         [
                             'bill_tenant_id',
                             'date_posted',
-                            'particular',
-                            'billing_amt',
-                            'details',
+                            'start',
+                            'end',
                             'billing_status',
-                            'bill_no'
+                            'bill_no',
+                            'particular_id_foreign',
+                            'amount',
+
                         ];
 
  public function tenant()

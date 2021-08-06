@@ -114,24 +114,24 @@
          @yield('title-page')
          <div class="col-md-9">
             {{-- @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced') --}}
-            <a href="{{ route('create-property') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Property</a>
+            <a href="{{ route('create-property') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Property</a>
              {{-- @else
              <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> Property</a>
              @endif --}}
              @if($properties->count()>1)
-                <a href="{{ route('view-portforlio') }}" class="btn btn-primary btn-sm"><i class="fas fa-chart-bar"></i> Portforlio</a>
+                <a href="{{ route('view-portforlio') }}" class="btn btn-primary"><i class="fas fa-chart-bar"></i> Portforlio</a>
              @endif
              @if (Auth::user()->role_id_foreign === 4)
              @if($users > 1)
-             <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> User </a>
+             <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary"><i class="fas fa-plus"></i> User </a>
              @else
-             <a title="Limited to 2 users." href="{{ route('create-user') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> User</a>
+             <a title="Limited to 2 users." href="{{ route('create-user') }}" class="btn btn-primary"><i class="fas fa-plus"></i> User</a>
              @endif
            @else
-           <a title="Reserved for manager." href="#/" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> User</a>
+           <a title="Reserved for manager." href="#/" class="btn btn-primary"><i class="fas fa-plus"></i> User</a>
            @endif
-           <a href="https://youtu.be/tGdDzY-dkLg" target="_blank" class="btn btn-danger btn-sm"> <i class="fab fa-youtube"></i> Getting started </a>
-           <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-sm"> <i class="fab fa-facebook-messenger"></i> Chat </a>
+           <a href="https://youtu.be/tGdDzY-dkLg" target="_blank" class="btn btn-primary"> <i class="fab fa-youtube"></i> Getting started </a>
+           {{-- <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-sm"> <i class="fab fa-facebook-messenger"></i> Chat </a> --}}
             <br><br>
             <div class="card border-0 mb-0">
                 @yield('content')

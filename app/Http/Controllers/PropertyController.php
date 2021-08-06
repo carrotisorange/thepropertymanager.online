@@ -377,6 +377,7 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function select(Request $request)
     {
         return redirect('/property/'.$request->selectedProperty.'/dashboard');
