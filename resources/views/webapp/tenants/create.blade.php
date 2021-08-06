@@ -27,6 +27,10 @@
           <label for="">Beds:</label>
           <input form="createTenantForm" value="{{ $room->occupancy }} pax" class="form-control" type="text" required readonly>
         </div>
+        <div class="form-group col-md-4">
+          <label for="">Rent/mo:</label>
+          <input form="createContractForm" value="{{ $room->rent }}" class="form-control" type="number" required readonly>
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
