@@ -155,7 +155,7 @@
         </div>
       </div>
       <div class="form-group">
-        <button type="submit" form="createTenantForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Save</button>
+        <button type="submit" form="createTenantForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Continue</button>
         <br>
         <p class="text-center">
             <a class="text-center text-dark" href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}">Cancel</a>
