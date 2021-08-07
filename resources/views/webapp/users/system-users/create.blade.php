@@ -84,7 +84,7 @@
                   
                   </div>
                      <div class="col"> --}}
-                      <button type="submit" class="btn btn-primary btn-user btn-block btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
+                      <button type="submit" class="btn btn-primary btn-user btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
                      {{-- </div> --}}
                    </div>
                   </form>  

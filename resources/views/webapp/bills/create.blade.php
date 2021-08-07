@@ -161,8 +161,8 @@
     </div> --}}
     
     <br>
-      <div class="form-group"  >
-        <a class="btn btn-primary btn-block" href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}"> Complete</a>
+    <div class="form-group col-md-11 mx-auto">
+        <a class="btn btn-primary btn-block" href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}"><i class="fas fa-check"></i> Finish</a>
        {{-- <br>
         <p class="text-center">
             <a class="text-center text-dark" href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}">Cancel</a>

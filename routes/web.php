@@ -366,7 +366,12 @@ Route::get('/property/{property_id}/blogs', 'BlogController@index');
 Route::post('/property/{property_id}/blog', 'BlogController@store')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/blog/{blog_id}', 'BlogController@show')->middleware(['auth', 'verified']);
 
-//routes for owners
+//ROUTES FOR OWNERCONTROLLER
+//route to create an owner
+Route::get('/property/{property_id}/room/{room_id}/create/owner', 'OwnerController@create')->middleware(['auth', 'verified']);
+//route to store new owner
+Route::post('/property/{property_id}/room/{room_id}/store/owner', 'OwnerController@store')->middleware(['auth', 'verified']);
+
 Route::get('/property/{property_id}/owners', 'OwnerController@index')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/owners/search', 'OwnerController@search')->middleware(['auth', 'verified']);
 Route::get('/property/{property_id}/owner/{owner_id}/edit', 'OwnerController@edit')->middleware(['auth', 'verified']);

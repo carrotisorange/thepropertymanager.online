@@ -38,7 +38,7 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
         @yield('body-content')
-        @include('layouts.argon.footer')
+        {{-- @include('layouts.argon.footer') --}}
         @include('layouts.argon.logout')
     </div>
     <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>

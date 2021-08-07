@@ -15,19 +15,11 @@ thead tr:nth-child(1) th {
 @endsection
 
 @section('upper-content')
-{{-- <div class="row align-items-center py-4">
-  <div class="col-auto text-right">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/rooms/">{{ Session::get('property_name') }}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ $home->building.' '.$home->unit_no }}</li>
-      </ol>
-    </nav>
-    
-    
+<div class="row align-items-center py-4">
+  <div class="col-lg-6 text-left"> 
+      <h6 class="h2 text-dark d-inline-block mb-0"> {{ $home->building.' '.$home->unit_no }}</h6>
   </div>
-</div> --}}
-<br>
+</div>
   <div class="row">
     <div class="col-md-12">
       <nav>
@@ -256,17 +248,20 @@ thead tr:nth-child(1) th {
         </div>
         </div>
         <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
-         
+          @if($tenants->count() > 0)
             <p class="text-left">
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
               {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
             </p>
-            <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+            @endif
+            <div class="table-responsive text-nowrap">
               <table class="table table-hover">
                 @if($tenants->count() <= 0)
                 <tr>
                     <br><br>
-                    <p class="text-center text-danger">No tenants found!</p>
+                    <p class="text-center">
+                      <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant" class="btn btn-primary"><i class="fas fa-plus"></i> Add a tenant</a> 
+                    </p>
                 </tr>
                 @else
                 <thead>
@@ -372,17 +367,21 @@ thead tr:nth-child(1) th {
         </div>
         
         <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="nav-owners-tab">
-        
-     <a  data-toggle="modal" data-target="#addInvestor" data-whatever="@mdo" type="button" class="btn btn-primary text-white btn-sm">
-      <i class="fas fa-user-plus text-white"></i> New
-    </a>   
-  <br>
-     <br>
-        <div class="col-md-12 mx-auto">
+          @if($owners->count() > 0)
+          <p class="text-left">
+            <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
+            {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          </p>
+          @endif
+    
+  
+
           @if($owners->count()<=-0)
-          <p class="text-center text-danger">No owners found!</p>
+          <p class="text-center">
+            <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner" class="btn btn-primary"><i class="fas fa-plus"></i> Add an owner</a>   
+          </p>
           @else
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+          <div class="table-responsive text-nowrap">
             <table class="table table-hover">
               <?php $ctr=1;?>
               <thead>
@@ -413,7 +412,7 @@ thead tr:nth-child(1) th {
           </div>
           @endif
          
-        </div>
+        
         </div>
       </div>
     </div>

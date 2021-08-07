@@ -139,7 +139,8 @@
         </div>
        </div>
       </div>
-      <div class="form-group">
+      
+      <div class="form-group col-md-11 mx-auto">
         <button type="submit" form="createContractForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Continue</button>
         <br>
         <p class="text-center">
@@ -149,7 +150,7 @@
     </div>
   </div>
     </div>
-  </div>
+  
 @endsection
 
 @section('scripts')

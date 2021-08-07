@@ -13,7 +13,6 @@
     @csrf
   </form>
 
-
   <div class="row">
     <div class="col-md-10 py-3 mx-auto">
       <div class="card">
@@ -158,7 +157,7 @@
           @enderror
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-11 mx-auto">
         <button type="submit" form="createTenantForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Continue</button>
         <br>
         <p class="text-center">
@@ -169,40 +168,6 @@
   </div>
     </div>
   </div>
-    
-      {{-- <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="">Studying/Working:</label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-            <label class="form-check-label" for="exampleRadios1">
-              Studying
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-              Working
-            </label>
-          </div>
-   
-         
-        </div>
-       
-      </div> --}}
-      {{-- <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="">High School:</label>
-          <input form="createTenantForm" value="{{ old('contact_no') }}" class="form-control" type="text" required>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="">Email address:</label>
-          <input form="createTenantForm" value="{{ old('email_address') }}" class="form-control" type="text" required>
-        </div>
-      </div>
-    </div>
-  </div> --}}
-
 @endsection
 
 @section('scripts')

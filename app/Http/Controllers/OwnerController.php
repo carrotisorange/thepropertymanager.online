@@ -106,9 +106,11 @@ class OwnerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($property_id, $room_id)
     {
-        
+        $room = Unit::findOrFail($room_id);
+
+        return view('webapp.owners.create', compact('room'));
     }
 
     public function upload_img(Request $request, $property_id, $owner_id)
@@ -142,44 +144,90 @@ class OwnerController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id)
     {
-   
+        //validate inputs
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required',
+            'address' => 'required',
+            'bank_name' => '',
+            'account_number' => '',
+            'account_name' => '',
+            'representative' => 'required',
+        ]);
 
-        $explode = explode(" ", $request->name);
+        //store all the input fields to the input
+        $input = $request->all();
 
-        if(count($explode)<=1){
-             $last_name = 'NULL';
-        }else{
-             $last_name = '';
-        }
+        //insert a new tenant to the database
+        $new_owner_id = Owner::create($input)->owner_id;
 
-         $owner_id = DB::table('owners')
-        ->insertGetId
-        (
-            [
-                'name' => $request->name.' '.$last_name,
-                'email' => $request->owner_email,
-                'mobile' => $request->mobile,
-            ]
-            );
+    //    Owner::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'mobile' => $request->mobile,
+    //         'address' => $request->address,
+    //         'bank_name' => $request->bank_name,
+    //         'account_number' => $request->account_number,
+    //         'account_name' => $request->account_name,
+    //         'representative' => $request->representative,
+    //    ]);
 
-        $certificate = new Certificate();
-        $certificate->certificate_id = Uuid::generate()->string;
-        $certificate->status = 'active';
-        $certificate->unit_id_foreign = $unit_id;
-        $certificate->owner_id_foreign = $owner_id;
-        $certificate->save();
-
+        Certificate::create([
+            'certificate_id' => Uuid::generate()->string,
+            'status' => 'active',
+            'unit_id_foreign' => $unit_id,
+            'owner_id_foreign' => $new_owner_id,
+        ]);
+      
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'owner';
         
-        $notification->message = Auth::user()->name.' adds '.$request->name.' '.$last_name.' as an owner in '.Unit::findOrFail($unit_id)->unit_no.'.';
+        $notification->message = Auth::user()->name.' adds '.$request->name.' as an owner in '.Unit::findOrFail($unit_id)->unit_no.'.';
         $notification->save();
                     
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'Owner is created successfully.');
+        return redirect('/property/'.$property_id.'/room/'.$unit_id.'/#owners')->with('success', 'Owner is created successfully.');
+
+        // $explode = explode(" ", $request->name);
+
+        // if(count($explode)<=1){
+        //      $last_name = 'NULL';
+        // }else{
+        //      $last_name = '';
+        // }
+
+        //  $owner_id = DB::table('owners')
+        // ->insertGetId
+        // (
+        //     [
+        //         'name' => $request->name.' '.$last_name,
+        //         'email' => $request->owner_email,
+        //         'mobile' => $request->mobile,
+        //     ]
+        //     );
+
+        // $certificate = new Certificate();
+        // $certificate->certificate_id = Uuid::generate()->string;
+        // $certificate->status = 'active';
+        // $certificate->unit_id_foreign = $unit_id;
+        // $certificate->owner_id_foreign = $owner_id;
+        // $certificate->save();
+
+        // $notification = new Notification();
+        // $notification->user_id_foreign = Auth::user()->id;
+        // $notification->property_id_foreign = Session::get('property_id');
+        // $notification->type = 'owner';
+        
+        // $notification->message = Auth::user()->name.' adds '.$request->name.' '.$last_name.' as an owner in '.Unit::findOrFail($unit_id)->unit_no.'.';
+        // $notification->save();
+                    
+        //  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        // return redirect('/property/'.$property_id.'/owner/'.$owner_id.'/edit')->with('success', 'Owner is created successfully.');
     }
 
     /**

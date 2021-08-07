@@ -56,7 +56,7 @@
 </div>
 <div class="row">
   
-  <div class="col-md-12 mx-auto">
+  <div class="col-md-12">
 
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -66,6 +66,7 @@
         @endforeach
       </div>
     </nav>
+    <div class="col-md-11 mx-auto">
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
         <br>
@@ -211,7 +212,7 @@
       </div>
       @endforeach
     </div>
-
+  </div>
     
     </div>
 </div>

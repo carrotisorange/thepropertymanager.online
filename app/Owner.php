@@ -8,23 +8,20 @@ class Owner extends Model
 {
     protected $primaryKey = 'owner_id';
 
+    protected $table = 'owners';
+
     protected $fillable = [
-                                'date_invested', 
-                                'unit_owner',
-                                'investor_representative',
-                                'investor_email_address',
-                                'investor_contact_no',
-                                'account_number',
-                                'bank_name',
-                                'investor_address',
-                                'contract_start',
-                                'contract_end',
-                                'discount',
-                                'investment_price',
-                                'investment_type',
-                                'unit_owner',
-                                'date_accepted'
-                            ];
+                            'name',
+                            'email',
+                            'mobile',
+                            'representative',
+                            'acccount_number',
+                            'bank_name',
+                            'address',
+                            'account_name',
+                            'user_id_foreign',
+                            'img'
+                         ];
 
     public function units()
     {
