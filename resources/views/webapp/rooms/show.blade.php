@@ -384,6 +384,7 @@ thead tr:nth-child(1) th {
   
 
           @if($owners->count()<=-0)
+          <br><br>
           <p class="text-center">
             <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner" class="btn btn-primary"><i class="fas fa-plus"></i> Add an owner</a>   
           </p>
