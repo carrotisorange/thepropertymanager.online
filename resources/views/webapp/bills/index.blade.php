@@ -57,10 +57,10 @@ thead tr:nth-child(1) th {
     {{-- @endif --}}
   </div>
 </div>
-@if($bills->count() <=0 )
+{{-- @if($bills->count() <=0 )
 <p class="text-danger text-center">No bills found!</p>
 
-@else
+@else --}}
 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
   <table class="table table-hover">
 <thead>
@@ -113,7 +113,7 @@ thead tr:nth-child(1) th {
       {{ $item->start? Carbon\Carbon::parse($item->start)->format('d M, Y') : null}}-
       {{ $item->end? Carbon\Carbon::parse($item->end)->format('d M, Y') : null }}
     </td>
-    <td>₱ {{ number_format($item->amount,2) }}</td>
+    <td>{{ number_format($item->amount,2) }}</td>
  
     </tr>
   @endforeach
@@ -122,7 +122,7 @@ thead tr:nth-child(1) th {
   
 </table>
   </div>
-@endif
+{{-- @endif --}}
 
 <div class="modal fade" id="createBills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
