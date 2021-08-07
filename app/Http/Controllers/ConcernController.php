@@ -211,6 +211,10 @@ class ConcernController extends Controller
         ->orderBy('particular', 'asc')
         ->get();
 
+        $materials = DB::table('materials_for_concerns')
+        ->where('concern_id_foreign', $concern_id)
+        ->get();
+
         $room  = Unit::findOrFail($room_id);
 
         $tenant = Tenant::findOrFail($tenant_id);
@@ -221,7 +225,7 @@ class ConcernController extends Controller
 
         $resolved_by = User::findOrFail($resolved_by);
 
-        return view('webapp.concerns.view-room-concern', compact('room', 'tenants', 'owners', 'users','particulars', 'tenant','concern','endorsed_to','resolved_by'));
+        return view('webapp.concerns.view-room-concern', compact('room', 'tenants', 'owners', 'users','particulars', 'tenant','concern','endorsed_to','resolved_by','materials'));
      }
 
      public function update_room_concern(Request $request, $property_id, $room_id, $concern_id ){

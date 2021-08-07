@@ -210,6 +210,46 @@
               @enderror
             </div>
           </div>
+          <div class="col-lg-6 text-left"> 
+            <h6 class="h2 text-dark d-inline-block mb-0">Materials used</h6>
+        </div>
+          <div class="form-row">
+            <table class="table">
+                <?php $ctr = 1; ?>
+                <thead>
+                    <th>#</th>
+                    <th>Material</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </thead>
+                @foreach ($materials as $item)
+                <tbody>
+                <tr>
+                  <th>{{ $ctr++ }}</th>
+                  <td>{{ $item->description }}</td>
+                  <td>{{ $item->price }}</td>
+                  <td>{{ $item->quantity}}</td>
+                  <td>{{ $item->total_cost }}</td>
+                  <th></th>
+                  {{-- <td><a class="text-danger" href="/material/{{ $item->material_id }}/delete"><i class="fas fa-times"></i> Remove</a></td> --}}
+                </tr>
+                </tbody>
+                
+                @endforeach 
+                <tr>
+               <th>Total</td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <th>{{ number_format($materials->sum('total_cost'),2) }}</th>
+              <th></th>
+               </tr>
+  
+            </table>
+  
+        </div>
     
       </div>
     
