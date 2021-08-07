@@ -565,7 +565,7 @@ class TenantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($property_id, $tenant_id)
-    {
+    {   
 
         if(Auth::user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 5){
 
@@ -650,7 +650,7 @@ class TenantController extends Controller
                 ->max('bill_no') + 1;
             }     
 
-            $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
             ->join('particulars','particular_id_foreign', 'particular_id')
           ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
           ->where('bill_tenant_id', $tenant_id)
@@ -672,8 +672,6 @@ class TenantController extends Controller
               ->join('tenants', 'id', 'user_id_foreign')
               ->where('tenant_id', $tenant_id)
               ->get();
-
-
             
                 return view('webapp.tenants.show', compact('violations_type','violations','bills','buildings','units','guardians','contracts','access','tenant','users' ,'concerns', 'current_bill_no', 'balance', 'payments','property_bills'));  
         }else{
