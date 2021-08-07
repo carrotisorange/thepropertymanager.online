@@ -85,7 +85,7 @@ thead tr:nth-child(1) th {
 
 
 
-<div style="overflow-y:scroll;overflow-x:scroll;">
+ <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
     <table class="table table-hover">
       <?php $ctr=1;?>
       <thead>
@@ -97,8 +97,8 @@ thead tr:nth-child(1) th {
           <th>Name</th>
           <th>Room</th>
           <th>Status</th>
-          <th>Movein Date</th>
-          <th>Moveout Date</th>
+          <th>Movein</th>
+          <th>Moveout</th>
           <th>Mobile</th>
          
           {{-- <th>Email</th> --}}
