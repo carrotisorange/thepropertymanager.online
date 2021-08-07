@@ -49,7 +49,7 @@ thead tr:nth-child(1) th {
           <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export text-danger"></i> Expenses <span class="badge badge-success badge-counter">{{ $expenses->count() }}</span></a>
           @endif
 
-          @if($concerns->count()<=0)
+          @if($pending_concerns->count()>0)
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <span class="badge badge-success badge-counter">{{ $concerns->count() }}</span></a>
@@ -299,13 +299,23 @@ thead tr:nth-child(1) th {
         </div>
   
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-          <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
-          <br><br>
+          @if($concerns->count() > 0)
+          <p class="text-left">
+            <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/concern" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
+            {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          </p>
+          @endif
+          {{-- <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
+          <br><br> --}}
           <div class="col-md-12 mx-auto">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-            @if($concerns->count() <=0)
-            <br>
-            <p class="text-danger text-center">No concerns found!</p>
+          <div class="table-responsive">
+        
+            @if($concerns->count()<=-0)
+            <br><br>
+            <p class="text-center">
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/concern" class="btn btn-primary"><i class="fas fa-plus"></i> Report a concern</a>   
+            </p>
+          
             @else
             <table class="table table-hover" >
             <thead>
@@ -317,7 +327,7 @@ thead tr:nth-child(1) th {
                 
                
     
-                 <th>Title</th>
+            
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>
@@ -331,10 +341,7 @@ thead tr:nth-child(1) th {
               <th>{{ $ctr++ }}</th>
            
               <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-                
-  
-               
-                <th><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></th>
+              
                 <td>
                     @if($item->urgency === 'urgent')
                     <span class="badge badge-danger">{{ $item->urgency }}</span>

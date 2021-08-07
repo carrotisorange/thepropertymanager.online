@@ -9,20 +9,23 @@ class Concern extends Model
     protected $primaryKey = 'concern_id';
 
     protected $fillable = [
-                        'concern_tenant_id',
-                        'concern_personnel_id',
-                        'category',
-                        'reported_at',
-                        'is_warranty',
-                        'urgency',
-                        'unit_id_foreign',
-                        'title',
-                        'concern_qty',
-                        'details',
-                        'status',
-                        'concern_amt',
-                        'is_paid',
-                        'rating'
+        'reported_at', 
+        'concern_unit_id',
+        'concern_tenant_id',
+        'contact_no',
+        'details',
+        'urgency',
+        'is_warranty',
+        'scheduled_at',
+        'concern_user_id',
+        'details',
+        'resolved_by',
+        'status',
+         'rating',
+         'remarks',
+         'action_taken',
+         'resolved_at',
+         'category'
     ];
 
     public function tenant()

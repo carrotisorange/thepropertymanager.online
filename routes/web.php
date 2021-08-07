@@ -253,10 +253,18 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/guardian', 'GuardianCont
 //ROUTES FOR CONCERNCONTOLLER
 //routes to show all concerns
 Route::get('/property/{property_id}/concerns', 'ConcernController@index')->middleware(['auth', 'verified']);
+//route to create a concern
+Route::get('/property/{property_id}/room/{room_id}/create/concern', 'ConcernController@create_room_concern')->middleware(['auth', 'verified']);
 //route to show all concerns of a tenant
 Route::post('/property/{property_id}/tenant/{tenant_id}/concern', 'ConcernController@store')->middleware(['auth', 'verified']);
 //route to show all concerns of a unit
-Route::post('/property/{property_id}/home/{unit_id}/concern', 'ConcernController@store_room_concern')->middleware(['auth', 'verified']);
+Route::post('/property/{property_id}/room/{unit_id}/store/concern', 'ConcernController@store_room_concern')->middleware(['auth', 'verified']);
+//route to show all concerns of a unit
+Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/materials', 'ConcernController@materials')->middleware(['auth', 'verified']);
+//route to show all concerns of a unit
+Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/materials', 'ConcernController@store_materials')->middleware(['auth', 'verified']);
+//route to remove a material from concerns
+Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/materials', 'ConcernController@store_materials')->middleware(['auth', 'verified']);
 //route to show concern
 Route::get('/property/{property_id}/concern/{concern_id}', 'ConcernController@show')->middleware(['auth', 'verified']);
 //route to show concerns of an employee
@@ -269,6 +277,15 @@ Route::put('/property/{property_id}/concern/{concern_id}/forward', 'ConcernContr
 Route::get('/property/{property_id}/tenant/{tenant_id}/concern/create', 'ConcernController@create')->middleware(['auth', 'verified']);
 //route to store a new concern
 Route::post('/property/{property_id}/tenant/{tenant_id}/concern/store', 'ConcernController@store')->middleware(['auth', 'verified']);
+
+//concerns
+Route::post('/concerns', 'ConcernController@store')->middleware(['auth', 'verified']);
+
+//show concerns
+Route::get('/units/{unit_id}/tenants/{tenant_id}/concerns/{concern_id}', 'ConcernController@show')->middleware(['auth', 'verified']);
+
+//update concerns
+Route::put('/concerns/{concern_id}', 'ConcernController@update')->middleware(['auth', 'verified']);
 
 //ROUTES FOR BillController
 //route to create bills for new tenant
@@ -683,14 +700,6 @@ Route::post('/property/{property_id}/suppliers/store', 'SupplierController@store
 // Route::delete('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}', 'BillController@destroy')->middleware(['auth', 'verified']);
 Route::put('property/{property_id}/tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill')->middleware(['auth', 'verified']);
 
-//concerns
-Route::post('/concerns', 'ConcernController@store')->middleware(['auth', 'verified']);
-
-//show concerns
-Route::get('/units/{unit_id}/tenants/{tenant_id}/concerns/{concern_id}', 'ConcernController@show')->middleware(['auth', 'verified']);
-
-//update concerns
-Route::put('/concerns/{concern_id}', 'ConcernController@update')->middleware(['auth', 'verified']);
 
 //routes for personnels
 Route::post('/personnels', 'PersonnelController@store')->middleware(['auth', 'verified']);

@@ -234,36 +234,6 @@ class RoomController extends Controller
            ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
            ->where('unit_id', $unit_id)
            ->get();
-
-        //     $tenant_inactive =DB::table('contracts')
-        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //     ->join('units', 'unit_id_foreign', 'unit_id')
-        //     ->where('unit_id', $unit_id)
-        //     ->where('contracts.status', 'inactive')
-        //     ->get();
-
-        //     $tenant_movingout =DB::table('contracts')
-        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //     ->join('units', 'unit_id_foreign', 'unit_id')
-        //     ->where('unit_id', $unit_id)
-        //     ->where('contracts.status', 'preparing to moveout')
-        //     ->get();
-
-        //     $tenant_reserved = DB::table('contracts')
-        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //     ->join('units', 'unit_id_foreign', 'unit_id')
-        //     ->where('unit_id', $unit_id)
-        //     ->where('contracts.status', 'pending')
-        //     ->get();
-
-
-            // $tenants = DB::table('contracts')
-            // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            // ->join('units', 'unit_id_foreign', 'unit_id')
-            // ->where('unit_id', $unit_id)
-            
-            // ->get();
-
        
             $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
            ->join('units', 'bill_unit_id', 'unit_id')
@@ -274,29 +244,9 @@ class RoomController extends Controller
            ->havingRaw('balance > 0')
            ->get();
 
-        //    $remittances = DB::table('units')
-        //    ->join('remittances', 'unit_id', 'remittances.unit_id_foreign')
-        //    ->join('certificates', 'remittances.unit_id_foreign', 'certificates.unit_id_foreign')
-         
-        //    ->select('*', 'remittances.created_at as dateRemitted')
-        //    ->where('remittances.unit_id_foreign',$unit_id)
-        //    ->orderBy('remittances.created_at')
-        //    ->get();
-
            $remittances = Unit::findOrFail($unit_id)->remittances;
 
            $expenses = Unit::findOrFail($unit_id)->expenses;
-
-        //     $expenses = DB::table('units')
-        //    ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
-           
-        //    ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
-      
-        //    ->select('*', 'expenses.created_at as dateCreated')
-        //    ->where('expenses.unit_id_foreign',$unit_id)
-        //    ->orderBy('expenses.created_at')
-        //    ->get();
-
 
            $concerns = DB::table('contracts')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -310,12 +260,25 @@ class RoomController extends Controller
             ->orderBy('concerns.status', 'desc')
             ->get();
 
+            $pending_concerns = DB::table('contracts')
+            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('concerns', 'tenant_id', 'concern_tenant_id')
+            ->join('users', 'concern_user_id', 'id')
+            ->select('*', 'concerns.status as concern_status')
+            ->where('unit_id', $unit_id)
+            ->where('concerns.status', 'pending')
+            ->orderBy('reported_at', 'desc')
+            ->orderBy('urgency', 'desc')
+            ->orderBy('concerns.status', 'desc')
+            ->get();
+
             $room_types = DB::table('unit_types')->get();
 
             $room_floors = DB::table('unit_floors')->get();
           
            
-            return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners','concerns', 'remittances', 'expenses'));
+            return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners','concerns', 'remittances', 'expenses','pending_concerns'));
            
         }else{
                 return view('layouts.arsha.unregistered');

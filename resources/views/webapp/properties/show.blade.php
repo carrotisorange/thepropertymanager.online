@@ -651,7 +651,7 @@ thead tr:nth-child(1) th {
 
 
 
-<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">>
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-md" role="modal">
 <div class="modal-content">
 <div class="modal-header">
@@ -665,8 +665,8 @@ thead tr:nth-child(1) th {
 You have <b>{{ $pending_concerns->count() }}</b> pending/active concern/s that need to be addressed.
 </div>
 <div class="modal-footer">
-<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i> Dismiss </button>
-<a href="/property/{{  Session::get('property_id') }}/pending-concerns" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Proceed</a>
+<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Dismiss </button>
+<a href="/property/{{  Session::get('property_id') }}/pending-concerns" class="btn btn-primary"><i class="fas fa-check"></i> Proceed</a>
 </form>
 </div> 
 </div>

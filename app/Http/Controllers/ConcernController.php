@@ -10,6 +10,7 @@ use Session;
 use App\Notification;
 use App\User;
 use App\Personnel;
+use App\Bill;
 
 class ConcernController extends Controller
 {
@@ -150,6 +151,38 @@ class ConcernController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function create_room_concern(Request $request, $property_id, $room_id){
+
+        $tenants = DB::table('contracts')
+        ->select('*', 'contracts.status as contract_status')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
+        ->where('unit_id', $room_id)
+        ->get();
+
+        $owners = DB::table('certificates')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->where('certificates.unit_id_foreign', $room_id)
+        ->get();
+
+        $users = DB::table('users_properties_relations')
+        ->join('users','user_id_foreign','id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->whereNotIn('user_type' ,['tenant', 'owner'])
+        ->get();
+
+        $particulars = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
+        $room = Unit::findOrFail($room_id);
+
+        return view('webapp.concerns.create-room-concern', compact('room', 'tenants', 'owners', 'users','particulars'));
+     }
     public function create($property_id, $tenant_id)
     {
         Session::put('current-page', 'concerns');
@@ -181,16 +214,43 @@ class ConcernController extends Controller
      */
     public function store_room_concern(Request $request, $property_id, $unit_id)
     {
-        $concern = new Concern();
-        $concern->reported_at = $request->reported_at;
-        $concern->concern_tenant_id = $request->reported_by;
-        $concern->concern_unit_id = $unit_id;
-        $concern->category = $request->category;
-        $concern->urgency = $request->urgency;
-        $concern->title = $request->title;
-        $concern->details = $request->details;
-        $concern->concern_user_id = $request->concern_user_id;
-        $concern->save();
+        Session::put('current-page', 'concerns');
+
+        $request->validate([
+            'reported_at' => 'required', 
+            'concern_unit_id' => 'required',
+            'concern_tenant_id' => 'required',
+            'contact_no' => 'required',
+            'details' => 'required',
+            'urgency' => 'required',
+            'is_warranty' => 'required',
+            'scheduled_at' => 'required',
+            'concern_user_id' => 'required',
+            'details' => 'required',
+            'resolved_by' => '',
+            'status' => 'required',
+             'rating' => '',
+             'remarks' => '',
+             'action_taken' => '',
+             'resolved_at' => ''
+        ]);
+
+        //store all the input fields to the input
+        $input = $request->all();
+
+        //insert a new concern to the database
+        $new_concern_id = Concern::create($input)->concern_id;
+        
+        // $concern = new Concern();
+        // $concern->reported_at = $request->reported_at;
+        // $concern->concern_tenant_id = $request->reported_by;
+        // $concern->concern_unit_id = $unit_id;
+        // $concern->category = $request->category;
+        // $concern->urgency = $request->urgency;
+        // $concern->title = $request->title;
+        // $concern->details = $request->details;
+        // $concern->concern_user_id = $request->concern_user_id;
+        // $concern->save();
 
         $unit = Unit::findOrFail($unit_id)->unit_no;
         
@@ -203,16 +263,81 @@ class ConcernController extends Controller
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         
+         return redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$request->concern_tenant_id.'/concern/'.$new_concern_id.'/materials')->with('success', 'Concern is added sucessfully.');
 
-
-         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-            return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
-        }else{
-            return redirect('/property/'.$property_id.'/room/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
-        }
+        //  if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
+        //     return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
+        // }else{
+        //     return redirect('/property/'.$property_id.'/room/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
+        // }
 
       
 
+    }
+
+    public function materials(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
+
+        Session::put('current-page', 'concerns');
+
+        $particulars = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
+        $materials = DB::table('materials_for_concerns')
+        ->where('concern_id_foreign', $concern_id)
+        ->get();
+
+        $room  = Unit::findOrFail($room_id);
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $concern = Concern::findOrFail($concern_id);
+
+        return view('webapp.concerns.materials', compact('room','tenant','concern','particulars','materials'));
+    }
+
+    public function store_materials(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
+
+        $request->validate([
+            'material' => 'required', 
+            'quantity' => 'required',
+            'price' => 'required',
+            'total_cost' => 'required',
+        ]);
+
+        DB::table('materials_for_concerns')
+        ->insert(
+                    [
+                        'description' => $request->material, 
+                        'quantity' => $request->quantity,
+                        'price' => $request->price,
+                        'total_cost' => $request->total_cost,
+                        'concern_id_foreign' => $concern_id,
+                        'created_at' => Carbon::now()
+                    ]
+                );
+
+         //get the last added bill no of the property
+         $current_bill_no = DB::table('contracts')
+         ->join('units', 'unit_id_foreign', 'unit_id')
+         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+         ->join('bills', 'tenant_id', 'bill_tenant_id')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->max('bill_no') + 1;  
+
+        Bill::create([
+            'bill_no' => $current_bill_no,
+            'bill_tenant_id' => $tenant_id,
+            'date_posted' => Carbon::now(),
+            'particular_id_foreign' => '20',
+            'amount'=> $request->total_cost,
+        ]);
+
+
+        return redirect('/property/'.Session::get('property_id').'/room/'.$room_id.'/tenant/'.$tenant_id.'/concern/'.$concern_id.'/materials')->with('success', 'Material is addedd successfully!');
     }
   
     public function store(Request $request, $property_id, $tenant_id)
