@@ -183,6 +183,93 @@ class ConcernController extends Controller
 
         return view('webapp.concerns.create-room-concern', compact('room', 'tenants', 'owners', 'users','particulars'));
      }
+
+     public function view_room_concern(Request $request, $property_id, $room_id, $tenant_id, $concern_id, $endorsed_to, $resolved_by){
+
+        $tenants = DB::table('contracts')
+        ->select('*', 'contracts.status as contract_status')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
+        ->where('unit_id', $room_id)
+        ->get();
+
+        $owners = DB::table('certificates')
+        ->join('owners', 'owner_id_foreign', 'owner_id')
+        ->where('certificates.unit_id_foreign', $room_id)
+        ->get();
+
+        $users = DB::table('users_properties_relations')
+        ->join('users','user_id_foreign','id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->whereNotIn('user_type' ,['tenant', 'owner'])
+        ->get();
+
+        $particulars = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
+        $room  = Unit::findOrFail($room_id);
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $concern = Concern::findOrFail($concern_id);
+
+        $endorsed_to = User::findOrFail($endorsed_to);
+
+        $resolved_by = User::findOrFail($resolved_by);
+
+        return view('webapp.concerns.view-room-concern', compact('room', 'tenants', 'owners', 'users','particulars', 'tenant','concern','endorsed_to','resolved_by'));
+     }
+
+     public function update_room_concern(Request $request, $property_id, $room_id, $concern_id ){
+
+        Session::put('current-page', 'concerns');
+
+        $request->validate([
+            'reported_at' => 'required', 
+            'concern_unit_id' => 'required',
+            'concern_tenant_id' => 'required',
+            'contact_no' => 'required',
+            'details' => 'required',
+            'urgency' => 'required',
+            'is_warranty' => 'required',
+            'scheduled_at' => 'required',
+            'concern_user_id' => 'required',
+            'details' => 'required',
+            'resolved_by' => '',
+            'status' => 'required',
+             'rating' => '',
+             'remarks' => '',
+             'action_taken' => '',
+             'resolved_at' => ''
+        ]);
+
+        Concern::where('concern_id', $concern_id)
+        ->update([
+            'reported_at' => $request->reported_at, 
+            'concern_unit_id' => $request->concern_unit_id,
+            'concern_tenant_id' => $request->concern_tenant_id,
+            'contact_no' => $request->contact_no,
+            'details' => $request->details,
+            'urgency' => $request->urgency,
+            'is_warranty' => $request->is_warranty,
+            'scheduled_at' => $request->scheduled_at,
+            'concern_user_id' => $request->concern_user_id,
+            'details' => $request->details,
+            'resolved_by' => $request->resolved_by,
+            'status' => $request->status,
+             'rating' => $request->rating,
+             'remarks' => $request->remarks,
+             'action_taken' => $request->action_taken,
+             'resolved_at' => $request->resolved_at,
+        ]);
+
+        return back()->with('success', 'Concern is updated successfully!');
+     }
+
     public function create($property_id, $tenant_id)
     {
         Session::put('current-page', 'concerns');

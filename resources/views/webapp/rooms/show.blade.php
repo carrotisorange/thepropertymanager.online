@@ -322,17 +322,12 @@ thead tr:nth-child(1) th {
             <tr>
               <?php $ctr=1; ?>
                <th>#</th>
-               
                  <th>Date Reported</th>
-                
-               
-    
-            
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>
-                 <th>Rating</th>
-                 <th>Feedback</th>
+                 <th>Details</th>
+                 <th></th>
             </tr>
             </thead>
             <tbody>
@@ -361,8 +356,8 @@ thead tr:nth-child(1) th {
                   @endif
                 </td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-                <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td>
+                <td>{{ $item->details }}</td>
+                <td><a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i class="fas fa-eye"></i> View</a></td>
             </tr>
              @endforeach
             </tbody>
