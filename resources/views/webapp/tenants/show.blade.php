@@ -663,6 +663,7 @@ thead tr:nth-child(1) th {
                          <th>Bill amount</th>
                          <th>Amount paid</th>
                          <th>Balance</th>
+                         <th></th>
                          {{-- <th>Action</th> --}}
                        </tr>
                   </thead>
@@ -685,19 +686,12 @@ thead tr:nth-child(1) th {
                            <span>{{ number_format($item->balance,2) }}</span>
                            @endif
                            </td>
-                           <td>
-                            {{-- <form action="/property/{{ Session::get('property_id') }}/tenant/{{ $item->bill_tenant_id }}/bill/{{ $item->bill_id }}/action" method="GET" onchange="submit();">
-                              <select class="" name="bill_option" id="">
-                                <option value="">Select your option</option>
-                                <option value="Debit memo">Debit memo</option>
-                              </select>
-                            </form> --}}
-                           </td>
+                           <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a></td>
                         </tr>                       
                     @endforeach
                     <tr>
                       <th>TOTAL</th>
-                       <th>Date posted</th>
+                       <th></th>
                          <th></th>
                          <th></th>
                          <th></th>
