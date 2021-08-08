@@ -28,10 +28,11 @@
             </div>
           </div>
           <p class="mt-3 mb-0 text-sm">
-            @foreach ($tenants as $item)
-            <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->first_name.' '.$item->last_name }}</span>
+            @foreach ($rooms as $item)
+            <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->building.' - '.$item->unit_no.' ('.$item->status.')' }}</span>
             <br>
             @endforeach
+           
           </p>
         </div>
       </div>
@@ -52,12 +53,10 @@
             </div>
           </div>
           <p class="mt-3 mb-0 text-sm">
-            <p class="mt-3 mb-0 text-sm">
-                @foreach ($rooms as $item)
-                <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->building.' - '.$item->unit_no.' ('.$item->status.')' }}</span>
-                <br>
-                @endforeach
-              </p>
+            @foreach ($tenants as $item)
+            <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->first_name.' '.$item->last_name }}</span>
+            <br>
+            @endforeach   
           </p>
         </div>
       </div>
