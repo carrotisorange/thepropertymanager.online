@@ -290,6 +290,15 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/concerns/{concern_id}', 'Concer
 Route::put('/concerns/{concern_id}', 'ConcernController@update')->middleware(['auth', 'verified']);
 
 //ROUTES FOR BillController
+
+//routes for tenants' bills
+//route to create a tenant bill
+Route::get('/property/{property_id}/tenant/{tenant_id}/create/bill', 'BillController@create_tenant_bill')->middleware(['auth', 'verified']);
+
+//route to post tenant a tenant bill
+Route::post('/property/{property_id}/tenant/{tenant_id}/store/bill', 'BillController@store_tenant_bill')->middleware(['auth', 'verified']);
+
+
 //route to create bills for new tenant
 Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/create/bill', 'BillController@create')->middleware(['auth', 'verified']);
 //route to create bills for removing bills

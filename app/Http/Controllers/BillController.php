@@ -135,6 +135,70 @@ class BillController extends Controller
        
     }
 
+    public function create_tenant_bill($property_id, $tenant_id){
+        
+        $particulars = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
+        $bills = Bill::join('particulars','particular_id_foreign', 'particular_id')
+        ->where('bill_tenant_id', $tenant_id)
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->get();
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.bills.create-tenant-bill', compact('particulars','bills','tenant'));
+    }
+
+    public function store_tenant_bill(Request $request, $property_id, $tenant_id){
+
+        $request->validate([
+            'particular_id_foreign' => 'required',
+            'amount' => 'required',
+            'start' => 'required',
+            'end' => 'required'
+         ]);
+ 
+           //get the last added bill no of the property
+           $current_bill_no = DB::table('contracts')
+           ->join('units', 'unit_id_foreign', 'unit_id')
+           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+           ->join('bills', 'tenant_id', 'bill_tenant_id')
+           ->where('property_id_foreign', Session::get('property_id'))
+           ->max('bill_no') + 1;  
+ 
+          //post the additional bill
+          Bill::create([
+             'bill_no' => $current_bill_no,
+             'bill_tenant_id' => $tenant_id,
+             'date_posted' => Carbon::now(),
+             'particular_id_foreign' => $request->particular_id_foreign,
+             'amount'=> $request->amount,
+             'start' => $request->start, 
+             'end' => $request->start,
+         ]);
+
+        $particulars = DB::table('particulars')
+        ->join('property_bills', 'particular_id', 'particular_id_foreign')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('particular', 'asc')
+        ->get();
+
+        $bills = Bill::join('particulars','particular_id_foreign', 'particular_id')
+        ->where('bill_tenant_id', $tenant_id)
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->get();
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return back()->with('success', 'Bill is created successfully!');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -164,6 +228,8 @@ class BillController extends Controller
     public function filter(Request $request){
 
         Session::put('current-page', 'bulk-billing');
+
+        $particular = Particular::findOrFail($request->particular);
 
         $property_bills = DB::table('particulars')
          ->join('property_bills', 'particular_id', 'particular_id_foreign')
@@ -207,7 +273,7 @@ class BillController extends Controller
                     ->havingRaw('amount != 0')
                     ->get();
             } 
-             return view('webapp.bills.index', compact('bills', 'property_bills'));
+             return view('webapp.bills.index', compact('bills', 'property_bills','particular'));
          }else{
              return view('layouts.arsha.unregistered');
          }
@@ -332,6 +398,7 @@ class BillController extends Controller
         ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
+        ->where('contracts.status', 'active')
         ->get();
 
         $particular = Particular::findOrFail($particular_id);
@@ -425,7 +492,9 @@ class BillController extends Controller
             ->update([
                 'amount' => $request->input('amount'.$i),
                 'start' => $request->input('start'.$i),
-                'end' => $request->input('end'.$i)
+                'end' => $request->input('end'.$i),
+                'date_posted' => Carbon::now(),
+                'bill_unit_id' => $request->input('room_id'.$i),
             ]);
             }
         }

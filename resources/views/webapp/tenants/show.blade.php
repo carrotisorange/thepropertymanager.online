@@ -630,7 +630,8 @@ thead tr:nth-child(1) th {
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
+        {{-- <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>  --}}
+        <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/create/bill" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
         {{-- @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
           @endif --}}
@@ -649,7 +650,7 @@ thead tr:nth-child(1) th {
     <p class="text-danger text-center">No bills found!</p>
 
             @else
-            <div class="col-md-12">
+          
                 <div class="table-responsive" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
                   <table class="table table-hover">
                     <?php $ctr=1; ?>
@@ -712,7 +713,7 @@ thead tr:nth-child(1) th {
               </div>
           
               
-                </div>
+          
 
             @endif
 
@@ -729,7 +730,7 @@ thead tr:nth-child(1) th {
         
         <p class="text-danger text-center">No payments found!</p>
         @else
-        <div class="col-md-12">
+        
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
             <table class="table table-hover">
               <thead>
@@ -779,7 +780,7 @@ thead tr:nth-child(1) th {
                 @endforeach
           </table>
           </div>
-        </div>
+     
         @endif
       </div>
     </div>

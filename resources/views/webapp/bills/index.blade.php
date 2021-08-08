@@ -53,8 +53,8 @@ thead tr:nth-child(1) th {
   <div class="col-md-12 text-center">
    {{-- <p class="text-left"> Showing <b>{{ $collections->count() }} </b> payments</p> --}}
     {{-- @if(Session::get(Auth::user()->id.'date')) --}}
-    <p class="text-center"> <span class=""> <small> Showing {{ number_format($bills->count(),0) }} bills posted on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
-    {{-- @endif --}}
+    <p class="text-center"><small> Showing <b>{{ number_format($bills->count(),0).' '.$particular->particular }}</b> bills... </small> </p>
+    {{-- @endif posted on <b>{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}</b>--}}
   </div>
 </div>
 {{-- @if($bills->count() <=0 )
@@ -90,23 +90,23 @@ thead tr:nth-child(1) th {
   @foreach ($bills as $item)
   <tr>
     <th>{{ $ctr++ }}</th>
-    <th>{{ Carbon\Carbon::parse($item->date_posted)->format('d M, Y') }}</th>
-    <th>{{ $item->bill_no }}</th>  
-    <th>
+    <td>{{ Carbon\Carbon::parse($item->date_posted)->format('d M, Y') }}</td>
+    <td>{{ $item->bill_no }}</td>  
+    <td>
      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
      <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
      @else
      <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
      @endif
-    </th>
-    <th>
+    </td>
+    <td>
       @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->building.' '.$item->unit_no }}</a>
       @else
       <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->building.' '.$item->unit_no }}</a>
       @endif
      
-    </th>
+    </td>
     <td>{{ $item->particular }}</td>
    
     <td colspan="2">

@@ -19,14 +19,14 @@ thead tr:nth-child(1) th {
 {{-- header of the page --}}
 <div class="row align-items-center py-4">
   <div class="col text-left">
-    <h6 class="h2 text-dark d-inline-block mb-0">Creating {{ $particular->particular }} bills</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Creating <b>{{ $bills->count().' '.$particular->particular }}</b> bills</h6>
   </div>
   
   <div class="col text-right">
     <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back </a> 
     <a href="/property/{{ Session::get('property_id') }}/create/bill/{{ $particular->particular_id }}/batch/{{ $batch_no }}/options" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
    
-    <button type="submit" form="createBulkBillsForm" class="btn btn-primary btn-block"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
+    <button type="submit" form="createBulkBillsForm" class="btn btn-primary"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
     
   </div>
 </div>
@@ -49,6 +49,7 @@ thead tr:nth-child(1) th {
         $end_ctr = 1;
         $amount_ctr = 1;
         $bill_id_ctr =1;
+        $room_id_ctr =1;
     ?>
       <form id="createBulkBillsForm" action="/property/{{ Session::get('property_id') }}/create/bill/{{ $particular->particular_id }}/batch/{{ $batch_no}}/store" method="POST">
         @csrf
@@ -59,10 +60,11 @@ thead tr:nth-child(1) th {
           <th>{{ $ctr++ }}</th>
           <td>{{ $item->first_name.' '.$item->last_name }}</td>
           <input form="createBulkBillsForm" type="hidden" name="bill_id{{ $bill_id_ctr++ }}" value="{{ $item->bill_id }}">
+          <input form="createBulkBillsForm" type="hidden" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
           <td>{{ $item->building.' '.$item->unit_no }}</td>
-          <td><input form="createBulkBillsForm" type="date" name="start{{ $start_ctr++ }}" class="form-control" value="{{ $item->start }}"></td>
-          <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" class="form-control" value="{{ $item->end }}"></td>
-          <td><input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" class="form-control" step="0.001" value="{{ $item->amount }}"></td>
+          <td><input form="createBulkBillsForm" type="date" name="start{{ $start_ctr++ }}" value="{{ $item->start }}"></td>
+          <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" value="{{ $item->end }}"></td>
+          <td><input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001" value="{{ $item->amount }}"></td>
           <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a></td>
         </tr>
       @endforeach
