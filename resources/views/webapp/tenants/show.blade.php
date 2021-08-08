@@ -185,12 +185,12 @@ thead tr:nth-child(1) th {
             </table>
             @if($tenant->type_of_tenant === 'studying')
             <p>
-              <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-eye"></i>  View tenant's educational background</a>
+              <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-eye"></i>  View tenant's educational background</a>
              
             </p>
             @else
             <p>
-              <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-eye"></i>   View tenant's employment information</a>
+              <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fas fa-eye"></i>   View tenant's employment information</a>
              
             </p>
             @endif
@@ -286,7 +286,7 @@ thead tr:nth-child(1) th {
   @enderror
     <br>
    
-    <button class="btn btn-primary btn-sm shadow-sm btn-user btn-block" form="uploadImageForm"><i class="fas fa-upload fa-sm text-white-50"></i> Upload tenant image </button>
+    <button class="btn btn-primary shadow-sm btn-user btn-block" form="uploadImageForm"><i class="fas fa-upload fa-sm text-white-50"></i> Upload tenant image </button>
 
   </div>
 
@@ -294,7 +294,7 @@ thead tr:nth-child(1) th {
       </div>
 
       <div class="tab-pane fade" id="guardians" role="tabpanel" aria-labelledby="nav-guardians-tab">
-        <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
+        <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addGuardian" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         
         @if($guardians->count() < 1)
@@ -336,7 +336,7 @@ thead tr:nth-child(1) th {
 
       <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
         {{-- <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>   --}}
-        <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/create" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>  
+        <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/create" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         @if($concerns->count() < 1)
         <p class="text-danger text-center">No concerns found!</p>
@@ -423,7 +423,7 @@ thead tr:nth-child(1) th {
 
       
       <div class="tab-pane fade" id="violations" role="tabpanel" aria-labelledby="nav-violations-tab">
-        <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/violation/create" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>  
+        <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/violation/create" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>  
         <br><br>
         @if($violations->count() < 1)
         <p class="text-danger text-center">No violations found!</p>
@@ -473,7 +473,7 @@ thead tr:nth-child(1) th {
 
       <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
 
-       <p class="text-left"> <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>  </p>
+       <p class="text-left"> <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addContract" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a>  </p>
       
       <div style="display:none" id="showSelectedContract" class="col-md-6 p-0 m-0 mx-auto text-center">
       <div class="alert alert-success alert-dismissable custom-success-box">
@@ -630,12 +630,12 @@ thead tr:nth-child(1) th {
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
-        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a> 
+        <a href="#" data-toggle="modal" data-target="#addBill" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
         {{-- @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
           <a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
           @endif --}}
           @if($balance->count() > 0)
-          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export</span></a>
+          <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/bills/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
           {{-- @if($tenant->email_address !== null)
           <a  target="_blank" href="/units/{{ $tenant->unit_tenant_id }}/tenants/{{ $tenant->tenant_id }}/bills/send" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</span></a>
           @endif --}}
@@ -720,10 +720,10 @@ thead tr:nth-child(1) th {
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
         @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
           @if($balance->count() > 0)
-          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
+          <a href="#" data-toggle="modal" data-target="#acceptPayment" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
           @endif
         @endif 
-        <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/payments/export" class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Export</span></a>
+        <a  target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/payments/export" class="btn btn-primary"><i class="fas fa-download"></i> Export</span></a>
         <br><br>
         @if($payments->count() < 1)
         
@@ -845,7 +845,7 @@ thead tr:nth-child(1) th {
                       @csrf
                     <span>
                       <p class="text-right">
-                      <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Close</button>
+                      <button type="button" class="d-none d-sm-inline-block btn btn-secondary shadow-sm" data-dismiss="modal"><i class="fas fa-times fa-sm text-white-50"></i> Close</button>
                       <button class="btn btn-primary btn btn-primary" title="for manager and admin access only" type="submit" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-paper-plane fa-sm text-white-50"></i> Send</button>
                       </p>
                     </form>
@@ -899,7 +899,7 @@ thead tr:nth-child(1) th {
         </span>
     @enderror
     </div>
-    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Submit</button> </p>
+    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button> </p>
     
    </div>
 
