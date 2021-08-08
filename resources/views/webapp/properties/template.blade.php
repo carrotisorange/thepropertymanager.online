@@ -118,9 +118,9 @@
              {{-- @else
              <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> Property</a>
              @endif --}}
-             @if($properties->count()>1)
+             {{-- @if($properties->count()>1)
                 <a href="{{ route('view-portforlio') }}" class="btn btn-primary"><i class="fas fa-chart-bar"></i> Portforlio</a>
-             @endif
+             @endif --}}
              @if (Auth::user()->role_id_foreign === 4)
              @if($users > 1)
              <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary"><i class="fas fa-plus"></i> User </a>
