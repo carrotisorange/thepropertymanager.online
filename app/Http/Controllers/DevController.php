@@ -57,7 +57,14 @@ class DevController extends Controller
     {
         Session::put('current-page', 'properties');
 
-         $properties = Property::all();
+        $properties = DB::table('properties')
+         ->join('property_types', 'property_type_id_foreign', 'property_type_id')
+        //  ->join('users_properties_relations', 'property_id', 'property_id_foreign')
+        //  ->join('users', 'user_id_foreign', 'id')
+         ->groupBy('property_id')
+        //  ->groupBy('users.id')
+         ->orderBy('properties.created_at', 'desc')
+         ->get();
 
         return view('layouts.dev.properties', compact('properties'));
     }

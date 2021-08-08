@@ -14,10 +14,11 @@
           <div class="card-body table-responsive">
             <table class="table table-hover">
               <thead class="text-primary">
-                
-                <th>Name</th>
-                <th>Type</th>
-                <th>Ownership</th>
+                <?php $ctr=1; ?>
+                <th>#</th>
+                <th>Property</th>
+                <th>Property type</th>
+               
                 <th>Mobile</th>
                 <th>Address</th>
          
@@ -25,9 +26,10 @@
               <tbody>
                 @foreach ($properties as $item)
                 <tr>
+                  <th>{{ $ctr++ }}</th>
                   <td><a href="/property/{{ $item->property_id }}/view"> {{ $item->name }}</a></td>
-                  <td>{{ $item->type }}</td>
-                  <td>{{ $item->ownership }}</td>
+                  <td>{{ $item->property_type }}</td>
+              
                   <td>{{ $item->mobile }}</td>
                   <td>{{ $item->address.', '.$item->country.', '.$item->zip }}</td>
                   </tr>
