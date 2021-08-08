@@ -91,6 +91,8 @@ Route::get('/property/{property_id}/edit', 'PropertyController@edit')->middlewar
 Route::put('/property/{property_id}/update', 'PropertyController@update')->middleware(['auth', 'verified']);
 //route to view the portforlio
 Route::get('/property/portforlio', 'PropertyController@view_portforlio')->middleware(['auth', 'verified'])->name('view-portforlio');
+//route to view property
+Route::get('/property/{property_id}/view', 'PropertyController@view')->middleware(['auth', 'verified']);
 
 //ROUTES TO CREATE A PROPERTY
 // route to step 1 of 5 (create property)

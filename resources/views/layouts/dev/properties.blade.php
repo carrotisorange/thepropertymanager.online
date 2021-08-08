@@ -25,7 +25,7 @@
               <tbody>
                 @foreach ($properties as $item)
                 <tr>
-                  <td><a href="/property/{{ $item->property_id }}/edit"> {{ $item->name }}</a></td>
+                  <td><a href="/property/{{ $item->property_id }}/view"> {{ $item->name }}</a></td>
                   <td>{{ $item->type }}</td>
                   <td>{{ $item->ownership }}</td>
                   <td>{{ $item->mobile }}</td>

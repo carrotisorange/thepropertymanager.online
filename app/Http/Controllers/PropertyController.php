@@ -1516,6 +1516,20 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
         return view('webapp.properties.edit', compact('property'));
     }
 
+    public function view($property_id){
+        
+        $rooms = Property::findOrFail($property_id)->units;
+
+        $tenants = DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->select('*', 'contracts.status as contract_status')
+        ->where('property_id_foreign', $property_id)
+        ->orderBy('tenant_id', 'desc')
+        ->get();
+        
+        return view('webapp.properties.view', compact('rooms', 'tenants'));
+    }
     /**
      * Update the specified resource in storage.
      *
