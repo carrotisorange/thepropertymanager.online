@@ -327,7 +327,7 @@
       <td class="row1">Password</td>
     </tr>
     <tr>
-      <td><input form="submitForm" type="email" name="email" class="inputtext" required>
+      <td><input form="submitForm" type="text" name="email" class="inputtext" required>
       </td>
       <td><input form="submitForm" type="password" name="password" class="inputtext" required>
       </td>
