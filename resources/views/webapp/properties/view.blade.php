@@ -28,8 +28,10 @@
             </div>
           </div>
           <p class="mt-3 mb-0 text-sm">
-            <span class="text-white mr-2"> | </span>
-            <span class="text-nowrap"></span>
+            @foreach ($tenants as $item)
+            <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->first_name.' '.$item->last_name }}</span>
+            <br>
+            @endforeach
           </p>
         </div>
       </div>
@@ -50,8 +52,12 @@
             </div>
           </div>
           <p class="mt-3 mb-0 text-sm">
-            <span class="text-white mr-2"> | </span>
-            <span class="text-nowrap"></span>
+            <p class="mt-3 mb-0 text-sm">
+                @foreach ($rooms as $item)
+                <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->building.' - '.$item->unit_no.' ('.$item->status.')' }}</span>
+                <br>
+                @endforeach
+              </p>
           </p>
         </div>
       </div>
@@ -72,8 +78,10 @@
               </div>
             </div>
             <p class="mt-3 mb-0 text-sm">
-              <span class="text-white mr-2"> | </span>
-              <span class="text-nowrap"></span>
+              @foreach ($users as $item)
+              <span class="text-dark mr-2"><i class="fas fa-check-circle text-green"></i> {{ $item->role.' - '.$item->email }}</span>
+              <br>
+              @endforeach
             </p>
           </div>
         </div>
