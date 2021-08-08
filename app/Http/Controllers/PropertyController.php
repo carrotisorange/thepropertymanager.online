@@ -1528,7 +1528,7 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
         ->orderBy('tenant_id', 'desc')
         ->get();
 
-         return $users = DB::table('users_properties_relations')
+         $users = DB::table('users_properties_relations')
         ->join('users', 'user_id_foreign', 'id')
         ->join('roles', 'role_id_foreign', 'role_id')
         ->where('property_id_foreign', $property_id)
