@@ -1527,8 +1527,14 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
         ->where('property_id_foreign', $property_id)
         ->orderBy('tenant_id', 'desc')
         ->get();
+
+         $users = DB::table('users_properties_relations')
+        ->where('property_id_foreign', $property_id)
+        ->get();
+
+        $property = Property::findOrFail($property_id);
         
-        return view('webapp.properties.view', compact('rooms', 'tenants'));
+        return view('webapp.properties.view', compact('rooms', 'tenants', 'users', 'property'));
     }
     /**
      * Update the specified resource in storage.
