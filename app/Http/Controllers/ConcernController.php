@@ -225,7 +225,9 @@ class ConcernController extends Controller
 
         $resolved_by = User::findOrFail($resolved_by);
 
-        return view('webapp.concerns.view-room-concern', compact('room', 'tenants', 'owners', 'users','particulars', 'tenant','concern','endorsed_to','resolved_by','materials'));
+        $responses = Concern::findOrFail($concern_id)->responses;
+
+        return view('webapp.concerns.view-room-concern', compact('room', 'tenants', 'owners', 'users','particulars', 'tenant','concern','endorsed_to','resolved_by','materials','responses'));
      }
 
      public function update_room_concern(Request $request, $property_id, $room_id, $concern_id ){

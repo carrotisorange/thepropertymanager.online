@@ -25,31 +25,31 @@ thead tr:nth-child(1) th {
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="nav-room" aria-selected="true"><i class="fas fa-home text-indigo"></i> Room</a>
-          @if($tenants->count()<=0)
+          @if(!$tenants->count())
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab" aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <span class="badge badge-success badge-counter">{{ $tenants->count() }}</span></a>
           @endif
          
-          @if($owners->count()<=0)
+          @if(!$owners->count())
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie text-teal"></i> Owners <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-owners-tab" data-toggle="tab" href="#owners" role="tab" aria-controls="nav-owners" aria-selected="false"><i class="fas fa-user-tie text-teal"></i> Owners <span class="badge badge-success badge-counter">{{ $owners->count() }}</span></a>
           @endif
 
-          @if($remittances->count()<=0)
+          @if(!$remittances->count())
           <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd text-teal"></i> Remittances <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab" aria-controls="nav-remittances" aria-selected="false"><i class="fas fa-hand-holding-usd text-teal"></i> Remittances <span class="badge badge-success badge-counter">{{ $remittances->count() }}</span></a>
           @endif
 
-          @if($expenses->count()<=0)
+          @if(!$expenses->count())
           <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export text-danger"></i> Expenses <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-expenses-tab" data-toggle="tab" href="#expenses" role="tab" aria-controls="nav-expenses" aria-selected="false"><i class="fas fa-file-export text-danger"></i> Expenses <span class="badge badge-success badge-counter">{{ $expenses->count() }}</span></a>
           @endif
 
-          @if($pending_concerns->count()>0)
+          @if($pending_concerns->count())
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
           <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab" aria-controls="nav-concerns" aria-selected="false"><i class="fas fa-tools fa-sm text-cyan"></i> Concerns <span class="badge badge-success badge-counter">{{ $concerns->count() }}</span></a>
@@ -248,7 +248,7 @@ thead tr:nth-child(1) th {
         </div>
         </div>
         <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
-          @if($tenants->count() > 0)
+          @if($tenants->count())
             <p class="text-left">
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
               {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
@@ -256,7 +256,7 @@ thead tr:nth-child(1) th {
             @endif
             <div class="table-responsive text-nowrap">
               <table class="table table-hover">
-                @if($tenants->count() <= 0)
+                @if(!$tenants->count())
                 <tr>
                     <br><br>
                     <p class="text-center">
@@ -299,7 +299,7 @@ thead tr:nth-child(1) th {
         </div>
   
         <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
-          @if($concerns->count() > 0)
+          @if($concerns->count())
           <p class="text-left">
             <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/concern" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
             {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
@@ -310,7 +310,7 @@ thead tr:nth-child(1) th {
           <div class="col-md-12 mx-auto">
           <div class="table-responsive">
         
-            @if($concerns->count()<=-0)
+            @if(!$concerns->count())
             <br><br>
             <p class="text-center">
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/concern" class="btn btn-primary"><i class="fas fa-plus"></i> Report a concern</a>   
@@ -369,7 +369,7 @@ thead tr:nth-child(1) th {
         </div>
         
         <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="nav-owners-tab">
-          @if($owners->count() > 0)
+          @if($owners->count())
           <p class="text-left">
             <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner" class="btn btn-primary"><i class="fas fa-plus"></i> New</a> 
             {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
@@ -378,7 +378,7 @@ thead tr:nth-child(1) th {
     
   
 
-          @if($owners->count()<=-0)
+          @if(!$owners->count())
           <br><br>
           <p class="text-center">
             <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner" class="btn btn-primary"><i class="fas fa-plus"></i> Add an owner</a>   

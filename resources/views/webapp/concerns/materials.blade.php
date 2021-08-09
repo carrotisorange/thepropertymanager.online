@@ -15,27 +15,67 @@
       <div class="card">
         <div class="card-body">
       
-   
+          <div class="form-row">
+            <table class="table table-responsive" >
+              <thead>
+                <th>#</th>
+                <th>Material</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </thead>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input form="createBillForm" type="text" value="{{ old('material') }}" name="material" id="material" class="form-control">
+                        @error('material')
+                        <small class="text-danger">
+                          {{ $message }}
+                        </small>
+                      @enderror
+                    </td>
+                    <td>
+                        <input form="createBillForm" type="number" value="{{ old('price') }}" name="price" id="price" class="form-control" oninput="autoCompute()">
+                        @error('price')
+                        <small class="text-danger">
+                          {{ $message }}
+                        </small>
+                        @enderror
+                    </td>
+                    <td>
+                        <input form="createBillForm" type="number" value="{{ old('quantity') }}" name="quantity" id="quantity" class="form-control" oninput="autoCompute()">
+                        @error('quantity')
+                        <small class="text-danger">
+                          {{ $message }}
+                        </small>
+                      @enderror
+                    </td>
+                    <td>
+                        <input form="createBillForm" type="number" min="1" value="{{ old('total_cost') }}" step="0.001" name="total_cost" id="total_cost" class="form-control" readonly>
+                        @error('total_cost')
+                        <small class="text-danger">
+                          {{ $message }}
+                        </small>
+                      @enderror
+                    </td>
+                    <td> <button form="createBillForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Save</button></td>
+                    </tr>   
+              </table>
+          </div>
  
       <div class="form-row">
           <table class="table">
               <?php $ctr = 1; ?>
-              <thead>
-                  <th>#</th>
-                  <th>Material</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                  <th></th>
-              </thead>
+             
               @foreach ($materials as $item)
               <tbody>
               <tr>
                 <th>{{ $ctr++ }}</th>
                 <td>{{ $item->description }}</td>
-                <td>{{ $item->price }}</td>
+                <td>{{ number_format($item->price,2) }}</td>
                 <td>{{ $item->quantity}}</td>
-                <td>{{ $item->total_cost }}</td>
+                <td>{{ number_format($item->total_cost, 2) }}</td>
                 <th></th>
                 {{-- <td><a class="text-danger" href="/material/{{ $item->material_id }}/delete"><i class="fas fa-times"></i> Remove</a></td> --}}
               </tr>
@@ -58,52 +98,13 @@
         @csrf
     </form>
      
-      <div class="form-row">
-        <table class="table table-responsive" >
-            <tr>
-                <td></td>
-                <td>
-                    <input form="createBillForm" type="text" value="{{ old('material') }}" name="material" id="material" class="form-control">
-                    @error('material')
-                    <small class="text-danger">
-                      {{ $message }}
-                    </small>
-                  @enderror
-                </td>
-                <td>
-                    <input form="createBillForm" type="number" value="{{ old('price') }}" name="price" id="price" class="form-control" oninput="autoCompute()">
-                    @error('price')
-                    <small class="text-danger">
-                      {{ $message }}
-                    </small>
-                    @enderror
-                </td>
-                <td>
-                    <input form="createBillForm" type="number" value="{{ old('quantity') }}" name="quantity" id="quantity" class="form-control" oninput="autoCompute()">
-                    @error('quantity')
-                    <small class="text-danger">
-                      {{ $message }}
-                    </small>
-                  @enderror
-                </td>
-                <td>
-                    <input form="createBillForm" type="number" min="1" value="{{ old('total_cost') }}" step="0.001" name="total_cost" id="total_cost" class="form-control" readonly>
-                    @error('total_cost')
-                    <small class="text-danger">
-                      {{ $message }}
-                    </small>
-                  @enderror
-                </td>
-                <td> <button form="createBillForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Add</button></td>
-                </tr>   
-          </table>
-      </div>
+     
       
       </div>
     
     <br>
     <div class="form-group col-md-11 mx-auto">
-        <a class="btn btn-primary btn-block" href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/#concerns"><i class="fas fa-check"></i> Finish</a>
+        <a class="btn btn-primary btn-block" href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/#concerns"> Finish</a>
     </div>
     </div>
   </div>

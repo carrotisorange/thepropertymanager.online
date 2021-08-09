@@ -22,7 +22,7 @@ thead tr:nth-child(1) th {
   </div>
 
 </div>
-@if($joborders->count() <=0 )
+@if(!$joborders->count())
 <p class="text-danger text-center">No job orders found!</p>
 
 @else

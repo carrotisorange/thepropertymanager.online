@@ -37,18 +37,13 @@ thead tr:nth-child(1) th {
 
 </div>
 </div>
-<div class="row">
-  <div class="col-md-12 text-center">
-   {{-- <p class="text-left"> Showing <b>{{ $collections->count() }} </b> payments</p> --}}
-    @if(Session::get(Auth::user()->id.'date'))
-    <p class="text-center"> <span class=""> <small> Showing {{ $collections->count() }} payments made on </small></span> <span class="text-danger">"{{ Carbon\Carbon::parse( Session::get(Auth::user()->id.'date'))->format('M d, Y') }}"<span></p>
-    @endif
-  </div>
-</div>
-@if($collections->count() <=0 )
+
+ <small> Showing <b>{{ $collections->count() }} </b> collections...</small>
+
+{{-- @if(!$collections->count())
 <p class="text-danger text-center">No collections found!</p>
 
-@else
+@else --}}
 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
   <?php $ctr = 1;?>
   <table class="table table-hover">
@@ -131,7 +126,7 @@ thead tr:nth-child(1) th {
 </tbody>
   </table>
    </div>
-@endif
+{{-- @endif --}}
 @endsection
 
 @section('scripts')
