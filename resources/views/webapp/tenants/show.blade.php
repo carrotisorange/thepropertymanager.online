@@ -578,7 +578,7 @@ thead tr:nth-child(1) th {
 
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Create access to the system</button>
+        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Generate</button>
         <br><br>
         @endif
      
@@ -586,10 +586,7 @@ thead tr:nth-child(1) th {
         <div class="col-md-12 mx-auto">
           <div class="table-responsive">
             <div class="table-responsive text-nowrap">
-             @if($access->count() <= 0)
-              <p class="text-center text-danger">No credentials found!</p>
-
-             @else
+        
              @foreach ($access as $item)
        
              <table class="table table-hover">
@@ -621,9 +618,6 @@ thead tr:nth-child(1) th {
               </thead>
              </table>
              @endforeach
-
-
-             @endif
             </div>
           </div>
         </div>
@@ -861,7 +855,7 @@ thead tr:nth-child(1) th {
   <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Add credentials</h5>
+    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Generate</h5>
   
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -875,7 +869,7 @@ thead tr:nth-child(1) th {
     </form>
     <div class="form-group">
       <small for="">Name</small>
-      <input type="text" name="name" form="userForm" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $tenant->first_name.' '.$tenant->last_name }}" required>
+      <input type="text" name="name" form="userForm" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $tenant->first_name.' '.$tenant->last_name }}" required readonly>
       @error('name')
       <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -900,7 +894,7 @@ thead tr:nth-child(1) th {
         </span>
     @enderror
     </div>
-    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button> </p>
+    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-primary btn-block"> Submit</button> </p>
     
    </div>
 
