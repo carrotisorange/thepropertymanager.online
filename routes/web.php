@@ -74,7 +74,7 @@ Route::put('/user/{user_id}', 'UserController@update_system_user')->middleware([
 //route to update a user
 Route::put('/user/{user_id}/update', 'UserController@update_system_user_info')->middleware(['auth', 'verified']);
 //route to logout a user
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->middleware(['auth', 'verified']);
+//Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->middleware(['auth', 'verified']);
 
 //ROUTES FOR PROPERTYCONTROLLER
 //route to display all properties
