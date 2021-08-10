@@ -117,8 +117,8 @@ thead tr:nth-child(1) th {
               </span>
             </td>
             {{-- <td>{{ $item->tenant_unique_id }}</td> --}}
-            <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}</a></th>
-            <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a></th>
+            <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a></th>
+            <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants">{{ $item->building.' '.$item->unit_no }}</a></th>
             <td>{{ $item->contract_status }}</td>
             <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
             <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>

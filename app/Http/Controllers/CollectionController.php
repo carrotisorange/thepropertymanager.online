@@ -146,7 +146,7 @@ class CollectionController extends Controller
             $tenant = Tenant::findOrFail($tenant_id);
             return view('webapp.collections.credit-memo', compact('payment', 'tenant'));
         }elseif($request->collection_option == 'export'){
-
+            return redirect('/property/'.Session::get('property_id').'/unit/'.$room_id.'/tenant/'.$tenant_id.'/payment/'.$payment_id.'/export');
         }
     }
 
@@ -563,6 +563,72 @@ class CollectionController extends Controller
     return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
 }
 
+
+public function export_payment($property_id, $room_id, $tenant_id, $payment_id){
+
+    $tenant = Tenant::findOrFail($tenant_id);
+
+    $room = Unit::findOrFail($room_id);
+
+    $payment = Payment::findOrFail($payment_id);
+   
+    $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+    ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+    
+    ->join('units', 'unit_id_foreign', 'unit_id')
+    ->join('particulars','particular_id_foreign', 'particular_id')
+    ->where('payment_id', $payment_id)
+    ->groupBy('payment_id')
+    ->orderBy('payment_created', 'desc')
+   ->get();
+
+    $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+    ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
+    ->where('bill_tenant_id', $tenant_id)
+    
+    ->groupBy('bill_id')
+    ->orderBy('bill_no', 'desc')
+    ->havingRaw('balance > 0')
+    ->get();
+
+    
+    $data = [
+                'tenant' => $tenant->first_name.' '.$tenant->last_name ,
+                'current_room' => $room->building.' '.$room->unit_no,
+                'collections' => $collections,
+                'balance' => $balance,
+                'payment_date' => $payment->payment_created,
+                'payment_ar' => $payment->ar_no
+            ];
+
+        
+    $notification = new Notification();
+    $notification->user_id_foreign = Auth::user()->id;
+    $notification->property_id_foreign = Session::get('property_id');
+    $notification->type = 'payment';
+    
+    $notification->message = Auth::user()->name.' exports '.$tenant->first_name.' '.$tenant->last_name.' payments.';
+    $notification->save();
+
+     Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+     $pdf = \PDF::loadView('webapp.collections.export', $data)
+     ->setPaper('a5', 'portrait');
+
+    // $pdf->setPaper('L');
+     $pdf->output();
+     $canvas = $pdf->getDomPDF()->getCanvas();
+     $height = $canvas->get_height();
+     $width = $canvas->get_width();
+     $canvas->set_opacity(.1,"Multiply");
+     $canvas->page_text($width/5, $height/2, Session::get('property_name'), null,
+      28, array(0,0,0),2,2,0);
+     return $pdf->stream();
+
+    // $pdf = \PDF::loadView('webapp.collections.export', $data)->setPaper('a5', 'portrait');
+
+    // return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-ar'.'.pdf');
+}
 
 
     public function export($property_id, $room_id, $tenant_id, $payment_id, $payment_created){

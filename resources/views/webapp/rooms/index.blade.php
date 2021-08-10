@@ -84,7 +84,7 @@
         
           <div class="col-md-2.5">
             @if($item->status === 'occupied')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
               @if($item->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
               @elseif($item->unit_type_id_foreign == '2')
@@ -96,7 +96,7 @@
             <small>  {{ $item->unit_no }}</small>
           </a>
             @elseif($item->status === 'vacant')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
+            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
               @if($item->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
               @elseif($item->unit_type_id_foreign == '2')
@@ -108,7 +108,7 @@
                 <small>  {{ $item->unit_no }}</small>
           </a>
           @elseif($item->status === 'dirty')
-          <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
+          <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
             @if($item->unit_type_id_foreign == '1')
             <i class="fas fa-home fa-2x"></i>
             @elseif($item->unit_type_id_foreign == '2')
@@ -121,7 +121,7 @@
         </a>
         @else
         
-        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
           @if($item->unit_type_id_foreign == '1')
           <i class="fas fa-home fa-2x"></i>
           @elseif($item->unit_type_id_foreign == '2')
@@ -152,7 +152,7 @@
           @if($unit->building === $item->building)
           <div class="col-md-2.5">
             @if($unit->status === 'occupied')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
               @if($unit->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
               @elseif($unit->unit_type_id_foreign == '2')
@@ -164,7 +164,7 @@
             <small>  {{ $unit->unit_no }}</small>
           </a>
             @elseif($unit->status === 'vacant')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
+            <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants" class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
               @if($unit->unit_type_id_foreign == '1')
               <i class="fas fa-home fa-2x"></i>
               @elseif($unit->unit_type_id_foreign == '2')
@@ -176,7 +176,7 @@
                 <small>  {{ $unit->unit_no }}</small>
           </a>
           @elseif($unit->status === 'dirty')
-          <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
+          <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
             @if($unit->unit_type_id_foreign == '1')
             <i class="fas fa-home fa-2x"></i>
             @elseif($unit->unit_type_id_foreign == '2')
@@ -189,7 +189,7 @@
         </a>
         @else
         
-        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
+        <a title="₱ {{ number_format ($item->rent, 2)}}/mo" href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants" class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
           @if($unit->unit_type_id_foreign == '1')
           <i class="fas fa-home fa-2x"></i>
           @elseif($unit->unit_type_id_foreign == '2')

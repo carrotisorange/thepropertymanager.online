@@ -70,7 +70,7 @@
          
          
           <?php $ctr = 1; ?>
-          <table class="table table-condensed table-bordered">
+          <table class="table table-condensed">
             <tr>
              
               {{-- <th>#</th> --}}
@@ -111,11 +111,13 @@
                 <tr>
                   <th>Total</th>
                   <th></th>
-                 
+                  <th></th>
+                  <th></th>
+                  <th></th>
                   <th class="text-right">{{ number_format($collections->sum('amt_paid'),2) }} </th>
                 </tr>
                 <tr>
-                  <th>Running Balance</th>
+                  <th> Balance</th>
                   <th></th>
                   {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th> --}}
                   <th  class="text-right">{{ number_format($balance->sum('balance'),2) }}</th>
@@ -125,10 +127,9 @@
               <table class="table table-condensed">
                 <tr>
                  <td> Prepared by: {{ Auth::user()->name }}
-                 <br>{{ Auth::user()->role_id_foreign }}</td>
+                 <br>Treasury</td>
                  <th></th>
-                 <td  class="text-right"> Noted by: 
-                   <br>Accounting Head</td>
+                 <td  class="text-right"> </td>
                </tr>
                 </table>
             </div>
