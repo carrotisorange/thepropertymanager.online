@@ -338,45 +338,29 @@ thead tr:nth-child(1) th {
         {{-- <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>   --}}
         <a  href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/create" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>  
         <br><br>
-        @if($concerns->count() < 1)
+        {{-- @if($concerns->count() < 1)
         <p class="text-danger text-center">No concerns found!</p>
-        @else
+        @else --}}
         <div class="row" >
           <div class="col-md-12" >
-        <div class="">
          <table class="table table-hover">
            <?php $ctr = 1; ?>
            <thead>
              <tr>
                <th>#</th>
-               
                  <th>Date Reported</th>
-                
-            
-                 {{-- <th>Type</th>
-                 <th>Title</th> --}}
                  <th>Urgency</th>
                  <th>Status</th>
                  <th>Assigned to</th>
                  <th>Rating</th>
                  <th>Actions</th>
-                 {{-- <th>Feedback</th> --}}
             </tr>
            </thead>
            <tbody>
              @foreach ($concerns as $item)
              <tr>
                <th>{{ $ctr++ }}</th>
-            
                <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-                 
-               
-                 {{-- <td>
-                   
-                     {{ $item->category }}
-                     
-                 </td>
-                 <td ><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a></td> --}}
                  <td>
                      @if($item->urgency === 'major and urgent')
                      <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -387,38 +371,31 @@ thead tr:nth-child(1) th {
                      @endif
                  </td>
                  <td>
-                  @if($item->concern_status === 'pending')
-                  <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
-                  @elseif($item->concern_status === 'active')
-                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+                  @if($item->status === 'pending')
+                  <i class="fas fa-clock text-warning"></i> {{ $item->status }}
+                  @elseif($item->status === 'active')
+                  <i class="fas fa-snowboarding text-primary"></i> {{ $item->status }}
                   @else
-                  <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+                  <i class="fas fa-check-circle text-success"></i> {{ $item->status }}
                   @endif
                  </td>
                  <td>{{ $item->name? $item->name: 'NULL' }}</td>
                  <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-                 {{-- <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td> --}}
                  <td>
                   <form action="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/action" method="GET" onchange="submit();">
                     <select class="" name="concern_action" id="">
                       <option value="" selected>Select your action</option>
                       <option value="view">View</option>
                       <option value="edit">Edit</option>
-                      
                     </select>
                   </form>
                  </td>
              </tr>
              @endforeach
            </tbody>
-         </table>
-        
-       </div>
-                
-                
+         </table>  
           </div>
       </div>
-      @endif
       </div>
 
       
@@ -491,9 +468,7 @@ thead tr:nth-child(1) th {
               <thead>
                 <?php $ctr = 1; ?>
                 <tr>
-                  {{-- <th><div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="selectAll" onclick="selectAll()" value="option1">
-                  </div> --}}
+                 
                 </th>
                   <th>#</th>
              
@@ -507,11 +482,7 @@ thead tr:nth-child(1) th {
               <tbody>
                @foreach ($contracts as $item)
                <tr>
-                 {{-- <th>
-                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" onclick="selectOne()" id="checkbox{{$item->contract_id}}" value="{{$item->contract_id}}">
-                  </div>
-                </th> --}}
+                
                 <th>{{ $ctr++ }}</th>
                
                 <th><a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id_foreign }}">{{  $item->building.' '.$item->unit_no }}</a></th>

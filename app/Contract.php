@@ -13,7 +13,7 @@ class Contract extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'conteact_id',
+        'contract_id',
         'unit_id_foreign',
         'tenant_id_foreign',
         'form_of_interaction',
@@ -26,9 +26,19 @@ class Contract extends Model
         'rent'
 ];
 
-    public function unit()
+    // public function unit()
+    // {
+    // return $this->belongsTo('App\Unit', 'unit_id');
+    // }
+
+    public function tenant()
     {
-    return $this->belongsTo('App\Unit', 'unit_id');
+        return $this->belongsTo(Tenant::class);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Unit::class);
     }
     
 

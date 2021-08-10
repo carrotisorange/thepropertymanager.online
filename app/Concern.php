@@ -30,7 +30,12 @@ class Concern extends Model
 
     public function tenant()
     {
-    return $this->belongsTo('App\Tenant');
+    return $this->belongsTo(Tenant::class);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Unit::class);
     }
 
     public function owner()

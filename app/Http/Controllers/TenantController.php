@@ -24,6 +24,7 @@ use Session;
 use App\UserProperty;
 use App\Notification;
 use App\OccupancyRate;
+use App\Contract;
 
 class TenantController extends Controller
 {
@@ -607,33 +608,27 @@ class TenantController extends Controller
             ->orderBy('contracts.created_at', 'desc')
             ->get();
 
+            // $contracts = Contract::get();
+
             $guardians = Tenant::findOrFail($tenant_id)->guardians;
 
-             $users = DB::table('users_properties_relations')
+            
+            $users = DB::table('users_properties_relations')
              ->join('users','user_id_foreign','id')
             ->where('property_id_foreign', Session::get('property_id'))
             ->whereNotIn('user_type' ,['tenant', 'owner'])
             ->get();
-    
-            
-            $concerns = DB::table('concerns')
-            ->join('tenants', 'concern_tenant_id', 'tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
-            ->leftJoin('units', 'concern_unit_id', 'unit_id')
-            ->select('*', 'concerns.status as concern_status')
-            ->where('tenant_id', $tenant_id)
-            ->orderBy('concern_id', 'desc')
-            ->get();
 
-        $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-       ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-       
-       ->join('units', 'unit_id_foreign', 'unit_id')
-       ->join('particulars','particular_id_foreign', 'particular_id')
-       ->where('bill_tenant_id', $tenant_id)
-       ->groupBy('payment_id')
-       ->orderBy('payment_created', 'desc')
-      ->get();
+            $concerns  = Concern::where('concern_tenant_id', $tenant_id)->get();
+
+             $payments = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+            ->join('units', 'unit_id_foreign', 'unit_id')
+            ->join('particulars','particular_id_foreign', 'particular_id')
+            ->where('bill_tenant_id', $tenant_id)
+            ->groupBy('payment_id')
+            ->orderBy('payment_created', 'desc')
+            ->get();
        
               if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
                 $current_bill_no = DB::table('units')

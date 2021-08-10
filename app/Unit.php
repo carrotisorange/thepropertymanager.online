@@ -35,7 +35,7 @@ class Unit extends Model
 
     public function contracts()
     {
-        return $this->hasMany('App\Contract', 'unit_id_foreign');
+        return $this->hasMany(Contract::class);
     }
 
     public function certificates()
