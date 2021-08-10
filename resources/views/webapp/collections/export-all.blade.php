@@ -102,28 +102,31 @@
               <td>{{ number_format($item->amt_paid,2) }}</td>
              
             </tr>
+            <tr>
+              <th>Total</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>{{ number_format($collections->sum('amt_paid'),2) }} </th>
+            </tr>
+            <tr>
+              <th> Balance</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th> --}}
+              <th>{{ number_format($balance->sum('balance'),2) }}</th>
+            </tr>
      
             @endforeach
         </table>
         <div class="row">
             <div class="col-md-12">
-              <table class="table table-condensed table-borderless">
-                <tr>
-                  <th>Total</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th class="text-right">{{ number_format($collections->sum('amt_paid'),2) }} </th>
-                </tr>
-                <tr>
-                  <th> Balance</th>
-                  <th></th>
-                  {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th> --}}
-                  <th  class="text-right">{{ number_format($balance->sum('balance'),2) }}</th>
-                </tr>
-               
-              </table>
+              
               <table class="table table-condensed">
                 <tr>
                  <td> Prepared by: {{ Auth::user()->name }}
