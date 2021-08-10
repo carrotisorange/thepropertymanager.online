@@ -102,6 +102,9 @@
               <td>{{ number_format($item->amt_paid,2) }}</td>
              
             </tr>
+           
+     
+            @endforeach
             <tr>
               <th>Total</th>
                   <th></th>
@@ -121,8 +124,6 @@
               {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span></th> --}}
               <th>{{ number_format($balance->sum('balance'),2) }}</th>
             </tr>
-     
-            @endforeach
         </table>
         <div class="row">
             <div class="col-md-12">
