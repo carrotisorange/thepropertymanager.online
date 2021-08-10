@@ -103,7 +103,7 @@
               @endforeach
               <tr>
                   <th>Total</th>
-                  <th class="text-right" colspan="6">{{ number_format($collections->sum('amt_paid')) }}</th>
+                  <th class="text-right" colspan="6">{{ number_format($collections->sum('amt_paid',2)) }}</th>
               </tr>
               <tr>
                 <th>Balance</th>
