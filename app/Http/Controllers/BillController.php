@@ -1334,7 +1334,7 @@ DB::table('properties')
 
     public function export($property_id,$tenant_id)
     {
-        $tenant = Tenant::findOrFail($tenant_id);
+       $tenant = Tenant::findOrFail($tenant_id);
 
          $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
@@ -1344,7 +1344,6 @@ DB::table('properties')
         ->where('particular_id_foreign', '1')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
-  
         ->get();
 
         $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
@@ -1363,7 +1362,7 @@ DB::table('properties')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
-        ->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
+        //->where('start', '<', Carbon::now()->subMonth()->firstOfMonth())
         ->where('particular_id_foreign', '16')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')

@@ -30,12 +30,12 @@ thead tr:nth-child(1) th {
            <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
-      
-              
+              <th>Tenant</th>
+              <th>Email</th>
               <th>Mobile</th>
   
-              <th>Movein on</th>
+              <th>Contract</th>
+              <th></th>
             
           </tr>
            </thead>
@@ -44,11 +44,8 @@ thead tr:nth-child(1) th {
             <tr>
                 <th>{{ $tenant_ctr++ }}</th>
                 <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}">{{ $tenant->first_name.' '.$tenant->middle_name.' '.$tenant->last_name }}</a></th>
-                
-              
-              
+                <th>{{ $tenant->email }}</th>
                 <td>{{ $tenant->contact_no }}</td>
-        
                 <td>{{ Carbon\Carbon::parse($tenant->created_at)->format('M d, Y') }}</td>
                
             </tr>

@@ -94,7 +94,7 @@
             @foreach ($previous_bills as $item)
             <tr>
               <th></th>
-              <td>({{  $item->particular }}) {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
+              <td>{{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
               <td>{{ number_format($item->balance,2) }}</td>
             </tr>
             @endforeach
@@ -102,21 +102,21 @@
              @if($previous_surcharges->count() <= 0)
              
              <tr>
-              <td>Previous Surcharges:</td>
+              <td>Surcharges:</td>
               <th></th>
               <th></th>
             </tr>
             
              @else
              <tr>
-              <td>Previous Surcharges:</td>
+              <td>Surcharges:</td>
               <th></th>
               <th></th>
             </tr>
              @foreach ($previous_surcharges as $item)
              <tr>
                <th></th>
-               <td>({{ $item->particular }}) {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
+               <td>{{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
                <td>{{ number_format($item->balance,2) }}</td>
              </tr>
              @endforeach
@@ -138,7 +138,7 @@
              @foreach ($current_bills as $item)
              <tr>
                <th></th>
-               <td>({{  $item->particular }}) {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
+               <td>{{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
                <td>{{ number_format($item->balance,2) }}</td>
              </tr>
              @endforeach
