@@ -67,7 +67,7 @@ thead tr:nth-child(1) th {
 <p class="text-danger text-center">No owners found!</p>
 
 @else
-<span class=""> <small> Showing <b>{{ $owners->count() }} </b> of {{ $count_owners }} owners...</span></small>
+<span class=""> <small> Showing <b>{{ $owners->count() }} </b> of {{ $count_owners }} {{ Str::plural('owner', $count_owners) }}</span></small>
 
 <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 

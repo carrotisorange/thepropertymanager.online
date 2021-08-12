@@ -13,6 +13,12 @@ use App\Payable;
 
 class PayableController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(['auth']);
+    }
+    
+    
     /**
      * Display a listing of the resource.
      *

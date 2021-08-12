@@ -26,6 +26,12 @@ use Illuminate\Support\Facades\Hash;
 
 class PropertyController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(['auth']);
+    }
+    
+    
     /**
      * Display a listing of the resource.
      *

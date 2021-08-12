@@ -14,6 +14,12 @@ use App\Notification;
 
 class UnitController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(['auth']);
+    }
+    
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +27,7 @@ class UnitController extends Controller
      */
     public function index(Request $request, $property_id)
     {
+        
         Session::put('current-page', 'units');
 
         $notification = new Notification();
