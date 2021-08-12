@@ -35,17 +35,6 @@ class ConcernController extends Controller
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
        if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4){
-            // $all_concerns = DB::table('contracts')
-            // ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
-            // ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-            // ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            // ->leftJoin('users', 'concern_user_id', 'id')
-            // ->select('*', 'concerns.status as concern_status')
-            // ->where('property_id_foreign', Session::get('property_id'))
-            // ->orderBy('reported_at', 'desc')
-            // ->orderBy('urgency', 'desc')
-            // ->orderBy('concerns.status', 'desc')
-            // ->get();
 
             $all_concerns = DB::table('contracts')
             ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')

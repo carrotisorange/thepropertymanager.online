@@ -608,11 +608,8 @@ class TenantController extends Controller
             ->orderBy('contracts.created_at', 'desc')
             ->get();
 
-            // $contracts = Contract::get();
-
             $guardians = Tenant::findOrFail($tenant_id)->guardians;
-
-            
+ 
             $users = DB::table('users_properties_relations')
              ->join('users','user_id_foreign','id')
             ->where('property_id_foreign', Session::get('property_id'))

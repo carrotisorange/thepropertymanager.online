@@ -33,7 +33,7 @@ class Contract extends Model
 
     public function tenant()
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo('App\Tenant', 'tenant_id_foreign');
     }
 
     public function room()
