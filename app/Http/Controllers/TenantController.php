@@ -70,11 +70,8 @@ class TenantController extends Controller
          ->join('units', 'unit_id_foreign', 'unit_id')
          ->join('tenants', 'tenant_id_foreign', 'tenant_id')
          ->where('property_id_foreign', Session::get('property_id'))
-        
-         
          ->count();
       
-
         if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5 ){
             
             if($search === null){
@@ -135,11 +132,8 @@ class TenantController extends Controller
                     ->select('*', 'contracts.status as contract_status')
                      ->where('property_id_foreign', Session::get('property_id'))
                      ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
-                    
                      ->orderBy('tenant_id', 'desc')
                     ->get();
-
-                    
                    }
              }
         return view('webapp.tenants.index', compact('tenants', 'count_tenants', 'tenant_status'));
@@ -572,7 +566,6 @@ class TenantController extends Controller
      */
     public function show($property_id, $tenant_id)
     {   
-
         if(Auth::user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 5){
 
             $property_bills = DB::table('particulars')

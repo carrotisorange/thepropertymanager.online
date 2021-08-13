@@ -15,12 +15,12 @@
             {{-- Dashboard --}}
             <li class="nav-item">
               @if(Session::get('current-page') === 'dashboard')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/dashboard">
+              <a class="nav-link active" href={{ route('show-dashboard', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-tachometer-alt text-orange"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/dashboard">
+              <a class="nav-link" href={{ route('show-dashboard', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-tachometer-alt text-orange"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
@@ -31,24 +31,24 @@
            <li class="nav-item">
               @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
                 @if(Session::get('current-page') === 'units')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/units">
+                <a class="nav-link active" href={{ route('show-all-unit', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-home text-indigo"></i>
                   <span class="nav-link-text">Units</span>
                 </a>
                 @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/units">
+                <a class="nav-link" href={{ route('show-all-unit', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-home text-indigo"></i>
                   <span class="nav-link-text">Units</span>
                 </a>
                 @endif 
               @else
                 @if(Session::get('current-page') === 'rooms')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/rooms">
+                <a class="nav-link active" href={{ route('show-all-room', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-home text-indigo"></i>
                   <span class="nav-link-text">Rooms</span>
                 </a>
                 @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/rooms">
+                <a class="nav-link" href={{ route('show-all-room', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-home text-indigo"></i>
                   <span class="nav-link-text">Rooms</span>
                 </a>
@@ -62,12 +62,12 @@
                 @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
                 <li class="nav-item">
                   @if(Session::get('current-page') === 'occupants')
-                  <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/occupants">
+                  <a class="nav-link active" href={{ route('show-all-occupant', ['property_id' => Session::get('property_id')]) }}>
                     <i class="fas fa-user text-green"></i>
                     <span class="nav-link-text">Occupants</span>
                     </a>
                   @else
-                  <a class="nav-link" href="/property/{{ Session::get('property_id') }}/occupants">
+                  <a class="nav-link" href={{ route('show-all-occupant', ['property_id' => Session::get('property_id')]) }}>
                     <i class="fas fa-user text-green"></i>
                     <span class="nav-link-text">Occupants</span>
                     </a>
@@ -76,12 +76,12 @@
                 @else
                 <li class="nav-item">
                   @if(Session::get('current-page') === 'tenants')
-                  <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/tenants">
+                  <a class="nav-link active" href={{ route('show-all-tenant', ['property_id' => Session::get('property_id')]) }}>
                     <i class="fas fa-user text-green"></i>
                     <span class="nav-link-text">Tenants</span>
                   </a>
                   @else
-                  <a class="nav-link" href="/property/{{ Session::get('property_id') }}/tenants">
+                  <a class="nav-link" href={{ route('show-all-tenant', ['property_id' => Session::get('property_id')]) }}>
                     <i class="fas fa-user text-green"></i>
                     <span class="nav-link-text">Tenants</span>
                   </a>
@@ -92,12 +92,12 @@
                 @if(Session::get('property_ownership') === 'Multiple Owners')
                 <li class="nav-item">
                   @if(Session::get('current-page') === 'owners')
-                  <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/owners">
+                  <a class="nav-link active" href={{ route('show-all-owner', ['property_id' => Session::get('property_id')]) }}>
                     <i class="fas fa-user-tie text-teal"></i>
                     <span class="nav-link-text">Owners</span>
                   </a>
                   @else
-                  <a class="nav-link" href="/property/{{ Session::get('property_id') }}/owners">
+                  <a class="nav-link" href={{ route('show-all-owner', ['property_id' => Session::get('property_id')]) }}>
                     <i class="fas fa-user-tie text-teal"></i>
                     <span class="nav-link-text">Owners</span>
                   </a>
@@ -108,12 +108,12 @@
             {{-- Concerns --}}
             <li class="nav-item">
               @if(Session::get('current-page') === 'concerns')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/concerns">
+              <a class="nav-link active" href={{ route('show-all-concern', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-tools text-cyan"></i>
                 <span class="nav-link-text">Concerns</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/concerns">
+              <a class="nav-link" href={{ route('show-all-concern', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-tools text-cyan"></i>
                 <span class="nav-link-text">Concerns</span>
               </a>
@@ -122,12 +122,12 @@
             {{-- Violations --}}
             <li class="nav-item">
               @if(Session::get('current-page') === 'violations')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/violations">
+              <a class="nav-link active" href={{ route('show-all-violation', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-smoking-ban text-primary"></i>
                 <span class="nav-link-text">Violations</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/violations">
+              <a class="nav-link" href={{ route('show-all-violation', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-smoking-ban text-primary"></i>
                 <span class="nav-link-text">Violations</span>
               </a>
@@ -137,12 +137,12 @@
             @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 )
             <li class="nav-item">
               @if(Session::get('current-page') === 'job-orders')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/joborders">
+              <a class="nav-link active" href={{ route('show-all-joborder', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-list text-dark"></i>
                 <span class="nav-link-text">Job Orders</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/joborders">
+              <a class="nav-link" href={{ route('show-all-joborder', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-list text-dark"></i>
                 <span class="nav-link-text">Job Orders</span>
               </a>
@@ -151,12 +151,12 @@
            {{-- Personnels --}}
             <li class="nav-item">
               @if(Session::get('current-page') === 'employees')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/personnels">
+              <a class="nav-link active" href={{ route('show-all-personnel', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-id-card-alt text-gray"></i>
                 <span class="nav-link-text">Employees and Personnels</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/personnels">
+              <a class="nav-link" href={{ route('show-all-personnel', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-id-card-alt text-gray"></i>
                 <span class="nav-link-text">Employees and Personnels</span>
               </a>
@@ -168,12 +168,12 @@
             @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
               <li class="nav-item">
                 @if(Session::get('current-page') === 'suppliers')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/suppliers">
+                <a class="nav-link active" href={{ route('show-all-supplier', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-boxes text-dark"></i>
                   <span class="nav-link-text">Suppliers</span>
                 </a>
                 @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/suppliers">
+                <a class="nav-link" href={{ route('show-all-supplier', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-boxes text-dark"></i>
                   <span class="nav-link-text">Suppliers</span>
                 </a>
@@ -196,12 +196,12 @@
             @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
             <li class="nav-item">
               @if(Session::get('current-page') === 'bulk-billing')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/bills">
+              <a class="nav-link active" href={{ route('show-all-bill', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bills</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/bills">
+              <a class="nav-link" href={{ route('show-all-bill', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-file-invoice-dollar text-pink"></i>
                 <span class="nav-link-text">Bills</span>
               </a>
@@ -212,12 +212,12 @@
             @if(Auth::user()->role_id_foreign === 5 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2 || Auth::user()->role_id_foreign === 1)
               <li class="nav-item">
                 @if(Session::get('current-page') === 'daily-collection-report')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/collections">
+                <a class="nav-link active" href={{ route('show-all-collection', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-coins text-yellow"></i>
                   <span class="nav-link-text">Collections</span>
                 </a>
                 @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/collections">
+                <a class="nav-link" href={{ route('show-all-collection', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-coins text-yellow"></i>
                   <span class="nav-link-text">Collections</span>
                 </a>
@@ -229,12 +229,12 @@
               @if(Session::get('property_type') === '7')
               <li class="nav-item">
                 @if(Session::get('current-page') === 'remittances')
-                <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/remittances">
+                <a class="nav-link active" href={{ route('show-all-remittance', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-hand-holding-usd text-teal"></i>
                   <span class="nav-link-text">Remittances</span>
                 </a>
                 @else
-                <a class="nav-link" href="/property/{{ Session::get('property_id') }}/remittances">
+                <a class="nav-link" href={{ route('show-all-remittance', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-hand-holding-usd text-teal"></i>
                   <span class="nav-link-text">Remittances</span>
                 </a>
@@ -247,12 +247,12 @@
             @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2 )
             <li class="nav-item">
               @if(Session::get('current-page') === 'payables')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/payables">
+              <a class="nav-link active" href={{ route('show-all-payable', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-file-export text-indigo"></i>
                 <span class="nav-link-text">Payables</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/payables">
+              <a class="nav-link" href={{ route('show-all-payable', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-file-export text-indigo"></i>
                 <span class="nav-link-text">Payables</span>
               </a>
@@ -273,12 +273,12 @@
             @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
             <li class="nav-item">
               @if(Session::get('current-page') === 'financial-reports')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/financials">
+              <a class="nav-link active" href={{ route('show-all-financial', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-chart-line text-purple"></i>
                 <span class="nav-link-text">Financial Reports</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/financials">
+              <a class="nav-link" href={{ route('show-all-financial', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-chart-line text-purple"></i>
                 <span class="nav-link-text">Financial Reports</span>
               </a>
@@ -290,12 +290,12 @@
             @if(Auth::user()->role_id_foreign === 4)
             <li class="nav-item">
               @if(Session::get('current-page') === 'usage-history')
-              <a class="nav-link active" href="/property/{{ Session::get('property_id') }}/users">
+               <a class="nav-link active" href={{ route('show-all-usage-history', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-user-circle text-green"></i>
                 <span class="nav-link-text">Usage History</span>
               </a>
               @else
-              <a class="nav-link" href="/property/{{ Session::get('property_id') }}/users">
+              <a class="nav-link" href={{ route('show-all-usage-history', ['property_id' => Session::get('property_id')]) }}>
                 <i class="fas fa-user-circle text-green"></i>
                 <span class="nav-link-text">Usage History</span>
               </a>

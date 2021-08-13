@@ -62,7 +62,7 @@ Route::get('/users/search', 'UserController@search');
 //route to show all users
 Route::get('/user/all', 'UserController@index_system_user');
 //route to create a user
-Route::get('/user/create', 'UserController@create_system_user');
+Route::get('/user/create', 'UserController@create_system_user')->name('create-user');
 //route to post a new user
 Route::post('/user/store', 'UserController@store_system_user');
 //route to show a user
@@ -78,7 +78,7 @@ Route::put('/user/{user_id}/update', 'UserController@update_system_user_info');
 //route to display all properties
 Route::get('/property/all', 'PropertyController@index');
 //route to show the dashboard of a property
-Route::get('/property/{property_id}/dashboard', 'PropertyController@show');
+Route::get('/property/{property_id}/dashboard', 'PropertyController@show')->name('show-dashboard');
 //route to select a property
 Route::post('/property/select', 'PropertyController@select');
 //route to search rooms, tenants, and etc in the main search bar
@@ -116,9 +116,9 @@ Route::post('/property/{property_id}/users/store', 'PropertyController@store_use
 
 //ROUTES FOR TENANTCONTROLLER
 //route to show all the tenants
-Route::get('/property/{property_id}/tenants', 'TenantController@index');
+Route::get('/property/{property_id}/tenants', 'TenantController@index')->name('show-all-tenant');
 //route to show a particular tenant
-Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show');
+Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->name('show-tenant');
 //route to edit a tenant
 Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit');
 //route to update a tenant
@@ -176,7 +176,7 @@ Route::get('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/{
 
 //ROUTES FOR OCCUPANTCONTROLLER
 //route to show all occupants
-Route::get('/property/{property_id}/occupants', 'OccupantController@index');
+Route::get('/property/{property_id}/occupants', 'OccupantController@index')->name('show-all-occupant');
 //route to show an occupant
 Route::get('/property/{property_id}/occupant/{tenant_id}', 'OccupantController@show');
 //route to edit an occupant
@@ -211,7 +211,7 @@ Route::get('/property/{property_id}/room/{unit_no}/edit', 'RoomController@edit')
 Route::put('/property/{property_id}/room/{room_id}/update', 'RoomController@update');
 //route to upload imagest to a room
 //route to show all rooms
-Route::get('/property/{property_id}/rooms', 'RoomController@index');
+Route::get('/property/{property_id}/rooms', 'RoomController@index')->name('show-all-room');
 //route to show a room
 Route::get('/property/{property_id}/room/{unit_id}', 'RoomController@show');
 //route to edit a room
@@ -232,7 +232,7 @@ Route::get('/property/{property_id}/rooms/clear', 'RoomController@clear');
 
 //ROUTES FOR UNITCONTROLLER
 //route to show all units
-Route::get('/property/{property_id}/units', 'UnitController@index');
+Route::get('/property/{property_id}/units', 'UnitController@index')->name('show-all-unit');
 //route to show a unit
 Route::get('/property/{property_id}/unit/{unit_id}', 'UnitController@show');
 //route to edit all units 
@@ -252,7 +252,7 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/guardian', 'GuardianCont
 
 //ROUTES FOR CONCERNCONTOLLER
 //routes to show all concerns
-Route::get('/property/{property_id}/concerns', 'ConcernController@index');
+Route::get('/property/{property_id}/concerns', 'ConcernController@index')->name('show-all-concern');
 //route to create a concern
 Route::get('/property/{property_id}/room/{room_id}/create/concern', 'ConcernController@create_room_concern');
 //route to view and edit a concern
@@ -306,7 +306,7 @@ Route::get('/bill/{bill_id}/delete/bill', 'BillController@destroy');
 //route to store new bill for new tenant
 Route::post('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/store/bill', 'BillController@store');
 //route to show all bills
-Route::get('/property/{property_id}/bills', 'BillController@index');
+Route::get('/property/{property_id}/bills', 'BillController@index')->name('show-all-bill');
 //route to filter bills
 Route::get('/property/{property_id}/bills/filter', 'BillController@filter');
 //route to create bulk bills
@@ -345,7 +345,7 @@ Route::post('property/{property_id}/bills/surcharge/{date}', 'BillController@pos
 
 //ROUTES FOR JOBORDERCONTROLLER
 //route to show all job orders
-Route::get('/property/{property_id}/joborders', 'JobOrderController@index');
+Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->name('show-all-joborder');
 //route to show inventories
 Route::get('/property/{property_id}/joborder/{joborder_id}/inventory', 'JobOrderController@inventory');
 
@@ -389,7 +389,7 @@ Route::get('/property/{property_id}/room/{room_id}/create/owner', 'OwnerControll
 //route to store new owner
 Route::post('/property/{property_id}/room/{room_id}/store/owner', 'OwnerController@store');
 
-Route::get('/property/{property_id}/owners', 'OwnerController@index');
+Route::get('/property/{property_id}/owners', 'OwnerController@index')->name('show-all-owner');
 Route::get('/property/{property_id}/owners/search', 'OwnerController@search');
 Route::get('/property/{property_id}/owner/{owner_id}/edit', 'OwnerController@edit');
 Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show');
@@ -404,20 +404,20 @@ Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'Certi
 Route::post('/property/{property_id}/concern/{concern_id}/joborder', 'JobOrderController@store');
 
 //routes for personnels
-Route::get('/property/{property_id}/personnels', 'PersonnelController@index');
+Route::get('/property/{property_id}/personnels', 'PersonnelController@index')->name('show-all-personnel');
 Route::post('/property/{property_id}/personnel', 'PersonnelController@store');
 Route::delete('/property/{property_id}/personnel/{personnel_id}/', 'PersonnelController@destroy');
 
 //routes for collections
-Route::get('/property/{property_id}/collections', 'CollectionController@index');
+Route::get('/property/{property_id}/collections', 'CollectionController@index')->name('show-all-collection');
 Route::post('/property/{property_id}/tenant/{tenant_id}/collection', 'CollectionController@store');
 Route::post('/property/{property_id}/home/{unit_id}/collection', 'CollectionController@collect_unit_payment');
 
 //routes for financials
-Route::get('/property/{property_id}/financials', 'FinancialController@index');
+Route::get('/property/{property_id}/financials', 'FinancialController@index')->name('show-all-financial');
 
 //routes for payables
-Route::get('/property/{property_id}/payables', 'PayableController@index');
+Route::get('/property/{property_id}/payables', 'PayableController@index')->name('show-all-payable');
 Route::get('/property/{property_id}/payables/entries', 'PayableController@entries');
 Route::post('/property/{property_id}/payable', 'PayableController@store');
 Route::post('/property/{property_id}/payable/request', 'PayableController@request');
@@ -427,7 +427,7 @@ Route::get('/property/{property_id}/payable/{payable_id}/release', 'PayableContr
 Route::get('property/{property_id}/payable/{payable_id}/action', 'PayableController@action');
 
 //routes for tenant users
-Route::get('/property/{property_id}/users', 'UserController@index');
+Route::get('/property/{property_id}/users', 'UserController@index')->name('show-all-usage-history');
 Route::get('/property/{property_id}/user/{user_id}', 'UserController@show');
 Route::put('/property/{property_id}/user/{user_id}', 'UserController@update');
 Route::get('/user/{user_id}', 'UserController@upgrade');
@@ -444,9 +444,6 @@ Route::get('/user/{user_id}/tenant/{tenant_id}/profile', 'UserController@show_pr
 Route::put('/user/{user_id}/tenant/{tenant_id}/profile', 'UserController@show_update_tenant');
 Route::get('/user/{user_id}/portal/tenant/', 'UserController@show_portal_tenant');
 
-
-//routes for owner users
-Route::get('/property/{property_id}/users', 'UserController@index');
 Route::get('/property/{property_id}/user/{user_id}', 'UserController@show');
 Route::put('/property/{property_id}/user/{user_id}', 'UserController@update');
 Route::get('/user/{user_id}', 'UserController@upgrade');
@@ -571,7 +568,7 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/print/gatepass', 'TenantControl
 Route::delete('/tenants/{tenant_id}', 'TenantController@destroy');
 
 //routes for violations
-Route::get('/property/{property_id}/violations', 'ViolationController@index');
+Route::get('/property/{property_id}/violations', 'ViolationController@index')->name('show-all-violation');
 Route::post('/property/{property_id}/tenant/{tenant_id}/violation', 'ViolationController@store');
 
 //routes for creating violation
@@ -579,7 +576,7 @@ Route::get('/property/{property_id}/tenant/{tenant_id}/violation/create', 'Viola
 Route::post('/property/{property_id}/tenant/{tenant_id}/violation/store', 'ViolationController@store');
 
 //routes for suppliers
-Route::get('/property/{property_id}/suppliers', 'SupplierController@index');
+Route::get('/property/{property_id}/suppliers', 'SupplierController@index')->name('show-all-supplier');
 Route::get('/property/{property_id}/suppliers/create', 'SupplierController@create');
 Route::post('/property/{property_id}/suppliers/store', 'SupplierController@store');
 
