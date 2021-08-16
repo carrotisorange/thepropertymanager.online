@@ -24,10 +24,10 @@
             <thead>
                 <th>#</th>
                 <th>Bill no</th>
-                <th>Particular</th>
+                <th>Select a particular</th>
                 <th>Start</th>
                 <th>End</th>
-                <th>Amount</th>
+                <th>Amount <span class="text-white">Amount</span></th>
                 <th>Action</th>
             </thead>
             <tr>

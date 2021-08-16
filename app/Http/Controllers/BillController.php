@@ -35,6 +35,9 @@ class BillController extends Controller
      */
     public function index(Request $request)
     {
+
+        // return Bill::onlyTrashed()->get();
+
         // $search = $request->search;
 
         Session::put('current-page', 'bulk-billing');
@@ -58,29 +61,28 @@ class BillController extends Controller
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
         if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
-            if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){
-               
+            if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){ 
                 $bills = DB::table('contracts')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('bills', 'tenant_id', 'bill_tenant_id')
                 ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('property_id_foreign', Session::get('property_id'))
+                ->whereNull('deleted_at')
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
-                ->havingRaw('amount != 0')
                 ->get();   
             }else{
                 $bills = DB::table('contracts')
-                    ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                    ->join('units', 'unit_id_foreign', 'unit_id')
-                    ->join('bills', 'unit_id', 'bill_unit_id')
-                    ->join('particulars','particular_id_foreign', 'particular_id')
-                    ->where('property_id_foreign', Session::get('property_id'))
-                    ->orderBy('date_posted', 'desc')
-                    ->groupBy('bill_id')
-                    ->havingRaw('amount != 0')
-                    ->get();
+                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('units', 'unit_id_foreign', 'unit_id')
+                ->join('bills', 'unit_id', 'bill_unit_id')
+                ->join('particulars','particular_id_foreign', 'particular_id')
+                ->where('property_id_foreign', Session::get('property_id'))
+                ->whereNull('deleted_at')
+                ->orderBy('date_posted', 'desc')
+                ->groupBy('bill_id')
+                ->get();
             }    
  
             return view('webapp.bills.index', compact('bills', 'property_bills'));
@@ -1331,8 +1333,7 @@ DB::table('properties')
                     
         //  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        $bill = Bill::find($bill_id);
-        $bill->delete();
+        Bill::find($bill_id)->delete();
 
         return back()->with('success', 'Bill is deleted successfully.');
     }

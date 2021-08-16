@@ -546,7 +546,7 @@ Route::get('units/{unit_id}/tenants/{tenant_id}/payments/{payment_id}', 'Collect
 Route::post('/payments', 'CollectionController@store');
 Route::get('/payments/all', 'CollectionController@index')->name('show-all-payments');
 Route::get('/property/{property_id}/payments/search', 'CollectionController@index');
-Route::delete('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}', 'CollectionController@destroy');
+Route::get('/payment/{payment_id}/delete/payment', 'CollectionController@destroy');
 Route::get('/property/{property_id}/room/{room_id}/contract/{contract_id}/tenant/{tenant_id}/bill/{bill_id}/payment/{payment_id}/action', 'CollectionController@action');
 Route::post('/property/{property_id}/tenant/{tenant_id}/payment/{payment_id}/credit-memo', 'CollectionController@credit_memo');
 

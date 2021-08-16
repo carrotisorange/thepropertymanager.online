@@ -2,10 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
 {
+
+    use SoftDeletes;
+
     protected $table = 'bills';
 
     protected $primaryKey = 'bill_id';

@@ -567,7 +567,7 @@ class TenantController extends Controller
     public function show($property_id, $tenant_id)
     {   
         if(Auth::user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 5){
-
+            
             $property_bills = DB::table('particulars')
             ->join('property_bills', 'particular_id', 'particular_id_foreign')
             ->where('property_id_foreign', Session::get('property_id'))

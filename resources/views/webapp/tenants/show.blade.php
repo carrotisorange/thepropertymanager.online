@@ -620,8 +620,8 @@ thead tr:nth-child(1) th {
                          <th>Bill no</th>
                          <th>Particular</th>
                          <th>Period covered</th>
-                         <th>Bill amount</th>
-                         <th>Amount paid</th>
+                         <th>Bill Amount</th>
+                         <th>Amount Paid</th>
                          <th>Balance</th>
                          <th></th>
                          {{-- <th>Action</th> --}}
@@ -629,7 +629,7 @@ thead tr:nth-child(1) th {
                   </thead>
                     @foreach ($balance as $item)
                     <tr>
-                      <th class="text-center">{{ $ctr++ }}</th>
+                      <th>{{ $ctr++ }}</th>
                          <td>{{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}</td>   
                            <td>{{ $item->bill_no }}</td>
                            <td>{{ $item->particular }}</td>

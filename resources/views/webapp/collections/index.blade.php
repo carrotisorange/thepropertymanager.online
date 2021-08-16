@@ -38,12 +38,8 @@ thead tr:nth-child(1) th {
 </div>
 </div>
 
- <small> Showing <b>{{ $collections->count() }} </b> collections...</small>
+ <small> Showing <b>{{ number_format($collections->count(), 0) }}</b> collections...</small>
 
-{{-- @if(!$collections->count())
-<p class="text-danger text-center">No collections found!</p>
-
-@else --}}
 <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
   <?php $ctr = 1;?>
   <table class="table table-hover">
@@ -53,23 +49,11 @@ thead tr:nth-child(1) th {
       <th>Date</th>
       <th>AR No</th>
       <th>Bill No</th>
-
-      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-      <th></th>
-      @else
       <th>Tenant</th>
-      @endif
-      @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-      <th>Unit</th>
-      @else
       <th>Room</th>
-      @endif
-      <th>Particular</th>
-      <th>Period Covered</th>
-      <th>Form</th>
+      <th>Mode of Payment</th>
       <th>Amount</th>
       <th></th>
-      {{-- <th></th> --}}
   
   </tr>
 </thead>
@@ -87,37 +71,34 @@ thead tr:nth-child(1) th {
  
 
   
-    <th>
+    <td>
       @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <a href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
       @else
       <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
       @endif
      
-    </th>
+    </td>
     
-    <th>
+    <td>
       @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
       <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
       @else
       <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{  $item->building.' '.$item->unit_no }}</a>
       @endif
       
-    </th>
-    <td>{{ $item->particular }}</td>
-    <td>
-      {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-      {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
     </td>
+  
     <td>{{ $item->form }}</td>
     
-    <th>
+    <td>
       @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2 || Auth::user()->role_id_foreign === 1)
      <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/contract/{{ $item->contract_id }}/tenant/{{ $item->tenant_id }}/bill/{{ $item->bill_id }}/payment/{{ $item->payment_id }}/remittance/create">{{ number_format($item->amt_paid,2) }}</a> 
       @else
       {{ number_format($item->amt_paid,2) }}
       @endif
-    </th>
+    </td>
+    <td><a class="text-danger" href="/payment/{{ $item->payment_id }}/delete/payment"><i class="fas fa-times"></i> Remove</a></td>
   
 </tr>
 

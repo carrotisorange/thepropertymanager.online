@@ -77,55 +77,84 @@ class CollectionController extends Controller
 
         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '7'){
             if($search  === null){
-              $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-                ->join('tenants', 'bill_tenant_id', 'tenant_id')
+                $collections = Contract::
+                join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('payments', 'payment_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('property_id_foreign', $property_id)
-                ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
                ->get();
-
-               
+            //   $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            //     ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+            //     ->join('tenants', 'bill_tenant_id', 'tenant_id')
+            //     ->join('units', 'unit_id_foreign', 'unit_id')
+            //     ->join('particulars','particular_id_foreign', 'particular_id')
+            //     ->where('property_id_foreign', $property_id)
+            //     ->groupBy('payment_id')
+            //     ->orderBy('payment_created', 'desc')
+            //    ->get();
             }else{
 
-                $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-                ->join('tenants', 'bill_tenant_id', 'tenant_id')
+                $collections = Contract::
+                join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('payments', 'payment_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
-                ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
                ->get();
-            
+
+            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            //     ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+            //     ->join('tenants', 'bill_tenant_id', 'tenant_id')
+            //     ->join('units', 'unit_id_foreign', 'unit_id')
+            //     ->join('particulars','particular_id_foreign', 'particular_id')
+            //     ->where('property_id_foreign', $property_id)
+            //     ->where('payment_created', $search)
+            //     ->groupBy('payment_id')
+            //     ->orderBy('payment_created', 'desc')
+            //    ->get();
             }
         }else{
             if($search  === null){
-                $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                $collections = Contract::
+                join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('payments', 'payment_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
-               
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
                ->get();
 
-           
+            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            //     ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
+            //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            //     ->join('units', 'unit_id_foreign', 'unit_id')
+            //     ->where('property_id_foreign', $property_id)
+            //     ->groupBy('payment_id')
+            //     ->orderBy('payment_created', 'desc')
+            //    ->get();
             }else{
             
-                $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-                ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                $collections = Contract::
+                join('tenants', 'tenant_id_foreign', 'tenant_id')
+                ->join('payments', 'payment_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
                ->get();
+
+            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
+            //     ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
+            //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+            //     ->join('units', 'unit_id_foreign', 'unit_id')
+            //     ->where('property_id_foreign', $property_id)
+            //     ->where('payment_created', $search)
+            //     ->groupBy('payment_id')
+            //     ->orderBy('payment_created', 'desc')
+            //    ->get();
             }
         }
 
@@ -756,32 +785,36 @@ public function export_payment($property_id, $room_id, $tenant_id, $payment_id){
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($property_id, $tenant_id, $payment_id)
+    public function destroy($payment_id)
     {
 
-        $payment = Payment::findOrFail($payment_id);
-
-        $tenant = Tenant::findOrFail($tenant_id);
-
-        $notification = new Notification();
-        $notification->user_id_foreign = Auth::user()->id;
-        $notification->property_id_foreign = Session::get('property_id');
-        $notification->type = 'payment';
+        Payment::findOrFail($payment_id)->delete();
         
-        $notification->message = Auth::user()->name.' deletes payment made by '.$tenant->first_name.' '.$tenant->last_name.'.';
-        $notification->save();
+        return back()->with('success', 'Collection is deleted successfully!');
 
-         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        // $payment = Payment::findOrFail($payment_id);
 
-        $bill = Payment::findOrFail($payment_id);
-        $bill->payment_status = 'deleted';
-        $bill->save();
+        // $tenant = Tenant::findOrFail($tenant_id);
 
-        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-            return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
-        }else{
-            return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
-        }
+        // $notification = new Notification();
+        // $notification->user_id_foreign = Auth::user()->id;
+        // $notification->property_id_foreign = Session::get('property_id');
+        // $notification->type = 'payment';
+        
+        // $notification->message = Auth::user()->name.' deletes payment made by '.$tenant->first_name.' '.$tenant->last_name.'.';
+        // $notification->save();
+
+        //  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        // $bill = Payment::findOrFail($payment_id);
+        // $bill->payment_status = 'deleted';
+        // $bill->save();
+
+        // if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
+        //     return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
+        // }else{
+        //     return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
+        // }
     }
 
 }

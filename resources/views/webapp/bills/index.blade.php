@@ -51,7 +51,7 @@ thead tr:nth-child(1) th {
 </div>
 
 
-<span class=""> <small> Showing <b>{{ $bills->count() }} </b> bills...</span></small>
+<span class=""> <small> Showing <b>{{ number_format($bills->count(), 0) }} </b> bills...</span></small>
 
 {{-- @if(!$bills->count())
 <p class="text-danger text-center">No bills found!</p>
@@ -64,7 +64,7 @@ thead tr:nth-child(1) th {
 <tr>
   <th>#</th>
   <th>Date</th>
-  <th>Bill #</th>
+  <th>Bill No</th>
   @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
   <th>Occupant</th>
   @else
@@ -78,7 +78,8 @@ thead tr:nth-child(1) th {
   <th>Particular</th>
  
   <th colspan="2">Period Covered</th>
-  <th>Amount</th>    
+  <th>Amount</th>  
+  <th></th>  
 </tr>
 </thead>
 <tbody>
@@ -110,7 +111,7 @@ thead tr:nth-child(1) th {
       {{ $item->end? Carbon\Carbon::parse($item->end)->format('d M, Y') : null }}
     </td>
     <td>{{ number_format($item->amount,2) }}</td>
- 
+    <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a></td>
     </tr>
   @endforeach
 </tbody>
