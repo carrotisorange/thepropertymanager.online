@@ -82,6 +82,7 @@ class CollectionController extends Controller
                 ->join('payments', 'payment_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
+                ->whereNull('deleted_at')
                 ->orderBy('payment_created', 'desc')
                ->get();
             //   $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
@@ -101,6 +102,7 @@ class CollectionController extends Controller
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
+                ->whereNull('deleted_at')
                 ->orderBy('payment_created', 'desc')
                ->get();
 
@@ -122,6 +124,7 @@ class CollectionController extends Controller
                 ->join('payments', 'payment_tenant_id', 'tenant_id')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
+                ->whereNull('deleted_at')
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
                ->get();
@@ -142,6 +145,7 @@ class CollectionController extends Controller
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                 ->where('payment_created', $search)
+                ->whereNull('deleted_at')
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
                ->get();
