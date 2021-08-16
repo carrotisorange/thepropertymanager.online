@@ -64,9 +64,9 @@ thead tr:nth-child(1) th {
         @endif
 
         @if($access->count() <=0  )
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-circle text-dark"></i> Access <i class="fas fa-exclamation-triangle text-danger"></i> </a>
+        <a class="nav-item nav-link" id="nav-credentials-tab" data-toggle="tab" href="#credentials" role="tab" aria-controls="nav-credentials" aria-selected="true"><i class="fas fa-key text-dark"></i> Credentials <i class="fas fa-exclamation-triangle text-danger"></i> </a>
         @else
-        <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="true"><i class="fas fa-user-circle text-dark"></i> Access </a>
+        <a class="nav-item nav-link" id="nav-credentials-tab" data-toggle="tab" href="#credentials" role="tab" aria-controls="nav-credentials" aria-selected="true"><i class="fas fa-key text-dark"></i> Credentials </a>
         @endif
        
         {{-- @if($contracts->count() <= 0)
@@ -547,15 +547,10 @@ thead tr:nth-child(1) th {
         </div>
       </div>
 
-      <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
-        @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Generate</button>
-        <br><br>
+      <div class="tab-pane fade" id="credentials" role="tabpanel" aria-labelledby="nav-credentials-tab">
+        @if(!$access->count())
+        <a href="{{ route('create-credentials', ['property_id' => Session::get('property_id'), 'tenant_id' => $tenant->tenant_id ]) }}" class="btn btn-primary"><i class="fas fa-key fa-sm"></i> Generate</a>
         @endif
-     
-        
-        <div class="col-md-12 mx-auto">
-          <div class="table-responsive">
             <div class="table-responsive text-nowrap">
         
              @foreach ($access as $item)
@@ -590,8 +585,7 @@ thead tr:nth-child(1) th {
              </table>
              @endforeach
             </div>
-          </div>
-        </div>
+          
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
@@ -821,59 +815,6 @@ thead tr:nth-child(1) th {
           </div>
           </div>
 </div>
-
-<div class="modal fade" id="userAccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-md" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i> Generate</h5>
-  
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-   <div class="modal-body">
-    
-      
-     <form id="userForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}/user/create" method="POST">
-    @csrf
-    </form>
-    <div class="form-group">
-      <small for="">Name</small>
-      <input type="text" name="name" form="userForm" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $tenant->first_name.' '.$tenant->last_name }}" required readonly>
-      @error('name')
-      <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-      </span>
-  @enderror
-    </div>
-    <div class="form-group">
-      <small for="">Email</small>
-      <input type="email" name="email" form="userForm"  class="form-control form-control-user @error('email') is-invalid @enderror" value="{{ $tenant->email }}" required>
-      @error('email')
-      <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-      </span>
-    @enderror
-    </div>
-    <div class="form-group">
-      <small for="">Password</small>
-      <input type="text" name="password" form="userForm"  class="form-control form-control-user @error('password') is-invalid @enderror" value="{{ $tenant->password }}" required>
-      @error('password')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-    @enderror
-    </div>
-    <p class="text-right"> <button type="submit" form="userForm" class="btn btn-primary btn-block"> Submit</button> </p>
-    
-   </div>
-
-  </div>
-  </div>
-  
-  </div>
-
   
 <div class="modal fade" id="pendingBalance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">

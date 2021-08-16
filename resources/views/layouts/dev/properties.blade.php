@@ -27,7 +27,7 @@
                 @foreach ($properties as $item)
                 <tr>
                   <th>{{ $ctr++ }}</th>
-                  <td><a href="/property/{{ $item->property_id }}/view"> {{ $item->name }}</a></td>
+                  <td><a href={{ route('show-dev-property', ['property_id'=> $item->property_id])}}> {{ $item->name }}</a></td>
                   <td>{{ $item->property_type }}</td>
               
                   <td>{{ $item->mobile }}</td>

@@ -1542,10 +1542,8 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
         ->orderBy('users.id')
         ->orderBy('users.created_at')
         ->get();
-
-        $property = Property::findOrFail($property_id);
         
-        return view('webapp.properties.view', compact('rooms', 'tenants', 'users', 'property'));
+        return view('webapp.properties.view', compact('rooms', 'tenants', 'users'));
     }
     /**
      * Update the specified resource in storage.

@@ -1,11 +1,11 @@
 @extends('layouts.argon.main')
 
-@section('title', $property->name)
+@section('title', Session::get('property_name'))
 
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $property->name }}</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">{{ Session::get('property_name') }}</h6>
     
   </div>
 

@@ -22,6 +22,33 @@ class UserController extends Controller
         $this->middleware(['auth']);
     }
     
+    public function create_credentials($property_id, $tenant_id){
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.users.create', compact('tenant'));
+    }
+
+    public function store_credentials(Request $request){
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' =>  ['required'],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'role_id_foreign' => '6',
+            'password' =>  Hash::make($request->password)
+        ]);
+
+        Tenant::where('tenant_id', $tenant_id)
+        ->update([
+            'user_id_foreign' => $tenant_id
+        ]);
+
+        return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'/#credentials')->with('success', 'Credentials are generated succesfully!');
+    }
     /**
      * Display a listing of the resource.
      *

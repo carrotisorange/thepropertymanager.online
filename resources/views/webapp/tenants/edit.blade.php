@@ -442,12 +442,13 @@
                 </div>
                 
             </div>
-
-
-<p class="text-right">   
-    <button type="submit" form="editTenantForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Save</button>
-    {{-- <button type="submit" form="editTenantForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Update</button> --}}
-</p>
+            <div class="form-group">
+                <button type="submit" form="editTenantForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Save</button>
+                <br>
+                <p class="text-center">
+                    <a class="text-center text-dark" href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}">Cancel</a>
+                </p>
+            </div>
 @endsection
 
 @section('main-content')

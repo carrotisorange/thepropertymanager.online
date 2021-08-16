@@ -90,7 +90,7 @@ Route::put('/property/{property_id}/update', 'PropertyController@update');
 //route to view the portforlio
 Route::get('/property/portforlio', 'PropertyController@view_portforlio')->name('view-portforlio');
 //route to view property
-Route::get('/property/{property_id}/view', 'PropertyController@view');
+Route::get('/property/{property_id}/view', 'PropertyController@view')->name("show-dev-property");
 
 //ROUTES TO CREATE A PROPERTY
 // route to step 1 of 5 (create property)
@@ -431,6 +431,8 @@ Route::get('/property/{property_id}/users', 'UserController@index')->name('show-
 Route::get('/property/{property_id}/user/{user_id}', 'UserController@show');
 Route::put('/property/{property_id}/user/{user_id}', 'UserController@update');
 Route::get('/user/{user_id}', 'UserController@upgrade');
+Route::get('/property/{property_id}/tenant/{tenant_id}/credentials/create', 'UserController@create_credentials')->name('create-credentials');
+Route::post('/property/{property_id}/tenant/{tenant_id}/credentials/store', 'UserController@store_credentials')->name('store-credentials');
 
 Route::post('/user/{user_id}/tenant/{tenant_id}/dashboard', 'UserController@show_user_tenant');
 Route::get('/user/{user_id}/tenant/{tenant_id}/dashboard', 'UserController@show_user_tenant');
