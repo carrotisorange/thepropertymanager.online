@@ -659,6 +659,7 @@ class TenantController extends Controller
              ->get();
 
                 $access = DB::table('users')
+                ->select('*', 'users.email as email')
               ->join('tenants', 'id', 'user_id_foreign')
               ->where('tenant_id', $tenant_id)
               ->get();

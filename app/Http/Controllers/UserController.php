@@ -23,13 +23,14 @@ class UserController extends Controller
     }
     
     public function create_credentials($property_id, $tenant_id){
+
         $tenant = Tenant::findOrFail($tenant_id);
 
         return view('webapp.users.create', compact('tenant'));
     }
 
     public function store_credentials(Request $request){
-
+        
         $this->validate($request, [
             'name' => 'required',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -38,16 +39,17 @@ class UserController extends Controller
 
         User::create([
             'name' => $request->name,
+            'email' => $request->email,
             'role_id_foreign' => '6',
             'password' =>  Hash::make($request->password)
         ]);
 
-        Tenant::where('tenant_id', $tenant_id)
+        Tenant::where('tenant_id', $request->tenant_id)
         ->update([
-            'user_id_foreign' => $tenant_id
+            'user_id_foreign' => $request->tenant_id,
         ]);
 
-        return redirect('/property/'.Session::get('property_id').'/tenant/'.$tenant_id.'/#credentials')->with('success', 'Credentials are generated succesfully!');
+        return redirect('/property/'.Session::get('property_id').'/tenant/'.$request->tenant_id.'/#credentials')->with('success', 'Credentials are generated succesfully!');
     }
     /**
      * Display a listing of the resource.
