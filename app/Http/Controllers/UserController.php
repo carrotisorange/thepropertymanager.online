@@ -30,7 +30,7 @@ class UserController extends Controller
     }
 
     public function store_credentials(Request $request){
-        
+
         $this->validate($request, [
             'name' => 'required',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -41,6 +41,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role_id_foreign' => '6',
+            'unhashed_password' => $request->password,
             'password' =>  Hash::make($request->password)
         ]);
 

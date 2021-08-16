@@ -552,12 +552,8 @@ thead tr:nth-child(1) th {
         <a href="{{ route('create-credentials', ['property_id' => Session::get('property_id'), 'tenant_id' => $tenant->tenant_id ]) }}" class="btn btn-primary"><i class="fas fa-key fa-sm"></i> Generate</a>
         @endif
             <div class="table-responsive text-nowrap">
-        
              @foreach ($access as $item)
-       
              <table class="table table-hover">
-               
-                
                <thead>
                  <tr>
                    <th>Email</th>
@@ -567,18 +563,18 @@ thead tr:nth-child(1) th {
                  <thead>
                  <tr>
                   <th>Password</th>
-                  <td>{{ $item->tenant_unique_id }}</td>
+                  <td>{{ $item->unhashed_password }}</td>
                 </tr>
               </thead>
                 <thead>
                  <tr>
-                  <th>Created at</th>
+                  <th>Created</th>
                   <td>{{ $item->created_at? $item->created_at: 'NOT AVAILABLE' }}</td>
                 </tr>
               </thead>
                 <thead>
                 <tr>
-                  <th>Verified at</th>
+                  <th>Verified</th>
                   <td>{{ $item->updated_at? $item->updated_at: 'NOT AVAILABLE' }}</td>
                 </tr>
               </thead>

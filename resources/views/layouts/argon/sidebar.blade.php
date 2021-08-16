@@ -89,7 +89,7 @@
                 </li>
             @endif
           {{-- Owners --}}
-                @if(Session::get('property_ownership') === 'Multiple Owners')
+                {{-- @if(Session::get('property_ownership') === 'Multiple Owners') --}}
                 <li class="nav-item">
                   @if(Session::get('current-page') === 'owners')
                   <a class="nav-link active" href={{ route('show-all-owner', ['property_id' => Session::get('property_id')]) }}>
@@ -103,7 +103,7 @@
                   </a>
                   @endif
                 </li>
-                @endif
+                {{-- @endif --}}
             @endif
             {{-- Concerns --}}
             <li class="nav-item">
