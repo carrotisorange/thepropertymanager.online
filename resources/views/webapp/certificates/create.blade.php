@@ -50,6 +50,7 @@
                      <option value="spot_tsp">Spot TSP</option>
                      <option value="spot_dp">Spot DP</option>
                      <option value="installment_dp">Installment DP</option>
+                     <option value="inhouse_tsp">Inhouse TSP</option>
                   </select>
                   @error('payment_type')
                   <small class="text-danger">
