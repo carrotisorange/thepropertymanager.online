@@ -256,7 +256,9 @@ class OwnerController extends Controller
            ->get();
 
             $rooms = DB::table('certificates')
+
            ->join('units', 'certificates.unit_id_foreign', 'unit_id')
+           ->select('*', 'units.type as type')
            ->where('owner_id_foreign', $owner_id)
            ->get();
 

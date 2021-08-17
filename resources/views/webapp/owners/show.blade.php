@@ -189,7 +189,7 @@
             
                   <th>Room</th>
                   <th>Payment</th>
-                 
+                  <th>Type</th>
                   
                   <th>Status</th>
                   <th>Rent</th>
@@ -212,7 +212,7 @@
                 </td>
                 <td>{{ $item->payment_type }}</td>
        
-              
+                <td>{{ $item->type }}</td>
               
                 <td>{{ $item->status }}</td>
                 <td>{{ number_format($item->rent, 2) }}</td>
