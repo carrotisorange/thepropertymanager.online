@@ -46,7 +46,7 @@
                   <div class="form-group">
                     <label for="">Select type of payment</label>
                     <select form="createCertificateForm" class="form-control" name="payment_type" id="" required>
-                     <option value="{{ old('payment_type')? old('payment_type'):"" }}">{{ old('payment_type')? old('payment_type'):"Please select one" }}</option>
+                     <option value="{{ old('payment_type')? old('payment_type'):"" }}>{{ old('payment_type')? old('payment_type'):"Please select one" }}</option>
                      <option value="spot_tsp">Spot TSP</option>
                      <option value="spot_dp">Spot DP</option>
                      <option value="installment_dp">Installment DP</option>
@@ -60,7 +60,7 @@
 
                   <div class="form-group">
                     <label >Purchased amount</label>
-                    <input form="createCertificateForm" class="form-control" type="number" step="0.001" name="price" value="{{ old('price') }}" required >
+                    <input form="createCertificateForm" class="form-control" type="number" min="0" step="0.001" name="price" value="{{ old('price') }}" required >
                     @error('price')
                     <small class="text-danger">
                         {{ $message }}

@@ -188,7 +188,7 @@
                   <th>Date purchased</th>
             
                   <th>Room</th>
-            
+                  <th>Payment</th>
                   <th>Type</th>
                   
                   <th>Status</th>
@@ -210,6 +210,7 @@
                   @endif
                  
                 </td>
+                <td>{{ $item->payment_type }}</td>
        
                 <td>{{ $item->type }}</td>
               
