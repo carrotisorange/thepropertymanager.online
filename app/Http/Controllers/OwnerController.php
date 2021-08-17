@@ -150,7 +150,7 @@ class OwnerController extends Controller
     public function store(Request $request, $property_id, $unit_id)
     {
         //validate inputs
-        $request->validate([
+        $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
             'mobile' => 'required',
@@ -159,7 +159,7 @@ class OwnerController extends Controller
             'account_number' => '',
             'account_name' => '',
             'representative' => 'required',
-        'occupation' => 'requireds'
+        'occupation' => 'required'
         ]);
 
         //store all the input fields to the input
