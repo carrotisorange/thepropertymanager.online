@@ -47,9 +47,9 @@
                     <label for="">Select type of payment</label>
                     <select form="createCertificateForm" class="form-control" name="payment_type" id="" required>
                      <option value="{{ old('payment_type')? old('payment_type'):"" }}">{{ old('payment_type')? old('payment_type'):"Please select one" }}</option>
-                     <option value="full_cash">Full Cash</option>
-                     <option value="full_downpayment">Full Downpayment</option>
-                     <option value="installment">Installment</option>
+                     <option value="spot_tsp">Spot TSP</option>
+                     <option value="spot_dp">Spot DP</option>
+                     <option value="installment_dp">Installment DP</option>
                   </select>
                   @error('payment_type')
                   <small class="text-danger">
