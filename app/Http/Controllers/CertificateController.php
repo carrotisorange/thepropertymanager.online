@@ -54,6 +54,9 @@ class CertificateController extends Controller
     public function store(Request $request, $property_id, $owner_id)
     {
 
+        return $request->all();
+        
+
         $this->validate($request, [
             'date_purchased' => 'required',
             'unit_id_foreign' => 'required',
