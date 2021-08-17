@@ -44,7 +44,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="">Select a room</label>
+                    <label for="">Select type of payment</label>
                     <select form="createCertificateForm" class="form-control" name="payment_type" id="" required>
                      <option value="{{ old('payment_type')? old('payment_type'):"" }}">{{ old('payment_type')? old('payment_type'):"Please select one" }}</option>
                      <option value="full_cash">Full Cash</option>
