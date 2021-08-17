@@ -161,10 +161,10 @@ thead tr:nth-child(1) th {
         <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-            @if($expenses->count() <=0)
+            {{-- @if($expenses->count() <=0)
             <br>
             <p class="text-danger text-center">No expenses found!</p>
-            @else
+            @else --}}
             <p>Total expenses deducted to remittance: {{ number_format($expenses->sum('expense_amt'), 2) }}</p>
             <table class="table table-hover">
               <thead>
@@ -191,17 +191,17 @@ thead tr:nth-child(1) th {
                 
               </tbody>
           </table>
-          @endif
+          {{-- @endif --}}
             </div>
         </div>
         </div>
         <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
           <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-            @if($remittances->count() <=0)
+            {{-- @if($remittances->count() <=0)
             <br>
             <p class="text-danger text-center">No remittances found!</p>
-            @else
+            @else --}}
             <p>Total remitted amount: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
             <table class="table table-hover">
               <thead>
@@ -242,7 +242,7 @@ thead tr:nth-child(1) th {
                   @endforeach
               </tbody>
           </table>
-          @endif
+          {{-- @endif --}}
            
             </div>
         </div>
