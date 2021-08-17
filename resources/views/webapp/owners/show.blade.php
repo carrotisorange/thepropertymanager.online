@@ -77,6 +77,13 @@
                  </thead>
                
               <thead>
+                
+                  <tr>
+                    <th>Occupation</th>
+                    <td>{{ $owner->occupation }}</td>
+                </tr>
+                </thead>
+                <thead>
                 <tr>
                   <th>Address</th>
                   <td>{{ $owner->address }}</td>
@@ -88,6 +95,7 @@
                   <td>{{ $owner->representative }}</td>
               </tr>
               </thead>
+              
                  </table>
                </div>
          

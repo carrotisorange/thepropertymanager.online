@@ -65,7 +65,17 @@
        
       </div>
       <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
+          <label for="">Occupation:</label>
+          <input name="occupation" form="createOwnerForm" value="{{ old('occupation') }}" class="form-control" type="text" required>
+          @error('occupation')
+            <small class="text-danger">
+              {{ $message }}
+            </small>
+          @enderror
+        </div>
+     
+        <div class="form-group col-md-6">
           <label for="">Address:</label>
           <input name="address" form="createOwnerForm" value="{{ old('address') }}" class="form-control" type="text" required>
           @error('address')

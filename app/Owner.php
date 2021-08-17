@@ -20,7 +20,8 @@ class Owner extends Model
                             'address',
                             'account_name',
                             'user_id_foreign',
-                            'img'
+                            'img',
+                            'occupation'
                          ];
 
     public function units()

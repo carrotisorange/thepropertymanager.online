@@ -159,6 +159,7 @@ class OwnerController extends Controller
             'account_number' => '',
             'account_name' => '',
             'representative' => 'required',
+        'occupation' => 'requireds'
         ]);
 
         //store all the input fields to the input
