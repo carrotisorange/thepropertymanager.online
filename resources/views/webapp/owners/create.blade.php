@@ -128,6 +128,35 @@
         </div>
      
       </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="">Select type of payment</label>
+          <select form="createOwnerForm" class="form-control" name="payment_type" id="" required>
+           <option value="{{ old('payment_type')? old('payment_type'):"" }}selected>{{ old('payment_type')? old('payment_type'):"Please select one"}}</option>
+           <option value="spot_tsp">Spot TSP</option>
+           <option value="spot_dp">Spot DP</option>
+           <option value="installment_dp">Installment DP</option>
+           <option value="inhouse_tsp">Inhouse TSP</option>
+        </select>
+        @error('payment_type')
+        <small class="text-danger">
+            {{ $message }}
+        </small>
+          @enderror
+        </div>
+
+        <div class="form-group col-md-6">
+          <label >Purchased amount</label>
+          <input form="createOwnerForm" class="form-control" type="number" min="0" step="0.001" name="price" value="{{ old('price') }}" required >
+          @error('price')
+          <small class="text-danger">
+              {{ $message }}
+          </small>
+      @enderror
+      </div>
+      </div>
+
       <div class="form-group col-md-11 mx-auto">
         <button type="submit" form="createOwnerForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
         <br>

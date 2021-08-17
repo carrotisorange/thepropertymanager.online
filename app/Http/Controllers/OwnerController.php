@@ -159,7 +159,9 @@ class OwnerController extends Controller
             'account_number' => '',
             'account_name' => '',
             'representative' => 'required',
-            'occupation' => 'required'
+            'occupation' => 'required',
+            'payment_type' => 'required',
+            'price' => 'required'
         ]);
 
         //store all the input fields to the input
@@ -184,6 +186,8 @@ class OwnerController extends Controller
             'status' => 'active',
             'unit_id_foreign' => $unit_id,
             'owner_id_foreign' => $new_owner_id,
+            'payment_type' => $request->payment_type,
+            'price' => $request->price
         ]);
       
         $notification = new Notification();
