@@ -5,7 +5,7 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
-    <h6 class="h2 text-dark d-inline-block mb-0">Owner Information</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Edit Owner</h6>
     
   </div>
 
@@ -114,18 +114,21 @@
                  
               </div>
      <br>
-         <div class="row">
+     <div class="form-group">
+      <button type="submit" form="editInvestorForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Save</button>
+      <br>
+      <p class="text-center">
+          <a class="text-center text-dark" href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}">Cancel</a>
+      </p>
+  </div>
+         {{-- <div class="row">
          <div class="col">
           <p class="text-right">   
            
             <button type="submit" form="editInvestorForm" class="btn btn-primary btn-sm" ><i class="fas fa-check"></i> Update</button>
         </p>   
          </div>
-        </div>  
-  
-
-
-
+        </div>   --}}
 </div>
 
 @endsection

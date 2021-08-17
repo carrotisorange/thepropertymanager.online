@@ -399,7 +399,8 @@ Route::put('/property/{property_id}/owner/{owner_id}/upload/img','OwnerControlle
 
 Route::delete('/property/{property_id}/owner/{owner_id}/delete', 'OwnerController@destroy');
 
-Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'CertificateController@store');
+Route::get('/property/{property_id}/owner/{owner_id}/certificate/create', 'CertificateController@create')->name('create-certificate');
+Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'CertificateController@store')->name('store-certificate');
 
 Route::post('/property/{property_id}/concern/{concern_id}/joborder', 'JobOrderController@store');
 

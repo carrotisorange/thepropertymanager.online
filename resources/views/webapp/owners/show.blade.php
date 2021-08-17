@@ -10,7 +10,11 @@
   </div>
 
 </div> --}}
-<br>
+<div class="row align-items-center py-4">
+  <div class="col-lg-6 text-left"> 
+      <h6 class="h2 text-dark d-inline-block mb-0"> {{ $owner->name }}</h6>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -18,18 +22,12 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-owner-tab" data-toggle="tab" href="#owner" role="tab" aria-controls="nav-owner" aria-selected="true"> <i class="fas fa-user-tie text-teal"></i> Profile</a>
           @if($access->count() <=0  )
-          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-user-circle text-green"></i> Access <i class="fas fa-exclamation-triangle text-danger"></i></a>
+          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-key text-green"></i> Credentials <i class="fas fa-exclamation-triangle text-danger"></i></a>
           @else
-          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-user-circle text-green"></i> Access </a>
+          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-key text-green"></i> Credentials </a>
           @endif
           <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="fas fa-money-check text-yellow"></i> Banks <span class="badge badge-primary"></span></a>
-          <a class="nav-item nav-link" id="nav-certificates-tab" data-toggle="tab" href="#certificates" role="tab" aria-controls="nav-certificates" aria-selected="false"><i class="fas fa-home text-indigo"></i> 
-            @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-            Certificates
-            @else
-            Rooms
-            @endif
-            <span class="badge badge-success">{{ $rooms->count() }}</span>
+          <a class="nav-item nav-link" id="nav-certificates-tab" data-toggle="tab" href="#certificates" role="tab" aria-controls="nav-certificates" aria-selected="false"><i class="fas fa-home text-indigo"></i> Certificates <span class="badge badge-success">{{ $rooms->count() }}</span>
           </a>
 
           {{-- <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter">{{ $bills->count() }}</span></a> --}}
@@ -46,8 +44,8 @@
       <div class="tab-pane fade show active" id="owner" role="tabpanel" aria-labelledby="nav-owner-tab">
         <div class="row">
           <div class="col-md-8">
-            <a href="/property/{{ Session::get('property_id') }}/owners"  class="btn btn-primary btn-sm"><i class="fas fa-arrow-left fa-sm text-dark-50"></i> Back</a>
-            <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary btn-sm" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit</a>
+           
+            <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/edit" class="btn btn-primary" ><i class="fas fa-edit fa-sm text-dark-50"></i> Edit</a>
             {{-- @if(Auth::user()->role_id_foreign === 4)
             <form action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/delete" method="POST">
               @csrf
@@ -121,7 +119,7 @@
 
       <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
         @if($access->count() <=0  )
-        <button  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> New</button>
+        <button  href="#" class="btn btn-primary" data-toggle="modal" data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Generate</button>
         <br><br>
         @endif
      
@@ -129,10 +127,7 @@
         <div class="col-md-12 mx-auto">
           <div class="table-responsive">
             <div class="table-responsive text-nowrap">
-             @if($access->count() <= 0)
-              <p class="text-center text-danger">No credentials found!</p>
-
-             @else
+         
              @foreach ($access as $item)
        
              <table class="table table-hover">
@@ -165,15 +160,13 @@
              </table>
              @endforeach
 
-
-             @endif
             </div>
           </div>
         </div>
       </div>
       
       <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="nav-certificates-tab">
-        <a href="#/"  data-toggle="modal" data-target="#addCertificateModal" data-whatever="@mdo" type="button" class="btn btn-primary btn-sm">
+        <a href="{{ route('create-certificate', ['property_id' => Session::get('property_id'),'owner_id' => $owner->owner_id]) }}" class="btn btn-primary">
           <i class="fas fa-plus fa-sm text-white-50"></i> New
         </a>
         <br><br>
@@ -184,13 +177,10 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Enrollment Date</th>
-                  <th>Building</th>
-                  @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-                  <th>Unit</th>
-                  @else
+                  <th>Date purchased</th>
+            
                   <th>Room</th>
-                  @endif
+            
                   <th>Type</th>
                   
                   <th>Status</th>
@@ -203,15 +193,15 @@
               <tr>
                 <th>{{ $ctr++ }}</th>
                 <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
-                <td>{{ $item->building }}</td>
-                <th>
+            
+                <td>
                   @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-                  <a href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                  <a href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
                   @else
-                  <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->unit_no }}</a>
+                  <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
                   @endif
                  
-                </th>
+                </td>
        
                 <td>{{ $item->type }}</td>
               
@@ -317,7 +307,7 @@
    </div>
   <div class="modal-footer">
 
-    <button type="submit" form="certificateForm" class="btn btn-primary"> Add Certificate</button> 
+    <button type="submit" form="certificateForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button> 
   </div> 
   </div>
   </div>

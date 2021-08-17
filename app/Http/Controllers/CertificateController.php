@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Uuid;
 use Carbon\Carbon;
 use Session;
+use App\Owner;
+use App\Unit;
 
 class CertificateController extends Controller
 {
@@ -31,9 +33,16 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($property_id, $owner_id)
     {
-        //
+        $owner = Owner::findOrFail($owner_id);
+
+        $all_rooms = Unit::where('property_id_foreign', Session::get('property_id'))
+        ->orderBy('building', 'asc')
+        ->orderBy('unit_no', 'asc')
+        ->get();
+        
+        return view('webapp.certificates.create', compact('owner', 'all_rooms'));
     }
 
     /**
@@ -44,16 +53,26 @@ class CertificateController extends Controller
      */
     public function store(Request $request, $property_id, $owner_id)
     {
-        $certificate = new Certificate();
-        $certificate->certificate_id =  Uuid::generate()->string;
-        $certificate->unit_id_foreign =  $request->unit_id;
-        $certificate->owner_id_foreign =  $owner_id;
-        $certificate->date_purchased =  $request->date_purchased;
-        $certificate->date_accepted =  Carbon::now();
-        $certificate->status = 'active';
-        $certificate->save();
 
-        return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'#certificates')->with('success',' Certificate created sucessfully!');
+        $this->validate($request, [
+            'date_purchased' => 'required',
+            'unit_id_foreign' => 'required',
+            'payment_type' =>  'required',
+            'price' => 'required',
+        ]);
+
+        Certificate::create([
+            'date_purchased' => $request->date_purchased,
+            'unit_id_foreign' => $request->unit_id_foreign,
+            'owner_id_foreign' => $owner_id,
+            'certificate_id' => Uuid::generate()->string,
+            'payment_type' => $request->payment_type,
+            'price' => $request->price,
+            'status' => 'active',
+        ]);
+
+        return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#certificates')->with('success', 'Certificates is added succesfully!');
+        
     }
 
     /**
