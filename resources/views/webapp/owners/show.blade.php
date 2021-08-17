@@ -189,7 +189,7 @@
             
                   <th>Room</th>
                   <th>Payment</th>
-                  <th>Type</th>
+                 
                   
                   <th>Status</th>
                   <th>Rent</th>
@@ -212,7 +212,7 @@
                 </td>
                 <td>{{ $item->payment_type }}</td>
        
-                <td>{{ $item->type }}</td>
+              
               
                 <td>{{ $item->status }}</td>
                 <td>{{ number_format($item->rent, 2) }}</td>
@@ -255,74 +255,6 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="addCertificateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-md" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title text-primary" id="exampleModalLabel"> Certificate Information</h5>
-  
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-   <div class="modal-body">
-      
-     <form id="certificateForm" action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/certificate/store" method="POST">
-    @csrf
-    </form>
-    <div class="row">
-     <div class="col-md-12">
-       <label for="">Purchase date</label>
-       <input form="certificateForm" class="form-control" type="date" name="date_purchased" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required >
-     </select>
-     </div>
-   </div>
-   <br>
-   <div class="row">
-     <div class="col-md-12">
-       <label for="">Select a room</label>
-       <select form="certificateForm" class="form-control" name="unit_id" id="" required>
-        <option value="">Please select one</option>
-        @foreach ($all_units as $item)
-            <option value="{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</option>
-        @endforeach
-       <option value=""></option>
-     </select>
-     </div>
-   </div>
-   <br>
-   <div class="row">
-    <div class="col-md-12">
-      <label for="">Select a payment type</label>
-      <select name="payment_type" id=""  form="certificateForm" class="form-control" >
-        <option value="">Please select one</option>
-        <option value="Full Cash">Full Cash</option>
-        <option value="Full Downpayment">Full Downpayment</option>
-        <option value="Installment">Installment</option>
-    </select>
-    </select>
-    </div>
-  </div>
-  <br>
-   <div class="row">
-    <div class="col-md-12">
-      <label for="">Purchase amount</label>
-      <input form="certificateForm" class="form-control" type="number" min="1" step="0.01" name="price">
-    </select>
-    </div>
-  </div>
-     
- 
-   </div>
-  <div class="modal-footer">
-
-    <button type="submit" form="certificateForm" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"> Submit</button> 
-  </div> 
-  </div>
-  </div>
-  
-  </div>
-
 
 <div class="modal fade" id="userAccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"  data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-md" role="document">
