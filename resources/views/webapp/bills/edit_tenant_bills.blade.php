@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', $tenant->first_name.' '.$tenant->last_name)
+@section('title', 'Edit SOA')
 
 
 @section('css')
@@ -28,8 +28,15 @@ thead tr:nth-child(1) th {
   {{ Session::get('footer_message') }}
   </textarea> 
   <br>
-  <a class="btn btn-secondary btn-sm" href="/property/{{ Session::get('property_id') }}/bills"><i class="fas fa-times"></i> Cancel</a>
-  <button form="editBillsForm" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" ><i class="fas fa-check"></i> Save</button>
+  <div class="row">
+    <div class="col-md-12">
+      <button form="editBillsForm" class="btn btn-primary btn-block" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;" > Save</button>
+      <br>
+    <p class="text-center">
+      <a class="text-center text-dark" href="/property/{{ Session::get('property_id') }}/bills">Cancel</a>
+  </p>
+    </div>
+</div>
 @endsection
 
 @section('main-content')
