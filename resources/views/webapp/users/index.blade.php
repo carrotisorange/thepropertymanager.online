@@ -3,15 +3,15 @@
 @section('title', 'Usage History')
 
 @section('css')
- <style>
-/*This will work on every browser*/
-thead tr:nth-child(1) th {
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-</style>   
+<style>
+  /*This will work on every browser*/
+  thead tr:nth-child(1) th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+</style>
 
 @section('upper-content')
 <div class="row align-items-center py-4">
@@ -23,39 +23,44 @@ thead tr:nth-child(1) th {
   <table class="table table-hover">
     <?php $ctr = 1; ?>
     <thead>
-    <tr>
-      <th>#</th>  
-      <th>Name</th>
-      <th>Role</th>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Role</th>
 
-      <th>IP Address</th>
-      <th>Login at</th>
-      <th>Logout at</th>
-      <th>Usage time</th>
-      
-    </tr>
+        <th>IP Address</th>
+        <th>Login at</th>
+        <th>Logout at</th>
+        <th>Usage time</th>
+
+      </tr>
     </thead>
     <tbody>
-    @foreach ($sessions as $item)
+      @foreach ($sessions as $item)
       <tr>
-       <th>{{ $ctr++ }}</th>
-       <td>{{ $item->user_name }}</td>
-       <td>{{ $item->role_id_foreign }}</td>
-       
-       
+        <th>{{ $ctr++ }}</th>
+        <td>{{ $item->user_name }}</td>
+        <td>{{ $item->role_id_foreign }}</td>
+
+
         <td>{{ $item->session_last_login_ip }}</td>
-       <td>{{ $item->session_last_login_at? Carbon\Carbon::parse($item->session_last_login_at)->format('M d Y').' '.Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() : null }}</td>
-       <td>{{ $item->session_last_logout_at? Carbon\Carbon::parse($item->session_last_logout_at)->format('M d Y').' '.Carbon\Carbon::parse($item->session_last_logout_at)->toTimeString() : null }}</td>
-       
-     <td>
-      @if($item->session_last_logout_at == null)
-        0.0 hours
-       @else
-       {{  number_format(Carbon\Carbon::parse($item->session_last_login_at)->DiffInHours(Carbon\Carbon::parse($item->session_last_logout_at)),1) }} hours
-       @endif
-      </td>
+        <td>
+          {{ $item->session_last_login_at? Carbon\Carbon::parse($item->session_last_login_at)->format('M d Y').' '.Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() : null }}
+        </td>
+        <td>
+          {{ $item->session_last_logout_at? Carbon\Carbon::parse($item->session_last_logout_at)->format('M d Y').' '.Carbon\Carbon::parse($item->session_last_logout_at)->toTimeString() : null }}
+        </td>
+
+        <td>
+          @if($item->session_last_logout_at == null)
+          0.0 hours
+          @else
+          {{  number_format(Carbon\Carbon::parse($item->session_last_login_at)->DiffInHours(Carbon\Carbon::parse($item->session_last_logout_at)),1) }}
+          hours
+          @endif
+        </td>
       </tr>
-    @endforeach
+      @endforeach
     </tbody>
   </table>
 
@@ -65,6 +70,3 @@ thead tr:nth-child(1) th {
 @section('scripts')
 
 @endsection
-
-
-

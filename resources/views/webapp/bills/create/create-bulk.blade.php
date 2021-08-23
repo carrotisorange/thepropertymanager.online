@@ -3,15 +3,15 @@
 @section('title', $particular->particular)
 
 @section('css')
- <style>
-/*This will work on every browser*/
-thead tr:nth-child(1) th {
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-</style>   
+<style>
+  /*This will work on every browser*/
+  thead tr:nth-child(1) th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+</style>
 @endsection
 
 {{-- content of the page --}}
@@ -21,13 +21,17 @@ thead tr:nth-child(1) th {
   <div class="col text-left">
     <h6 class="h2 text-dark d-inline-block mb-0">Creating {{ $particular->particular }} bills</h6>
   </div>
-  
+
   <div class="col text-right">
-    <a href="/property/{{Session::get('property_id')}}/bills"  class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back </a> 
-    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i> Options</a> 
-   
-    <button type="submit" form="add_billings" class="btn btn-primary"  onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
-    
+    <a href="/property/{{Session::get('property_id')}}/bills" class="btn btn-primary"><i class="fas fa-arrow-left"></i>
+      Back </a>
+    <a href="#" data-toggle="modal" data-target="#editPeriodCovered" class="btn btn-primary"><i class="fas fa-edit"></i>
+      Options</a>
+
+    <button type="submit" form="add_billings" class="btn btn-primary"
+      onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i
+        class="fas fa-check"></i> Save</button>
+
   </div>
 </div>
 {{-- body of the page --}}
@@ -43,13 +47,14 @@ thead tr:nth-child(1) th {
     <tbody>
       <?php $ctr = 1; ?>
       @foreach ($bills as $item)
-        <tr>
-          <th>{{ $ctr++ }}</th>
-          <td>{{ $item->first_name.' '.$item->last_name }}</td>
-          <td>{{ $item->building.' '.$item->unit_no }}</td>
-          <td>{{ $item->amount }}</td>
-          <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a></td>
-        </tr>
+      <tr>
+        <th>{{ $ctr++ }}</th>
+        <td>{{ $item->first_name.' '.$item->last_name }}</td>
+        <td>{{ $item->building.' '.$item->unit_no }}</td>
+        <td>{{ $item->amount }}</td>
+        <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a>
+        </td>
+      </tr>
       @endforeach
     </tbody>
   </table>
@@ -73,7 +78,7 @@ thead tr:nth-child(1) th {
     document.getElementById(amt).value = parseFloat(actual_consumption) * rate;
    
   }
-</script> 
+</script>
 
 <script type="text/javascript">
   $(window).on('load',function(){
@@ -84,6 +89,3 @@ thead tr:nth-child(1) th {
   });
 </script>
 @endsection
-
-
-

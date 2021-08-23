@@ -7,87 +7,98 @@
   <div class="col-auto text-right">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/#contracts">{{ $tenant->first_name.' '.$tenant->last_name }}</a></li>
-        <li class="breadcrumb-item"><a href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/">Contract</a></li>
+        <li class="breadcrumb-item"><a
+            href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/#contracts">{{ $tenant->first_name.' '.$tenant->last_name }}</a>
+        </li>
+        <li class="breadcrumb-item"><a
+            href="/property/{{ Session::get('property_id') }}/tenant/{{ $contract->tenant_id_foreign }}/contract/{{ $contract->contract_id }}/">Contract</a>
+        </li>
         <li class="breadcrumb-item active" aria-current="page">Terminate</li>
       </ol>
     </nav>
-    
-    
+
+
   </div>
 </div>
 <div class="row">
-    <form id="preterminateContractForm" action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/preterminate_post" method="POST">
-        @csrf
-        @method('PUT')
-      </form>
+  <form id="preterminateContractForm"
+    action="/property/{{Session::get('property_id')}}/tenant/{{ $contract->tenant_id_foreign}}/contract/{{$contract->contract_id}}/preterminate_post"
+    method="POST">
+    @csrf
+    @method('PUT')
+  </form>
 </div>
-      <div class="row">
-        <div class="col-md-12">
-           <label>Reason for termination</label>
-            <select class="form-control" form="preterminateContractForm" name="moveout_reason" id="moveout_reason" required>
-              <option value="" selected>Please select one</option>
-              <option value="End of contract">End of contract</option>
-              <option value="Delinquent">Delinquent</option>
-              <option value="Force majeure">Force majeure</option>
-              <option value="Graduated">Graduated</option>
-              <option value="Run away">Run away</option>
-              <option value="Unruly">Unruly</option>
-              <option value="Unsatisfied with the service">Unsatisfied with the service</option>
-            </select>
-        </div>
-    </div>
-    <br>
+<div class="row">
+  <div class="col-md-12">
+    <label>Reason for termination</label>
+    <select class="form-control" form="preterminateContractForm" name="moveout_reason" id="moveout_reason" required>
+      <option value="" selected>Please select one</option>
+      <option value="End of contract">End of contract</option>
+      <option value="Delinquent">Delinquent</option>
+      <option value="Force majeure">Force majeure</option>
+      <option value="Graduated">Graduated</option>
+      <option value="Run away">Run away</option>
+      <option value="Unruly">Unruly</option>
+      <option value="Unsatisfied with the service">Unsatisfied with the service</option>
+    </select>
+  </div>
+</div>
+<br>
 
-    <div class="row">
-      <div class="col-md-12">
-          <label>Actual moveout date</label>
-          <input type="date" form="preterminateContractForm" class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="actual_moveout_at" required >
-      </div>
+<div class="row">
+  <div class="col-md-12">
+    <label>Actual moveout date</label>
+    <input type="date" form="preterminateContractForm" class="form-control"
+      value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="actual_moveout_at" required>
   </div>
-  <br>
-  <div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-5">
-                <h6 class="h2 text-dark d-inline-block mb-0">Moveout charges <small class="text-danger">(Optional)</small></h6>
-            </div>
-            <div class="col-md-7">
-                <p class="text-right">
-                    <span id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove the current row</span>
-                  <span id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add more charges </span>     
-                  </p>
-            </div>
-        </div>
-     
-        <div class="table-responsive text-nowrap">
-        <table class = "table" id="tab_logic">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Item</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Amount</th>
-              
-          </tr>
-          </thead>
-                <input form="preterminateContractForm" type="hidden" id="no_of_charges" name="no_of_charges" >
-            <tr id='addr1'></tr>
-        </table>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-5">
+        <h6 class="h2 text-dark d-inline-block mb-0">Moveout charges <small class="text-danger">(Optional)</small></h6>
+      </div>
+      <div class="col-md-7">
+        <p class="text-right">
+          <span id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove
+            the current row</span>
+          <span id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add more
+            charges </span>
+        </p>
       </div>
     </div>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table" id="tab_logic">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Amount</th>
+
+          </tr>
+        </thead>
+        <input form="preterminateContractForm" type="hidden" id="no_of_charges" name="no_of_charges">
+        <tr id='addr1'></tr>
+      </table>
+    </div>
   </div>
-  <br>
-  <div class="row">
-      <div class="col-md-12">
-       <p class="text-right">
-        
-        
-        <button type="submit" form="preterminateContractForm" class="btn btn-primary btn-user btn-block btn-sm" onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Terminate</button>
-       </p>
-      </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <p class="text-right">
+
+
+      <button type="submit" form="preterminateContractForm" class="btn btn-primary btn-user btn-block btn-sm"
+        onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i
+          class="fas fa-check"></i> Terminate</button>
+    </p>
   </div>
+</div>
 
 @endsection
 
@@ -97,7 +108,7 @@
 
 @section('scripts')
 <script type="text/javascript">
-    //adding moveout charges upon moveout
+  //adding moveout charges upon moveout
       $(document).ready(function(){
           var i=1;
       $("#add_row").click(function(){
@@ -146,18 +157,15 @@
           }
       });
   });
-  </script>
-  
-  <script>
-    function autoCompute(val) {
+</script>
+
+<script>
+  function autoCompute(val) {
       price = document.getElementById('price'+val).value;
       qty = document.getElementById('qty'+val).value;
       
       amt = document.getElementById('amt'+val).value =  parseFloat(price) *  parseFloat(qty);
      
     }
-  </script>
+</script>
 @endsection
-
-
-

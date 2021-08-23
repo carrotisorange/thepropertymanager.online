@@ -8,44 +8,60 @@
 
 <style>
   div.stars {
-width: 270px;
-display: inline-block;
-}
-input.star { display: none; }
-label.star {
-float: right;
-padding: 10px;
-font-size: 36px;
-color: #444;
-transition: all .2s;
-}
-input.star:checked ~ label.star:before {
-content: '\f005';
-color: #FD4;
-transition: all .25s;
-}
-input.star-5:checked ~ label.star:before {
-color: #FE7;
-text-shadow: 0 0 20px #952;
-}
-input.star-1:checked ~ label.star:before { color: #F62; }
-label.star:hover { transform: rotate(-15deg) scale(1.3); }
-label.star:before {
-content: '\f006';
-font-family: FontAwesome;
-}
+    width: 270px;
+    display: inline-block;
+  }
+
+  input.star {
+    display: none;
+  }
+
+  label.star {
+    float: right;
+    padding: 10px;
+    font-size: 36px;
+    color: #444;
+    transition: all .2s;
+  }
+
+  input.star:checked~label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+  }
+
+  input.star-5:checked~label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+  }
+
+  input.star-1:checked~label.star:before {
+    color: #F62;
+  }
+
+  label.star:hover {
+    transform: rotate(-15deg) scale(1.3);
+  }
+
+  label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+  }
 </style>
 @endsection
 
 @section('upper-content')
 <div class="col-lg-6">
-    <h6 class="h2 text-dark d-inline-block mb-0">{{ $concern->details }}</h6>
-   
-  </div>
+  <h6 class="h2 text-dark d-inline-block mb-0">{{ $concern->details }}</h6>
+
+</div>
 <div class="col-md-6">
-    
+
   @if($concern->status != 'closed')
-  <p class="text-right"><a href="#" title="You can close the concern once you're satisfied with the action made the person/s in charge." data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Did the employee address your concern?</a></p>
+  <p class="text-right"><a href="#"
+      title="You can close the concern once you're satisfied with the action made the person/s in charge."
+      data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"> Did the employee address your
+      concern?</a></p>
   @else
   <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p>
   @endif
@@ -57,13 +73,14 @@ font-family: FontAwesome;
 
 <div class="row">
 
- <div class="col-md-12">
-  <p class="text-danger">This page will serve as your way of communicating to the person/s in charge of your concern. Please provide as many details as possible to properly address your concern. </p>
-    
-        <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
-          @csrf
-    
-          <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
+  <div class="col-md-12">
+    <p class="text-danger">This page will serve as your way of communicating to the person/s in charge of your concern.
+      Please provide as many details as possible to properly address your concern. </p>
+
+    <form action="/concern/{{ $concern->concern_id }}/response" method="POST">
+      @csrf
+
+      <textarea class="form-control" name="response" id="" cols="30" rows="3" placeholder="type your response here..."></textarea required>
     <br>
       <p class="text-right">  <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Response </button></p>
       </form>
@@ -215,14 +232,15 @@ font-family: FontAwesome;
       <textarea form="markAsCompleteModalForm" class="form-control" id="" cols="30" rows="5" name="feedback" required>
         
       </textarea>
-  
- 
-      </div>
-      <div class="modal-footer">
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Submit</button>
-      </div>
+
+
   </div>
+  <div class="modal-footer">
+    <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary"
+      onclick="this.form.submit(); this.disabled = true;"> Submit</button>
   </div>
+</div>
+</div>
 
 </div>
 
@@ -238,8 +256,5 @@ font-family: FontAwesome;
       filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
       filebrowserUploadMethod: 'form',
   });
-  </script>
+</script>
 @endsection
-
-
-

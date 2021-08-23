@@ -6,21 +6,22 @@
 <div class="row align-items-center py-4">
   <div class="col-lg-12 col-12">
     <h6 class="h2 text-dark d-inline-block mb-0">Issue # {{ $issue->issue_id.' : '.$issue->details }}</h6>
-    
+
   </div>
 
 </div>
 
 <div class="row">
-    <div class="col">
-  
-        
-  
-          <form action="/dev/issue/{{ $issue->issue_id }}/responses" method="POST">
-            @csrf
-        
-      
-            <textarea  class="form-control form-control-user @error('response') is-invalid @enderror" name="response" id="" cols="30" rows="3" placeholder="enter your response here..."></textarea required>
+  <div class="col">
+
+
+
+    <form action="/dev/issue/{{ $issue->issue_id }}/responses" method="POST">
+      @csrf
+
+
+      <textarea class="form-control form-control-user @error('response') is-invalid @enderror" name="response" id=""
+        cols="30" rows="3" placeholder="enter your response here..."></textarea required>
             
               @error('response')
               <span class="invalid-feedback" role="alert">
@@ -98,6 +99,3 @@
   }
   </script>
 @endsection
-
-
-

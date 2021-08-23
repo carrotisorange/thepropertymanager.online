@@ -8,7 +8,8 @@
 
 @section('scripts')
 <script
-src="https://www.paypal.com/sdk/js?client-id=AeNwUQA-mvG0mc2EdNR4HueO60Jj8HpQaGeXdLWNJNq1w5M-txV4Yn9mDRHma9WEEspItoK3tjtGLpS0"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+  src="https://www.paypal.com/sdk/js?client-id=AeNwUQA-mvG0mc2EdNR4HueO60Jj8HpQaGeXdLWNJNq1w5M-txV4Yn9mDRHma9WEEspItoK3tjtGLpS0">
+  // Required. Replace SB_CLIENT_ID with your sandbox client ID.
 </script>
 
 <script>

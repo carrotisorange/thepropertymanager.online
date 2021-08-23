@@ -3,7 +3,7 @@
 @section('title', 'Properties')
 
 @section('sidebar')
-   
+
 
 @endsection
 
@@ -14,12 +14,9 @@
 @section('content')
 
 @section('content')
-    Please get in touch with your manager...
+Please get in touch with your manager...
 @endsection
 
 @section('scripts')
 
 @endsection
-
-
-

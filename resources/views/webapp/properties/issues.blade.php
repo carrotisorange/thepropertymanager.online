@@ -6,20 +6,21 @@
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">Issues</h6>
-    
+
   </div>
 
 </div>
 <div class="row">
   <div class="col">
 
-      
 
-        <form action="/property/{{Session::get('property_id')}}/issue/create" method="POST">
-          @csrf
-      
-    
-          <textarea  class="form-control form-control-user @error('details') is-invalid @enderror" name="details" id="" cols="30" rows="3" placeholder="I just created 3 rooms but it is not showing on the rooms page..."></textarea required>
+
+    <form action="/property/{{Session::get('property_id')}}/issue/create" method="POST">
+      @csrf
+
+
+      <textarea class="form-control form-control-user @error('details') is-invalid @enderror" name="details" id=""
+        cols="30" rows="3" placeholder="I just created 3 rooms but it is not showing on the rooms page..."></textarea required>
           
             @error('details')
             <span class="invalid-feedback" role="alert">
@@ -95,6 +96,3 @@
   }
   </script>
 @endsection
-
-
-

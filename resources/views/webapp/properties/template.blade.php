@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-        <meta name="author" content="Creative Tim">
-        <title>@yield('title')</title>
-        <!-- Favicon -->
-        <link rel="icon" href="{{ asset('/argon/assets/img/brand/favicon.ico') }}" type="image/png">
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-        <!-- Icons -->
-        <link rel="stylesheet" href="{{ asset('/argon/assets/vendor/nucleo/css/nucleo.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('/argon/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" type="text/css">
-        <!-- Page plugins -->
-        <!-- Argon CSS -->
-        <link rel="stylesheet" href="{{ asset('/argon/assets/css/argon.css?v=1.2.0') }}" type="text/css">
-        @yield('css')
-      </head>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>@yield('title')</title>
+  <!-- Favicon -->
+  <link rel="icon" href="{{ asset('/argon/assets/img/brand/favicon.ico') }}" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="{{ asset('/argon/assets/vendor/nucleo/css/nucleo.css') }}" type="text/css">
+  <link rel="stylesheet" href="{{ asset('/argon/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
+    type="text/css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="{{ asset('/argon/assets/css/argon.css?v=1.2.0') }}" type="text/css">
+  @yield('css')
+</head>
+
 <body>
-       <!-- Load Facebook SDK for JavaScript -->
-       @include('layouts.argon.chat-messenger')
+  <!-- Load Facebook SDK for JavaScript -->
+  @include('layouts.argon.chat-messenger')
 
   <!-- Navbar -->
   <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg">
@@ -29,7 +32,8 @@
         {{-- <img src="{{ asset('/argon/assets/img/brand/logo.png') }}"> --}}
         <img src="{{asset('arsha/assets/img/logo3.png')}}" alt="">
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+        aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
@@ -41,39 +45,44 @@
               </a>
             </div>
             <div class="col-6 collapse-close">
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse"
+                aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span></span>
                 <span></span>
               </button>
             </div>
           </div>
         </div>
-       
+
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-             <li class="nav-item">
-              <a class="nav-link nav-link-icon text-primary" href="https://www.facebook.com/onlinepropertymanager" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
-                <i class="fab fa-facebook-square"></i>
-                <span class="nav-link-inner--text d-lg-none">Facebook</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon text-indigo" href="https://www.instagram.com/onlinepropertymanager/" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
-                <i class="fab fa-instagram"></i>
-                <span class="nav-link-inner--text d-lg-none">Instagram</span>
-              </a>
-            </li>
-           <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://twitter.com/ThePropertyMan3" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Twitter">
-                <i class="fab fa-twitter-square text-teal"></i>
-                <span class="nav-link-inner--text d-lg-none">Twitter</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="https://www.youtube.com/channel/UCZkxSsob3vWJu3tJztyZIVg" target="_blank" data-toggle="tooltip" data-original-title="Subscribe on Youtube Channel">
-                <i class="fab fa-youtube text-danger"></i>
-                <span class="nav-link-inner--text d-lg-none">Github</span>
-              </a>
-            </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon text-primary" href="https://www.facebook.com/onlinepropertymanager"
+              target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
+              <i class="fab fa-facebook-square"></i>
+              <span class="nav-link-inner--text d-lg-none">Facebook</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon text-indigo" href="https://www.instagram.com/onlinepropertymanager/"
+              target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
+              <i class="fab fa-instagram"></i>
+              <span class="nav-link-inner--text d-lg-none">Instagram</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="https://twitter.com/ThePropertyMan3" target="_blank"
+              data-toggle="tooltip" data-original-title="Follow us on Twitter">
+              <i class="fab fa-twitter-square text-teal"></i>
+              <span class="nav-link-inner--text d-lg-none">Twitter</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="https://www.youtube.com/channel/UCZkxSsob3vWJu3tJztyZIVg"
+              target="_blank" data-toggle="tooltip" data-original-title="Subscribe on Youtube Channel">
+              <i class="fab fa-youtube text-danger"></i>
+              <span class="nav-link-inner--text d-lg-none">Github</span>
+            </a>
+          </li>
           <li class="nav-item d-none d-lg-block ml-lg-4">
             <a href="/user/upgrade" target="_blank" class="btn btn-neutral btn-icon">
               <span class="btn-inner--icon">
@@ -99,7 +108,7 @@
     </div>
     <!-- Page content -->
     <div class="container mt--8 pb-5">
-        
+
       @include('layouts.argon.notifications')
       <div class="row justify-content-center">
         {{-- @if ($properties->count() <= 0)
@@ -111,36 +120,40 @@
        
       
         @endif --}}
-         @yield('title-page')
-         <div class="col-md-9">
-            {{-- @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced') --}}
-            <a href="{{ route('create-property') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Property</a>
-             {{-- @else
+        @yield('title-page')
+        <div class="col-md-9">
+          {{-- @if(Auth::user()->account_type === 'enterprise' || Auth::user()->account_type === 'advanced') --}}
+          <a href="{{ route('create-property') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Property</a>
+          {{-- @else
              <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus"></i> Property</a>
              @endif --}}
-             {{-- @if($properties->count()>1)
-                <a href="{{ route('view-portforlio') }}" class="btn btn-primary"><i class="fas fa-chart-bar"></i> Portforlio</a>
-             @endif --}}
-             @if (Auth::user()->role_id_foreign === 4)
-             @if($users > 1)
-             <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary"><i class="fas fa-plus"></i> User </a>
-             @else
-             <a title="Limited to 2 users." href="{{ route('create-user') }}" class="btn btn-primary"><i class="fas fa-plus"></i> User</a>
-             @endif
-           @else
-           <a title="Reserved for manager." href="#/" class="btn btn-primary"><i class="fas fa-plus"></i> User</a>
-           @endif
-           <a href="https://youtu.be/tGdDzY-dkLg" target="_blank" class="btn btn-primary"> <i class="fab fa-youtube"></i> Getting started </a>
-           {{-- <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-sm"> <i class="fab fa-facebook-messenger"></i> Chat </a> --}}
-            <br><br>
-            <div class="card border-0 mb-0">
-                @yield('content')
-            </div>
-         </div>
+          {{-- @if($properties->count()>1)
+                <a href="{{ route('view-portforlio') }}" class="btn btn-primary"><i class="fas fa-chart-bar"></i>
+          Portforlio</a>
+          @endif --}}
+          @if (Auth::user()->role_id_foreign === 4)
+          @if($users > 1)
+          <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary"><i
+              class="fas fa-plus"></i> User </a>
+          @else
+          <a title="Limited to 2 users." href="{{ route('create-user') }}" class="btn btn-primary"><i
+              class="fas fa-plus"></i> User</a>
+          @endif
+          @else
+          <a title="Reserved for manager." href="#/" class="btn btn-primary"><i class="fas fa-plus"></i> User</a>
+          @endif
+          <a href="https://youtu.be/tGdDzY-dkLg" target="_blank" class="btn btn-primary"> <i class="fab fa-youtube"></i>
+            Getting started </a>
+          {{-- <a title="Please tap the bottom left side of your screen." href="#/"  class="btn btn-primary btn-sm"> <i class="fab fa-facebook-messenger"></i> Chat </a> --}}
+          <br><br>
+          <div class="card border-0 mb-0">
+            @yield('content')
+          </div>
+        </div>
       </div>
     </div>
   </div>
- 
+
   <!-- Footer -->
   {{-- <footer class="py-5" id="footer-main">
     <div class="container">

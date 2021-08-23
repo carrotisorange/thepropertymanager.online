@@ -1,18 +1,18 @@
 @extends('layouts.argon.main')
 
-@section('title',   $concern->details)
+@section('title', $concern->details)
 
 
 @section('css')
- <style>
-/*This will work on every browser*/
-thead tr:nth-child(1) th {
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-</style>   
+<style>
+  /*This will work on every browser*/
+  thead tr:nth-child(1) th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+</style>
 @endsection
 
 @section('css')
@@ -20,436 +20,481 @@ thead tr:nth-child(1) th {
 
 <style>
   div.stars {
-width: 270px;
-display: inline-block;
-}
-input.star { display: none; }
-label.star {
-float: right;
-padding: 10px;
-font-size: 36px;
-color: #444;
-transition: all .2s;
-}
-input.star:checked ~ label.star:before {
-content: '\f005';
-color: #FD4;
-transition: all .25s;
-}
-input.star-5:checked ~ label.star:before {
-color: #FE7;
-text-shadow: 0 0 20px #952;
-}
-input.star-1:checked ~ label.star:before { color: #F62; }
-label.star:hover { transform: rotate(-15deg) scale(1.3); }
-label.star:before {
-content: '\f006';
-font-family: FontAwesome;
-}
+    width: 270px;
+    display: inline-block;
+  }
+
+  input.star {
+    display: none;
+  }
+
+  label.star {
+    float: right;
+    padding: 10px;
+    font-size: 36px;
+    color: #444;
+    transition: all .2s;
+  }
+
+  input.star:checked~label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+  }
+
+  input.star-5:checked~label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+  }
+
+  input.star-1:checked~label.star:before {
+    color: #F62;
+  }
+
+  label.star:hover {
+    transform: rotate(-15deg) scale(1.3);
+  }
+
+  label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+  }
 </style>
 @endsection
 
 @section('upper-content')
 
-@if($responses->count() <= 0)
-<br>
-<div class="row">
-  <div class="col">
-   
-    <div class="alert alert-danger alert-dismissable custom-danger-box">
-      
+@if($responses->count() <= 0) <br>
+  <div class="row">
+    <div class="col">
+
+      <div class="alert alert-danger alert-dismissable custom-danger-box">
+
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
-       
-            <strong><i class="fas fa-exclamation-triangle"></i> The tenant is waiting for your response. Please provide them with an update.  </strong>
-          
-        
+
+        <strong><i class="fas fa-exclamation-triangle"></i> The tenant is waiting for your response. Please provide them
+          with an update. </strong>
+
+
+      </div>
+
+    </div>
+  </div>
+  @endif
+  <br>
+  <div class="row align-items-center">
+    <div class="col-lg-6">
+      <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
+      {{-- <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }}
+      (
+      @if($concern->status === 'pending')
+      <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
+      @elseif($concern->status === 'active')
+      <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
+      @else
+      <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
+      @endif
+      )
+      </h6> --}}
     </div>
 
-  </div>
-</div>
-@endif
-<br>
-<div class="row align-items-center">
-  <div class="col-lg-6">
-    <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
-    {{-- <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }} 
-      ( 
-          @if($concern->status === 'pending')
-          <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
-          @elseif($concern->status === 'active')
-          <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
-          @else
-          <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
-          @endif
-      )
-  </h6> --}}
-  </div>
+    <div class="col-md-6 text-right">
+      <h6 class="h2 text-dark d-inline-block mb-0">Status:
 
-  <div class="col-md-6 text-right">
-    <h6 class="h2 text-dark d-inline-block mb-0">Status: 
-       
-          @if($concern->status === 'pending')
-          <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
-          @elseif($concern->status === 'active')
-          <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
-          @else
-          <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
-          @endif
-      ,
-  </h6>
+        @if($concern->status === 'pending')
+        <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->status }}</span>
+        @elseif($concern->status === 'active')
+        <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->status }}</span>
+        @else
+        <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->status }}</span>
+        @endif
+        ,
+      </h6>
 
       <h6 class="h2 text-dark d-inline-block mb-0">Urgency:
-          @if($concern->urgency === 'urgent')
-          <span class="badge badge-danger">{{ $concern->urgency }}</span>
-          @elseif($concern->urgency === 'major')
-          <span class="badge badge-warning">{{ $concern->urgency }}</span>
-          @else
-          <span class="badge badge-primary">{{ $concern->urgency }}</span>
-          @endif
+        @if($concern->urgency === 'urgent')
+        <span class="badge badge-danger">{{ $concern->urgency }}</span>
+        @elseif($concern->urgency === 'major')
+        <span class="badge badge-warning">{{ $concern->urgency }}</span>
+        @else
+        <span class="badge badge-primary">{{ $concern->urgency }}</span>
+        @endif
       </h6>
-      
+
+    </div>
   </div>
-</div>
-{{-- <div class="row">
+  {{-- <div class="row">
   <div class="col-md-12">
     <h6 class="h2 text-dark d-inline-block mb-0">Details: {{ $concern->details}}</h6>
   </div>
-</div> --}}
+  </div> --}}
 
-<div class="row">
+  <div class="row">
 
-  <div class="col-md-7">
-    @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-    @if($concern->status != 'closed')
-    <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary btn-sm"><i class="fas fa-edit text-dark-50"></i> Edit</a> 
-    @endif 
-    @if($concern->concern_user_id)
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Reforward</a>
-    @else
-    <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i class="fas fas fa-arrow-right text-dark-50"></i> Forward</a>
-    @endif
-    @if($personnels->count()<=0)
-    <a href="#" data-toggle="modal" data-target="#addPersonnel" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New joborder</a>
-    @else
-    <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New joborder</a>
-    @endif
-   @endif
-  <br><br>
-    <div class="table-responsive">
-      @foreach ($concern_details as $concern)
-          
-   
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <th>Date Reported</th>
-          <td>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }}</td>
-        </tr>
-      </thead>
-        <thead>
-           <tr>
+    <div class="col-md-7">
+      @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
+      @if($concern->status != 'closed')
+      <a href="#" data-toggle="modal" data-target="#editConcernDetails" class="btn btn-primary btn-sm"><i
+          class="fas fa-edit text-dark-50"></i> Edit</a>
+      @endif
+      @if($concern->concern_user_id)
+      <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i
+          class="fas fas fa-arrow-right text-dark-50"></i> Reforward</a>
+      @else
+      <a href="#" data-toggle="modal" data-target="#forwardConcern" class="btn btn-primary btn-sm"><i
+          class="fas fas fa-arrow-right text-dark-50"></i> Forward</a>
+      @endif
+      @if($personnels->count()<=0) <a href="#" data-toggle="modal" data-target="#addPersonnel"
+        class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New joborder</a>
+        @else
+        <a href="#" data-toggle="modal" data-target="#addJobOrder" class="btn btn-primary btn-sm"><i
+            class="fas fa-plus text-dark-50"></i> New joborder</a>
+        @endif
+        @endif
+        <br><br>
+        <div class="table-responsive">
+          @foreach ($concern_details as $concern)
+
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Date Reported</th>
+                <td>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }}</td>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
                 <th>Reported by</th>
-                <td><a target="_blank" href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a></td>
-           </tr>  
-           
-          </tr>
-        </thead>
-          <thead>
-          <tr>
-            @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-            <th>Unit</th>
-            @else
-            <th>Room</th>
-            @endif
-            @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
-            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></td>
-            @else
-            <td><a target="_blank" href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a></td>
-            @endif
-           
-            
-           
-          </tr>  
-        </thead>
-          <thead>
-       <tr>
-            <th>Category</th>
-            <td>
-              {{ $concern->category }}
-            </td>
-       </tr>
-      </thead>
-       {{-- <thead>
+                <td><a target="_blank"
+                    href="/property/{{Session::get('property_id')}}/tenant/{{ $concern->concern_tenant_id }}/#concerns">{{ $concern->first_name.' '.$concern->last_name }}</a>
+                </td>
+              </tr>
+
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
+                Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
+                Session::get('property_type') === '6')
+                <th>Unit</th>
+                @else
+                <th>Room</th>
+                @endif
+                @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
+                Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
+                Session::get('property_type') === '6')
+                <td><a target="_blank"
+                    href="/property/{{Session::get('property_id')}}/unit/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a>
+                </td>
+                @else
+                <td><a target="_blank"
+                    href="/property/{{Session::get('property_id')}}/room/{{ $concern->unit_id }}/#concerns">{{ $concern->building.' '.$concern->unit_no }}</a>
+                </td>
+                @endif
+
+
+
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <td>
+                  {{ $concern->category }}
+                </td>
+              </tr>
+            </thead>
+            {{-- <thead>
        <tr>
             <th>Urgency</th>
             <td>
               @if($concern->urgency === 'urgent')
               <span class="badge badge-danger">{{ $concern->urgency }}</span>
-              @elseif($concern->urgency === 'major')
-              <span class="badge badge-warning">{{ $concern->urgency }}</span>
-              @else
-              <span class="badge badge-primary">{{ $concern->urgency }}</span>
-              @endif
+            @elseif($concern->urgency === 'major')
+            <span class="badge badge-warning">{{ $concern->urgency }}</span>
+            @else
+            <span class="badge badge-primary">{{ $concern->urgency }}</span>
+            @endif
             </td>
-       </tr>
-      </thead> --}}
-       {{-- <thead>
+            </tr>
+            </thead> --}}
+            {{-- <thead>
        <tr>
           <th>Status</th>
             <td>
               @if($concern->concern_status === 'pending')
               <span class="text-warning"><i class="fas fa-clock "></i> {{ $concern->concern_status }}</span>
-              @elseif($concern->concern_status === 'active')
-              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->concern_status }}</span>
-              @else
-              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->concern_status }}</span>
-              @endif
+            @elseif($concern->concern_status === 'active')
+            <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $concern->concern_status }}</span>
+            @else
+            <span class="text-success"><i class="fas fa-check-circle "></i> {{ $concern->concern_status }}</span>
+            @endif
             </td>
-       </tr>
-      </thead> --}}
-       <thead>
-       <tr>
-         <th>Assigned to</th>
-         <td><a target="_blank" href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a></td>
-       </tr>
-      </thead>
-       <thead>
-       <tr>
-        <th>Rating</th>
-        <td>{{ $concern->rating? $concern->rating.'/5' : 'NA' }}</td>
-     </tr>
-    </thead>
-     <thead>
-     <tr>
-      <th>Feedback</th>
-      <td>{{ $concern->feedback? $concern->feedback : 'NA' }}</td>
-   </tr>
-  </thead>
-       </table>
-       @endforeach
-    </div>
-
-   
-  </div>
-  <div class="col-md-5">
-    <div class="row">
-      <div class="col">
-     
-        <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary btn-sm"><i class="fas fa-plus text-dark-50"></i> New response</a> 
-        
-       </div>
-     </div>
-    <br>
-   @if($responses->count() <= 0)
-     <p class="text-center text-danger">No responses found!</p>
-   @else
-   <div class="row">
-    <div class="col">
-        <div class="list-group list-group-flush">
-            @foreach ($responses as $item)
-         
-            <span class="list-group-item list-group-item-action">
-              <div class="row align-items-center">
-               
-                <div class="col">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
-                    </div>
-                    <div class="text-right text-muted">
-  
-                      <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
-                     
-                      
-                    </div>
-                  </div>
-                  <p class="text-sm text-muted mb-0"> {!! $item->response !!}</p>
-                 
-                </div>
-              </div>
-            </span>
-  
-            @endforeach
-  
-          </div>
-          <br>
-     
-    </div>
-    
-  </div>
-   @endif
-    
-    
-  </div>
-</div>
-
-
-<div class="modal fade" id="editConcernDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-md" role="document">
-  <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Edit Concern</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-      </div>
-      <div class="modal-body">
-      <form id="editConcernDetailsForm" action="/concerns/{{ $concern->concern_id }}" method="POST">
-        @method('put')
-        {{ csrf_field() }}
-      </form>
-      
-     
-        <div class="row">
-            <div class="col">
-                <label>Date reported</label>
-                <input type="date" form="editConcernDetailsForm" class="form-control" name="reported_at" value="{{ $concern->reported_at }}" required>
-            </div>
+            </tr>
+            </thead> --}}
+            <thead>
+              <tr>
+                <th>Assigned to</th>
+                <td><a target="_blank"
+                    href="/property/{{Session::get('property_id')}}/user/{{ $concern->concern_user_id }}/#concerns">{{ $concern->name }}</a>
+                </td>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th>Rating</th>
+                <td>{{ $concern->rating? $concern->rating.'/5' : 'NA' }}</td>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th>Feedback</th>
+                <td>{{ $concern->feedback? $concern->feedback : 'NA' }}</td>
+              </tr>
+            </thead>
+          </table>
+          @endforeach
         </div>
-        <br>
-        <div class="row">
-          <div class="col">
-              <label>Title</label>
-              <input type="text" form="editConcernDetailsForm" class="form-control" name="title" value="{{ $concern->title }}" required>
-          </div>
+
+
+    </div>
+    <div class="col-md-5">
+      <div class="row">
+        <div class="col">
+
+          <a href="#" data-toggle="modal" data-target="#addResponse" class="btn btn-primary btn-sm"><i
+              class="fas fa-plus text-dark-50"></i> New response</a>
+
+        </div>
       </div>
       <br>
-        <div class="row">
-            <div class="col">
-                <label>Category</label>
-                <select class="form-control" form="editConcernDetailsForm" name="category" id="" required>
-                    <option value="{{ $concern->category }}" readonly selected class="bg-primary">{{ $concern->category }}</option>
-                    <option value="billing">billing</option>
-                    <option value="internet">internet</option>
-                    <option value="employee">employee</option>
-                    <option value="neighbour">neighbour</option>
-                    <option value="noise">noise</option>
-                    <option value="odours">odours</option>
-                    <option value="parking">parking</option>
-                    <option value="pets">pets</option>
-                    <option value="repair">repair</option>
-                    <option value="others">others</option>
-                </select>
-            </div>
-        </div>
-      
-<br>
-        <div class="row">
-            <div class="col">
-                <label>Urgency</label>
-                <select class="form-control" form="editConcernDetailsForm" name="urgency" id="" required>
-                    <option value="{{ $concern->urgency }}" readonly selected class="bg-primary">{{ $concern->urgency }}</option>
-                    <option value="minor and not urgent">minor and not urgent</option>
-                    <option value="minor but urgent">minor but urgent</option>
-                    <option value="major but not urgent">major but not urgent</option>
-                    <option value="major and urgent">major and urgent</option>
-                </select>
-            </div>
-        </div>
-<br>
-     
+      @if($responses->count() <= 0) <p class="text-center text-danger">No responses found!</p>
+        @else
         <div class="row">
           <div class="col">
+            <div class="list-group list-group-flush">
+              @foreach ($responses as $item)
+
+              <span class="list-group-item list-group-item-action">
+                <div class="row align-items-center">
+
+                  <div class="col">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
+                      </div>
+                      <div class="text-right text-muted">
+
+                        <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }} </small>
+
+
+                      </div>
+                    </div>
+                    <p class="text-sm text-muted mb-0"> {!! $item->response !!}</p>
+
+                  </div>
+                </div>
+              </span>
+
+              @endforeach
+
+            </div>
+            <br>
+
+          </div>
+
+        </div>
+        @endif
+
+
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="editConcernDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Concern</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editConcernDetailsForm" action="/concerns/{{ $concern->concern_id }}" method="POST">
+            @method('put')
+            {{ csrf_field() }}
+          </form>
+
+
+          <div class="row">
+            <div class="col">
+              <label>Date reported</label>
+              <input type="date" form="editConcernDetailsForm" class="form-control" name="reported_at"
+                value="{{ $concern->reported_at }}" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label>Title</label>
+              <input type="text" form="editConcernDetailsForm" class="form-control" name="title"
+                value="{{ $concern->title }}" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label>Category</label>
+              <select class="form-control" form="editConcernDetailsForm" name="category" id="" required>
+                <option value="{{ $concern->category }}" readonly selected class="bg-primary">{{ $concern->category }}
+                </option>
+                <option value="billing">billing</option>
+                <option value="internet">internet</option>
+                <option value="employee">employee</option>
+                <option value="neighbour">neighbour</option>
+                <option value="noise">noise</option>
+                <option value="odours">odours</option>
+                <option value="parking">parking</option>
+                <option value="pets">pets</option>
+                <option value="repair">repair</option>
+                <option value="others">others</option>
+              </select>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col">
+              <label>Urgency</label>
+              <select class="form-control" form="editConcernDetailsForm" name="urgency" id="" required>
+                <option value="{{ $concern->urgency }}" readonly selected class="bg-primary">{{ $concern->urgency }}
+                </option>
+                <option value="minor and not urgent">minor and not urgent</option>
+                <option value="minor but urgent">minor but urgent</option>
+                <option value="major but not urgent">major but not urgent</option>
+                <option value="major and urgent">major and urgent</option>
+              </select>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col">
               <label>Details</label>
-             <textarea form="editConcernDetailsForm" class="form-control" name="details" id="" cols="30" rows="10" required>
+              <textarea form="editConcernDetailsForm" class="form-control" name="details" id="" cols="30" rows="10"
+                required>
               {{ $concern->details }}
              </textarea>
+            </div>
           </div>
-      </div>
-{{-- 
+          {{-- 
       <br>
         <div class="row">
             <div class="col">
                 <label>Assigned to</label>
                 <select class="form-control" form="editConcernDetailsForm" name="concern_user_id" id="" required>
-                    <option value="{{ $concern->concern_user_id }}" readonly selected class="bg-primary">{{ $concern->concern_user_id }}</option>
-                    @foreach ($users as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div> --}}
-
-      </div>
-      <div class="modal-footer">
-
-          <button form="editConcernDetailsForm" type="submit" class="btn btn-primary btn-sm" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
-      </div>
-  </div>
-  </div>
-
-</div>
-
-
-
-<div class="modal fade" id="addPersonnel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">No Personnels found</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-      </div>
-      <div class="modal-body">
-        <p class="text-center">
-          Personnel such as maintenance and housekeeping are required to file a job order. 
-        </p>
-      </div>
-      <div class="modal-footer">
-        
-        <a href="/property/{{ Session::get('property_id') }}/personnels" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add your first personnel now </a>
-      
-      </div>
-  </div>
-  </div>
-
-</div>
-
-<div class="modal fade" id="addJobOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Job Order Information</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-      </div>
-      <div class="modal-body">
-        <form action="/property/{{Session::get('property_id')}}/concern/{{ $concern->concern_id }}/joborder" method="POST">
-          @csrf
-
-          <div class="row">
-            <div class="col">
-                <label>Date</label>
-                <input type="date"  class="form-control" name="created_at" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
-            </div>
+                    <option value="{{ $concern->concern_user_id }}" readonly selected
+          class="bg-primary">{{ $concern->concern_user_id }}</option>
+          @foreach ($users as $item)
+          <option value="{{ $item->id }}">{{ $item->name }}</option>
+          @endforeach
+          </select>
         </div>
-        <br>
-        <div class="row">
-          <div class="col">
-              <label>Personnel</label>
-              {{-- <select  class="form-control r" name="personnel_id_foreign" id="personnel_id_foreign" required> --}}
-              <select  class="form-control form-control-user @error('personnel_id_foreign') is-invalid @enderror" name="personnel_id_foreign" id="personnel_id_foreign" required>
-                <option value="">Please select one</option>
-                @foreach ($personnels as $item)
-                    <option value="{{ $item->personnel_id }}">{{ $item->personnel_name }} | {{ $item->personnel_type }}</option>
-                @endforeach
-              </select>
+      </div> --}}
 
-              @error('personnel_id_foreign')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-              @enderror
-          </div>
+    </div>
+    <div class="modal-footer">
+
+      <button form="editConcernDetailsForm" type="submit" class="btn btn-primary btn-sm"
+        onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
+    </div>
+  </div>
+  </div>
+
+  </div>
+
+
+
+  <div class="modal fade" id="addPersonnel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">No Personnels found</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-center">
+            Personnel such as maintenance and housekeeping are required to file a job order.
+          </p>
+        </div>
+        <div class="modal-footer">
+
+          <a href="/property/{{ Session::get('property_id') }}/personnels" class="btn btn-primary btn-sm"><i
+              class="fas fa-plus"></i> Add your first personnel now </a>
+
+        </div>
       </div>
-      <br>
-      <div class="row">
-        <div class="col">
-            <label>Summary</label>
-            <textarea  class="form-control form-control-user @error('summary') is-invalid @enderror" name="summary" id="" cols="30" rows="3" placeholder="What the job order is all about?"></textarea required>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="addJobOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Job Order Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/property/{{Session::get('property_id')}}/concern/{{ $concern->concern_id }}/joborder"
+            method="POST">
+            @csrf
+
+            <div class="row">
+              <div class="col">
+                <label>Date</label>
+                <input type="date" class="form-control" name="created_at"
+                  value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" required>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label>Personnel</label>
+                {{-- <select  class="form-control r" name="personnel_id_foreign" id="personnel_id_foreign" required> --}}
+                <select class="form-control form-control-user @error('personnel_id_foreign') is-invalid @enderror"
+                  name="personnel_id_foreign" id="personnel_id_foreign" required>
+                  <option value="">Please select one</option>
+                  @foreach ($personnels as $item)
+                  <option value="{{ $item->personnel_id }}">{{ $item->personnel_name }} | {{ $item->personnel_type }}
+                  </option>
+                  @endforeach
+                </select>
+
+                @error('personnel_id_foreign')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label>Summary</label>
+                <textarea class="form-control form-control-user @error('summary') is-invalid @enderror" name="summary"
+                  id="" cols="30" rows="3" placeholder="What the job order is all about?"></textarea required>
               @error('summary')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -598,34 +643,32 @@ font-family: FontAwesome;
       <textarea form="markAsCompleteModalForm" class="form-control" id="" cols="30" rows="5" name="feedback" required>
         
       </textarea>
-  
- 
+
+
+              </div>
+              <div class="modal-footer">
+                <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary"
+                  onclick="this.form.submit(); this.disabled = true;"> Mark as closed and rate </button>
+              </div>
+            </div>
+        </div>
+
       </div>
-      <div class="modal-footer">
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Mark as closed and rate </button>
-      </div>
-  </div>
-  </div>
-
-</div>
 
 
 
-@endsection
+      @endsection
 
-@section('main-content')
+      @section('main-content')
 
-@endsection
+      @endsection
 
-@section('scripts')
-<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
-<script>
-  CKEDITOR.replace( 'response', {
+      @section('scripts')
+      <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+      <script>
+        CKEDITOR.replace( 'response', {
       filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
       filebrowserUploadMethod: 'form',
   });
-  </script>
-@endsection
-
-
-
+      </script>
+      @endsection
