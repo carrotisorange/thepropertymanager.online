@@ -150,11 +150,20 @@ class BillController extends Controller
         ->orderBy('particular', 'asc')
         ->get();
 
-        $bills = Bill::join('particulars','particular_id_foreign', 'particular_id')
-        ->where('bill_tenant_id', $tenant_id)
-        ->groupBy('bill_id')
-        ->orderBy('bill_no', 'desc')
-        ->get();
+        // $bills = Bill::join('particulars','particular_id_foreign', 'particular_id')
+        // ->where('bill_tenant_id', $tenant_id)
+        // ->groupBy('bill_id')
+        // ->orderBy('bill_no', 'desc')
+        // ->get();
+
+         $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+          ->join('particulars','particular_id_foreign', 'particular_id')
+          ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
+          ->where('bill_tenant_id', $tenant_id)
+          ->groupBy('bill_id')
+          ->orderBy('bill_no', 'desc')
+          // ->havingRaw('balance > 0')
+          ->get();
 
         $tenant = Tenant::findOrFail($tenant_id);
 
@@ -177,6 +186,13 @@ class BillController extends Controller
            ->join('bills', 'tenant_id', 'bill_tenant_id')
            ->where('property_id_foreign', Session::get('property_id'))
            ->max('bill_no') + 1;  
+
+         if($request->particular_id_foreign === '18'){
+         $bill_amount = $request->particular_id_foreign * -1;
+         }else{
+         $bill_amount = $request->particular_id_foreign;
+         }
+
  
           //post the additional bill
           Bill::create([
@@ -184,7 +200,7 @@ class BillController extends Controller
              'bill_tenant_id' => $tenant_id,
              'date_posted' => Carbon::now(),
              'particular_id_foreign' => $request->particular_id_foreign,
-             'amount'=> $request->amount,
+             'amount'=> $bill_amount,
              'start' => $request->start, 
              'end' => $request->start,
          ]);
@@ -822,6 +838,7 @@ DB::table('properties')
 
     public function post_tenant_bill(Request $request, $property_id, $tenant_id)
     {
+
         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
@@ -848,7 +865,7 @@ DB::table('properties')
             $bill->particular_id_foreign = $request->input('particular'.$i);
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
-            if($request->particular1 == '18'){
+            if($request->particular1 === '18'){
                 $bill->amount = $request->input('amount'.$i) * -1;
             }else{
                 $bill->amount = $request->input('amount'.$i);
@@ -897,7 +914,7 @@ DB::table('properties')
 
     public function post_unit_bill(Request $request, $property_id, $unit_id)
     {
-
+ 
         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
@@ -927,7 +944,7 @@ DB::table('properties')
           
             $bill->start = $request->input('start'.$i);
             $bill->end = $request->input('end'.$i);
-            if($request->particular1 == '18'){
+            if($request->particular1 === '18'){
                 $bill->amount = $request->input('amount'.$i) * -1;
             }else{
                 $bill->amount = $request->input('amount'.$i);

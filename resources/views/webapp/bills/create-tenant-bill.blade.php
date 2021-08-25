@@ -94,7 +94,7 @@
                 <td>{{ $item->particular }}</td>
                 <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y') }}</td>
                 <td>{{ Carbon\Carbon::parse($item->end)->format('M d, Y') }}</td>
-                <td>{{ number_format($item->amount , 2) }}</td>
+                <td>{{ number_format($item->balance , 2) }}</td>
                 <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i>
                     Remove</a></td>
               </tr>
@@ -107,7 +107,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <th>{{ number_format($bills->sum('amount'),2) }}</th>
+              <th>{{ number_format($bills->sum('balance'),2) }}</th>
               <td></td>
             </tr>
 
