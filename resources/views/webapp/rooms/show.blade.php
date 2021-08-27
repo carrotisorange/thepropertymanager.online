@@ -402,7 +402,7 @@
         @if($owners->count())
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner"
-            class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
+            class="btn btn-primary"><i class="fas fa-exchange-alt"></i> Change</a>
           {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
         </p>
         @endif

@@ -27,9 +27,9 @@
               @endif
             </li>
             {{-- Units/Rooms --}}
-            @if(Auth::user()->role_id_foreign === '1' || Auth::user()->role_id_foreign === 4 )
+            @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 )
            <li class="nav-item">
-              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6')
+              @if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6')
                 @if(Session::get('current-page') === 'units')
                 <a class="nav-link active" href={{ route('show-all-unit', ['property_id' => Session::get('property_id')]) }}>
                   <i class="fas fa-home text-indigo"></i>

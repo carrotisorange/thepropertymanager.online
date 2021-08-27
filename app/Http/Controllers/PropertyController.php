@@ -1497,21 +1497,22 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
      */
     public function edit($property_id)
     {
+
         Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
         Session::put('property_id', $property_id);
 
         $property = Property::findOrFail($property_id);
        
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+        Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-        Session::put('property_type', Property::findOrFail(Session::get('property_type_id_foreign'))->type);
+        Session::put('property_type', Property::findOrFail($property_id)->type);
 
-        Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
+        Session::put('property_name', Property::findOrFail($property_id)->name);
 
-        Session::put('property_address', Property::findOrFail(Session::get('property_id'))->address);
+        Session::put('property_address', Property::findOrFail($property_id)->address);
 
-        Session::put('property_mobile', Property::findOrFail(Session::get('property_id'))->mobile);
+        Session::put('property_mobile', Property::findOrFail($property_id)->mobile);
 
         Session::put('footer_message', Property::findOrFail($property_id)->footer_message);
 

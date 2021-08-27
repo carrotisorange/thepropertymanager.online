@@ -111,15 +111,14 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col">
-                                <p class="text-right">
-
-                                    <button type="submit" form="editPropertyForm" class="btn btn-success btn-sm"><i
-                                            class="fas fa-check"></i> Update</button>
+                       <div class="form-group">
+                                <button type="submit" form="editPropertyForm" class="btn btn-primary btn-block"
+                                    onclick="this.form.submit(); this.disabled = true;"> Save</button>
+                                <br>
+                                <p class="text-center">
+                                    <a class="text-center text-dark" href="/property/all">Cancel</a>
                                 </p>
                             </div>
-                        </div>
 
 
                 </div>
