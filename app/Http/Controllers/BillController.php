@@ -187,7 +187,7 @@ class BillController extends Controller
            ->where('property_id_foreign', Session::get('property_id'))
            ->max('bill_no') + 1;  
 
-         if($request->particular_id_foreign === 18){
+         if($request->particular_id_foreign === '18'){
          $bill_amount = $request->amount * -1;
          }else{
          $bill_amount = $request->amount;
