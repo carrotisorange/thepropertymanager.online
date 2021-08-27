@@ -16,10 +16,9 @@ class RoomController extends Controller
 {
 
     public function __construct(){
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'is_user_a_manager']);
     }
-    
-    
+       
     /**
      * Display a listing of the resource.
      *n
@@ -38,8 +37,6 @@ class RoomController extends Controller
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
-
-        if(auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 1 ){
 
             Session::put('status', $request->status);
             Session::put('size', $request->size);
@@ -169,9 +166,7 @@ class RoomController extends Controller
            }else{
             return view('webapp.rooms.index',compact('units','buildings', 'statuses','floors', 'types', 'occupancies', 'rents', 'sizes','room_types','room_floors'));
            }
-        }else{
-            return view('layouts.arsha.unregistered');
-        }
+     
     }
 
     /**
@@ -206,7 +201,7 @@ class RoomController extends Controller
     {
         Session::put('current-page', 'rooms');
 
-        if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 5){
+       
          
              $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
@@ -286,10 +281,7 @@ class RoomController extends Controller
            
             return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners','concerns', 'remittances', 'expenses','pending_concerns'));
            
-        }else{
-                return view('layouts.arsha.unregistered');
-        }
-        
+       
     }
 
     public function store(Request $request){

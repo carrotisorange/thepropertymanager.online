@@ -18,13 +18,12 @@
           <div class="col">
             <input class="form-check-input" type="radio" name="selectedProperty" id="inlineRadio1"
               value="{{ $item->property_id }}" checked>
-            <span class="h2 font-weight-bold mb-0">{{ $item->name }} </span> </a>
-            <a title="Edit this property." href="/property/{{ $item->property_id }}/edit"><i
-              class="fas fa-edit"></i>
-            {{-- <h5 class="card-title text-uppercase text-muted mb-0">{{ $item->type}} &#9671 {{ $item->ownership }}
-            </h5> --}}
-            <h5 class="card-title text-uppercase text-muted mb-0">{{ $item->type}}</h5>
-            <input type="hidden" name="property_id" value="{{ $item->property_id }}">
+            <span class="h2 font-weight-bold mb-0">{{ $item->name }} </span>
+            <a title="Edit this property." href="/property/{{ $item->property_id }}/edit"><i class="fas fa-edit"></i></a>\
+              {{-- <h5 class="card-title text-uppercase text-muted mb-0">{{ $item->type}} &#9671 {{ $item->ownership }}
+              </h5> --}}
+              <h5 class="card-title text-uppercase text-muted mb-0">{{ $item->type}}</h5>
+              <input type="hidden" name="property_id" value="{{ $item->property_id }}">
           </div>
 
           <div class="col-auto">
