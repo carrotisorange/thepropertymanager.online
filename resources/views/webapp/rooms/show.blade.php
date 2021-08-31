@@ -26,6 +26,8 @@
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-room-tab" data-toggle="tab" href="#room" role="tab"
           aria-controls="nav-room" aria-selected="true"><i class="fas fa-home text-indigo"></i> Room</a>
+          <a class="nav-item nav-link" id="nav-inventory-tab" data-toggle="tab" href="#inventory" role="tab" aria-controls="nav-inventory"
+            aria-selected="true"><i class="fas fa-list text-dark"></i> Inventory</a>
         @if(!$tenants->count())
         <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab"
           aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <i
@@ -172,6 +174,54 @@
         </div>
 
       </div>
+
+      <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="nav-inventory-tab">
+              @if($inventories)
+              <p class="text-left">
+                <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/inventory"
+                  class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
+                {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+              </p>
+              @endif
+              <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                  @if(!$inventories)
+                  <tr>
+                    <br><br>
+                    <p class="text-center">
+                      <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/inventory"
+                        class="btn btn-primary"><i class="fas fa-plus"></i> Add an item</a>
+                    </p>
+                  </tr>
+                  @else
+                  <thead>
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th>Date</th>
+                      <th>Item</th>
+                      <th>Quantity</th>
+                      <th>Remarks</th>
+                     
+                    </tr>
+                  </thead>
+                  <?php $inv_ctr = 1; ?>
+                  @foreach ($inventories as $item)
+                  <tr>
+                    <th class="text-center">{{ $inv_ctr++ }}</th>
+                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                    <td>{{ $item->item }}</td>
+                    <td>{{ $item->quantity }}</td>
+                    <td>{{ $item->quantity }}</td>
+                    <td>{{ $item->remarks }}</td>
+                   
+                  </tr>
+                  @endforeach
+                  @endif
+                </table>
+              </div>
+            
+            </div>
+
       <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">

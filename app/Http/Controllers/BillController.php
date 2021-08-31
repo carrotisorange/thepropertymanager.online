@@ -202,7 +202,7 @@ class BillController extends Controller
              'particular_id_foreign' => $request->particular_id_foreign,
              'amount'=> $bill_amount,
              'start' => $request->start, 
-             'end' => $request->start,
+             'end' => $request->end,
          ]);
 
         $particulars = DB::table('particulars')

@@ -134,6 +134,10 @@ Route::get('/property/{property_id}/tenants/search', 'TenantController@index');
 //route to filter tenant based on their status
 Route::get('/property/{property_id}/tenants/filter', 'TenantController@filter');
 
+//ROUTES FOR ADDING INVENTORIES TO ROOM
+//route to add a inventory
+Route::get('/property/{property_id}/room/{unit_id}/create/inventory', 'InventoryController@create');
+
 //ROUTES FOR CONTRACTCONTROLLER
 //route to extend tenant's contract
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend');

@@ -200,9 +200,7 @@ class RoomController extends Controller
     public function show($property_id, $unit_id)
     {
         Session::put('current-page', 'rooms');
-
-       
-         
+  
              $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
            ->where('property_id_foreign', $property_id)
@@ -235,15 +233,17 @@ class RoomController extends Controller
            ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
            ->where('unit_id', $unit_id)
            ->get();
+
+            $inventories = Unit::findOrFail($unit_id)->inventories;
        
-            $bills = Bill::leftJoin('payments', 'bills.bill_no', '=', 'payments.payment_bill_no')
-           ->join('units', 'bill_unit_id', 'unit_id')
-           ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-           ->where('unit_id', $unit_id)
-           ->groupBy('bill_id')
-           ->orderBy('bill_no', 'desc')
-           ->havingRaw('balance > 0')
-           ->get();
+        //     $bills = Bill::leftJoin('payments', 'bills.bill_no', 'payments.payment_bill_no')
+        //    ->join('units', 'bill_unit_id', 'unit_id')
+        //    ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
+        //    ->where('unit_id', $unit_id)
+        //    ->groupBy('bill_id')
+        //    ->orderBy('bill_no', 'desc')
+        //    ->havingRaw('balance > 0')
+        //    ->get();
 
            $remittances = Unit::findOrFail($unit_id)->remittances;
 
@@ -279,7 +279,9 @@ class RoomController extends Controller
             $room_floors = DB::table('unit_floors')->get();
           
            
-            return view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home', 'owners','concerns', 'remittances', 'expenses','pending_concerns'));
+            return
+            view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home',
+            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories'));
            
        
     }
