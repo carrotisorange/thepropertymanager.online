@@ -57,7 +57,7 @@
                             <td>
                                 <input form="createInventoryForm" type="text" value="{{ old('remarks') }}"
                                     name="remarks" id="remarks" class="form-control">
-                                @error('description')
+                                @error('remarks')
                                 <small class="text-danger">
                                     {{ $message }}
                                 </small>
