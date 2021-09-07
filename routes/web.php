@@ -137,6 +137,10 @@ Route::get('/property/{property_id}/tenants/filter', 'TenantController@filter');
 //ROUTES FOR ADDING INVENTORIES TO ROOM
 //route to add a inventory
 Route::get('/property/{property_id}/room/{unit_id}/create/inventory', 'InventoryController@create');
+//route to post inventory
+Route::post('/property/{property_id}/room/{unit_id}/store/inventory', 'InventoryController@store');
+//route to update inventory
+Route::put('/property/{property_id}/room/{unit_id}/update/inventory', 'InventoryController@update');
 
 //ROUTES FOR CONTRACTCONTROLLER
 //route to extend tenant's contract

@@ -16,6 +16,7 @@ class Inventory extends Model
     'unit_id_foreign',
     'item',
     'quantity',
+    'current_inventory',
     'remarks'
     ];
 

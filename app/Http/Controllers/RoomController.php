@@ -11,6 +11,7 @@ use App\Property;
 use App\OccupancyRate;
 use Session;
 use App\Notification;
+use App\Inventory;
 
 class RoomController extends Controller
 {
@@ -234,7 +235,7 @@ class RoomController extends Controller
            ->where('unit_id', $unit_id)
            ->get();
 
-            $inventories = Unit::findOrFail($unit_id)->inventories;
+            $inventories = Inventory::where('unit_id_foreign', $unit_id)->get();
        
         //     $bills = Bill::leftJoin('payments', 'bills.bill_no', 'payments.payment_bill_no')
         //    ->join('units', 'bill_unit_id', 'unit_id')
