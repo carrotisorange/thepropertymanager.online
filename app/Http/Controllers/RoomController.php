@@ -12,6 +12,7 @@ use App\OccupancyRate;
 use Session;
 use App\Notification;
 use App\Inventory;
+use App\Contract;
 
 class RoomController extends Controller
 {
@@ -235,17 +236,20 @@ class RoomController extends Controller
            ->where('unit_id', $unit_id)
            ->get();
 
+             $revenues = Contract::
+             join('tenants', 'tenant_id_foreign', 'tenant_id')
+             ->join('payments', 'payment_tenant_id', 'tenant_id')
+             ->join('units', 'unit_id_foreign', 'unit_id')
+              ->join('bills', 'unit_id', 'bill_unit_id')
+              ->join('particulars', 'particular_id_foreign', 'particular_id')
+             ->where('unit_id', $unit_id)
+             ->whereNull('payments.deleted_at')
+             ->orderBy('payment_created', 'desc')
+             ->groupBy('payment_id')
+             ->get();
+
             $inventories = Inventory::where('unit_id_foreign', $unit_id)->get();
        
-        //     $bills = Bill::leftJoin('payments', 'bills.bill_no', 'payments.payment_bill_no')
-        //    ->join('units', 'bill_unit_id', 'unit_id')
-        //    ->selectRaw('*, bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
-        //    ->where('unit_id', $unit_id)
-        //    ->groupBy('bill_id')
-        //    ->orderBy('bill_no', 'desc')
-        //    ->havingRaw('balance > 0')
-        //    ->get();
-
            $remittances = Unit::findOrFail($unit_id)->remittances;
 
            $expenses = Unit::findOrFail($unit_id)->expenses;
@@ -279,10 +283,9 @@ class RoomController extends Controller
 
             $room_floors = DB::table('unit_floors')->get();
           
-           
             return
             view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home',
-            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories'));
+            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories', 'revenues'));
            
        
     }

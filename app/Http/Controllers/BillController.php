@@ -535,38 +535,6 @@ class BillController extends Controller
         return redirect('/property/'.Session::get('property_id').'/bills')->with('success', ($posted_bills).' '.$particular->particular.' bills have been posted!');
 
     }
-            // Bill::table('bills')->insert(
-            //     [
-            //         'bill_no' => $current_bill_no++,
-            //         'bill_tenant_id' => $request->input('bill_tenant_id'.$i),
-            //         'bill_unit_id' => $request->input('bill_unit_id'.$i),
-            //         'date_posted' => Carbon::now(),
-            //         'start' => $request->input('start'.$i),
-            //         'end' => $request->input('end'.$i),
-            //         'particular' => $particular,
-            //         'particular_id_foreign' => $request->particular_id,
-            //         'amount' =>  $amount
-            //     ]);
-     
-           
-        // }
-        
-        // $particular = Particular::findOrFail($request->particular_id)->particular;
-     
-        
-
-            
-        // $notification = new Notification();
-        // $notification->user_id_foreign = Auth::user()->id;
-        // $notification->property_id_foreign = Session::get('property_id');
-        // $notification->type = 'bill';
-        
-        // $notification->message = Auth::user()->name. 'posts '.($no_of_billed-1).' '.$request->particular1.'.';
-        // $notification->save();
-                    
-        // Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
-
-    
     
     public function post_bills_rent(Request $request, $property_id)
     {

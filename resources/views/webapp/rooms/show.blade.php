@@ -38,16 +38,16 @@
         <a class="nav-item nav-link" id="nav-inventory-tab" data-toggle="tab" href="#inventory" role="tab"
           aria-controls="nav-inventory" aria-selected="true"><i class="fas fa-list text-dark"></i> Inventory</a>
         @if(!$tenants->count())
-        <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab"
+        <a class="nav-item nav-link" id="nav-tenants-tab" data-toggle="tab" href="#tenants" role="tab"
           aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <i
             class="fas fa-exclamation-triangle text-danger"></i></a>
         @else
-        <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#tenants" role="tab"
+        <a class="nav-item nav-link" id="nav-tenants-tab" data-toggle="tab" href="#tenants" role="tab"
           aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <span
             class="badge badge-success badge-counter">{{ $tenants->count() }}</span></a>
         @endif
-
-
+        <a class="nav-item nav-link" id="nav-revenues-tab" data-toggle="tab" href="#revenues" role="tab"
+          aria-controls="nav-revenues" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Revenues</a>
 
         @if(!$remittances->count())
         <a class="nav-item nav-link" id="nav-remittances-tab" data-toggle="tab" href="#remittances" role="tab"
@@ -185,10 +185,10 @@
         </p>
         @endif
         <form id="updateInventoryForm"
-            action="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/update/inventory" method="POST">
-            @method('PUT')
-            @csrf
-          </form>
+          action="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/update/inventory" method="POST">
+          @method('PUT')
+          @csrf
+        </form>
         <div class="table-responsive text-nowrap">
           <table class="table table-hover">
             @if(!$inventories)
@@ -224,15 +224,15 @@
               <td>
                 {{ $item->current_inventory }}
                 {{-- <input form="updateInventoryForm" type="text"value="{{ $item->inventory_id }}" name="item_id"
-                  id="item_id" class="form-control col-md-6">
-          
-              <input form="updateInventoryForm" type="number" min="1" value="{{ $item->current_inventory }}" name="current_inventory" id="current_inventory"
-                    class="form-control col-md-6">
-                  @error('current_inventory')
-                  <small class="text-danger">
-                    {{ $message }}
-                  </small>
-                  @enderror --}}
+                id="item_id" class="form-control col-md-6">
+
+                <input form="updateInventoryForm" type="number" min="1" value="{{ $item->current_inventory }}"
+                  name="current_inventory" id="current_inventory" class="form-control col-md-6">
+                @error('current_inventory')
+                <small class="text-danger">
+                  {{ $message }}
+                </small>
+                @enderror --}}
               </td>
               <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d, Y') }}</td>
               {{-- <th>
@@ -240,7 +240,9 @@
                 onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>
                 Save</button>
               </th> --}}
-              <th><a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/show/inventory/{{ $item->inventory_id }}"><i class="fas fa-eye"></i> Show</a></th>
+              <th><a
+                  href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/show/inventory/{{ $item->inventory_id }}"><i
+                    class="fas fa-eye"></i> Show</a></th>
             </tr>
             @endforeach
             @endif
@@ -351,7 +353,7 @@
           {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
         </p>
         @endif
-        <div class="table-responsive text-nowrap">
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
           <table class="table table-hover">
             @if(!$tenants->count())
             <tr>
@@ -384,9 +386,15 @@
                 </a></th>
               <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
               <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
-              <td>{{ $item->unit_no }}</td>
+              <td>{{ $item->building.' '.$item->unit_no }}</td>
               <td>{{ $item->contract_term }}</td>
-              <td>{{ $item->contract_status }}</td>
+              <td>
+                @if($item->contract_status == 'active')
+                <span class="text-success"><i class="fas fa-check"></i> {{ $item->contract_status }} </span>
+                @else
+                <span class="text-danger"><i class="fas fa-times"></i> {{ $item->contract_status }} </span>
+                @endif
+              </td>
               {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }}
               days
               left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}
@@ -396,6 +404,45 @@
             </tr>
             @endforeach
             @endif
+          </table>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="revenues" role="tabpanel" aria-labelledby="nav-revenues-tab">
+
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+          <table class="table table-hover">
+
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>AR No</th>
+                <th>Bill No</th>
+                <th>Particular</th>
+                <th>Payment method</th>
+                <th>Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <?php $rev_ctr = 1; ?>
+            @foreach ($revenues as $item)
+            <tr>
+              <th>{{ $ctr++ }}</th>
+              <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
+              <td>
+                {{ $item->ar_no }}
+              </td>
+              <td>{{ $item->payment_bill_no }}</td>
+              <td>{{ $item->particular }}</td>
+              <td>{{ $item->form }}</td>
+              <td>{{ number_format($item->amt_paid, 2) }}</td>
+
+
+
+            </tr>
+            @endforeach
           </table>
         </div>
 
