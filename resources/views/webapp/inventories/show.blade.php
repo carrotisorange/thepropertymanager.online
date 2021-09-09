@@ -29,7 +29,7 @@
                             <th>Item</th>
                             <th>Description</th>
                             <th>Quantity</th>
-                            <th>Update on</th>
+                            <th>Updated on</th>
                             <th></th>
                         </thead>
                         @foreach ($inventories as $item)
