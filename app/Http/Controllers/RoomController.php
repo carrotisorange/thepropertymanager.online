@@ -248,7 +248,9 @@ class RoomController extends Controller
              ->groupBy('payment_id')
              ->get();
 
-            $inventories = Inventory::where('unit_id_foreign', $unit_id)->get();
+            $inventories = Inventory::where('unit_id_foreign', $unit_id)
+            ->orderBy('created_at', 'asc')
+            ->get();
        
            $remittances = Unit::findOrFail($unit_id)->remittances;
 

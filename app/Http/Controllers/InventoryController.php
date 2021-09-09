@@ -52,12 +52,17 @@ class InventoryController extends Controller
             'quantity' => 'required',
         ]);
 
-        Inventory::create([
+        $inventory_id = DB::table('inventories')->insertGetId([
             'unit_id_foreign' => $request->unit_id_foreign,
             'item' => $request->item, 
             'remarks' => $request->remarks,
             'quantity' => $request->quantity,
             'current_inventory' => $request->quantity
+        ]);
+
+        InventoryUpdate::create([
+        'update_quantity' => $request->quantity,
+        'inventory_id_foreign' => $inventory_id,
         ]);
 
         return back()->with('success', 'Inventory is added successfully!');
