@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Unit;
 use App\InventoryUpdate;
 use DB;
+use Carbon\Carbon;
 
 class InventoryController extends Controller
 {
@@ -117,7 +118,8 @@ class InventoryController extends Controller
 
         Inventory::where('inventory_id', $request->item_id)
         ->update([
-            'current_inventory' => $request->current_inventory
+            'current_inventory' => $request->current_inventory,
+            'updated_at' => Carbon::now(),
         ]);
 
         InventoryUpdate::create([
