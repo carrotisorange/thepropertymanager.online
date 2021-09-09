@@ -139,6 +139,10 @@ Route::get('/property/{property_id}/tenants/filter', 'TenantController@filter');
 Route::get('/property/{property_id}/room/{unit_id}/create/inventory', 'InventoryController@create');
 //route to post inventory
 Route::post('/property/{property_id}/room/{unit_id}/store/inventory', 'InventoryController@store');
+//route to edit inventory
+Route::get('/property/{property_id}/room/{unit_id}/update/inventory/{inventory_id}', 'InventoryController@edit');
+//route to show inventory
+Route::get('/property/{property_id}/room/{unit_id}/show/inventory/{inventory_id}', 'InventoryController@show');
 //route to update inventory
 Route::put('/property/{property_id}/room/{unit_id}/update/inventory', 'InventoryController@update');
 

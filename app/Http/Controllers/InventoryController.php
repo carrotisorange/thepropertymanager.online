@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Inventory;
 use Illuminate\Http\Request;
 use App\Unit;
+use App\InventoryUpdate;
+use DB;
 
 class InventoryController extends Controller
 {
@@ -68,9 +70,19 @@ class InventoryController extends Controller
      * @param  \App\Inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventory $inventory)
+    public function show($property_id, $room_id, $inventory_id)
     {
-        //
+
+        $inventories =  DB::table('inventories')
+        ->join('inventory_updates', 'inventory_id', 'inventory_id_foreign')
+        ->select('*', 'inventory_updates.created_at as updated_on')
+        ->where('inventory_id_foreign', $inventory_id)
+        ->orderBy('inventory_updates.created_at', 'desc')
+        ->get();
+
+        $unit = Unit::findOrFail($room_id);
+
+        return view('webapp.inventories.show', compact('inventories', 'unit'));
     }
 
     /**
@@ -79,9 +91,9 @@ class InventoryController extends Controller
      * @param  \App\Inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inventory $inventory)
+    public function edit($property_id, $room_id, $inventory_id)
     {
-        //
+        return $inventory_id;
     }
 
     /**
@@ -93,8 +105,6 @@ class InventoryController extends Controller
      */
     public function update(Request $request, $property_id, $unit_id)
     {
-
-        return $request->all();
         
       $this->validate($request, [
             'current_inventory' => 'required',
@@ -104,6 +114,11 @@ class InventoryController extends Controller
         ->update([
             'current_inventory' => $request->current_inventory
         ]);
+
+        InventoryUpdate::create([
+          'update_quantity' => $request->current_inventory,
+          'inventory_id_foreign' => $request->item_id,
+          ]);
 
         return redirect('/property/'.$property_id.'/room/'.$unit_id.'/#inventory')->with('success', 'Inventory is updated successfully!');
    

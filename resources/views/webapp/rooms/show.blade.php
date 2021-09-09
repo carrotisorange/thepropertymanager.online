@@ -184,11 +184,7 @@
           {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
         </p>
         @endif
-        <form id="updateInventoryForm"
-          action="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/update/inventory" method="POST">
-          @method('PUT')
-          @csrf
-        </form>
+
         <div class="table-responsive text-nowrap">
           <table class="table table-hover">
             @if(!$inventories)
@@ -213,6 +209,10 @@
               </tr>
             </thead>
             <?php $inv_ctr = 1; ?>
+            <?php $inv_ctr_form = 1; ?>
+            <?php $inv_ctr_input_1= 1; ?>
+            <?php $inv_ctr_input_2= 1; ?>
+            <?php $inv_ctr_button= 1; ?>
             @foreach ($inventories as $item)
             <tr>
               <th class="text-center">{{ $inv_ctr++ }}</th>
@@ -222,23 +222,31 @@
               <td>{{ $item->remarks }}</td>
               <td>{{ $item->quantity }}</td>
               <td>
-                {{ $item->current_inventory }}
-                {{-- <input form="updateInventoryForm" type="text"value="{{ $item->inventory_id }}" name="item_id"
-                id="item_id" class="form-control col-md-6">
+                <form id="updateInventoryForm{{ $inv_ctr_form++ }}"
+                  action="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/update/inventory"
+                  method="POST" onchange="submit();">
+                  @method('PUT')
+                  @csrf
+                </form>
+                {{-- {{ $item->current_inventory }} --}}
+                <input form="updateInventoryForm{{ $inv_ctr_input_1++ }}" type="hidden" value="{{ $item->inventory_id }}"
+                  name="item_id" id="item_id" class="form-control col-md-6">
 
-                <input form="updateInventoryForm" type="number" min="1" value="{{ $item->current_inventory }}"
-                  name="current_inventory" id="current_inventory" class="form-control col-md-6">
+                <input form="updateInventoryForm{{ $inv_ctr_input_2++ }}" type="number" min="1"
+                  value="{{ $item->current_inventory }}" name="current_inventory" id="current_inventory"
+                  class="col-md-6">
                 @error('current_inventory')
                 <small class="text-danger">
                   {{ $message }}
                 </small>
-                @enderror --}}
+                @enderror
+                <button form="updateInventoryForm{{ $inv_ctr_button++ }}" type="submit" class="btn btn-sm btn-primary"><i
+                    class="fas fa-check"></i>
+                  Save</button>
               </td>
               <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d, Y') }}</td>
               {{-- <th>
-                <button form="updateInventoryForm" type="submit" class="btn btn-sm btn-primary"
-                onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>
-                Save</button>
+               
               </th> --}}
               <th><a
                   href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/show/inventory/{{ $item->inventory_id }}"><i
