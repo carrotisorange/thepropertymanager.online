@@ -137,8 +137,10 @@ class InventoryController extends Controller
      * @param  \App\Inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inventory $inventory)
+    public function destroy($property_id, $room_id, $inventory_id)
     {
-        //
+         Inventory::find($inventory_id)->delete();
+
+         return redirect('/property/'.$property_id.'/room/'.$room_id.'/#inventory')->with('success', 'Bill is deleted successfully.');
     }
 }

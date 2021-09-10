@@ -205,7 +205,7 @@
                 <th>Quantity</th>
                 <th>Current Quantity</th>
                 <th>Last updated on</th>
-                <th>Action</th>
+                <th colspan="2">Action</th>
               </tr>
             </thead>
             <?php $inv_ctr = 1; ?>
@@ -229,8 +229,8 @@
                   @csrf
                 </form>
                 {{-- {{ $item->current_inventory }} --}}
-                <input form="updateInventoryForm{{ $inv_ctr_input_1++ }}" type="hidden" value="{{ $item->inventory_id }}"
-                  name="item_id" id="item_id" class="form-control col-md-6">
+                <input form="updateInventoryForm{{ $inv_ctr_input_1++ }}" type="hidden"
+                  value="{{ $item->inventory_id }}" name="item_id" id="item_id" class="form-control col-md-6">
 
                 <input form="updateInventoryForm{{ $inv_ctr_input_2++ }}" type="number" min="1"
                   value="{{ $item->current_inventory }}" name="current_inventory" id="current_inventory"
@@ -240,17 +240,18 @@
                   {{ $message }}
                 </small>
                 @enderror
-                <button form="updateInventoryForm{{ $inv_ctr_button++ }}" type="submit" class="btn btn-sm btn-primary"><i
-                    class="fas fa-check"></i>
+                <button form="updateInventoryForm{{ $inv_ctr_button++ }}" type="submit" class="btn btn-sm btn-primary"
+                  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>
                   Save</button>
               </td>
               <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d, Y') }}</td>
-              {{-- <th>
-               
-              </th> --}}
+              <td><a class="text-danger" href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/inventory/{{ $item->inventory_id }}/delete/inventory"><i
+                    class="fas fa-times"></i>
+                  Remove</a></td>
               <th><a
                   href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/show/inventory/{{ $item->inventory_id }}"><i
                     class="fas fa-eye"></i> Show</a></th>
+
             </tr>
             @endforeach
             @endif

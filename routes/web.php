@@ -145,6 +145,8 @@ Route::get('/property/{property_id}/room/{unit_id}/update/inventory/{inventory_i
 Route::get('/property/{property_id}/room/{unit_id}/show/inventory/{inventory_id}', 'InventoryController@show');
 //route to update inventory
 Route::put('/property/{property_id}/room/{unit_id}/update/inventory', 'InventoryController@update');
+//route to delete inventory
+Route::get('/property/{property_id}/room/{room_id}/inventory/{inventory_ud}/delete/inventory', 'InventoryController@destroy');
 
 //ROUTES FOR CONTRACTCONTROLLER
 //route to extend tenant's contract
