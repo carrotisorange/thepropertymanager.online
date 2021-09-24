@@ -276,11 +276,30 @@ Route::put('/property/{property_id}/room/{room_id}/concern/{concern_id}/update',
 //route to show all concerns of a tenant
 Route::post('/property/{property_id}/tenant/{tenant_id}/concern', 'ConcernController@store');
 //route to show all concerns of a unit
-Route::post('/property/{property_id}/room/{unit_id}/store/concern', 'ConcernController@store_room_concern');
+Route::post('/property/{property_id}/room/{unit_id}/store/concern', 'ConcernController@store_details');
 //route to show all concerns of a unit
-Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/materials', 'ConcernController@materials');
+Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/assessment', 'ConcernController@create_assessment');
+//route to store concern assessment
+Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concer/{concern_id}/store/assessment', 'ConcernController@store_assessment');
+//route to show all concerns of a unit
+Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/scope_of_work',
+'ConcernController@create_scope_of_work');
+//route to store concern assessment
+Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concer/{concern_id}/store/scope_of_work',
+'ConcernController@store_scope_of_work');
+//route to show all concerns of a unit
+Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/materials',
+'ConcernController@create_materials');
+
+Route::get('/material/{material_id}/delete','ConcernController@remove_material');
+//route to show all concerns of a unit
+Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/approval','ConcernController@create_approval');
 //route to show all concerns of a unit
 Route::post('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/materials', 'ConcernController@store_materials');
+//route to show all concerns of a unit
+Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/payment-options','ConcernController@create_payment_options');
+//route to show all concerns of a unit
+Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/payment-options','ConcernController@store_payment_options');
 //route to show concern
 Route::get('/property/{property_id}/concern/{concern_id}', 'ConcernController@show');
 //route to show concerns of an employee

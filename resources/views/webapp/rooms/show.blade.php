@@ -519,7 +519,7 @@
                   <td>{{ $item->name }}</td>
                   <td>{{ $item->details }}</td>
                   <td><a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
                         class="fas fa-eye"></i> View</a></td>
                 </tr>
                 @endforeach

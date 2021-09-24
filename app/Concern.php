@@ -25,7 +25,16 @@ class Concern extends Model
          'remarks',
          'action_taken',
          'resolved_at',
-         'category'
+         'category',
+         'assessed_at',
+         'assessed_by_id',
+         'assessment',
+         'scope_of_work',
+         'ended_on',
+         'approved_by_tenant_at',
+         'approved_by_owner_at',
+         'payee',
+         'payment_options'
     ];
 
     public function tenant()

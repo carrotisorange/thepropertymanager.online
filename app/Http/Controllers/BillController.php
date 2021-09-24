@@ -172,6 +172,7 @@ class BillController extends Controller
 
     public function store_tenant_bill(Request $request, $property_id, $tenant_id){
 
+
         $request->validate([
             'particular_id_foreign' => 'required',
             'amount' => 'required',
@@ -776,6 +777,7 @@ DB::table('properties')
 
     public function post_bill(Request $request, $property_id, $tenant_id)
     {
+
 
         $no_of_bills = $request->no_of_bills;
         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){

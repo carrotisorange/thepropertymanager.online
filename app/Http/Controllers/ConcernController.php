@@ -188,7 +188,8 @@ class ConcernController extends Controller
 
         $room = Unit::findOrFail($room_id);
 
-        return view('webapp.concerns.create-room-concern', compact('room', 'tenants', 'owners', 'users','particulars'));
+        return view('webapp.concerns.create-room-concern', compact('room', 'tenants', 'owners',
+        'users','particulars'));
      }
 
      public function view_room_concern(Request $request, $property_id, $room_id, $tenant_id, $concern_id, $endorsed_to, $resolved_by){
@@ -285,6 +286,7 @@ class ConcernController extends Controller
 
     public function create($property_id, $tenant_id)
     {
+    
         Session::put('current-page', 'concerns');
 
         $contracts = DB::table('contracts')
@@ -300,7 +302,7 @@ class ConcernController extends Controller
         ->where('property_id_foreign', Session::get('property_id'))
         ->whereNotIn('user_type' ,['tenant', 'owner'])
         ->get();
-        
+
         $tenant = Tenant::findOrFail($tenant_id);
         
         return view('webapp.concerns.create', compact('tenant', 'contracts', 'users'));
@@ -312,8 +314,9 @@ class ConcernController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_room_concern(Request $request, $property_id, $unit_id)
+    public function store_details(Request $request, $property_id, $unit_id)
     {
+
         Session::put('current-page', 'concerns');
 
         $request->validate([
@@ -322,17 +325,7 @@ class ConcernController extends Controller
             'concern_tenant_id' => 'required',
             'contact_no' => 'required',
             'details' => 'required',
-            'urgency' => 'required',
-            'is_warranty' => 'required',
-            'scheduled_at' => 'required',
-            'concern_user_id' => 'required',
-            'details' => 'required',
-            'resolved_by' => '',
             'status' => 'required',
-             'rating' => '',
-             'remarks' => '',
-             'action_taken' => '',
-             'resolved_at' => ''
         ]);
 
         //store all the input fields to the input
@@ -341,17 +334,6 @@ class ConcernController extends Controller
         //insert a new concern to the database
         $new_concern_id = Concern::create($input)->concern_id;
         
-        // $concern = new Concern();
-        // $concern->reported_at = $request->reported_at;
-        // $concern->concern_tenant_id = $request->reported_by;
-        // $concern->concern_unit_id = $unit_id;
-        // $concern->category = $request->category;
-        // $concern->urgency = $request->urgency;
-        // $concern->title = $request->title;
-        // $concern->details = $request->details;
-        // $concern->concern_user_id = $request->concern_user_id;
-        // $concern->save();
-
         $unit = Unit::findOrFail($unit_id)->unit_no;
         
         $notification = new Notification();
@@ -363,82 +345,242 @@ class ConcernController extends Controller
         $notification->save();
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+          return
+          redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$request->concern_tenant_id.'/concern/'.$new_concern_id.'/assessment')->with('success',
+          'Concern is added sucessfully.');
          
-         return redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$request->concern_tenant_id.'/concern/'.$new_concern_id.'/materials')->with('success', 'Concern is added sucessfully.');
-
-        //  if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-        //     return redirect('/property/'.$property_id.'/unit/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
-        // }else{
-        //     return redirect('/property/'.$property_id.'/room/'.$unit_id.'#concerns')->with('success', 'Concern is added sucessfully.');
-        // }
-
-      
-
+        //  return redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$request->concern_tenant_id.'/concern/'.$new_concern_id.'/materials')->with('success', 'Concern is added sucessfully.');
     }
 
-    public function materials(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
+        public function create_assessment($property_id, $unit_id, $tenant_id, $concern_id)
+        {
+            $room = Unit::findOrFail($unit_id);
 
-        Session::put('current-page', 'concerns');
+            $tenant = Tenant::findOrFail($tenant_id);
 
-        $particulars = DB::table('particulars')
-        ->join('property_bills', 'particular_id', 'particular_id_foreign')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->orderBy('particular', 'asc')
-        ->get();
+            $concern = Concern::findOrFail($concern_id);
 
-        $materials = DB::table('materials_for_concerns')
-        ->where('concern_id_foreign', $concern_id)
-        ->get();
+            $users = DB::table('users_properties_relations')
+            ->join('users','user_id_foreign','id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->whereNotIn('user_type' ,['tenant', 'owner'])
+            ->get();
 
-        $room  = Unit::findOrFail($room_id);
+            $concern = Concern::findOrFail($concern_id);
 
-        $tenant = Tenant::findOrFail($tenant_id);
+             $personnels = Personnel::where('property_id_foreign', $property_id)->get();
+            
+            return view('webapp.concerns.create-assessment', compact('room','users', 'tenant','concern','personnels'));
+        }
 
-        $concern = Concern::findOrFail($concern_id);
+            public function store_assessment(Request $request, $property_id, $unit_id, $tenant_id, $concern_id)
+            {
+       
 
-        return view('webapp.concerns.materials', compact('room','tenant','concern','particulars','materials'));
-    }
+            $request->validate([
+                'assessed_by_id' => 'required',
+                'assessed_at' => 'required',
+            'category' => 'required',
+            'urgency' => 'required',
+            'is_warranty' => 'required',
+            'assessment' => 'required',
+            ]);
 
-    public function store_materials(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
-
-        $request->validate([
-            'material' => 'required', 
-            'quantity' => 'required',
-            'price' => 'required',
-            'total_cost' => 'required',
-        ]);
-
-        DB::table('materials_for_concerns')
-        ->insert(
-                    [
-                        'description' => $request->material, 
-                        'quantity' => $request->quantity,
-                        'price' => $request->price,
-                        'total_cost' => $request->total_cost,
-                        'concern_id_foreign' => $concern_id,
-                        'created_at' => Carbon::now()
-                    ]
+            Concern::where('concern_id', $concern_id)
+            ->update(
+                [
+                    'category' => $request->category,
+                    'assessed_by_id' => $request->assessed_by_id,
+                    'assessed_at' => $request->assessed_at,
+                    'urgency' => $request->urgency,
+                    'is_warranty' => $request->is_warranty,
+                    'assessment' => $request->assessment,
+                ]
                 );
 
-         //get the last added bill no of the property
-         $current_bill_no = DB::table('contracts')
-         ->join('units', 'unit_id_foreign', 'unit_id')
-         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-         ->join('bills', 'tenant_id', 'bill_tenant_id')
-         ->where('property_id_foreign', Session::get('property_id'))
-         ->max('bill_no') + 1;  
+            return
+            redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$tenant_id.'/concern/'.$concern_id.'/scope_of_work')->with('success',
+            'Assessment is added sucessfully.');
 
-        Bill::create([
-            'bill_no' => $current_bill_no,
-            'bill_tenant_id' => $tenant_id,
-            'date_posted' => Carbon::now(),
-            'particular_id_foreign' => '20',
-            'amount'=> $request->total_cost,
+            }
+
+         public function create_scope_of_work($property_id, $unit_id, $tenant_id, $concern_id)
+         {
+
+            $room = Unit::findOrFail($unit_id);
+
+            $tenant = Tenant::findOrFail($tenant_id);
+
+            $concern = Concern::findOrFail($concern_id);
+
+            $users = DB::table('users_properties_relations')
+            ->join('users','user_id_foreign','id')
+            ->where('property_id_foreign', Session::get('property_id'))
+            ->whereNotIn('user_type' ,['tenant', 'owner'])
+            ->get();
+
+            $concern = Concern::findOrFail($concern_id);
+
+            $personnels = Personnel::where('property_id_foreign', $property_id)->get();
+
+            return view('webapp.concerns.create-scope-of-work', compact('room','users', 'tenant','concern','personnels'));
+         }
+
+          public function store_scope_of_work(Request $request, $property_id, $unit_id, $tenant_id, $concern_id)
+          {
+
+          $request->validate([
+          'scheduled_at' => 'required',
+          'ended_on' => 'required',
+          'concern_user_id' => 'required',
+          'scope_of_work' => 'required',
+          ]);
+
+          Concern::where('concern_id', $concern_id)
+          ->update(
+          [
+          'scheduled_at' => $request->scheduled_at,
+          'ended_on' => $request->ended_on,
+          'concern_user_id' => $request->concern_user_id,
+          'scope_of_work' => $request->scope_of_work,
+          ]
+          );
+
+          return
+          redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$tenant_id.'/concern/'.$concern_id.'/materials')->with('success',
+          'Scope of work is added sucessfully.');
+
+          }
+
+           public function create_materials($property_id, $unit_id, $tenant_id, $concern_id)
+           {
+
+          $particulars = DB::table('particulars')
+          ->join('property_bills', 'particular_id', 'particular_id_foreign')
+          ->where('property_id_foreign', Session::get('property_id'))
+          ->orderBy('particular', 'asc')
+          ->get();
+
+          $materials = DB::table('materials_for_concerns')
+          ->where('concern_id_foreign', $concern_id)
+          ->get();
+
+          $room = Unit::findOrFail($unit_id);
+
+          $tenant = Tenant::findOrFail($tenant_id);
+
+          $concern = Concern::findOrFail($concern_id);
+
+           return view('webapp.concerns.create-materials', compact('particulars','materials',
+           'room','tenant','concern'));
+           }
+
+      public function store_materials(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
+
+      $request->validate([
+      'material' => 'required',
+      'quantity' => 'required',
+      'price' => 'required',
+      'total_cost' => 'required',
+      ]);
+
+      DB::table('materials_for_concerns')
+      ->insert(
+      [
+      'description' => $request->material,
+      'quantity' => $request->quantity,
+      'price' => $request->price,
+      'total_cost' => $request->total_cost,
+      'concern_id_foreign' => $concern_id,
+      'created_at' => Carbon::now()
+      ]
+      );
+
+      //get the last added bill no of the property
+      $current_bill_no = DB::table('contracts')
+      ->join('units', 'unit_id_foreign', 'unit_id')
+      ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+      ->join('bills', 'tenant_id', 'bill_tenant_id')
+      ->where('property_id_foreign', Session::get('property_id'))
+      ->max('bill_no') + 1;
+
+      Bill::create([
+      'bill_no' => $current_bill_no,
+      'bill_tenant_id' => $tenant_id,
+      'date_posted' => Carbon::now(),
+      'particular_id_foreign' => '20',
+      'amount'=> $request->total_cost,
+      ]);
+
+
+          return
+          back()->with('success',
+          'Material is added sucessfully.');
+      }
+
+      public function remove_material($material_id){
+          DB::table('materials_for_concerns')
+          ->where('material_id',$material_id)
+          ->delete();
+
+          return back()->with('success','Material is removed successfully!');
+      }
+
+       public function create_approval($property_id, $unit_id, $tenant_id, $concern_id)
+       { 
+           
+        $particulars = DB::table('particulars')
+       ->join('property_bills', 'particular_id', 'particular_id_foreign')
+       ->where('property_id_foreign', Session::get('property_id'))
+       ->orderBy('particular', 'asc')
+       ->get();
+
+       $materials = DB::table('materials_for_concerns')
+       ->where('concern_id_foreign', $concern_id)
+       ->get();
+
+       $room = Unit::findOrFail($unit_id);
+
+       $tenant = Tenant::findOrFail($tenant_id);
+
+       $concern = Concern::findOrFail($concern_id);
+
+        return view('webapp.concerns.create-approval', compact('particulars','materials',
+        'room','tenant','concern'));
+        }
+
+         public function create_payment_options($property_id, $room_id, $tenant_id, $concern_id){
+
+               $room = Unit::findOrFail($room_id);
+
+               $tenant = Tenant::findOrFail($tenant_id);
+
+               $concern = Concern::findOrFail($concern_id);
+
+            return view('webapp.concerns.create-payment-options', compact('room','tenant','concern'));
+
+        }
+
+        public function store_payment_options(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
+
+
+        $request->validate([
+        'payee' => 'required',
+        'payment_options' => 'required',
         ]);
 
+          Concern::where('concern_id', $concern_id)
+          ->update(
+          [
+          'payee' => $request->payee,
+          'payment_options' => $request->payment_options,
+          ]
+          );
 
-        return redirect('/property/'.Session::get('property_id').'/room/'.$room_id.'/tenant/'.$tenant_id.'/concern/'.$concern_id.'/materials')->with('success', 'Material is addedd successfully!');
-    }
+        return
+        back()->with('success',
+        'Payment option is set sucessfully.');
+        }
   
     public function store(Request $request, $property_id, $tenant_id)
     {
