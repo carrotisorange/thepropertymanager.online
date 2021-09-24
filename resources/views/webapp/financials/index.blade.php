@@ -52,29 +52,76 @@
       <div class="col-md-12">
         <table class="table table-hover">
           <thead>
-            <th>Date</th>
-            <th>Collections</th>
-            <th>Export</th>
+            <th>Description</th>
+            <th>Monthly</th>
+            <th>Yearly</th>
           </thead>
-
           <tbody>
+            <tr>
+              <th>Gross Potential Revenue</th>
+              <td>{{ number_format($monthly_gross_potential_revenue,2) }}</td>
+              <td>{{ number_format($monthly_gross_potential_revenue*12,2) }}</td>
+            </tr>
+            <tr>
+              <th>Less</th>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Vacancy</td>
+              <td>{{ number_format($vacancy,2) }}</td>
+              <td>{{ number_format($vacancy*12,2) }}</td>
+            </tr>
+            <tr>
+              <td>Effective rent revenue</td>
+              <td>{{ number_format($effective_rent_revenue-$vacancy,2) }}</td>
+              <td>{{ number_format(($effective_rent_revenue-$vacancy)*12,2) }}</td>
+            </tr>
+            <tr>
+              <th>Total monthly income</th>
+              <td>{{ number_format($total_monthly_income,2) }}</td>
+              <td>{{ number_format($total_monthly_income*12,2) }}
+            </tr>
+            <tr>
+              <td>Rent</td>
+              <td>{{ number_format($rent,2) }}</td>
+              <td>{{ number_format($rent*12,2) }}</td>
+            </tr>
+            <tr>
+              <td>Water</td>
+              <td>{{ number_format($water,2) }}</td>
+              <td>{{ number_format($water*12,2) }}</td>
+            </tr>
+            <tr>
+              <td>Electricity</td>
+              <td>{{ number_format($electricity,2) }}</td>
+              <td>{{ number_format($electricity*12,2) }}</td>
+            </tr>
+            <tr>
+              <td>Security deposit</td>
+              <td>{{ number_format($sec_dep,2) }}</td>
+              <td>{{ number_format($sec_dep*12,2) }}</td>
+            </tr>
+          </tbody>
+
+          {{-- <tbody>
             @foreach ($collections as $item)
             <tr>
               <th>{{ Carbon\Carbon::create()->month($item->month)->format('M').', '.$item->year }}</th>
-              <td>
+          <td>
 
-                ₱ {{ number_format($item->total_collections,2) }}
+            ₱ {{ number_format($item->total_collections,2) }}
 
-                </th>
-              <th>
-                <a title="export pdf" target="_blank"
-                  href="/property/{{ Session::get('property_id') }}/collections/month/{{ $item->month }}/year/{{ $item->year }}/export"
-                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i></a>
-              </th>
-            </tr>
-            @endforeach
-          </tbody>
+            </th>
+          <th>
+            <a title="export pdf" target="_blank"
+              href="/property/{{ Session::get('property_id') }}/collections/month/{{ $item->month }}/year/{{ $item->year }}/export"
+              class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i></a>
+          </th>
+          </tr>
+          @endforeach
+          </tbody> --}}
 
 
         </table>

@@ -31,32 +31,123 @@ class FinancialController extends Controller
         $notification->save();
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);  
-       
+        
+        $monthly_gross_potential_revenue =
+         Property::findOrFail(Session::get('property_id'))
+        ->units
+            ->where('status', '!=', 'deleted')
+                ->sum('rent');
 
-        $collections = DB::table('contracts')
+        $vacancy =
+        Property::findOrFail(Session::get('property_id'))
+        ->units
+        ->where('status', 'vacant')
+        ->sum('rent');
+
+        $effective_rent_revenue =
+        Property::findOrFail(Session::get('property_id'))
+        ->units
+       ->where('status', 'occupied')
+        ->sum('rent');
+
+         $total_monthly_income = DB::table('contracts')
+         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+         ->join('units', 'unit_id_foreign', 'unit_id')
+         ->join('bills', 'tenant_id', 'bill_tenant_id')
+         ->join('particulars','particular_id_foreign', 'particular_id')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->where('particular_id_foreign', ['1','2','3','11','12'])
+         ->where('date_posted')
+         ->whereNull('deleted_at')
+         ->orderBy('date_posted', 'desc')
+         ->groupBy('bill_id')
+         ->sum('amount');
+
+         $rent = DB::table('contracts')
+         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+         ->join('units', 'unit_id_foreign', 'unit_id')
+         ->join('bills', 'tenant_id', 'bill_tenant_id')
+         ->join('particulars','particular_id_foreign', 'particular_id')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->where('particular_id_foreign', '1')
+         ->whereNull('deleted_at')
+         ->orderBy('date_posted', 'desc')
+         ->groupBy('bill_id')
+         ->sum('amount');
+
+
+        $water = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
-        ->select('*',DB::raw('sum(amt_paid) as `total_collections`'),DB::raw('YEAR(payment_created) year'),DB::raw('MONTH(payment_created) month'))
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('property_id_foreign', Session::get('property_id'))
+        ->where('particular_id_foreign', '2')
+        ->whereNull('deleted_at')
+        ->orderBy('date_posted', 'desc')
+        ->groupBy('bill_id')
+        ->sum('amount');
+
+        $electricity = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('particular_id_foreign', '3')
+        ->whereNull('deleted_at')
+        ->orderBy('date_posted', 'desc')
+        ->groupBy('bill_id')
+        ->sum('amount');
+
+        $sec_dep = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('particular_id_foreign', ['11','12'])
+        ->whereNull('deleted_at')
+        ->orderBy('date_posted', 'desc')
+        ->groupBy('bill_id')
+        ->sum('amount');
+
+         $total_monthly_expenses = DB::table('payable_request')
+         ->join('users', 'requester_id', 'users.id')
+         ->join('payable_entry', 'entry_id', 'payable_entry.id')
+         ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
+         ->where('payable_request.status', 'released')
+         ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+         ->orderBy('released_at', 'desc')
+         ->get();
+
+           return view('webapp.financials.index', compact(
+           'monthly_gross_potential_revenue','vacancy','effective_rent_revenue','total_monthly_income','rent','water','electricity','sec_dep'
+           ));
+    //     $collections = DB::table('contracts')
+    //     ->join('units', 'unit_id_foreign', 'unit_id')
+    //     ->join('payments', 'tenant_id_foreign', 'payment_tenant_id')
+    //     ->select('*',DB::raw('sum(amt_paid) as `total_collections`'),DB::raw('YEAR(payment_created) year'),DB::raw('MONTH(payment_created) month'))
+    //     ->where('property_id_foreign', Session::get('property_id'))
         
-       ->groupBy(DB::raw('YEAR(payment_created)'), DB::raw('MONTH(payment_created)'))
+    //    ->groupBy(DB::raw('YEAR(payment_created)'), DB::raw('MONTH(payment_created)'))
         
-        ->orderBy('year', 'desc')
-        ->orderBy('month', 'desc')
-       ->get();
+    //     ->orderBy('year', 'desc')
+    //     ->orderBy('month', 'desc')
+    //    ->get();
 
        
-       $expenses = DB::table('payable_request')
-        ->join('payable_entry', 'entry_id', 'payable_entry.id')
-        ->select('*',DB::raw('sum(amt) as `total_expenses`'),DB::raw('YEAR(released_at) year'),DB::raw('MONTH(released_at) month'))
-        ->where('payable_request.status', 'released')
-        ->where('payable_entry.property_id_foreign', Session::get('property_id'))
+    //    $expenses = DB::table('payable_request')
+    //     ->join('payable_entry', 'entry_id', 'payable_entry.id')
+    //     ->select('*',DB::raw('sum(amt) as `total_expenses`'),DB::raw('YEAR(released_at) year'),DB::raw('MONTH(released_at) month'))
+    //     ->where('payable_request.status', 'released')
+    //     ->where('payable_entry.property_id_foreign', Session::get('property_id'))
          
-       ->groupBy(DB::raw('YEAR(released_at)'), DB::raw('MONTH(released_at)'))
+    //    ->groupBy(DB::raw('YEAR(released_at)'), DB::raw('MONTH(released_at)'))
         
-       ->orderBy('year', 'desc')
-       ->orderBy('month', 'desc')
-      ->get();
+    //    ->orderBy('year', 'desc')
+    //    ->orderBy('month', 'desc')
+    //   ->get();
 
     //   $incomes = DB::table('contracts')
     //   ->leftJoin('units', 'unit_id_foreign', 'unit_id')
@@ -72,10 +163,7 @@ class FinancialController extends Controller
     //   ->orderBy('month', 'desc')
     //  ->get();
     
-        return view('webapp.financials.index', compact(
-            'expenses',
-            'collections',   
-        ));
+     
     }
 
     /**
