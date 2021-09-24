@@ -54,63 +54,129 @@ class FinancialController extends Controller
          ->join('tenants', 'tenant_id_foreign', 'tenant_id')
          ->join('units', 'unit_id_foreign', 'unit_id')
          ->join('bills', 'tenant_id', 'bill_tenant_id')
+         ->join('payments', 'tenant_id', 'payment_tenant_id')
          ->join('particulars','particular_id_foreign', 'particular_id')
          ->where('property_id_foreign', Session::get('property_id'))
          ->where('particular_id_foreign', ['1','2','3','11','12'])
-         ->where('date_posted')
-         ->whereNull('deleted_at')
-         ->orderBy('date_posted', 'desc')
-         ->groupBy('bill_id')
-         ->sum('amount');
+        ->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
+         ->whereNull('payments.deleted_at')
+         ->sum('amt_paid');
+
+           $total_yearly_income = DB::table('contracts')
+           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+           ->join('units', 'unit_id_foreign', 'unit_id')
+           ->join('bills', 'tenant_id', 'bill_tenant_id')
+           ->join('payments', 'tenant_id', 'payment_tenant_id')
+           ->join('particulars','particular_id_foreign', 'particular_id')
+           ->where('property_id_foreign', Session::get('property_id'))
+           ->where('particular_id_foreign', ['1','2','3','11','12'])
+           ->whereYear('payment_created', '2021')
+               ->whereNull('payments.deleted_at')
+               ->sum('amt_paid');
 
          $rent = DB::table('contracts')
-         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-         ->join('units', 'unit_id_foreign', 'unit_id')
-         ->join('bills', 'tenant_id', 'bill_tenant_id')
-         ->join('particulars','particular_id_foreign', 'particular_id')
-         ->where('property_id_foreign', Session::get('property_id'))
-         ->where('particular_id_foreign', '1')
-         ->whereNull('deleted_at')
-         ->orderBy('date_posted', 'desc')
-         ->groupBy('bill_id')
-         ->sum('amount');
-
-
-        $water = DB::table('contracts')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('payments', 'tenant_id', 'payment_tenant_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->where('particular_id_foreign', '2')
-        ->whereNull('deleted_at')
-        ->orderBy('date_posted', 'desc')
-        ->groupBy('bill_id')
-        ->sum('amount');
+        ->where('particular_id_foreign', ['1'])
+        ->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
+        ->whereNull('payments.deleted_at')
+        ->sum('amt_paid');
+
+        
+        $rent_yearly = DB::table('contracts')
+           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+           ->join('units', 'unit_id_foreign', 'unit_id')
+           ->join('bills', 'tenant_id', 'bill_tenant_id')
+           ->join('payments', 'tenant_id', 'payment_tenant_id')
+           ->join('particulars','particular_id_foreign', 'particular_id')
+           ->where('property_id_foreign', Session::get('property_id'))
+           ->where('particular_id_foreign', ['1'])
+           ->whereYear('payment_created', '2021')
+               ->whereNull('payments.deleted_at')
+               ->sum('amt_paid');
+
+
+         $water = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('payments', 'tenant_id', 'payment_tenant_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('particular_id_foreign', ['2'])
+        ->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
+            ->whereNull('payments.deleted_at')
+            ->sum('amt_paid');
+
+            
+         $water_yearly = DB::table('contracts')
+         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+         ->join('units', 'unit_id_foreign', 'unit_id')
+         ->join('bills', 'tenant_id', 'bill_tenant_id')
+         ->join('payments', 'tenant_id', 'payment_tenant_id')
+         ->join('particulars','particular_id_foreign', 'particular_id')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->where('particular_id_foreign', ['2'])
+         ->whereYear('payment_created', '2021')
+         ->whereNull('payments.deleted_at')
+         ->sum('amt_paid');
 
         $electricity = DB::table('contracts')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('payments', 'tenant_id', 'payment_tenant_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->where('particular_id_foreign', '3')
-        ->whereNull('deleted_at')
-        ->orderBy('date_posted', 'desc')
-        ->groupBy('bill_id')
-        ->sum('amount');
+        ->where('particular_id_foreign', ['3'])
+        ->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
+            ->whereNull('payments.deleted_at')
+            ->sum('amt_paid');
+        
+         $electricity_yearly = DB::table('contracts')
+         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+         ->join('units', 'unit_id_foreign', 'unit_id')
+         ->join('bills', 'tenant_id', 'bill_tenant_id')
+         ->join('payments', 'tenant_id', 'payment_tenant_id')
+         ->join('particulars','particular_id_foreign', 'particular_id')
+         ->where('property_id_foreign', Session::get('property_id'))
+         ->where('particular_id_foreign', ['3'])
+         ->whereYear('payment_created', '2021')
+         ->whereNull('payments.deleted_at')
+         ->sum('amt_paid');
 
-        $sec_dep = DB::table('contracts')
+         $sec_dep = DB::table('contracts')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('payments', 'tenant_id', 'payment_tenant_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->where('property_id_foreign', Session::get('property_id'))
         ->where('particular_id_foreign', ['11','12'])
-        ->whereNull('deleted_at')
-        ->orderBy('date_posted', 'desc')
-        ->groupBy('bill_id')
-        ->sum('amount');
+        ->where('payment_created', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('payment_created', '<=', Carbon::now()->subMonth()->endOfMonth())
+            ->whereNull('payments.deleted_at')
+            ->sum('amt_paid');
+
+        $sec_dep_yearly = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('bills', 'tenant_id', 'bill_tenant_id')
+        ->join('payments', 'tenant_id', 'payment_tenant_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('particular_id_foreign', ['11','12'])
+        ->whereYear('payment_created', '2021')
+        ->whereNull('payments.deleted_at')
+        ->sum('amt_paid');
 
          $total_monthly_expenses = DB::table('payable_request')
          ->join('users', 'requester_id', 'users.id')
@@ -122,7 +188,9 @@ class FinancialController extends Controller
          ->get();
 
            return view('webapp.financials.index', compact(
-           'monthly_gross_potential_revenue','vacancy','effective_rent_revenue','total_monthly_income','rent','water','electricity','sec_dep'
+           'monthly_gross_potential_revenue','vacancy','effective_rent_revenue','total_monthly_income','rent','water','electricity','sec_dep',
+           'total_yearly_income','rent_yearly','water_yearly','electricity_yearly','sec_dep_yearly'
+           
            ));
     //     $collections = DB::table('contracts')
     //     ->join('units', 'unit_id_foreign', 'unit_id')

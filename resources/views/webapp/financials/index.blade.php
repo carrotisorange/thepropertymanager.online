@@ -78,29 +78,29 @@
               <td>{{ number_format(($effective_rent_revenue-$vacancy)*12,2) }}</td>
             </tr>
             <tr>
-              <th>Total monthly income</th>
+              <th>Total income</th>
               <td>{{ number_format($total_monthly_income,2) }}</td>
-              <td>{{ number_format($total_monthly_income*12,2) }}
+              <td>{{ number_format($total_yearly_income*12,2) }}
             </tr>
             <tr>
               <td>Rent</td>
               <td>{{ number_format($rent,2) }}</td>
-              <td>{{ number_format($rent*12,2) }}</td>
+              <td>{{ number_format($rent_yearly*12,2) }}</td>
             </tr>
             <tr>
               <td>Water</td>
               <td>{{ number_format($water,2) }}</td>
-              <td>{{ number_format($water*12,2) }}</td>
+              <td>{{ number_format($water_yearly*12,2) }}</td>
             </tr>
             <tr>
               <td>Electricity</td>
               <td>{{ number_format($electricity,2) }}</td>
-              <td>{{ number_format($electricity*12,2) }}</td>
+              <td>{{ number_format($electricity_yearly*12,2) }}</td>
             </tr>
             <tr>
               <td>Security deposit</td>
               <td>{{ number_format($sec_dep,2) }}</td>
-              <td>{{ number_format($sec_dep*12,2) }}</td>
+              <td>{{ number_format($sec_dep_yearly*12,2) }}</td>
             </tr>
           </tbody>
 
