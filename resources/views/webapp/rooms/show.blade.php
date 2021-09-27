@@ -245,7 +245,8 @@
                   Save</button>
               </td>
               <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d, Y') }}</td>
-              <td><a class="text-danger" href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/inventory/{{ $item->inventory_id }}/delete/inventory"><i
+              <td><a class="text-danger"
+                  href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/inventory/{{ $item->inventory_id }}/delete/inventory"><i
                     class="fas fa-times"></i>
                   Remove</a></td>
               <th><a
@@ -507,13 +508,15 @@
                     <span class="badge badge-primary">{{ $item->urgency }}</span>
                     @endif
                   </td>
-                  <td>
-                    @if($item->concern_status === 'pending')
-                    <i class="fas fa-clock text-warning"></i> {{ $item->concern_status }}
-                    @elseif($item->concern_status === 'active')
-                    <i class="fas fa-snowboarding text-primary"></i> {{ $item->concern_status }}
+                  <td> @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
+                    $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
+                    $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
+                    <p class="text-warning"><i class="fas fa-clock"></i> {{ $item->concern_status }}</p>
+                    @elseif($item->concern_status === 'on going')
+                    <p class="text-primary"><i class="fas fa-snowboarding"></i> {{ $item->concern_status }}
+                    </p>
                     @else
-                    <i class="fas fa-check-circle text-success"></i> {{ $item->concern_status }}
+                    <p class="text-primary"> <i class="fas fa-check-circle"></i> {{ $item->concern_status }}</p>
                     @endif
                   </td>
                   <td>{{ $item->name }}</td>

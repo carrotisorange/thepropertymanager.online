@@ -395,6 +395,7 @@ class ConcernController extends Controller
                     'urgency' => $request->urgency,
                     'is_warranty' => $request->is_warranty,
                     'assessment' => $request->assessment,
+                    'status' => 'assessed',
                 ]
                 );
 
@@ -443,6 +444,7 @@ class ConcernController extends Controller
           'ended_on' => $request->ended_on,
           'concern_user_id' => $request->concern_user_id,
           'scope_of_work' => $request->scope_of_work,
+              'status' => 'waiting for approval',
           ]
           );
 
@@ -492,7 +494,8 @@ class ConcernController extends Controller
       'price' => $request->price,
       'total_cost' => $request->total_cost,
       'concern_id_foreign' => $concern_id,
-      'created_at' => Carbon::now()
+      'created_at' => Carbon::now(),
+      'status' => 'waiting for approval',
       ]
       );
 
@@ -528,7 +531,18 @@ class ConcernController extends Controller
 
        public function create_approval($property_id, $unit_id, $tenant_id, $concern_id)
        { 
-           
+
+        $concern = Concern::findOrFail($concern_id);
+
+        if($concern->approved_by_tenant_at && $concern->approved_by_owner_at && $concern->approved_by_manager_at){
+            Concern::where('concern_id', $concern_id)
+            ->update(
+            [
+            'status' => 'approved',
+            ]
+            );
+        }
+                 
         $particulars = DB::table('particulars')
        ->join('property_bills', 'particular_id', 'particular_id_foreign')
        ->where('property_id_foreign', Session::get('property_id'))

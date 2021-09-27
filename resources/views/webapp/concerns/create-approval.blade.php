@@ -35,14 +35,19 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">Status:</label>
-                        <p class="text-warning"><i class="fas fa-clock"></i>
-                            {{ $concern->approved_by_tenant_at? 'approved':'pending' }}</p>
+
+                        @if($concern->approved_by_tenant_at)
+                        <p class="text-success"> <i class="fas fa-check-circle"></i> approved</p>
+
+                        @else
+                        <p class="text-warning"> <i class="fas fa-clock"></i> pending</p>
+                        @endif
+
                     </div>
 
                     <div class="form-group col-md-2">
                         <label for="">Approved on:</label>
                         <p>{{ $concern->approved_by_tenant_at? $concern->approved_by_tenant_at:'NA' }}</p>
-
                     </div>
                 </div>
 
@@ -54,9 +59,12 @@
                     </div>
                     <div class="form-group col-md-4">
 
-                        <p class="text-warning"><i class="fas fa-clock"></i>
-                            {{ $concern->approved_by_owner_at? 'approved':'pending' }}
-                        </p>
+                        @if($concern->approved_by_owner_at)
+                        <p class="text-success"> <i class="fas fa-check-circle"></i> approved</p>
+
+                        @else
+                        <p class="text-warning"> <i class="fas fa-clock"></i> pending</p>
+                        @endif
                     </div>
 
                     <div class="form-group col-md-2">
@@ -73,10 +81,12 @@
 
                     </div>
                     <div class="form-group col-md-4">
+                        @if($concern->approved_by_manager_at)
+                        <p class="text-success"> <i class="fas fa-check-circle"></i> approved</p>
 
-                        <p class="text-warning"><i class="fas fa-clock"></i>
-                            {{ $concern->approved_by_manager_at? 'approved':'pending' }}
-                        </p>
+                        @else
+                        <p class="text-warning"> <i class="fas fa-clock"></i> pending</p>
+                        @endif
                     </div>
 
                     <div class="form-group col-md-2">
@@ -90,12 +100,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-12 mx-auto">
                         <p class="text-center">
-                            @if($concern->approved_by_tenant_at && $concern->approved_by_owner_at && $concern->approved_by_manager_at)
+                            @if($concern->approved_by_tenant_at && $concern->approved_by_owner_at &&
+                            $concern->approved_by_manager_at)
                             <a class="btn btn-block btn-primary"
                                 href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $concern->concern_id }}/payment-options">Next</a>
                             @else
-                            <a class="btn btn-block btn-primary"
-                                href="" disabled>Waiting for approval</a>
+                            <a class="btn btn-block btn-primary" href="" disabled>Waiting for approval</a>
                             @endif
                         </p>
 
