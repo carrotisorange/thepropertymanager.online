@@ -41,16 +41,17 @@
               type="text" required readonly>
             <input form="createConcernForm" name="concern_unit_id" value="{{ $room->unit_id }}" class="form-control"
               type="hidden" required readonly>
-              <input form="createConcernForm" name="status" value="pending" class="form-control" type="hidden"
-                required readonly>
+          
           </div>
           <div class="form-group col-md-3">
             <label for="">Reported by:</label>
             <select form="createConcernForm" class="form-control" name="concern_tenant_id">
               <option value="{{ old('concern_tenant_id') }}" selected>{{ old('concern_tenant_id') }}</option>
               @foreach ($tenants as $item)
-              <option value="{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} |
-                {{ $item->contract_status }}</option>
+              <option value="{{ 'tenant-'.$item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }} | tenant | {{ $item->contract_status }}</option>
+              @endforeach
+              @foreach ($owners as $item)
+              <option value="{{ 'owner-'.$item->owner_id }}">{{ $item->name }} | owner | {{ $item->status }}</option>
               @endforeach
             </select>
             @error('concern_tenant_id')

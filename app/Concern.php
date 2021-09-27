@@ -34,7 +34,9 @@ class Concern extends Model
          'approved_by_tenant_at',
          'approved_by_owner_at',
          'payee',
-         'payment_options'
+         'payment_options',
+         'reported_by_user',
+         'owner_id_foreign'
     ];
 
     public function tenant()

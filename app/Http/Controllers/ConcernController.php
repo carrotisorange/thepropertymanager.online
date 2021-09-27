@@ -161,6 +161,7 @@ class ConcernController extends Controller
 
      public function create_room_concern(Request $request, $property_id, $room_id){
 
+
         $tenants = DB::table('contracts')
         ->select('*', 'contracts.status as contract_status')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -169,7 +170,7 @@ class ConcernController extends Controller
         ->where('unit_id', $room_id)
         ->get();
 
-        $owners = DB::table('certificates')
+         $owners = DB::table('certificates')
         ->join('owners', 'owner_id_foreign', 'owner_id')
         ->where('certificates.unit_id_foreign', $room_id)
         ->get();
@@ -286,7 +287,7 @@ class ConcernController extends Controller
 
     public function create($property_id, $tenant_id)
     {
-    
+
         Session::put('current-page', 'concerns');
 
         $contracts = DB::table('contracts')
@@ -316,23 +317,50 @@ class ConcernController extends Controller
      */
     public function store_details(Request $request, $property_id, $unit_id)
     {
-
+   
         Session::put('current-page', 'concerns');
 
         $request->validate([
             'reported_at' => 'required', 
             'concern_unit_id' => 'required',
-            'concern_tenant_id' => 'required',
             'contact_no' => 'required',
+            'concern_tenant_id' => 'required',
             'details' => 'required',
-            'status' => 'required',
         ]);
 
+             $explode = explode("-", $request->concern_tenant_id);
+
+             $reported_by_user = $explode[0];
+
+             if($reported_by_user === 'tenant'){
+              $concern = new Concern();
+              $concern->reported_at = $request->reported_at;
+              $concern->concern_unit_id = $request->concern_unit_id;
+              $concern->contact_no = $request->contact_no;
+              $concern->concern_tenant_id = $explode[1];
+              $concern->details = $request->details;
+              $concern->status = 'pending';
+              $concern->save();
+             }else{
+             $concern = new Concern();
+             $concern->reported_at = $request->reported_at;
+             $concern->concern_unit_id = $request->concern_unit_id;
+             $concern->contact_no = $request->contact_no;
+             $concern->owner_id_foreign = $explode[1];
+             $concern->details = $request->details;
+             $concern->status = 'pending';
+             $concern->save();
+             }
+
+        
+             $new_concern_id = $concern->concern_id;
+
+
         //store all the input fields to the input
-        $input = $request->all();
+        // $input = $request->all();
 
         //insert a new concern to the database
-        $new_concern_id = Concern::create($input)->concern_id;
+        // $new_concern_id = Concern::create($input)->concern_id;
         
         $unit = Unit::findOrFail($unit_id)->unit_no;
         
@@ -346,7 +374,7 @@ class ConcernController extends Controller
                 
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
           return
-          redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$request->concern_tenant_id.'/concern/'.$new_concern_id.'/assessment')->with('success',
+          redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$explode[1].'/concern/'.$new_concern_id.'/assessment')->with('success',
           'Concern is added sucessfully.');
          
         //  return redirect('/property/'.$property_id.'/room/'.$unit_id.'/tenant/'.$request->concern_tenant_id.'/concern/'.$new_concern_id.'/materials')->with('success', 'Concern is added sucessfully.');
@@ -444,7 +472,7 @@ class ConcernController extends Controller
           'ended_on' => $request->ended_on,
           'concern_user_id' => $request->concern_user_id,
           'scope_of_work' => $request->scope_of_work,
-              'status' => 'waiting for approval',
+          'status' => 'waiting for approval',
           ]
           );
 

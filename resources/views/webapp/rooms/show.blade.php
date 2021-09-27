@@ -488,8 +488,8 @@
                   <th>Category</th>
                   <th>Urgency</th>
                   <th>Status</th>
-                  <th>Assigned to</th>
-                  <th>Details</th>
+                  <th>Endorsed to</th>
+                  {{-- <th>Details</th> --}}
                   <th></th>
                 </tr>
               </thead>
@@ -501,13 +501,14 @@
                   <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
                   <td>{{ $item->category }}</td>
                   <td>
-                    @if($item->urgency === 'urgent')
+                    {{ $item->urgency }}
+                    {{-- @if($item->urgency === 'urgent')
                     <span class="badge badge-danger">{{ $item->urgency }}</span>
                     @elseif($item->urgency === 'major')
                     <span class="badge badge-warning">{{ $item->urgency }}</span>
                     @else
                     <span class="badge badge-primary">{{ $item->urgency }}</span>
-                    @endif
+                    @endif --}}
                   </td>
                   <td> @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
                     $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
@@ -521,10 +522,28 @@
                     @endif
                   </td>
                   <td>{{ $item->name }}</td>
-                  <td>{{ $item->details }}</td>
-                  <td><a
+                  {{-- <td>{{ $item->details }}</td> --}}
+                  <td>
+                    @if($item->concern_status === 'pending')
+                    <a
                       href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
-                        class="fas fa-eye"></i> View</a></td>
+                        class="fas fa-eye"></i> View</a>
+                    @elseif($item->concern_status === 'assessed')
+                    <a
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/scope_of_work/"><i
+                        class="fas fa-eye"></i> View</a>
+                    @elseif($item->concern_status === 'waiting for approval')
+                    <a
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/approval/"><i
+                        class="fas fa-eye"></i> View</a>
+                    @elseif($item->concern_status === 'request for purchase')
+                    <a
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/materials/"><i
+                        class="fas fa-eye"></i> View</a>
+                    @endif
+                    {{-- <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
+                      class="fas fa-eye"></i> View</a> --}}
+                  </td>
                 </tr>
                 @endforeach
               </tbody>
