@@ -61,7 +61,7 @@
                         <select form="createConcernForm" name="category" class="form-control" required>
                             <option value="{{ old('category')?old('category'):$concern->category }}" selected>{{ old('category')?old('category'):$concern->category }}
                             </option>
-                            <option value="emergency"> Unit work</option>
+                            <option value="unit_work"> Unit work</option>
                             <option value="major_concern"> HRR violations Concern</option>
                             <option value="minor_concern"> Contract</option>
                             <option value="remmittance">Remittance</option>

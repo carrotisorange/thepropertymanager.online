@@ -485,6 +485,7 @@
                   <?php $ctr=1; ?>
                   <th>#</th>
                   <th>Date Reported</th>
+                  <th>Category</th>
                   <th>Urgency</th>
                   <th>Status</th>
                   <th>Assigned to</th>
@@ -498,7 +499,7 @@
                   <th>{{ $ctr++ }}</th>
 
                   <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-
+                  <td>{{ $item->category }}</td>
                   <td>
                     @if($item->urgency === 'urgent')
                     <span class="badge badge-danger">{{ $item->urgency }}</span>
@@ -511,12 +512,12 @@
                   <td> @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
                     $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
                     $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
-                    <p class="text-warning"><i class="fas fa-clock"></i> {{ $item->concern_status }}</p>
+                    <span class="text-warning"><i class="fas fa-clock"></i> {{ $item->concern_status }}</span>
                     @elseif($item->concern_status === 'on going')
-                    <p class="text-primary"><i class="fas fa-snowboarding"></i> {{ $item->concern_status }}
-                    </p>
+                    <span class="text-primary"><i class="fas fa-snowboarding"></i> {{ $item->concern_status }}
+                    </span>
                     @else
-                    <p class="text-primary"> <i class="fas fa-check-circle"></i> {{ $item->concern_status }}</p>
+                    <span class="text-primary"> <i class="fas fa-check-circle"></i> {{ $item->concern_status }}</span>
                     @endif
                   </td>
                   <td>{{ $item->name }}</td>

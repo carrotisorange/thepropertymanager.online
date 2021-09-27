@@ -103,8 +103,8 @@
               <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#payments" role="tab"
                 aria-controls="nav-payments" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Payments
               </a>
-              <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab"
-                aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a>
+              {{-- <a class="nav-item nav-link" id="nav-concerns-tab" data-toggle="tab" href="#concerns" role="tab"
+                aria-controls="nav-concern" aria-selected="false"><i class="fas fa-tools text-cyan"></i> Concerns</a> --}}
               @if($violations->count() <= 0) <a class="nav-item nav-link" id="nav-violations-tab" data-toggle="tab"
                 href="#violations" role="tab" aria-controls="nav-violation" aria-selected="false"> <i
                   class="fas fa-smoking-ban text-primary"></i> Violations</a>
@@ -372,18 +372,18 @@
 
       </div>
 
-      <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab">
+      {{-- <div class="tab-pane fade" id="concerns" role="tabpanel" aria-labelledby="nav-concerns-tab"> --}}
         {{-- <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>   --}}
-        <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/create"
+        {{-- <a href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/create"
           class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
-        <br><br>
+        <br><br> --}}
         {{-- @if($concerns->count() < 1)
         <p class="text-danger text-center">No concerns found!</p>
         @else --}}
-        <div class="row">
+        {{-- <div class="row">
           <div class="col-md-12">
             <table class="table table-hover">
-              <?php $ctr = 1; ?>
+              
               <thead>
                 <tr>
                   <th>#</th>
@@ -437,7 +437,7 @@
             </table>
           </div>
         </div>
-      </div>
+      </div> --}}
 
 
       <div class="tab-pane fade" id="violations" role="tabpanel" aria-labelledby="nav-violations-tab">
