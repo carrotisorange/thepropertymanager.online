@@ -396,7 +396,7 @@ class ConcernController extends Controller
 
             $concern = Concern::findOrFail($concern_id);
 
-             $personnels = Personnel::where('property_id_foreign', $property_id)->get();
+            $personnels = Personnel::where('property_id_foreign', $property_id)->get();
             
             return view('webapp.concerns.create-assessment', compact('room','users', 'tenant','concern','personnels'));
         }

@@ -41,13 +41,21 @@
                     <div class="form-group col-md-6">
                         <label for="">Assessed by:</label>
                         <select form="createConcernForm" class="form-control" name="assessed_by_id">
-                            <option value="{{ old('assessed_by_id')?old('assessed_by_id'):$concern->assessed_by_id }}" selected>{{ old('assessed_by_id')?old('assessed_by_id'):$concern->assessed_by_id }}</option>
+                            <option value="{{ old('assessed_by_id')?old('assessed_by_id'):$concern->assessed_by_id }}"
+                                selected>{{ old('assessed_by_id')?old('assessed_by_id'):$concern->assessed_by_id }}
+                            </option>
                             @foreach ($personnels as $item)
                             <option value="{{ $item->personnel_id }}">{{ $item->personnel_name }} |
                                 {{ $item->personnel_availability }}</option>
                             @endforeach
                         </select>
+                        @if(!$personnels)
+                        <small class="text-danger">
+                           No available personnels. Please click <a target="_blank" href="/property/{{ Session::get('property_id') }}/personnels">here</a> to add one and refresh this page.
+                        </small>
+                        @endif
                         @error('assessed_by_id')
+                        <br>
                         <small class="text-danger">
                             {{ $message }}
                         </small>
@@ -59,7 +67,8 @@
                     <div class="form-group col-md-4">
                         <label for="">Category:</label>
                         <select form="createConcernForm" name="category" class="form-control" required>
-                            <option value="{{ old('category')?old('category'):$concern->category }}" selected>{{ old('category')?old('category'):$concern->category }}
+                            <option value="{{ old('category')?old('category'):$concern->category }}" selected>
+                                {{ old('category')?old('category'):$concern->category }}
                             </option>
                             <option value="unit_work"> Unit work</option>
                             <option value="major_concern"> HRR violations Concern</option>
@@ -78,7 +87,8 @@
                     <div class="form-group col-md-4">
                         <label for="">Urgency:</label>
                         <select form="createConcernForm" name="urgency" class="form-control" required>
-                            <option value="{{ old('urgency')?old('urgency'):$concern->urgency }}" selected>{{ old('urgency')?old('urgency'):$concern->urgency }}
+                            <option value="{{ old('urgency')?old('urgency'):$concern->urgency }}" selected>
+                                {{ old('urgency')?old('urgency'):$concern->urgency }}
                             </option>
                             <option value="emergency"> Emergency</option>
                             <option value="major_concern"> Major Concern</option>
@@ -94,12 +104,13 @@
 
                     <div class="form-group col-md-4">
                         <label for="">Warranty:</label>
-                        <select form="createConcernForm" name="is_warranty" id="is_warranty" class="form-control" required>
+                        <select form="createConcernForm" name="is_warranty" id="is_warranty" class="form-control"
+                            required>
                             <option value="{{ old('is_warranty')?old('is_warranty'):$concern->is_warranty }}" selected>
                                 {{ old('is_warranty')?old('is_warranty'):$concern->is_warranty }}</option>
                             <option value="yes"> Yes</option>
                             <option value="no"> No</option>
-                    
+
                         </select>
                         @error('is_warranty')
                         <small class="text-danger">
@@ -111,20 +122,20 @@
 
                 </div>
 
-               <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label for="">Assessment:</label>
-                    <textarea form="createConcernForm" name="assessment" cols="115%" rows="5"
-                        class="form-control">{{ old('assessment')?old('assessment'):$concern->assessment }}</textarea>
-                    @error('assessment')
-                    <small class="text-danger">
-                        {{ $message }}
-                    </small>
-                    @enderror
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="">Assessment:</label>
+                        <textarea form="createConcernForm" name="assessment" cols="115%" rows="5"
+                            class="form-control">{{ old('assessment')?old('assessment'):$concern->assessment }}</textarea>
+                        @error('assessment')
+                        <small class="text-danger">
+                            {{ $message }}
+                        </small>
+                        @enderror
+                    </div>
+
+
                 </div>
-            
-            
-            </div>
                 <div class="form-row">
                     <div class="form-group col-md-12 mx-auto">
                         <button type="submit" form="createConcernForm" class="btn btn-primary btn-block"
@@ -132,7 +143,8 @@
                         <br>
                         <p class="text-center">
                             <a class="text-center text-dark"
-                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/#concenrs">Save and continue later</a>
+                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/#concenrs">Save
+                                and continue later</a>
                         </p>
                     </div>
                 </div>
