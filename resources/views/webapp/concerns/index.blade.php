@@ -48,16 +48,13 @@
           <?php $ctr=1; ?>
           <tr>
             <th>#</th>
-            <th>Received On</th>
-            <th>Reported By</th>
+            <th>Reported on</th>
+            <th>Reported by</th>
             <th>Room</th>
-
             <th>Urgency</th>
             <th>Status</th>
-            <th>Assigned to</th>
-            <th>Rating</th>
+            <th>Endorsed to</th>
             <th></th>
-
           </tr>
         </thead>
         <tbody>
@@ -65,46 +62,30 @@
           <tr>
             <th>{{ $ctr++ }}</th>
 
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
+            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
             <td>
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
+              @if($item->concern_owner_id)
+              <a target="_blank"
+                href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
+                (owner)</a>
+              @else
+              <a target="_blank"
+                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
+                (tenant)</a>
+              @endif
+            </td>
+            <td>
               <a
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
-              @else
-              {{ $item->first_name.' '.$item->last_name }}
-              @endif
-
-            </td>
-            <td>
-              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6')
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @else
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @endif
-
-
+                href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{ $item->building.' '.$item->unit_no }}</a>
             </td>
 
-
             <td>
-              @if($item->urgency === 'urgent')
-              <span class="badge badge-danger">{{ $item->urgency }}</span>
+              @if($item->urgency === 'emergency')
+              <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
               @elseif($item->urgency === 'major')
-              <span class="badge badge-warning">{{ $item->urgency }}</span>
+              <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
               @else
-              <span class="badge badge-primary">{{ $item->urgency }}</span>
+              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
               @endif
             </td>
             <td>
@@ -116,8 +97,9 @@
               <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
               @endif
             </td>
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
+            <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
+                ({{ $item->role }})</a> </td>
+
             <td><a
                 href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
                   class="fas fa-eye"></i> View</a></td>
@@ -132,105 +114,88 @@
   <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 
-      <table class="table table-hover">
-        <thead>
-          <?php $ctr=1; ?>
-          <tr>
-            <th>#</th>
-            <th>Received On</th>
-            <th>Reported By</th>
-            <th>Room</th>
-
-            <th>Urgency</th>
-
-            <th>Assigned to</th>
-            <th>Rating</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($pending_concerns as $item)
-          <tr>
-            <th>{{ $ctr++ }}</th>
-
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-            <td>
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
-              @else
-              {{ $item->first_name.' '.$item->last_name }}
-              @endif
-
-            </td>
-            <td>
-              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6')
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @else
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @endif
-
-
-            </td>
-
-
-            <td>
-              @if($item->urgency === 'urgent')
-              <span class="badge badge-danger">{{ $item->urgency }}</span>
-              @elseif($item->urgency === 'major')
-              <span class="badge badge-warning">{{ $item->urgency }}</span>
-              @else
-              <span class="badge badge-primary">{{ $item->urgency }}</span>
-              @endif
-            </td>
-
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-            <td><a
-                href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
-                  class="fas fa-eye"></i> View</a></td>
-
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+ <table class="table table-hover">
+    <thead>
+      <?php $ctr=1; ?>
+      <tr>
+        <th>#</th>
+        <th>Reported on</th>
+        <th>Reported by</th>
+        <th>Room</th>
+        <th>Urgency</th>
+        <th>Status</th>
+        <th>Endorsed to</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($pending_concerns as $item)
+      <tr>
+        <th>{{ $ctr++ }}</th>
+  
+        <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
+        <td>
+          @if($item->concern_owner_id)
+          <a target="_blank"
+            href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
+            (owner)</a>
+          @else
+          <a target="_blank"
+            href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
+            (tenant)</a>
+          @endif
+        </td>
+        <td>
+          <a
+            href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{ $item->building.' '.$item->unit_no }}</a>
+        </td>
+  
+        <td>
+          @if($item->urgency === 'emergency')
+          <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
+          @elseif($item->urgency === 'major')
+          <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
+          @else
+          <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
+          @endif
+        </td>
+        <td>
+          @if($item->concern_status === 'pending')
+          <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
+          @elseif($item->concern_status === 'active')
+          <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
+          @else
+          <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
+          @endif
+        </td>
+        <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
+            ({{ $item->role }})</a> </td>
+  
+        <td><a
+            href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
+              class="fas fa-eye"></i> View</a></td>
+  
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 
     </div>
   </div>
   <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 
-      <table class="table table-hover">
+     <table class="table table-hover">
         <thead>
           <?php $ctr=1; ?>
           <tr>
             <th>#</th>
-            <th>Received On</th>
-            <th>Reported By</th>
-            @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-            Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
-            Session::get('property_type') === '6')
-            <th>Unit</th>
-            @else
+            <th>Reported on</th>
+            <th>Reported by</th>
             <th>Room</th>
-            @endif
-
             <th>Urgency</th>
-
-            <th>Assigned to</th>
-            <th>Rating</th>
+            <th>Status</th>
+            <th>Endorsed to</th>
             <th></th>
           </tr>
         </thead>
@@ -238,56 +203,49 @@
           @foreach ($active_concerns as $item)
           <tr>
             <th>{{ $ctr++ }}</th>
-
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
+      
+            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
             <td>
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
+              @if($item->concern_owner_id)
+              <a target="_blank"
+                href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
+                (owner)</a>
+              @else
+              <a target="_blank"
+                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
+                (tenant)</a>
+              @endif
+            </td>
+            <td>
               <a
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
-              @else
-              {{ $item->first_name.' '.$item->last_name }}
-              @endif
-
+                href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{ $item->building.' '.$item->unit_no }}</a>
             </td>
+      
             <td>
-              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6')
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @else
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @endif
-
-
-            </td>
-
-
-            <td>
-              @if($item->urgency === 'urgent')
-              <span class="badge badge-danger">{{ $item->urgency }}</span>
+              @if($item->urgency === 'emergency')
+              <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
               @elseif($item->urgency === 'major')
-              <span class="badge badge-warning">{{ $item->urgency }}</span>
+              <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
               @else
-              <span class="badge badge-primary">{{ $item->urgency }}</span>
+              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
               @endif
             </td>
-
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
+            <td>
+              @if($item->concern_status === 'pending')
+              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
+              @elseif($item->concern_status === 'active')
+              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
+              @else
+              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
+              @endif
+            </td>
+            <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
+                ({{ $item->role }})</a> </td>
+      
             <td><a
                 href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
                   class="fas fa-eye"></i> View</a></td>
-
+      
           </tr>
           @endforeach
         </tbody>
@@ -298,80 +256,71 @@
   <div class="tab-pane fade" id="nav-closed" role="tabpanel" aria-labelledby="nav-closed-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
 
-      <table class="table table-hover">
-        <thead>
-          <?php $ctr=1; ?>
-          <tr>
-            <th>#</th>
-            <th>Received On</th>
-            <th>Reported By</th>
-            <th>Room</th>
+<table class="table table-hover">
+  <thead>
+    <?php $ctr=1; ?>
+    <tr>
+      <th>#</th>
+      <th>Reported on</th>
+      <th>Reported by</th>
+      <th>Room</th>
+      <th>Urgency</th>
+      <th>Status</th>
+      <th>Endorsed to</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($closed_concerns as $item)
+    <tr>
+      <th>{{ $ctr++ }}</th>
 
-            <th>Urgency</th>
+      <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
+      <td>
+        @if($item->concern_owner_id)
+        <a target="_blank"
+          href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
+          (owner)</a>
+        @else
+        <a target="_blank"
+          href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
+          (tenant)</a>
+        @endif
+      </td>
+      <td>
+        <a
+          href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">{{ $item->building.' '.$item->unit_no }}</a>
+      </td>
 
-            <th>Assigned to</th>
-            <th>Rating</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($closed_concerns as $item)
-          <tr>
-            <th>{{ $ctr++ }}</th>
+      <td>
+        @if($item->urgency === 'emergency')
+        <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
+        @elseif($item->urgency === 'major')
+        <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
+        @else
+        <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
+        @endif
+      </td>
+      <td>
+        @if($item->concern_status === 'pending')
+        <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
+        @elseif($item->concern_status === 'active')
+        <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
+        @else
+        <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
+        @endif
+      </td>
+      <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
+          ({{ $item->role }})</a> </td>
 
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
-            <td>
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}</a>
-              @else
-              {{ $item->first_name.' '.$item->last_name }}
-              @endif
+      <td><a
+          href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
+            class="fas fa-eye"></i> View</a></td>
 
-            </td>
-            <td>
-              @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
-              Session::get('property_type') === '6')
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/unit/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @else
-              @if(Auth::user()->role_id_foreign === 1 || Auth::user()->role_id_foreign === 4)
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns">
-                {{$item->building.' '.$item->unit_no }}</a>
-              @else
-              {{$item->building.' '.$item->unit_no }}
-              @endif
-              @endif
-
-
-            </td>
-
-
-            <td>
-              @if($item->urgency === 'urgent')
-              <span class="badge badge-danger">{{ $item->urgency }}</span>
-              @elseif($item->urgency === 'major')
-              <span class="badge badge-warning">{{ $item->urgency }}</span>
-              @else
-              <span class="badge badge-primary">{{ $item->urgency }}</span>
-              @endif
-            </td>
-
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-            <td><a
-                href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/endorsed_to/{{ $item->concern_user_id }}/resolved_by/{{ $item->resolved_by }}/view"><i
-                  class="fas fa-eye"></i> View</a></td>
-
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+    </tr>
+    @endforeach
+  </tbody>
+</table>
 
     </div>
   </div>
