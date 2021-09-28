@@ -161,7 +161,7 @@
   @foreach ($status as $status)
   <div class="tab-pane fade" id="nav-{{ $status->status }}-tab" role="tabpanel"
     aria-labelledby="nav-{{ $status->status }}-tab">
-    <br>
+    
     @foreach ($concerns as $item)
 
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
