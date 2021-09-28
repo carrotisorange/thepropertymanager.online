@@ -78,60 +78,43 @@ class ConcernController extends Controller
         ->get();
 
        }else{
-            $all_concerns = DB::table('contracts')
-            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
-            ->select('*', 'concerns.status as concern_status')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('concern_user_id', Auth::user()->id)
-            ->orderBy('reported_at', 'desc')
-            ->orderBy('urgency', 'desc')
-            ->orderBy('concerns.status', 'desc')
-            ->get();
+          $status = DB::table('concerns')
+          ->leftJoin('tenants', 'concern_tenant_id', 'tenant_id')
+          ->leftJoin('units', 'concern_unit_id', 'unit_id')
+          ->leftJoin('owners', 'owner_id_foreign', 'owner_id')
+          ->leftJoin('users', 'concern_user_id', 'id')
+          ->leftJoin('roles', 'role_id_foreign', 'role_id')
+          ->where('property_id_foreign', Session::get('property_id'))
+          ->where('concern_user_id',Auth::user()->id)
+          ->select('concerns.status', DB::raw('count(*) as count'))
+          ->groupBy('concerns.status')
+          ->get();
 
-            $pending_concerns = DB::table('contracts')
-            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
-            ->select('*', 'concerns.status as concern_status')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('concern_user_id', Auth::user()->id)
-            ->where('concerns.status', 'pending')
-            ->orderBy('reported_at', 'desc')
-            ->orderBy('urgency', 'desc')
-            ->orderBy('concerns.status', 'desc')
-            ->get();
+          $category = DB::table('concerns')
+          ->leftJoin('tenants', 'concern_tenant_id', 'tenant_id')
+          ->leftJoin('units', 'concern_unit_id', 'unit_id')
+          ->leftJoin('owners', 'owner_id_foreign', 'owner_id')
+          ->leftJoin('users', 'concern_user_id', 'id')
+          ->leftJoin('roles', 'role_id_foreign', 'role_id')
+          ->where('property_id_foreign', Session::get('property_id'))
+           ->where('concern_user_id',Auth::user()->id)
+          ->select('concerns.category', DB::raw('count(*) as count'))
+          ->groupBy('concerns.category')
+          ->get();
 
-            $active_concerns = DB::table('contracts')
-            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
-            ->select('*', 'concerns.status as concern_status')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('concern_user_id', Auth::user()->id)
-            ->where('concerns.status', 'active')
-            ->orderBy('reported_at', 'desc')
-            ->orderBy('urgency', 'desc')
-            ->orderBy('concerns.status', 'desc')
-            ->get();
-
-            $closed_concerns = DB::table('contracts')
-            ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->leftJoin('units', 'unit_id_foreign', 'unit_id')
-            ->join('concerns', 'tenant_id', 'concern_tenant_id')
-            ->leftJoin('users', 'concern_user_id', 'id')
-            ->select('*', 'concerns.status as concern_status')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->where('concern_user_id', Auth::user()->id)
-            ->where('concerns.status', 'closed')
-            ->orderBy('reported_at', 'desc')
-            ->orderBy('urgency', 'desc')
-            ->orderBy('concerns.status', 'desc')
-            ->get();
+          $concerns = DB::table('concerns')
+          ->leftJoin('tenants', 'concern_tenant_id', 'tenant_id')
+          ->leftJoin('units', 'concern_unit_id', 'unit_id')
+          ->leftJoin('owners', 'owner_id_foreign', 'owner_id')
+          ->leftJoin('users', 'concern_user_id', 'id')
+          ->leftJoin('roles', 'role_id_foreign', 'role_id')
+          ->select('*', 'concerns.status as concern_status', 'owners.name as concern_owner_name','concerns.owner_id_foreign as concern_owner_id')
+          ->where('property_id_foreign', Session::get('property_id'))
+           ->where('concern_user_id',Auth::user()->id)
+          ->orderBy('reported_at', 'desc')
+          ->orderBy('urgency', 'desc')
+          ->orderBy('concerns.status', 'desc')
+          ->get();
 
        }       
 
@@ -609,6 +592,30 @@ class ConcernController extends Controller
         'Payment option is set sucessfully.');
         }
   
+
+          public function show_concern_communications($property_id, $unit_id, $tenant_id, $concern_id)
+          {
+
+          $room = Unit::findOrFail($unit_id);
+
+          $tenant = Tenant::findOrFail($tenant_id);
+
+          $concern = Concern::findOrFail($concern_id);
+
+          $users = DB::table('users_properties_relations')
+          ->join('users','user_id_foreign','id')
+          ->where('property_id_foreign', Session::get('property_id'))
+          ->whereNotIn('user_type' ,['tenant', 'owner'])
+          ->get();
+
+        $concern = Concern::findOrFail($concern_id);
+
+        $responses = Concern::findOrFail($concern_id)->responses;
+
+          return view('webapp.concerns.show-concern-communications', compact('room','users', 'tenant','concern','responses'));
+          }
+
+
     public function store(Request $request, $property_id, $tenant_id)
     {
 
@@ -857,6 +864,7 @@ class ConcernController extends Controller
                     'rating' => $request->rating,
                     'feedback' => $request->feedback,
                     'updated_at' => Carbon::now(),
+                    'status'=>'closed'
                 ]
             );
 

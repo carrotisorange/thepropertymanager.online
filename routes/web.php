@@ -270,7 +270,7 @@ Route::get('/property/{property_id}/concerns', 'ConcernController@index')->name(
 //route to create a concern
 Route::get('/property/{property_id}/room/{room_id}/create/concern', 'ConcernController@create_room_concern');
 //route to view and edit a concern
-Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/concern/{concern_id}/endorsed_to/{endorsed_to}/resolved_by/{resolved_by}/view', 'ConcernController@view_room_concern');
+Route::get('/property/{property_id}/room/{room_id}/tenant/{tenant_id}/concern/{concern_id}/communications', 'ConcernController@show_concern_communications');
 //route to update a concern
 Route::put('/property/{property_id}/room/{room_id}/concern/{concern_id}/update', 'ConcernController@update_room_concern');
 //route to show all concerns of a tenant

@@ -66,7 +66,7 @@ class PropertyController extends Controller
        
                 return view('webapp.properties.index', compact('properties', 'users')); 
 
-            }elseif(Auth::user()->role_id_foreign == 'tenant'){
+            }elseif(Auth::user()->role_id_foreign == '6'){
                 $property_id = DB::table('users_properties_relations')
                ->join('users', 'user_id_foreign', 'id')
                ->where('user_id_foreign', Auth::user()->id)
@@ -78,7 +78,7 @@ class PropertyController extends Controller
                 return view('webapp.tenant_access.main', compact('property_id', 'tenant'));
 
            
-            }elseif(Auth::user()->role_id_foreign == 'owner'){
+            }elseif(Auth::user()->role_id_foreign == '7'){
                 $property_id = DB::table('users_properties_relations')
                 ->join('users', 'user_id_foreign', 'id')
                 ->where('user_id_foreign', Auth::user()->id)

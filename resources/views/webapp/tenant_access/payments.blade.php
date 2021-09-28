@@ -2,6 +2,18 @@
 
 @section('title', 'Payments')
 
+@section('css')
+<style>
+  /*This will work on every browser*/
+  thead tr:nth-child(1) th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+</style>
+@endsection
+
 @section('upper-content')
 <div class="col-lg-6 col-7">
   <h6 class="h2 text-dark d-inline-block mb-0">Payments</h6>
@@ -10,8 +22,8 @@
 @endsection
 
 @section('main-content')
-<div class="table-responsive text-nowrap">
-  <table class="table table-bordered table-condensed">
+<div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+  <table class="table table-hover">
     @foreach ($payments as $day => $collection_list)
     <thead>
       <tr>

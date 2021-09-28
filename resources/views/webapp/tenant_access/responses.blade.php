@@ -51,7 +51,7 @@
 @endsection
 
 @section('upper-content')
-<div class="col-md-6">
+{{-- <div class="col-md-6">
   <h6 class="h2 text-dark d-inline-block mb-0">Concern # {{ $concern->concern_id }}
     (
     @if($concern->status === 'pending')
@@ -76,17 +76,17 @@
     @endif
   </h6>
 
-</div>
+</div> --}}
 <br><br>
 <div class="row">
   <div class="col-md-12">
     @if($concern->status != 'closed')
     <p class="text-right"><a href="#"
         title="You can close the concern once you're satisfied with the action made the person/s in charge."
-        data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary btn-sm"> Did the employee address
+        data-toggle="modal" data-target="#markAsCompleteModal" class="btn btn-primary"><i class="fas fa-question-circle"></i> Did the employee address
         your concern?</a></p>
     @else
-    {{-- <p class="text-right"><button class="btn btn-success">The concern is closed.</button></p> --}}
+    <p class="text-center">Concern has been closed.</p>
     @endif
   </div>
 </div>
@@ -94,19 +94,64 @@
 @endsection
 
 @section('main-content')
-<div class="row">
-  <div class="col-auto">
-    <h6 class="h2 text-dark d-inline-block mb-0">Responses ({{ $responses->count() }})</h6>
-  </div>
-</div>
-<br>
+@if($concern->status != 'closed')
 
+<p class="text-center"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addResponse"
+    data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a></p>
+</p>
+@endif
 
-@if($responses->count() < 1) <p class="text-center text-red">No responses found!</p>
-  @else
   <div class="row">
     <div class="col">
+      @if(!$concern->approved_by_tenant_at)
+      
+      
+<span class="list-group-item list-group-item-action">
+  <div class="row align-items-center">
+
+    <div class="col">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+
+          <h4 class="mb-0 text-sm">{{ $concern->concern_user_id }}</h4>
+        </div>
+        <div class="text-right text-muted">
+
+          <small>{{ Carbon\Carbon::parse($concern->assessed_at)->format('M d, Y') }}
+            ({{ Carbon\Carbon::parse($concern->assessed_at)->diffForHumans() }}) </small>
+
+
+        </div>
+      </div>
+      <p class="text-sm text-muted mb-0"> Your concern has been assessed. Click <a href="">here</a>  to see the details of the concern.</p>
+
+    </div>
+  </div>
+</span>
+      @endif
       <div class="list-group list-group-flush">
+        <span class="list-group-item list-group-item-action">
+          <div class="row align-items-center">
+        
+            <div class="col">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  
+                  <h4 class="mb-0 text-sm">{{ Auth::user()->name }}</h4>
+                </div>
+                <div class="text-right text-muted">
+        
+                  <small>{{ Carbon\Carbon::parse($concern->reported_at)->format('M d, Y') }}
+                    ({{ Carbon\Carbon::parse($concern->reported_at)->diffForHumans() }}) </small>
+        
+        
+                </div>
+              </div>
+              <p class="text-sm text-muted mb-0"> {!! $concern->details !!}</p>
+        
+            </div>
+          </div>
+        </span>
         @foreach ($responses as $item)
 
         <span class="list-group-item list-group-item-action">
@@ -115,8 +160,8 @@
             <div class="col">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <?php $explode = explode(" ", $item->posted_by );?>
-                  <h4 class="mb-0 text-sm">{{ $explode[0] }}</h4>
+                  
+                  <h4 class="mb-0 text-sm">{{ $item->posted_by }}</h4>
                 </div>
                 <div class="text-right text-muted">
 
@@ -138,16 +183,13 @@
     </div>
   </div>
 
-  @endif
-  <br>
-  <p class="text-right"><a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addResponse"
-      data-whatever="@mdo"><i class="fas fa-plus"></i> Response</a></p>
+  
   <div class="modal fade" id="addResponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content  text-center">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Response Information</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Enter your response</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -163,7 +205,7 @@
     
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Add Response </button>
+        <button type="submit" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-submit"></i><i class="fas fa-check"></i> Submit </button>
       </form>
       </div>
   </div>
@@ -207,7 +249,7 @@
   <div class="modal-content  text-center">
       <div class="modal-header">
 
-      <h5 class="modal-title" id="exampleModalLabel">Rating Information</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Enter your rating</h5>
 
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -252,8 +294,8 @@
 
         </div>
         <div class="modal-footer">
-          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary"
-            onclick="this.form.submit(); this.disabled = true;"> Rate Employee</button>
+          <button form="markAsCompleteModalForm" type="submit" class="btn btn-primary btn-block"
+            onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
         </div>
       </div>
     </div>

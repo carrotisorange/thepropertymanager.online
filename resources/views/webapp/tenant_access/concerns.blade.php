@@ -2,33 +2,45 @@
 
 @section('title', 'Concerns')
 
+@section('css')
+<style>
+  /*This will work on every browser*/
+  thead tr:nth-child(1) th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+</style>
+@endsection
+
 @section('upper-content')
 <div class="col-lg-6 col-7">
   <h6 class="h2 text-dark d-inline-block mb-0">Concerns</h6>
 
 </div>
 <div class="col-md-6 text-right">
-  <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i
-      class="fas fa-plus"></i> Report Concern</a>
+  <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i
+      class="fas fa-plus"></i> Add</a>
 </div>
 @endsection
 
 @section('main-content')
-<div class="table-responsive text-nowrap">
-  <table class="table table-bordered table-condensed">
+<div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+  <table class="table table-hover">
     <?php $ctr = 1; ?>
     <thead>
       <tr>
         <th>#</th>
 
-        <th>Date Reported</th>
+        <th>Reported on</th>
 
 
         <th>Category</th>
-        <th>Title</th>
+     
         <th>Urgency</th>
         <th>Status</th>
-        <th>Assigned to</th>
+        <th>Endorsed to</th>
         <th>Rating</th>
         <th></th>
         {{-- <th>Feedback</th> --}}
@@ -44,33 +56,33 @@
 
         <td>{{ $item->category }}</td>
 
-        <th>{{ $item->title }}</th>
+        
         <td>
-          @if($item->urgency === 'urgent')
-          <span class="badge badge-danger">{{ $item->urgency }}</span>
-          @elseif($item->urgency === 'major')
-          <span class="badge badge-warning">{{ $item->urgency }}</span>
-          @else
-          <span class="badge badge-primary">{{ $item->urgency }}</span>
-          @endif
+         @if($item->urgency === 'emergency')
+        <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
+        @elseif($item->urgency === 'major')
+        <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
+        @else
+        <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
+        @endif
         </td>
         <td>
-          @if($item->concern_status === 'pending')
+         @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
+          $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
+          $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
           <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
-          @elseif($item->concern_status === 'active')
+          @elseif($item->concern_status === 'on-going')
           <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
           @else
           <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
           @endif
         </td>
-        <?php $explode = explode(" ", $item->name );?>
-
-        <td>{{ $item->name? $explode[0]: 'NULL' }}</td>
+        
+        <td>{{ $item->role? $item->role: 'NULL' }}</td>
         <td>{{ $item->rating? $item->rating.'/5' : 'NA' }}</td>
-        <th><a class="btn btn-primary btn-sm"
-            href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses"><i
-              class="fas fa-eye"></i></a></th>
-        {{-- <td>{{ $item->feedback? $item->feedback : 'NULL' }}</td> --}}
+        <th><a class=""
+            href="/user/{{ Auth::user()->id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $item->concern_id }}/responses" target="_blank"><i class="fas fa-eye"></i> View</a></th>
+      
       </tr>
       @endforeach
     </tbody>
@@ -84,7 +96,7 @@
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Concern Information</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Concern form</h5>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -109,48 +121,33 @@
       </div>
     </div>
     <br> --}}
-    <div class="row">
-      <div class="col">
-        <label>Title</label>
 
-        <input type="text" form="concernForm" class="form-control" name="title"
-          placeholder="Uncessary charges to my account" required>
-      </div>
-    </div>
-
-    <br>
-    <div class="row">
+    {{-- <div class="row">
       <div class="col">
         <label>Category</label>
         <select class="form-control" form="concernForm" name="category" id="" required>
           <option value="" selected>Please select one</option>
-          <option value="billing">billing</option>
-          <option value="employee">employee</option>
-          <option value="internet">internet</option>
-          <option value="neighbour">neighbour</option>
-          <option value="noise">noise</option>
-          <option value="odours">odours</option>
-          <option value="parking">parking</option>
-          <option value="pets">pets</option>
-          <option value="repair">repair</option>
-          <option value="others">others</option>
+          <option value="unit_work"> Unit work</option>
+          <option value="hrr_violations"> HRR violations</option>
+          <option value="contract"> Contract</option>
+          <option value="remmittance">Remittance</option>
+          <option value="billing">Billing</option>
         </select>
       </div>
-    </div>
-    <br>
+    </div> --}}
+    {{-- <br>
     <div class="row">
       <div class="col">
         <label>Urgency</label>
         <select class="form-control" form="concernForm" name="urgency" id="" required>
           <option value="" selected>Please select one</option>
-          <option value="minor and not urgent">minor and not urgent</option>
-          <option value="minor but urgent">minor but urgent</option>
-          <option value="major but not urgent">major but not urgent</option>
-          <option value="major and urgent">major and urgent</option>
+          <option value="emergency">emergency</option>
+          <option value="major">major</option>
+          <option value="minor">minor</option>
         </select>
       </div>
     </div>
-    <br>
+    <br> --}}
 
 
 
@@ -161,7 +158,7 @@
         <textarea form="concernForm" rows="7" class="form-control" name="details" required></textarea>
       </div>
     </div>
-    <br>
+    
     {{-- <div class="row">
                             <div class="col">
                                 <label for="movein_date">Assign concern to</label>
@@ -177,7 +174,7 @@
 </div> --}}
 </div>
 <div class="modal-footer">
-  <button type="submit" form="concernForm" class="btn btn-primary"> Report Concern</button>
+  <button type="submit" form="concernForm" class="btn btn-primary btn-block"><i class="fas fa-check"></i> Submit</button>
 </div>
 </div>
 </div>
