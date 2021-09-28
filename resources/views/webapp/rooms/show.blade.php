@@ -501,14 +501,13 @@
                   <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d Y') }}</td>
                   <td>{{ $item->category }}</td>
                   <td>
-                    {{ $item->urgency }}
-                    {{-- @if($item->urgency === 'urgent')
-                    <span class="badge badge-danger">{{ $item->urgency }}</span>
+                    @if($item->urgency === 'emergency')
+                    <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
                     @elseif($item->urgency === 'major')
-                    <span class="badge badge-warning">{{ $item->urgency }}</span>
+                    <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
                     @else
-                    <span class="badge badge-primary">{{ $item->urgency }}</span>
-                    @endif --}}
+                    <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
+                    @endif
                   </td>
                   <td> @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
                     $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
@@ -540,6 +539,11 @@
                     <a
                       href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/materials/"><i
                         class="fas fa-eye"></i> View</a>
+                    @elseif($item->concern_status === 'approved')
+                    <a
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/payment-options/"><i
+                        class="fas fa-eye"></i> View</a>
+                    
                     @endif
                     {{-- <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
                       class="fas fa-eye"></i> View</a> --}}
