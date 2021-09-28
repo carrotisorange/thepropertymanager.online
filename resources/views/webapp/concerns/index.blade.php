@@ -71,6 +71,7 @@
         <th>#</th>
         <th>Reported on</th>
         <th>Reported by</th>
+        <th>Category</th>
         <th>Room</th>
         <th>Urgency</th>
         <th>Status</th>
@@ -95,6 +96,7 @@
             (tenant)</a>
           @endif
         </td>
+        <td>{{ $item->category }}</td>
         <td>
           <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns"
             target="_blank">{{ $item->building.' '.$item->unit_no }}</a>
@@ -167,6 +169,7 @@
           <th>#</th>
           <th>Reported on</th>
           <th>Reported by</th>
+          <th>Category</th>
           <th>Room</th>
           <th>Urgency</th>
           <th>Status</th>
@@ -192,6 +195,7 @@
       (tenant)</a>
     @endif
   </td>
+  <td>{{ $item->category }}</td>
   <td>
     <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns"
       target="_blank">{{ $item->building.' '.$item->unit_no }}</a>
