@@ -112,7 +112,7 @@ class RoomController extends Controller
             ->where('units.status', '!=', 'deleted')
             ->get();
             
-            $buildings = Property::findOrFail($property_id)
+             $buildings = Property::findOrFail($property_id)
             ->units()
             ->where('status','<>','deleted')
             ->select('building', 'status', DB::raw('count(*) as count'))

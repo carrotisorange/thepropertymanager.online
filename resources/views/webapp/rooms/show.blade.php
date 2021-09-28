@@ -514,7 +514,7 @@
                     $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
                     $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
                     <span class="text-warning"><i class="fas fa-clock"></i> {{ $item->concern_status }}</span>
-                    @elseif($item->concern_status === 'on going')
+                    @elseif($item->concern_status === 'on-going')
                     <span class="text-primary"><i class="fas fa-snowboarding"></i> {{ $item->concern_status }}
                     </span>
                     @else
