@@ -71,8 +71,8 @@
                                 {{ old('category')?old('category'):$concern->category }}
                             </option>
                             <option value="unit_work"> Unit work</option>
-                            <option value="major_concern"> HRR violations Concern</option>
-                            <option value="minor_concern"> Contract</option>
+                            <option value="hrr_violations"> HRR violations</option>
+                            <option value="contract"> Contract</option>
                             <option value="remmittance">Remittance</option>
                             <option value="billing">Billing</option>
 

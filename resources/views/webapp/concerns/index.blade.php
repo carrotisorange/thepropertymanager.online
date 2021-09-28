@@ -43,11 +43,20 @@
     @endforeach
     @foreach ($category as $item)
     <a class="nav-item nav-link" id="nav-{{ $item->category }}" data-toggle="tab" href="#nav-{{ $item->category }}-tab"
-    role="tab" aria-controls="nav-{{ $item->category }}" aria-selected="false">
+      role="tab" aria-controls="nav-{{ $item->category }}" aria-selected="false">
+      @if($item->category==='unit_work')
+      <i class="fas fa-home text-primary"></i>
+      @elseif($item->category==='hrr_violations')
+      <i class="fas fa-users text-primary"></i>
+      @elseif($item->category==='contract')
+      <i class="fas fa-file-alt text-primary"></i>
+      @elseif($item->category==='remittance')
+      <i class="fas fa-hand-holding-usd text-primary"></i>
+      @else
+      <i class="fas fa-file-invoice-dollar text-primary"></i>
+      @endif
 
-    <i class="fas fa-toolbox text-primary"></i>
-
-    {{ $item->category }} <span class="badge badge-primary badge-counter">{{ $item->count }}</span></a>
+      {{ $item->category }} <span class="badge badge-primary badge-counter">{{ $item->count }}</span></a>
     @endforeach
   </div>
 </nav>
