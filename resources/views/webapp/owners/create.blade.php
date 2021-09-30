@@ -171,9 +171,9 @@
           </div>
         </div>
 
-        <div class="form-group col-md-11 mx-auto">
+        <div class="form-group col-md-12 mx-auto">
           <button type="submit" form="createOwnerForm" class="btn btn-primary btn-block"
-            onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+            onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
           <br>
           <p class="text-center">
             <a class="text-center text-dark"

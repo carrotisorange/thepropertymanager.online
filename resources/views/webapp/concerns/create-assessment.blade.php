@@ -49,7 +49,7 @@
                                 {{ $item->personnel_availability }}</option>
                             @endforeach
                         </select>
-                        @if(!$personnels)
+                        @if(!$personnels->count())
                         <small class="text-danger">
                            No available personnels. Please click <a target="_blank" href="/property/{{ Session::get('property_id') }}/personnels">here</a> to add one and refresh this page.
                         </small>

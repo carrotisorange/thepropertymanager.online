@@ -28,7 +28,7 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                            <label for="">Scheduled on:</label>
+                            <label for="">Start on:</label>
                             <input name="scheduled_at" form="createConcernForm" value="{{ old('scheduled_at')?old('scheduled_at'):$concern->scheduled_at }}" class="form-control"
                                 type="date" required>
                             @error('scheduled_at')
@@ -38,7 +38,7 @@
                             @enderror
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="">Ended on:</label>
+                            <label for="">End on:</label>
                             <input name="ended_on" form="createConcernForm" value="{{ old('ended_on')?old('ended_on'):$concern->ended_on }}" class="form-control"
                                 type="date" required>
                             @error('ended_on')

@@ -11,6 +11,7 @@ use App\Notification;
 use App\User;
 use App\Personnel;
 use App\Bill;
+use App\Owner;
 
 class ConcernController extends Controller
 {
@@ -352,9 +353,13 @@ class ConcernController extends Controller
         {
             $room = Unit::findOrFail($unit_id);
 
-            $tenant = Tenant::findOrFail($tenant_id);
-
             $concern = Concern::findOrFail($concern_id);
+            
+            if($concern->concern_tenant_id){
+                $tenant = Tenant::findOrFail($tenant_id);
+            }else{
+                $tenant = Owner::findOrFail($tenant_id);
+            }
 
             $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
@@ -406,9 +411,14 @@ class ConcernController extends Controller
 
             $room = Unit::findOrFail($unit_id);
 
-            $tenant = Tenant::findOrFail($tenant_id);
-
             $concern = Concern::findOrFail($concern_id);
+            
+             if($concern->concern_tenant_id){
+             $tenant = Tenant::findOrFail($tenant_id);
+             }else{
+             $tenant = Owner::findOrFail($tenant_id);
+             }
+
 
             $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
@@ -465,9 +475,13 @@ class ConcernController extends Controller
 
           $room = Unit::findOrFail($unit_id);
 
-          $tenant = Tenant::findOrFail($tenant_id);
-
           $concern = Concern::findOrFail($concern_id);
+
+           if($concern->concern_tenant_id){
+           $tenant = Tenant::findOrFail($tenant_id);
+           }else{
+           $tenant = Owner::findOrFail($tenant_id);
+           }
 
            return view('webapp.concerns.create-materials', compact('particulars','materials',
            'room','tenant','concern'));
@@ -482,6 +496,13 @@ class ConcernController extends Controller
       'total_cost' => 'required',
       ]);
 
+       Concern::where('concern_id', $concern_id)
+       ->update(
+       [
+       'status' => 'waiting for approval',
+       ]
+       );
+
       DB::table('materials_for_concerns')
       ->insert(
       [
@@ -491,7 +512,7 @@ class ConcernController extends Controller
       'total_cost' => $request->total_cost,
       'concern_id_foreign' => $concern_id,
       'created_at' => Carbon::now(),
-      'status' => 'waiting for approval',
+    
       ]
       );
 
@@ -530,6 +551,12 @@ class ConcernController extends Controller
 
         $concern = Concern::findOrFail($concern_id);
 
+            if($concern->concern_tenant_id){
+            $tenant = Tenant::findOrFail($tenant_id);
+            }else{
+            $tenant = Owner::findOrFail($tenant_id);
+            }
+
         if($concern->approved_by_tenant_at && $concern->approved_by_owner_at && $concern->approved_by_manager_at){
             Concern::where('concern_id', $concern_id)
             ->update(
@@ -551,9 +578,7 @@ class ConcernController extends Controller
 
        $room = Unit::findOrFail($unit_id);
 
-       $tenant = Tenant::findOrFail($tenant_id);
-
-       $concern = Concern::findOrFail($concern_id);
+      
 
         return view('webapp.concerns.create-approval', compact('particulars','materials',
         'room','tenant','concern'));

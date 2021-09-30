@@ -177,7 +177,7 @@
       </div>
 
       <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="nav-inventory-tab">
-        @if($inventories)
+        @if($inventories->count())
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/inventory"
             class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
@@ -187,12 +187,12 @@
 
         <div class="table-responsive text-nowrap">
           <table class="table table-hover">
-            @if(!$inventories)
+            @if(!$inventories->count())
             <tr>
               <br><br>
               <p class="text-center">
                 <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/inventory"
-                  class="btn btn-primary"><i class="fas fa-plus"></i> Add an item</a>
+                  class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
               </p>
             </tr>
             @else
@@ -370,7 +370,7 @@
               <br><br>
               <p class="text-center">
                 <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant"
-                  class="btn btn-primary"><i class="fas fa-plus"></i> Add a tenant</a>
+                  class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
               </p>
             </tr>
             @else
@@ -475,7 +475,7 @@
             <br><br>
             <p class="text-center">
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/concern"
-                class="btn btn-primary"><i class="fas fa-plus"></i> Report a concern</a>
+                class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
             </p>
 
             @else
@@ -525,23 +525,23 @@
                   <td>
                     @if($item->concern_status === 'pending')
                     <a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/assessment/"><i
                         class="fas fa-eye"></i> View</a>
                     @elseif($item->concern_status === 'assessed')
                     <a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/scope_of_work/"><i
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/scope_of_work/"><i
                         class="fas fa-eye"></i> View</a>
                     @elseif($item->concern_status === 'waiting for approval')
                     <a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/approval/"><i
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/approval/"><i
                         class="fas fa-eye"></i> View</a>
                     @elseif($item->concern_status === 'request for purchase')
                     <a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/materials/"><i
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/materials/"><i
                         class="fas fa-eye"></i> View</a>
                     @elseif($item->concern_status === 'approved')
                     <a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/payment-options/"><i
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/payment-options/"><i
                         class="fas fa-eye"></i> View</a>
                     
                     @endif
@@ -573,7 +573,7 @@
         <br><br>
         <p class="text-center">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner"
-            class="btn btn-primary"><i class="fas fa-plus"></i> Add an owner</a>
+            class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
         </p>
         @else
         <div class="table-responsive text-nowrap">
