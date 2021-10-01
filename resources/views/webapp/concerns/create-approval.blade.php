@@ -111,7 +111,7 @@
 
                         <p class="text-center">
                             <a class="text-center text-dark"
-                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/materials">Back</a>
+                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/materials">Back</a>
                         </p>
                     </div>
                 </div>

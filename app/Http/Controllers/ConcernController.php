@@ -516,7 +516,7 @@ class ConcernController extends Controller
       );
 
       //get the last added bill no of the property
-       $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+       return $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
        ->max('bill_no') + 1;
 
        $concern = Concern::findOrFail($concern_id);
@@ -525,6 +525,7 @@ class ConcernController extends Controller
       Bill::create([
       'bill_no' => $current_bill_no,
       'bill_tenant_id' => $tenant_id,
+      'bill_unit_id' => $room_id,
       'date_posted' => Carbon::now(),
       'particular_id_foreign' => '20',
       'amount'=> $request->total_cost,
@@ -533,6 +534,7 @@ class ConcernController extends Controller
       Bill::create([
       'bill_no' => $current_bill_no,
       'bill_owner_id' => $tenant_id,
+      'bill_unit_id' => $room_id,
       'date_posted' => Carbon::now(),
       'particular_id_foreign' => '20',
       'amount'=> $request->total_cost,

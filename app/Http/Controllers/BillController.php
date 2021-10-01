@@ -62,23 +62,32 @@ class BillController extends Controller
 
         if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
             if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){ 
-                $bills = DB::table('contracts')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('bills', 'tenant_id', 'bill_tenant_id')
+                $bills = DB::table('bills')
+                ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
+                ->leftJoin('units', 'unit_id', 'bill_unit_id')
+                ->leftJoin('owners', 'owner_id', 'bill_owner_id')
                 ->join('particulars','particular_id_foreign', 'particular_id')
-                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('units.property_id_foreign', Session::get('property_id'))
                 ->whereNull('deleted_at')
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
-                ->get();   
+                ->get();
+                // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+                // ->join('units', 'unit_id_foreign', 'unit_id')
+                // ->join('bills', 'tenant_id', 'bill_tenant_id')
+                // ->join('particulars','particular_id_foreign', 'particular_id')
+                // ->where('property_id_foreign', Session::get('property_id'))
+                // ->whereNull('deleted_at')
+                // ->orderBy('date_posted', 'desc')
+                // ->groupBy('bill_id')
+                // ->get();   
             }else{
-                $bills = DB::table('contracts')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('bills', 'unit_id', 'bill_unit_id')
+                $bills = DB::table('bills')
+                ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
+                ->leftJoin('units', 'unit_id', 'bill_unit_id')
+                ->leftJoin('owners', 'owner_id', 'bill_owner_id')
                 ->join('particulars','particular_id_foreign', 'particular_id')
-                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('units.property_id_foreign', Session::get('property_id'))
                 ->whereNull('deleted_at')
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
@@ -172,6 +181,7 @@ class BillController extends Controller
 
     public function store_tenant_bill(Request $request, $property_id, $tenant_id){
 
+        return 'asd';
 
         $request->validate([
             'particular_id_foreign' => 'required',
@@ -181,12 +191,9 @@ class BillController extends Controller
          ]);
  
            //get the last added bill no of the property
-           $current_bill_no = DB::table('contracts')
-           ->join('units', 'unit_id_foreign', 'unit_id')
-           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-           ->join('bills', 'tenant_id', 'bill_tenant_id')
-           ->where('property_id_foreign', Session::get('property_id'))
-           ->max('bill_no') + 1;  
+          $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+          ->max('bill_no') + 1;
+
 
          if($request->particular_id_foreign === '18'){
          $bill_amount = $request->amount * -1;
@@ -323,12 +330,8 @@ class BillController extends Controller
         ]);
 
         //get the last added bill no of the property
-         $current_bill_no = DB::table('contracts')
-         ->join('units', 'unit_id_foreign', 'unit_id')
-         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-         ->join('bills', 'tenant_id', 'bill_tenant_id')
-         ->where('property_id_foreign', Session::get('property_id'))
-         ->max('bill_no') + 1;  
+        $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+        ->max('bill_no') + 1;
 
          //$tenants = Tenant::where('bill_batch_no', $batch_no)->count();
 
@@ -420,7 +423,7 @@ class BillController extends Controller
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
-        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('units.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
         ->where('contracts.status', 'active')
         ->get();
@@ -497,13 +500,14 @@ class BillController extends Controller
 
     public function store_bulk_bills(Request $request, $property_id, $particular_id, $batch_no){
 
+
         $particular = Particular::findOrFail($particular_id);
 
         $bills = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
-        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('units.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
         ->get();
 
@@ -519,17 +523,18 @@ class BillController extends Controller
                 'end' => $request->input('end'.$i),
                 'date_posted' => Carbon::now(),
                 'bill_unit_id' => $request->input('room_id'.$i),
+                'property_id_foreign' => Session::get('property_id')
             ]);
             }
         }
 
-         Bill::where('amount', 0)->delete();
+         Bill::where('amount','=', 0)->delete();
 
          $posted_bills = DB::table('contracts')
          ->join('units', 'unit_id_foreign', 'unit_id')
          ->join('tenants', 'tenant_id_foreign', 'tenant_id')
          ->join('bills', 'tenant_id', 'bill_tenant_id')
-         ->where('property_id_foreign', Session::get('property_id'))
+         ->where('units.property_id_foreign', Session::get('property_id'))
          ->where('batch_no', $batch_no)
          ->count();
 

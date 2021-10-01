@@ -625,20 +625,10 @@ class TenantController extends Controller
             ->orderBy('payment_created', 'desc')
             ->get();
        
-              if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-                $current_bill_no = DB::table('units')
-                ->join('bills', 'unit_id', 'bill_unit_id')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->max('bill_no') + 1;
-        
-            }else{
-                $current_bill_no = DB::table('contracts')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('bills', 'tenant_id', 'bill_tenant_id')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->max('bill_no') + 1;
-            }     
+             
+            $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+           
 
              $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
             ->join('particulars','particular_id_foreign', 'particular_id')
@@ -712,21 +702,8 @@ class TenantController extends Controller
             
 
             //get the number of last added bills
-         
-            if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-                $current_bill_no = DB::table('units')
-                ->join('bills', 'unit_id', 'bill_unit_id')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->max('bill_no') + 1;
-        
-            }else{
-                $current_bill_no = DB::table('contracts')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('bills', 'tenant_id', 'bill_tenant_id')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->max('bill_no') + 1;
-            }     
+            $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
 
             //count the number of payments made
             $payments = DB::table('payments')
@@ -776,20 +753,9 @@ class TenantController extends Controller
     
             //get the number of last added bills
 
-            if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-                $current_bill_no = DB::table('units')
-                ->join('bills', 'unit_id', 'bill_unit_id')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->max('bill_no') + 1;
-        
-            }else{
-                $current_bill_no = DB::table('contracts')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('bills', 'tenant_id', 'bill_tenant_id')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->max('bill_no') + 1;
-            }     
+            $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
+
 
             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id') 
             ->selectRaw('* ,bills.amount - IFNULL(sum(payments.amt_paid),0) as balance')
@@ -908,20 +874,9 @@ class TenantController extends Controller
 
         //get the number of last added bills
 
-        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-            $current_bill_no = DB::table('units')
-            ->join('bills', 'unit_id', 'bill_unit_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->max('bill_no') + 1;
-    
-        }else{
-            $current_bill_no = DB::table('contracts')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->max('bill_no') + 1;
-        }     
+       $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+       ->max('bill_no') + 1;
+  
 
         for($i = 1; $i<$no_of_charges; $i++){
             DB::table('bills')->insert(
@@ -987,20 +942,9 @@ class TenantController extends Controller
         $renewal_history = Tenant::findOrFail($tenant_id);
 
   
-        if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-            $current_bill_no = DB::table('units')
-            ->join('bills', 'unit_id', 'bill_unit_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->max('bill_no') + 1;
-    
-        }else{
-            $current_bill_no = DB::table('contracts')
-            ->join('units', 'unit_id_foreign', 'unit_id')
-            ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
-            ->max('bill_no') + 1;
-        }     
+      $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+      ->max('bill_no') + 1;
+
 
         //retrieve the number of dynamically created.
         $no_of_items = (int) $request->no_of_items; 
