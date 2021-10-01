@@ -14,7 +14,7 @@
     </div>
 </div>
 <form id="createConcernForm"
-    action="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $tenant->tenant_id }}/concer/{{ $concern->concern_id }}/store/scope_of_work"
+    action="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/store/scope_of_work"
     method="POST">
     @csrf
     @method('PUT')

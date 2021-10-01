@@ -93,7 +93,7 @@
             <th>Urgency</th>
             <th>Status</th>
             <th>Endorsed to</th>
-            <th></th>
+            <th colspan="2" class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -144,27 +144,41 @@
 
             <td>
               @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
-                @if($item->concern_status === 'pending')
-                <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/assessment/"
-                  target="_blank"><i class="fas fa-eye"></i> View</a>
-                @elseif($item->concern_status === 'assessed')
-                <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/scope_of_work/"
-                  target="_blank"><i class="fas fa-eye"></i> View</a>
-                @elseif($item->concern_status === 'waiting for approval')
-                <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/approval/"
-                  target="_blank"><i class="fas fa-eye"></i> View</a>
-                @elseif($item->concern_status === 'request for purchase')
-                <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/materials/"
-                  target="_blank"><i class="fas fa-eye"></i> View</a>
-                @elseif($item->concern_status === 'approved')
-                <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/payment-options/"
-                  target="_blank"><i class="fas fa-eye"></i> View</a>
-                @endif
-                 @else
+              @if($item->concern_status === 'pending')
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/assessment/"
+                target="_blank"><i class="fas fa-eye"></i> View</a>
+              @elseif($item->concern_status === 'assessed')
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/scope_of_work/"
+                target="_blank"><i class="fas fa-eye"></i> View</a>
+              @elseif($item->concern_status === 'waiting for approval')
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/approval/"
+                target="_blank"><i class="fas fa-eye"></i> View</a>
+              @elseif($item->concern_status === 'request for purchase')
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/materials/"
+                target="_blank"><i class="fas fa-eye"></i> View</a>
+              @elseif($item->concern_status === 'approved')
+              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/payment-options/"
+                target="_blank"><i class="fas fa-eye"></i> View</a>
+              @endif
+              @else
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/communications/"
                 target="_blank"><i class="fas fa-eye"></i> View</a>
               @endif
             </td>
+            <td>
+              @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
+                @if($item->approved_by_tenant_at && $item->approved_by_owner_at && $item->approved_by_manager_at)
+                <a href="#/"><i class="fas fa-check"></i> NA</a>
+                @else
+                <a
+                  href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/approve/"><i
+                    class="fas fa-check"></i> Approve</a>
+                @endif
+              @else
+
+              @endif
+            </td>
+
 
           </tr>
           @endforeach
@@ -266,7 +280,7 @@
               @else
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/communications/"
                 target="_blank"><i class="fas fa-eye"></i> View</a>
-                @endif
+              @endif
             </td>
 
           </tr>
@@ -374,7 +388,7 @@
               @else
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/communications/"
                 target="_blank"><i class="fas fa-eye"></i> View</a>
-                @endif
+              @endif
             </td>
 
           </tr>

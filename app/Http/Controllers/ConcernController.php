@@ -376,7 +376,6 @@ class ConcernController extends Controller
 
             public function store_assessment(Request $request, $property_id, $unit_id, $tenant_id, $concern_id)
             {
-       
 
             $request->validate([
                 'assessed_by_id' => 'required',
@@ -414,9 +413,9 @@ class ConcernController extends Controller
             $concern = Concern::findOrFail($concern_id);
             
              if($concern->concern_tenant_id){
-             $tenant = Tenant::findOrFail($tenant_id);
+                $tenant = Tenant::findOrFail($tenant_id);
              }else{
-             $tenant = Owner::findOrFail($tenant_id);
+                $tenant = Owner::findOrFail($tenant_id);
              }
 
 
@@ -517,13 +516,12 @@ class ConcernController extends Controller
       );
 
       //get the last added bill no of the property
-      $current_bill_no = DB::table('contracts')
-      ->join('units', 'unit_id_foreign', 'unit_id')
-      ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-      ->join('bills', 'tenant_id', 'bill_tenant_id')
-      ->where('property_id_foreign', Session::get('property_id'))
-      ->max('bill_no') + 1;
+       $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+       ->max('bill_no') + 1;
 
+       $concern = Concern::findOrFail($concern_id);
+
+      if($concern->concern_tenant_id){
       Bill::create([
       'bill_no' => $current_bill_no,
       'bill_tenant_id' => $tenant_id,
@@ -531,6 +529,15 @@ class ConcernController extends Controller
       'particular_id_foreign' => '20',
       'amount'=> $request->total_cost,
       ]);
+      }else{
+      Bill::create([
+      'bill_no' => $current_bill_no,
+      'bill_owner_id' => $tenant_id,
+      'date_posted' => Carbon::now(),
+      'particular_id_foreign' => '20',
+      'amount'=> $request->total_cost,
+      ]);
+      }
 
 
           return
@@ -588,9 +595,13 @@ class ConcernController extends Controller
 
                $room = Unit::findOrFail($room_id);
 
-               $tenant = Tenant::findOrFail($tenant_id);
-
                $concern = Concern::findOrFail($concern_id);
+
+               if($concern->concern_tenant_id){
+               $tenant = Tenant::findOrFail($tenant_id);
+               }else{
+               $tenant = Owner::findOrFail($tenant_id);
+               }
 
             return view('webapp.concerns.create-payment-options', compact('room','tenant','concern'));
 

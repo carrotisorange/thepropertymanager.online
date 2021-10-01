@@ -14,8 +14,7 @@ class AddPropertyIdToPayableEntryTable extends Migration
     public function up()
     {
         Schema::table('entry', function (Blueprint $table) {
-            $table->uuid('property_id_foreign')->nullable();
-            $table->foreign('property_id_foreign')->references('property_id')->on('properties')->onDelete('cascade');
+          ;
         });
     }
 

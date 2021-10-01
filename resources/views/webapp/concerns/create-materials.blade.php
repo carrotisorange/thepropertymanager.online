@@ -20,7 +20,7 @@
             <div class="card-body">
            <div class="form-row">
                <form id="createBillForm"
-                        action="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $concern->concern_id }}/store/materials"
+                        action="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/store/materials"
                         method="POST">
                         @csrf
                     </form>
@@ -115,7 +115,7 @@
                     <div class="form-group col-md-12 mx-auto">
                       <p class="text-center">
                         <a class="btn btn-block btn-primary"
-                        href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $tenant->tenant_id }}/concern/{{ $concern->concern_id }}/approval">Next</a>
+                        href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/approval">Next</a>
                       </p>
                         
                         <p class="text-center">

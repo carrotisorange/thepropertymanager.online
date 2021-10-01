@@ -280,12 +280,12 @@ Route::post('/property/{property_id}/room/{unit_id}/store/concern', 'ConcernCont
 //route to show all concerns of a unit
 Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/assessment', 'ConcernController@create_assessment');
 //route to store concern assessment
-Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concer/{concern_id}/store/assessment', 'ConcernController@store_assessment');
+Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/assessment', 'ConcernController@store_assessment');
 //route to show all concerns of a unit
 Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/scope_of_work',
 'ConcernController@create_scope_of_work');
 //route to store concern assessment
-Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concer/{concern_id}/store/scope_of_work',
+Route::put('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/scope_of_work',
 'ConcernController@store_scope_of_work');
 //route to show all concerns of a unit
 Route::get('/property/{property_id}/room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/materials',
