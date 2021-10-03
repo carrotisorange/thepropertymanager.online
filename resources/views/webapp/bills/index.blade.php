@@ -167,7 +167,7 @@
       </div>
       <div class="modal-footer">
         <button type="submit" form="particular" class="btn btn-primary btn-block"
-          onclick="this.form.submit(); this.disabled = true;"> Create</button>
+          onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>  Submit</button>
       </div>
     </div>
   </div>

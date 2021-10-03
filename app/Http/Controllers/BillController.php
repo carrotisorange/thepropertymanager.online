@@ -72,15 +72,7 @@ class BillController extends Controller
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
                 ->get();
-                // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                // ->join('units', 'unit_id_foreign', 'unit_id')
-                // ->join('bills', 'tenant_id', 'bill_tenant_id')
-                // ->join('particulars','particular_id_foreign', 'particular_id')
-                // ->where('property_id_foreign', Session::get('property_id'))
-                // ->whereNull('deleted_at')
-                // ->orderBy('date_posted', 'desc')
-                // ->groupBy('bill_id')
-                // ->get();   
+               
             }else{
                 $bills = DB::table('bills')
                 ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
@@ -100,54 +92,6 @@ class BillController extends Controller
         }
           
 
-        // if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){
-        //     if($search  === null){
-        //         $bills = DB::table('contracts')
-        //         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //         ->join('units', 'unit_id_foreign', 'unit_id')
-        //         ->join('bills', 'unit_id', 'bill_tenant_id')
-        //         ->join('particulars','particular_id_foreign', 'particular_id')
-        //         ->where('property_id_foreign', Session::get('property_id'))
-        //         ->orderBy('date_posted', 'desc')
-        //         ->groupBy('bill_id')
-        //         ->havingRaw('amount != 0')
-        //         ->get();                 
-        //       }else{
-        //          $bills = DB::table('contracts')
-        //         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //         ->join('units', 'unit_id_foreign', 'unit_id')
-        //         ->join('bills', 'unit_id', 'bill_unit_id')
-        //         ->join('particulars','particular_id_foreign', 'particular_id')
-        //         ->where('property_id_foreign', Session::get('property_id'))
-        //         ->where('date_posted', $search)
-        //         ->orderBy('date_posted', 'desc')
-        //         ->groupBy('bill_id')
-        //         ->havingRaw('amount != 0')
-        //         ->get();
-        //     }
-       
-        // }else{
-        //     if($search  === null){
-        //         $bills = DB::table('contracts')
-        //         ->join('units', 'unit_id_foreign', 'unit_id')
-        //         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //         ->join('bills', 'tenant_id', 'bill_tenant_id')
-        //         ->join('particulars','particular_id_foreign', 'particular_id')
-        //         ->where('property_id_foreign', Session::get('property_id'))
-        //         ->get();
-                           
-        //       }else{
-        //         $bills = DB::table('contracts')
-        //         ->join('units', 'unit_id_foreign', 'unit_id')
-        //         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //         ->join('bills', 'tenant_id', 'bill_tenant_id')
-        //         ->join('particulars','particular_id_foreign', 'particular_id')
-        //         ->where('property_id_foreign', Session::get('property_id'))
-        //         ->where('date_posted', $search)
-        //         ->get();
-               
-        //     }
-        // }
        
     }
 
@@ -159,11 +103,13 @@ class BillController extends Controller
         ->orderBy('particular', 'asc')
         ->get();
 
-        // $bills = Bill::join('particulars','particular_id_foreign', 'particular_id')
-        // ->where('bill_tenant_id', $tenant_id)
-        // ->groupBy('bill_id')
-        // ->orderBy('bill_no', 'desc')
-        // ->get();
+        $rooms = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.status as contract_status', 'contracts.term as contract_term')
+        ->where('tenant_id', $tenant_id)
+        ->orderBy('contracts.created_at', 'desc')
+        ->get();
 
          $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
           ->join('particulars','particular_id_foreign', 'particular_id')
@@ -176,18 +122,17 @@ class BillController extends Controller
 
         $tenant = Tenant::findOrFail($tenant_id);
 
-        return view('webapp.bills.create-tenant-bill', compact('particulars','bills','tenant'));
+        return view('webapp.bills.create-tenant-bill', compact('particulars','bills','tenant', 'rooms'));
     }
 
     public function store_tenant_bill(Request $request, $property_id, $tenant_id){
-
-        return 'asd';
 
         $request->validate([
             'particular_id_foreign' => 'required',
             'amount' => 'required',
             'start' => 'required',
-            'end' => 'required'
+            'end' => 'required',
+            'bill_unit_id' => 'required'
          ]);
  
            //get the last added bill no of the property
@@ -211,6 +156,8 @@ class BillController extends Controller
              'amount'=> $bill_amount,
              'start' => $request->start, 
              'end' => $request->end,
+             'property_id_foreign' => Session::get('property_id'),
+             'bill_unit_id' => $request->bill_unit_id
          ]);
 
         $particulars = DB::table('particulars')
@@ -352,69 +299,12 @@ class BillController extends Controller
                 'amount'=> '0',
                 'start' => Carbon::now()->startOfMonth(), 
                 'end' => Carbon::now()->endOfMonth(), 
+                'property_id_foreign' => Session::get('property_id')
             ]);
          }
         }
 
         return redirect('/property/'.Session::get('property_id').'/create/bill/'.$particular->particular_id.'/batch/'.$batch_no);
-
-
-        // $updated_start = $request->start;
-        // $updated_end = $request->end;
-
-
-
-        //return view('webapp.bills.create.create-bulk', compact('bills','particular','property_bill','updated_start','updated_end'));
-        
- 
-
-        // if($request->options == 'true'){
-        //     if($request->bill_id == '2'){
-        //          DB::table('property_bills')
-        //         ->where('particular_id_foreign', $bill_id)
-        //         ->update(
-        //             [
-        //                 'rate' => $request->water_rate
-        //             ]
-        //         );
-        //     }else{
-        //         if($request->bill_id == '3'){
-        //              DB::table('property_bills')
-        //             ->where('particular_id_foreign', $bill_id)
-        //             ->update(
-        //                 [
-        //                     'rate' => $request->electric_rate
-        //                 ]
-        //             );
-        //     }
-        // }
-    
-        // }else{
-       
-        //     $selected_particular = explode("-", $request->particular_id);
-
-        //      $particular_id = $selected_particular[0];
-        //     $property_bill_id =  $selected_particular[1];
-        
-        //      $particular = Particular::findOrFail($particular_id);
-
-        //     $property_bill = PropertyBill::findOrFail($property_bill_id);
-        // }
-        
-        // if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-        //     $current_bill_no = DB::table('units')
-        //     ->join('bills', 'unit_id', 'bill_unit_id')
-        //     ->where('property_id_foreign', Session::get('property_id'))
-        //     ->max('bill_no') + 1;
-
-        // }else{
-        //     $current_bill_no = DB::table('contracts')
-        //     ->join('units', 'unit_id_foreign', 'unit_id')
-        //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        //     ->join('bills', 'tenant_id', 'bill_tenant_id')
-        //     ->where('property_id_foreign', Session::get('property_id'))
-        //     ->max('bill_no') + 1;
-        // }
     }
 
     public function show_bulk($property_id, $particular_id, $batch_no){
@@ -500,9 +390,10 @@ class BillController extends Controller
 
     public function store_bulk_bills(Request $request, $property_id, $particular_id, $batch_no){
 
-
+        //get the info of the selected particular
         $particular = Particular::findOrFail($particular_id);
 
+        //get all the created bills
         $bills = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -511,30 +402,34 @@ class BillController extends Controller
         ->where('batch_no', $batch_no)
         ->get();
 
+        //get the last id in the bills table 
         $bills_count = Bill::all()->max('bill_id');
 
         for ($i=1; $i<=$bills_count ; $i++) { 
             if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
-        
-            Bill::where('bill_id', $request->input('bill_id'.$i))
-            ->update([
+                Bill::where('bill_id', $request->input('bill_id'.$i))
+                ->update([
                 'amount' => $request->input('amount'.$i),
                 'start' => $request->input('start'.$i),
                 'end' => $request->input('end'.$i),
                 'date_posted' => Carbon::now(),
                 'bill_unit_id' => $request->input('room_id'.$i),
-                'property_id_foreign' => Session::get('property_id')
-            ]);
-            }
+                ]);
+                }
         }
 
-         Bill::where('amount','=', 0)->delete();
+        //delete bills with 0 values
+          Bill::where('amount', 0)
+         ->where('batch_no', $batch_no)
+         ->delete();
 
+         //get the count of posted bills
          $posted_bills = DB::table('contracts')
          ->join('units', 'unit_id_foreign', 'unit_id')
          ->join('tenants', 'tenant_id_foreign', 'tenant_id')
          ->join('bills', 'tenant_id', 'bill_tenant_id')
          ->where('units.property_id_foreign', Session::get('property_id'))
+         ->whereNull('deleted_at')
          ->where('batch_no', $batch_no)
          ->count();
 

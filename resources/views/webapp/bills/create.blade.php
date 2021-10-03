@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-11 py-3 mx-auto">
+  <div class="col-md-12 py-3 mx-auto">
     <div class="card">
       <div class="card-body">
         <div class="form-row">

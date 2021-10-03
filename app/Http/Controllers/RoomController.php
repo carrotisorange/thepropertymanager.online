@@ -209,6 +209,8 @@ class RoomController extends Controller
            ->whereNotIn('user_type' ,['tenant', 'owner', 'dev'])
            ->get();
 
+         
+
             $home = Unit::findOrFail($unit_id);
         
             $owners = DB::table('certificates')
