@@ -20,6 +20,7 @@ use App\Notification;
 use App\Particular; 
 use App\PropertyBill;
 use Uuid;
+use App\Notif;
 
 class BillController extends Controller
 {
@@ -232,8 +233,9 @@ class BillController extends Controller
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('bills', 'tenant_id', 'bill_tenant_id')
                 ->join('particulars','particular_id_foreign', 'particular_id')
-                ->where('property_id_foreign', Session::get('property_id'))
+                ->where('bills.property_id_foreign', Session::get('property_id'))
                 ->where('particular_id_foreign', $request->particular)
+                    ->whereNull('deleted_at')
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
                 ->havingRaw('amount != 0')
@@ -244,8 +246,9 @@ class BillController extends Controller
                     ->join('units', 'unit_id_foreign', 'unit_id')
                     ->join('bills', 'unit_id', 'bill_unit_id')
                     ->join('particulars','particular_id_foreign', 'particular_id')
-                    ->where('property_id_foreign', Session::get('property_id'))
+                    ->where('bills.property_id_foreign', Session::get('property_id'))
                     ->where('particular_id_foreign', $request->particular)
+                        ->whereNull('deleted_at')
                     ->orderBy('date_posted', 'desc')
                     ->groupBy('bill_id')
                     ->havingRaw('amount != 0')
@@ -278,6 +281,7 @@ class BillController extends Controller
 
         //get the last added bill no of the property
         $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+        ->whereNull('deleted_at')
         ->max('bill_no') + 1;
 
          //$tenants = Tenant::where('bill_batch_no', $batch_no)->count();
@@ -316,6 +320,7 @@ class BillController extends Controller
         ->where('units.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
         ->where('contracts.status', 'active')
+        ->whereNull('deleted_at')
         ->get();
 
         $particular = Particular::findOrFail($particular_id);
@@ -402,6 +407,12 @@ class BillController extends Controller
         ->where('batch_no', $batch_no)
         ->get();
 
+        //get the last added bill no of the property
+         $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+        ->where('batch_no', $batch_no)
+        ->whereNotNull('deleted_at')
+        ->max('bill_no') + 1;
+
         //get the last id in the bills table 
         $bills_count = Bill::all()->max('bill_id');
 
@@ -409,6 +420,7 @@ class BillController extends Controller
             if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
                 Bill::where('bill_id', $request->input('bill_id'.$i))
                 ->update([
+                'bill_no' => $current_bill_no++,
                 'amount' => $request->input('amount'.$i),
                 'start' => $request->input('start'.$i),
                 'end' => $request->input('end'.$i),
@@ -420,7 +432,6 @@ class BillController extends Controller
 
         //delete bills with 0 values
           Bill::where('amount', 0)
-         ->where('batch_no', $batch_no)
          ->delete();
 
          //get the count of posted bills
@@ -1210,19 +1221,22 @@ DB::table('properties')
      */
     public function destroy($bill_id)
     {
-        // $notification = new Notification();
-        // $notification->user_id_foreign = Auth::user()->id;
-        // $notification->property_id_foreign = Session::get('property_id');
-        // $notification->type = 'bill';
+        $bill = Bill::findOrFail($bill_id);
+
         
-        // $notification->message = Auth::user()->name.' deletes '. $tenant->first_name.' '.$tenant->last_name.' bills.';
-        // $notification->save();
+        $notification = new Notif();
+        $notification->user_id_foreign = Auth::user()->id;
+        $notification->property_id_foreign = Session::get('property_id');
+        $notification->type = 'bill';
+        $notification->message = Auth::user()->name.' deletes bill # '. $bill->bill_no;
+        $notification->save();
                     
-        //  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        Bill::find($bill_id)->delete();
+       
+         Bill::find($bill_id)->delete();
 
-        return back()->with('success', 'Bill is deleted successfully.');
+        return back()->with('success', 'Bill # '.$bill->bill_no.' is deleted successfully.');
     }
 
     public function export($property_id,$tenant_id)

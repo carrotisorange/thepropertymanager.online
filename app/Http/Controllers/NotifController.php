@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Notif;
 use Illuminate\Http\Request;
+use Session;
+use DB;
 
 class NotifController extends Controller
 {
@@ -14,7 +16,16 @@ class NotifController extends Controller
      */
     public function index()
     {
-        //
+        Session::put('current-page', 'audit-trails');
+
+        $notifs = DB::table('notifs')
+        ->join('users', 'user_id_foreign', 'id')
+        ->join('properties', 'property_id_foreign', 'property_id')
+        ->select('*', 'notifs.type as action_type', 'users.name as user_name', 'notifs.created_at as triggered_at')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->get();
+
+        return view('webapp.notifs.index', compact('notifs'));
     }
 
     /**

@@ -322,6 +322,9 @@ Route::get('/units/{unit_id}/tenants/{tenant_id}/concerns/{concern_id}', 'Concer
 //update concerns
 Route::put('/concerns/{concern_id}', 'ConcernController@update');
 
+//ROUTES FOR NOTIFCONTROLLER
+Route::get('/property/{property_id}/audit-trails', 'NotifController@index')->name('show-all-audit-trails');
+
 //ROUTES FOR BillController
 
 //routes for tenants' bills
