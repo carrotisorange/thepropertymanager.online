@@ -1,6 +1,6 @@
 @extends('layouts.argon.main')
 
-@section('title', 'Usage History')
+@section('title', 'Audit Trails')
 
 @section('css')
 <style>
@@ -28,6 +28,7 @@
                 <th>User</th>
                 <th>Action</th>
                 <th>Details</th>
+                <th>Amount</th>
                 <th>Triggered on</th>
             </tr>
         </thead>
@@ -38,6 +39,7 @@
                 <td>{{ $item->user_name }}</td>
                 <td>{{ $item->action_type }}</td>
                 <td>{{ $item->message }}</td>
+                <td>{{ $item->amount }}</td>
                 <td>{{ $item->triggered_at }}</td>
                 </td> 
             </tr>

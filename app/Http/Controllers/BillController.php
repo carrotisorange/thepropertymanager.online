@@ -313,14 +313,15 @@ class BillController extends Controller
 
     public function show_bulk($property_id, $particular_id, $batch_no){
 
-         $bills = DB::table('contracts')
+        $bills = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('units.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
+        ->whereNull('bills.deleted_at')
         ->where('contracts.status', 'active')
-        ->whereNull('deleted_at')
+        ->orderBy('unit_no')
         ->get();
 
         $particular = Particular::findOrFail($particular_id);
@@ -405,22 +406,31 @@ class BillController extends Controller
         ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('units.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
+
+
+        
+        // ->join('units', 'unit_id_foreign', 'unit_id')
+        // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        // ->join('bills', 'tenant_id', 'bill_tenant_id')
+        // ->where('units.property_id_foreign', Session::get('property_id'))
+        // ->where('batch_no', $batch_no)
         ->get();
 
         //get the last added bill no of the property
-         $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
-        ->where('batch_no', $batch_no)
-        ->whereNotNull('deleted_at')
-        ->max('bill_no') + 1;
+        //$current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+        //->where('batch_no', $batch_no)
+        // ->whereNotNull('deleted_at')
+        //->max('bill_no') + 1;
 
         //get the last id in the bills table 
-        $bills_count = Bill::all()->max('bill_id');
+      $bills_count = Bill::where('batch_no', $batch_no)
+      ->max('bill_id')+1;
 
-        for ($i=1; $i<=$bills_count ; $i++) { 
+        for ($i=1; $i<=$bills_count; $i++) { 
             if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
                 Bill::where('bill_id', $request->input('bill_id'.$i))
                 ->update([
-                'bill_no' => $current_bill_no++,
+                // 'bill_no' => $current_bill_no++,
                 'amount' => $request->input('amount'.$i),
                 'start' => $request->input('start'.$i),
                 'end' => $request->input('end'.$i),
@@ -430,7 +440,7 @@ class BillController extends Controller
                 }
         }
 
-        //delete bills with 0 values
+       //delete bills with 0 values
           Bill::where('amount', 0)
          ->delete();
 
@@ -443,6 +453,12 @@ class BillController extends Controller
          ->whereNull('deleted_at')
          ->where('batch_no', $batch_no)
          ->count();
+
+         $batch_no = $batch_no;
+
+        //return view('webapp.bills.show-bulk',compact('bills', 'particular','batch_no'));
+
+        //return back()->with('success', ($posted_bills).' '.$particular->particular.' bills have been posted!');
 
         return redirect('/property/'.Session::get('property_id').'/bills')->with('success', ($posted_bills).' '.$particular->particular.' bills have been posted!');
 
@@ -1228,6 +1244,7 @@ DB::table('properties')
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'bill';
+        $notification->amount = $bill->amount;
         $notification->message = Auth::user()->name.' deletes bill # '. $bill->bill_no;
         $notification->save();
                     
@@ -1447,8 +1464,7 @@ DB::table('properties')
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
-        $notification->type = 'bill';
-        
+     
         $notification->message = Auth::user()->name.' archives bill '. $billing_id.'.';
         $notification->save();
 
