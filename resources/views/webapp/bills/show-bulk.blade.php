@@ -73,8 +73,15 @@
         <td><input form="createBulkBillsForm" type="date" name="start{{ $start_ctr++ }}" value="{{ $item->start }}">
         </td>
         <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" value="{{ $item->end }}"></td>
-        <td><input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
-            value="{{ $item->amount }}"></td>
+        <td>
+          @if ($particular->particular_id == '1')
+          <input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
+            value="{{ $item->rent }}">
+          @else
+          <input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
+            value="{{ $item->amount }}">
+          @endif
+        </td>
         <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a>
         </td>
       </tr>

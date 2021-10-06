@@ -346,7 +346,7 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('bills.property_id_foreign', Session::get('property_id'))
             ->where('batch_no', $batch_no)
             ->update([
                 'start' => $request->start,
@@ -358,7 +358,7 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('bills.property_id_foreign', Session::get('property_id'))
             ->where('batch_no', $batch_no)
             ->update([
                 'end' => $request->end,
@@ -370,7 +370,7 @@ class BillController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('bills.property_id_foreign', Session::get('property_id'))
             ->where('batch_no', $batch_no)
             ->update([
                 'amount' => $request->amount,
@@ -381,7 +381,7 @@ class BillController extends Controller
         ->join('units', 'unit_id_foreign', 'unit_id')
         ->join('tenants', 'tenant_id_foreign', 'tenant_id')
         ->join('bills', 'tenant_id', 'bill_tenant_id')
-        ->where('property_id_foreign', Session::get('property_id'))
+        ->where('bills.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
         ->get();
 
