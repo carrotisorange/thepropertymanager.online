@@ -43,9 +43,33 @@
                     @enderror
                 </div>
 
+                @if($particular->particular_id == '3')
+                <div class="form-group">
+                    <label>Electricity rate</label>
+                    <input form="optionForm" type="number" step="0.001" class="form-control" name="electricity_rate" id="electric_rate">
+                    @error('electricity_rate')
+                    <small class="text-danger">
+                        {{ $message }}
+                    </small>
+                    @enderror
+                </div>
+                @endif
+
+                @if($particular->particular_id == '2')
+                <div class="form-group">
+                    <label>Water rate</label>
+                    <input form="optionForm" type="number" step="0.001"" class="form-control" name="water_rate" id="water_rate">
+                    @error('water_rate')
+                    <small class="text-danger">
+                        {{ $message }}
+                    </small>
+                    @enderror
+                </div>
+                @endif
+
                 <div class="form-group">
                     <label>Amount</label>
-                    <input form="optionForm" type="number" step="0.01" class="form-control" name="amount" id="amount">
+                    <input form="optionForm" type="number" step="0.01" class="form-control" name="amount" value="{{ $particular->rate }}" id="amount">
                     @error('amount')
                     <small class="text-danger">
                         {{ $message }}
@@ -59,7 +83,8 @@
                     <br>
                     <p class="text-center">
                         <a class="text-center text-danger"
-                            href="/property/{{ Session::get('property_id') }}/create/bill/{{ $particular->particular_id }}/batch/{{ $batch_no }}"><i class="fas fa-times"></i> Cancel</a>
+                            href="/property/{{ Session::get('property_id') }}/create/bill/{{ $particular->particular_id }}/batch/{{ $batch_no }}"><i
+                                class="fas fa-times"></i> Cancel</a>
                     </p>
                 </div>
             </div>

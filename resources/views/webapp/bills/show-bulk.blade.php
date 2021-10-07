@@ -39,11 +39,25 @@
   <table class="table table-responsinve">
     <thead>
       <th>#</th>
-      <th>Bill #</th>
+      {{-- <th>Bill #</th> --}}
       <th>Tenant</th>
       <th>Room</th>
       <th>Start</th>
       <th>End</th>
+      @if($particular->particular_id == '3')
+      <th>Rate  (  /KwH)</th>
+      <th>Prev reading</th>
+      <th>Curr reading</th>
+      <th>Consumption</th>
+      @endif
+
+      @if($particular->particular_id == '2')
+      <th>Rate  (  /CuM)</th>
+      <th>Prev reading</th>
+      <th>Curr reading</th>
+      <th>Consumption</th>
+      @endif
+
       <th>Amount</th>
       <th></th>
     </thead>
@@ -55,6 +69,16 @@
         $amount_ctr = 1;
         $bill_id_ctr =1;
         $room_id_ctr =1;
+        $id_amt = 1;
+        $previous_reading = 1;
+        $current_reading = 1;
+        $consumption = 1;
+        $id_previous_reading = 1;
+        $id_current_reading = 1;
+        $id_consumption = 1;
+        $ctr_previous_reading = 1;
+        $ctr_current_reading = 1;
+        $ctr_consumption = 1;
     ?>
       <form id="createBulkBillsForm"
         action="/property/{{ Session::get('property_id') }}/create/bill/{{ $particular->particular_id }}/batch/{{ $batch_no}}/store"
@@ -65,7 +89,7 @@
       @foreach ($bills as $item)
       <tr>
         <th>{{ $ctr++ }}</th>
-        <td>{{ $item->bill_no }}</td>
+        {{-- <td>{{ $item->bill_no }}</td> --}}
         <td>{{ $item->first_name.' '.$item->last_name }}</td>
         <input form="createBulkBillsForm" type="hidden" name="bill_id{{ $bill_id_ctr++ }}" value="{{ $item->bill_id }}">
         <input form="createBulkBillsForm" type="hidden" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
@@ -73,10 +97,28 @@
         <td><input form="createBulkBillsForm" type="date" name="start{{ $start_ctr++ }}" value="{{ $item->start }}">
         </td>
         <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" value="{{ $item->end }}"></td>
+        @if($particular->particular_id == '3')
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number"
+           
+            value={{ $item->electricity_rate }} step="0.001" class="col-md-12" readonly></th>
+
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number"
+            name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}"
+            value={{ $item->prev_electricity_reading }}></th>
+
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number"
+            name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}"
+            oninput="autoCompute({{ $ctr_current_reading++ }})"></th>
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number" name="consumption{{ $consumption++ }}"
+            id="id_consumption{{ $id_consumption++ }}" value="0" required readonly></th>
+        @endif
         <td>
           @if ($particular->particular_id == '1')
-          <input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
-            value="{{ $item->rent }}">
+          <input form="createBulkBillsForm" type="number" class="col-md-12" name="amount{{ $amount_ctr++ }}"
+            step="0.001" value="{{ $item->amount? $item->amount: $item->rent }}">
+          @elseif ($particular->particular_id == '3')
+          <input form="createBulkBillsForm" type="number" step="0.001" name="amount{{ $amount_ctr++ }}"
+            id="id_amt{{ $id_amt++ }}" value="{{ $item->amount }}">
           @else
           <input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
             value="{{ $item->amount }}">
@@ -118,4 +160,5 @@
         });
   });
 </script>
+
 @endsection

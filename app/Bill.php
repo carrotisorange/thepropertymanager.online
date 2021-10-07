@@ -28,7 +28,13 @@ class Bill extends Model
                             'batch_no',
                             'bill_owner_id',
                             'property_id_foreign',
-                            'bill_unit_id'
+                            'bill_unit_id',
+                            'electricity_rate',
+                            'water_rate',
+                            'prev_water_reading',
+                            'curr_water_reading',
+                            'prev_electricity_reading',
+                            'curr_electricity_reading'
                         ];
 
  public function tenant()

@@ -334,6 +334,7 @@ class BillController extends Controller
     public function options_bulk($property_id, $particular_id, $batch_no){
 
         $particular = Particular::findOrFail($particular_id);
+        
         $batch_no = $batch_no;
 
         return view('webapp.bills.options-bulk', compact('particular', 'batch_no'));
@@ -341,6 +342,7 @@ class BillController extends Controller
 
     public function update_options_bulk(Request $request, $property_id, $particular_id, $batch_no){
 
+        
         if($request->start){
             DB::table('contracts')
             ->join('units', 'unit_id_foreign', 'unit_id')
@@ -376,6 +378,49 @@ class BillController extends Controller
                 'amount' => $request->amount,
             ]);
         }
+
+              if($request->water_rate){
+              DB::table('contracts')
+              ->join('units', 'unit_id_foreign', 'unit_id')
+              ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+              ->join('bills', 'tenant_id', 'bill_tenant_id')
+              ->where('bills.property_id_foreign', Session::get('property_id'))
+              ->where('batch_no', $batch_no)
+              ->update([
+              'water_rate' => $request->water_rate,
+              ]);
+
+               DB::table('property_bills')
+               ->where('property_id_foreign', Session::get('property_id'))
+               ->where('particular_id_foreign', $particular_id)
+               ->update(
+               [
+               'rate' => $request->water_rate
+               ]
+               );
+              }
+
+
+          if($request->electricity_rate){
+          DB::table('contracts')
+          ->join('units', 'unit_id_foreign', 'unit_id')
+          ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+          ->join('bills', 'tenant_id', 'bill_tenant_id')
+          ->where('bills.property_id_foreign', Session::get('property_id'))
+          ->where('batch_no', $batch_no)
+          ->update([
+          'electricity_rate' => $request->electricity_rate,
+          ]);
+
+          DB::table('property_bills')
+          ->where('property_id_foreign', Session::get('property_id'))
+          ->where('particular_id_foreign', $particular_id)
+          ->update(
+              [
+                'rate' => $request->electricity_rate
+              ]
+              );
+          }
 
         $bills = DB::table('contracts')
         ->join('units', 'unit_id_foreign', 'unit_id')

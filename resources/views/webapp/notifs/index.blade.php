@@ -39,7 +39,7 @@
                 <td>{{ $item->user_name }}</td>
                 <td>{{ $item->action_type }}</td>
                 <td>{{ $item->message }}</td>
-                <td>{{ $item->amount }}</td>
+                <td>{{ number_format($item->amount, 2)}}</td>
                 <td>{{ $item->triggered_at }}</td>
                 </td> 
             </tr>
