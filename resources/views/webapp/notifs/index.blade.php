@@ -29,7 +29,7 @@
                 <th>Action</th>
                 <th>Details</th>
                 <th>Amount</th>
-                <th>Triggered on</th>
+                <th>Deleted on</th>
             </tr>
         </thead>
         <tbody>
