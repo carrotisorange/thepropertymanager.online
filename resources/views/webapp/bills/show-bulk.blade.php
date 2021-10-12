@@ -40,7 +40,7 @@
     <thead>
       <th>#</th>
       {{-- <th>Bill #</th> --}}
-      <th>Tenant</th>
+      {{-- <th>Tenant</th> --}}
       <th>Room</th>
       <th>Start</th>
       <th>End</th>
@@ -90,7 +90,7 @@
       <tr>
         <th>{{ $ctr++ }}</th>
         {{-- <td>{{ $item->bill_no }}</td> --}}
-        <td>{{ $item->first_name.' '.$item->last_name }}</td>
+        {{-- <td>{{ $item->first_name.' '.$item->last_name }}</td> --}}
         <input form="createBulkBillsForm" type="hidden" name="bill_id{{ $bill_id_ctr++ }}" value="{{ $item->bill_id }}">
         <input form="createBulkBillsForm" type="hidden" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
         <td>{{ $item->building.' '.$item->unit_no }}</td>
