@@ -287,8 +287,63 @@ class OwnerController extends Controller
        
     }
 
-    public function create_user_access(Request $request, $property_id, $owner_id){
+    public function create_owner_credentials($property_id, $owner_id){
+        
+        $owner = Owner::findOrFail($owner_id);
 
+        return view('webapp.owners.create-credentials', compact('owner'));
+    }
+
+    public function store_owner_credentials(Request $request, $property_id, $owner_id){
+          $request->validate([
+          'name' => ['required', 'string', 'max:255'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+          'password' => ['required'],
+          ]);
+
+          $new_user_id =  DB::table('users')->insertGetId([
+           'name' => $request->name,
+           'email' => $request->email,
+           'password' => Hash::make($request->password),
+           'unhashed_password' => $request->password,
+           'created_at' => Carbon::now(),
+           'role_id_foreign' => '7'
+           ]);
+
+           DB::table('owners')
+           ->where('owner_id', $owner_id)
+           ->update([
+           'user_id_foreign' => $new_user_id,
+           ]);
+
+
+           DB::table('users_properties_relations')
+           ->insert
+           (
+           [
+           'user_id_foreign' => $new_user_id,
+           'property_id_foreign' => $property_id,
+           ]
+           );
+
+           $data = array(
+           'email' => 'lmbernardo@slu.edu.ph',
+           'password' => $request->password,
+           'name' => $request->name,
+           'property' => Session::get('property_name'),
+           );
+
+
+           Mail::send('webapp.owners.email-credentials-to-owner', $data, function($message) use ($data){
+           $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+           $message->subject('Online Access to Owner Portal');
+           });
+
+      return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#credentials')->with('success', 'Owner"s credentials is ge');
+
+    }
+
+    public function create_user_access(Request $request, $property_id, $owner_id){
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

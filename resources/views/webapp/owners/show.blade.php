@@ -7,7 +7,7 @@
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">{{ $owner->name }}</h6>
 
-</div>
+  </div>
 
 </div> --}}
 <div class="row align-items-center py-4">
@@ -22,11 +22,11 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-owner-tab" data-toggle="tab" href="#owner" role="tab"
             aria-controls="nav-owner" aria-selected="true"> <i class="fas fa-user-tie text-teal"></i> Profile</a>
-          @if($access->count() <=0 ) <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user"
+          @if($access->count() <=0 ) <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#credentials"
             role="tab" aria-controls="nav-user" aria-selected="false"> <i class="fas fa-key text-green"></i> Credentials
             <i class="fas fa-exclamation-triangle text-danger"></i></a>
             @else
-            <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#user" role="tab"
+            <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#credentials" role="tab"
               aria-controls="nav-user" aria-selected="false"> <i class="fas fa-key text-green"></i> Credentials </a>
             @endif
             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#bank" role="tab"
@@ -37,7 +37,10 @@
               Certificates <span class="badge badge-success">{{ $rooms->count() }}</span>
             </a>
 
-            {{-- <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab" aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span class="badge badge-primary badge-counter">{{ $bills->count() }}</span></a>
+            {{-- <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab"
+              aria-controls="nav-bills" aria-selected="false"><i
+                class="fas fa-file-signature fa-sm text-primary-50"></i> Bills <span
+                class="badge badge-primary badge-counter">{{ $bills->count() }}</span></a>
             --}}
         </div>
       </nav>
@@ -57,11 +60,11 @@
               class="btn btn-primary"><i class="fas fa-edit fa-sm text-dark-50"></i> Edit</a>
             {{-- @if(Auth::user()->role_id_foreign === 4)
             <form action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/delete" method="POST">
-            @csrf
-            @method('delete')
-            <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
-              onclick="return confirm('Are you sure you want perform this action?');"><i
-                class="fas fa-trash-alt fa-sm text-white-50"></i></button>
+              @csrf
+              @method('delete')
+              <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                onclick="return confirm('Are you sure you want perform this action?');"><i
+                  class="fas fa-trash-alt fa-sm text-white-50"></i></button>
             </form>
             @endif --}}
             <br><br>
@@ -142,9 +145,8 @@
         </div>
       </div>
 
-      <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="nav-user-tab">
-        @if($access->count() <=0 ) <button href="#" class="btn btn-primary" data-toggle="modal"
-          data-target="#userAccess" data-whatever="@mdo"><i class="fas fa-plus"></i> Generate</button>
+      <div class="tab-pane fade" id="credentials" role="tabpanel" aria-labelledby="nav-user-tab">
+        @if($access->count() <=0 ) <a href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/create/credentials" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
           <br><br>
           @endif
 
@@ -164,22 +166,22 @@
                   </thead>
                   <thead>
                     <tr>
-                      <th>Password</th>
-                      <td>{{ $item->mobile }} or <b>12345678</b></td>
+                      <th>Default password</th>
+                      <td>{{ $item->unhashed_password }}</td>
                     </tr>
                   </thead>
                   <thead>
 
                     <tr>
                       <th>Created at</th>
-                      <td>{{ $item->created_at? $item->created_at: null }}</td>
+                      <td>{{ $item->created_at }}</td>
                     </tr>
                   </thead>
 
                   <thead>
                     <tr>
                       <th>Verified at</th>
-                      <td>{{ $item->updated_at? $item->updated_at: null }}</td>
+                      <td>{{ $item->updated_at }}</td>
                     </tr>
                   </thead>
                 </table>
@@ -224,11 +226,11 @@
                     @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
                     Session::get('property_type') === '6' || Session::get('property_type') === 1 ||
                     Session::get('property_type') === '6')
-                    <a
-                      href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
+                    <a href="/property/{{ Session::get('property_id') }}/unit/{{ $item->unit_id }}">{{ $item->building.'
+                      '.$item->unit_no }}</a>
                     @else
-                    <a
-                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
+                    <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}">{{ $item->building.'
+                      '.$item->unit_no }}</a>
                     @endif
 
                   </td>
@@ -278,78 +280,6 @@
   </div>
 </div>
 
-<div class="modal fade" id="userAccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true" data-backdrop="static" data-keyboard="false" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-primary" id="exampleModalLabel"><i class="fas fa-user-lock"></i>Credential
-          Information</h5>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <form id="userForm" action="/property/{{Session::get('property_id')}}/owner/{{ $owner->owner_id }}/user/create"
-          method="POST">
-          @csrf
-        </form>
-        <table class="table table-borderless">
-          <tr>
-            <th>Name</th>
-            <td><input type="text" name="name" form="userForm"
-                class="form-control form-control-user @error('name') is-invalid @enderror" value="{{ $owner->name }}"
-                required>
-              <br>
-              @error('name')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
-            </td>
-
-          </tr>
-          <tr>
-            <th>Email</th>
-            <td><input type="email" name="email" form="userForm"
-                class="form-control form-control-user @error('email') is-invalid @enderror"
-                value="{{ $owner->email? $owner->email: Str::random(8).' @thepropertymanager.online' }}" required>
-              <br>
-              @error('email')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
-            </td>
-
-          </tr>
-          <tr>
-            <th>Password</th>
-            <td><input type="text" name="password" form="userForm"
-                class="form-control form-control-user @error('password') is-invalid @enderror"
-                value="{{ $owner->mobile? $owner->mobile: '12345678' }}" required>
-              <br>
-              @error('password')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
-            </td>
-
-          </tr>
-
-        </table>
-      </div>
-      <div class="modal-footer">
-
-        <button type="submit" form="userForm" class="btn btn-primary"> Add Credential</button>
-      </div>
-    </div>
-  </div>
-
-</div>
 
 @endsection
 

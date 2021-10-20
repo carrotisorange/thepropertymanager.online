@@ -214,6 +214,7 @@ Route::post('property/{property_id}/tenant/{tenant_id}/user/create', 'TenantCont
 //route to post a credentials for a tenant
 Route::post('property/{property_id}/owner/{owner_id}/user/create', 'OwnerController@create_user_access');
 
+
 //ROUTES FOR ROOMCONTROLLER
 //route to create rooms
 Route::get('/property/create/room', 'RoomController@create')->name('create-room');
@@ -424,14 +425,24 @@ Route::get('/property/{property_id}/blog/{blog_id}', 'BlogController@show');
 Route::get('/property/{property_id}/room/{room_id}/create/owner', 'OwnerController@create');
 //route to store new owner
 Route::post('/property/{property_id}/room/{room_id}/store/owner', 'OwnerController@store');
-
+//route to show all the owner
 Route::get('/property/{property_id}/owners', 'OwnerController@index')->name('show-all-owner');
+//route to show filtered owners based on the search keywords
 Route::get('/property/{property_id}/owners/search', 'OwnerController@search');
+//route to edit owner details
 Route::get('/property/{property_id}/owner/{owner_id}/edit', 'OwnerController@edit');
+//route to show specific owner
 Route::get('/property/{property_id}/owner/{owner_id}', 'OwnerController@show');
+//route to update owner's details
 Route::put('/property/{property_id}/owner/{owner_id}', 'OwnerController@update');
+//route to store a new owner
 Route::post('/property/{property_id}/room/{unit_id}/owner', 'OwnerController@store');
+//route to upate owner's image
 Route::put('/property/{property_id}/owner/{owner_id}/upload/img','OwnerController@upload_img');
+//create a credential for the owner
+Route::get('property/{property_id}/owner/{owner_id}/create/credentials', 'OwnerController@create_owner_credentials');
+//store new owner's credentials
+Route::post('property/{property_id}/owner/{owner_id}/store/credentials', 'OwnerController@store_owner_credentials');
 
 Route::delete('/property/{property_id}/owner/{owner_id}/delete', 'OwnerController@destroy');
 
