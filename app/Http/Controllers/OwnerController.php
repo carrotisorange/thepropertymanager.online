@@ -327,7 +327,7 @@ class OwnerController extends Controller
            );
 
            $data = array(
-           'email' => 'lmbernardo@slu.edu.ph',
+           'email' => $request->email,
            'password' => $request->password,
            'name' => $request->name,
            'property' => Session::get('property_name'),
