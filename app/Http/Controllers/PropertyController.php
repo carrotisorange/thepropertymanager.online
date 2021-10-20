@@ -88,7 +88,7 @@ class PropertyController extends Controller
                   $owner = User::findOrFail(Auth::user()->id)->owner_access;
                  
                  return view('webapp.owner_access.main', compact('property_id', 'owner'));
-            }elseif(Auth::user()->role_id_foreign === '8'){
+            }elseif(Auth::user()->role_id_foreign == '8'){
 
                 Session::put('notifications', Notification::orderBy('created_at','desc')->limit(5)->get());
 

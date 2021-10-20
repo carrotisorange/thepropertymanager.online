@@ -222,13 +222,13 @@ public function financial($user_id, $owner_id){
         ->groupBy('remittance_id')
         ->get();
 
-       $bills = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-        ->leftJoin('contracts', 'bill_tenant_id', 'tenant_id_foreign')
+     $bills = DB::table('contracts')
         ->leftJoin('certificates', 'contracts.unit_id_foreign', 'certificates.unit_id_foreign')
         ->leftJoin('units', 'contracts.unit_id_foreign', 'unit_id')
+        ->select("*", 'contracts.rent as contract_rent')
         ->where('owner_id_foreign', $owner_id)
         ->limit(1)
-        ->get('contracts.rent');
+        ->get();
 
       $expenses = DB::table('units')
         ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
@@ -252,9 +252,61 @@ public function financial($user_id, $owner_id){
   return view('webapp.owner_access.financials', compact('owner', 'bills', 'expenses', 'remittances'));
 }
 
+public function edit_room($user_id, $owner_id, $room_id){
+    
+    $room = Unit::findOrFail($room_id);
+
+    $room_types = DB::table('unit_types')->get();
+
+    $room_floors = DB::table('unit_floors')->get();
+
+      $owner = Owner::findOrFail($owner_id);
+
+    return view('webapp.owner_access.edit-room', compact('room','room_types','room_floors','owner'));
+}
+
+public function update_room(Request $request,$user_id, $owner_id, $room_id){
+
+    // return $request->all();
+
+       $this->validate($request, [
+        'unit_no' => 'required',
+       'unit_type_id_foreign' => 'required',
+       'unit_floor_id_foreign' => 'required|integer',
+       'unit_no' => 'required',
+       'occupancy' => 'required|integer',
+       'rent' => 'required',
+       'no_of_rooms' => 'required|integer',
+       ]);
+
+    $room = Unit::findOrFail($room_id);
+
+           Unit::where('unit_id', $room_id)
+           ->update([
+           'unit_no'=>$request->unit_no,
+           'floor' => $request->floor,
+           'occupancy' => $request->occupancy,
+           'status' => $request->status,
+           'building' => $request->building,
+           'unit_type_id_foreign' => $request->unit_type_id_foreign,
+           'unit_floor_id_foreign' => $request->unit_floor_id_foreign,
+           'rent' => $request->rent,
+           'size' => $request->size,
+           'updated_at' => Carbon::now(),
+           ]);
+
+    $room_types = DB::table('unit_types')->get();
+
+    $room_floors = DB::table('unit_floors')->get();
+
+    $owner = Owner::findOrFail($owner_id);
+
+return back()->with('success', 'Room is updated sucessfully!');
+}
+
 public function contracts($user_id, $owner_id, $room_id){
 
-    Session::put('current-page', 'rooms');
+   Session::put('current-page', 'rooms');
 
    $contracts = Unit::findOrFail($room_id)->contracts;
 

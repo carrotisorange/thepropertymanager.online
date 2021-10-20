@@ -24,7 +24,7 @@
           <th>Date Prepared</th>
           <th>Period Covered</th>
           <th>Particular</th>
-          <th>CV</th>
+          <th>CV #</th>
           <th>Check #</th>
 
           <th>Status</th>

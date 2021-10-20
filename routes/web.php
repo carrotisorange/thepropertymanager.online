@@ -490,6 +490,8 @@ Route::get('/user/{user_id}', 'UserController@upgrade');
 Route::post('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard');
 Route::get('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard');
 Route::get('/user/{user_id}/owner/{owner_id}/rooms', 'OwnerAccessController@room');
+Route::get('/user/{user_id}/owner/{owner_id}/room/{room_id}/room/edit', 'OwnerAccessController@edit_room');
+Route::put('/user/{user_id}/owner/{owner_id}/room/{room_id}/room/update', 'OwnerAccessController@update_room');
 Route::get('/user/{user_id}/owner/{owner_id}/room/{room_id}/contracts', 'OwnerAccessController@contracts');
 Route::get('/user/{user_id}/owner/{owner_id}/bills', 'OwnerAccessController@bill');
 Route::get('/user/{user_id}/owner/{owner_id}/financials', 'OwnerAccessController@financial');

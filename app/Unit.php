@@ -35,7 +35,7 @@ class Unit extends Model
 
     public function contracts()
     {
-        return $this->hasMany(Contract::class);
+        return $this->hasMany(Contract::class, 'unit_id_foreign')->orderBy('movein_at', 'desc');
     }
 
     public function certificates()

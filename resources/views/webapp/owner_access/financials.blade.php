@@ -8,8 +8,9 @@
 
 </div>
 {{-- <div class="col-md-6 text-right">
-    <a  href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> Add</a>  
-  </div> --}}
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i
+            class="fas fa-plus fa-sm text-white-50"></i> Add</a>
+</div> --}}
 @endsection
 
 @section('main-content')
@@ -39,7 +40,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Amount Collected <a href="#" title="Rent of your unit per month."><i
+                        <th>Revenue <a href="#" title="Rent of your unit per month."><i
                                     class="fas fa-info-circle"></i></a></th>
                     </tr>
                 </thead>
@@ -48,7 +49,7 @@
                     @foreach ($bills as $item)
                     <tr>
 
-                        <td>{{ number_format($item->rent, 2) }}</td>
+                        <td>{{ number_format($item->contract_rent, 2) }}</td>
                     </tr>
                     @endforeach
                     @endforeach
@@ -75,7 +76,8 @@
                     @foreach ($expenses as $item)
                     <tr>
                         <td><a
-                                href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id_foreign }}/expenses">{{ number_format($item->total_expenses, 2) }}</a>
+                                href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittance/{{ $item->remittance_id_foreign }}/expenses">{{
+                                number_format($item->total_expenses, 2) }}</a>
                         </td>
                     </tr>
                     @endforeach
