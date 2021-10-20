@@ -335,11 +335,11 @@ class OwnerController extends Controller
 
 
            Mail::send('webapp.owners.email-credentials-to-owner', $data, function($message) use ($data){
-           $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+           $message->to([$data['email'], 'lmbernardo@slu.edu.ph']);
            $message->subject('Online Access to Owner Portal');
            });
 
-      return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#credentials')->with('success', 'Owner"s credentials is ge');
+      return redirect('/property/'.Session::get('property_id').'/owner/'.$owner_id.'/#credentials')->with('success', 'Owner"s credentials is successfully created!');
 
     }
 
