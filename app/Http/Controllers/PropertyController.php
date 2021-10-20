@@ -101,91 +101,90 @@ class PropertyController extends Controller
         
                 $paying_users = DB::table('users')
                 ->whereNotNull('email_verified_at')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->get();
             
                 $unverified_users = DB::table('users')
                 ->whereNull('email_verified_at')
                 ->orderBy('users.created_at', 'desc')
-                ->where('user_type', '<>','tenant')
+                ->where('role_id_foreign', '<>','6')
                 ->get();
             
             
                 $signup_rate_1 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign', ['7','6','8' ])
                 ->count();
             
                 $signup_rate_2 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->count();
             
                 $signup_rate_3 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(2)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                 ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->count();
             
                 $signup_rate_4 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->count();
             
                 $signup_rate_5 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->count();
             
                 $signup_rate_6 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->count();
             
             
                 $verified_users_1 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
-                ->whereNotNull('email_verified_at')
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->count();
             
                 $verified_users_2 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonth()->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_3 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(2)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_4 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(3)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(3)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_5 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(4)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(4)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
                 $verified_users_6 = DB::table('users')
                 ->where('email_verified_at', '>=', Carbon::now()->subMonths(5)->firstOfMonth())
                 ->where('email_verified_at', '<=', Carbon::now()->subMonths(5)->endOfMonth())
-                ->whereNotIn('user_type', ['owner','tenant','dev' ])
+                 ->whereNotIn('role_id_foreign+', ['7','6','8' ])
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -231,7 +230,7 @@ class PropertyController extends Controller
 
             
                 $active_users = DB::table('users')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->whereNotNull('email_verified_at')
                 ->get();
 
@@ -240,44 +239,44 @@ class PropertyController extends Controller
                 ->join('properties', 'id', 'user_id_property')
                 ->select('*', 'properties.name as property_name', 'users.name as user_name')
                 ->where('session_last_login_at', '>=', Carbon::today())
-                ->where('user_type', 4)
+                ->where('role_id_foreign','4')
                 ->paginate(5);
 
                  $all_active_users = DB::table('users')
                 ->join('sessions', 'id', 'session_user_id')
                 ->where('session_last_login_at', '>=', Carbon::today())
-                ->where('user_type', '<>', 4)
+                ->where('role_id_foreign', '<>', '4')
                 ->get();
 
 
                 $starter_plan = DB::table('users')
                 ->where('account_type','starter')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->whereNotNull('email_verified_at')
                 ->count();
 
                 $basic_plan = DB::table('users')
                 ->where('account_type','basic')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->whereNotNull('email_verified_at')
                 ->count();
 
                 $large_plan = DB::table('users')
                 ->where('account_type','large')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->whereNotNull('email_verified_at')
                 ->count();
 
                 $advanced_plan = DB::table('users')
                 ->where('account_type','advanced')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->whereNotNull('email_verified_at')
                 ->count();
 
 
                 $enterprise_plan = DB::table('users')
                 ->where('account_type','enterprise')
-                ->where('user_type',4)
+                ->where('role_id_foreign','4')
                 ->whereNotNull('email_verified_at')
                 ->count();
             
@@ -285,7 +284,7 @@ class PropertyController extends Controller
             
                         $users = DB::table('users')
                         ->orderBy('email_verified_at', 'desc')
-                        ->where('user_type','<>', 'tenant')
+                        ->where('role_id_foreign','<>', '6')
                         ->paginate(10);
             
                         $sessions = DB::table('users')
@@ -504,7 +503,7 @@ class PropertyController extends Controller
         ->join('users', 'referrer_id_foreign', 'id')
         ->join('users_properties_relations', 'id', 'user_id_foreign')
         ->select('*', DB::raw('count(*) as referrals'))
-        ->where('user_type', '<>', 'tenant')
+        ->where('role_id_foreign', '<>', '4')
         ->where('property_id_foreign', Session::get('property_id') )
         ->groupBy('id')
         ->orderBy('referrals', 'desc')
