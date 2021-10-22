@@ -23,7 +23,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'property',
          'status', 
-         'user_type',
          'property_type', 
          'property_ownership', 
          'last_login_at',

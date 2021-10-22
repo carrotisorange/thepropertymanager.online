@@ -316,7 +316,7 @@ class TenantController extends Controller
       $user_id =  DB::table('users')->insertGetId([
             'name' => $request->name,
             'email' => $request->email,
-            'user_type' => 'tenant',
+            'role_id_foreign' => '6',
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
             'account_type' => Auth::user()->account_type,
@@ -522,7 +522,7 @@ class TenantController extends Controller
         $user_id =  DB::table('users')->insertGetId([
             'name' => $request->first_name.' '.$request->last_name,
             'email' => $request->email_address,
-            'user_type' => 'tenant',
+            'role_id_foreign' => '6',
             'password' => Hash::make($request->contact_no),
             'created_at' => Carbon::now(),
             'account_type' => '',
@@ -611,7 +611,7 @@ class TenantController extends Controller
             $users = DB::table('users_properties_relations')
              ->join('users','user_id_foreign','id')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->whereNotIn('user_type' ,['tenant', 'owner'])
+            ->whereNotIn('role_id_foreign' ,['6', '7'])
             ->get();
 
             $concerns  = Concern::where('concern_tenant_id', $tenant_id)->get();

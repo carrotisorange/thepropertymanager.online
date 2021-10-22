@@ -58,7 +58,7 @@ class ViolationController extends Controller
         $users = DB::table('users_properties_relations')
         ->join('users','user_id_foreign','id')
         ->where('property_id_foreign', Session::get('property_id'))
-        ->whereNotIn('user_type' ,['tenant', 'owner'])
+        ->whereNotIn('role_id_foreign' ,['6', '7'])
         ->get();
         
         $tenant = Tenant::findOrFail($tenant_id);

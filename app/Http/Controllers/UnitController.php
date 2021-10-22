@@ -234,7 +234,7 @@ class UnitController extends Controller
             $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
            ->where('property_id_foreign', $property_id)
-           ->where('user_type','<>' ,'tenant')
+           ->where('role_id_foreign','<>' ,'6')
            ->get();
 
             $home = Unit::findOrFail($unit_id);

@@ -447,7 +447,7 @@ $contracts = DB::table('contracts')
         Session::put('current-page', 'system-users');
         
         $users = DB::table('users')
-        ->where('user_type','<>', 'tenant')
+        ->where('role_id_foreign','<>', '6')
     ->orderBy('created_at', 'desc')
         ->get();
 

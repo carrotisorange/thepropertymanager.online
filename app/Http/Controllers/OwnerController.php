@@ -354,7 +354,7 @@ class OwnerController extends Controller
       $user_id =  DB::table('users')->insertGetId([
             'name' => $request->name,
             'email' => $request->email,
-            'user_type' => 'owner',
+            'role_id_foreign' => '7',
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
             'account_type' => Auth::user()->account_type,

@@ -216,7 +216,7 @@ class UserController extends Controller
         ->update([
           'name' => $request->name,
           'email' => $request->email,
-          'user_type' => $request->role_id_foreign,
+          'role_id_foreign' => $request->role_id_foreign,
         ]);
 
         DB::table('users_properties_relations')
@@ -234,7 +234,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'user_type' => ['required'],
+            'role_id_foreign' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required'],
         ]);
@@ -242,7 +242,7 @@ class UserController extends Controller
       $user_id =  DB::table('users')->insertGetId([
             'name' => $request->name,
             'email' => $request->email,
-            'user_type' => $request->role_id_foreign,
+            'role_id_foreign' => $request->role_id_foreign,
             'password' => Hash::make($request->password),
             'created_at' => Carbon::now(),
             'account_type' => Auth::user()->account_type,
@@ -285,7 +285,7 @@ class UserController extends Controller
         DB::table('users')->insert([
             'name' => $request->name,
             'email' => $request->email,
-            'user_type' => $request->role_id_foreign,
+            'role_id_foreign' => $request->role_id_foreign,
             'property' => Auth::user()->property,
             'property_type' => Auth::user()->property_type,
             'property_ownership' => Auth::user()->property_ownership,
@@ -583,7 +583,7 @@ class UserController extends Controller
             $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
            ->where('property_id_foreign', Session::get('property_id'))
-           ->where('user_type','<>' ,'tenant')
+           ->where('role_id_foreign','<>' ,'tenant')
            ->get();
 
            $notification = new Notification();

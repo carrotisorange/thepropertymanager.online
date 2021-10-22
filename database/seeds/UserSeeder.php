@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             'email' => 'marthaleasing@yahoo.com',
             'password' => Hash::make('12345678'),
             'status' => 'registered',
-            'user_type' => 1,
+            'role_id_foreign' => 1,
             'property' => 'The Courtyards'
         ]);
 
