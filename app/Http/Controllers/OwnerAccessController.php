@@ -327,19 +327,19 @@ public function contracts($user_id, $owner_id, $room_id){
  return view('webapp.owner_access.contracts', compact('owner', 'contracts', 'room'));
 }
 
-public function expense($user_id, $owner_id, $remittance_id){
+public function expense($user_id, $owner_id, $unit_id){
 
-    Session::put('current-page', 'remittances');
+    Session::put('current-page', 'expenses');
 
      $expenses = DB::table('units')
     ->join('expenses', 'unit_id', 'expenses.unit_id_foreign')
     ->join('certificates', 'expenses.unit_id_foreign', 'certificates.unit_id_foreign')
     ->select('*', 'expenses.created_at as dateCreated')
-    ->where('remittance_id_foreign',$remittance_id)
+    ->where('unit_id',$unit_id)
     ->orderBy('expenses.created_at')
     ->get();
 
-     $remittance = Remittance::findOrFail($remittance_id);
+     //$remittance = Remittance::findOrFail($remittance_id);
 
     $owner = Owner::findOrFail($owner_id);
 
@@ -354,7 +354,7 @@ public function expense($user_id, $owner_id, $remittance_id){
 
    Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));
 
-  return view('webapp.owner_access.expenses', compact('expenses', 'owner', 'remittance'));
+  return view('webapp.owner_access.expenses', compact('expenses', 'owner'));
 }
 
   public function bill($user_id, $owner_id){

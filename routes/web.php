@@ -512,7 +512,7 @@ Route::post('/user/{user_id}/owner/{owner_id}/concerns', 'OwnerAccessController@
 Route::get('/user/{user_id}/owner/{owner_id}/concern/{concern_id}/responses', 'OwnerAccessController@show_concern_responses');
 Route::get('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@profile');
 Route::get('/user/{user_id}/owner/{owner_id}/remittances', 'OwnerAccessController@remittance');
-Route::get('/user/{user_id}/owner/{owner_id}/remittance/{remittance_id}/expenses', 'OwnerAccessController@expense');
+Route::get('/user/{user_id}/owner/{owner_id}/expenses', 'OwnerAccessController@expense');
 Route::put('/user/{user_id}/owner/{owner_id}/profile', 'OwnerAccessController@update_profile');
 
 //routes for dev

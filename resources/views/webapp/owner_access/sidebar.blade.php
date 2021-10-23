@@ -41,12 +41,25 @@
           @if(Session::get('current-page') === 'remittances')
           <a class="nav-link active" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittances">
             <i class="fas fa-hand-holding-usd text-teal"></i>
-            <span class="nav-link-text">Remittances & Expenses</span>
+            <span class="nav-link-text">Remittances</span>
           </a>
           @else
           <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/remittances">
             <i class="fas fa-hand-holding-usd text-teal"></i>
-            <span class="nav-link-text">Remittances & Expenses</span>
+            <span class="nav-link-text">Remittances</span>
+          </a>
+          @endif
+        </li>
+        <li class="nav-item">
+          @if(Session::get('current-page') === 'expenses')
+          <a class="nav-link active" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/expenses">
+            <i class="fas fa-search-dollar text-red"></i>
+            <span class="nav-link-text">Expenses</span>
+          </a>
+          @else
+          <a class="nav-link" href="/user/{{ Auth::user()->id }}/owner/{{ $owner->owner_id }}/expenses">
+            <i class="fas fa-search-dollar text-red"></i>
+            <span class="nav-link-text">Expenses</span>
           </a>
           @endif
         </li>
