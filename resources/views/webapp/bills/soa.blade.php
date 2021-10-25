@@ -165,11 +165,20 @@
                   </tr>
                   @foreach ($other_bills as $item)
                   <tr>
-                    <th></th>
+                    <td>{{ $item->particular }}</td>
                     <td>
-                      ({{ $item->particular }}){{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}}
+                      {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}}
                       - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
                     <td>{{ number_format($item->balance,2) }}</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      P({{ $item->prev_electricity_reading }}),
+                      C({{ $item->curr_electricity_reading }}),
+                      A({{ $item->curr_electricity_reading - $item->prev_electricity_reading }}),
+                      R({{ $item->electricity_rate }}) </td>
+                    <td></td>
                   </tr>
                   @endforeach
                   @endif
@@ -186,6 +195,7 @@
                     <?php $surcharge = $total*.1; ?>
                     <th>{{ number_format($total,2) }}</th>
                   </tr>
+                  
                   {{-- <tr>
                 <th colspan="2">ADD 10% surcharge ON RENT if not paid on due date</th>
                 
@@ -198,6 +208,13 @@
                   </tr> --}}
 
         </table>
+        <table>
+          <tr>
+            <td colspan="3">
+              Previous Reading (P), Current Reading (C), Current Consumption (C), Rate (R)
+            </td>
+          </tr>
+        </table>
         <table class="">
           <tr>
             <td> {!! Session::get('footer_message') !!}</td>
@@ -206,7 +223,7 @@
         <table class="table table-condensed">
           <tr>
             <td> Prepared by: {{ Auth::user()->name }}
-              <br>{{ Auth::user()->role_id_foreign }}</td>
+              <br></td>
             <th></th>
             <td class="text-right"> Noted by:
               <br>Accounting Head</td>

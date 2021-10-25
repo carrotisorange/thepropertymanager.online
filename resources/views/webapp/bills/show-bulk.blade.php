@@ -45,14 +45,14 @@
       <th>Start</th>
       <th>End</th>
       @if($particular->particular_id == '3')
-      <th>Rate  (  /KwH)</th>
+      <th>Rate ( /KwH)</th>
       <th>Prev reading</th>
       <th>Curr reading</th>
       <th>Consumption</th>
       @endif
 
       @if($particular->particular_id == '2')
-      <th>Rate  (  /CuM)</th>
+      <th>Rate ( /CuM)</th>
       <th>Prev reading</th>
       <th>Curr reading</th>
       <th>Consumption</th>
@@ -98,13 +98,17 @@
         </td>
         <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" value="{{ $item->end }}"></td>
         @if($particular->particular_id == '3')
-        <th><input form="createBulkBillsForm" class="col-md-12" type="number"
-           
-            value={{ $item->electricity_rate }} step="0.001" class="col-md-12" readonly></th>
+        <th>
+          @foreach($electricity_rate as $rate)
+          <input form="createBulkBillsForm" class="col-md-12" type="number" value={{ $item->electricity_rate?
+          $item->electricity_rate: $rate->rate }}
+          step="0.001" class="col-md-12" id="electricity_rate" name="electricity_rate" readonly>
+          @endforeach
+        </th>
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number"
             name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}"
-            value={{ $item->prev_electricity_reading }}></th>
+            value="{{ $item->prev_electricity_reading }}" oninput="autoCompute({{ $ctr_previous_reading++ }})"></th>
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number"
             name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}"
@@ -142,7 +146,7 @@
     var consumption = 'id_consumption'+val;
     var amt = 'id_amt'+val;
 
-    var rate = parseFloat(document.getElementById('rate').value);
+    var rate = parseFloat(document.getElementById('electricity_rate').value);
  
     var actual_consumption = document.getElementById(current_reading).value - document.getElementById(previous_reading).value;
     
@@ -151,14 +155,4 @@
    
   }
 </script>
-
-<script type="text/javascript">
-  $(window).on('load',function(){
-    $("#editPeriodCovered").modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-  });
-</script>
-
 @endsection

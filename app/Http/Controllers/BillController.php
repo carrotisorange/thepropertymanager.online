@@ -326,9 +326,14 @@ class BillController extends Controller
 
         $particular = Particular::findOrFail($particular_id);
 
+        $electricity_rate = DB::table('property_bills')
+        ->where('particular_id_foreign',$particular_id)
+        ->where('property_id_foreign', $property_id)
+        ->get();
+
         $batch_no = $batch_no;
 
-        return view('webapp.bills.show-bulk',compact('bills', 'particular','batch_no'));
+        return view('webapp.bills.show-bulk',compact('bills', 'particular','batch_no','electricity_rate'));
     }
 
     public function options_bulk($property_id, $particular_id, $batch_no){
@@ -451,28 +456,45 @@ class BillController extends Controller
         ->join('bills', 'tenant_id', 'bill_tenant_id')
         ->where('units.property_id_foreign', Session::get('property_id'))
         ->where('batch_no', $batch_no)
-
-
-        
-        // ->join('units', 'unit_id_foreign', 'unit_id')
-        // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        // ->join('bills', 'tenant_id', 'bill_tenant_id')
-        // ->where('units.property_id_foreign', Session::get('property_id'))
-        // ->where('batch_no', $batch_no)
         ->get();
-
-        //get the last added bill no of the property
-        //$current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
-        //->where('batch_no', $batch_no)
-        // ->whereNotNull('deleted_at')
-        //->max('bill_no') + 1;
 
         //get the last id in the bills table 
       $bills_count = Bill::where('batch_no', $batch_no)
       ->max('bill_id')+1;
 
-        for ($i=1; $i<=$bills_count; $i++) { 
-            if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
+        for ($i=1; $i<=$bills_count; $i++) {
+            if($particular_id === '2'){
+                if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
+                Bill::where('bill_id', $request->input('bill_id'.$i))
+                ->update([
+                // 'bill_no' => $current_bill_no++,
+                'amount' => $request->input('amount'.$i),
+                'start' => $request->input('start'.$i),
+                'end' => $request->input('end'.$i),
+                'date_posted' => Carbon::now(),
+                'prev_water_reading' => $request->input('previous_reading'.$i),
+                'curr_water_reading' => $request->input('current_reading1'.$i),
+                'water_rate' => $request->water_rate,
+                'bill_unit_id' => $request->input('room_id'.$i),
+                ]);
+                }
+            }elseif($particular_id === '3'){
+                if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
+                Bill::where('bill_id', $request->input('bill_id'.$i))
+                ->update([
+                // 'bill_no' => $current_bill_no++,
+                'amount' => $request->input('amount'.$i),
+                'start' => $request->input('start'.$i),
+                'end' => $request->input('end'.$i),
+                'date_posted' => Carbon::now(),
+                'prev_electricity_reading' => $request->input('previous_reading'.$i),
+                'curr_electricity_reading' => $request->input('current_reading'.$i),
+                'electricity_rate' => $request->electricity_rate,
+                'bill_unit_id' => $request->input('room_id'.$i),
+                ]);
+                }
+            }else{
+                if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
                 Bill::where('bill_id', $request->input('bill_id'.$i))
                 ->update([
                 // 'bill_no' => $current_bill_no++,
@@ -483,6 +505,8 @@ class BillController extends Controller
                 'bill_unit_id' => $request->input('room_id'.$i),
                 ]);
                 }
+            }
+          
         }
 
        //delete bills with 0 values

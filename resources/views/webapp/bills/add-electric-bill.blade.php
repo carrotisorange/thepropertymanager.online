@@ -228,6 +228,7 @@
 @section('scripts')
 <script>
   function autoCompute(val) {
+    alert(val)
     var previous_reading = 'id_previous_reading'+val;
     var current_reading = 'id_current_reading'+val;
     var consumption = 'id_consumption'+val;
@@ -241,13 +242,5 @@
     document.getElementById(amt).value = parseFloat(actual_consumption) * electric_rate_kwh;
    
   }
-</script>
-<script type="text/javascript">
-  $(window).on('load',function(){
-    $("#editPeriodCovered").modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-  });
 </script>
 @endsection
