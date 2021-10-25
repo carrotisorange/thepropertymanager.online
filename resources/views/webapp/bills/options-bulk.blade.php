@@ -69,7 +69,10 @@
 
                 <div class="form-group">
                     <label>Amount</label>
-                    <input form="optionForm" type="number" step="0.01" class="form-control" name="amount" value="{{ $particular->rate }}" id="amount">
+                    @foreach ($electricity_rate as $item)
+                    <input form="optionForm" type="number" step="0.01" class="form-control" name="amount" value="{{ $item->rate }}"
+                        id="amount">    
+                    @endforeach
                     @error('amount')
                     <small class="text-danger">
                         {{ $message }}

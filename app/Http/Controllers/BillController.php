@@ -36,7 +36,6 @@ class BillController extends Controller
      */
     public function index(Request $request)
     {
-
         // return Bill::onlyTrashed()->get();
 
         // $search = $request->search;
@@ -61,7 +60,7 @@ class BillController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
+        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 5 || auth()->user()->role_id_foreign === 3){
             if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){ 
                 $bills = DB::table('bills')
                 ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
@@ -342,7 +341,12 @@ class BillController extends Controller
         
         $batch_no = $batch_no;
 
-        return view('webapp.bills.options-bulk', compact('particular', 'batch_no'));
+         $electricity_rate = DB::table('property_bills')
+         ->where('particular_id_foreign',$particular_id)
+         ->where('property_id_foreign', $property_id)
+         ->get();
+
+        return view('webapp.bills.options-bulk', compact('particular', 'batch_no','electricity_rate'));
     }
 
     public function update_options_bulk(Request $request, $property_id, $particular_id, $batch_no){
@@ -437,9 +441,14 @@ class BillController extends Controller
 
         $particular = Particular::findOrFail($particular_id);
 
+             $electricity_rate = DB::table('property_bills')
+             ->where('particular_id_foreign',$particular_id)
+             ->where('property_id_foreign', $property_id)
+             ->get();
+
         $batch_no = $batch_no;
 
-        return view('webapp.bills.show-bulk',compact('bills', 'particular','batch_no'));
+        return view('webapp.bills.show-bulk',compact('bills', 'particular','batch_no','electricity_rate'));
     }
 
     
