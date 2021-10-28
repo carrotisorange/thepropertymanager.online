@@ -60,7 +60,8 @@ class BillController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 5 || auth()->user()->role_id_foreign === 3){
+        if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 5 ||
+        auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
             if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){ 
                 $bills = DB::table('bills')
                 ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
