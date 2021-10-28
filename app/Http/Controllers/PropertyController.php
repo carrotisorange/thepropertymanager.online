@@ -1351,7 +1351,15 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
     
         PropertyBill::insert($data);
 
-        return redirect('property/'.Session::get('property_id').'/duedates/create')->with('success', 'Bills are successfully created.');
+        if(Session::get('property_type') !== '5'){
+        return redirect('property/'.Session::get('property_id').'/bills')->with('success', 'Bills are
+        successfully updated.');
+        }else{
+        return redirect('property/'.Session::get('property_id').'/duedates/create')->with('success', 'Bills are
+        successfully created.');
+        }
+
+
     }
 
     public function create_duedate(){
