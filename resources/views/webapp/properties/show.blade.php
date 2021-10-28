@@ -139,7 +139,7 @@
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $movein_rate->container() !!}
@@ -160,7 +160,7 @@
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $renewed_chart->container() !!}
@@ -184,7 +184,7 @@
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $expenses_rate->container() !!}
@@ -209,7 +209,7 @@
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        @if($top_agents->count() <=0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not
+        @if(!$top_agents->count()) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not
           enough data to show statistics.</p>
           @else
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
@@ -253,7 +253,7 @@
 
 
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $point_of_contact->container() !!}
@@ -278,7 +278,7 @@
 
 
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $status->container() !!}
@@ -300,7 +300,7 @@
 
 
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $length_of_stay->container() !!}
@@ -321,7 +321,7 @@
         <h6 class="m-0 font-weight-bold text-primary">MOVEOUT FOR THE LAST 6 MONTHS</h6>
       </div>
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $moveout_rate->container() !!}
@@ -339,7 +339,7 @@
         <h6 class="m-0 font-weight-bold text-primary">REASON FOR MOVING-OUT</h6>
       </div>
       <div class="card-body">
-        @if($contracts <= 0) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
+        @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
           @else
           {!! $reason_for_moving_out_chart->container() !!}

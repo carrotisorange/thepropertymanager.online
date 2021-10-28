@@ -70,7 +70,7 @@
 
     <div class="row">
 
-      @if ($properties->count() <= 0) <div class="col">
+      @if (!$properties->count()) <div class="col">
         <a href="{{ route('create-property') }}" class="btn btn-primary btn-user btn-block"><i class="fas fa-plus"></i>
           Add your property</a>
     </div>
