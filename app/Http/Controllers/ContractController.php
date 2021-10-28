@@ -201,11 +201,24 @@ class ContractController extends Controller
             'end' => $request->moveout_at
         ]);
 
-        
-        Unit::where('unit_id', $unit_id)
-        ->update([
-            'status' => 'reserved'
-        ]);
+          if(Session::get('property_type') !== 5){
+            Unit::where('unit_id', $unit_id)
+                ->update([
+                'status' => 'reserved'
+            ]);
+
+          }else{ 
+            Unit::where('unit_id', $unit_id)
+            ->update([
+            'status' => 'occupied'
+            ]);
+
+            Contract::where('contract_id', $contract_id)
+            ->update([
+            'status' => 'active'
+            ]);
+          }
+    
 
         $contract = Contract::findOrFail($contract_id);
         $tenant = Tenant::findOrFail($tenant_id);
