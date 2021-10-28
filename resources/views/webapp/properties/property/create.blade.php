@@ -95,6 +95,10 @@
           <button type="submit" class="btn btn-block btn-primary" onclick="this.form.submit(); this.disabled = true;"><i
               class="fas fa-arrow-right"></i> Continue</button>
         </p>
+      
+        <p class="text-center">
+          <a class="text-dark" href="/property/all"><i class="fas fa-arrow-left"></i> Cancel</a>
+        </p>
       </div>
     </div>
   </form>

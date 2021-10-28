@@ -328,7 +328,7 @@ class CollectionController extends Controller
 
             //     Mail::send('webapp.tenants.user-generated-mail', $data, function($message) use ($data){
             //     $message->to($data['email']);
-            //     $message->bcc('customercare@thepropertymanager.online');
+            //     $message->bcc('thepropertymanagernoreply@gmail.com');
             //     $message->subject('Welcome Tenant');
             // });
             // }

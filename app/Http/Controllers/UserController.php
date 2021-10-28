@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB, App\User, Carbon\Carbon, Auth, Session;
 use Illuminate\Support\Facades\Hash;
-
 use App\Mail\TenantRegisteredMail;
 use Illuminate\Support\Facades\Mail;
 use App\Property;
@@ -59,17 +58,14 @@ class UserController extends Controller
      */
     public function index($property_id)
     {
-
         Session::put('current-page', 'usage-history');
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
         $notification->property_id_foreign = Session::get('property_id');
         $notification->type = 'user';
-        
         $notification->message = Auth::user()->name.' opens users page.';
-        $notification->save();
-                    
+        $notification->save();          
 
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications->where('user_id_foreign', Auth::user()->id));;
 
@@ -81,17 +77,6 @@ class UserController extends Controller
         ->where('property_id_foreign', Session::get('property_id'))
         ->orderBy('sessions.created_at', 'desc')
         ->get();
-
-
-            // $sessions = DB::table('sessions')
-            // ->join('properties', 'id', 'user_id_property')
-            // ->select('*', 'properties.name as property_name', 'users.name as user_name')
-            // ->where('property_id', Session::get('property_id'))
-     
-            // ->get();
-
-           
-
 
         return view('webapp.users.index', compact('sessions'));
 }
@@ -119,15 +104,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
-    }
+         $roles = DB::table('roles')->whereNotIn('role_id', [8])->orderBy('role')->get();
 
-    public function create_system_user(){
-        
-            // return back()->with('danger', 'Exceeded your limit for adding users. Upgrade to Pro to add more users.');
-            // $property = Property::findOrFail($property_id);
-            return view('webapp.users.system-users.create');
-
+         return view('webapp.users.system-users.create', compact('roles'));
     }
 
     public function index_system_user(){
@@ -250,15 +229,17 @@ class UserController extends Controller
             'trial_ends_at' => Auth::user()->trial_ends_at,
         ]);
 
+        $name = explode(" ", $request->name);
+
         $data = array(
             'email' => $request->email,
             'password' => $request->password,
-            'name' => $request->name,
+            'name' => $name[0],
             'property' => Session::get('property_name'),
         );
 
                 Mail::send('webapp.users.welcome-generated-mail', $data, function($message) use ($data){
-                $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+                $message->to([$data['email'], 'thepropertymanagernoreply@gmail.com']);
                 $message->subject('Welcome New User');
             });      
 

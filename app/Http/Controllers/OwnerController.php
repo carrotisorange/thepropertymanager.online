@@ -388,7 +388,7 @@ class OwnerController extends Controller
 
         
                 Mail::send('webapp.owners.email-credentials-to-owner', $data, function($message) use ($data){
-                $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+                $message->to([$data['email'], 'thepropertymanagernoreply@gmail.com']);
                 $message->subject('Online Access to Owner Portal');
             });      
                                   

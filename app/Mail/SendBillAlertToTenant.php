@@ -28,7 +28,7 @@ class SendBillAlertToTenant extends Mailable
      */
     public function build()
     {
-        return $this->from('customercare@thepropertymanager.online')
+        return $this->from('thepropertymanagernoreply@gmail.com')
         ->view('webapp.tenants.send-bill-alert');
     }
 }

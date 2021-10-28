@@ -457,7 +457,7 @@
     'port' => '465',
     'from' => 
     array (
-      'address' => 'customercare@thepropertymanager.online',
+      'address' => 'thepropertymanagernoreply@gmail.com',
       'name' => 'The Property Manager',
     ),
     'encryption' => 'ssl',

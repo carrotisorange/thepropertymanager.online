@@ -914,7 +914,7 @@ class TenantController extends Controller
              //send welcome email to the tenant
              Mail::send('webapp.tenants.send-request-moveout-mail', $data, function($message) use ($data){
                 $message->to($data['email']);
-                $message->bcc(['landleybernardo@thepropertymanager.online','customercare@thepropertymanager.online']);
+                $message->bcc(['landleybernardo@thepropertymanager.online','thepropertymanagernoreply@gmail.com']);
                 $message->subject('Request to Moveout');
             });
         }

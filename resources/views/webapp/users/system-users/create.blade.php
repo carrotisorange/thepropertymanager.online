@@ -1,11 +1,9 @@
 @extends('layouts.argon.dashboard')
 
-@section('title', 'User')
+@section('title', 'Create user')
 
-@section('welcome')
-
+@section('title')
 <h1 class="text-white">Add New User Here! </h1>
-
 @endsection
 
 @section('content')
@@ -40,26 +38,15 @@
         </div>
 
         <div class="form-group">
-            <select name="user_type" id="user_type"
+            <select name="role_id_foreign" id="role_id_foreign"
                 class="form-control form-control-user @error('user_type') is-invalid @enderror" required
                 autocomplete="user_type" autofocus>
 
-                @if (old('user_type'))
-                <option value="{{ old('user_type') }}" selected>{{ old('user_type') }}</option>
-
-                <option value="admin">admin</option>
-                <option value="ap">ap</option>
-                <option value="billing">billing</option>
-
-                <option value="treasury">treasury</option>
-                @else
-                <option value="">Select user role</option>
-                <option value="admin">admin</option>
-                <option value="ap">ap</option>
-                <option value="billing">billing</option>
-
-                <option value="treasury">treasury</option>
-                @endif
+                <option value="{{ old('role_id_foreign') }}" selected>{{ old('role_id_foreign')?old('role_id_foreign'):'Select a role' }}</option>
+                @foreach ($roles as $item)
+                
+                <option value="{{ $item->role_id }}">({{ $item->role }}) - {{ $item->privileges }}</option>
+                @endforeach
 
             </select>
             @error('user_type')
@@ -82,6 +69,7 @@
         </div>
 
         <div class="row">
+            <div class="col-md-12">
             {{-- <div class="col">
                       <a href="/property/all" class="btn btn-primary btn-user btn-block btn-sm" ><i class="fas fa-home"></i> Go back to home</a>
                      
@@ -93,8 +81,13 @@
                   </div>
                      <div class="col"> --}}
             <button type="submit" class="btn btn-primary btn-user btn-block"
-                onclick="this.form.submit(); this.disabled = true;"> Submit</button>
+                onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit</button>
             {{-- </div> --}}
+            <br>
+            <p class="text-center">
+                <a class="text-center text-dark" href="/property/all"><i class="fas fa-arrow-left"></i> Cancel</a>
+            </p>
+            </div>
         </div>
     </form>
 </div>

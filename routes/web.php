@@ -62,7 +62,7 @@ Route::get('/users/search', 'UserController@search');
 //route to show all users
 Route::get('/user/all', 'UserController@index_system_user');
 //route to create a user
-Route::get('/user/create', 'UserController@create_system_user')->name('create-user');
+Route::get('/user/create', 'UserController@create')->name('create-user');
 //route to post a new user
 Route::post('/user/store', 'UserController@store_system_user');
 //route to show a user

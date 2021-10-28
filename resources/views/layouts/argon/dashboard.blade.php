@@ -101,10 +101,11 @@
     <div class="container mt--8 pb-5">
       @include('layouts.argon.notifications')
       <div class="row justify-content-center">
-    
-         @yield('title-page')
-          <div class="card border-0 mb-0">
+      {{-- @yield('title') --}}
+          <div class="col-md-8">
+            <div class="card border-0 mb-0">
               @yield('content')
+            </div>
           </div>
       </div>
     </div>

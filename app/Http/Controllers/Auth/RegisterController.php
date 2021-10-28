@@ -79,7 +79,7 @@ class RegisterController extends Controller
         );
 
                 Mail::send('webapp.users.welcome-generated-mail', $data, function($message) use ($data){
-                $message->to([$data['email'], 'customercare@thepropertymanager.online']);
+                $message->to([$data['email'], 'thepropertymanagernoreply@gmail.com']);
                 $message->subject('Welcome New User');
             });  
 

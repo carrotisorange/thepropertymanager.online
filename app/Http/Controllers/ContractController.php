@@ -356,7 +356,7 @@ class ContractController extends Controller
         
                 //     Mail::send('webapp.tenants.send-request-moveout-mail', $data, function($message) use ($data){
                 //     $message->to($data['email']);
-                //     $message->bcc(['landleybernardo@thepropertymanager.online','customercare@thepropertymanager.online']);
+                //     $message->bcc(['landleybernardo@thepropertymanager.online','thepropertymanagernoreply@gmail.com']);
                 //     $message->subject('Contract Termination');
                 // });
                 // }
@@ -473,7 +473,7 @@ class ContractController extends Controller
 
             Mail::send('webapp.tenants.send-request-moveout-mail', $data, function($message) use ($data){
             $message->to($data['email']);
-            $message->bcc(['landleybernardo@thepropertymanager.online','customercare@thepropertymanager.online']);
+            $message->bcc(['landleybernardo@thepropertymanager.online','thepropertymanagernoreply@gmail.com']);
             $message->subject('Contract Termination');
         });
         }
@@ -681,7 +681,7 @@ public function send_contract_alert($property_id, $unit_id, $tenant_id, $contrac
 
     Mail::send('webapp.tenants.send-contract-alert-mail', $data, function($message) use ($data){
         $message->to($data['email']);
-        $message->bcc(['customercare@thepropertymanager.online']);
+        $message->bcc(['thepropertymanagernoreply@gmail.com']);
         $message->subject('Contract Termination Alert');
 
     });
