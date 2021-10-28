@@ -131,11 +131,11 @@
 
                 <div class="form-group">
                     <button type="submit" form="updateRoomForm" class="btn btn-primary btn-block"
-                        onclick="this.form.submit(); this.disabled = true;"> Update</button>
+                        onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
                     <br>
                     <p class="text-center">
                         <a class="text-center text-dark"
-                            href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}">Cancel</a>
+                            href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}"><i class="fas fa-times"></i> Cancel</a>
                     </p>
                 </div>
             </div>
