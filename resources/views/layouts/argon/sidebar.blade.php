@@ -207,7 +207,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           {{-- Bulk billing --}}
-          @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 5 ||
+          @if(Auth::user()->role_id_foreign === 3 || Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 5 ||
           Auth::user()->role_id_foreign === 1)
           <li class="nav-item">
             @if(Session::get('current-page') === 'bulk-billing')
