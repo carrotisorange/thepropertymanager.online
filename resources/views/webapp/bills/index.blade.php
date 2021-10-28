@@ -47,7 +47,7 @@
       <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#createBills" data-whatever="@mdo"><i
           class="fas fa-plus"></i> New</a>
       <a href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/tenant/966/bills/edit" class="btn btn-primary"><i
-          class="fas fa-edit"></i> Edit SOA</a>
+          class="fas fa-edit"></i> Edit</a>
       <a href="/property/1e2ee7c0-ca86-11eb-b90a-576ba19a581f/bills" class="btn btn-primary"><i
           class="fas fa-eraser"></i> Clear</a>
       {{-- <a href="#" class="btn btn-white btn-sm"><i class="fas fa-lightbulb"></i> Page tips</a> --}}
