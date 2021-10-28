@@ -38,8 +38,28 @@
         </div>
 
         <div class="form-group">
+            <select name="property_id_foreign" id="property_id_foreign"
+                class="form-control form-control-user @error('property_id_foreign') is-invalid @enderror" required
+                autocomplete="property_id_foreign" autofocus>
+        
+                <option value="{{ old('property_id_foreign') }}" selected>{{ old('property_id_foreign')?old('property_id_foreign'):'Select a
+                    property' }}</option>
+                @foreach ($properties as $item)
+        
+                <option value="{{ $item->property_id }}">{{ $item->property.' '.$item->property_type }}</option>
+                @endforeach
+        
+            </select>
+            @error('property_id_foreign')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+
+        <div class="form-group">
             <select name="role_id_foreign" id="role_id_foreign"
-                class="form-control form-control-user @error('user_type') is-invalid @enderror" required
+                class="form-control form-control-user @error('role_id_foreign') is-invalid @enderror" required
                 autocomplete="user_type" autofocus>
 
                 <option value="{{ old('role_id_foreign') }}" selected>{{ old('role_id_foreign')?old('role_id_foreign'):'Select a role' }}</option>
@@ -49,7 +69,7 @@
                 @endforeach
 
             </select>
-            @error('user_type')
+            @error('role_id_foreign')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

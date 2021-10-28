@@ -102,7 +102,7 @@
       @include('layouts.argon.notifications')
       <div class="row justify-content-center">
       {{-- @yield('title') --}}
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div class="card border-0 mb-0">
               @yield('content')
             </div>

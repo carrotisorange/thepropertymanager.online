@@ -1,6 +1,6 @@
 @extends('layouts.argon.dashboard')
 
-@section('title', 'Step 3 of 5 | The Property Manager')
+@section('title', 'Step 2 of 4 | The Property Manager')
 
 @section('content')
 <div class="card-body px-lg-5 py-lg-5">

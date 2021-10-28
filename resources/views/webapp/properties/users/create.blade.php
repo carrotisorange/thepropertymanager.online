@@ -10,8 +10,8 @@
     <div class="row">
       <div class="col">
         <p class="text-right">
-          <a href="#/" id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> Add </a>
-          <a href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus"></i> Remove </a>
+          <a href="#/" id="add_entry" class="btn-sm btn-primary"><i class="fas fa-plus"></i> Add </a>
+          <a href="#/" id='delete_entry' class="btn-sm btn-danger"><i class="fas fa-minus"></i> Remove </a>
 
         </p>
 
@@ -68,7 +68,7 @@
 
        $("#add_entry").click(function(){
 
-           $('#addr'+i).html("<th>"+ (i) +"</th><td><input class='form-control' form='addPayableEntryForm' name='name"+i+"' type='text' required></td><td><input class='form-control' form='addPayableEntryForm' name='email"+i+"' type='email' required></td><td><select class='form-control' form='addPayableEntryForm' name='role"+i+"' id='role"+i+"' required><option value=''>Please select a role</option>@foreach($roles as $item)<option value='{{ $item->role_id }}'>{{ $item->role }}</option>@endforeach</select></td>");
+           $('#addr'+i).html("<th>"+ (i) +"</th><td><input class='' form='addPayableEntryForm' name='name"+i+"' type='text' required></td><td><input class='' form='addPayableEntryForm' name='email"+i+"' type='email' required></td><td><select class='' form='addPayableEntryForm' name='role"+i+"' id='role"+i+"' required><option value=''>Please select a role</option>@foreach($roles as $item)<option value='{{ $item->role_id }}'>{{ $item->role.' '.$item->privileges }}</option>@endforeach</select></td>");
    
    
         $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');

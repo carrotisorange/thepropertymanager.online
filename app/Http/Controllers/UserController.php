@@ -106,7 +106,17 @@ class UserController extends Controller
     {
          $roles = DB::table('roles')->whereNotIn('role_id', [8])->orderBy('role')->get();
 
-         return view('webapp.users.system-users.create', compact('roles'));
+          $properties = DB::table('users_properties_relations')
+          ->join('properties', 'property_id_foreign', 'property_id')
+          ->join('users', 'user_id_foreign', 'id')
+        ->join('property_types', 'property_id', 'property_id_foreign')
+          ->select('*', 'properties.name as property', 'users.created_at as created_on')
+          ->where('lower_access_user_id', Auth::user()->id)
+          ->orWhere('id', Auth::user()->id)
+            ->groupBy('property_id')
+          ->get();
+
+         return view('webapp.users.system-users.create', compact('roles', 'properties'));
     }
 
     public function index_system_user(){
@@ -214,6 +224,7 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'role_id_foreign' => ['required'],
+            'property_id_foreign' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required'],
         ]);
@@ -228,6 +239,15 @@ class UserController extends Controller
             'lower_access_user_id' => Auth::user()->id,
             'trial_ends_at' => Auth::user()->trial_ends_at,
         ]);
+
+                DB::table('users_properties_relations')
+                ->insert
+                (
+                [
+                'user_id_foreign' => $user_id,
+                'property_id_foreign' => $request->property_id_foreign,
+                ]
+                );
 
         $name = explode(" ", $request->name);
 
@@ -341,6 +361,20 @@ class UserController extends Controller
 
        
         
+    }
+
+     function show_user(){
+
+            $users = DB::table('users_properties_relations')
+           ->join('properties', 'property_id_foreign', 'property_id')
+           ->join('users', 'user_id_foreign', 'id')
+           ->join('roles', 'role_id_foreign', 'role_id')
+           ->select('*', 'properties.name as property', 'users.created_at as created_on')
+           ->where('lower_access_user_id', Auth::user()->id)
+       
+           ->get();
+
+        return view('webapp.properties.users.show', compact('users'));
     }
 
     /**
@@ -804,5 +838,3 @@ class UserController extends Controller
         return view('webapp.tenant_access.main', compact('tenant'));
     }
 }
-
-

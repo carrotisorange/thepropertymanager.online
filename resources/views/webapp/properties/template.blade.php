@@ -133,14 +133,24 @@
           @endif --}}
           @if (Auth::user()->role_id_foreign === 4)
           @if($users > 1)
-          <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary"><i
-              class="fas fa-plus"></i> User </a>
+          <div class="dropdown show">
+            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user"></i> Users
+            </a>
+          
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/user/create">Add</a>
+              <a class="dropdown-item" href="/users/show">Show</a>         
+            </div>
+          </div>
+          {{-- <a title="Upgrade to Pro to add more users." href="{{ route('create-user') }}" class="btn btn-primary"><i
+              class="fas fa-plus"></i> User </a> --}}
           @else
           <a title="Limited to 2 users." href="{{ route('create-user') }}" class="btn btn-primary"><i
               class="fas fa-plus"></i> User</a>
           @endif
-          @else
-          <a title="Reserved for manager." href="#/" class="btn btn-primary"><i class="fas fa-plus"></i> User</a>
+     
           @endif
           <a href="https://youtu.be/tGdDzY-dkLg" target="_blank" class="btn btn-primary"> <i class="fab fa-youtube"></i>
             Getting started </a>

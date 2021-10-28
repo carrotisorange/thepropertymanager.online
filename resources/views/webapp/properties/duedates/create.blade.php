@@ -1,6 +1,6 @@
 @extends('layouts.argon.dashboard')
 
-@section('title', 'Step 3 of 5 | The Property Manager')
+@section('title', 'Step 3 of 4 | The Property Manager')
 
 @section('content')
 <div class="card-body px-lg-5 py-lg-5">
@@ -9,20 +9,20 @@
   <form class="user" method="POST" action="/property/{{ Session::get('property_id') }}/duedates/store">
     @csrf
 
-    <div class="row table">
+    <div class="row">
       <table class="table table-hover">
         <thead>
           <tr>
             <th>#</th>
             <th>Bill</th>
             <th>Due date</th>
-            <th>Penalty after due date(%)
-            <th>
+            <th>Surcharge after Due Date(%)<th>
             <th>Rate</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($bills as $item)
+          <input type="hidden" min="0.00" name="bill{{ $item->property_bill_id }}" value="{{ $item->property_bill_id}}" />
           <tr>
             <th>{{ $ctr++ }}</th>
             <td>{{ $item->particular }}</td>
@@ -36,8 +36,7 @@
               </select>
             </td>
             <td>
-              <input type="hidden" min="0.00" name="bill{{ $item->property_bill_id }}"
-                value="{{ $item->property_bill_id}}" />
+              
               <input type="number" class="" min="0.00" step="0.01" name="penalty{{ $item->property_bill_id}}" value="10"
                 required />
             </td>

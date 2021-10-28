@@ -45,6 +45,12 @@ class LoginController extends Controller
 
         function authenticated(Request $request, $user)
         {
+
+            User::where('id', Auth::user()->id)->update(
+                [
+                    'updated_at' => Carbon::now()
+                ]
+            );
             $sessions = User::findOrFail(Auth::user()->id)->sessions;
 
            if($sessions->count() <= 1){

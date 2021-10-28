@@ -73,6 +73,8 @@ Route::get('/user/{user_id}/edit', 'UserController@edit_system_user');
 Route::put('/user/{user_id}', 'UserController@update_system_user');
 //route to update a user
 Route::put('/user/{user_id}/update', 'UserController@update_system_user_info');
+//route to show all users
+Route::get('/users/show', 'UserController@show_user');
 
 //ROUTES FOR PROPERTYCONTROLLER
 //route to display all properties
@@ -478,7 +480,7 @@ Route::get('property/{property_id}/payable/{payable_id}/action', 'PayableControl
 Route::get('/property/{property_id}/users', 'UserController@index')->name('show-all-usage-history');
 Route::get('/property/{property_id}/user/{user_id}', 'UserController@show');
 Route::put('/property/{property_id}/user/{user_id}', 'UserController@update');
-Route::get('/user/{user_id}', 'UserController@upgrade');
+// Route::get('/user/{user_id}', 'UserController@upgrade');
 Route::get('/property/{property_id}/tenant/{tenant_id}/credentials/create', 'UserController@create_credentials')->name('create-credentials');
 Route::post('/property/{property_id}/tenant/{tenant_id}/credentials/store', 'UserController@store_credentials')->name('store-credentials');
 
@@ -496,7 +498,7 @@ Route::get('/user/{user_id}/portal/tenant/', 'UserController@show_portal_tenant'
 
 Route::get('/property/{property_id}/user/{user_id}', 'UserController@show');
 Route::put('/property/{property_id}/user/{user_id}', 'UserController@update');
-Route::get('/user/{user_id}', 'UserController@upgrade');
+// Route::get('/user/{user_id}', 'UserController@upgrade');
 
 Route::post('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard');
 Route::get('/user/{user_id}/owner/{owner_id}/dashboard', 'OwnerAccessController@dashboard');

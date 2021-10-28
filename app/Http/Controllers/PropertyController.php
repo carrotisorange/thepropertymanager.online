@@ -1447,9 +1447,23 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
                         'property_id_foreign' => Session::get('property_id'),
                     ]
                 );
+
+                $name = explode(" ", $request->input('name'.$i));
+
+                $data = array(
+                'email' => $request->input('email'.$i),
+                'password' => $request->input('password'.$i),
+                'name' => $name[0],
+                'property' => Session::get('property_name'),
+                );
+
+                Mail::send('webapp.users.welcome-generated-mail', $data, function($message) use ($data){
+                $message->to([$data['email'], 'thepropertymanagernoreply@gmail.com']);
+                $message->subject('Welcome New User');
+                });
             }       
 
-       return redirect('property/all')->with('success', 'Users are added successfully. Please provide them with the password '.Carbon::now()->timestamp);
+       return redirect('property/all')->with('success', 'Users are added successfully.');
    }
 
    
