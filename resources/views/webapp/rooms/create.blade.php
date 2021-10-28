@@ -172,21 +172,33 @@
       if($floor === '9'){
         $unit_name.value = '9F';
       }
+      if($floor === '10'){
+      $unit_name.value = '10F';
+      }
 
-      if($floor === '-1'){
+      if($floor === '11'){
         $unit_name.value = '1B';
       }
-      if($floor === '-2'){
+      if($floor === '12'){
         $unit_name.value = '2B';
       }
-      if($floor === '-3'){
+      if($floor === '13'){
         $unit_name.value = '3B';
       }
-      if($floor === '-4'){
+      if($floor === '14'){
         $unit_name.value = '4B';
       }
-      if($floorfed === '-5'){
+      if($floor === '15'){
         $unit_name.value = '5B';
+      }
+      if($floor === '16'){
+      $unit_name.value = '6B';
+      }
+      if($floor === '17'){
+      $unit_name.value = '7B';
+      }
+      if($floor === '18'){
+      $unit_name.value = '8B';
       }
     }
 </script>
