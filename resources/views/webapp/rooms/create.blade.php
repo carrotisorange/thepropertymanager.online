@@ -94,8 +94,11 @@
           @enderror
         </div>
 
+
+        @if(Session::get('property_type') !== 5)
+
         <div class="form-group residential">
-          <label>Occupancy</label>
+          <label>Occupancy </label>
           <input form="createRoomForm" type="number" min="1" value="{{ old('occupancy') }}" class="form-control"
             name="occupancy">
           @error('occupancy')
@@ -104,11 +107,6 @@
           </small>
           @enderror
         </div>
-
-
-
-
-
 
         <div class="form-group residential">
           <label>Monthly rent</label>
@@ -121,6 +119,10 @@
           @enderror
         </div>
 
+
+
+
+        @endif
         <div class="form-group">
           <button type="submit" form="createRoomForm" class="btn btn-primary btn-block"
             onclick="this.form.submit(); this.disabled = true;"> Save</button>
@@ -129,6 +131,8 @@
             <a class="text-center text-dark" href="/property/{{ Session::get('property_id') }}/rooms">Cancel</a>
           </p>
         </div>
+
+
       </div>
     </div>
   </div>

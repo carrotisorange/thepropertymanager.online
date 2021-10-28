@@ -168,12 +168,16 @@ class ContractController extends Controller
         ]);
 
         //get the last added bill no of the property
-        $current_bill_no = DB::table('contracts')
-        ->join('units', 'unit_id_foreign', 'unit_id')
-        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-        ->join('bills', 'tenant_id', 'bill_tenant_id')
-        ->where('property_id_foreign', Session::get('property_id'))
-        ->max('bill_no') + 1;   
+        // $current_bill_no = DB::table('contracts')
+        // ->join('units', 'unit_id_foreign', 'unit_id')
+        // ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        // ->join('bills', 'tenant_id', 'bill_tenant_id')
+        // ->where('property_id_foreign', Session::get('property_id'))
+        // ->max('bill_no') + 1;   
+
+            //get the last added bill no of the property
+            $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+            ->max('bill_no') + 1;
 
         //post the rental bill
         Bill::create([
@@ -216,7 +220,17 @@ class ContractController extends Controller
                     
         Session::put('notifications', Property::findOrFail($property_id)->unseen_notifications);
 
-        return redirect('/property/'.Session::get('property_id').'/room/'.$unit_id.'/tenant/'.$tenant_id.'/contract/'.$contract->contract_id.'/create/bill')->with('success', 'Contract is added successfully.');
+          if(Session::get('property_type') !== 5){
+  return
+  redirect('/property/'.Session::get('property_id').'/room/'.$unit_id.'/tenant/'.$tenant_id.'/contract/'.$contract->contract_id.'/create/bill')->with('success',
+  'Contract is added successfully.');
+          }else{
+  return
+  redirect('/property/'.Session::get('property_id').'/room/'.$unit_id.'/#tenants')->with('success',
+  'Contract is added successfully.');
+          }
+
+      
     }
 
     /**

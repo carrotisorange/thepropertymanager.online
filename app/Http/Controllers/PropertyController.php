@@ -477,7 +477,7 @@ class PropertyController extends Controller
        
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->type);
+        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->property_type_id_foreign);;
 
         Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
 
@@ -1460,6 +1460,8 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
 
 
     public function store_room(Request $request){
+
+        
         $no_of_entry = (int) $request->no_of_entry;
        
         for ($i=1; $i <= $no_of_entry; $i++) { 

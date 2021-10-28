@@ -144,6 +144,7 @@
               <option value="Website">Website</option>
               <option value="Walk in">Walk in</option>
               <option value="Word of mouth">Word of mouth</option>
+              <option value="NA">NA</option>
             </select>
             @error('form_of_interaction')
             <small class="text-danger">

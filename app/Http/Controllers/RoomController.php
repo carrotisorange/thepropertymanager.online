@@ -296,14 +296,26 @@ class RoomController extends Controller
 
     public function store(Request $request){
 
-        $this->validate($request, [
+        if(Session::get('property_type') !== 5)
+            $this->validate($request, [
             'unit_type_id_foreign' => 'required',
             'unit_floor_id_foreign' => 'required|integer',
             'unit_no' => 'required',
             'occupancy' => 'required|integer',
-            'rent' => 'required',  
+            'rent' => 'required',
             'no_of_rooms' => 'required|integer',
-        ]);
+            ]);
+        else{
+            $this->validate($request, [
+            'unit_type_id_foreign' => 'required',
+            'unit_floor_id_foreign' => 'required|integer',
+            'unit_no' => 'required',
+        
+            'no_of_rooms' => 'required|integer',
+            ]);
+        }
+
+      
 
         if(!$request->building){
             $building = 'Building-1';

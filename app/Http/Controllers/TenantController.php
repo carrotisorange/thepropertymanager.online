@@ -419,6 +419,7 @@ class TenantController extends Controller
      */
     public function store(Request $request, $property_id, $unit_id )
     {
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['required', 'string', 'max:255'],
