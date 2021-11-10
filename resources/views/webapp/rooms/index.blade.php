@@ -9,48 +9,86 @@
 @section('upper-content')
 <div class="row align-items-center py-4">
 
-  <div class="col-lg-6 text-left">
+  <div class="col-lg-3 text-left">
 
     <h6 class="h2 text-dark d-inline-block mb-0">Rooms</h6>
 
   </div>
+  <div class="col-md-6">
+    <a href="#/" class="btn btn-sm btn-primary" style="width: 85px; height: 60px;">
+      <i class="fas fa-home fa-2x"></i>
+      <br>
+      <small> Occupied</small>
+    </a>
+    <a href="#/" class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+      <i class="fas fa-home fa-2x"></i>
+      <br>
+      <small> Vacant</small>
+    </a>
+    <a href="#/" class="btn btn-sm btn-warning" style="width: 85px; height: 60px;">
+      <i class="fas fa-home fa-2x"></i>
+      <br>
+      <small> Reserved</small>
+    </a>
+    <a href="#/" class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
+      <i class="fas fa-home fa-2x"></i>
+      <br>
+      <small> Maintenance</small>
+    </a>
+    <a href="#/" class="btn btn-sm btn-gray" style="width: 85px; height: 60px;">
+      <i class="fas fa-home fa-2x"></i>
+      <br>
+      <small> Housekeeping</small>
+    </a>
+  </div>
 
-  <div class="col-md-6 text-right">
+  <div class="col-md-3 text-right">
     {{-- @if(Auth::user()->account_type === '1')
-      @if($units->count()>20)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @endif
+    @if($units->count()>20)
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @else
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @endif
     @elseif(Auth::user()->account_type === '2' )
-      @if($units->count()>30)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @endif
+    @if($units->count()>30)
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @else
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @endif
     @elseif(Auth::user()->account_type === '3' )
-      @if($units->count()>50)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @endif
+    @if($units->count()>50)
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @else
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @endif
     @elseif(Auth::user()->account_type === '4' )
-      @if($units->count()>75)
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @else
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
-      @endif
+    @if($units->count()>75)
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @else
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#upgradeToPro"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    @endif
     @elseif(Auth::user()->account_type === '5' )
-        <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
+    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a>
     @endif --}}
-    {{-- <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits" data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a> --}}
+    {{-- <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#addMultipleUnits"
+      data-whatever="@mdo"><i class="fas fa-plus fa-sm text-dark-50"></i> New</a> --}}
+    
     <a href="{{ route('create-room') }}" class="btn btn-primary"><i class="fas fa-plus fa-sm"></i> New</a>
     {{-- @if($units->count() >1 )
 
-  @endif --}}
+    @endif --}}
     <a href="{{ route('edit-room') }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-    {{-- <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger btn-sm" ><i
-      class="fas fa-backspace fa-sm text-dark-50"></i> Clear search filters</a> --}}
+    {{-- <a href="/property/{{Session::get('property_id')}}/rooms/clear" class="btn btn-danger btn-sm"><i
+        class="fas fa-backspace fa-sm text-dark-50"></i> Clear search filters</a> --}}
   </div>
 
 
@@ -76,170 +114,197 @@
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
           <br>
-          {{-- <div class="row" >
-          @if($units->count() <=0 )
-        <p class="">No rooms found!</p>
-        @else
-        <p class="">Showing <b>{{ $units->count() }} {{ Session::get('status') }} {{ Session::get('type') }}
-          {{ Session::get('building') }} {{ Session::get('rent') }} {{ Session::get('occupancy') }}
-          {{ Session::get('floor') }} </b>rooms...
-
-          </p>
-        </div> --}}
-
-        <div class="row  text-center">
-          @foreach ($units as $item)
-
-          <div class="col-md-2.5">
-            @if($item->status === 'occupied')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
-              class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
-              @if($item->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($item->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
+          {{-- <div class="row">
+            @if($units->count() <=0 ) <p class="">No rooms found!</p>
               @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $item->unit_no }}</small>
-            </a>
-            @elseif($item->status === 'vacant')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
-              class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
-              @if($item->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($item->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $item->unit_no }}</small>
-            </a>
-            @elseif($item->status === 'dirty')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
-              class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
-              @if($item->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($item->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $item->unit_no }}</small>
-            </a>
-            @else
+              <p class="">Showing <b>{{ $units->count() }} {{ Session::get('status') }} {{ Session::get('type') }}
+                  {{ Session::get('building') }} {{ Session::get('rent') }} {{ Session::get('occupancy') }}
+                  {{ Session::get('floor') }} </b>rooms...
 
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
-              class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
-              @if($item->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($item->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $item->unit_no }}</small>
-            </a>
-            @endif
+              </p>
+          </div> --}}
 
-            <hr>
+          <div class="row  text-center">
+            @foreach ($units as $item)
+
+            <div class="col-md-2.5">
+              @if($item->status === 'occupied')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="{{ url('property/'.Session::get('property_id'), ['room', 'room_id'=>$item->unit_id]) }}"
+                class="btn btn-sm btn-primary" style="width: 85px; height: 60px;">
+                @if($item->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($item->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $item->unit_no }}</small>
+              </a>
+              @elseif($item->status === 'vacant')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
+                class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+                @if($item->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($item->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $item->unit_no }}</small>
+              </a>
+              @elseif($item->status === 'reserved')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
+                class="btn btn-sm btn-warning" style="width: 85px; height: 60px;">
+                @if($item->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($item->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $item->unit_no }}</small>
+              </a>
+              @elseif($item->status === 'maintenance')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants" class="btn btn-sm btn-dark"
+                style="width: 85px; height: 60px;">
+                @if($item->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($item->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $item->unit_no }}</small>
+              </a>
+              @else
+
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
+                class="btn btn-sm btn-warning" style="width: 85px; height: 60px;">
+                @if($item->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($item->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $item->unit_no }}</small>
+              </a>
+              @endif
+
+              <hr>
+            </div>
+
+
+            @endforeach
           </div>
 
-
-          @endforeach
+          {{-- @endif --}}
         </div>
+        @foreach ($buildings as $item)
+        <div class="tab-pane fade" id="nav-{{ $item->building }}" role="tabpanel"
+          aria-labelledby="nav-{{ $item->building }}-tab">
+          <br>
+          <div class="row text-center">
+            @foreach ($units as $unit)
 
-        {{-- @endif --}}
-      </div>
-      @foreach ($buildings as $item)
-      <div class="tab-pane fade" id="nav-{{ $item->building }}" role="tabpanel"
-        aria-labelledby="nav-{{ $item->building }}-tab">
-        <br>
-        <div class="row text-center">
-          @foreach ($units as $unit)
+            @if($unit->building === $item->building)
+            <div class="col-md-2.5">
+              @if($unit->status === 'occupied')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
+                class="btn btn-sm btn-primary" style="width: 85px; height: 60px;">
+                @if($unit->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($unit->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $unit->unit_no }}</small>
+              </a>
+              @elseif($unit->status === 'vacant')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
+                class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
+                @if($unit->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($unit->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $unit->unit_no }}</small>
+              </a>
+              @elseif($unit->status === 'reserved')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
+                class="btn btn-sm btn-warning" style="width: 85px; height: 60px;">
+                @if($unit->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($unit->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $unit->unit_no }}</small>
+              </a>
+              @elseif($unit->status === 'maintenance')
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants" class="btn btn-sm btn-dark"
+                style="width: 85px; height: 60px;">
+                @if($unit->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($unit->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $unit->unit_no }}</small>
+              </a>
+              @else
 
-          @if($unit->building === $item->building)
-          <div class="col-md-2.5">
-            @if($unit->status === 'occupied')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
-              class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
-              @if($unit->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($unit->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
+              <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
+                href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
+                class="btn btn-sm btn-gray" style="width: 85px  ; height: 60px;">
+                @if($unit->unit_type_id_foreign == '1')
+                <i class="fas fa-home fa-2x"></i>
+                @elseif($unit->unit_type_id_foreign == '2')
+                <i class="fas fa-dumpster fa-2x"></i>
+                @else
+                <i class="fas fa-car fa-2x"></i>
+                @endif
+                <br>
+                <small> {{ $unit->unit_no }}</small>
+              </a>
               @endif
-              <br>
-              <small> {{ $unit->unit_no }}</small>
-            </a>
-            @elseif($unit->status === 'vacant')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
-              class="btn btn-sm btn-danger" style="width: 85px; height: 60px;">
-              @if($unit->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($unit->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $unit->unit_no }}</small>
-            </a>
-            @elseif($unit->status === 'dirty')
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
-              class="btn btn-sm btn-dark" style="width: 85px; height: 60px;">
-              @if($unit->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($unit->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $unit->unit_no }}</small>
-            </a>
-            @else
 
-            <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-              href="/property/{{Session::get('property_id')}}/room/{{ $unit->unit_id }}/#tenants"
-              class="btn btn-sm btn-warning" style="width: 85px  ; height: 60px;">
-              @if($unit->unit_type_id_foreign == '1')
-              <i class="fas fa-home fa-2x"></i>
-              @elseif($unit->unit_type_id_foreign == '2')
-              <i class="fas fa-dumpster fa-2x"></i>
-              @else
-              <i class="fas fa-car fa-2x"></i>
-              @endif
-              <br>
-              <small> {{ $unit->unit_no }}</small>
-            </a>
+              <hr>
+            </div>
             @endif
 
-            <hr>
+
+            @endforeach
           </div>
-          @endif
-
-
-          @endforeach
         </div>
+        @endforeach
       </div>
-      @endforeach
     </div>
-  </div>
 
-</div>
+  </div>
 </div>
 
 

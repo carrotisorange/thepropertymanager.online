@@ -23,7 +23,8 @@ class Contract extends Model
         'number_of_months',
         'discount',
         'term',
-        'rent'
+        'rent',
+        'bill_batch_no'
 ];
 
     // public function unit()

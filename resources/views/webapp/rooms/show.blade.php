@@ -90,9 +90,11 @@
       <div class="tab-pane fade show active" id="room" role="tabpanel" aria-labelledby="nav-room-tab">
 
         <p class="text-left">
+          <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/edit"
             class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> --}}
         </p>
         <div class="row">
           <div class="col-md-6 mx-auto">
@@ -127,7 +129,10 @@
 
                         <td>
                           @if($home->floor <= 0) {{ $numberFormatter->format($home->floor * -1) }} basement @else
-                            {{ $numberFormatter->format($home->floor) }} floor @endif </td> </tr> </thead> <thead>
+                            {{ $numberFormatter->format($home->floor) }} floor @endif </td>
+                      </tr>
+                    </thead>
+                    <thead>
                       <tr>
                         <th>Type</th>
                         <td>{{ $home->type }}</td>
@@ -181,7 +186,8 @@
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/inventory"
             class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
-          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> --}}
         </p>
         @endif
 
@@ -264,93 +270,94 @@
       <div class="tab-pane fade" id="expenses" role="tabpanel" aria-labelledby="nav-expenses-tab">
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-            {{-- @if($expenses->count() <=0)
-            <br>
-            <p class="text-danger text-center">No expenses found!</p>
-            @else --}}
-            <p>Total expenses deducted to remittance: {{ number_format($expenses->sum('expense_amt'), 2) }}</p>
-            <table class="table table-hover">
-              <thead>
-                <?php $ctr=1;?>
-                <tr>
-                  <th>#</th>
-                  <th>Date deducted</th>
-                  {{-- <th>Period Covered</th> --}}
-                  <th>Particular</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($expenses as $item)
-                <tr>
-                  <th>{{ $ctr++ }}</th>
-                  <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
-                  {{-- <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}
-                  </td> --}}
-                  <td>{{ $item->expense_particular }}</td>
-                  <th>{{ number_format($item->expense_amt,2) }}</th>
+            {{-- @if($expenses->count() <=0) <br>
+              <p class="text-danger text-center">No expenses found!</p>
+              @else --}}
+              <p>Total expenses deducted to remittance: {{ number_format($expenses->sum('expense_amt'), 2) }}</p>
+              <table class="table table-hover">
+                <thead>
+                  <?php $ctr=1;?>
+                  <tr>
+                    <th>#</th>
+                    <th>Date deducted</th>
+                    {{-- <th>Period Covered</th> --}}
+                    <th>Particular</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($expenses as $item)
+                  <tr>
+                    <th>{{ $ctr++ }}</th>
+                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                    {{-- <td>{{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' -
+                      '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}
+                    </td> --}}
+                    <td>{{ $item->expense_particular }}</td>
+                    <th>{{ number_format($item->expense_amt,2) }}</th>
 
-                </tr>
-                @endforeach
+                  </tr>
+                  @endforeach
 
-              </tbody>
-            </table>
-            {{-- @endif --}}
+                </tbody>
+              </table>
+              {{-- @endif --}}
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="remittances" role="tabpanel" aria-labelledby="nav-remittances-tab">
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
-            {{-- @if($remittances->count() <=0)
-            <br>
-            <p class="text-danger text-center">No remittances found!</p>
-            @else --}}
-            <p>Total remitted amount: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
-            <table class="table table-hover">
-              <thead>
-                <?php $ctr=1;?>
-                <tr>
-                  <th>#</th>
-                  <th>Date Prepared</th>
-                  <th>Period Covered</th>
-                  <th>Particular</th>
-                  <th>CV</th>
-                  <th>Check #</th>
+            {{-- @if($remittances->count() <=0) <br>
+              <p class="text-danger text-center">No remittances found!</p>
+              @else --}}
+              <p>Total remitted amount: {{ number_format($remittances->sum('amt_remitted'), 2) }}</p>
+              <table class="table table-hover">
+                <thead>
+                  <?php $ctr=1;?>
+                  <tr>
+                    <th>#</th>
+                    <th>Date Prepared</th>
+                    <th>Period Covered</th>
+                    <th>Particular</th>
+                    <th>CV</th>
+                    <th>Check #</th>
 
-                  <th>Status</th>
-                  <th>Amount</th>
+                    <th>Status</th>
+                    <th>Amount</th>
 
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($remittances as $item)
-                <tr>
-                  <th>{{ $ctr++ }}</th>
-                  <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($remittances as $item)
+                  <tr>
+                    <th>{{ $ctr++ }}</th>
+                    <td>{{ Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
 
-                  <td>
-                    {{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' - '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}
-                  </td>
-                  <td>{{ $item->particular }}</td>
-                  <td>{{ $item->cv_number }}</td>
-                  <td>{{ $item->check_number }}</td>
+                    <td>
+                      {{ Carbon\Carbon::parse($item->start_at)->format('M d, Y').' -
+                      '.Carbon\Carbon::parse($item->end_at)->format('M d, Y') }}
+                    </td>
+                    <td>{{ $item->particular }}</td>
+                    <td>{{ $item->cv_number }}</td>
+                    <td>{{ $item->check_number }}</td>
 
-                  <td>
-                    @if($item->remitted_at === NULL)
-                    <span class="badge badge-danger">pending</span>
-                    @else
-                    <span class="badge badge-success">remitted</span>
-                    @endif
-                  </td>
-                  <th><a
-                      href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{ number_format($item->amt_remitted,2) }}</a>
-                  </th>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-            {{-- @endif --}}
+                    <td>
+                      @if($item->remitted_at === NULL)
+                      <span class="badge badge-danger">pending</span>
+                      @else
+                      <span class="badge badge-success">remitted</span>
+                      @endif
+                    </td>
+                    <th><a
+                        href="/property/{{ Session::get('property_id') }}/remittance/{{ $item->remittance_id }}/expenses">{{
+                        number_format($item->amt_remitted,2) }}</a>
+                    </th>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              {{-- @endif --}}
 
           </div>
         </div>
@@ -360,7 +367,8 @@
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant"
             class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
-          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> --}}
         </p>
         @endif
         <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
@@ -391,8 +399,8 @@
             @foreach ($tenants as $item)
             <tr>
               <th class="text-center">{{ $ctr++ }}</th>
-              <th><a
-                  href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
+              <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{
+                  $item->first_name.' '.$item->last_name }}
                 </a></th>
               <td>{{ Carbon\Carbon::parse($item->movein_at)->format('M d, Y') }}</td>
               <td>{{ Carbon\Carbon::parse($item->moveout_at)->format('M d, Y') }}</td>
@@ -407,8 +415,9 @@
               </td>
               {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }}
               days
-              left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}
-              </> --}}
+              left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d
+                Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}
+                </> --}}
               <td>{{ number_format($item->contract_rent, 2) }}</td>
               <td>{{ $item->form_of_interaction }}</td>
             </tr>
@@ -463,11 +472,13 @@
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/concern"
             class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
-          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> --}}
         </p>
         @endif
-        {{-- <a  href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern" data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>  
-          <br><br> --}}
+        {{-- <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addConcern"
+          data-whatever="@mdo"><i class="fas fa-plus"></i> New</a>
+        <br><br> --}}
         <div class="col-md-12 mx-auto">
           <div class="table-responsive">
 
@@ -543,10 +554,11 @@
                     <a
                       href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/payment-options/"><i
                         class="fas fa-eye"></i> View</a>
-                    
+
                     @endif
-                    {{-- <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
-                      class="fas fa-eye"></i> View</a> --}}
+                    {{-- <a
+                      href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"><i
+                        class="fas fa-eye"></i> View</a> --}}
                   </td>
                 </tr>
                 @endforeach
@@ -563,7 +575,8 @@
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/owner"
             class="btn btn-primary"><i class="fas fa-exchange-alt"></i> Change</a>
-          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button>  --}}
+          {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> --}}
         </p>
         @endif
 

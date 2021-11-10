@@ -127,8 +127,8 @@
 
         <div class="row">
           <div class="col-md-8">
-            {{-- <a href="/property/{{Session::get('property_id')}}/tenants" class="btn btn-primary btn-sm"><i
-              class="fas fa-arrow-left"></i> Back</a> --}}
+            <a href="{{ url()->previous() }}" class="btn btn-primary"><i
+              class="fas fa-arrow-left"></i> Back</a>
 
             {{-- <a href="/asa/{{Session::get('property_id')}}/tenant/{{ $tenant->tenant_id }}" class="btn
             btn-primary"><i class="fas fa-user"></i> Change property </a> --}}

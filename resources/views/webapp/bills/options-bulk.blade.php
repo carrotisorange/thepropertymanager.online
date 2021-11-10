@@ -6,7 +6,7 @@
 
 <div class="row align-items-center py-4">
     <div class="col-lg-12 text-left">
-        <h6 class="h2 text-dark d-inline-block mb-0">Options - <span class="text-danger"> the values you set for each
+        <h6 class="h2 text-dark d-inline-block mb-0"><span class=""> The values you set for each
                 parameter will take affect on all the bills.</span></h6>
     </div>
 </div>
@@ -44,9 +44,13 @@
                 </div>
 
                 @if($particular->particular_id == '3')
+                  <label>Electricity rate</label>
                 <div class="form-group">
-                    <label>Electricity rate</label>
-                    <input form="optionForm" type="number" step="0.001" class="form-control" name="electricity_rate" id="electric_rate">
+              
+                   @foreach ($rate as $item)
+                    <input form="optionForm" type="number" step="0.001"" class=" form-control" name="electricity_rate" id="water_rate"
+                        value="{{ $item->rate }}">
+                    @endforeach
                     @error('electricity_rate')
                     <small class="text-danger">
                         {{ $message }}
@@ -58,7 +62,9 @@
                 @if($particular->particular_id == '2')
                 <div class="form-group">
                     <label>Water rate</label>
-                    <input form="optionForm" type="number" step="0.001"" class="form-control" name="water_rate" id="water_rate">
+                    @foreach ($rate as $item)
+                    <input form="optionForm" type="number" step="0.001"" class="form-control" name="water_rate" id="water_rate" value="{{ $item->rate }}">
+                    @endforeach
                     @error('water_rate')
                     <small class="text-danger">
                         {{ $message }}
@@ -69,10 +75,10 @@
 
                 <div class="form-group">
                     <label>Amount</label>
-                    @foreach ($electricity_rate as $item)
-                    <input form="optionForm" type="number" step="0.01" class="form-control" name="amount" value="{{ $item->rate }}"
+                   
+                    <input form="optionForm" type="number" step="0.01" class="form-control" name="amount" value=""
                         id="amount">    
-                    @endforeach
+                   
                     @error('amount')
                     <small class="text-danger">
                         {{ $message }}

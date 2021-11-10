@@ -120,7 +120,7 @@ Route::post('/property/{property_id}/users/store', 'PropertyController@store_use
 //route to show all the tenants
 Route::get('/property/{property_id}/tenants', 'TenantController@index')->name('show-all-tenant');
 //route to show a particular tenant
-Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->name('show-tenant');
+Route::get('/property/{property_id}/tenant/{tenant_id}', 'TenantController@show')->name('property.tenant');
 //route to edit a tenant
 Route::get('/property/{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit');
 //route to update a tenant

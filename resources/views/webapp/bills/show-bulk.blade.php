@@ -39,20 +39,18 @@
   <table class="table table-responsinve">
     <thead>
       <th>#</th>
-      {{-- <th>Bill #</th> --}}
-      {{-- <th>Tenant</th> --}}
       <th>Room</th>
       <th>Start</th>
       <th>End</th>
       @if($particular->particular_id == '3')
-      <th>Rate ( /KwH)</th>
+      <th>Electricity Rate (/KwH)</th>
       <th>Prev reading</th>
       <th>Curr reading</th>
       <th>Consumption</th>
       @endif
 
       @if($particular->particular_id == '2')
-      <th>Rate ( /CuM)</th>
+      <th>Water Rate (/CuM)</th>
       <th>Prev reading</th>
       <th>Curr reading</th>
       <th>Consumption</th>
@@ -70,15 +68,30 @@
         $bill_id_ctr =1;
         $room_id_ctr =1;
         $id_amt = 1;
-        $previous_reading = 1;
-        $current_reading = 1;
-        $consumption = 1;
-        $id_previous_reading = 1;
-        $id_current_reading = 1;
-        $id_consumption = 1;
-        $ctr_previous_reading = 1;
-        $ctr_current_reading = 1;
-        $ctr_consumption = 1;
+
+        // previus electric reading
+        $elecricity_previous_reading = 1;
+        $elecricity_previous_reading_id = 1;
+        $elecricity_previous_reading_ctr = 1;
+        //current electric reading
+        $elecricity_current_reading = 1;
+        $elecricity_current_reading_id = 1;
+        $elecricity_current_reading_ctr = 1;
+        //actual elecric consumption
+        $elecricity_consumption = 1;
+        $elecricity_consumption_id = 1;
+
+        // previus electric reading
+        $water_previous_reading = 1;
+        $water_previous_reading_id = 1;
+        $water_previous_reading_ctr = 1;
+        //current electric reading
+        $water_current_reading = 1;
+        $water_current_reading_id = 1;
+        $water_current_reading_ctr = 1;
+        //actual elecric consumption
+        $water_consumption = 1;
+        $water_consumption_id = 1;
     ?>
       <form id="createBulkBillsForm"
         action="/property/{{ Session::get('property_id') }}/create/bill/{{ $particular->particular_id }}/batch/{{ $batch_no}}/store"
@@ -89,14 +102,13 @@
       @foreach ($bills as $item)
       <tr>
         <th>{{ $ctr++ }}</th>
-        {{-- <td>{{ $item->bill_no }}</td> --}}
-        {{-- <td>{{ $item->first_name.' '.$item->last_name }}</td> --}}
         <input form="createBulkBillsForm" type="hidden" name="bill_id{{ $bill_id_ctr++ }}" value="{{ $item->bill_id }}">
-        <input form="createBulkBillsForm" type="hidden" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
+        <input form="createBulkBillsForm" type="text" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
         <td>{{ $item->building.' '.$item->unit_no }}</td>
         <td><input form="createBulkBillsForm" type="date" name="start{{ $start_ctr++ }}" value="{{ $item->start }}">
         </td>
         <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" value="{{ $item->end }}"></td>
+        {{-- show when the particular is electricity --}}
         @if($particular->particular_id == '3')
         <th>
           @foreach($electricity_rate as $rate)
@@ -107,25 +119,48 @@
         </th>
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number"
-            name="previous_reading{{ $previous_reading++ }}" id="id_previous_reading{{ $id_previous_reading++ }}"
-            value="{{ $item->prev_electricity_reading }}" oninput="autoCompute({{ $ctr_previous_reading++ }})"></th>
+            name="elecricity_previous_reading{{ $elecricity_previous_reading++ }}" id="elecricity_previous_reading_id{{ $elecricity_previous_reading_id++ }}"
+            value="{{ $item->prev_electricity_reading }}"
+            oninput="autoComputeElectricityConsumption({{ $elecricity_previous_reading_ctr++ }})"></th>
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number"
-            name="current_reading{{ $current_reading++ }}" id="id_current_reading{{ $id_current_reading++ }}"
-            oninput="autoCompute({{ $ctr_current_reading++ }})"></th>
-        <th><input form="createBulkBillsForm" class="col-md-12" type="number" name="consumption{{ $consumption++ }}"
-            id="id_consumption{{ $id_consumption++ }}" value="0" required readonly></th>
+            name="elecricity_current_reading{{ $elecricity_current_reading++ }}" id="elecricity_current_reading_id{{ $elecricity_current_reading_id++ }}"
+            oninput="autoComputeElectricityConsumption({{ $elecricity_current_reading_ctr++ }})" value="0.00"></th>
+            
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number" name="elecricity_consumption{{ $elecricity_consumption++ }}"
+            id="elecricity_consumption_id{{ $elecricity_consumption_id++ }}" value="0" required readonly value="{{ $item->amount?$item->amount:'0.00' }}"></th>
+        {{-- show when the particular is water --}}
+        @elseif($particular->particular_id == '2')
+        <th>
+          @foreach($electricity_rate as $rate)
+          <input form="createBulkBillsForm" class="col-md-12" type="number" value={{ $item->water_rate?
+          $item->electricity_rate: $rate->rate }}
+          step="0.001" class="col-md-12" id="water_rate" name="water_rate" readonly>
+          @endforeach
+        </th>
+
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number"
+            name="water_previous_reading{{ $elecricity_previous_reading++ }}" id="water_previous_reading_id{{ $water_previous_reading_id++ }}"
+            value="{{ $item->prev_water_reading }}" oninput="autoComputeWaterConsumption({{ $water_previous_reading_ctr++ }})"></th>
+
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number"
+            name="water_current_reading{{ $water_current_reading++ }}" id="water_current_reading_id{{ $water_current_reading_id++ }}"
+            oninput="autoComputeWaterConsumption({{ $water_current_reading_ctr++ }})" value="0.00"></th>
+
+        <th><input form="createBulkBillsForm" class="col-md-12" type="number" name="water_consumption{{ $water_consumption++ }}"
+            id="water_consumption_id{{ $water_consumption_id++ }}" value="0" required readonly value="{{ $item->amount?$item->amount:'0.00' }}"></th>
+        
         @endif
         <td>
-          @if ($particular->particular_id == '1')
+          @if ($particular->particular_id === '1')
           <input form="createBulkBillsForm" type="number" class="col-md-12" name="amount{{ $amount_ctr++ }}"
             step="0.001" value="{{ $item->amount? $item->amount: $item->rent }}">
-          @elseif ($particular->particular_id == '3')
+          {{-- @elseif ($particular->particular_id == '2' || $particular->particular_id == '3')
           <input form="createBulkBillsForm" type="number" step="0.001" name="amount{{ $amount_ctr++ }}"
-            id="id_amt{{ $id_amt++ }}" value="{{ $item->amount }}">
+            id="id_amt{{ $id_amt++ }}" value="{{ $item->amount }}"> --}}
           @else
-          <input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
-            value="{{ $item->amount }}">
+          <input form="createBulkBillsForm" type="number" step="0.001" name="amount{{ $amount_ctr++ }}"
+          id="id_amt{{ $id_amt++ }}" value="{{ $item->amount?$item->amount:'0.00' }}">
           @endif
         </td>
         <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a>
@@ -140,19 +175,34 @@
 {{-- scripts --}}
 @section('scripts')
 <script>
-  function autoCompute(val) {
-    var previous_reading = 'id_previous_reading'+val;
-    var current_reading = 'id_current_reading'+val;
-    var consumption = 'id_consumption'+val;
+  function autoComputeElectricityConsumption(val) {
+    var elecricity_previous_reading = 'elecricity_previous_reading_id'+val;
+    var elecricity_current_reading = 'elecricity_current_reading_id'+val;
+    var elecricity_consumption = 'elecricity_consumption_id'+val;
     var amt = 'id_amt'+val;
 
     var rate = parseFloat(document.getElementById('electricity_rate').value);
  
-    var actual_consumption = document.getElementById(current_reading).value - document.getElementById(previous_reading).value;
+    var actual_consumption = document.getElementById(elecricity_current_reading).value - document.getElementById(elecricity_previous_reading).value;
     
-    document.getElementById(consumption).value = parseFloat(actual_consumption,2);
+    document.getElementById(elecricity_consumption).value = parseFloat(actual_consumption,2);
     document.getElementById(amt).value = parseFloat(actual_consumption) * rate;
    
+  }
+
+  function autoComputeWaterConsumption(val) {
+  var water_previous_reading = 'water_previous_reading_id'+val;
+  var water_current_reading = 'water_current_reading_id'+val;
+  var water_consumption = 'water_consumption_id'+val;
+  var amt = 'id_amt'+val;
+  
+  var rate = parseFloat(document.getElementById('water_rate').value);
+  
+  var actual_consumption = document.getElementById(water_current_reading).value - document.getElementById(water_previous_reading).value;
+  
+  document.getElementById(water_consumption).value = parseFloat(actual_consumption,2);
+  document.getElementById(amt).value = parseFloat(actual_consumption) * rate;
+  
   }
 </script>
 @endsection

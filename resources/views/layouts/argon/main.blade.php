@@ -22,7 +22,7 @@
 
 <body>
      <!-- Load Facebook SDK for JavaScript -->
-  @include('layouts.argon.chat-messenger')
+  {{-- @include('layouts.argon.chat-messenger') --}}
   @include('layouts.argon.sidebar')
   <!-- Main content -->
   <div class="main-content" id="panel">

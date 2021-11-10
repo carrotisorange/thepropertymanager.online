@@ -25,7 +25,7 @@
 
 <body>
   <!-- Load Facebook SDK for JavaScript -->
-  @include('layouts.argon.chat-messenger')
+  {{-- @include('layouts.argon.chat-messenger') --}}
 
   <!-- Navbar -->
   <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg">

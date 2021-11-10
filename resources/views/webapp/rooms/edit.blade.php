@@ -55,9 +55,11 @@
 
                         <option value="{{ $room->status }}" selected>{{ $room->status }}</option>
 
-                        <option value="active">active</option>
-                        <option value="pending">pending</option>
+                        <option value="maintenance">maintenance</option>
+                        <option value="housekeeping">housekeeping</option>
                         <option value="occupied">occupied</option>
+                        <option value="reserved">reserved</option>
+                        <option value="vacant">vacant</option>
 
                     </select>
 

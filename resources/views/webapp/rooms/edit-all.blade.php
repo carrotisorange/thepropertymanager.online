@@ -18,12 +18,12 @@
 
 <div class="row align-items-center py-4">
   <div class="col-lg-6 text-left">
-    <h6 class="h2 text-dark d-inline-block mb-0">Edit room</h6>
+    <h6 class="h2 text-dark d-inline-block mb-0">Edit Rooms</h6>
   </div>
   <div class="col-lg-6 text-right">
     @if($units->count() <=0 ) @else <p class="text-right">
       <button type="submit" form="editUnitsForm" class="btn btn-primary"
-        onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"> Save</button>
+        onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
       </p>
       @endif
   </div>
@@ -134,13 +134,12 @@
             <td>
               <select form="editUnitsForm" type="text" name="status{{ $status++  }}" id="">
                 <option value="{{ $item->status }}" readonly selected class="bg-primary">{{ $item->status }}</option>
-                <option value="dirty">dirty</option>
-                <option value="vacant">vacant</option>
+                <option value="maintenance">maintenance</option>
+                <option value="housekeeping">housekeeping</option>
                 <option value="occupied">occupied</option>
-
                 <option value="reserved">reserved</option>
+                <option value="vacant">vacant</option>
               </select>
-
             </td>
 
 

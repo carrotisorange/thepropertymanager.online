@@ -107,8 +107,9 @@ class RoomController extends Controller
 
             $units = DB::table('units')
             ->where('property_id_foreign', Session::get('property_id'))
-            ->orderBy('floor', 'desc')
+       
             ->orderBy('unit_no', 'asc')
+             ->orderBy('floor', 'desc')
             ->where('units.status', '!=', 'deleted')
             ->get();
             
@@ -199,13 +200,13 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($property_id, $unit_id)
+    public function show($unit_id)
     {
         Session::put('current-page', 'rooms');
   
              $users = DB::table('users_properties_relations')
             ->join('users','user_id_foreign','id')
-           ->where('property_id_foreign', $property_id)
+           ->where('property_id_foreign', Session::get('property_id'))
            ->whereNotIn('role_id_foreign' ,['6', '7', '8'])
            ->get();
 

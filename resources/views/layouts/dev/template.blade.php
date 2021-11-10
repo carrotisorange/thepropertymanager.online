@@ -53,7 +53,7 @@
   <div id="preloader"></div>
 
       <!-- Load Facebook SDK for JavaScript -->
-      @include('layouts.argon.chat-messenger')
+      {{-- @include('layouts.argon.chat-messenger') --}}
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('/arsha/assets/vendor/jquery/jquery.min.js') }}"></script>

@@ -28,7 +28,9 @@
           <button type="submit" class="btn btn-primary btn-block" onclick="this.form.submit(); this.disabled = true;"><i
               class="fas fa-arrow-right"></i> Continue</button>
         </p>
-      
+        <p class="text-center">
+          <a class="text-danger" href="{{ url()->previous() }}"><i class="fas fa-times"></i> Cancel</a>
+        </p>
       </div>
     </div>
   </form>
