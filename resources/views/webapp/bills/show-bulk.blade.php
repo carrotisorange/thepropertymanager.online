@@ -40,6 +40,7 @@
     <thead>
       <th>#</th>
       <th>Room</th>
+      <th>Tenant</th>
       <th>Start</th>
       <th>End</th>
       @if($particular->particular_id == '3')
@@ -103,8 +104,9 @@
       <tr>
         <th>{{ $ctr++ }}</th>
         <input form="createBulkBillsForm" type="hidden" name="bill_id{{ $bill_id_ctr++ }}" value="{{ $item->bill_id }}">
-        <input form="createBulkBillsForm" type="text" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
+        <input form="createBulkBillsForm" type="hidden" name="room_id{{ $room_id_ctr++ }}" value="{{ $item->unit_id }}">
         <td>{{ $item->building.' '.$item->unit_no }}</td>
+        <td>{{ $item->first_name.' '.$item->last_name }}</td>
         <td><input form="createBulkBillsForm" type="date" name="start{{ $start_ctr++ }}" value="{{ $item->start }}">
         </td>
         <td><input form="createBulkBillsForm" type="date" name="end{{ $end_ctr++ }}" value="{{ $item->end }}"></td>
@@ -141,23 +143,24 @@
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number"
             name="water_previous_reading{{ $elecricity_previous_reading++ }}" id="water_previous_reading_id{{ $water_previous_reading_id++ }}"
-            value="{{ $item->prev_water_reading }}" oninput="autoComputeWaterConsumption({{ $water_previous_reading_ctr++ }})"></th>
+            value="{{ $item->prev_water_reading?$item->prev_water_reading: '0.00' }}" oninput="autoComputeWaterConsumption({{ $water_previous_reading_ctr++ }})"></th>
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number"
             name="water_current_reading{{ $water_current_reading++ }}" id="water_current_reading_id{{ $water_current_reading_id++ }}"
             oninput="autoComputeWaterConsumption({{ $water_current_reading_ctr++ }})" value="0.00"></th>
 
         <th><input form="createBulkBillsForm" class="col-md-12" type="number" name="water_consumption{{ $water_consumption++ }}"
-            id="water_consumption_id{{ $water_consumption_id++ }}" value="0" required readonly value="{{ $item->amount?$item->amount:'0.00' }}"></th>
+            id="water_consumption_id{{ $water_consumption_id++ }}" required readonly value="0.00"></th>
         
         @endif
         <td>
-          @if ($particular->particular_id === '1')
-          <input form="createBulkBillsForm" type="number" class="col-md-12" name="amount{{ $amount_ctr++ }}"
+  
+          @if ($particular->particular_id == '1')
+          <input form="createBulkBillsForm" type="number" class="col-md-12" name="rent{{ $amount_ctr++ }}"
             step="0.001" value="{{ $item->amount? $item->amount: $item->rent }}">
-          {{-- @elseif ($particular->particular_id == '2' || $particular->particular_id == '3')
-          <input form="createBulkBillsForm" type="number" step="0.001" name="amount{{ $amount_ctr++ }}"
-            id="id_amt{{ $id_amt++ }}" value="{{ $item->amount }}"> --}}
+          @elseif ($particular->particular_id == '2' || $particular->particular_id == '3')
+          <input form="createBulkBillsForm" type="number" name="amount{{ $amount_ctr++ }}" step="0.001"
+            id="id_amt{{ $id_amt++ }}" value="{{ $item->amount?$item->amount:'0.00' }}">
           @else
           <input form="createBulkBillsForm" type="number" step="0.001" name="amount{{ $amount_ctr++ }}"
           id="id_amt{{ $id_amt++ }}" value="{{ $item->amount?$item->amount:'0.00' }}">

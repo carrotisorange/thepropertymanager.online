@@ -351,7 +351,7 @@ Route::get('/property/{property_id}/bills/filter', 'BillController@filter');
 //route to create bulk bills
 Route::post('/property/{property_id}/bill/{particular_id}', 'BillController@create_bulk');
 //route to show pre-created bulk bills
-Route::get('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}', 'BillController@show_bulk');
+Route::get('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}/show', 'BillController@show_bulk');
 //route to edit parameters for bulk bills
 Route::get('/property/{property_id}/create/bill/{particular_id}/batch/{batch_no}/options', 'BillController@options_bulk');
 //route to edit parameters for bulk bills

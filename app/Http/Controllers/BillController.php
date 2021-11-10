@@ -65,11 +65,12 @@ class BillController extends Controller
             if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){ 
                 $bills = DB::table('bills')
                 ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
-                ->leftJoin('units', 'unit_id', 'bill_unit_id')
+                ->join('units', 'unit_id', 'bill_unit_id')
 
                 ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('bills.property_id_foreign', Session::get('property_id'))
                 ->whereNull('deleted_at')
+    
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
                 ->get();
@@ -77,10 +78,11 @@ class BillController extends Controller
             }else{
                 $bills = DB::table('bills')
                 ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
-                ->leftJoin('units', 'unit_id', 'bill_unit_id')
+                ->join('units', 'unit_id', 'bill_unit_id')
                 
                 ->join('particulars','particular_id_foreign', 'particular_id')
                 ->where('bills.property_id_foreign', Session::get('property_id'))
+               
                 ->whereNull('deleted_at')
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
@@ -315,7 +317,7 @@ class BillController extends Controller
         }
         }
 
-        return redirect('/property/'.Session::get('property_id').'/create/bill/'.$particular->particular_id.'/batch/'.$batch_no);
+        return redirect('/property/'.Session::get('property_id').'/create/bill/'.$particular->particular_id.'/batch/'.$batch_no.'/show');
     }
 
     public function show_bulk($property_id, $particular_id, $batch_no){
@@ -330,15 +332,15 @@ class BillController extends Controller
         // ->groupBy('bill_id')
         // ->orderBy('unit_id')
         // ->count();
-          $bills =  DB::table('contracts')
+           $bills =  DB::table('contracts')
           ->join('units', 'unit_id_foreign', 'unit_id')
           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
           ->join('bills', 'tenant_id', 'bill_tenant_id')
           ->where('bills.property_id_foreign', Session::get('property_id'))
           ->where('contracts.status', 'active')
           ->whereNull('bills.deleted_at')
-          ->where('contracts.bill_batch_no', $batch_no)
-          ->groupBy('unit_id')
+          ->where('tenants.bill_batch_no', $batch_no)
+          ->groupBy('contract_id')
           ->get();
 
         //get the info of the selected particular
@@ -470,11 +472,13 @@ class BillController extends Controller
         $batch_no = $batch_no;
 
         return view('webapp.bills.show-bulk',compact('bills', 'particular','batch_no','electricity_rate'));
+
     }
 
     
 
     public function store_bulk_bills(Request $request, $property_id, $particular_id, $batch_no){
+    
 
         //get the info of the selected particular
         $particular = Particular::findOrFail($particular_id);
@@ -482,7 +486,7 @@ class BillController extends Controller
         $bills = Bill::where('batch_no', $batch_no)->get();
         
             //execute if the particular is water
-            if($particular_id === '2'){
+            if($particular_id == '1'){
                 //create the bills
                 for ($i=$bills->min('bill_no'); $i<=$bills->max('bill_no'); $i++) {
                     //check if the bill exists
@@ -490,19 +494,36 @@ class BillController extends Controller
                         //update the selected bill
                         Bill::where('bill_id', $request->input('bill_id'.$i))
                         ->update([
-                                'amount' => $request->input('amount'.$i),
-                                'start' => $request->input('start'.$i),
-                                'end' => $request->input('end'.$i),
-                                'date_posted' => Carbon::now(),
-                                'prev_water_reading' => $request->input('water_previous_reading'.$i),
-                                'curr_water_reading' => $request->input('water_current_reading'.$i),
-                                'water_rate' => $request->water_rate,
-                                'bill_unit_id' => $request->input('room_id'.$i),
+                               'amount' => $request->input('rent'.$i),
+                               'start' => $request->input('start'.$i),
+                               'end' => $request->input('end'.$i),
+                               'date_posted' => Carbon::now(),
+                               'bill_unit_id' => $request->input('room_id'.$i),
                             ]);
                     // }
                 }
             //execute if the particular is electricity
-            }elseif($particular_id === '3'){
+            }elseif($particular_id == '2'){
+            //create the bills
+            for ($i=$bills->min('bill_no'); $i<=$bills->max('bill_no'); $i++) {
+                //check if the bill exists
+                // if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
+                //update the selected bill
+                Bill::where('bill_id', $request->input('bill_id'.$i))
+                ->update([
+                'amount' => $request->input('amount'.$i),
+                'start' => $request->input('start'.$i),
+                'end' => $request->input('end'.$i),
+                'date_posted' => Carbon::now(),
+                'prev_water_reading' => $request->input('water_previous_reading'.$i),
+                'curr_water_reading' => $request->input('water_current_reading'.$i),
+                'water_rate' => $request->water_rate,
+                'bill_unit_id' => $request->input('room_id'.$i),
+                ]);
+                // }
+                }
+                //execute if the particular is electricity
+                }elseif($particular_id == '3'){
                 for ($i=$bills->min('bill_no'); $i<=$bills->max('bill_no'); $i++) {
                     //check if the bill exists
                     // if (Bill::where('bill_id', $request->input('bill_id'.$i))->exists()){
