@@ -565,7 +565,7 @@ class TenantController extends Controller
      * @param  \App\Tenant  $tenant
      * @return \Illuminate\Http\Response
      */
-    public function show($tenant_id)
+    public function show($property_id, $tenant_id)
     {   
         if(Auth::user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 5){
             
