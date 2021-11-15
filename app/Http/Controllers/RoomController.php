@@ -48,66 +48,65 @@ class RoomController extends Controller
             Session::put('rent', $request->rent);
             Session::put('floor', $request->floor);
 
-            if(Session::has('status')){
-               $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('status', Session::get('status'))
-                ->orderBy('unit_no', 'desc')
+            // if(Session::has('status')){
+            //    $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('status', Session::get('status'))
+            //     ->orderBy('unit_no', 'desc')
           
-                ->get();
-            }
-            elseif(Session::has('type')){
-                $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('type', Session::get('type'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
-            elseif(Session::has('building')){
-                $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('building', Session::get('building'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
-            elseif(Session::has('floor')){
-                $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('floor', Session::get('floor'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
-            elseif(Session::has('occupancy')){
-                $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('occupancy', Session::get('occupancy'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
-            elseif(Session::has('rent')){
-                $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('rent', Session::get('rent'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
-            elseif(Session::has('size')){
-                $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->where('size', Session::get('size'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
-            else{
-                 $units = DB::table('units')
-                ->where('property_id_foreign', Session::get('property_id'))
-                ->orderBy('unit_no', 'desc')
-                ->get();
-            }
+            //     ->get();
+            // }
+            // elseif(Session::has('type')){
+            //     $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('type', Session::get('type'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
+            // elseif(Session::has('building')){
+            //     $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('building', Session::get('building'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
+            // elseif(Session::has('floor')){
+            //     $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('floor', Session::get('floor'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
+            // elseif(Session::has('occupancy')){
+            //     $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('occupancy', Session::get('occupancy'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
+            // elseif(Session::has('rent')){
+            //     $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('rent', Session::get('rent'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
+            // elseif(Session::has('size')){
+            //     $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->where('size', Session::get('size'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
+            // else{
+            //      $units = DB::table('units')
+            //     ->where('property_id_foreign', Session::get('property_id'))
+            //     ->orderBy('unit_no', 'desc')
+            //     ->get();
+            // }
 
-            $units = DB::table('units')
+           $units = DB::table('units')
             ->where('property_id_foreign', Session::get('property_id'))
-       
             ->orderBy('unit_no', 'asc')
              ->orderBy('floor', 'desc')
             ->where('units.status', '!=', 'deleted')
@@ -200,8 +199,9 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($unit_id)
+    public function show($property_id, $unit_id)
     {
+
         Session::put('current-page', 'rooms');
   
              $users = DB::table('users_properties_relations')
@@ -210,8 +210,7 @@ class RoomController extends Controller
            ->whereNotIn('role_id_foreign' ,['6', '7', '8'])
            ->get();
 
-         
-
+        
             $home = Unit::findOrFail($unit_id);
         
             $owners = DB::table('certificates')

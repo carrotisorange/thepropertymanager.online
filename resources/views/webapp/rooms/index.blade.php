@@ -130,7 +130,7 @@
             <div class="col-md-2.5">
               @if($item->status === 'occupied')
               <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-                href="{{ url('property/'.Session::get('property_id'), ['room', 'room_id'=>$item->unit_id]) }}"
+               href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
                 class="btn btn-sm btn-primary" style="width: 85px; height: 60px;">
                 @if($item->unit_type_id_foreign == '1')
                 <i class="fas fa-home fa-2x"></i>
@@ -144,7 +144,7 @@
               </a>
               @elseif($item->status === 'vacant')
               <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
+               href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
                 class="btn btn-sm btn-success" style="width: 85px; height: 60px;">
                 @if($item->unit_type_id_foreign == '1')
                 <i class="fas fa-home fa-2x"></i>
@@ -158,7 +158,7 @@
               </a>
               @elseif($item->status === 'reserved')
               <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
+               href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
                 class="btn btn-sm btn-warning" style="width: 85px; height: 60px;">
                 @if($item->unit_type_id_foreign == '1')
                 <i class="fas fa-home fa-2x"></i>
@@ -172,7 +172,7 @@
               </a>
               @elseif($item->status === 'maintenance')
               <a title="₱ {{ number_format ($item->rent, 2)}}/mo"
-                href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants" class="btn btn-sm btn-dark"
+               href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}/#tenants"
                 style="width: 85px; height: 60px;">
                 @if($item->unit_type_id_foreign == '1')
                 <i class="fas fa-home fa-2x"></i>
