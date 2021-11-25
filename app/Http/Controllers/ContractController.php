@@ -50,22 +50,104 @@ class ContractController extends Controller
             }
 
         }elseif($request->contract_option == 'moveout'){
-            if($contract->terminated_at == NULL){
                 if($balance>0){
-                    return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/#contracts/')->with('danger', 'Cannot moveout the contract due to the pending balance.');
+                    return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/#contracts/')->with('danger', 'Tenant cannot be moved out due to the pending balance.');
                 }else{
                     if($contract->status!='inactive'){
                         return redirect('/property/'.$request->property_id.'/room/'.$room_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/moveout');
                     }
                 }
-            }
+           
         }elseif($request->contract_option == 'delete'){
             return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/delete');
+        }elseif($request->contract_option == 'transfer'){
+            return redirect('/property/'.$request->property_id.'/tenant/'.$tenant_id.'/contract/'.$contract_id.'/create/transfer');
         }
+        
 
         
     }
 
+    public function create_transfer_room($property_id, $tenant_id, $contract_id){
+        $units = Property::findOrFail(Session::get('property_id'))
+
+        ->units()->whereIn('status',['vacant'])
+        ->get();        
+        
+
+        $buildings = Property::findOrFail(Session::get('property_id'))
+        ->units()
+        ->whereIn('status',['vacant'])
+        ->select('building', 'status', DB::raw('count(*) as count'))
+        ->groupBy('building')
+        ->orderBy('building', 'asc')
+        ->get('building', 'status','count');
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        $contract = Contract::findOrFail($contract_id);
+
+        return view('webapp.contracts.create-transfer-room', compact('units', 'buildings', 'tenant', 'contract'));
+    }
+
+    public function store_transfer_room(Request $request, $property_id, $tenant_id, $contract_id){
+
+       $current_contract = Contract::findOrFail($contract_id);
+
+       $new_contract_id = Uuid::generate()->string;
+
+       //make the current contract inactive
+       DB::table('contracts')->where('contract_id', $contract_id)
+       ->update([
+        'status' => 'inactive'
+       ]);
+
+       //change the status of the new contract to occupied
+       DB::table('units')->where('unit_id', $request->room_id)
+       ->update([
+        'status'=> 'occupied'          
+       ]);
+
+       //change the status of the old contract to vacant
+       DB::table('units')->where('unit_id', $current_contract->unit_id)
+        ->update([
+            'status'=> 'vacant'
+        ]);
+
+       DB::table('contracts')->insert([
+       'contract_id' => $new_contract_id,
+       'unit_id_foreign' => $request->room_id,
+       'tenant_id_foreign' => $current_contract->tenant_id_foreign,
+       'movein_at' => $current_contract->movein_at,
+       'moveout_at' => $current_contract->moveout_at,
+       'number_of_months' => $current_contract->number_of_months,
+       'term' => $current_contract->term,
+       'rent' => $current_contract->rent,
+       'discount' => $current_contract->discount,
+       'status' => $current_contract->status,
+       'referrer_id_foreign' => $current_contract->referrer_id_foreign,
+       'form_of_interaction' => $current_contract->form_of_interaction,
+       'created_at' => Carbon::now(),
+       ]);
+
+       $new_contract = Contract::findOrFail($new_contract_id);
+       $tenant = Tenant::findOrFail($current_contract->tenant_id_foreign);
+       $room = Unit::findOrFail($current_contract->unit_id_foreign);
+
+       $notification = new Notification();
+       $notification->user_id_foreign = Auth::user()->id;
+       $notification->property_id_foreign = Session::get('property_id');
+       $notification->type = 'contract';
+       $notification->message = Auth::user()->name. ' adds new contract for '.$tenant->first_name.' in
+       '.$room->unit_no.'.';
+       $notification->save();
+
+    
+
+        return redirect('/property/'.Session::get('property_id').'/tenant/'.$current_contract->tenant_id_foreign.'/#contracts')->with('success',
+        'Contract"s room has been transferred successfully!');
+        
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -294,7 +376,8 @@ class ContractController extends Controller
     //     return view('webapp.contracts.moveout', compact('tenant', 'property', 'contract'));
     // }
 
-    public function moveout_get(Request $request, $property_id, $unit_id, $tenant_id, $contract_id){      
+    public function moveout_get(Request $request, $property_id, $unit_id, $tenant_id, $contract_id){
+
 
         $tenant = Tenant::findOrFail($tenant_id);
 
@@ -397,7 +480,7 @@ class ContractController extends Controller
         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
             $current_bill_no = DB::table('units')
             ->join('bills', 'unit_id', 'bill_unit_id')
-            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('bills.property_id_foreign', Session::get('property_id'))
             ->max('bill_no') + 1;
     
         }else{
@@ -405,7 +488,7 @@ class ContractController extends Controller
             ->join('units', 'unit_id_foreign', 'unit_id')
             ->join('tenants', 'tenant_id_foreign', 'tenant_id')
             ->join('bills', 'tenant_id', 'bill_tenant_id')
-            ->where('property_id_foreign', Session::get('property_id'))
+            ->where('bills.property_id_foreign', Session::get('property_id'))
             ->max('bill_no') + 1;
         }     
         
@@ -472,7 +555,7 @@ class ContractController extends Controller
             //send welcome email to the tenant
 
             Mail::send('webapp.tenants.send-request-moveout-mail', $data, function($message) use ($data){
-            $message->to($data['email']);
+            // $message->to($data['email']);
             $message->bcc(['landleybernardo@thepropertymanager.online','thepropertymanagernoreply@gmail.com']);
             $message->subject('Contract Termination');
         });

@@ -189,6 +189,10 @@ Route::put('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/{
 Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/delete', 'ContractController@destroy');
 
 Route::get('/property/{property_id}/home/{unit_id}/tenant/{tenant_id}/contract/{contract_id}/alert', 'ContractController@send_contract_alert');
+//route to show available rooms for transfer
+Route::get('/property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/create/transfer', 'ContractController@create_transfer_room');
+//route to show info for transferring room
+Route::post('property/{property_id}/tenant/{tenant_id}/contract/{contract_id}/store/transfer', 'ContractController@store_transfer_room');
 
 //ROUTES FOR OCCUPANTCONTROLLER
 //route to show all occupants

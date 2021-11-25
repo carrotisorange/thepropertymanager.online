@@ -478,14 +478,14 @@ class BillController extends Controller
     
 
     public function store_bulk_bills(Request $request, $property_id, $particular_id, $batch_no){
-    
+        return $request->all();
 
         //get the info of the selected particular
         $particular = Particular::findOrFail($particular_id);
 
         $bills = Bill::where('batch_no', $batch_no)->get();
         
-            //execute if the particular is water
+            //execute if the particular is rent
             if($particular_id == '1'){
                 //create the bills
                 for ($i=$bills->min('bill_no'); $i<=$bills->max('bill_no'); $i++) {
@@ -502,7 +502,7 @@ class BillController extends Controller
                             ]);
                     // }
                 }
-            //execute if the particular is electricity
+            //execute if the particular is water
             }elseif($particular_id == '2'){
             //create the bills
             for ($i=$bills->min('bill_no'); $i<=$bills->max('bill_no'); $i++) {

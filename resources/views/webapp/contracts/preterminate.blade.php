@@ -61,9 +61,9 @@
       </div>
       <div class="col-md-7">
         <p class="text-right">
-          <span id='delete_row' class="btn btn-danger btn-sm"><i class="fas fa-minus fa-sm text-white-50"></i> Remove
+          <span id='delete_row' class="btn btn-danger"><i class="fas fa-minus fa-sm text-white-50"></i> Remove
             the current row</span>
-          <span id="add_row" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add more
+          <span id="add_row" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> Add more
             charges </span>
         </p>
       </div>
@@ -93,9 +93,9 @@
     <p class="text-right">
 
 
-      <button type="submit" form="preterminateContractForm" class="btn btn-primary btn-user btn-block btn-sm"
+      <button type="submit" form="preterminateContractForm" class="btn btn-primary btn-user btn-block"
         onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;"><i
-          class="fas fa-check"></i> Terminate</button>
+          class="fas fa-check"></i> Confirm termination</button>
     </p>
   </div>
 </div>

@@ -544,15 +544,18 @@
                   <td>{{ number_format($item->rent, 2) }}</td>
                   <th>
                     <form
-                      action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id_foreign }}/tenant/{{ $tenant->tenant_id }}/contract/{{ $item->contract_id }}/balance/{{ $balance->count() }}/action"
+                      action="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id_foreign }}/tenant/{{ $tenant->tenant_id }}/contract/{{ $item->contract_id }}/balance/{{ $balance->sum('balance') }}/action"
                       method="GET" onchange="submit();">
                       <select class="" name="contract_option" id="">
                         <option value="">Select your option</option>
                         <option value="edit">Edit</option>
+                        @if($item->contract_status=='active')
+                        <option value="transfer">Transfer</option>
+                        @endif
                         @if(!$item->terminated_at)
                         <option value="terminate">Terminate</option>
                         @endif
-                        @if(!$item->terminated_at)
+                        @if($item->contract_status=='preparing to moveout')
                         <option value="moveout">Moveout</option>
                         @endif
                         <option value="delete">Delete</option>
