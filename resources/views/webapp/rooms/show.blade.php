@@ -46,6 +46,11 @@
           aria-controls="nav-tenants" aria-selected="false"><i class="fas fa-users text-green"></i> Tenants <span
             class="badge badge-success badge-counter">{{ $tenants->count() }}</span></a>
         @endif
+
+        <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab"
+          aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-green"></i> Bills
+          <span class="badge badge-success badge-counter">{{ $bills->count() }}</span></a>
+
         <a class="nav-item nav-link" id="nav-revenues-tab" data-toggle="tab" href="#revenues" role="tab"
           aria-controls="nav-revenues" aria-selected="false"><i class="fas fa-coins text-yellow"></i> Revenues</a>
 
@@ -423,6 +428,52 @@
             </tr>
             @endforeach
             @endif
+          </table>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
+
+        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+          <table class="table table-hover">
+
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date posted</th>
+                <th>Bill no</th>
+                <th>Particular</th>
+                <th>Period covered</th>
+                <th>Bill amount</th>
+                <th>Amount paid</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <?php $bill_ctr = 1; ?>
+            @foreach ($bills as $item)
+            <tr>
+              <th>{{ $bill_ctr++ }}</th>
+              <td>{{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}</td>
+              <td>{{ $item->bill_no }}</td>
+              <td>{{ $item->particular }}</td>
+              <td>
+                {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
+                {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+              </td>
+              <td>{{ number_format($item->amount,2) }}</td>
+              <td>{{ number_format($item->amt_paid,2) }}</td>
+              <td>
+                @if($item->balance > 0)
+                <span class="text-danger">{{ number_format($item->balance,2) }}</span>
+                @else
+                <span>{{ number_format($item->balance,2) }}</span>
+                @endif
+              </td>
+              <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i>
+                  Remove</a></td>
+            </tr>
+            @endforeach
           </table>
         </div>
 

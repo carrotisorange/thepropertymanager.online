@@ -286,10 +286,20 @@ class RoomController extends Controller
             $room_types = DB::table('unit_types')->get();
 
             $room_floors = DB::table('unit_floors')->get();
+
+             $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+             ->join('particulars','particular_id_foreign', 'particular_id')
+             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as
+             amt_paid')
+             ->where('bill_unit_id', $unit_id)
+             ->groupBy('bill_id')
+             ->orderBy('bill_no', 'desc')
+             // ->havingRaw('balance > 0')
+             ->get();
           
             return
             view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home',
-            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories', 'revenues'));
+            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories', 'revenues', 'bills'));
            
        
     }

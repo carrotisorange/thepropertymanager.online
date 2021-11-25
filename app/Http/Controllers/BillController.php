@@ -478,7 +478,6 @@ class BillController extends Controller
     
 
     public function store_bulk_bills(Request $request, $property_id, $particular_id, $batch_no){
-        return $request->all();
 
         //get the info of the selected particular
         $particular = Particular::findOrFail($particular_id);
