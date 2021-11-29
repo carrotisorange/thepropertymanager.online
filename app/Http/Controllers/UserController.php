@@ -421,7 +421,7 @@ class UserController extends Controller
                     Auth::logout();
                     return redirect('/login')->with('success', 'Changes saved.');
                 }else{
-                    return back()->with('success', 'Changes saved!');
+                    return redirect('/property/'.Session::get('property_id').'/user/'.Auth::user()->id.'#settings')->with('success', 'Changes saved!');
                 }
             
           

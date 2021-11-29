@@ -51,36 +51,56 @@
         <div class="col-md-12 mx-auto">
           <div class="table-responsive text-nowrap">
             <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <td>{{ $user->name }}</td>
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <td>{{ $user->email }}</td>
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                  <th>Mobile</th>
-                  <td>{{ $user->mobile }}</td>
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                  <th>Role</th>
-                  <td>{{ $user->role_id_foreign }}</td>
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                  <th>Plan</th>
-                  <td>{{ $user->account_type }}</td>
-                </tr>
-              </thead>
+
+              <tr>
+                <th>Name</th>
+                <td>{{ $user->name }}</td>
+              </tr>
+
+
+              <tr>
+                <th>Email</th>
+                <td>{{ $user->email }}</td>
+              </tr>
+
+
+              <tr>
+                <th>Mobile</th>
+                <td>{{ $user->mobile }}</td>
+              </tr>
+
+              <tr>
+                <th>Civil Status</th>
+                <td>{{ $user->civil_status }}</td>
+              </tr>
+
+              <tr>
+                <th>Religion</th>
+                <td>{{ $user->religion }}</td>
+              </tr>
+
+              <tr>
+                <th>Birthdate</th>
+                <td>{{ $user->birthdate? Carbon\Carbon::parse($user->birthdate)->format('M d, Y'): ' ' }}</td>
+              </tr>
+
+              <tr>
+                <th>Address</th>
+                <td>{{ $user->address.' '.$user->city.' '.$user->province.' '.$user->country }}</td>
+              </tr>
+
+              {{--
+              <tr>
+                <th>Role</th>
+                <td>{{ $user->role_id_foreign }}</td>
+              </tr>
+              --}}
+
+              {{-- <tr>
+                <th>Plan</th>
+                <td>{{ $user->account_type }}</td>
+              </tr> --}}
+
             </table>
           </div>
         </div>
@@ -129,16 +149,20 @@
                 <td>{{ $item->session_last_login_ip }}</td>
                 <td>{{ $item->location }}</td>
                 <td>
-                  {{ $item->session_last_login_at? Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() : null }}
+                  {{ $item->session_last_login_at? Carbon\Carbon::parse($item->session_last_login_at)->toTimeString() :
+                  null }}
                 </td>
                 <td>
-                  {{ $item->session_last_logout_at? Carbon\Carbon::parse($item->session_last_logout_at)->toTimeString() : null }}
+                  {{ $item->session_last_logout_at? Carbon\Carbon::parse($item->session_last_logout_at)->toTimeString()
+                  : null }}
                 </td>
                 <td>
                   @if($item->session_last_logout_at == null)
                   0.0 hours
                   @else
-                  {{  number_format(Carbon\Carbon::parse($item->session_last_login_at)->DiffInHours(Carbon\Carbon::parse($item->session_last_logout_at)),1) }}
+                  {{
+                  number_format(Carbon\Carbon::parse($item->session_last_login_at)->DiffInHours(Carbon\Carbon::parse($item->session_last_logout_at)),1)
+                  }}
                   hours
                   @endif
 
@@ -181,8 +205,8 @@
                   {{ $item->category }}
 
                 </td>
-                <td><a
-                    href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title }}</a>
+                <td><a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id }}">{{ $item->title
+                    }}</a>
                 </td>
                 <td>
                   @if($item->urgency === 'urgent')
@@ -300,8 +324,8 @@
           </span>
           @enderror
           <p class="text-right">
-            <button form="editUserForm" type="submit" class="btn btn-success btn-sm"
-              onclick="return confirm('Are you sure you want perform this action?');"><i class="fas fa-check"></i>
+            <button form="editUserForm" type="submit" class="btn btn-primary"
+              onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>
               Update</button>
           </p>
 
@@ -310,12 +334,12 @@
           <small>Warning: Account deletion can't be undone. </small>
           <br>
           <form action="/users/{{ $user->id }}" method="POST">
-          @csrf
-          @method('delete')
-          <button type="submit" class="col-md-3 btn btn-danger btn-user btn-block" id="registerButton"
-            onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;">
-            <i class="fas fa-trash fa-sm text-white-50"></i> Delete
-          </button>
+            @csrf
+            @method('delete')
+            <button type="submit" class="col-md-3 btn btn-danger btn-user btn-block" id="registerButton"
+              onclick="return confirm('Are you sure you want perform this action?'); this.disabled = true;">
+              <i class="fas fa-trash fa-sm text-white-50"></i> Delete
+            </button>
           </form>
           @endif --}}
 
