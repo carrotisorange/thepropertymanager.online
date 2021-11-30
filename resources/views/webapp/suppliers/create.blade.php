@@ -46,7 +46,7 @@
 <div class="form-group row">
     <div class="col">
         <p class="text-right">
-            <button type="submit" form="addSupplierForm" class="btn btn-primary btn-sm"><i class="fas fa-check"></i>
+            <button type="submit" form="addSupplierForm" class="btn btn-primary"><i class="fas fa-check"></i>
                 Submit</button>
         </p>
     </div>

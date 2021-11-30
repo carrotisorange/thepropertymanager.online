@@ -12,7 +12,7 @@
     <h6 class="h2 text-dark d-inline-block mb-0">Suppliers</h6>
   </div>
   <div class="col text-right">
-    <a href="/property/{{ Session::get('property_id') }}/suppliers/create" class="btn btn-primary shadow-sm btn-sm"><i
+    <a href="/property/{{ Session::get('property_id') }}/suppliers/create" class="btn btn-primary shadow-sm"><i
         class="fas fa-plus fa-sm text-white-50"></i> New</a>
   </div>
 </div>
