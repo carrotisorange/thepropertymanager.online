@@ -491,8 +491,7 @@
 
       <div class="tab-pane fade" id="contracts" role="tabpanel" aria-labelledby="nav-contracts-tab">
 
-        <p class="text-left"> <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addContract"
-            data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New</a> </p>
+        <p class="text-left"> <a href="/property/{{ Session::get('property_id') }}/contract/room/select" class="btn btn-primary"><i class="fas fa-plus fa-sm text-white-50"></i> New</a> </p>
 
         <div style="display:none" id="showSelectedContract" class="col-md-6 p-0 m-0 mx-auto text-center">
           <div class="alert alert-success alert-dismissable custom-success-box">

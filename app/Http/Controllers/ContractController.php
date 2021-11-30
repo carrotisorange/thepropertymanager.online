@@ -327,6 +327,10 @@ class ContractController extends Controller
 
       
     }
+    
+    public function contract_room_select($property_id){
+        return $property_id;
+    }
 
     /**
      * Display the specified resource.

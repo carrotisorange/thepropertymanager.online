@@ -87,54 +87,51 @@ Route::prefix('property/{property_id}')->group(function(){
 });
 
 Route::prefix('property')->group(function(){
-    Route::get('/portforlio', 'PropertyController@view_portforlio')->name('view-portforlio');
-    Route::post('/propertytype/store', 'PropertyTypeController@store');
-    Route::get('/all', 'PropertyController@index');
-    Route::post('/select', 'PropertyController@select');
-    Route::get('/create/', 'PropertyController@create_property')->name('create-property');
+    Route::get('portforlio', 'PropertyController@view_portforlio')->name('view-portforlio');
+    Route::post('propertytype/store', 'PropertyTypeController@store');
+    Route::get('all', 'PropertyController@index');
+    Route::post('select', 'PropertyController@select');
+    Route::get('create', 'PropertyController@create_property')->name('create-property');
     Route::post('/', 'PropertyController@store_property');
 });
 
 //ROUTES FOR TENANTCONTROLLER
-Route::prefix('property')->group(function(){
-    Route::get('{property_id}/tenants', 'TenantController@index')->name('show-all-tenant');
-    Route::get('{property_id}/tenant/{tenant_id}', 'TenantController@show')->name('property.tenant');
-    Route::get('{property_id}/tenant/{tenant_id}/edit', 'TenantController@edit');
-    Route::put('{property_id}/tenant/{tenant_id}', 'TenantController@update');
-    Route::get('{property_id}/room/{unit_id}/create/tenant', 'TenantController@create');
-    Route::post('{property_id}/room/{unit_id}/store/tenant', 'TenantController@store');
-    Route::get('{property_id}/tenants/search', 'TenantController@index');
-    Route::get('{property_id}/tenants/filter', 'TenantController@filter');
-    Route::post('{property_id}/tenant/{tenant_id}/user/create', 'TenantController@create_user_access');
-    Route::put('{property_id}/home/{unit_id}/tenant/{tenant_id}/request', 'TenantController@request');
-    Route::put('{property_id}/home/{unit_id}/tenant/{tenant_id}/approve', 'TenantController@approve');
-    Route::put('{property_id}/tenant/{tenant_id}/upload/img','TenantController@upload_img');
-    Route::get('{property_id}/tenants/pending','TenantController@pending');
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('tenants', 'TenantController@index')->name('show-all-tenant');
+    Route::get('tenant/{tenant_id}', 'TenantController@show')->name('property.tenant');
+    Route::get('tenant/{tenant_id}/edit', 'TenantController@edit');
+    Route::put('tenant/{tenant_id}', 'TenantController@update');
+    Route::get('room/{unit_id}/create/tenant', 'TenantController@create');
+    Route::post('room/{unit_id}/store/tenant', 'TenantController@store');
+    Route::get('tenants/search', 'TenantController@index');
+    Route::get('tenants/filter', 'TenantController@filter');
+    Route::post('tenant/{tenant_id}/user/create', 'TenantController@create_user_access');
+    Route::put('home/{unit_id}/tenant/{tenant_id}/request', 'TenantController@request');
+    Route::put('home/{unit_id}/tenant/{tenant_id}/approve', 'TenantController@approve');
+    Route::put('tenant/{tenant_id}/upload/img','TenantController@upload_img');
+    Route::get('tenants/pending','TenantController@pending');
 });
 
 //print gate pass
 Route::get('/units/{unit_id}/tenants/{tenant_id}/print/gatepass', 'TenantController@printGatePass');
-
 Route::delete('/tenants/{tenant_id}', 'TenantController@destroy');
 
-
-
 //ROUTES FOR ADDING INVENTORIES TO ROOM
-Route::prefix('property/{property_id}')->group(function(){
-    Route::get('room/{unit_id}/create/inventory', 'InventoryController@create');
-    Route::post('room/{unit_id}/store/inventory', 'InventoryController@store');
-    Route::get('room/{unit_id}/update/inventory/{inventory_id}', 'InventoryController@edit');
-    Route::get('room/{unit_id}/show/inventory/{inventory_id}', 'InventoryController@show');
-    Route::put('room/{unit_id}/update/inventory', 'InventoryController@update');
-    Route::get('room/{room_id}/inventory/{inventory_ud}/delete/inventory','InventoryController@destroy');
+Route::prefix('property/{property_id}/room/{unit_id}')->group(function(){
+    Route::get('create/inventory', 'InventoryController@create');
+    Route::post('store/inventory', 'InventoryController@store');
+    Route::get('update/inventory/{inventory_id}', 'InventoryController@edit');
+    Route::get('show/inventory/{inventory_id}', 'InventoryController@show');
+    Route::put('update/inventory', 'InventoryController@update');
+    Route::get('inventory/{inventory_ud}/delete/inventory','InventoryController@destroy');
 });
-
 
 //ROUTES FOR CONTRACTCONTROLLER
 Route::prefix('property/{property_id}/')->group(function(){
     Route::get('tenant/{tenant_id}/contract/{contract_id}/extend', 'ContractController@extend');
     Route::post('tenant/{tenant_id}/contract/{contract_id}/extend','ContractController@extend_post');
     Route::get('room/{room_id}/tenant/{tenant_id}/create/contract','ContractController@create');
+    Route::get('contract/room/select', 'ContractController@contract_room_select');
     Route::post('room/{room_id}/tenant/{tenant_id}/contract/create','ContractController@new_contract');
     Route::get('room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/balance/{balance}/action','ContractController@action');
     Route::post('room/{unit_id}/tenant/{tenant_id}/store/contract', 'ContractController@store');
@@ -153,75 +150,52 @@ Route::prefix('property/{property_id}/')->group(function(){
 });
 
 //ROUTES FOR OCCUPANTCONTROLLER
-//route to show all occupants
-Route::get('/property/{property_id}/occupants', 'OccupantController@index')->name('show-all-occupant');
-//route to show an occupant
-Route::get('/property/{property_id}/occupant/{tenant_id}', 'OccupantController@show');
-//route to edit an occupant
-Route::get('/property/{property_id}/occupant/{tenant_id}/edit', 'OccupantController@edit');
-//route to update an occupant
-Route::put('/property/{property_id}/occupant/{tenant_id}', 'OccupantController@update');
-//route to create an occupant
-Route::get('/property/{property_id}/unit/{unit_id}/occupant', 'OccupantController@create');
-//route to create an occupant
-Route::get('/property/{property_id}/unit/{unit_id}/occupant/add', 'OccupantController@add_occupant');
-//route to post a new occupant
-Route::post('/property/{property_id}/unit/{unit_id}/occupant', 'OccupantController@store');
-//route to create an occupant with prefilled values
-Route::get('/property/{property_id}/unit/{unit_id}/occupant/prefilled', 'OccupantController@create_prefilled');
-//route to post a new occupant with prefilled values
-Route::post('/property/{property_id}/unit/{unit_id}/occupant/prefilled', 'OccupantController@store_prefilled');
-//route to search occupants
-Route::get('/property/{property_id}/occupants/search', 'OccupantController@index');
-
-
+Route::prefix('property')->group(function(){
+    Route::get('occupants', 'OccupantController@index')->name('show-all-occupant');
+    Route::get('occupant/{tenant_id}', 'OccupantController@show');
+    Route::get('occupant/{tenant_id}/edit', 'OccupantController@edit');
+    Route::put('occupant/{tenant_id}', 'OccupantController@update');
+    Route::get('unit/{unit_id}/occupant', 'OccupantController@create');
+    Route::get('unit/{unit_id}/occupant/add', 'OccupantController@add_occupant');
+    Route::post('unit/{unit_id}/occupant', 'OccupantController@store');
+    Route::get('unit/{unit_id}/occupant/prefilled', 'OccupantController@create_prefilled');
+    Route::post('unit/{unit_id}/occupant/prefilled', 'OccupantController@store_prefilled');
+    Route::get('occupants/search', 'OccupantController@index');
+});
 
 //ROUTES FOR ROOMCONTROLLER
 //route to create rooms
-Route::prefix('property')->group(function(){
-    Route::get('/create/room', 'RoomController@create')->name('create-room');
-    //route to post a new room
-    Route::post('/store/room', 'RoomController@store')->name('store-room');
-    //route to edit a room
-    Route::get('/{property_id}/room/{unit_no}/edit', 'RoomController@edit');
-    //route to update a room
-    Route::put('/{property_id}/room/{room_id}/update', 'RoomController@update');
-    //route to upload imagest to a room
-    //route to show all rooms
-    Route::get('/{property_id}/rooms', 'RoomController@index')->name('show-all-room');
-    //route to show a room
-    Route::get('/{property_id}/room/{unit_id}', 'RoomController@show');
-    //route to edit a room
-    Route::get('/edit/room', 'RoomController@edit_all')->name('edit-room');
-    //route to update all rooms
-    Route::put('/{property_id}/rooms/update', 'RoomController@update_all');
-    //route to delete a room
-    Route::delete('/{property_id}/room/{unit_id}/delete', 'RoomController@destroy');
-    //route to restore a deleted room
-    Route::put('/{property_id}/room/{unit_id}/restore', 'RoomController@restore');
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('room/{unit_no}/edit', 'RoomController@edit');
+    Route::put('room/{room_id}/update', 'RoomController@update');
+    Route::get('rooms', 'RoomController@index')->name('show-all-room');
+    Route::get('room/{unit_id}', 'RoomController@show');
 
-    Route::post('/{property_id}/room/{room_id}/upload', 'RoomController@upload');
-    //route to filter rooms
-    Route::get('/{property_id}/rooms/filter', 'RoomController@index');
-    //route to clear filters in rooms
-    Route::get('/{property_id}/rooms/clear', 'RoomController@clear');
+    Route::put('rooms/update', 'RoomController@update_all');
+    Route::delete('room/{unit_id}/delete', 'RoomController@destroy');
+    Route::put('room/{unit_id}/restore', 'RoomController@restore');
+    Route::post('room/{room_id}/upload', 'RoomController@upload');
+    Route::get('rooms/filter', 'RoomController@index');
+    Route::get('rooms/clear', 'RoomController@clear');
+});
+
+    
+Route::prefix('property')->group(function(){
+    Route::get('/edit/room', 'RoomController@edit_all')->name('edit-room');
+    Route::get('/create/room', 'RoomController@create')->name('create-room');
+    Route::post('/store/room', 'RoomController@store')->name('store-room');
 });
 
 //ROUTES FOR UNITCONTROLLER
-//route to show all units
-Route::get('/property/{property_id}/units', 'UnitController@index')->name('show-all-unit');
-//route to show a unit
-Route::get('/property/{property_id}/unit/{unit_id}', 'UnitController@show');
-//route to edit all units 
-Route::get('/property/{property_id}/units/{date}/edit', 'UnitController@edit_all');
-//route to update all units
-Route::put('/property/{property_id}/units/{date}/update', 'UnitController@update_all');
-//route to post a unit
-Route::post('/property/{property_id}/unit/store', 'UnitController@store');
-//route to update a unit
-Route::put('/property/{property_id}/unit/{unit_id}', 'UnitController@update');
-//route to clear unit filters
-Route::get('/property/{property_id}/units/clear', 'UnitController@clear_units_filters');
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('units', 'UnitController@index')->name('show-all-unit');
+    Route::get('unit/{unit_id}', 'UnitController@show');
+    Route::get('units/{date}/edit', 'UnitController@edit_all');
+    Route::put('units/{date}/update', 'UnitController@update_all');
+    Route::post('unit/store', 'UnitController@store');
+    Route::put('unit/{unit_id}', 'UnitController@update');
+    Route::get('units/clear', 'UnitController@clear_units_filters');
+});
 
 //ROUTES FOR GUARDIANCONTROLLER
 //route to post a guardian to a tenant
@@ -229,62 +203,28 @@ Route::post('/property/{property_id}/tenant/{tenant_id}/guardian', 'GuardianCont
 
 //ROUTES FOR CONCERNCONTOLLER
 Route::prefix('property/{property_id}')->group(function(){
-    //routes to show all concerns
     Route::get('/concerns', 'ConcernController@index')->name('show-all-concern');
-    //route to create a concern
     Route::get('room/{room_id}/create/concern', 'ConcernController@create_room_concern');
-    //route to view and edit a concern
-    Route::get('room/{room_id}/tenant/{tenant_id}/concern/{concern_id}/communications',
-    'ConcernController@show_concern_communications');
-    //route to update a concern
-    Route::put('room/{room_id}/concern/{concern_id}/update',
-    'ConcernController@update_room_concern');
-    //route to show all concerns of a tenant
+    Route::get('room/{room_id}/tenant/{tenant_id}/concern/{concern_id}/communications','ConcernController@show_concern_communications');
+    Route::put('room/{room_id}/concern/{concern_id}/update','ConcernController@update_room_concern');
     Route::post('tenant/{tenant_id}/concern', 'ConcernController@store');
-    //route to show all concerns of a unit
     Route::post('room/{unit_id}/store/concern', 'ConcernController@store_details');
-    //route to show all concerns of a unit
-    Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/assessment',
-    'ConcernController@create_assessment');
-    //route to store concern assessment
-    Route::put('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/assessment',
-    'ConcernController@store_assessment');
-    //route to show all concerns of a unit
-    Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/scope_of_work',
-    'ConcernController@create_scope_of_work');
-    //route to store concern assessment
-    Route::put('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/scope_of_work',
-    'ConcernController@store_scope_of_work');
-    //route to show all concerns of a unit
-    Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/materials',
-    'ConcernController@create_materials');
-
-    //route to show all concerns of a unit
+    Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/assessment','ConcernController@create_assessment');
+    Route::put('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/assessment','ConcernController@store_assessment');
+    Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/scope_of_work','ConcernController@create_scope_of_work');
+    Route::put('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/scope_of_work','ConcernController@store_scope_of_work');
+    Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/materials','ConcernController@create_materials');
     Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/approval','ConcernController@create_approval');
-    //route to show all concerns of a unit
-    Route::post('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/materials',
-    'ConcernController@store_materials');
-    //route to show all concerns of a unit
+    Route::post('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/materials','ConcernController@store_materials');
     Route::get('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/payment-options','ConcernController@create_payment_options');
-    //route to show all concerns of a unit
     Route::post('room/{unit_id}/tenant/{tenant_id}/concern/{concern_id}/store/payment-options','ConcernController@store_payment_options');
-    //route to show concern
     Route::get('concern/{concern_id}', 'ConcernController@show');
-    //route to show concerns of an employee
-    Route::get('concern/{concern_id}/assign/{user_id}',
-    'ConcernController@show_assigned_concerns');
-
-    //route to forward a concern to an employee
+    Route::get('concern/{concern_id}/assign/{user_id}','ConcernController@show_assigned_concerns');
     Route::put('concern/{concern_id}/forward', 'ConcernController@forward');
-    //route to show create a new concern
     Route::get('tenant/{tenant_id}/concern/create', 'ConcernController@create');
-    //route to store a new concern
     Route::post('tenant/{tenant_id}/concern/store', 'ConcernController@store');
-
-    //route to approve a concern
     Route::get('concern/{concern_id}/approve', 'ConcernController@concern_approve');
-
-
+    Route::get('pending-concerns', 'ConcernController@pending');
 });
 
 //concerns
@@ -305,73 +245,41 @@ Route::get('/property/{property_id}/audit-trails', 'NotifController@index')->nam
 
 //ROUTES FOR BillController
 Route::prefix('property/{property_id}')->group(function(){
-    //routes for tenants' bills
-    //route to create a tenant bill
     Route::get('/tenant/{tenant_id}/create/bill', 'BillController@create_tenant_bill');
-
-    //route to post tenant a tenant bill
     Route::post('tenant/{tenant_id}/store/bill', 'BillController@store_tenant_bill');
-
-
-    //route to create bills for new tenant
-    Route::get('room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/create/bill',
-    'BillController@create');
-
-    //route to store new bill for new tenant
+    Route::get('room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/create/bill','BillController@create');
     Route::post('room/{room_id}/tenant/{tenant_id}/store/bill', 'BillController@store');
-    //route to show all bills
     Route::get('bills', 'BillController@index')->name('show-all-bill');
-    //route to filter bills
     Route::get('bills/filter', 'BillController@filter');
-    //route to create bulk bills
     Route::post('bill/{particular_id}', 'BillController@create_bulk');
-    //route to show pre-created bulk bills
     Route::get('create/bill/{particular_id}/batch/{batch_no}/show', 'BillController@show_bulk');
-    //route to edit parameters for bulk bills
-    Route::get('create/bill/{particular_id}/batch/{batch_no}/options',
-    'BillController@options_bulk');
-    //route to edit parameters for bulk bills
-    Route::put('create/bill/{particular_id}/batch/{batch_no}/options',
-    'BillController@update_options_bulk');
-    //route to mass update tenants' bills
+    Route::get('create/bill/{particular_id}/batch/{batch_no}/options','BillController@options_bulk');
+    Route::put('create/bill/{particular_id}/batch/{batch_no}/options','BillController@update_options_bulk');
     Route::put('bill/{particular_id}/update', 'BillController@update_bulk');
-    //route to store bulk bills
-    Route::put('create/bill/{particular_id}/batch/{batch_no}/store',
-    'BillController@store_bulk_bills');
-    //route to edit a tenant's bills
+    Route::put('create/bill/{particular_id}/batch/{batch_no}/store','BillController@store_bulk_bills');
     Route::get('tenant/{tenant_id}/bills/edit', 'BillController@edit_tenant_bills');
-    //route to edit a unit's bills
     Route::get('unit/{home_id}/bills/edit', 'BillController@edit_occupant_bills');
-    //route to export a tenant's bills
     Route::get('tenant/{tenant_id}/bills/export', 'BillController@export');
-    //route to export a unit's bills
     Route::get('unit/{unit_id}/bills/export', 'BillController@export_occupant_bills');
-    //route to update a tenant's bills
     Route::put('tenant/{tenant_id}/bills/update', 'BillController@post_edited_bills');
-    //route to update a unit's bills
     Route::put('unit/{unit_id}/bills/update', 'BillController@update_occupant_bills');
-
     Route::post('bills/create', 'BillController@store');
-    //route to post a tenant's bills
     Route::post('tenant/{tenant_id}/bills/create', 'BillController@post_tenant_bill');
-    //route to post a unit's bills
     Route::post('unit/{unit_id}/bills/create', 'BillController@post_unit_bill');
     Route::post('bills/electric/{date}', 'BillController@post_bills_electric');
     Route::post('bills/water/{date}', 'BillController@post_bills_water');
     Route::post('bills/surcharge/{date}', 'BillController@post_bills_surcharge');
     Route::put('tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill');
+    Route::get('bills/search', 'BillController@index');
 });
-    //route to create bills for removing bills
-    Route::get('/bill/{bill_id}/delete/bill', 'BillController@destroy');
+//route to create bills for removing bills
+Route::get('/bill/{bill_id}/delete/bill', 'BillController@destroy');
 
 //ROUTES FOR JOBORDERCONTROLLER
-//route to show all job orders
-Route::get('/property/{property_id}/joborders', 'JobOrderController@index')->name('show-all-joborder');
-//route to show inventories
-Route::get('/property/{property_id}/joborder/{joborder_id}/inventory', 'JobOrderController@inventory');
-
-//routes for filtering bills based on dates
-Route::get('/property/{property_id}/bills/search', 'BillController@index');
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('joborders', 'JobOrderController@index')->name('show-all-joborder');
+    Route::get('joborder/{joborder_id}/inventory', 'JobOrderController@inventory');
+});
 
 Route::get('/blogs', 'BlogController@index');
 
@@ -388,17 +296,15 @@ Route::get('property/{property_id}/getting-started', function($property_id){
     return view('webapp.properties.getting-started',compact('property'));
 });
 
-
 Route::get('property/{property_id}/announcements', function($property_id){
     $property = Property::findOrFail($property_id);
     return view('webapp.properties.announcements',compact('property'));
 });
 
-Route::prefix('property')->group(function(){
-    //route for issues
-    Route::get('/{property_id}/issues', 'IssueController@index');
-    Route::get('/{property_id}/issue/{issue_id}', 'IssueController@show');
-    Route::post('/{property_id}/issue/create', 'IssueController@store');
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('issues', 'IssueController@index');
+    Route::get('issue/{issue_id}', 'IssueController@show');
+    Route::post('issue/create', 'IssueController@store');
 });
 
 //routes for blogs
@@ -407,46 +313,35 @@ Route::post('/property/{property_id}/blog', 'BlogController@store');
 Route::get('/property/{property_id}/blog/{blog_id}', 'BlogController@show');
 
 //ROUTES FOR OWNERCONTROLLER
-Route::prefix('property')->group(function(){
-    //route to create an owner
-    Route::get('{property_id}/room/{room_id}/create/owner', 'OwnerController@create');
-    //route to store new owner
-    Route::post('{property_id}/room/{room_id}/store/owner', 'OwnerController@store');
-    //route to show all the owner
-    Route::get('{property_id}/owners', 'OwnerController@index')->name('show-all-owner');
-    //route to show filtered owners based on the search keywords
-    Route::get('{property_id}/owners/search', 'OwnerController@search');
-    //route to edit owner details
-    Route::get('{property_id}/owner/{owner_id}/edit', 'OwnerController@edit');
-    //route to show specific owner
-    Route::get('{property_id}/owner/{owner_id}', 'OwnerController@show');
-    //route to update owner's details
-    Route::put('{property_id}/owner/{owner_id}', 'OwnerController@update');
-    //route to store a new owner
-    Route::post('{property_id}/room/{unit_id}/owner', 'OwnerController@store');
-    //route to upate owner's image
-    Route::put('{property_id}/owner/{owner_id}/upload/img','OwnerController@upload_img');
-    //create a credential for the owner
-    Route::get('{property_id}/owner/{owner_id}/create/credentials','OwnerController@create_owner_credentials');
-    //store new owner's credentials
-    Route::post('{property_id}/owner/{owner_id}/store/credentials', 'OwnerController@store_owner_credentials');
-
-    Route::delete('{property_id}/owner/{owner_id}/delete', 'OwnerController@destroy');
-
-    Route::post('{property_id}/owner/{owner_id}/user/create', 'OwnerController@create_user_access');
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('/room/{room_id}/create/owner', 'OwnerController@create');
+    Route::post('room/{room_id}/store/owner', 'OwnerController@store');
+    Route::get('owners', 'OwnerController@index')->name('show-all-owner');
+    Route::get('owners/search', 'OwnerController@search');
+    Route::get('owner/{owner_id}/edit', 'OwnerController@edit');
+    Route::get('owner/{owner_id}', 'OwnerController@show');
+    Route::put('owner/{owner_id}', 'OwnerController@update');
+    Route::post('room/{unit_id}/owner', 'OwnerController@store');
+    Route::put('owner/{owner_id}/upload/img','OwnerController@upload_img');
+    Route::get('owner/{owner_id}/create/credentials','OwnerController@create_owner_credentials');
+    Route::post('owner/{owner_id}/store/credentials', 'OwnerController@store_owner_credentials');
+    Route::delete('owner/{owner_id}/delete', 'OwnerController@destroy');
+    Route::post('owner/{owner_id}/user/create', 'OwnerController@create_user_access');
 });
 
-Route::get('/property/{property_id}/owner/{owner_id}/certificate/create', 'CertificateController@create')->name('create-certificate');
-Route::post('/property/{property_id}/owner/{owner_id}/certificate/store', 'CertificateController@store')->name('store-certificate');
+//ROUTES FOR CERTIFICATECONTROLLER
+Route::prefix('property/{property_id}/owner/{owner_id}/certificate')->group(function(){
+    Route::get('create','CertificateController@create')->name('create-certificate');
+    Route::post('store','CertificateController@store')->name('store-certificate');
+});
 
 Route::post('/property/{property_id}/concern/{concern_id}/joborder', 'JobOrderController@store');
 
-//routes for personnels
-Route::get('/property/{property_id}/personnels', 'PersonnelController@index')->name('show-all-personnel');
-Route::post('/property/{property_id}/personnel', 'PersonnelController@store');
-Route::delete('/property/{property_id}/personnel/{personnel_id}/', 'PersonnelController@destroy');
-
-
+Route::prefix('property/{property_id}')->group(function(){
+    Route::get('personnels', 'PersonnelController@index')->name('show-all-personnel');
+    Route::post('personnel', 'PersonnelController@store');
+    Route::delete('personnel/{personnel_id}', 'PersonnelController@destroy');
+});
 
 //routes for financials
 Route::get('/property/{property_id}/financials', 'FinancialController@index')->name('show-all-financial');
@@ -531,7 +426,7 @@ Route::prefix('dev')->group(function(){
     Route::post('updates/store', 'UpdateController@store');
 });
 
-    Route::post('/plan', 'DevController@post_plan');
+Route::post('/plan', 'DevController@post_plan');
 
 Route::get('/register', function(Request $request){
     // \Session::put('plan', $request->plan);
@@ -565,9 +460,6 @@ Route::post('concern/{concern_id}/response', 'ResponseController@store');
 
 //routes for notifications
 Route::get('property/{property_id}/notifications', 'NotificationController@index');
-Route::get('property/{property_id}/delinquents', 'CollectionController@delinquents');
-Route::get('property/{property_id}/pending-concerns', 'ConcernController@pending');
-
 
 //ROUTES FOR REMITTANCECONTROLLER
 Route::prefix('property/{property_id}')->group(function(){
@@ -578,15 +470,12 @@ Route::prefix('property/{property_id}')->group(function(){
     Route::get('room/{unit_id}/remittance/{remittance_id}', 'RemittanceController@show');
     Route::get('remittance/{remittance_id}/expenses', 'ExpenseController@index');
     Route::get('room/{room_id}/remittance/{remittance_id}/edit', 'RemittanceController@edit');
-    Route::put('premittance/{remittance_id}/update', 'RemittanceController@update');
+    Route::put('remittance/{remittance_id}/update', 'RemittanceController@update');
     Route::get('room/{room_id}/remittance/{remittance_id}/action','RemittanceController@action');
 });
 
-
 Route::get('/listings', function(){
-
     $properties = Property::all()->count();
-
     return view('layouts.arsha.listings', compact('properties'));
 });
 
@@ -610,6 +499,7 @@ Route::prefix('property/{property_id}')->group(function(){
     Route::get('collections', 'CollectionController@index')->name('show-all-collection');
     Route::post('tenant/{tenant_id}/collection', 'CollectionController@store');
     Route::post('home/{unit_id}/collection', 'CollectionController@collect_unit_payment');
+    Route::get('delinquents', 'CollectionController@delinquents');
 });
 
 //ROUTES FOR VIOLATIONCONTROLLER
