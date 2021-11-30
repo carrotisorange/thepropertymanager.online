@@ -135,7 +135,7 @@ class BillController extends Controller
             'amount' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'bill_unit_id' => 'required'
+            'bill_unit_id' => 'required',
          ]);
  
            //get the last added bill no of the property

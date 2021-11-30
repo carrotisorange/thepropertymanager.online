@@ -159,7 +159,7 @@
                   </tr>
                   @else
                   <tr>
-                    <td>Other Charges:</td>
+                    <td>Other asdas:</td>
                     <th></th>
                     <th></th>
                   </tr>

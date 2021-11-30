@@ -86,6 +86,10 @@
         <div class="form-group">
           <button type="submit" form="createBillForm" class="btn btn-primary btn-block"
             onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
+            <br>
+            <p class="text-center">
+              <a class="text-center text-dark" href="{{ url()->previous() }}/#certificates"><i class="fas fa-times"></i> Cancel</a>
+            </p>
         </div>
       </div>
     </div>
