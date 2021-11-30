@@ -629,15 +629,15 @@ class TenantController extends Controller
              
             $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
             ->max('bill_no') + 1;
-           
 
-             $balance = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+              $balance = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
             ->join('particulars','particular_id_foreign', 'particular_id')
           ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-          ->where('bill_tenant_id', $tenant_id)
+          //->where('bill_tenant_id', $tenant_id)
+          ->where('bills.property_id_foreign', Session::get('property_id'))
           ->groupBy('bill_id')
           ->orderBy('bill_no', 'desc')
-          // ->havingRaw('balance > 0')
+          //->havingRaw('balance > 0')
           ->get();
 
               $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
