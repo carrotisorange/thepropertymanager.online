@@ -167,12 +167,9 @@
             </td>
             <td>
               @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
-                @if($item->approved_by_tenant_at && $item->approved_by_owner_at && $item->approved_by_manager_at)
-                <a href="#/"><i class="fas fa-check"></i> NA</a>
-                @else
-                <a
-                  href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/approve/"><i
-                    class="fas fa-check"></i> Approve</a>
+                @if(!$item->approved_by_manager_at)
+              <a href="/property/{{ Session::get('property_id') }}/concern/{{ $item->concern_id }}/approve/"><i
+                  class="fas fa-check"></i> Approve</a>   
                 @endif
               @else
 
@@ -267,10 +264,10 @@
               @elseif($item->concern_status === 'assessed')
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/scope_of_work/"
                 target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'waiting for approval')
+              @elseif($item->concern_status === 'waiting_for_approval')
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/approval/"
                 target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'request for purchase')
+              @elseif($item->concern_status === 'request_for_purchase')
               <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/materials/"
                 target="_blank"><i class="fas fa-eye"></i> View</a>
               @elseif($item->concern_status === 'approved')

@@ -127,11 +127,11 @@
 <br>
 <div class="form-group">
   <button type="submit" form="editInvestorForm" class="btn btn-primary btn-block"
-    onclick="this.form.submit(); this.disabled = true;"> Save</button>
+    onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Update</button>
   <br>
   <p class="text-center">
     <a class="text-center text-dark"
-      href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}">Cancel</a>
+      href="{{ url()->previous() }}"><i class="fas fa-times"></i> Cancel</a>
   </p>
 </div>
 {{-- <div class="row">

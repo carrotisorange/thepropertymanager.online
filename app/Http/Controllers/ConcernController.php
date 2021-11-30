@@ -449,7 +449,7 @@ class ConcernController extends Controller
           'ended_on' => $request->ended_on,
           'concern_user_id' => $request->concern_user_id,
           'scope_of_work' => $request->scope_of_work,
-          'status' => 'waiting for approval',
+          'status' => 'waiting_for_approval',
           ]
           );
 
@@ -498,7 +498,7 @@ class ConcernController extends Controller
        Concern::where('concern_id', $concern_id)
        ->update(
        [
-       'status' => 'waiting for approval',
+       'status' => 'waiting_for_approval',
        ]
        );
 
@@ -516,7 +516,7 @@ class ConcernController extends Controller
       );
 
       //get the last added bill no of the property
-       return $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+        $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
        ->max('bill_no') + 1;
 
        $concern = Concern::findOrFail($concern_id);
@@ -540,8 +540,6 @@ class ConcernController extends Controller
       'amount'=> $request->total_cost,
       ]);
       }
-
-
           return
           back()->with('success',
           'Material is added sucessfully.');
@@ -587,8 +585,6 @@ class ConcernController extends Controller
 
        $room = Unit::findOrFail($unit_id);
 
-      
-
         return view('webapp.concerns.create-approval', compact('particulars','materials',
         'room','tenant','concern'));
         }
@@ -596,9 +592,7 @@ class ConcernController extends Controller
          public function create_payment_options($property_id, $room_id, $tenant_id, $concern_id){
 
                $room = Unit::findOrFail($room_id);
-
                $concern = Concern::findOrFail($concern_id);
-
                if($concern->concern_tenant_id){
                $tenant = Tenant::findOrFail($tenant_id);
                }else{
@@ -610,10 +604,10 @@ class ConcernController extends Controller
         }
 
         public function store_payment_options(Request $request, $property_id, $room_id, $tenant_id, $concern_id){
-
+         
+            return $request->all();
 
         $request->validate([
-        'payee' => 'required',
         'payment_options' => 'required',
         ]);
 
@@ -653,6 +647,18 @@ class ConcernController extends Controller
           return view('webapp.concerns.show-concern-communications', compact('room','users', 'tenant','concern','responses'));
           }
 
+
+    public function concern_approve($property_id, $concern_id){
+        
+        DB::table('concerns')
+        ->where('concern_id', $concern_id)
+        ->update([
+            'approved_by_manager_at'=> Carbon::now(),
+            'status' => 'approved'
+        ]);
+
+        return back()->with('success', 'Concern is approved successfully!');
+    }
 
     public function store(Request $request, $property_id, $tenant_id)
     {

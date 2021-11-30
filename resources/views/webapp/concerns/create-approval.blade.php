@@ -105,13 +105,13 @@
                             <a class="btn btn-block btn-primary"
                                 href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/payment-options">Next</a>
                             @else
-                            <a class="btn btn-block btn-primary" href="" disabled>Waiting for approval</a>
+                            <a class="btn btn-block btn-primary" href="" disabled><i class="fas fa-clock"></i> Waiting for approval</a>
                             @endif
                         </p>
 
                         <p class="text-center">
                             <a class="text-center text-dark"
-                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/materials">Back</a>
+                                href="{{ url()->previous() }}"><i class="fas fa-arrow-left"></i> Back</a>
                         </p>
                     </div>
                 </div>

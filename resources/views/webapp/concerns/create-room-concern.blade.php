@@ -93,11 +93,11 @@
       <div class="form-row">
         <div class="form-group col-md-12 mx-auto">
           <button type="submit" form="createConcernForm" class="btn btn-primary btn-block"
-            onclick="this.form.submit(); this.disabled = true;"> Next</button>
+            onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Next</button>
           <br>
           <p class="text-center">
             <a class="text-center text-dark"
-              href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/#concerns">Cancel</a>
+              href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/#concerns"><i class="fas fa-times"></i> Cancel</a>
           </p>
         </div>
       </div>

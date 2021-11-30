@@ -29,10 +29,11 @@
                     <div class="form-group col-md-12">
                         <label for="">Charge to:</label>
 
-                        <form form="createConcernForm" name="payee"
-                            action="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/concern/action"
-                            method="GET" onchange="submit();">
-                            <select form="createConcernForm" class="form-control" name="payee">
+                        <form form="selectPaymentOptionForm" name="payee"
+                            action="/property/{{ Session::get('property_id') }}/room/{{ $concern->concern_unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/store/payment-options"
+                            method="POST" onchange="submit();">
+                            @csrf
+                            <select form="selectPaymentOptionForm" class="form-control" name="payee">
                                 <option value="{{ old('payee')?old('payee'):$concern->payee }}">
                                     {{ old('payee')?old('payee'):$concern->payee }}
                                 </option>
@@ -84,7 +85,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-12 mx-auto">
                         <button type="submit" form="createConcernForm" class="btn btn-primary btn-block"
-                            onclick="this.form.submit(); this.disabled = true;"> Finish</button>
+                            onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Finish</button>
                         <br>
                         <p class="text-center">
                             <a class="text-center text-dark"

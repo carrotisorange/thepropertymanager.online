@@ -59,11 +59,11 @@
 
                 <div class="form-group">
                     <button type="submit" form="createOwnerCredentialsForm" class="btn btn-primary btn-block"
-                        onclick="this.form.submit(); this.disabled = true;"> Save</button>
+                        onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
                     <br>
                     <p class="text-center">
                         <a class="text-center text-dark"
-                            href="/property/{{ Session::get('property_id') }}/owner/{{ $owner->owner_id }}/#credentials">Cancel</a>
+                            href="{{ url()->previous() }}/#credentials"><i class="fas fa-times"></i> Cancel</a>
                     </p>
                 </div>
             </div>

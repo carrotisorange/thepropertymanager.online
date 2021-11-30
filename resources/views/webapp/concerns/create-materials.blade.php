@@ -71,8 +71,8 @@
                                 </small>
                                 @enderror
                             </td>
-                            <td> <button form="createBillForm" type="submit" class="btn btn-primary"
-                                    onclick="this.form.submit(); this.disabled = true;"> Save</button></td>
+                            <td> <button form="createBillForm" type="submit" class="btn btn-sm btn-primary"
+                                    onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Save</button></td>
                         </tr>
                     </table>
                 </div>
@@ -115,12 +115,12 @@
                     <div class="form-group col-md-12 mx-auto">
                       <p class="text-center">
                         <a class="btn btn-block btn-primary"
-                        href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/approval">Next</a>
+                        href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/approval"><i class="fas fa-arrow-right"></i> Next</a>
                       </p>
                         
                         <p class="text-center">
                             <a class="text-center text-dark"
-                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/scope_of_work">Back</a>
+                                href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}/tenant/{{ $concern->concern_tenant_id?$tenant->tenant_id:$tenant->owner_id }}/concern/{{ $concern->concern_id }}/scope_of_work"><i class="fas fa-arrow-left"></i> Back</a>
                         </p>
                     </div>
                 </div>
