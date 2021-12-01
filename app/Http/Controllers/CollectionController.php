@@ -14,6 +14,7 @@ use App\Contract;
 use Session;
 use App\Notification;
 use App\OccupancyRate;
+use App\Notif;
 
 class CollectionController extends Controller
 {
@@ -75,6 +76,16 @@ class CollectionController extends Controller
 
         Session::put(Auth::user()->id.'date', $search);
 
+             $count_collections = Contract::
+             join('tenants', 'tenant_id_foreign', 'tenant_id')
+             ->join('payments', 'payment_tenant_id', 'tenant_id')
+             ->join('units', 'unit_id_foreign', 'unit_id')
+             ->where('property_id_foreign', $property_id)
+
+             ->whereNull('deleted_at')
+             ->orderBy('payment_created', 'desc')
+             ->count();
+
         if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '7'){
             if($search  === null){
                 $collections = Contract::
@@ -84,16 +95,8 @@ class CollectionController extends Controller
                 ->where('property_id_foreign', $property_id)
                 ->whereNull('deleted_at')
                 ->orderBy('payment_created', 'desc')
-               ->get();
-            //   $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-            //     ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-            //     ->join('tenants', 'bill_tenant_id', 'tenant_id')
-            //     ->join('units', 'unit_id_foreign', 'unit_id')
-            //     ->join('particulars','particular_id_foreign', 'particular_id')
-            //     ->where('property_id_foreign', $property_id)
-            //     ->groupBy('payment_id')
-            //     ->orderBy('payment_created', 'desc')
-            //    ->get();
+               ->paginate(5);
+
             }else{
 
                 $collections = Contract::
@@ -104,18 +107,9 @@ class CollectionController extends Controller
                 ->where('payment_created', $search)
                 ->whereNull('deleted_at')
                 ->orderBy('payment_created', 'desc')
-               ->get();
+               ->paginate(5);
 
-            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-            //     ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-            //     ->join('tenants', 'bill_tenant_id', 'tenant_id')
-            //     ->join('units', 'unit_id_foreign', 'unit_id')
-            //     ->join('particulars','particular_id_foreign', 'particular_id')
-            //     ->where('property_id_foreign', $property_id)
-            //     ->where('payment_created', $search)
-            //     ->groupBy('payment_id')
-            //     ->orderBy('payment_created', 'desc')
-            //    ->get();
+            
             }
         }else{
             if($search  === null){
@@ -127,16 +121,9 @@ class CollectionController extends Controller
                 ->whereNull('deleted_at')
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
-               ->get();
+                  ->paginate(5);
 
-            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-            //     ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-            //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            //     ->join('units', 'unit_id_foreign', 'unit_id')
-            //     ->where('property_id_foreign', $property_id)
-            //     ->groupBy('payment_id')
-            //     ->orderBy('payment_created', 'desc')
-            //    ->get();
+                 
             }else{
             
                 $collections = Contract::
@@ -148,21 +135,12 @@ class CollectionController extends Controller
                 ->whereNull('deleted_at')
                 ->groupBy('payment_id')
                 ->orderBy('payment_created', 'desc')
-               ->get();
-
-            //     $collections = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-            //     ->join('contracts', 'bill_unit_id', 'unit_id_foreign')
-            //     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-            //     ->join('units', 'unit_id_foreign', 'unit_id')
-            //     ->where('property_id_foreign', $property_id)
-            //     ->where('payment_created', $search)
-            //     ->groupBy('payment_id')
-            //     ->orderBy('payment_created', 'desc')
-            //    ->get();
+               ->paginate(5);
+              
             }
         }
 
-       return view('webapp.collections.index', compact('collections'));
+       return view('webapp.collections.index', compact('collections', 'count_collections'));
     }
 
     /**
@@ -811,33 +789,22 @@ public function export_payment($property_id, $room_id, $tenant_id, $payment_id){
     public function destroy($payment_id)
     {
 
-        Payment::findOrFail($payment_id)->delete();
-        
-        return back()->with('success', 'Collection is deleted successfully!');
+          $payment = Payment::findOrFail($payment_id);
 
-        // $payment = Payment::findOrFail($payment_id);
+         $notification = new Notif();
+         $notification->user_id_foreign = Auth::user()->id;
+         $notification->property_id_foreign = Session::get('property_id');
+         $notification->type = 'collection';
+         $notification->amount = $payment->amt_paid;
+         $notification->message = Auth::user()->name.' deletes ar # '. $payment->ar_no;
+         $notification->save();
 
-        // $tenant = Tenant::findOrFail($tenant_id);
+         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-        // $notification = new Notification();
-        // $notification->user_id_foreign = Auth::user()->id;
-        // $notification->property_id_foreign = Session::get('property_id');
-        // $notification->type = 'payment';
-        
-        // $notification->message = Auth::user()->name.' deletes payment made by '.$tenant->first_name.' '.$tenant->last_name.'.';
-        // $notification->save();
+         Payment::find($payment_id)->delete();
 
-        //  Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+         return back()->with('success', 'AR # '.$payment->ar_no.' is deleted successfully.');
 
-        // $bill = Payment::findOrFail($payment_id);
-        // $bill->payment_status = 'deleted';
-        // $bill->save();
-
-        // if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-        //     return redirect('/property/'.$property_id.'/occupant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
-        // }else{
-        //     return redirect('/property/'.$property_id.'/tenant/'.$tenant_id.'#payments')->with('success', ' Payment is deleted successfully.');
-        // }
     }
 
 }

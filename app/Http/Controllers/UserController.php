@@ -76,7 +76,7 @@ class UserController extends Controller
         ->select('*', 'properties.name as property_name', 'users.name as user_name')
         ->where('property_id_foreign', Session::get('property_id'))
         ->orderBy('sessions.created_at', 'desc')
-        ->get();
+        ->paginate(5);
 
         return view('webapp.users.index', compact('sessions'));
 }

@@ -49,7 +49,7 @@ class OwnerController extends Controller
             ->join('owners', 'users_properties_relations.user_id_foreign', 'owners.user_id_foreign')
             ->where('property_id', $property_id)
             ->orderBy('owner_id', 'desc')
-            ->get();
+            ->paginate(5);
     
             $count_owners = DB::table('users_properties_relations')
             ->join('properties', 'property_id_foreign', 'property_id')
@@ -63,7 +63,7 @@ class OwnerController extends Controller
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->where('property_id_foreign', $property_id)
                 ->orderBy('owners.name')
-                ->get();
+                     ->paginate(5);
 
                 $count_owners = DB::table('certificates')
                 ->join('owners', 'owner_id_foreign', 'owner_id')
@@ -94,7 +94,7 @@ class OwnerController extends Controller
         ->join('units', 'certificates.unit_id_foreign', 'unit_id')
         ->where('property_id_foreign', $property_id)
         ->whereRaw("name like '%$search%' ")
-        ->get();
+           ->paginate(5);
 
         $count_owners = DB::table('certificates')
         ->join('owners', 'owner_id_foreign', 'owner_id')

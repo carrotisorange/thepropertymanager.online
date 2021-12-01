@@ -2,18 +2,6 @@
 
 @section('title', 'Bills')
 
-@section('css')
-<style>
-  /*This will work on every browser*/
-  thead tr:nth-child(1) th {
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-</style>
-@endsection
-
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-3">
@@ -21,7 +9,7 @@
       <select class="form-control" name="particular" id="">
         <option value="">All posted bills</option>
         @foreach ($property_bills as $item)
-        <option value="{{ $item->particular_id }}">{{ $item->particular }} bills only</option>
+        <option value="{{ $item->particular_id }}">{{ $item->particular }} bills</option>
         @endforeach
       </select>
 
@@ -56,19 +44,22 @@
 </div>
 
 
-<span class=""> <small> Showing <b>{{ number_format($bills->count(), 0) }} </b> bills...</span></small>
+<h3 class="text-center">
+  <span class=""> <small> Showing <b>{{ $bills->count() }} </b> of {{ $count_bills }}
+      {{ Str::plural('bill', $count_bills) }}</span></small>
+</h3>
 
 {{-- @if(!$bills->count())
 <p class="text-danger text-center">No bills found!</p>
 
 @else --}}
-<div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+
   <table class="table table-hover">
     <thead>
 
       <tr>
-        <th>#</th>
-        <th>Date</th>
+  
+        <th>Date posted</th>
         <th>Bill No</th>
         @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
         Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type')
@@ -97,7 +88,8 @@
 
 
   </table>
-</div>
+  {{ $bills->links() }}
+
 {{-- @endif --}}
 
 <div class="modal fade" id="createBills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

@@ -73,7 +73,9 @@ class BillController extends Controller
     
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
-                ->get();
+                ->paginate(5);
+
+                $count_bills=Bill::where('property_id_foreign', Session::get('property_id'))->count();
                
             }else{
                 $bills = DB::table('bills')
@@ -86,10 +88,12 @@ class BillController extends Controller
                 ->whereNull('deleted_at')
                 ->orderBy('date_posted', 'desc')
                 ->groupBy('bill_id')
-                ->get();
+                  ->paginate(5);
+
+                     $count_bills=Bill::where('property_id_foreign', Session::get('property_id'))->count();
             }    
  
-            return view('webapp.bills.index', compact('bills', 'property_bills'));
+            return view('webapp.bills.index', compact('bills', 'property_bills', 'count_bills'));
         }else{
             return view('layouts.arsha.unregistered');
         }
@@ -230,18 +234,20 @@ class BillController extends Controller
  
          if(auth()->user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3){
             if(Session::get('property_type') === '5' || Session::get('property_type') === '1' || Session::get('property_type') === '6' ){
-                $bills = DB::table('contracts')
-                ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-                ->join('units', 'unit_id_foreign', 'unit_id')
-                ->join('bills', 'tenant_id', 'bill_tenant_id')
-                ->join('particulars','particular_id_foreign', 'particular_id')
-                ->where('bills.property_id_foreign', Session::get('property_id'))
-                ->where('particular_id_foreign', $request->particular)
-                    ->whereNull('deleted_at')
-                ->orderBy('date_posted', 'desc')
-                ->groupBy('bill_id')
-                ->havingRaw('amount != 0')
-                ->get();   
+               
+                 $bills = DB::table('bills')
+                 ->leftJoin('tenants', 'tenant_id', 'bill_tenant_id')
+                 ->join('units', 'unit_id', 'bill_unit_id')
+
+                 ->join('particulars','particular_id_foreign', 'particular_id')
+                 ->where('bills.property_id_foreign', Session::get('property_id'))
+                 ->whereNull('deleted_at')
+                 ->orderBy('date_posted', 'desc')
+                 ->groupBy('bill_id')
+                 ->paginate(5);
+     
+
+                $count_bills=Bill::where('property_id_foreign', Session::get('property_id'))->count();
             }else{
                 $bills = DB::table('contracts')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -253,10 +259,12 @@ class BillController extends Controller
                         ->whereNull('deleted_at')
                     ->orderBy('date_posted', 'desc')
                     ->groupBy('bill_id')
-                    ->havingRaw('amount != 0')
-                    ->get();
+                 
+                    ->paginate(5);
+
+                    $count_bills=Bill::where('property_id_foreign', Session::get('property_id'))->count();
             } 
-             return view('webapp.bills.index', compact('bills', 'property_bills','particular'));
+             return view('webapp.bills.index', compact('bills', 'property_bills','particular','count_bills'));
          }else{
              return view('layouts.arsha.unregistered');
          }
@@ -1388,7 +1396,7 @@ DB::table('properties')
         ->where('particular_id_foreign', '1')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
-             ->havingRaw('balance > 0')
+        ->havingRaw('balance > 0')
         ->get();
         
         
@@ -1414,7 +1422,6 @@ DB::table('properties')
         ->where('particular_id_foreign','!=', '16')
         ->where('particular_id_foreign','!=', '18')
         ->orderBy('bill_no', 'desc')
-        // ->havingRaw('balance != 0')
         ->havingRaw('balance > 0')
         ->get();
 

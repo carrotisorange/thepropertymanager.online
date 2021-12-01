@@ -30,5 +30,5 @@
         {{ number_format($collection->amt_paid,2) }}
         @endif
     </td>
-    <td><a class="text-danger" href="/payment/{{ $collection->payment_id }}/delete/payment"><i class="fas fa-times"></i>Remove</a></td>
+    <td><a class="text-danger" href="/payment/{{ $collection->payment_id }}/delete/payment"><i class="fas fa-times"></i> Remove</a></td>
 </tr>

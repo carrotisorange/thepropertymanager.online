@@ -40,7 +40,6 @@ class TenantController extends Controller
      */
     public function index(Request $request, $property_id)
     {
-     
         Session::put('current-page', 'tenants');
 
         $notification = new Notification();
@@ -76,14 +75,14 @@ class TenantController extends Controller
             
             if($search === null){
                if(Session::get('status')){
-                $tenants = DB::table('contracts')
+                 $tenants = DB::table('contracts')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
                 ->select('*', 'contracts.status as contract_status')
                  ->where('property_id_foreign', Session::get('property_id'))
                  ->where('contracts.status', Session::get('status'))
                 ->orderBy('tenant_id', 'desc')
-                ->get();
+                ->paginate(5);
 
                 $count_tenants = DB::table('contracts')
                 ->join('units', 'unit_id_foreign', 'unit_id')
@@ -92,21 +91,19 @@ class TenantController extends Controller
                  ->where('contracts.status', Session::get('status'))
                 ->count();
                }else{
-                $tenants = DB::table('contracts')
+                 $tenants = DB::table('contracts')
                 ->join('units', 'unit_id_foreign', 'unit_id')
                 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
                 ->select('*', 'contracts.status as contract_status')
-                 ->where('property_id_foreign', Session::get('property_id'))
-                
+                ->where('property_id_foreign', Session::get('property_id'))
                 ->orderBy('tenant_id', 'desc')
-                ->get();
-
+                ->paginate(5);
                }
 
             }else{
 
                 if(Session::get('status')){
-                    $tenants = DB::table('contracts')
+                     $tenants = DB::table('contracts')
                     ->join('units', 'unit_id_foreign', 'unit_id')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
                     ->select('*', 'contracts.status as contract_status')
@@ -114,9 +111,8 @@ class TenantController extends Controller
                      ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
                      ->where('contracts.status', Session::get('status'))
                      ->orderBy('tenant_id', 'desc')
-                    ->get();
+                          ->paginate(5);
 
-                        
                     $count_tenants = DB::table('contracts')
                     ->join('units', 'unit_id_foreign', 'unit_id')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -126,14 +122,14 @@ class TenantController extends Controller
                     ->count();
     
                    }else{
-                    $tenants = DB::table('contracts')
+                      $tenants = DB::table('contracts')
                     ->join('units', 'unit_id_foreign', 'unit_id')
                     ->join('tenants', 'tenant_id_foreign', 'tenant_id')
                     ->select('*', 'contracts.status as contract_status')
                      ->where('property_id_foreign', Session::get('property_id'))
                      ->whereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
                      ->orderBy('tenant_id', 'desc')
-                    ->get();
+                    ->paginate(5);
                    }
              }
         return view('webapp.tenants.index', compact('tenants', 'count_tenants', 'tenant_status'));
@@ -189,7 +185,7 @@ class TenantController extends Controller
                  ->where('property_id_foreign', Session::get('property_id'))
                  ->where('contracts.status', $request->tenant_status)
                 ->orderBy('tenant_id', 'desc')
-                ->get();
+                      ->paginate(5);
 
               
                }else{
@@ -200,7 +196,7 @@ class TenantController extends Controller
                  ->where('property_id_foreign', Session::get('property_id'))
                 
                 ->orderBy('tenant_id', 'desc')
-                ->get();
+                     ->paginate(5);
 
                
                }
@@ -216,7 +212,7 @@ class TenantController extends Controller
                      ->where("concat(first_name, ' ', last_name) like '%$search%' ")
                      ->where('contracts.status', $request->tenant_status)
                      ->orderBy('tenant_id', 'desc')
-                    ->get();
+                          ->paginate(5);
 
                         
                     
@@ -230,7 +226,7 @@ class TenantController extends Controller
                      ->where("concat(first_name, ' ', last_name) like '%$search%' ")
                     
                      ->orderBy('tenant_id', 'desc')
-                    ->get();
+                    ->paginate(5);
 
                         
                     

@@ -24,7 +24,8 @@ class NotifController extends Controller
         ->select('*', 'notifs.type as action_type', 'users.name as user_name', 'notifs.created_at as triggered_at')
         ->where('property_id_foreign', Session::get('property_id'))
         ->whereNull('deleted_at')
-        ->get();
+        ->orderBy('notifs.created_at', 'desc')
+        ->paginate(5);
 
         return view('webapp.notifs.index', compact('notifs'));
     }

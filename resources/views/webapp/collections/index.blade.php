@@ -2,18 +2,6 @@
 
 @section('title', 'Collections')
 
-@section('css')
-<style>
-  /*This will work on every browser*/
-  thead tr:nth-child(1) th {
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-</style>
-@endsection
-
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -30,8 +18,15 @@
           </button>
         </div>
       </div>
-    </form </div> </div> </div> <small> Showing <b>{{ number_format($collections->count(), 0) }}</b>collections...</small>
-    <div class="row" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+    </form> 
+  </div> 
+</div> 
+
+<h3 class="text-center">
+  <span class=""> <small> Showing <b>{{ $collections->count() }} </b> of {{ $count_collections }}
+      {{ Str::plural('collection', $count_collections) }}</span></small>
+</h3>
+    
       <table class="table table-hover">
         <thead>
           <tr>
@@ -49,9 +44,5 @@
           @each('webapp.collections.includes.collections', $collections, 'collection', 'webapp.tenants.includes.no-record')
         </tbody>
       </table>
-    </div>
-    @endsection
-
-    @section('scripts')
-
+    {{ $collections->links() }}
     @endsection

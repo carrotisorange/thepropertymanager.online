@@ -2,29 +2,16 @@
 
 @section('title', 'Tenants')
 
-@section('css')
-<style>
-  /*This will work on every browser*/
-  thead tr:nth-child(1) th {
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-</style>
-@endsection
-
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-md-3">
     <form action="/property/{{ Session::get('property_id') }}/tenants/filter" method="GET" onchange="submit();">
       <select class="form-control" name="tenant_status" id="">
-        <option value="all">All tenants</option>
+        <option value="">all tenants</option>
         @foreach ($tenant_status as $item)
-        <option value="{{ $item->status }}">{{ $item->status }} tenants only</option>
+        <option value="{{ $item->status }}">{{ $item->status }} tenants</option>
         @endforeach
       </select>
-
     </form>
   </div>
   <div class="col text-right">
@@ -42,16 +29,14 @@
     </form>
   </div>
 </div>
-
-  <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }}
-      {{ Str::plural('tenant', $count_tenants) }} </span></small>
-
-  <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
+  <h3 class="text-center">
+    <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }}
+          {{ Str::plural('tenant', $count_tenants) }} </span></small>
+    </h3>
+ 
     <table class="table table-hover">
-     
       <thead>
         <tr>
-         
           <th>Profile</th>
           <th>Name</th>
           <th>Room</th>
@@ -67,6 +52,7 @@
       <tbody>
           @each('webapp.tenants.includes.tenants', $tenants, 'tenant', 'webapp.tenants.includes.no-record')
       </tbody>
+      
     </table>
-  </div>
+{{ $tenants->links() }}
   @endsection
