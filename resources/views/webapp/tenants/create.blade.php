@@ -171,13 +171,12 @@
             @enderror
           </div>
         </div>
-        <div class="form-group col-md-11 mx-auto">
+        <div class="form-group col-md-12 mx-auto">
           <button type="submit" form="createTenantForm" class="btn btn-primary btn-block"
-            onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Continue</button>
+            onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-arrow-right"></i> Next</button>
           <br>
           <p class="text-center">
-            <a class="text-center text-dark"
-              href="/property/{{ Session::get('property_id') }}/room/{{ $room->unit_id }}"><i class="fas fa-times"></i> Cancel</a>
+            <a class="text-center text-dark" href="{{ url()->previous() }}"><i class="fas fa-times"></i> Cancel</a>
           </p>
         </div>
       </div>

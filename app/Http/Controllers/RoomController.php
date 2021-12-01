@@ -147,16 +147,15 @@ class RoomController extends Controller
 
         Session::put('current-page', 'rooms');
   
-             $users = DB::table('users_properties_relations')
-            ->join('users','user_id_foreign','id')
-           ->where('property_id_foreign', Session::get('property_id'))
-           ->whereNotIn('role_id_foreign' ,['6', '7', '8'])
-           ->get();
+        $users = DB::table('users_properties_relations')
+        ->join('users','user_id_foreign','id')
+        ->where('property_id_foreign', Session::get('property_id'))
+        ->whereNotIn('role_id_foreign' ,['6', '7', '8'])
+        ->get();
 
-        
-            $home = Unit::findOrFail($unit_id);
-        
-            $owners = DB::table('certificates')
+        $home = Unit::findOrFail($unit_id);
+
+        $owners = DB::table('certificates')
             ->join('owners', 'owner_id_foreign', 'owner_id')
             ->where('certificates.unit_id_foreign', $unit_id)
             ->get();
@@ -179,7 +178,14 @@ class RoomController extends Controller
            ->join('units', 'unit_id_foreign', 'unit_id')
            ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
            ->where('unit_id', $unit_id)
-           ->get();
+           ->paginate(5);
+
+            $count_tenants = DB::table('contracts')
+           ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+           ->join('units', 'unit_id_foreign', 'unit_id')
+           ->select('*', 'contracts.rent as contract_rent', 'contracts.term as contract_term', 'contracts.status as contract_status')
+           ->where('unit_id', $unit_id)
+           ->count();
 
              $revenues = Contract::
              join('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -191,7 +197,7 @@ class RoomController extends Controller
              ->whereNull('payments.deleted_at')
              ->orderBy('payment_created', 'desc')
              ->groupBy('payment_id')
-             ->get();
+             ->paginate(5);
 
             $inventories = Inventory::where('unit_id_foreign', $unit_id)
             ->orderBy('created_at', 'asc')
@@ -232,17 +238,18 @@ class RoomController extends Controller
 
              $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
              ->join('particulars','particular_id_foreign', 'particular_id')
-             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as
-             amt_paid')
+             ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
              ->where('bill_unit_id', $unit_id)
              ->groupBy('bill_id')
              ->orderBy('bill_no', 'desc')
-             // ->havingRaw('balance > 0')
-             ->get();
+             ->paginate(5);
+
+                $count_bills = Bill::where('bill_unit_id', $unit_id)->count();
           
             return
             view('webapp.rooms.show',compact('room_floors','room_types','tenants','occupants','reported_by','users','home',
-            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories', 'revenues', 'bills'));
+            'owners','concerns', 'remittances', 'expenses','pending_concerns', 'inventories', 'revenues',
+            'bills','count_tenants','count_bills'));
            
        
     }

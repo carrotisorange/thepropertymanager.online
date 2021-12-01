@@ -2,18 +2,6 @@
 
 @section('title', $home->building.' '.$home->unit_no)
 
-@section('css')
-<style>
-  /*This will work on every browser*/
-  thead tr:nth-child(1) th {
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-</style>
-@endsection
-
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 text-left">
@@ -48,7 +36,7 @@
         @endif
 
         <a class="nav-item nav-link" id="nav-bills-tab" data-toggle="tab" href="#bills" role="tab"
-          aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-green"></i> Bills
+          aria-controls="nav-bills" aria-selected="false"><i class="fas fa-file-invoice-dollar text-pink"></i> Bills
           <span class="badge badge-success badge-counter">{{ $bills->count() }}</span></a>
 
         <a class="nav-item nav-link" id="nav-revenues-tab" data-toggle="tab" href="#revenues" role="tab"
@@ -368,17 +356,21 @@
         </div>
       </div>
       <div class="tab-pane fade" id="tenants" role="tabpanel" aria-labelledby="nav-tenants-tab">
-        @if($tenants->count())
+        @if($tenants)
         <p class="text-left">
           <a href="/property/{{ Session::get('property_id') }}/room/{{ $home->unit_id }}/create/tenant"
             class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
           {{-- <button type="button" title="edit room" class="btn btn-primary btn-sm" data-toggle="modal"
             data-target="#uploadImages" data-whatever="@mdo"><i class="fas fa-upload"></i> Upload Image</button> --}}
         </p>
+        <h3 class="text-center">
+            <span class=""> <small> Showing <b>{{ $tenants->count() }} </b> of {{ $count_tenants }}
+                {{ Str::plural('tenant', $count_tenants) }} </span></small>
+          </h3>
         @endif
-        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
+        
           <table class="table table-hover">
-            @if(!$tenants->count())
+            @if(!$tenants)
             <tr>
               <br><br>
               <p class="text-center">
@@ -389,7 +381,7 @@
             @else
             <thead>
               <tr>
-                <th class="text-center">#</th>
+            
                 <th>Name</th>
                 <th>Movein</th>
                 <th>Moveout</th>
@@ -400,10 +392,10 @@
                 <th>Source</th>
               </tr>
             </thead>
-            <?php $ctr = 1; ?>
+        
             @foreach ($tenants as $item)
             <tr>
-              <th class="text-center">{{ $ctr++ }}</th>
+      
               <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{
                   $item->first_name.' '.$item->last_name }}
                 </a></th>
@@ -418,29 +410,29 @@
                 <span class="text-danger"><i class="fas fa-times"></i> {{ $item->contract_status }} </span>
                 @endif
               </td>
-              {{-- <td title="{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($item->moveout_date), false) }}
-              days
-              left">{{ Carbon\Carbon::parse($item->movein_at)->format('M d
-                Y').'-'.Carbon\Carbon::parse($item->moveout_date)->format('M d Y') }}
-                </> --}}
+            
               <td>{{ number_format($item->contract_rent, 2) }}</td>
               <td>{{ $item->form_of_interaction }}</td>
             </tr>
             @endforeach
             @endif
           </table>
-        </div>
+          {{ $tenants->links() }}
+       
 
       </div>
 
       <div class="tab-pane fade" id="bills" role="tabpanel" aria-labelledby="nav-bills-tab">
 
-        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+      <h3 class="text-center">
+            <span class=""> <small> Showing <b>{{ $bills->count() }} </b> of {{ $count_bills }}
+                {{ Str::plural('bill', $count_bills) }} </span></small>
+          </h3>
           <table class="table table-hover">
 
             <thead>
               <tr>
-                <th>#</th>
+         
                 <th>Date posted</th>
                 <th>Bill no</th>
                 <th>Particular</th>
@@ -450,10 +442,10 @@
                 <th>Balance</th>
               </tr>
             </thead>
-            <?php $bill_ctr = 1; ?>
+           
             @foreach ($bills as $item)
             <tr>
-              <th>{{ $bill_ctr++ }}</th>
+             
               <td>{{Carbon\Carbon::parse($item->date_posted)->format('M d Y')}}</td>
               <td>{{ $item->bill_no }}</td>
               <td>{{ $item->particular }}</td>
@@ -475,18 +467,18 @@
             </tr>
             @endforeach
           </table>
-        </div>
-
+          {{ $bills->links() }}
+       
       </div>
 
       <div class="tab-pane fade" id="revenues" role="tabpanel" aria-labelledby="nav-revenues-tab">
 
-        <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+     
           <table class="table table-hover">
 
             <thead>
               <tr>
-                <th>#</th>
+        
                 <th>Date</th>
                 <th>AR No</th>
                 <th>Bill No</th>
@@ -496,10 +488,10 @@
                 <th></th>
               </tr>
             </thead>
-            <?php $rev_ctr = 1; ?>
+ 
             @foreach ($revenues as $item)
             <tr>
-              <th>{{ $ctr++ }}</th>
+   
               <td>{{ Carbon\Carbon::parse($item->payment_created)->format('M d, Y') }}</td>
               <td>
                 {{ $item->ar_no }}
@@ -514,7 +506,8 @@
             </tr>
             @endforeach
           </table>
-        </div>
+          {{ $revenues->links() }}
+       
 
       </div>
 
