@@ -193,7 +193,7 @@
             
                   <th>User</th>
                   <th>Role</th>
-                  <th>COUNT</th>
+                  <th>Count</th>
                 </tr>
               </thead>
             <tbody>
