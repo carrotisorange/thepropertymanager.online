@@ -502,7 +502,7 @@ class PropertyController extends Controller
          $referrals = DB::table('contracts')
         ->join('users', 'referrer_id_foreign', 'id')
         ->join('users_properties_relations', 'id', 'user_id_foreign')
-        ->select('*', DB::raw('count(*) as referrals'))
+        ->select('*', DB::raw('count(*) as referrals'), 'users.name as name')
         ->where('role_id_foreign', '<>', '4')
         ->where('property_id_foreign', Session::get('property_id') )
         ->groupBy('id')

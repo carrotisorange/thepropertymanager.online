@@ -1,29 +1,27 @@
-<tbody>
-    @foreach ($collection as $item)
-    <tr>
 
-        <td>{{ $item->ar_no }}</td>
-        <td>{{ $item->payment_bill_no }}</td>
+
+        <td>{{ $collection->ar_no }}</td>
+        <td>{{ $collection->payment_bill_no }}</td>
         <th>
             @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
             Session::get('property_type') === '6')
-            <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
+            <a href="/property/{{Session::get('property_id')}}/unit/{{ $collection->unit_id }}">{{ $collection->unit_no }}
                 @else
-                <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
+                <a href="/property/{{Session::get('property_id')}}/room/{{ $collection->unit_id }}">{{ $collection->unit_no }}
                     @endif
 
         </th>
-        <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{
-                $item->first_name.' '.$item->last_name }}</a>
+        <th><a href="/property/{{Session::get('property_id')}}/tenant/{{ $collection->tenant_id }}#payments">{{
+                $collection->first_name.' '.$collection->last_name }}</a>
         </th>
 
-        <td>{{ $item->particular }}</td>
-        <td>{{ $item->form }}</td>
+        <td>{{ $collection->particular }}</td>
+        <td>{{ $collection->form }}</td>
         <td colspan="2">
-            {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-            {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
+            {{ $item->start? Carbon\Carbon::parse($collection->start)->format('M d Y') : null}} -
+            {{ $item->end? Carbon\Carbon::parse($collection->end)->format('M d Y') : null }}
         </td>
-        <td>{{ number_format($item->amt_paid,2) }}</td>
+        <td>{{ number_format($collection->amt_paid,2) }}</td>
         @endforeach
     <tr>
         <th>TOTAL</th>
@@ -33,6 +31,5 @@
         <th></th>
         <th></th>
         <th colspan="2"></th>
-        <th>{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
+        <th>{{ number_format($collection->sum('amt_paid'),2) }}</th>
     </tr>
-</tbody>

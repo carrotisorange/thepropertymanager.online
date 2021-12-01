@@ -1,8 +1,6 @@
-<?php $pending_concerns_ctr =1; ?>
-<tbody>
-    @foreach($pending_concerns as $item)
+
     <tr>
-        <th>{{ $pending_concerns_ctr++ }}</th>
+
         <th>
             <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
         </th>
@@ -22,5 +20,3 @@
             <a href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
         </th>
     </tr>
-    @endforeach
-</tbody>

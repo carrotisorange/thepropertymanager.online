@@ -185,9 +185,7 @@
         </div>
       </div>
       <div class="card-body">
-        @if(!$referrals->count()) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not
-          enough data to show statistics.</p>
-          @else
+       
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             <table class="table table-hover">
               <thead>
@@ -198,14 +196,12 @@
                   <th># Referrals</th>
                 </tr>
               </thead>
-             @forelse ($referrals as $referral)
-              @include('webapp.properties.includes.referrals', ['referral' => $referral])
-              @empty
-              @include('webapp.tenants.includes.no-record')
-              @endforelse
+            <tbody>
+              @each('webapp.properties.includes.referrals', $referrals, 'referral', 'webapp.tenants.includes.no-record')
+            </tbody>
             </table>
           </div>
-          @endif
+        
       </div>
     </div>
   </div>
@@ -367,11 +363,9 @@
                   <th>Concern</th>
                 </tr>
               </thead>
-             @forelse ($pending_concerns as $pending_concern)
-              @include('webapp.properties.includes.pending_concerns', ['pending_concern' => $pending_concern])
-              @empty
-              @include('webapp.tenants.includes.no-record')
-              @endforelse
+              <tbody>
+                @each('webapp.properties.includes.pending-concerns', $pending_concerns, 'item', 'webapp.tenants.includes.no-record')
+              </tbody>
             </table>
           </div>
       </div>
@@ -402,11 +396,8 @@
                   <th>Amount</th>
                 </tr>
               </thead>
-             @forelse ($collections as $collection)
-              @include('webapp.properties.includes.daily-collections', ['collection' => $collection])
-              @empty
-              @include('webapp.tenants.includes.no-record')
-              @endforelse
+            
+             @each('webapp.properties.includes.dailyc-collections', $collections, 'collection', 'webapp.tenants.includes.no-record')
             </table>
           </div>
       </div>
