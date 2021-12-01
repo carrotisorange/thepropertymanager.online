@@ -180,7 +180,7 @@
   <div class="col-md-5">
     <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">TOP AGENTS</h6>
+        <h6 class="m-0 font-weight-bold text-primary">REFERRALS</h6>
         <div class="dropdown no-arrow">
         </div>
       </div>
@@ -190,10 +190,10 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
+            
                   <th>User</th>
                   <th>Role</th>
-                  <th># Referrals</th>
+                  <th>COUNT</th>
                 </tr>
               </thead>
             <tbody>
