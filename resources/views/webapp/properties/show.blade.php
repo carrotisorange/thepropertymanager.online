@@ -18,15 +18,11 @@
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
     <h6 class="h2 text-dark d-inline-block mb-0">Dashboard</h6>
-
   </div>
-
 </div>
-<!-- Card stats -->
 <div class="row">
   <div class="col-xl-3 col-md-6">
     <div class="card card-stats">
-      <!-- Card body -->
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -52,7 +48,6 @@
   </div>
   <div class="col-xl-3 col-md-6">
     <div class="card card-stats">
-      <!-- Card body -->
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -74,7 +69,6 @@
   </div>
   <div class="col-xl-3 col-md-6">
     <div class="card card-stats">
-      <!-- Card body -->
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -101,7 +95,6 @@
   </div>
   <div class="col-xl-3 col-md-6">
     <div class="card card-stats">
-      <!-- Card body -->
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -129,15 +122,11 @@
 
 
 <div class="row">
-
-  <!-- Occupancy Line Chart -->
   <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">OCCUPANCY RATE ({{ $current_occupancy_rate}}%)</h6>
       </div>
-      <!-- Card Body -->
       <div class="card-body">
         @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
@@ -149,16 +138,13 @@
     </div>
   </div>
 
-  <!-- Retention Doughnut Chart -->
   <div class="col-xl-4 col-lg-5">
     <div class="card shadow mb-3">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">RETENTION RATE ({{ $renewal_rate }}%)</h6>
         <div class="dropdown no-arrow">
         </div>
       </div>
-      <!-- Card Body -->
       <div class="card-body">
         @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
@@ -172,17 +158,13 @@
 </div>
 
 <div class="row">
-
-  <!-- Financial Line Chart -->
   <div class="col-xl-12 col-lg-12">
     <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">FINANCIALS</h6>
         <div class="dropdown no-arrow">
         </div>
       </div>
-      <!-- Card Body -->
       <div class="card-body">
         @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
@@ -193,28 +175,21 @@
       </div>
     </div>
   </div>
-
-
 </div>
 <div class="row">
-
-  <!-- Financial Line Chart -->
   <div class="col-md-5">
     <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">TOP AGENTS</h6>
         <div class="dropdown no-arrow">
         </div>
       </div>
-      <!-- Card Body -->
       <div class="card-body">
-        @if(!$top_agents->count()) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not
+        @if(!$referrals->count()) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not
           enough data to show statistics.</p>
           @else
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;">
             <table class="table table-hover">
-
               <thead>
                 <tr>
                   <th>#</th>
@@ -223,18 +198,11 @@
                   <th># Referrals</th>
                 </tr>
               </thead>
-              <?php $agent_ctr = 1; ?>
-              <tbody>
-                @foreach ($top_agents as $item)
-                <tr>
-                  <?php $explode = explode(" ", $item->name);?>
-                  <th>{{ $agent_ctr++ }}</th>
-                  <td>{{ $explode[0] }}</td>
-                  <td>{{ $item->role_id_foreign }}</td>
-                  <td>{{ number_format($item->referrals) }}</td>
-                </tr>
-                @endforeach
-              </tbody>
+             @forelse ($referrals as $referral)
+              @include('webapp.properties.includes.referrals', ['referral' => $referral])
+              @empty
+              @include('webapp.tenants.includes.no-record')
+              @endforelse
             </table>
           </div>
           @endif
@@ -242,16 +210,10 @@
     </div>
   </div>
   <div class="col-md-7 mb-4">
-    <!-- Illustrations -->
     <div class="card shadow mb-4">
-
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">SOURCES OF TENANTS</h6>
-        {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View
-        all</a></small> --}}
       </div>
-
-
       <div class="card-body">
         @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
@@ -265,18 +227,11 @@
 </div>
 <br>
 <div class="row">
-
   <div class="col-md-6 mb-4">
-    <!-- Illustrations -->
     <div class="card shadow mb-4">
-
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">TYPE OF TENANTS</h6>
-        {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View
-        all</a></small> --}}
       </div>
-
-
       <div class="card-body">
         @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
@@ -285,20 +240,12 @@
           @endif
       </div>
     </div>
-
   </div>
-
   <div class="col-md-6 mb-4">
-    <!-- Illustrations -->
     <div class="card shadow mb-4">
-
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">LENGHT OF CONTRACTS </h6>
-        {{-- <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/demographics">View
-        all</a></small> --}}
       </div>
-
-
       <div class="card-body">
         @if(!$contracts) <p class="text-danger text-center"><i class="fas fa-exclamation-triangle"></i> Not enough
           data to show statistics.</p>
@@ -307,15 +254,10 @@
           @endif
       </div>
     </div>
-
   </div>
-
-
 </div>
 <div class="row">
-  {{-- Moveout Line Chart --}}
   <div class="col-lg-6 mb-4">
-    <!-- Illustrations -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">MOVEOUT FOR THE LAST 6 MONTHS</h6>
@@ -326,14 +268,10 @@
           @else
           {!! $moveout_rate->container() !!}
           @endif
-
       </div>
     </div>
-
   </div>
-
   <div class="col-lg-6 mb-4">
-    <!-- Moveout Pie Chart -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">REASON FOR MOVING-OUT</h6>
@@ -344,20 +282,12 @@
           @else
           {!! $reason_for_moving_out_chart->container() !!}
           @endif
-
       </div>
     </div>
-
   </div>
 </div>
-
-
-<!-- Content Row -->
 <div class="row">
-
-  <!-- Content Column -->
   <div class="col-lg-12 mb-4">
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">EXPIRING CONTRACTS</h6>
@@ -365,116 +295,41 @@
             all</a></small>
       </div>
       <div class="card-body">
-        @if($tenants_to_watch_out->count() <=0) <p class="text-success text-center"><i class="fas fa-check-circle"></i>
-          No expiring contracts.</p>
-          @else
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
             <table class="table table-hover">
               <thead>
-
                 <tr>
                   <th>#</th>
                   <th>Tenant</th>
                   <th>Room</th>
                   <th>Moveout</th>
-
                   <th>Status</th>
                   <th>Mobile</th>
-                  {{-- <th>Action</th> --}}
-
                 </tr>
               </thead>
-              <?php $expiring_ctr =1; ?>
-              <tbody>
-                @foreach($tenants_to_watch_out as $item)
-
-                <tr>
-                  <th>{{ $expiring_ctr++ }}</th>
-                  <th>
-                    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#contracts">{{ $item->first_name.' '.$item->last_name }}
-                  </th>
-                  <th>
-                    @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-                    Session::get('property_type') === '6')
-                    <a
-                      href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
-                    @else
-                    <a
-                      href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->building.' '.$item->unit_no }}</a>
-                    @endif
-
-                  </th>
-                  <td>{{Carbon\Carbon::parse($item->moveout_at)->format('M d Y')}} <span
-                      class="text-danger">({{ Carbon\Carbon::parse($item->moveout_at)->diffForHumans() }})</span></td>
-
-                  <td>
-                    @if($item->contract_status === 'active')
-                    <span> {{ $item->contract_status }} <i class="fas fa-check-circle text-success"></i> </span>
-                    @else
-                    <span> {{ $item->contract_status }} <i class="fas fa-clock text-warning"></i> </span>
-
-                    @endif
-                  </td>
-                  {{-- <td>
-                 @if($item->email_address === null)
-                 <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address"
-                  class="badge badge-danger">Please add an email</a>
-                  @else
-                  <form
-                    action="/property/{{Session::get('property_id')}}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
-                    @csrf
-                    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
-                    <button class="btn btn-sm btn btn-primary" type="submit"
-                      onclick="this.form.submit(); this.disabled = true;"><i
-                        class="fas fa-paper-plane fa-sm text-white-50"></i> Send email</button>
-                    @else
-                    <button class="btn btn-sm btn btn-primary" title="for manager and admin access only" type="submit"
-                      onclick="this.form.submit(); this.disabled = true;" disabled><i
-                        class="fas fa-paper-plane fa-sm text-white-50"></i> Send Email</button>
-                    @endif
-                  </form>
-                  @endif
-                  </td> --}}
-                  <td>{{ $item->contact_no }}</td>
-
-                </tr>
-                @endforeach
-              </tbody>
+              @forelse ($expiring_contracts as $item)
+              @include('webapp.properties.includes.expiring-contracts', ['item' => $item])
+              @empty
+              @include('webapp.tenants.includes.no-record')
+              @endforelse
             </table>
-
           </div>
-          @endif
-
       </div>
     </div>
-
   </div>
-
 </div>
 
-
-<!-- Content Row -->
 <div class="row">
-
-  <!-- Pie Chart -->
   <div class="col-md-6">
     <div class="card shadow mb-3">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">LIST OF DELINQUENT TENANTS </h6>
-
+        <h6 class="m-0 font-weight-bold text-primary">DELINQUENTS </h6>
         <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/delinquents">View all</a></small>
-
       </div>
-      <!-- Card Body -->
       <div class="card-body">
-        @if($delinquent_accounts->count() <=0) <p class="text-success text-center"><i class="fas fa-check-circle"></i>
-          No delinquent tenants.</p>
-          @else
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
             <table class="table table-hover">
               <thead>
-
                 <tr>
                   <th>#</th>
                   <th>Tenant</th>
@@ -482,64 +337,26 @@
                   <th>Balance</th>
                 </tr>
               </thead>
-              <?php $delinquent_ctr =1; ?>
-              <tbody>
-                @foreach($delinquent_accounts as $item)
-                <tr>
-                  <th>{{ $delinquent_ctr++ }}</th>
-                  <th>
-
-                    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#bills">{{ $item->first_name.' '.$item->last_name }}
-
-                  </th>
-                  <th>
-                    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
-                    @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-                    Session::get('property_type') === '6')
-                    <a
-                      href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{$item->building.' '.$item->unit_no }}</a>
-                    @else
-                    <a
-                      href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{$item->building.' '.$item->unit_no }}</a>
-                    @endif
-
-                    @else
-                    {{ $item->unit_no }}
-                    @endif
-                  </th>
-                  <td>
-                    <a>{{ number_format($item->balance,2) }}
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-
+              @forelse ($delinquents as $delinquent)
+              @include('webapp.properties.includes.delinquents', ['delinquent' => $delinquent])
+              @empty
+              @include('webapp.tenants.includes.no-record')
+              @endforelse
             </table>
-
           </div>
-
-          @endif
       </div>
     </div>
-
   </div>
 
   <div class="col-md-6">
     <div class="card shadow mb-3">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">PENDING/ACTIVE CONCERNS <span hidden
             id="pending_concerns">{{ $pending_concerns->count() }}</span></h6>
         <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/pending-concerns">View
             all</a></small>
-        {{-- <b class="text-success">({{ $concerns->count()? 0: number_format($concerns->sum('rating')/$concerns->count(), 2) }}/5)
-        SATISFACTION RATE</b> --}}
       </div>
-      <!-- Card Body -->
       <div class="card-body">
-        @if($pending_concerns->count() <=0) <p class="text-success text-center"><i class="fas fa-check-circle"></i> No
-          pending concerns.</p>
-          @else
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
             <table class="table table-hover">
               <thead>
@@ -550,73 +367,31 @@
                   <th>Concern</th>
                 </tr>
               </thead>
-              <?php $pending_concern_ctr =1; ?>
-              <tbody>
-                @foreach($pending_concerns as $item)
-                <tr>
-                  <th>{{ $pending_concern_ctr++ }}</th>
-                  <th>
-
-                    <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}">{{ $item->first_name.' '.$item->last_name }}
-
-                  </th>
-                  <th>
-                    @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1 )
-                    @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-                    Session::get('property_type') === '6')
-                    <a
-                      href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
-                    @else
-                    <a
-                      href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id   }}">{{ $item->unit_no }}</a>
-                    @endif
-
-                    @else
-                    {{ $item->building.' '.$item->unit_no }}
-                    @endif
-                  </th>
-                  <th>
-                    <a
-                      href="/property/{{Session::get('property_id')}}/concern/{{ $item->concern_id   }}">{{ $item->title }}</a>
-                  </th>
-                </tr>
-                @endforeach
-              </tbody>
+             @forelse ($pending_concerns as $pending_concern)
+              @include('webapp.properties.includes.pending_concerns', ['pending_concern' => $pending_concern])
+              @empty
+              @include('webapp.tenants.includes.no-record')
+              @endforelse
             </table>
-            {{ $pending_concerns->links() }}
           </div>
-          @endif
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="row">
-  <!-- Content Column -->
   <div class="col-lg-12 mb-4">
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">DAILY COLLECTIONS as of
           {{ Carbon\Carbon::now()->isoFormat('MMMM Do YYYY, h:mm:ss a') }}</h6>
-
         <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/collections">View all</a></small>
-        {{-- <a title="export all" target="_blank" href="/property/{{ Auth::user()->property }}/export"><i
-          class="fas fa-download fa-sm fa-fw text-primary-400"></i></a> --}}
-
-
       </div>
       <div class="card-body">
-        @if($collections_for_the_day->count() <=0) <p class="text-danger text-center"><i
-            class="fas fa-exclamation-triangle"></i> No collections recorded for today!</p>
-          @else
           <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
             <table class="table table-hover">
               <thead>
-
                 <tr>
-
                   <th>AR No</th>
                   <th>Bill No</th>
                   <th>Room</th>
@@ -625,59 +400,19 @@
                   <th>Form</th>
                   <th colspan="2">Period Covered</th>
                   <th>Amount</th>
-
                 </tr>
-
               </thead>
-              <tbody>
-                @foreach ($collections_for_the_day as $item)
-                <tr>
-
-                  <td>{{ $item->ar_no }}</td>
-                  <td>{{ $item->payment_bill_no }}</td>
-                  <th>
-                    @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-                    Session::get('property_type') === '6')
-                    <a href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}">{{ $item->unit_no }}
-                      @else
-                      <a href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}">{{ $item->unit_no }}
-                        @endif
-
-                  </th>
-                  <th><a
-                      href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}#payments">{{ $item->first_name.' '.$item->last_name }}</a>
-                  </th>
-
-                  <td>{{ $item->particular }}</td>
-                  <td>{{ $item->form }}</td>
-                  <td colspan="2">
-                    {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}} -
-                    {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}
-                  </td>
-                  <td>{{ number_format($item->amt_paid,2) }}</td>
-                  @endforeach
-                <tr>
-                  <th>TOTAL</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th colspan="2"></th>
-                  <th>{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}</th>
-                </tr>
-              </tbody>
+             @forelse ($collections as $collection)
+              @include('webapp.properties.includes.daily-collections', ['collection' => $collection])
+              @empty
+              @include('webapp.tenants.includes.no-record')
+              @endforelse
             </table>
           </div>
-          @endif
-
       </div>
     </div>
   </div>
 </div>
-
-
-
 
 
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -708,10 +443,6 @@
 
 @endsection
 
-@section('main-content')
-
-@endsection
-
 @section('scripts')
 {!! $point_of_contact->script() !!}
 {!! $movein_rate->script() !!}
@@ -721,7 +452,6 @@
 {!! $reason_for_moving_out_chart->script() !!}
 {!! $status->script() !!}
 {!! $length_of_stay->script() !!}
-
 <script>
   $(document).ready(function(){
 
@@ -734,18 +464,4 @@
     }
   });
 </script>
-
-{{-- <script type="text/javascript">
-  $(window).on('load',function(){
-      $('#showModal').modal('show');
-  });
-</script> --}}
-{{-- 
-<script type="text/javascript">
-  $(window).on('load',function(){
-      $('#showModal').modal('show');
-  });
-</script> --}}
-
-
 @endsection

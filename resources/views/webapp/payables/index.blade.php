@@ -23,10 +23,10 @@
 
   <div class="col text-right">
     @if(auth()->user()->role_id_foreign === 2 || auth()->user()->role_id_foreign === 4 )
-    <a href="/property/{{ Session::get('property_id') }}/payables/entries" class="btn btn-primary shadow-sm btn-sm"><i
+    <a href="/property/{{ Session::get('property_id') }}/payables/entries" class="btn btn-primary shadow-sm"><i
         class="fas fa-plus fa-sm text-white-50"></i> New entry</a>
     @endif
-    <a href="#" class="btn btn-primary shadow-sm btn-sm" data-toggle="modal" data-target="#requestPayable"
+    <a href="#" class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#requestPayable"
       data-whatever="@mdo"><i class="fas fa-plus fa-sm text-white-50"></i> New request</a>
 
   </div>
@@ -60,11 +60,11 @@
       <div class="tab-pane fade  show active" id="all" role="tabpanel" aria-labelledby="nav-all-tab">
         <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
           <table class="table table-hover">
-            <?php $ctr=1;?>
+   
             <thead>
 
               <tr>
-                <th class="text-center">#</th>
+     
                 <th>Requested on</th>
 
                 <th>Entry</th>
@@ -80,106 +80,7 @@
               </tr>
             </thead>
             <tbody>
-
-              @foreach ($all as $item)
-              <tr>
-                <th class="text-center">{{ $ctr++ }}</th>
-                <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-
-
-                <td>{{ $item->entry }}</td>
-                <td>{{ number_format($item->amt, 2) }}</td>
-
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>
-                <td>
-                  @if($item->payable_status == 'pending')
-                  {{-- <a title="waiting to be processed" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-clock"></i></a> --}}
-                  <span>Pending <i class="fas fa-clock text-warning"></i></span>
-                  @elseif($item->payable_status == 'approved')
-                  {{-- <a title="request approved" class="btn btn-success btn-sm" href="#/"><i class="fas fa-check"></i></a> --}}
-                  <span>Approved <i class="fas fa-check text-success"></i></span>
-                  @elseif($item->payable_status == 'released')
-                  <span>Released <i class="fas fa-clipboard-check text-success"></i></span>
-                  {{-- <a title="request released" class="btn btn-success btn-sm" href="#/"><i class="fas fa-clipboard-check"></i></a> --}}
-                  @elseif($item->payable_status == 'declined')
-                  <span>Declined <i class="fas fa-times text-danger"></i></span>
-                  {{-- <a title="request declined" class="btn btn-danger btn-sm" href="#/"><i class="fas fa-times"></i></a> --}}
-                  @endif
-                </td>
-                <td>
-                  @if($item->payable_status == 'released')
-
-                  @else
-                  <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action"
-                    method="GET" onchange="submit();">
-                    <select class="" name="payable_option" id="">
-                      <option value="">Select your option</option>
-                      @if($item->payable_status != 'approved' && $item->payable_status != 'released' &&
-                      $item->payable_status != 'declined')
-                      <option value="approve">Approve</option>
-                      @endif
-                      @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
-                      <option value="release">Release</option>
-                      @endif
-                      @if($item->payable_status != 'declined')
-                      <option value="decline">Decline</option>
-                      @endif
-                    </select>
-                  </form>
-                  @endif
-                </td>
-                {{-- @if($item->payable_status == 'pending')
-                      @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
-                      
-                      <td class="text-right"> 
-                        
-                        <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/decline"
-                method="POST">
-                @csrf
-                <button title="decline this payable request" type="submit"
-                  class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
-                  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-times"></i></button>
-                </form>
-
-
-                </td>
-                <td class="text-left">
-                  <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/approve"
-                    method="POST">
-                    @csrf
-
-                    <button title="approve this payable request" type="submit"
-                      class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"
-                      onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i></button>
-                  </form>
-                </td>
-
-
-                @endif
-                @elseif($item->payable_status == 'approved')
-
-                <td class="text-right">
-
-                  <form action="/property/{{Session::get('property_id')}}/payable/{{ $item->pb_id }}/release"
-                    method="POST">
-                    @csrf
-                    <button title="release approved funds" type="submit"
-                      class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"
-                      onclick="this.form.submit(); this.disabled = true;"><i
-                        class="fas fa-clipboard-check"></i></button>
-                  </form>
-
-
-                </td>
-
-
-                @endif--}}
-
-
-
-              </tr>
-              @endforeach
+            @each('webapp.payables.includes.payables', $all, 'payable', 'webapp.tenants.includes.no-record')
             </tbody>
           </table>
         </div>
@@ -188,11 +89,11 @@
       <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="nav-pending-tab">
         <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
           <table class="table table-hover">
-            <?php $ctr=1;?>
+      
             <thead>
 
               <tr>
-                <th class="text-center">#</th>
+             
                 <th>Requested on</th>
                 <th>Entry</th>
                 <th>Amount</th>
@@ -208,42 +109,7 @@
               </tr>
             </thead>
             <tbody>
-
-              @foreach ($pending as $item)
-              <tr>
-                <th class="text-center">{{ $ctr++ }}</th>
-                <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                <td>{{ $item->entry }}</td>
-                <td>{{ number_format($item->amt, 2) }}</td>
-
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>
-
-
-                @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
-                <td>
-                  <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action"
-                    method="GET" onchange="submit();">
-                    <select class="" name="payable_option" id="">
-                      <option value="">Select your option</option>
-                      @if($item->payable_status != 'approved' && $item->payable_status != 'released')
-                      <option value="approve">Approve</option>
-                      @endif
-
-                      @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
-                      <option value="release">Release</option>
-                      @endif
-                      @if($item->payable_status != 'declined')
-                      <option value="decline">Declined</option>
-                      @endif
-                    </select>
-
-                  </form>
-                </td>
-                @endif
-
-              </tr>
-              @endforeach
+              @each('webapp.payables.includes.payables', $pending, 'payable', 'webapp.tenants.includes.no-record')
             </tbody>
           </table>
         </div>
@@ -255,7 +121,7 @@
             <?php $ctr=1;?>
             <thead>
               <tr>
-                <th class="text-center">#</th>
+               
                 <th>Requested on</th>
                 <th>Entry</th>
                 <th>Amount</th>
@@ -271,42 +137,7 @@
             </thead>
             </thead>
             <tbody>
-
-              @foreach ($approved as $item)
-              <tr>
-                <th class="text-center">{{ $ctr++ }}</th>
-                <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                <td>{{ $item->entry }}</td>
-                <td>{{ number_format($item->amt, 2) }}</td>
-
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>
-                <td>{{ Carbon\Carbon::parse($item->updated_at)->format('M d Y') }}</td>
-                @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 2||
-                Auth::user()->role_id_foreign === 1)
-                <td>
-                  <form action="/property/{{ Session::get('property_id') }}/payable/{{ $item->pb_id }}/action"
-                    method="GET" onchange="submit();">
-                    <select class="" name="payable_option" id="">
-                      <option value="">Select your option</option>
-                      @if($item->payable_status != 'approved' && $item->payable_status != 'released')
-                      <option value="approve">Approve</option>
-                      @endif
-
-                      @if($item->payable_status == 'approved' && $item->payable_status != 'released' )
-                      <option value="release">Release</option>
-                      @endif
-                      @if($item->payable_status != 'declined')
-                      <option value="decline">Declined</option>
-                      @endif
-                    </select>
-
-                  </form>
-                </td>
-                @endif
-
-              </tr>
-              @endforeach
+             @each('webapp.payables.includes.payables', $approved, 'payable', 'webapp.tenants.includes.no-record')
             </tbody>
           </table>
         </div>
@@ -317,43 +148,18 @@
             <?php $ctr=1;?>
             <thead>
               <tr>
-                <th class="text-center">#</th>
+         
                 <th>Requested on</th>
                 <th>Entry</th>
                 <th>Amount</th>
-
                 <th>Requester</th>
                 <th>Note</th>
                 <th>Released</th>
-
-                {{-- @if(Auth::user()->role_id_foreign === 4)
-                  <th colspan="2" class="text-center">Action</th>
-                  @endif --}}
               </tr>
             </thead>
             </thead>
             <tbody>
-
-              @foreach ($released as $item)
-              <tr>
-                <th class="text-center">{{ $ctr++ }}</th>
-                <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                <td>{{ $item->entry }}</td>
-                <td>{{ number_format($item->amt, 2) }}</td>
-
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>
-                <td>{{ Carbon\Carbon::parse($item->released_at)->format('M d Y') }}</td>
-                {{-- @if(Auth::user()->role_id_foreign === 4)
-                    <td class="text-center"> 
-                      <form action="/" method="POST">
-                      @csrf
-                      <button title="release" type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"  onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check-circle fa-sm text-white-50"></i></button>
-                    </form>
-                  @endif --}}
-
-              </tr>
-              @endforeach
+            @each('webapp.payables.includes.payables', $released, 'payable', 'webapp.tenants.includes.no-record')
             </tbody>
           </table>
         </div>
@@ -376,19 +182,7 @@
             </thead>
             </thead>
             <tbody>
-
-              @foreach ($declined as $item)
-              <tr>
-                <th class="text-center">{{ $ctr++ }}</th>
-                <td>{{ Carbon\Carbon::parse($item->requested_at)->format('M d Y') }}</td>
-                <td>{{ $item->entry }}</td>
-                <td>{{ number_format($item->amt, 2) }}</td>
-
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->pb_note? $item->pb_note: '-' }}</td>
-                <td>{{ Carbon\Carbon::parse($item->declined_at)->format('M d Y') }}</td>
-              </tr>
-              @endforeach
+              @each('webapp.payables.includes.payables', $declined, 'payable', 'webapp.tenants.includes.no-record')
             </tbody>
           </table>
         </div>
@@ -415,10 +209,10 @@
           @csrf
         </form>
 
-        <a href="#/" id='delete_request' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove</a>
-        <a href="#/" id="add_request" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New</a>
+        <a href="#/" id='delete_request' class="btn btn-danger"><i class="fas fa-minus"></i> Remove</a>
+        <a href="#/" id="add_request" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
 
-        <button form="requestFundsForm" type="submit" class="btn btn-success btn-sm"
+        <button form="requestFundsForm" type="submit" class="btn btn-success"
           onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>Submit (<span
             id="current_no_of_entry"></span>)</button>
         <br><br>

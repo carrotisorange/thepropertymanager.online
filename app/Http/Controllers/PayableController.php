@@ -45,7 +45,7 @@ class PayableController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-             $all = DB::table('payable_request')
+            $all = DB::table('payable_request')
             ->join('users', 'requester_id', 'users.id')
             ->join('payable_entry', 'entry_id', 'payable_entry.id')
             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
@@ -74,7 +74,7 @@ class PayableController extends Controller
            $released = DB::table('payable_request')
            ->join('users', 'requester_id', 'users.id')
            ->join('payable_entry', 'entry_id', 'payable_entry.id')
-           ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
+        ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
           ->where('payable_request.status', 'released')
           ->where('payable_entry.property_id_foreign', Session::get('property_id'))
           ->orderBy('released_at', 'desc')
@@ -84,7 +84,7 @@ class PayableController extends Controller
           $declined = DB::table('payable_request')
           ->join('users', 'requester_id', 'users.id')
           ->join('payable_entry', 'entry_id', 'payable_entry.id')
-          ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id')
+             ->select('*', 'payable_request.note as pb_note', 'payable_request.id as pb_id', 'payable_request.status as payable_status')
          ->where('payable_request.status', 'declined')
          ->where('payable_entry.property_id_foreign', Session::get('property_id'))
          ->orderBy('declined_at', 'desc')

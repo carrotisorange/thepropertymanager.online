@@ -31,7 +31,7 @@
         <br>
       <p class="text-right">
         {{-- <a href="/property/{{Session::get('property_id')}}/issues" class="btn btn-danger"> Clear Field</a> --}}
-        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"> Post Issue </button>
+        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Submit </button>
       </p>
       </form>
     
@@ -42,7 +42,7 @@
 <div class="row">
   <div class="col">
     
-      <h6 class="h2 text-dark d-inline-block mb-0">Other issues ({{ $issues->count() }})</h6>
+      <h6 class="h2 text-dark d-inline-block mb-0">Submitted issues ({{ $issues->count() }})</h6>
       <br><br>
 
      

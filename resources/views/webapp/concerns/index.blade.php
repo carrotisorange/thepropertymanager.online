@@ -20,7 +20,6 @@
     <h6 class="h2 text-dark d-inline-block mb-0">Concerns</h6>
 
   </div>
-
 </div>
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -55,37 +54,17 @@
       @else
       <i class="fas fa-file-invoice-dollar text-primary"></i>
       @endif
-
       {{ $item->category }} <span class="badge badge-primary badge-counter">{{ $item->count }}</span></a>
     @endforeach
   </div>
 </nav>
-{{-- <nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab"
-      aria-controls="nav-all" aria-selected="true"><i class="fas fa-tools text-cyan"></i> All
-      ({{ $all_concerns->count() }})</a>
-<a class="nav-item nav-link" id="nav-pending-tab" data-toggle="tab" href="#nav-pending" role="tab"
-  aria-controls="nav-pending" aria-selected="false"><i class="fas fa-clock text-warning"></i> Pending
-  ({{ $pending_concerns->count() }})</a>
-<a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab"
-  aria-controls="nav-active" aria-selected="false"><i class="fas fa-snowboarding text-primary"></i> Active
-  ({{ $active_concerns->count() }})</a>
-<a class="nav-item nav-link" id="nav-closed-tab" data-toggle="tab" href="#nav-closed" role="tab"
-  aria-controls="nav-closed" aria-selected="false"><i class="fas fa-check text-green"></i> Closed
-  ({{ $closed_concerns->count() }})</a>
-</div>
-</nav> --}}
 <div class="tab-content" id="nav-tabContent">
   <br>
   <div class="tab-pane fade show active" id="nav-all-tab" role="tabpanel" aria-labelledby="nav-all-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-
       <table class="table table-hover">
         <thead>
-          <?php $ctr=1;?>
           <tr>
-            <th>#</th>
             <th>Reported on</th>
             <th>Reported by</th>
             <th>Category</th>
@@ -97,88 +76,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($concerns as $item)
-          <tr>
-            <th>{{ $ctr++ }}</th>
-
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
-            <td>
-              @if($item->concern_owner_id)
-              <a target="_blank"
-                href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
-                (owner)</a>
-              @else
-              <a target="_blank"
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
-                (tenant)</a>
-              @endif
-            </td>
-            <td>{{ $item->category }}</td>
-            <td>
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns"
-                target="_blank">{{ $item->building.' '.$item->unit_no }}</a>
-            </td>
-
-            <td>
-              @if($item->urgency === 'emergency')
-              <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
-              @elseif($item->urgency === 'major')
-              <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
-              @else
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
-              @endif
-            </td>
-            <td>
-              @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
-              $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
-              $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
-              @elseif($item->concern_status === 'on-going')
-              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
-              @else
-              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
-              @endif
-            </td>
-            <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
-                ({{ $item->role }})</a> </td>
-
-            <td>
-              @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
-              @if($item->concern_status === 'pending')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/assessment/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'assessed')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/scope_of_work/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'waiting for approval')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/approval/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'request for purchase')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/materials/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'approved')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/payment-options/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @endif
-              @else
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->concern_tenant_id?$item->concern_tenant_id:$item->owner_id_foreign }}/concern/{{ $item->concern_id }}/communications/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @endif
-            </td>
-            <td>
-              @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
-                @if(!$item->approved_by_manager_at)
-              <a href="/property/{{ Session::get('property_id') }}/concern/{{ $item->concern_id }}/approve/"><i
-                  class="fas fa-check"></i> Approve</a>   
-                @endif
-              @else
-
-              @endif
-            </td>
-
-
-          </tr>
-          @endforeach
+          @each('webapp.concerns.includes.concerns', $concerns, 'concern', 'webapp.tenants.includes.no-record')
         </tbody>
       </table>
 
@@ -189,16 +87,10 @@
   @foreach ($status as $status)
   <div class="tab-pane fade" id="nav-{{ $status->status }}-tab" role="tabpanel"
     aria-labelledby="nav-{{ $status->status }}-tab">
-
-
-
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-
       <table class="table table-hover">
         <thead>
-
           <tr>
-            <th>#</th>
             <th>Reported on</th>
             <th>Reported by</th>
             <th>Category</th>
@@ -206,107 +98,22 @@
             <th>Urgency</th>
             <th>Status</th>
             <th>Endorsed to</th>
-            <th></th>
+           <th colspan="2" class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($concerns as $item)
-          @if($item->concern_status === $status->status)
-          <tr>
-            <th>{{ $ctr++ }}</th>
-
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
-            <td>
-              @if($item->concern_owner_id)
-              <a target="_blank"
-                href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
-                (owner)</a>
-              @else
-              <a target="_blank"
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
-                (tenant)</a>
-              @endif
-            </td>
-            <td>{{ $item->category }}</td>
-            <td>
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns"
-                target="_blank">{{ $item->building.' '.$item->unit_no }}</a>
-            </td>
-
-            <td>
-              @if($item->urgency === 'emergency')
-              <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
-              @elseif($item->urgency === 'major')
-              <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
-              @else
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
-              @endif
-            </td>
-            <td>
-              @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
-              $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
-              $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
-              @elseif($item->concern_status === 'on-going')
-              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
-              @else
-              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
-              @endif
-            </td>
-            <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
-                ({{ $item->role }})</a> </td>
-
-            <td>
-              @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
-              @if($item->concern_status === 'pending')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'assessed')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/scope_of_work/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'waiting_for_approval')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/approval/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'request_for_purchase')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/materials/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'approved')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/payment-options/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @endif
-              @else
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/communications/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @endif
-            </td>
-
-          </tr>
-          @else
-
-          @endif
-
-          @endforeach
+          @each('webapp.concerns.includes.concerns', $concerns, 'concern', 'webapp.tenants.includes.no-record')
         </tbody>
       </table>
-
     </div>
-
   </div>
   @endforeach
-
   @foreach ($category as $category)
-  <div class="tab-pane fade" id="nav-{{ $category->category }}-tab" role="tabpanel"
-    aria-labelledby="nav-{{ $category->category }}-tab">
-
-
-
+  <div class="tab-pane fade" id="nav-{{ $category->category }}-tab" role="tabpanel" aria-labelledby="nav-{{ $category->category }}-tab">
     <div style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-
       <table class="table table-hover">
         <thead>
-
           <tr>
-            <th>#</th>
             <th>Reported on</th>
             <th>Reported by</th>
             <th>Category</th>
@@ -314,99 +121,15 @@
             <th>Urgency</th>
             <th>Status</th>
             <th>Endorsed to</th>
-            <th></th>
+            <th colspan="2" class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($concerns as $item)
-          @if($item->category === $category->category)
-          <tr>
-            <th>{{ $ctr++ }}</th>
-
-            <td>{{ Carbon\Carbon::parse($item->reported_at)->format('M d, Y') }}</td>
-            <td>
-              @if($item->concern_owner_id)
-              <a target="_blank"
-                href="/property/{{Session::get('property_id')}}/owner/{{$item->concern_owner_id}}/#concerns">{{ $item->concern_owner_name }}
-                (owner)</a>
-              @else
-              <a target="_blank"
-                href="/property/{{Session::get('property_id')}}/tenant/{{$item->tenant_id}}/#concerns">{{ $item->first_name.' '.$item->last_name }}
-                (tenant)</a>
-              @endif
-            </td>
-            <td>{{ $item->category }}</td>
-            <td>
-              <a href="/property/{{Session::get('property_id')}}/room/{{ $item-> unit_id  }}/#concerns"
-                target="_blank">{{ $item->building.' '.$item->unit_no }}</a>
-            </td>
-
-            <td>
-              @if($item->urgency === 'emergency')
-              <span class="text-danger"><i class="fas fa-exclamation-triangle "></i> {{ $item->urgency }}</span>
-              @elseif($item->urgency === 'major')
-              <span class="text-warning"><i class="fas fa-exclamation-circle "></i> {{ $item->urgency }}</span>
-              @else
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->urgency }}</span>
-              @endif
-            </td>
-            <td>
-              @if($item->concern_status === 'pending' || $item->concern_status === 'assessed' ||
-              $item->concern_status === 'waiting for approval' || $item->concern_status === 'approved' ||
-              $item->concern_status === 'request for purchase' || $item->concern_status === 'for purchase' )
-              <span class="text-warning"><i class="fas fa-clock "></i> {{ $item->concern_status }}</span>
-              @elseif($item->concern_status === 'on-going')
-              <span class="text-primary"><i class="fas fa-snowboarding "></i> {{ $item->concern_status }}</span>
-              @else
-              <span class="text-success"><i class="fas fa-check-circle "></i> {{ $item->concern_status }}</span>
-              @endif
-            </td>
-            <td><a href="/property/{{ Session::get('property_id') }}/user/{{ $item->id }}">{{ $item->name }}
-                ({{ $item->role }})</a> </td>
-
-            <td>
-              @if(Auth::user()->role_id_foreign == '1' || Auth::user()->role_id_foreign == '4')
-              @if($item->concern_status === 'pending')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/assessment/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'assessed')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/scope_of_work/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'waiting for approval')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/approval/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'request for purchase')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/materials/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @elseif($item->concern_status === 'approved')
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/payment-options/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @endif
-              @else
-              <a href="/property/{{ Session::get('property_id') }}/room/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/concern/{{ $item->concern_id }}/communications/"
-                target="_blank"><i class="fas fa-eye"></i> View</a>
-              @endif
-            </td>
-
-          </tr>
-          @else
-
-          @endif
-
-          @endforeach
+         @each('webapp.concerns.includes.concerns', $concerns, 'concern', 'webapp.tenants.includes.no-record')
         </tbody>
       </table>
-
     </div>
-
   </div>
   @endforeach
-
-
 </div>
-
-@endsection
-
-@section('scripts')
-
 @endsection

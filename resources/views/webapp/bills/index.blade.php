@@ -92,46 +92,7 @@
       </tr>
     </thead>
     <tbody>
-      <?php $ctr=1;?>
-      @foreach ($bills as $item)
-      <tr>
-        <th>{{ $ctr++ }}</th>
-        <td>{{ Carbon\Carbon::parse($item->date_posted)->format('d M, Y') }}</td>
-        <td>{{ $item->bill_no }}</td>
-        <td>
-          @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-          Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type')
-          === '6')
-          <a
-            href="/property/{{Session::get('property_id')}}/occupant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
-          @else
-          <a
-            href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/#bills">{{ $item->first_name.' '.$item->last_name }}</a>
-          @endif
-        </td>
-        <td>
-          @if(Session::get('property_type') === '5' || Session::get('property_type') === 1 ||
-          Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type')
-          === '6')
-          <a
-            href="/property/{{Session::get('property_id')}}/unit/{{ $item->unit_id }}#payments">{{ $item->building.' '.$item->unit_no }}</a>
-          @else
-          <a
-            href="/property/{{Session::get('property_id')}}/room/{{ $item->unit_id }}#payments">{{ $item->building.' '.$item->unit_no }}</a>
-          @endif
-
-        </td>
-        <td>{{ $item->particular }}</td>
-
-        <td colspan="2">
-          {{ $item->start? Carbon\Carbon::parse($item->start)->format('d M, Y') : null}}-
-          {{ $item->end? Carbon\Carbon::parse($item->end)->format('d M, Y') : null }}
-        </td>
-        <td>{{ number_format($item->amount,2) }}</td>
-        <td><a class="text-danger" href="/bill/{{ $item->bill_id }}/delete/bill"><i class="fas fa-times"></i> Remove</a>
-        </td>
-      </tr>
-      @endforeach
+   @each('webapp.bills.includes.bills', $bills, 'bill', 'webapp.tenants.includes.no-record')
     </tbody>
 
 

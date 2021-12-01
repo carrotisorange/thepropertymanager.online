@@ -31,10 +31,10 @@
 
 <div class="row">
   <div class="col">
-    <a href="#/" id="add_entry" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New </a>
-    <a href="#/" id='delete_entry' class="btn btn-danger btn-sm"><i class="fas fa-minus"></i> Remove </a>
+    <a href="#/" id="add_entry" class="btn btn-primary"><i class="fas fa-plus"></i> New </a>
+    <a href="#/" id='delete_entry' class="btn btn-danger"><i class="fas fa-minus"></i> Remove </a>
 
-    <button id="savebutton" form="addPayableEntryForm" type="submit" class="btn btn-success btn-sm"
+    <button id="savebutton" form="addPayableEntryForm" type="submit" class="btn btn-success"
       onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i>Save (<span
         id="current_no_of_entry"></span>)</button>
 

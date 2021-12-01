@@ -499,7 +499,7 @@ class PropertyController extends Controller
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
 
-         $top_agents = DB::table('contracts')
+         $referrals = DB::table('contracts')
         ->join('users', 'referrer_id_foreign', 'id')
         ->join('users_properties_relations', 'id', 'user_id_foreign')
         ->select('*', DB::raw('count(*) as referrals'))
@@ -832,7 +832,7 @@ $expenses_rate->dataset
 
 
     if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-        $delinquent_accounts = Unit::leftJoin('bills', 'unit_id','bill_unit_id')
+        $delinquents = Unit::leftJoin('bills', 'unit_id','bill_unit_id')
         ->leftJoin('payments', 'bill_id','payment_bill_id')
         ->leftJoin('contracts', 'unit_id', 'unit_id_foreign')
           ->selectRaw('*,sum(amount) - IFNULL(sum(payments.amt_paid),0) as balance')
@@ -842,7 +842,7 @@ $expenses_rate->dataset
           ->havingRaw('balance > 0')
           ->get();
     }else{
-        $delinquent_accounts = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
+        $delinquents = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
           ->leftJoin('payments', 'bill_id','payment_bill_id')
         ->leftJoin('contracts', 'tenant_id', 'tenant_id_foreign')
       
@@ -855,18 +855,6 @@ $expenses_rate->dataset
           ->get();
     }
 
-
-
-//  $delinquent_accounts = Billing::leftJoin('payments', 'billings.billing_id', '=', 'payments.payment_bill_id')
-// ->join('contracts', 'bill_tenant_id', 'tenant_id_foreign')
-// ->join('units', 'unit_id_foreign', 'unit_id')
-// ->join('tenants', 'tenant_id_foreign', 'tenant_id')
-// ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance')
-// ->where('property_id_foreign', Session::get('property_id'))
-// ->groupBy('tenant_id')
-// ->orderBy('balance', 'desc')
-// ->havingRaw('balance > 0')
-// ->get();
 
   $contracts = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
@@ -1038,7 +1026,7 @@ $length_of_stay->dataset
                     );
 
                     
- $tenants_to_watch_out = DB::table('contracts')
+ $expiring_contracts = DB::table('contracts')
 ->join('units', 'unit_id_foreign', 'unit_id')
 ->join('tenants', 'tenant_id_foreign', 'tenant_id')
 ->select('*', 'contracts.status as contract_status' )
@@ -1270,7 +1258,7 @@ if($tenants->count() != 0){
 
 
 if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
-    $collections_for_the_day = DB::table('contracts')
+    $collections = DB::table('contracts')
     ->leftJoin('units', 'unit_id_foreign', 'unit_id')
     ->leftJoin('bills', 'unit_id', 'bill_unit_id')
     ->leftJoin('payments', 'payment_bill_id', 'bill_id')
@@ -1284,7 +1272,7 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
     ->get();
 }else{
 
-    $collections_for_the_day = DB::table('contracts')
+    $collections = DB::table('contracts')
     ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
     ->leftJoin('units', 'unit_id_foreign', 'unit_id')
     ->leftJoin('bills', 'tenant_id', 'bill_tenant_id')
@@ -1305,9 +1293,9 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
                 'units', 'units_occupied','units_vacant', 'units_reserved',
                 'tenants', 'pending_tenants', 'owners',
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
-                'delinquent_accounts','tenants_to_watch_out',
-                'collections_for_the_day','contracts',
-                'current_occupancy_rate','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','top_agents','point_of_contact','pending_concerns',
+                'delinquents','expiring_contracts',
+                'collections','contracts',
+                'current_occupancy_rate','collection_rate_1','renewal_rate','increase_from_last_month','increase_in_room_acquired','referrals','point_of_contact','pending_concerns',
                 'length_of_stay'
             )
     );
@@ -1317,11 +1305,11 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
                 'units', 'units_occupied','units_vacant', 'units_reserved',
                 'tenants', 'pending_tenants', 'owners',
                 'movein_rate','moveout_rate', 'renewed_chart','expenses_rate', 'reason_for_moving_out_chart',
-                'delinquent_accounts','tenants_to_watch_out',
-                'collections_for_the_day','concerns','contracts',
+                'delinquents','expiring_contracts',
+                'collections','concerns','contracts',
                 'current_occupancy_rate','collection_rate_1',
                 'renewal_rate','increase_from_last_month','increase_in_room_acquired',
-                'top_agents','point_of_contact','pending_concerns', 'status','length_of_stay'
+                'referrals','point_of_contact','pending_concerns', 'status','length_of_stay'
             )
     );
 }
