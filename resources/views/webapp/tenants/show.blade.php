@@ -668,11 +668,7 @@
 
         <br>
         <br>
-        @if($balance->count() <= 0) <p class="text-danger text-center">No bills found!</p>
-
-          @else
-
-          <div class="table-responsive" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+      
             <table class="table table-hover">
               <?php $ctr=1; ?>
               <thead>
@@ -686,7 +682,7 @@
                   <th>Amount Paid</th>
                   <th>Balance</th>
                   <th></th>
-                  {{-- <th>Action</th> --}}
+               
                 </tr>
               </thead>
               @foreach ($balance as $item)
@@ -732,12 +728,6 @@
 
             </table>
 
-          </div>
-
-
-
-
-          @endif
 
       </div>
       <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="nav-payments-tab">
