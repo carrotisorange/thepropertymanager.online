@@ -1375,24 +1375,21 @@ DB::table('properties')
     {
        $tenant = Tenant::findOrFail($tenant_id);
 
-        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
-       ->join('particulars','particular_id_foreign', 'particular_id')
-       ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-        ->where('bills.property_id_foreign', Session::get('property_id'))
-       ->where('bill_tenant_id', $tenant_id)
-           ->where('particular_id_foreign', '1')
-        ->whereYear('start', Carbon::now()->year)
-        ->whereMonth('start', Carbon::now()->month)
-        
-       ->groupBy('bill_id')
-       ->orderBy('bill_no', 'desc')
-       ->havingRaw('balance > 0')
-       ->get();
-
-          $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-        ->where('bills.property_id_foreign', Session::get('property_id'))
+        ->where('bill_tenant_id', $tenant_id)
+        ->where('particular_id_foreign', '1')
+        ->whereYear('start', Carbon::now()->year)
+        ->whereMonth('start', Carbon::now()->month)
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        ->havingRaw('balance > 0')
+        ->get();
+
+        $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
         ->whereBetween('start',[Carbon::now()->startOfMonth()->subMonth(100),Carbon::now()->startOfMonth()->subMonth(1)])
         ->where('particular_id_foreign', '1')
@@ -1400,7 +1397,6 @@ DB::table('properties')
         ->orderBy('bill_no', 'desc')
         ->havingRaw('balance > 0')
         ->get();
-        
         
         $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
@@ -1413,6 +1409,7 @@ DB::table('properties')
         ->orderBy('bill_no', 'desc')
             ->havingRaw('balance > 0')
         ->get();
+        
 
         $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
