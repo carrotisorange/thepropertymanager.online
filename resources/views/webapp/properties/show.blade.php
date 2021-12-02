@@ -2,18 +2,6 @@
 
 @section('title', 'Dashboard')
 
-@section('css')
-<style>
-  /*This will work on every browser*/
-  thead tr:nth-child(1) th {
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-</style>
-@endsection
-
 @section('upper-content')
 <div class="row align-items-center py-4">
   <div class="col-lg-6 col-7">
@@ -291,7 +279,7 @@
             all</a></small>
       </div>
       <div class="card-body">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+          
             <table class="table table-hover">
               <thead>
                 <tr>
@@ -309,7 +297,7 @@
               @include('webapp.tenants.includes.no-record')
               @endforelse
             </table>
-          </div>
+        {{ $expiring_contracts->links() }}
       </div>
     </div>
   </div>
@@ -339,6 +327,7 @@
               @include('webapp.tenants.includes.no-record')
               @endforelse
             </table>
+            {{ $delinquents->links() }}
           </div>
       </div>
     </div>
@@ -382,7 +371,7 @@
         <small class="text-right"><a href="/property/{{ Session::get('property_id') }}/collections">View all</a></small>
       </div>
       <div class="card-body">
-          <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:500px;">
+          
             <table class="table table-hover">
               <thead>
                 <tr>
@@ -396,10 +385,10 @@
                   <th>Amount</th>
                 </tr>
               </thead>
-            
-             @each('webapp.properties.includes.dailyc-collections', $collections, 'collection', 'webapp.tenants.includes.no-record')
+             @each('webapp.properties.includes.daily-collections', $collections, 'collection', 'webapp.tenants.includes.no-record')
             </table>
-          </div>
+            {{ $collections->links() }}
+         
       </div>
     </div>
   </div>

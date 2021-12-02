@@ -1,5 +1,5 @@
 
-
+<tr>
         <td>{{ $collection->ar_no }}</td>
         <td>{{ $collection->payment_bill_no }}</td>
         <th>
@@ -18,12 +18,12 @@
         <td>{{ $collection->particular }}</td>
         <td>{{ $collection->form }}</td>
         <td colspan="2">
-            {{ $item->start? Carbon\Carbon::parse($collection->start)->format('M d Y') : null}} -
-            {{ $item->end? Carbon\Carbon::parse($collection->end)->format('M d Y') : null }}
+            {{ $collection->start? Carbon\Carbon::parse($collection->start)->format('M d Y') : null}} -
+            {{ $collection->end? Carbon\Carbon::parse($collection->end)->format('M d Y') : null }}
         </td>
         <td>{{ number_format($collection->amt_paid,2) }}</td>
-        @endforeach
-    <tr>
+<tr>
+    {{-- <tr>
         <th>TOTAL</th>
         <th></th>
         <th></th>
@@ -32,4 +32,4 @@
         <th></th>
         <th colspan="2"></th>
         <th>{{ number_format($collection->sum('amt_paid'),2) }}</th>
-    </tr>
+    </tr> --}}

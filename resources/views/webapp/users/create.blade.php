@@ -63,11 +63,11 @@
 
                 <div class="form-group">
                     <button type="submit" form="createCredentialsForm" class="btn btn-primary btn-block"
-                        onclick="this.form.submit(); this.disabled = true;"> Save</button>
+                        onclick="this.form.submit(); this.disabled = true;"><i class="fas fa-check"></i> Save</button>
                     <br>
                     <p class="text-center">
                         <a class="text-center text-dark"
-                            href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/#credentials">Cancel</a>
+                            href="/property/{{ Session::get('property_id') }}/tenant/{{ $tenant->tenant_id }}/#credentials"><i class="fas fa-times"></i> Cancel</a>
                     </p>
                 </div>
             </div>

@@ -839,8 +839,8 @@ $expenses_rate->dataset
           ->where('property_id_foreign',Session::get('property_id'))
           ->groupBy('unit_id')
           ->orderBy('balance', 'desc')
-          ->havingRaw('balance > 0')
-          ->get();
+        
+          ->paginate(5);
     }else{
         $delinquents = Tenant::leftJoin('bills', 'tenant_id','bill_tenant_id')
           ->leftJoin('payments', 'bill_id','payment_bill_id')
@@ -851,8 +851,8 @@ $expenses_rate->dataset
           ->where('units.property_id_foreign',Session::get('property_id'))
           ->groupBy('tenant_id')
           ->orderBy('balance', 'desc')
-          ->havingRaw('balance > 0')
-          ->get();
+       
+          ->paginate(5);
     }
 
 
@@ -1034,7 +1034,7 @@ $length_of_stay->dataset
 ->where('contracts.status','<>', 'inactive')
 ->where('moveout_at', '<=', Carbon::now()->addMonth())
 ->orderBy('moveout_at', 'asc')
-->get();
+->paginate(5);
 
 $pending_concerns = DB::table('contracts')
 ->leftJoin('tenants', 'tenant_id_foreign', 'tenant_id')
@@ -1269,7 +1269,7 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
     ->orderBy('payment_created', 'desc')
     ->orderBy('ar_no', 'desc')
     ->groupBy('payment_id')
-    ->get();
+    ->paginate(5);
 }else{
 
     $collections = DB::table('contracts')
@@ -1284,7 +1284,7 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
     ->orderBy('payment_created', 'desc')
     ->orderBy('ar_no', 'desc')
     ->groupBy('payment_id')
-    ->get();
+    ->paginate(5);
 }
 
 if(Session::get('property_type') === '5' || Session::get('property_type') === 1 || Session::get('property_type') === '6' || Session::get('property_type') === 1 || Session::get('property_type') === '6'){
