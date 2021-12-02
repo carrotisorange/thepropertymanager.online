@@ -29,7 +29,7 @@
               class="fas fa-arrow-right"></i> Continue</button>
         </p>
         <p class="text-center">
-          <a class="text-danger" href="{{ url()->previous() }}"><i class="fas fa-times"></i> Cancel</a>
+          <a class="text-black" href="{{ url()->previous() }}"><i class="fas fa-times"></i> Cancel</a>
         </p>
       </div>
     </div>

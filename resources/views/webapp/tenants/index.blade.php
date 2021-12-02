@@ -14,7 +14,7 @@
       </select>
     </form>
   </div>
-  <div class="col text-right">
+  <div class="col-md-6">
     <form action="/property/{{Session::get('property_id')}}/tenants/search" method="GET">
       @csrf
       <div class="input-group">
@@ -27,6 +27,11 @@
         </div>
       </div>
     </form>
+
+  </div>
+  <div class="col-auto">
+    <a href="/property/{{ Session::get('property_id') }}/tenants" class="btn btn-primary"><i class="fas fa-eraser"></i>
+          Clear</a>
   </div>
 </div>
   <h3 class="text-center">

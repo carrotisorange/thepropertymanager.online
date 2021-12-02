@@ -342,7 +342,7 @@ class PropertyController extends Controller
 
     public function search(Request $request, $property_id){
 
-         $search_key = $request->search_key;
+        $search_key = $request->search_key;
 
          $notification = new Notification();
          $notification->user_id_foreign = Auth::user()->id;
@@ -354,12 +354,14 @@ class PropertyController extends Controller
                      
          Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
 
-         $tenants = DB::table('users_properties_relations')
-         ->join('properties', 'property_id_foreign', 'property_id')
-         ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
-         ->where('property_id', $property_id)
-         ->whereRaw("concat(first_name, last_name) like '%$search_key%' ")
-         ->get();
+         
+           $tenants = DB::table('users_properties_relations')
+           ->join('properties', 'property_id_foreign', 'property_id')
+           ->join('tenants', 'users_properties_relations.user_id_foreign', 'tenants.user_id_foreign')
+           ->where('property_id', $property_id)
+           ->whereRaw("concat(first_name, ' ', last_name) like '%$search_key%' ")
+           ->orderBy('tenant_id', 'desc')
+           ->get();
 
         $units = DB::table('units')
         ->where('property_id_foreign', $property_id)
