@@ -45,20 +45,20 @@
                         <label>Rate </label>
                         @foreach ($property_bill as $bill)
                         <input class="form-control" form="createBillForm" type="number" value="{{ $bill->rate }}"
-                            name="start" id="start" class="">
+                            name="rate" id="start" class="">
                         @endforeach
                     </div>
 
                     <div class="col-md-4">
                         <label>Previous </label>
-                        <input class="form-control" form="createBillForm" type="number" value="{{ old('end') }}"
-                            name="end" id="end" class="">
+                        <input class="form-control" form="createBillForm" type="number" value=""
+                            name="previous" id="end" class="">
                     </div>
 
                     <div class="col-md-4">
                         <label>Current </label>
-                        <input class="form-control" form="createBillForm" type="number" value="{{ old('end') }}"
-                            name="end" id="end" class="">
+                        <input class="form-control" form="createBillForm" type="number" value=""
+                            name="current" id="end" class="">
                     </div>
                 </div>
                 <br>
@@ -69,7 +69,7 @@
 
                     <div class="col-md-6">
                         <label>Start </label>
-                        <input class="form-control" form="createBillForm" type="date" value="{{ old('start') }}"
+                        <input class="form-control" form="createBillForm" type="date" value="{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}"
                             name="start" id="start" class="" required>
                         @error('start')
                         <small class="text-danger">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-md-6">
                         <label>End </label>
-                        <input class="form-control" form="createBillForm" type="date" value="{{ old('end') }}"
+                        <input class="form-control" form="createBillForm" type="date" value="{{ Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d') }}"
                             name="end" id="end" class="" required>
                         @error('end')
                         <small class="text-danger">
@@ -92,8 +92,12 @@
                 <br>
                 <div class="form-group residential">
                     <label><b>Amount</b></label>
-                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}"
-                        step="0.001" name="amount" id="amount" class="" required>
+                    @if($particular->particular=='1')
+                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
+                    @else
+                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
+                    @endif
+                        
                     @error('amount')
                     <small class="text-danger">
                         {{ $message }}
