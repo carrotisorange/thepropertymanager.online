@@ -193,11 +193,7 @@
                   @endforeach
                   @endif
 
-                  <tr>
-                    <td colspan="2">Advance Payments:</td>
-
-                    <th></th>
-                  </tr>
+                  
                   <tr>
                     <th colspan="2">TOTAL AMOUNT PAYABLE</th>
                     {{-- <th colspan="2">TOTAL AMOUNT PAYABLE(If paid before due date)</th> --}}

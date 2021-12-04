@@ -838,7 +838,7 @@ $expenses_rate->dataset
         ->leftJoin('payments', 'bill_id','payment_bill_id')
         ->leftJoin('contracts', 'unit_id', 'unit_id_foreign')
           ->selectRaw('*,sum(amount) - IFNULL(sum(payments.amt_paid),0) as balance')
-          ->where('property_id_foreign',Session::get('property_id'))
+          ->where('units.property_id_foreign',Session::get('property_id'))
           ->groupBy('unit_id')
           ->orderBy('balance', 'desc')
         

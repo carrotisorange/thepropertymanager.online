@@ -132,40 +132,137 @@ class BillController extends Controller
         return view('webapp.bills.create-tenant-bill', compact('particulars','bills','tenant', 'rooms'));
     }
 
-    public function store_tenant_bill(Request $request, $property_id, $tenant_id){
+    public function post_bill_particular(Request $request, $property_id, $tenant_id){
 
-        $request->validate([
-            'particular_id_foreign' => 'required',
-            'amount' => 'required',
-            'start' => 'required',
-            'end' => 'required',
-            'bill_unit_id' => 'required',
-         ]);
  
            //get the last added bill no of the property
           $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
           ->max('bill_no') + 1;
 
-
-         if($request->particular_id_foreign === '18'){
-         $bill_amount = $request->amount * -1;
-         }else{
-         $bill_amount = $request->amount;
-         }
-
- 
           //post the additional bill
           Bill::create([
              'bill_no' => $current_bill_no,
              'bill_tenant_id' => $tenant_id,
              'date_posted' => Carbon::now(),
              'particular_id_foreign' => $request->particular_id_foreign,
-             'amount'=> $bill_amount,
-             'start' => $request->start, 
-             'end' => $request->end,
              'property_id_foreign' => Session::get('property_id'),
-             'bill_unit_id' => $request->bill_unit_id
          ]);
+
+        $particular = Particular::findOrFail($request->particular_id_foreign);
+
+        $rooms = DB::table('contracts')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->select('*', 'contracts.status as contract_status', 'contracts.term as contract_term')
+        ->where('tenant_id', $tenant_id)
+        ->orderBy('contracts.created_at', 'desc')
+        ->get();
+
+        $bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        ->join('particulars','particular_id_foreign', 'particular_id')
+        ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as
+        amt_paid')
+        ->where('bill_tenant_id', $tenant_id)
+        ->groupBy('bill_id')
+        ->orderBy('bill_no', 'desc')
+        // ->havingRaw('balance > 0')
+        ->get();
+
+        $tenant = Tenant::findOrFail($tenant_id);
+
+        return view('webapp.bills.create-tenant-bill-with-particular', compact('particular','bills','tenant', 'rooms'));
+    }
+
+     public function create_bill_with_particular(Request $request, $property_id, $tenant_id){
+
+    return $request->all();
+
+     $request->validate([
+     'particular_id_foreign' => 'required',
+     'amount' => 'required',
+     'start' => 'required',
+     'end' => 'required',
+     'bill_unit_id' => 'required',
+     ]);
+
+     //get the last added bill no of the property
+     $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+     ->max('bill_no') + 1;
+
+
+     if($request->particular_id_foreign === '18'){
+     $bill_amount = $request->amount * -1;
+     }else{
+     $bill_amount = $request->amount;
+     }
+
+
+     //create bill and get the bill id
+     Bill::create([
+     'bill_no' => $current_bill_no,
+     'bill_tenant_id' => $tenant_id,
+     'date_posted' => Carbon::now(),
+     'particular_id_foreign' => $request->particular_id_foreign,
+     'amount'=> $bill_amount,
+     'start' => $request->start,
+     'end' => $request->end,
+     'property_id_foreign' => Session::get('property_id'),
+     'bill_unit_id' => $request->bill_unit_id
+     ]);
+
+     $particulars = DB::table('particulars')
+     ->join('property_bills', 'particular_id', 'particular_id_foreign')
+     ->where('property_id_foreign', Session::get('property_id'))
+     ->orderBy('particular', 'asc')
+     ->get();
+
+     $bills = Bill::join('particulars','particular_id_foreign', 'particular_id')
+     ->where('bill_tenant_id', $tenant_id)
+     ->groupBy('bill_id')
+     ->orderBy('bill_no', 'desc')
+     ->get();
+
+     $tenant = Tenant::findOrFail($tenant_id);
+
+     return back()->with('success', 'Bill is created successfully!');
+     }
+
+
+        public function store_tenant_bill(Request $request, $property_id, $tenant_id){
+
+
+        $request->validate([
+        'particular_id_foreign' => 'required',
+        'amount' => 'required',
+        'start' => 'required',
+        'end' => 'required',
+        'bill_unit_id' => 'required',
+        ]);
+
+        //get the last added bill no of the property
+        $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
+        ->max('bill_no') + 1;
+
+
+        if($request->particular_id_foreign === '18'){
+        $bill_amount = $request->amount * -1;
+        }else{
+        $bill_amount = $request->amount;
+        }
+
+
+        //post the additional bill
+        Bill::create([
+        'bill_no' => $current_bill_no,
+        'bill_tenant_id' => $tenant_id,
+        'date_posted' => Carbon::now(),
+        'particular_id_foreign' => $request->particular_id_foreign,
+        'amount'=> $bill_amount,
+        'start' => $request->start,
+        'end' => $request->end,
+        'property_id_foreign' => Session::get('property_id'),
+        'bill_unit_id' => $request->bill_unit_id
+        ]);
 
         $particulars = DB::table('particulars')
         ->join('property_bills', 'particular_id', 'particular_id_foreign')
@@ -182,7 +279,8 @@ class BillController extends Controller
         $tenant = Tenant::findOrFail($tenant_id);
 
         return back()->with('success', 'Bill is created successfully!');
-    }
+        }
+
 
     /**
      * Show the form for creating a new resource.

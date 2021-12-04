@@ -153,16 +153,14 @@
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">DELINQUENTS
-          ({{ number_format($delinquent_accounts->sum('balance'),2) }})</h6>
+          ({{ number_format($delinquents->sum('balance'),2) }})</h6>
 
 
       </div>
       <!-- Card Body -->
       <div class="card-body">
         <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-          @if($delinquent_accounts->count()<=0) <p class="text-center text-success">No delinquents found <i
-              class="fas fa-check-circle text-success"></i></p>
-            @else
+  
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -174,7 +172,7 @@
               </thead>
               <?php $del_ctr = 1;?>
               <tbody>
-                @foreach($delinquent_accounts as $item)
+                @foreach($delinquents as $item)
                 <tr>
                   <th>{{ $del_ctr++ }}</th>
                   <td><a
@@ -193,8 +191,8 @@
                 @endforeach
               </tbody>
             </table>
-            @endif
-        </div>
+          
+        
       </div>
     </div>
   </div>
@@ -272,8 +270,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive text-nowrap" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-          @if($collections_for_the_day->count()<=0) <p class="text-center text-danger">No collections found! </p>
-            @else
+         
             <table class="table table-bordered">
               <thead>
 
@@ -290,7 +287,7 @@
 
               </thead>
               <tbody>
-                @foreach ($collections_for_the_day as $item)
+                @foreach ($collections as $item)
                 <tr>
 
                   <td>{{ $item->ar_no }}</td>
@@ -307,13 +304,12 @@
                   @endforeach
                 <tr>
                   <th>TOTAL</th>
-                  <th class="text-right" colspan="7">{{ number_format($collections_for_the_day->sum('amt_paid'),2) }}
+                  <th class="text-right" colspan="7">{{ number_format($collections->sum('amt_paid'),2) }}
                   </th>
                 </tr>
               </tbody>
             </table>
-            @endif
-        </div>
+          
       </div>
     </div>
   </div>
