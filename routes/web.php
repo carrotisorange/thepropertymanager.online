@@ -248,7 +248,7 @@ Route::prefix('property/{property_id}')->group(function(){
     Route::get('tenant/{tenant_id}/create/bill', 'BillController@create_tenant_bill');
     Route::post('tenant/{tenant_id}/post/particular', 'BillController@post_bill_particular');
     Route::get('tenant/{tenant_id}/particular/{particular_id}', 'BillController@create_bill_with_particular');
-    Route::post('tenant/{tenant_id}/particular/{particular_id}/store/bill', 'BillController@store_tenant_bill');
+    Route::post('tenant/{tenant_id}/particular/{particular_id}/bill/{bill_id}/store/bill', 'BillController@store_tenant_bill');
     Route::get('room/{room_id}/tenant/{tenant_id}/contract/{contract_id}/create/bill','BillController@create');
     Route::post('room/{room_id}/tenant/{tenant_id}/store/bill', 'BillController@store');
     Route::get('bills', 'BillController@index')->name('show-all-bill');
