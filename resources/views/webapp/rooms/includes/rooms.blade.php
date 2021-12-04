@@ -41,7 +41,7 @@
         <br>
         <small> {{ $room->unit_no }}</small>
     </a>
-    @elseif($item->status === 'maintenance')
+    @elseif($room->status === 'maintenance')
     <a title="₱ {{ number_format ($room->rent, 2)}}/mo"
         href="/property/{{Session::get('property_id')}}/room/{{ $room->unit_id }}/#tenants"
         style="width: 85px; height: 60px;">
