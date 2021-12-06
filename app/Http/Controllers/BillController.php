@@ -1529,7 +1529,7 @@ DB::table('properties')
     {
        $tenant = Tenant::findOrFail($tenant_id);
 
-        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        $current_bills = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
@@ -1541,7 +1541,7 @@ DB::table('properties')
         ->havingRaw('balance > 0')
         ->get();
 
-        $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        $previous_bills = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
         ->where('bill_tenant_id', $tenant_id)
@@ -1552,12 +1552,12 @@ DB::table('properties')
         ->havingRaw('balance > 0')
         ->get();
         
-        $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        $previous_surcharges = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-        ->where('bills.property_id_foreign', Session::get('property_id'))
+
         ->where('bill_tenant_id', $tenant_id)
-    ->whereMonth('start','!=', Carbon::now()->month)
+        ->whereMonth('start','!=', Carbon::now()->month)
         ->where('particular_id_foreign', '16')
         ->groupBy('bill_id')
         ->orderBy('bill_no', 'desc')
@@ -1565,10 +1565,10 @@ DB::table('properties')
         ->get();
         
 
-        $other_bills = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+        $other_bills = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
         ->join('particulars','particular_id_foreign', 'particular_id')
         ->selectRaw('*, amount - IFNULL(sum(payments.amt_paid),0) as balance, IFNULL(sum(payments.amt_paid),0) as amt_paid')
-        ->where('bills.property_id_foreign', Session::get('property_id'))
+
         ->where('bill_tenant_id', $tenant_id)
         ->groupBy('bill_id')
         ->where('particular_id_foreign','!=', '1')
@@ -1578,7 +1578,7 @@ DB::table('properties')
         ->havingRaw('balance > 0')
         ->get();
 
-         $discounts = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+         $discounts = Bill::leftJoin('payments', 'bills.bill_id', 'payments.payment_bill_id')
          ->join('particulars','particular_id_foreign', 'particular_id')
          ->where('bills.property_id_foreign', Session::get('property_id'))
          ->where('bill_tenant_id', $tenant_id)
