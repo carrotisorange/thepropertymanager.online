@@ -45,20 +45,20 @@
                         <label>Rate </label>
                         @foreach ($property_bill as $bill)
                         <input class="form-control" form="createBillForm" type="number" value="{{ $bill->rate }}"
-                            name="rate" id="start" class="">
+                            name="rate" id="rate" class="" oninput="autoComputeAmount()">
                         @endforeach
                     </div>
 
                     <div class="col-md-4">
                         <label>Previous </label>
                         <input class="form-control" form="createBillForm" type="number" value=""
-                            name="previous" id="end" class="">
+                            name="previous" id="previous" class="" oninput="autoComputeAmount()">
                     </div>
 
                     <div class="col-md-4">
                         <label>Current </label>
                         <input class="form-control" form="createBillForm" type="number" value=""
-                            name="current" id="end" class="">
+                            name="current" id="current" class="" oninput="autoComputeAmount()">
                     </div>
                 </div>
                 <br>
@@ -94,6 +94,8 @@
                     <label><b>Amount</b></label>
                     @if($particular->particular=='1')
                     <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
+                    @elseif($particular->particular_id == '2' || $particular->particular_id == '3')
+                   <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required readonly>
                     @else
                     <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
                     @endif
@@ -118,4 +120,18 @@
     </div>
 </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function autoComputeAmount(){
+      var previous = parseFloat(document.getElementById('previous').value);
+      var current = parseFloat(document.getElementById('current').value);
+      var rate = parseFloat(document.getElementById('rate').value);
+
+     var cons = document.getElementById('amount').value = (current - previous)* rate;
+
+      
+    }
+</script>
 @endsection

@@ -174,10 +174,10 @@
                   <tr>
                     <td></td>
                     <td>
-                      P({{ $item->prev_electricity_reading }}),
-                      C({{ $item->curr_electricity_reading }}),
-                      A({{ $item->curr_electricity_reading - $item->prev_electricity_reading }}),
-                      R({{ $item->electricity_rate }}) </td>
+                      P({{ $item->prev_electricity_reading? $item->prev_electricity_reading: $item->prev_water_reading }}),
+                      C({{ $item->curr_electricity_reading? $item->curr_electricity_reading: $item->curr_water_reading }}),
+                      A({{ $item->curr_electricity_reading? $item->curr_electricity_reading - $item->prev_electricity_reading: $item->curr_water_reading - $item->prev_water_reading }}),
+                      R({{ $item->electricity_rate?$item->electricity_rate:$item->water_rate }}) </td>
                     <td></td>
                   </tr>
                   @endforeach

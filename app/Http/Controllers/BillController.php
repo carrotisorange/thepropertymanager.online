@@ -236,8 +236,8 @@ class BillController extends Controller
 
 
         public function store_tenant_bill(Request $request, $property_id, $tenant_id, $particular_id, $bill_id){
-    
 
+        //validate inputs
         $request->validate([
         'amount' => 'required',
         'start' => 'required',
@@ -245,28 +245,80 @@ class BillController extends Controller
         'bill_unit_id' => 'required',
         ]);
 
+        //update rate in particular
+        DB::table('property_bills')
+        ->where('property_id_foreign', $property_id)
+        ->where('particular_id_foreign', $particular_id)
+        ->update(
+            [
+                'rate' => $request->rate
+            ]   
+            );
+
+        //record previous readings 
+
+        //if the particular is electric
+        if($request->particular_id === '2'){
+
+        DB::table('tenants')
+        ->where('tenant_id', $tenant_id)
+        ->update(
+            [
+                'previous_water_reading' => $request->previous
+            ]
+        );
+
+        //store the bill
+        DB::table('bills')
+        ->where('bill_id', $bill_id)
+        ->update(
+            [
+                'amount'=> $request->amount,
+                'start' => $request->start,
+                'end' => $request->end,
+                'bill_unit_id' => $request->bill_unit_id,
+                'curr_water_reading' => $request->current,
+                'prev_water_reading' => $request->previous,
+                'water_rate'=> $request->rate
+            ]
+            );
+
+        }elseif($request->particular_id === '3'){
+
+        DB::table('tenants')
+        ->where('tenant_id', $tenant_id)
+        ->update(
+            [
+                'previous_electric_reading' => $request->previous
+            ]
+        );
+
+       //store the bill
+        DB::table('bills')
+        ->where('bill_id', $bill_id)
+        ->update(
+            [
+                'amount'=> $request->amount,
+                'start' => $request->start,
+                'end' => $request->end,
+                'bill_unit_id' => $request->bill_unit_id,
+                'curr_electricity_reading' => $request->current,
+                'prev_electricity_reading' => $request->previous,
+                'electricity_rate' => $request->rate
+            ]
+            );
+        }
+
         //get the last added bill no of the property
         $current_bill_no = Bill::where('property_id_foreign', Session::get('property_id'))
         ->max('bill_no') + 1;
-
 
         if($particular_id === '18'){
         $bill_amount = $request->amount * -1;
         }else{
         $bill_amount = $request->amount;
         }
-
-        //post the additional bill
-      DB::table('bills')
-      ->where('bill_id', $bill_id)
-      ->update(
-          [
-              'amount'=> $bill_amount,
-              'start' => $request->start,
-              'end' => $request->end,
-              'bill_unit_id' => $request->bill_unit_id
-          ]
-        );
+      
 
         $particulars = DB::table('particulars')
         ->join('property_bills', 'particular_id', 'particular_id_foreign')

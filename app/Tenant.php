@@ -37,6 +37,8 @@ class Tenant extends Model
                                 'employer_contact_no',
                                 'zip_code',
                                 'bill_batch_no',
+                                'previous_electric_reading',
+                                'previous_water_reading'
                             ];
 
 
