@@ -1627,6 +1627,26 @@ DB::table('properties')
         //return $pdf->download(Carbon::now().'-'.$tenant->first_name.'-'.$tenant->last_name.'-soa'.'.pdf');
     }
 
+    public function footer($property_id){
+    
+        $footer = Property::findOrFail($property_id);
+
+        return view('webapp.bills.footer', compact('footer'));
+    }
+
+    public function update_footer(Request $request, $property_id){
+        
+    DB::table('properties')
+    ->where('property_id', $property_id)
+    ->update(
+        [
+            'footer_message' => $request->footer_message
+        ]
+    );
+
+    return back()->with('success', 'Footer is updated successfully!');
+    }
+
     public function export_occupant_bills($property_id,$unit_id)
     {
        

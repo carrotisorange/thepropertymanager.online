@@ -273,6 +273,9 @@ Route::prefix('property/{property_id}')->group(function(){
     Route::post('bills/surcharge/{date}', 'BillController@post_bills_surcharge');
     Route::put('tenant/{tenant_id}/bill/{bill_id}/restore', 'BillController@restore_bill');
     Route::get('bills/search', 'BillController@index');
+
+    Route::get('bills/edit', 'BillController@footer');
+    Route::put('bills/update', 'BillController@update_footer');
 });
 //route to create bills for removing bills
 Route::get('/bill/{bill_id}/delete/bill', 'BillController@destroy');
