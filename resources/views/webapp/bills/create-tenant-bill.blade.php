@@ -52,6 +52,7 @@
             <?php $ctr = 1; ?>
             <thead>
               <th>#</th>
+              <th>Date posted</th>
               <th>Bill #</th>
               <th>Particular</th>
               <th>Start</th>
@@ -64,6 +65,7 @@
             <tbody>
               <tr>
                 <th>{{ $ctr++ }}</th>
+                <td>{{ Carbon\Carbon::parse($item->date_posted)->format('M d, Y') }}</td>
                 <td>{{ $item->bill_no }}</td>
                 <td>{{ $item->particular }}</td>
                 <td>{{ Carbon\Carbon::parse($item->start)->format('M d, Y') }}</td>
