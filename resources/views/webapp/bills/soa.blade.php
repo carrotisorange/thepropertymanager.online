@@ -68,8 +68,7 @@
           <tr>
             <td>Room: {{ $current_room }}</td>
             <th></th>
-            {{-- <th class="text-right"><span class="text-danger"><b>Due Date:</b> {{
-                Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span>
+            {{-- <th  class="text-right"><span class="text-danger"><b>Due Date:</b> {{ Carbon\Carbon::now()->firstOfMonth()->addDays(7)->format('M d Y') }}</span>
             </th> --}}
             <td class="text-right"><span class="text-danger"><b> </span></td>
           </tr>
@@ -172,7 +171,6 @@
                       - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
                     <td>{{ number_format($item->balance,2) }}</td>
                   </tr>
-                  @if($item->particular_id_foreign == '2' || $item->particular_id_foreign == '3')
                   <tr>
                     <td></td>
                     <td>
@@ -182,30 +180,36 @@
                       R({{ $item->electricity_rate }}) </td>
                     <td></td>
                   </tr>
-                  @else
-                  <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                    <td></td>
-                  </tr>
-                  @endif
                   @endforeach
                   @endif
 
+                  <tr>
+                    <td colspan="2">Discounts:</td>
+
+                    <th></th>
+                  </tr>
+                  @foreach ($discounts as $item)
+                  <tr>
+                    <td></td>
+                    <td>
+                      {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}}
+                      - {{ $item->end? Carbon\Carbon::parse($item->end)->format('M d Y') : null }}</td>
+                    <td>{{ number_format($item->amount,2) }}</td>
+                  </tr>
                   
+                  @endforeach
                   <tr>
                     <th colspan="2">TOTAL AMOUNT PAYABLE</th>
                     {{-- <th colspan="2">TOTAL AMOUNT PAYABLE(If paid before due date)</th> --}}
-                    <?php $total = $current_bills->sum('balance')+$previous_bills->sum('balance')+$previous_surcharges->sum('balance')+$other_bills->sum('balance'); ?>
+                    <?php $total = ($current_bills->sum('balance')+$previous_bills->sum('balance')+$previous_surcharges->sum('balance')+$other_bills->sum('balance')+$discounts->sum('amount')); ?>
                     <?php $surcharge = $total*.1; ?>
                     <th>{{ number_format($total,2) }}</th>
                   </tr>
-
+                  
                   {{-- <tr>
-                    <th colspan="2">ADD 10% surcharge ON RENT if not paid on due date</th>
-
-                    <th>{{ number_format($surcharge,2) }}</th>
+                <th colspan="2">ADD 10% surcharge ON RENT if not paid on due date</th>
+                
+                <th>{{ number_format($surcharge,2) }}</th>
                   </tr>
                   <tr>
                     <th class="text-danger" colspan="2">TOTAL AMOUNT PAYABLE AFTER DUE DATE</th>
@@ -229,12 +233,10 @@
         <table class="table table-condensed">
           <tr>
             <td> Prepared by: {{ Auth::user()->name }}
-              <br>
-            </td>
+              <br></td>
             <th></th>
             <td class="text-right"> Noted by:
-              <br>Accounting Head
-            </td>
+              <br>Accounting Head</td>
           </tr>
         </table>
       </div>

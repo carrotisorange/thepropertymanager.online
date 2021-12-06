@@ -1526,6 +1526,15 @@ DB::table('properties')
         ->havingRaw('balance > 0')
         ->get();
 
+         $discounts = Bill::leftJoin('payments', 'bills.bill_id', '=', 'payments.payment_bill_id')
+         ->join('particulars','particular_id_foreign', 'particular_id')
+         ->where('bills.property_id_foreign', Session::get('property_id'))
+         ->where('bill_tenant_id', $tenant_id)
+         ->groupBy('bill_id')
+         ->where('particular_id_foreign', '18')
+         ->orderBy('bill_no', 'desc')
+         ->get();
+
         $room_id = Tenant::findOrFail($tenant_id)->contracts()->first()->unit_id_foreign;
 
         $current_room = Unit::findOrFail($room_id)->unit_no;
@@ -1536,6 +1545,7 @@ DB::table('properties')
             'previous_bills' => $previous_bills,
             'previous_surcharges'=>$previous_surcharges,
             'other_bills'=>$other_bills,
+            'discounts' => $discounts,
             'current_room' => $current_room,
         ];
 
