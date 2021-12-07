@@ -188,8 +188,8 @@
 
                     <th></th>
                   </tr>
-                  @foreach ($discounts as $item)
-                  {{-- <tr>
+                  {{-- @foreach ($discounts as $item)
+                  <tr>
                     <td></td>
                     <td>
                       {{ $item->start? Carbon\Carbon::parse($item->start)->format('M d Y') : null}}
@@ -197,8 +197,8 @@
                     <td>{{ number_format($item->amount,2) }}</td>
                   </tr>
                   
-                  @endforeach
-                  <tr> --}}
+                  @endforeach --}}
+                  <tr>
                     <th colspan="2">TOTAL AMOUNT PAYABLE</th>
                     {{-- <th colspan="2">TOTAL AMOUNT PAYABLE(If paid before due date)</th> --}}
                     <?php $total = ($current_bills->sum('balance')+$previous_bills->sum('balance')+$previous_surcharges->sum('balance')+$other_bills->sum('balance')+$discounts->sum('amount')); ?>
