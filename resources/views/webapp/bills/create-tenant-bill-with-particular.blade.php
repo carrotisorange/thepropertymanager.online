@@ -51,15 +51,44 @@
 
                     <div class="col-md-4">
                         <label>Previous </label>
-                        <input class="form-control" form="createBillForm" type="number" value=""
-                            name="previous" id="previous" class="" oninput="autoComputeAmount()">
+                        <input class="form-control" form="createBillForm" type="number" value="" name="previous"
+                            id="previous" class="" oninput="autoComputeAmount()">
                     </div>
 
                     <div class="col-md-4">
                         <label>Current </label>
-                        <input class="form-control" form="createBillForm" type="number" value=""
-                            name="current" id="current" class="" oninput="autoComputeAmount()">
+                        <input class="form-control" form="createBillForm" type="number" value="" name="current"
+                            id="current" class="" oninput="autoComputeAmount()">
                     </div>
+                </div>
+                <br>
+                <div class="form-row residential">
+
+                    <div class="col-md-3">
+                        <label>Consumption </label>
+                        <input class="form-control" form="createBillForm" type="number" value="" name="consumption"
+                            id="consumption" readonly>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Minimum </label>
+                        <input class="form-control" form="createBillForm" type="number" value="" name="minimum"
+                            id="minimum" class="" oninput="autoComputeAmount()">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Unpaid </label>
+                        <input class="form-control" form="createBillForm" type="number" value="" name="unpaid"
+                            id="unpaid" class="" oninput="autoComputeAmount()">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Surcharge </label>
+                        <input class="form-control" form="createBillForm" type="number" value="" name="surcharge"
+                            id="surcharge" class="" oninput="autoComputeAmount()">
+                    </div>
+
+
                 </div>
                 <br>
                 @endif
@@ -69,8 +98,9 @@
 
                     <div class="col-md-6">
                         <label>Start </label>
-                        <input class="form-control" form="createBillForm" type="date" value="{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}"
-                            name="start" id="start" class="" required>
+                        <input class="form-control" form="createBillForm" type="date"
+                            value="{{ Carbon\Carbon::now()->firstOfMonth()->format('Y-m-d') }}" name="start" id="start"
+                            class="" required>
                         @error('start')
                         <small class="text-danger">
                             {{ $message }}
@@ -79,8 +109,9 @@
                     </div>
                     <div class="col-md-6">
                         <label>End </label>
-                        <input class="form-control" form="createBillForm" type="date" value="{{ Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d') }}"
-                            name="end" id="end" class="" required>
+                        <input class="form-control" form="createBillForm" type="date"
+                            value="{{ Carbon\Carbon::now()->lastOfMonth()->format('Y-m-d') }}" name="end" id="end"
+                            class="" required>
                         @error('end')
                         <small class="text-danger">
                             {{ $message }}
@@ -93,13 +124,16 @@
                 <div class="form-group residential">
                     <label><b>Amount</b></label>
                     @if($particular->particular=='1')
-                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
+                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}"
+                        step="0.001" name="amount" id="amount" class="" required>
                     @elseif($particular->particular_id == '2' || $particular->particular_id == '3')
-                   <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
+                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}"
+                        step="0.001" name="amount" id="amount" class="" required>
                     @else
-                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
+                    <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}"
+                        step="0.001" name="amount" id="amount" class="" required>
                     @endif
-                        
+
                     @error('amount')
                     <small class="text-danger">
                         {{ $message }}
@@ -108,11 +142,12 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" form="createBillForm" class="btn btn-primary btn-block"><i class="fas fa-check"></i> Save</button>
+                    <button type="submit" form="createBillForm" class="btn btn-primary btn-block"><i
+                            class="fas fa-check"></i> Save</button>
                     <br>
                     <p class="text-center">
-                        <a class="text-center text-dark" href="{{ url()->previous() }}"><i
-                                class="fas fa-times"></i> Cancel</a>
+                        <a class="text-center text-dark" href="{{ url()->previous() }}"><i class="fas fa-times"></i>
+                            Cancel</a>
                     </p>
                 </div>
             </div>
@@ -129,7 +164,15 @@
       var current = parseFloat(document.getElementById('current').value);
       var rate = parseFloat(document.getElementById('rate').value);
 
-      document.getElementById('amount').value = (current - previous)* rate;
+      var consumption = document.getElementById('consumption').value = (current - previous) * rate;
+
+      var minimum = document.getElementById('minimum').value;
+
+      var surcharge = document.getElementById('surcharge').value;
+
+      var unpaid = document.getElementById('unpaid').value;
+
+      document.getElementById('amount').value = (parseFloat(consumption) + parseFloat(minimum) + parseFloat(surcharge) + parseFloat(unpaid));
 
       
     }
