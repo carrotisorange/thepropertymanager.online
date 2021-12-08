@@ -95,7 +95,7 @@
                     @if($particular->particular=='1')
                     <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
                     @elseif($particular->particular_id == '2' || $particular->particular_id == '3')
-                   <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required readonly>
+                   <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
                     @else
                     <input class="form-control" form="createBillForm" type="number" min="1" value="{{ old('amount') }}" step="0.001" name="amount" id="amount" class="" required>
                     @endif
@@ -129,7 +129,7 @@
       var current = parseFloat(document.getElementById('current').value);
       var rate = parseFloat(document.getElementById('rate').value);
 
-     var cons = document.getElementById('amount').value = (current - previous)* rate;
+      document.getElementById('amount').value = (current - previous)* rate;
 
       
     }
