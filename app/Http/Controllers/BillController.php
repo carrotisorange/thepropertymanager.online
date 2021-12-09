@@ -258,7 +258,21 @@ class BillController extends Controller
         //record previous readings 
 
         //if the particular is electric
-        if($request->particular_id === '2'){
+       if($request->particular_id === '1'){
+
+       //store the bill
+       DB::table('bills')
+       ->where('bill_id', $bill_id)
+       ->update(
+            [
+                'amount'=> $request->amount,
+                'start' => $request->start,
+                'end' => $request->end,
+                'bill_unit_id' => $request->bill_unit_id,
+            ]
+       );
+
+       } elseif($request->particular_id === '2'){
 
         DB::table('tenants')
         ->where('tenant_id', $tenant_id)
