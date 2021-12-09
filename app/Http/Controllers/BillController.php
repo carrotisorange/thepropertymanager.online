@@ -321,6 +321,20 @@ class BillController extends Controller
                 'electricity_rate' => $request->rate
             ]
             );
+        } else{
+
+        //store the bill
+        DB::table('bills')
+        ->where('bill_id', $bill_id)
+        ->update(
+        [
+        'amount'=> $request->amount,
+        'start' => $request->start,
+        'end' => $request->end,
+        'bill_unit_id' => $request->bill_unit_id,
+        ]
+        );
+
         }
 
         //get the last added bill no of the property
