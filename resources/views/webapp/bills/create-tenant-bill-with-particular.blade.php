@@ -44,7 +44,7 @@
                     <div class="col-md-4">
                         <label>Rate </label>
                         @foreach ($property_bill as $bill)
-                        <input class="form-control" form="createBillForm" type="number" value="{{ $bill->rate }}"
+                        <input class="form-control" form="createBillForm" type="number" step="0.001" value="{{ $bill->rate }}"
                             name="rate" id="rate" class="" oninput="autoComputeAmount()">
                         @endforeach
                     </div>
