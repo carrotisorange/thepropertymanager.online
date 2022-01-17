@@ -219,7 +219,7 @@ class PropertyController extends Controller
                                                                                 $verified_users_2,
                                                                                 $verified_users_1,
                                                                        
-                                                                            ],
+                                                                            ]
             
                                             )
             
@@ -823,7 +823,7 @@ $expenses_rate->dataset
                                                                $collection_rate_2 - $expenses_2,
                                                                $collection_rate_1 - $expenses_1,
                                                       
-                                                            ],
+                                                            ]
 
                             )
 

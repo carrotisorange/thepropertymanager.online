@@ -176,7 +176,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -239,7 +239,7 @@
         'driver' => 'mysql',
         'url' => NULL,
         'host' => '127.0.0.1',
-        'port' => '3308',
+        'port' => '3306',
         'database' => 'forge',
         'username' => 'root',
         'password' => '',
@@ -256,7 +256,7 @@
         'driver' => 'pgsql',
         'url' => NULL,
         'host' => '127.0.0.1',
-        'port' => '3308',
+        'port' => '3306',
         'database' => 'forge',
         'username' => 'root',
         'password' => '',
@@ -271,7 +271,7 @@
         'driver' => 'sqlsrv',
         'url' => NULL,
         'host' => '127.0.0.1',
-        'port' => '3308',
+        'port' => '3306',
         'database' => 'forge',
         'username' => 'root',
         'password' => '',
@@ -313,10 +313,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\fonts/',
-      'font_cache' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\HPUSER~1\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online',
+      'font_dir' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\fonts/',
+      'font_cache' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\User\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -339,12 +339,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\app',
+        'root' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\app/public',
+        'root' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -390,13 +390,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -446,7 +446,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -469,7 +469,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\resources\\views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -579,7 +579,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -599,9 +599,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\resources\\views',
+      0 => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\framework\\views',
   ),
   'debugbar' => 
   array (
@@ -615,12 +615,15 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'C:\\Users\\hp user\\Desktop\\Side\\thepropertymanager.online\\storage\\debugbar',
+      'path' => 'C:\\Users\\User\\Desktop\\thepropertymanager.online\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
       'port' => 2304,
     ),
+    'editor' => 'phpstorm',
+    'remote_sites_path' => '',
+    'local_sites_path' => '',
     'include_vendors' => true,
     'capture_ajax' => true,
     'add_ajax_timing' => false,
@@ -766,7 +769,9 @@
       'payment_failed' => NULL,
       'source_chargeable' => NULL,
     ),
+    'webhook_signature' => NULL,
     'signature_header_name' => 'paymongo-signature',
+    'amount_type' => 'float',
   ),
   'trustedproxy' => 
   array (

@@ -28,7 +28,7 @@
         </nav>
 
         <div class="tab-content" id="" style="overflow-y:scroll;overflow-x:scroll;height:450px;">
-          <?php $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL) ?>
+         
 
           @foreach ($buildings as $building)
           <div class="tab-pane fade" id="{{ $building->building }}" role="tabpanel"
@@ -38,7 +38,7 @@
             @foreach ($units as $floor_no => $floor_no_list)
             <p class="text-center">
               @if($floor_no >= 1)
-              {{ $numberFormatter->format($floor_no).' floor' }}
+              {{ $floor_no.' floor' }}
               @else
               @if($floor_no >= -1)
               1st basement
