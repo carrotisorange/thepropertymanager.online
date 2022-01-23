@@ -42,9 +42,9 @@ class Tenant extends Model
                             ];
 
 
-    public function contracts()
+    public function contract()
     {
-        return $this->hasMany('App\Contract','tenant_id_foreign');
+        return $this->belongsTo('App\Contract','tenant_id_foreign');
     }
 
     public function bills()
@@ -65,7 +65,4 @@ class Tenant extends Model
     public function payments(){
         return $this->hasMany('App\Payment','payment_tenant_id');
     }
-
-
-    
 }

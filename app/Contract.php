@@ -32,9 +32,9 @@ class Contract extends Model
     // return $this->belongsTo('App\Unit', 'unit_id');
     // }
 
-    public function tenant()
+    public function tenants()
     {
-        return $this->belongsTo('App\Tenant', 'tenant_id_foreign');
+        return $this->hasMany('App\Tenant');
     }
 
     public function room()

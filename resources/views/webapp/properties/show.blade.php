@@ -71,7 +71,7 @@
         </div>
         <a class="text-dark" href="/property/{{ Session::get('property_id') }}/tenants/pending">
           <p class="mt-3 mb-0 text-sm">
-            @if($pending_tenants->count()>0)
+            @if($pending_tenants->count())
             <span class="text-warning mr-2"><i class="fa fa-user-clock"></i> {{ $pending_tenants->count() }} </span>
             <span class="text-nowrap">Marked as pending</span>
             @endif
@@ -297,7 +297,7 @@
               @include('webapp.tenants.includes.no-record')
               @endforelse
             </table>
-        {{ $expiring_contracts->links() }}
+        
       </div>
     </div>
   </div>

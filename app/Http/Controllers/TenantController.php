@@ -562,7 +562,8 @@ class TenantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($property_id, $tenant_id)
-    {   
+    {  
+
         if(Auth::user()->role_id_foreign === 1 || auth()->user()->role_id_foreign === 4 || auth()->user()->role_id_foreign === 3 || auth()->user()->role_id_foreign === 5){
             
             $property_bills = DB::table('particulars')

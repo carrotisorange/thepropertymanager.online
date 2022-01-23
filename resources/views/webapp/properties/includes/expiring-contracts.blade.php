@@ -30,26 +30,7 @@
 
             @endif
         </td>
-        {{-- <td>
-            @if($item->email_address === null)
-            <a href="/property/{{Session::get('property_id')}}/tenant/{{ $item->tenant_id }}/edit#email_address"
-                class="badge badge-danger">Please add an email</a>
-            @else
-            <form
-                action="/property/{{Session::get('property_id')}}/home/{{ $item->unit_id }}/tenant/{{ $item->tenant_id }}/contract/{{ $item->contract_id }}/alert">
-                @csrf
-                @if(Auth::user()->role_id_foreign === 4 || Auth::user()->role_id_foreign === 1)
-                <button class="btn btn-sm btn btn-primary" type="submit"
-                    onclick="this.form.submit(); this.disabled = true;"><i
-                        class="fas fa-paper-plane fa-sm text-white-50"></i> Send email</button>
-                @else
-                <button class="btn btn-sm btn btn-primary" title="for manager and admin access only" type="submit"
-                    onclick="this.form.submit(); this.disabled = true;" disabled><i
-                        class="fas fa-paper-plane fa-sm text-white-50"></i> Send Email</button>
-                @endif
-            </form>
-            @endif
-        </td> --}}
+
         <td>{{ $item->contact_no }}</td>
 
     </tr>

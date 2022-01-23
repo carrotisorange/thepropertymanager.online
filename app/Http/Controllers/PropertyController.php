@@ -325,7 +325,6 @@ class PropertyController extends Controller
      */
     public function create_property()
     {
-
         $property_types = PropertyType::all();
 
         $countries = Country::all();
@@ -466,29 +465,9 @@ class PropertyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
-    {   
-        Session::put('current-page', 'dashboard');
-        
-        Session::put('property_id', $request->property_id);
-
-        Session::put('footer_message', Property::findOrFail(Session::get('property_id'))->footer_message);
-
-        Session::put('electric_rate_kwh', Property::findOrFail(Session::get('property_id'))->electric_rate_kwh);
-
-        Session::put('water_rate_cum', Property::findOrFail(Session::get('property_id'))->water_rate_cum);
-       
-        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
-
-        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->property_type_id_foreign);;
-
-        Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
-
-        Session::put('property_address', Property::findOrFail(Session::get('property_id'))->address);
-
-        Session::put('property_mobile', Property::findOrFail(Session::get('property_id'))->mobile);
-
-        Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
-        
+    {  
+        //store selected property's info
+        $this->createSessionsForProperty($request->property_id);
 
         $notification = new Notification();
         $notification->user_id_foreign = Auth::user()->id;
@@ -500,34 +479,25 @@ class PropertyController extends Controller
                     
         Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
     
+        //get all referrals info
+        $referrals = $this->getReferralsInfo($request->property_id);
 
-         $referrals = DB::table('contracts')
-        ->join('users', 'referrer_id_foreign', 'id')
-        ->join('users_properties_relations', 'id', 'user_id_foreign')
-        ->select('*', DB::raw('count(*) as referrals'), 'users.name as name')
-        ->where('role_id_foreign', '<>', '4')
-        ->where('property_id_foreign', Session::get('property_id') )
-        ->groupBy('id')
-        ->orderBy('referrals', 'desc')
-        ->get();
+        //get all the units of the property
+        $units = $this->getPropertyUnits($request->property_id);
 
-$units = Property::findOrFail(Session::get('property_id'))->units->where('status', '<>', 'deleted');
+        //get tenants info of the property
+        $tenants = $this->getPropertyTenants($request->property_id);
 
+        //get inactive tenants of the property
+        $inactive_tenants = $this->getPropertyInactiveTenants($request->property_id);
 
+        //get pending tenants of the property
+        $pending_tenants = $this->getPropertyPendingTenants($request->property_id);
 
-  $no_of_rooms_previous_month = Property::findOrFail(Session::get('property_id'))
-->units
-->where('created_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
-->where('created_at', '<=', Carbon::now()->subMonth()->endOfMonth())
-->where('status', '<>', 'deleted')
-->count();
+        //get the number of rooms from the previous month of the property
+        $no_of_rooms_previous_month = $this->getNumberOfRoomsFromThePreviousMonth($request->property_id);
 
- $no_of_rooms_current_month = Property::findOrFail(Session::get('property_id'))
-->units
-->where('created_at', '>=', Carbon::now()->firstOfMonth())
-->where('created_at', '<=', Carbon::now()->endOfMonth())
-->where('status', '<>', 'deleted')
-->count();
+        $no_of_rooms_current_month = $this->getNumberOfRoomsFromTheCurrentMonth($request->property_id); 
 
 $increase_in_room_acquired = number_format($no_of_rooms_previous_month == 0 ? 0 : (($no_of_rooms_current_month-$no_of_rooms_previous_month)/$no_of_rooms_previous_month ) * 100 ,1);
 
@@ -537,33 +507,6 @@ $units_vacant = Property::findOrFail(Session::get('property_id'))->units->where(
 
 $units_reserved =  Property::findOrFail(Session::get('property_id'))->units->where('status', 'reserved')->count();
 
-
- $tenants = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('tenants', 'tenant_id_foreign', 'tenant_id')
-->where('property_id_foreign', Session::get('property_id'))
-->where('contracts.status', 'active')
-->get();
-
- $all_tenants = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('tenants', 'tenant_id_foreign', 'tenant_id')
-->where('property_id_foreign', Session::get('property_id'))
-->count();
-
-$inactive_tenants = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('tenants', 'tenant_id_foreign', 'tenant_id')
-->where('property_id_foreign', Session::get('property_id'))
-->where('contracts.status', 'inactive')
-->get();
-
-$pending_tenants = DB::table('contracts')
-->join('units', 'unit_id_foreign', 'unit_id')
-->join('tenants', 'tenant_id_foreign', 'tenant_id')
-->where('property_id_foreign', Session::get('property_id'))
-->where('contracts.status', 'pending')
-->get();
 
 $owners = DB::table('certificates')
 ->join('units', 'unit_id_foreign', 'unit_id')
@@ -1239,7 +1182,7 @@ if($tenants->count() != 0){
                                  [ 
                                      'Working'.' ('.$working.')',
                                      'Studying'.' ('.$studying.')', 
-                                     'Total'.' ('.$all_tenants. ')'
+                                     'Total'.' ('.$tenants. ')'
                                  ]
                              );
  $status->dataset
@@ -1317,6 +1260,96 @@ if(Session::get('property_type') === '5' || Session::get('property_type') === 1 
 }
 
     }
+
+    
+    public function createSessionsForProperty($property_id){
+
+        Session::put('current-page', 'dashboard');
+
+        Session::put('property_id', $property_id);
+
+        Session::put('footer_message', Property::findOrFail(Session::get('property_id'))->footer_message);
+
+        Session::put('electric_rate_kwh', Property::findOrFail(Session::get('property_id'))->electric_rate_kwh);
+
+        Session::put('water_rate_cum', Property::findOrFail(Session::get('property_id'))->water_rate_cum);
+       
+        Session::put('notifications', Property::findOrFail(Session::get('property_id'))->unseen_notifications);
+
+        Session::put('property_type', Property::findOrFail(Session::get('property_id'))->property_type_id_foreign);;
+
+        Session::put('property_name', Property::findOrFail(Session::get('property_id'))->name);
+
+        Session::put('property_address', Property::findOrFail(Session::get('property_id'))->address);
+
+        Session::put('property_mobile', Property::findOrFail(Session::get('property_id'))->mobile);
+
+        Session::put('property_ownership', Property::findOrFail(Session::get('property_id'))->ownership);
+     }
+
+     public function getReferralsInfo($property_id){
+
+        return DB::table('contracts')
+        ->join('users', 'referrer_id_foreign', 'id')
+        ->join('users_properties_relations', 'id', 'user_id_foreign')
+        ->select('*', DB::raw('count(*) as referrals'), 'users.name as name')
+        ->where('role_id_foreign', '<>', '4')
+        ->where('property_id_foreign', $property_id)
+        ->groupBy('id')
+        ->orderBy('referrals', 'desc')
+        ->get();
+
+     }
+     
+     public function getPropertyUnits($property_id){
+        return Property::findOrFail($property_id)->units->where('status', '<>', 'deleted');
+     }
+     
+     public function getPropertyTenants($property_id){
+        return DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('property_id_foreign', $property_id)
+        ->where('contracts.status', 'active')
+        ->get();
+    
+     }
+
+     public function getPropertyInactiveTenants($property_id){ 
+        return DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('property_id_foreign', $property_id)
+        ->where('contracts.status', 'inactive')
+        ->get();
+     }
+
+     public function getPropertyPendingTenants($property_id){
+       return DB::table('contracts')
+        ->join('units', 'unit_id_foreign', 'unit_id')
+        ->join('tenants', 'tenant_id_foreign', 'tenant_id')
+        ->where('property_id_foreign', $property_id)
+        ->where('contracts.status', 'pending')
+        ->get();
+     }
+
+     public function getNumberOfRoomsFromThePreviousMonth($property_id){
+        return Property::findOrFail($property_id)
+        ->units
+        ->where('created_at', '>=', Carbon::now()->subMonth()->firstOfMonth())
+        ->where('created_at', '<=', Carbon::now()->subMonth()->endOfMonth())
+        ->where('status', '<>', 'deleted')
+        ->count();
+     }
+
+     public function getNumberOfRoomsFromTheCurrentMonth($property_id){
+         return  Property::findOrFail(Session::get('property_id'))
+         ->units
+         ->where('created_at', '>=', Carbon::now()->firstOfMonth())
+         ->where('created_at', '<=', Carbon::now()->endOfMonth())
+         ->where('status', '<>', 'deleted')
+         ->count();
+     }
 
     public function create_bill(){
 
